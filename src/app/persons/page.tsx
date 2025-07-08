@@ -1,20 +1,5 @@
-import Opportunity from "@/components/Person";
-import { OpportunityType } from "@/types";
-import styles from "./page.module.css";
+import Persons from "./Persons";
 
-export default async function Persons() {
-  const opportunities: OpportunityType[] = await getOpportunities();
-
-  return (
-    <div className={styles["list-container"]}>
-      <h1>Persons</h1>
-      <ul>
-        {opportunities.map((opportunity) => (
-          <li key={opportunity.id}>
-            <Opportunity opportunity={opportunity} />
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+export default function Page() {
+  return <Persons />;
 }

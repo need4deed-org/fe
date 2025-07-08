@@ -4,9 +4,10 @@
 
 .list-container h1 {
   text-align: center;
-  font-size: 3rem;
+  font-size: 2rem;
   font-weight: 600;
   margin-bottom: 2rem;
+  text-transform: uppercase;
 }
 
 .list-container ul {

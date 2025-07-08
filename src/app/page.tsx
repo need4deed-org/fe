@@ -9,8 +9,8 @@ export default function Home() {
           <a href="/login" className={styles.secondary}>
             Login
           </a>
-          <a href="/opportunities" className={styles.secondary}>
-            Opportunities
+          <a href="/persons" className={styles.secondary}>
+            Persons
           </a>
         </div>
       </main>
