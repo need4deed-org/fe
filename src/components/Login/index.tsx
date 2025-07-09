@@ -1,9 +1,8 @@
 "use client";
 import { useForm } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
-
-import useToken from "@/hooks/auth/useToken";
 import { useRouter } from "next/navigation";
+
 import styles from "./index.module.css";
 
 const urlLogin = "/api/auth/login";
@@ -20,12 +19,11 @@ interface LoginResponse {
 
 export default function Login() {
   const router = useRouter();
-  const { setToken } = useToken();
 
   const { mutate: login } = useMutation<LoginResponse, Error, LoginData>({
     mutationFn: async (data: LoginData): Promise<LoginResponse> => {
       return fetch(urlLogin, {
-        method: "post",
+        method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       }).then(async (res) => {
@@ -47,9 +45,8 @@ export default function Login() {
     },
     onSubmit: async ({ value }) => {
       login(value, {
-        onSuccess: ({ data, message }) => {
+        onSuccess: ({ message }) => {
           console.log("DEBUG:login:message", message);
-          setToken(data.token);
           router.push("/");
         },
         onError: (err) => {
@@ -123,7 +120,6 @@ export default function Login() {
               {!!state.errors.length && (
                 <p>ERRORS: {state.errors.join(", ")}</p>
               )}
-              <pre>{JSON.stringify(state, null, 4)}</pre>
             </>
           )}
         </form.Subscribe>
