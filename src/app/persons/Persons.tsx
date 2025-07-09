@@ -1,11 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
 
+import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 import Person, { PersonType } from "./Person";
 
 export default function Persons() {
   const [persons, setPersons] = useState<PersonType[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     fetch("/api/person", {
@@ -19,6 +21,9 @@ export default function Persons() {
           return res.json();
         } else {
           console.error(`HTTP error! status: ${res.status}`);
+          if (res.status === 401) {
+            router.push("/login");
+          }
           return [];
         }
       })
@@ -34,7 +39,7 @@ export default function Persons() {
     <div className={styles["list-container"]}>
       <h1>Persons</h1>
       <ul>
-        {persons.length
+        {persons && persons.length
           ? persons.map((person) => <Person key={person.id} person={person} />)
           : null}
       </ul>
