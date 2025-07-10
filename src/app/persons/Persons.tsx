@@ -33,7 +33,7 @@ export default function Persons() {
       .catch((err) => {
         console.error("Error fetching persons:", err);
       });
-  }, []);
+  }, [router]);
 
   return (
     <div className={styles["list-container"]}>
