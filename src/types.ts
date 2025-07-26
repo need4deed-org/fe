@@ -9,3 +9,9 @@ export enum Subpage {
   LOGIN = "login",
   OPPORTUNITY_CARDS = "opportunity-cards",
 }
+
+export enum Env {
+  DEVELOPMENT = "development",
+  TEST = "test",
+  PRODUCTION = "production",
+}

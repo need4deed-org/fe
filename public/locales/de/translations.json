@@ -1,0 +1,11 @@
+{
+  "homepage": {
+    "heroSection": {
+      "menuItems": {
+        "about": "ÜBER UNS",
+        "volunteeringOpportunities": "EHRENAMTSANGEBOTE",
+        "events": "VERANSTALTUNGEN"
+      }
+    }
+  }
+}

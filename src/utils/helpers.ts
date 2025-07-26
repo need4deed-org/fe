@@ -16,3 +16,15 @@ export function isEnumValue<E>(enumObject: object, value: E) {
     ? Object.values(enumObject).includes(value)
     : false;
 }
+
+export function getStoredLang(): Lang | null {
+   if (typeof window === "undefined") {
+    return null;   }
+
+  const storedLang = localStorage.getItem(n4dLanguageLocalStorageKey);
+  if (storedLang && isEnumValue(Lang, storedLang)) {
+    return storedLang as Lang;
+  }
+  
+  return null;
+}

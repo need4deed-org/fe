@@ -8,8 +8,6 @@ import MenuItems from "./MenuItems";
 import { MenuItemType, Subpage } from "@/types";
 import { eventsSectionContainerId } from "@/config/constants";
 
-
-
 interface HeaderContainerProps {
   height?: string;
   padding?: string;
@@ -45,17 +43,10 @@ export function Header({
   const { t } = useTranslation();
   const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState<boolean>(false);
 
-  // const menuItems: MenuItemType[] = [
-  //   [t("homepage.heroSection.menuItems.about"), `/${Subpage.ABOUT}`],
-  //   [t("homepage.heroSection.menuItems.volunteeringOpportunities"), `/${Subpage.OPPORTUNITY_CARDS}`],
-  //   [t("homepage.heroSection.menuItems.events"), `/#${eventsSectionContainerId}`],
-  // ];
-
-
   const menuItems: MenuItemType[] = [
-    ["about", `/${Subpage.ABOUT}`],
-    ["volunteeringOpportunities", `/${Subpage.OPPORTUNITY_CARDS}`],
-    ["events", `/#${eventsSectionContainerId}`],
+    [t("homepage.heroSection.menuItems.about"), `/${Subpage.ABOUT}`],
+    [t("homepage.heroSection.menuItems.volunteeringOpportunities"), `/${Subpage.OPPORTUNITY_CARDS}`],
+    [t("homepage.heroSection.menuItems.events"), `/#${eventsSectionContainerId}`],
   ];
 
   return (

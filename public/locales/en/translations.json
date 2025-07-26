@@ -1,0 +1,11 @@
+{
+  "homepage": {
+    "heroSection": {
+      "menuItems": {
+        "about": "ABOUT",
+        "volunteeringOpportunities": "VOLUNTEERING OPPORTUNITIES",
+        "events": "EVENTS"
+      }
+    }
+  }
+}
