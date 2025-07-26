@@ -1,15 +1,15 @@
 "use client"
-import styled from "styled-components"
 
-const PageContainer = styled.div`
-display: flex;
-background: var(--color-orchid);
-`
+import { SubPageLayout } from "@/components/Layout/subPageLayout"
+import { Heading4 } from "@/components/styled/text"
+
+
+
 
 export default function TestPage() {
   return (
-    <PageContainer>
-      <h1>Need4Deed</h1>
-    </PageContainer>
+    <SubPageLayout>
+      <Heading4>This is a test page...</Heading4>
+    </SubPageLayout>
   )
 }
