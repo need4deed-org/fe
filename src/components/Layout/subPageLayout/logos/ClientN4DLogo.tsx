@@ -1,11 +1,8 @@
-import dynamic from 'next/dynamic';
+import dynamic from 'next/dynamic'
 
-const N4DLogo = dynamic(
-  () => import('./N4DLogo'), // Path to your original N4DLogo.tsx
-  { 
-    ssr: false, 
-    // loading: () => <p>Loading logo...</p>, 
-  }
-);
+// Todo: move this component if it is not used after finishing entire Admin Dashboard !
+const N4DLogo = dynamic(() => import('./N4DLogo'), {
+  ssr: false,
+})
 
-export default N4DLogo;
+export default N4DLogo

@@ -1,15 +1,23 @@
 "use client"
 
 import { SubPageLayout } from "@/components/Layout/subPageLayout"
-import { Heading4 } from "@/components/styled/text"
+import { Heading2 } from "@/components/styled/text"
+import styled from "styled-components"
 
 
-
+const TestPageContainer = styled.div`
+  display: flex;
+  height: 300px;
+  justify-content: center;
+  align-items: center;
+`
 
 export default function TestPage() {
   return (
     <SubPageLayout>
-      <Heading4>This is a test page...</Heading4>
+      <TestPageContainer>
+        <Heading2>This is a test page...</Heading2>
+      </TestPageContainer>
     </SubPageLayout>
   )
 }
