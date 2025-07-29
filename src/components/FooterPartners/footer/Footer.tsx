@@ -1,11 +1,11 @@
-import styled from 'styled-components'
+import styled from "styled-components"
 
-import { LogoN4D } from '../logos'
-import ContactSocials from './ContactSocials'
-import FooterLinks from './FooterLinks'
-import { useScreenType } from '@/context/DeviceContext'
-import { ScreenTypes } from '@/config/constants'
-import { FooterLink, Subpage } from '@/types'
+import { LogoN4D } from "../logos"
+import ContactSocials from "./ContactSocials"
+import FooterLinks from "./FooterLinks"
+import { useScreenType } from "@/context/DeviceContext"
+import { ScreenTypes } from "@/config/constants"
+import { FooterLink, Subpage } from "@/types"
 
 const FooterContainer = styled.div`
   display: flex;
@@ -22,26 +22,26 @@ const FooterLinksN4DLogoContainer = styled.div`
 `
 
 interface FooterLinksContainerProps {
-  'flex-direction'?: string
+  "flex-direction"?: string
 }
 
 const FooterLinksContainer = styled.div<FooterLinksContainerProps>`
   display: flex;
   justify-content: space-between;
-  flex-direction: ${props => props['flex-direction'] || 'row'};
+  flex-direction: ${(props) => props["flex-direction"] || "row"};
   width: var(--homepage-footer-partners-section-footer-links-container-width);
 `
 
 const links1: FooterLink[] = [
-  ['homepage.footer.about', Subpage.ABOUT],
-  ['homepage.footer.resources', '#'],
-  ['homepage.footer.faq', Subpage.FAQ],
+  ["homepage.footer.about", Subpage.ABOUT],
+  ["homepage.footer.resources", "#"],
+  ["homepage.footer.faq", Subpage.FAQ],
 ]
 
 const links2: FooterLink[] = [
-  ['homepage.footer.legalNotice', Subpage.LEGAL_NOTICE],
-  ['homepage.footer.privacy', Subpage.DATA_PRIVACY],
-  ['homepage.footer.vpa', Subpage.VPA],
+  ["homepage.footer.legalNotice", Subpage.LEGAL_NOTICE],
+  ["homepage.footer.privacy", Subpage.DATA_PRIVACY],
+  ["homepage.footer.vpa", Subpage.VPA],
 ]
 
 const desktopFooter = (

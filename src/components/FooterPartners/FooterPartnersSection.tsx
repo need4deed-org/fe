@@ -1,8 +1,8 @@
-import styled from 'styled-components'
+import styled from "styled-components"
 
-import { Partners } from './Partners'
-import { Footer } from './footer/Footer'
-import { FullWidthContainer, SectionContainer } from '../styled/container'
+import { Partners } from "./Partners"
+import { Footer } from "./footer/Footer"
+import { FullWidthContainer, SectionContainer } from "../styled/container"
 
 const FooterPartnersSectionContainer = styled(SectionContainer)`
   height: var(--homepage-footer-partners-section-container-height);

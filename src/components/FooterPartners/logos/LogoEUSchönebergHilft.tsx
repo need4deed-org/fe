@@ -1,12 +1,12 @@
-import { ScreenTypes } from '@/config/constants'
-import FunderLogoSchönebergHilft from '../../svg/FunderLogoSchönebergHilft'
-import { useEffect, useState } from 'react'
-import { useScreenType } from '@/context/DeviceContext'
+import { ScreenTypes } from "@/config/constants"
+import FunderLogoSchönebergHilft from "../../svg/FunderLogoSchönebergHilft"
+import { useEffect, useState } from "react"
+import { useScreenType } from "@/context/DeviceContext"
 
 const logoSizeMap = {
-  [ScreenTypes.DESKTOP]: { width: '150', height: '150' },
-  [ScreenTypes.TABLET]: { width: '150', height: '150' },
-  [ScreenTypes.MOBILE]: { width: '100', height: '100' },
+  [ScreenTypes.DESKTOP]: { width: "150", height: "150" },
+  [ScreenTypes.TABLET]: { width: "150", height: "150" },
+  [ScreenTypes.MOBILE]: { width: "100", height: "100" },
 }
 
 export function LogoSchönebergHilft() {
@@ -17,11 +17,11 @@ export function LogoSchönebergHilft() {
   useEffect(() => {
     // This code will only run on the client-side
     const computedHeight = getComputedStyle(document.documentElement).getPropertyValue(
-      '--homepage-footer-partners-section-logo-SchönebergHilft-height',
+      "--homepage-footer-partners-section-logo-SchönebergHilft-height",
     )
 
     const computedWidth = getComputedStyle(document.documentElement).getPropertyValue(
-      '--homepage-footer-partners-section-logo-SchönebergHilft-width',
+      "--homepage-footer-partners-section-logo-SchönebergHilft-width",
     )
 
     setLogoWidth(computedWidth)

@@ -1,8 +1,8 @@
-import styled from "styled-components";
+import styled from "styled-components"
 
-import LanguageSwitcher from "./LanguageSwitcher";
-import MenuitemList from "./MenuitemList";
-import { MenuItemType } from "@/types";
+import LanguageSwitcher from "./LanguageSwitcher"
+import MenuitemList from "./MenuitemList"
+import { MenuItemType } from "@/types"
 
 export const MenuItemsContainer = styled.div`
   justify-content: space-between;
@@ -14,11 +14,11 @@ export const MenuItemsContainer = styled.div`
   a {
     text-decoration: none;
   }
-`;
+`
 
 interface Props {
-  items: MenuItemType[];
-  menuItemColor: string;
+  items: MenuItemType[]
+  menuItemColor: string
 }
 
 export default function MenuItems({ items, menuItemColor }: Props) {
@@ -28,5 +28,5 @@ export default function MenuItems({ items, menuItemColor }: Props) {
 
       <LanguageSwitcher textColor={menuItemColor} />
     </MenuItemsContainer>
-  );
+  )
 }

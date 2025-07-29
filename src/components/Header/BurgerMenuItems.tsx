@@ -1,11 +1,11 @@
-import { XIcon } from '@phosphor-icons/react'
-import styled, { css, keyframes } from 'styled-components'
+import { XIcon } from "@phosphor-icons/react"
+import styled, { css, keyframes } from "styled-components"
 
-import LanguageSwitcher from './LanguageSwitcher'
-import { MenuItemsContainer } from './MenuItems'
-import MenuitemList from './MenuitemList'
-import { MenuItemType } from '@/types'
-import N4DLogoFlat from '../svg/N4DLogoFlat'
+import LanguageSwitcher from "./LanguageSwitcher"
+import { MenuItemsContainer } from "./MenuItems"
+import MenuitemList from "./MenuitemList"
+import { MenuItemType } from "@/types"
+import N4DLogoFlat from "../svg/N4DLogoFlat"
 
 const slideIn = keyframes`
   from {
@@ -49,14 +49,14 @@ const BurgerMenuItemsContainer = styled(MenuItemsContainer)<BurgerMenuProps>`
   }
 
   /* Apply animation based on isOpen prop */
-  ${props =>
+  ${(props) =>
     props.$isOpen &&
     css`
       transform: translateX(0);
       animation: ${slideIn} 0.3s ease-in-out forwards;
     `}
 
-  ${props =>
+  ${(props) =>
     !props.$isOpen &&
     css`
       animation: ${slideOut} 0.3s ease-in-out forwards;

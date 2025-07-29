@@ -1,9 +1,9 @@
-export const tokenKey = 'token'
+export const tokenKey = "token"
 
 export enum ScreenTypes {
-  MOBILE = 'mobile',
-  TABLET = 'tablet',
-  DESKTOP = 'desktop',
+  MOBILE = "mobile",
+  TABLET = "tablet",
+  DESKTOP = "desktop",
 }
 
 export const screenSizeThresholds = {
@@ -11,6 +11,6 @@ export const screenSizeThresholds = {
   desktop: 1440,
 }
 
-export const n4dLanguageLocalStorageKey = 'n4d-language'
+export const n4dLanguageLocalStorageKey = "n4d-language"
 
-export const eventsSectionContainerId = 'events-section-container'
+export const eventsSectionContainerId = "events-section-container"

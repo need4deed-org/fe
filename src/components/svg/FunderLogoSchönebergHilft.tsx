@@ -1,17 +1,11 @@
 interface Props {
-  width: string;
-  height: string;
+  width: string
+  height: string
 }
 
 export default function FunderLogoSchönebergHilft({ width, height }: Props) {
   return (
-    <svg
-      width={width}
-      height={height}
-      viewBox="0 0 150 150"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg width={width} height={height} viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g clipPath="url(#clip0_2378_8301)">
         <path
           fillRule="evenodd"
@@ -95,18 +89,12 @@ export default function FunderLogoSchönebergHilft({ width, height }: Props) {
           d="M121.746 147.232C121.092 147.232 120.531 147.108 120.071 146.865C119.607 146.62 119.254 146.26 119.012 145.786C118.766 145.312 118.648 144.741 118.648 144.069V143.273C118.648 142.574 118.766 141.976 118.998 141.481C119.23 140.986 119.569 140.609 120.015 140.352C120.458 140.093 120.995 139.965 121.621 139.965C122.213 139.965 122.715 140.114 123.133 140.408C123.549 140.702 123.867 141.131 124.089 141.688C124.31 142.245 124.417 142.917 124.417 143.699V144.163H119.649V143.045H123.095C123.054 142.467 122.905 142.02 122.649 141.702C122.393 141.38 122.05 141.221 121.618 141.221C121.092 141.221 120.683 141.394 120.396 141.74C120.109 142.083 119.964 142.571 119.964 143.204V144.1C119.964 144.685 120.119 145.139 120.427 145.45C120.735 145.765 121.175 145.921 121.742 145.921C122.023 145.921 122.303 145.862 122.58 145.748C122.857 145.637 123.106 145.474 123.324 145.27L124.234 146.184C123.884 146.519 123.493 146.779 123.054 146.962C122.618 147.146 122.178 147.239 121.739 147.239L121.746 147.232Z"
           fill="#94BDD6"
         />
-        <path
-          d="M125.816 145.67H127.273V147.127H125.816V145.67Z"
-          fill="#94BDD6"
-        />
+        <path d="M125.816 145.67H127.273V147.127H125.816V145.67Z" fill="#94BDD6" />
         <path
           d="M127.65 137.227H129.159L131.537 144.989L133.914 137.227H135.427L132.198 147.128H130.879L127.65 137.227Z"
           fill="#94BDD6"
         />
-        <path
-          d="M135.801 145.67H137.258V147.127H135.801V145.67Z"
-          fill="#94BDD6"
-        />
+        <path d="M135.801 145.67H137.258V147.127H135.801V145.67Z" fill="#94BDD6" />
         <path
           fillRule="evenodd"
           clipRule="evenodd"
@@ -116,14 +104,9 @@ export default function FunderLogoSchönebergHilft({ width, height }: Props) {
       </g>
       <defs>
         <clipPath id="clip0_2378_8301">
-          <rect
-            width="125.26"
-            height="150"
-            fill="white"
-            transform="translate(12)"
-          />
+          <rect width="125.26" height="150" fill="white" transform="translate(12)" />
         </clipPath>
       </defs>
     </svg>
-  );
+  )
 }

@@ -1,14 +1,14 @@
-import styled from 'styled-components'
-import { Paragraph } from '../../styled/text'
-import FunderLogoClubDialog from '../../svg/FunderLogoClubDialog'
-import { ScreenTypes } from '@/config/constants'
-import { useEffect, useState } from 'react'
-import { useScreenType } from '@/context/DeviceContext'
+import styled from "styled-components"
+import { Paragraph } from "../../styled/text"
+import FunderLogoClubDialog from "../../svg/FunderLogoClubDialog"
+import { ScreenTypes } from "@/config/constants"
+import { useEffect, useState } from "react"
+import { useScreenType } from "@/context/DeviceContext"
 
 const logoSizeMap = {
-  [ScreenTypes.DESKTOP]: { width: '316', height: '58' },
-  [ScreenTypes.TABLET]: { width: '316', height: '58' },
-  [ScreenTypes.MOBILE]: { width: '200', height: '36' },
+  [ScreenTypes.DESKTOP]: { width: "316", height: "58" },
+  [ScreenTypes.TABLET]: { width: "316", height: "58" },
+  [ScreenTypes.MOBILE]: { width: "200", height: "36" },
 }
 
 const ClubDialogDiv = styled.div`
@@ -25,11 +25,11 @@ export function LogoClubDialog() {
   useEffect(() => {
     // This code will only run on the client-side
     const computedHeight = getComputedStyle(document.documentElement).getPropertyValue(
-      '--homepage-footer-partners-section-logo-club-dialog-height',
+      "--homepage-footer-partners-section-logo-club-dialog-height",
     )
 
     const computedWidth = getComputedStyle(document.documentElement).getPropertyValue(
-      '--homepage-footer-partners-section-logo-club-dialog-width',
+      "--homepage-footer-partners-section-logo-club-dialog-width",
     )
 
     setLogoWidth(computedWidth)

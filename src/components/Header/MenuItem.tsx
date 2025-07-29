@@ -1,18 +1,17 @@
-import React from "react";
-import styled from "styled-components";
+import React from "react"
+import styled from "styled-components"
 
-import { CustomHeading } from "../styled/text";
-
+import { CustomHeading } from "../styled/text"
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
-  text: string;
-  color?: string;
+  text: string
+  color?: string
 }
 
 const MenuItemDiv = styled.div`
   cursor: pointer;
   width: fit-content;
-`;
+`
 
 export default function MenuItem({ text, color, onClick }: Props) {
   return (
@@ -29,5 +28,5 @@ export default function MenuItem({ text, color, onClick }: Props) {
         {text}
       </CustomHeading>
     </MenuItemDiv>
-  );
+  )
 }

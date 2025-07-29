@@ -1,12 +1,12 @@
-import { useScreenType } from '@/context/DeviceContext'
-import FunderLogoEU from '../../svg/FunderLogoEU'
-import { useEffect, useState } from 'react'
-import { ScreenTypes } from '@/config/constants'
+import { useScreenType } from "@/context/DeviceContext"
+import FunderLogoEU from "../../svg/FunderLogoEU"
+import { useEffect, useState } from "react"
+import { ScreenTypes } from "@/config/constants"
 
 const logoSizeMap = {
-  [ScreenTypes.DESKTOP]: { width: '194', height: '180' },
-  [ScreenTypes.TABLET]: { width: '194', height: '180' },
-  [ScreenTypes.MOBILE]: { width: '130', height: '120' },
+  [ScreenTypes.DESKTOP]: { width: "194", height: "180" },
+  [ScreenTypes.TABLET]: { width: "194", height: "180" },
+  [ScreenTypes.MOBILE]: { width: "130", height: "120" },
 }
 
 export function LogoEU() {
@@ -17,11 +17,11 @@ export function LogoEU() {
   useEffect(() => {
     // This code will only run on the client-side
     const computedHeight = getComputedStyle(document.documentElement).getPropertyValue(
-      '--homepage-footer-partners-section-logo-eu-height',
+      "--homepage-footer-partners-section-logo-eu-height",
     )
 
     const computedWidth = getComputedStyle(document.documentElement).getPropertyValue(
-      '--homepage-footer-partners-section-logo-eu-width',
+      "--homepage-footer-partners-section-logo-eu-width",
     )
 
     setLogoWidth(computedWidth)

@@ -1,9 +1,9 @@
-import { FacebookLogoIcon, InstagramLogoIcon, LinkedinLogoIcon } from '@phosphor-icons/react'
-import { useTranslation } from 'react-i18next'
-import styled from 'styled-components'
+import { FacebookLogoIcon, InstagramLogoIcon, LinkedinLogoIcon } from "@phosphor-icons/react"
+import { useTranslation } from "react-i18next"
+import styled from "styled-components"
 
-import { Paragraph } from '../../styled/text'
-import { ATag } from '@/components/styled/tags'
+import { Paragraph } from "../../styled/text"
+import { ATag } from "@/components/styled/tags"
 
 const ContactSocialsContainer = styled.div`
   display: flex;
@@ -36,7 +36,7 @@ function Contact() {
         fontSize="var(--homepage-footer-partners-section-p-fontSize)"
         lineheight="var(--homepage-footer-partners-section-p-fontSize)"
       >
-        {t('homepage.footer.contact')}:
+        {t("homepage.footer.contact")}:
       </Paragraph>
 
       <Paragraph

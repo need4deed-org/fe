@@ -1,13 +1,13 @@
-'use client'
+"use client"
 
-import { ReactNode } from 'react'
-import styled from 'styled-components'
+import { ReactNode } from "react"
+import styled from "styled-components"
 
-import { N4DLogo } from './logos/N4DLogo'
-import { ScreenTypes } from '@/config/constants'
-import { Header } from '@/components/Header'
-import { useScreenType } from '@/context/DeviceContext'
-import { FooterPartnersSection } from '@/components/FooterPartners'
+import { N4DLogo } from "./logos/N4DLogo"
+import { ScreenTypes } from "@/config/constants"
+import { Header } from "@/components/Header"
+import { useScreenType } from "@/context/DeviceContext"
+import { FooterPartnersSection } from "@/components/FooterPartners"
 
 interface Props {
   children: ReactNode
@@ -28,7 +28,7 @@ const PageContentHeaderContainer = styled.div<PageContentHeaderContainerProps>`
   display: flex;
   flex: 1;
   flex-direction: column;
-  background: ${props => props.background || 'var(--layout-static-page-background-default)'};
+  background: ${(props) => props.background || "var(--layout-static-page-background-default)"};
   padding-bottom: var(--layout-static-page-header-content-bottom-padding);
 `
 

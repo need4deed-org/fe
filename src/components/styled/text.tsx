@@ -1,12 +1,12 @@
-import styled from "styled-components";
+import styled from "styled-components"
 
 interface TextProps {
-  color?: string;
-  fontWeight?: number | string;
-  fontSize?: string;
-  lineheight?: string;
-  letterSpacing?: string;
-  margin?: number | string;
+  color?: string
+  fontWeight?: number | string
+  fontSize?: string
+  lineheight?: string
+  letterSpacing?: string
+  margin?: number | string
 }
 
 export const CustomHeading = styled.h1<TextProps>`
@@ -16,7 +16,7 @@ export const CustomHeading = styled.h1<TextProps>`
   letter-spacing: ${(props) => props.letterSpacing};
   color: ${(props) => props.color};
   margin: ${(props) => props.margin};
-`;
+`
 
 export const Heading1 = styled.h1<TextProps>`
   font-weight: var(--text-h1-font-weight);
@@ -25,7 +25,7 @@ export const Heading1 = styled.h1<TextProps>`
   letter-spacing: var(--text-h1-letter-spacing);
   color: ${(props) => props.color || "var(--color-midnight)"};
   margin: ${(props) => props.margin};
-`;
+`
 
 export const Heading2 = styled.h2<TextProps>`
   font-weight: var(--text-h2-font-weight);
@@ -34,7 +34,7 @@ export const Heading2 = styled.h2<TextProps>`
   letter-spacing: var(--text-h2-letter-spacing);
   color: ${(props) => props.color || "var(--color-midnight)"};
   margin: ${(props) => props.margin};
-`;
+`
 
 export const Heading3 = styled.h3<TextProps>`
   font-weight: var(--text-h3-font-weight);
@@ -43,7 +43,7 @@ export const Heading3 = styled.h3<TextProps>`
   letter-spacing: var(--text-h3-letter-spacing);
   margin: ${(props) => props.margin};
   color: ${(props) => props.color || "var(--color-midnight)"};
-`;
+`
 
 export const Heading4 = styled.h4<TextProps>`
   font-weight: var(--text-h4-font-weight);
@@ -52,17 +52,16 @@ export const Heading4 = styled.h4<TextProps>`
   letter-spacing: var(--text-h4-letter-spacing);
   color: ${(props) => props.color || "var(--color-midnight)"};
   margin: ${(props) => props.margin};
-`;
+`
 
 export const Paragraph = styled.p<TextProps>`
   font-weight: ${(props) => props.fontWeight || "var(--text-p-font-weight)"};
   font-size: ${(props) => props.fontSize || "var(--text-p-font-size)"};
   line-height: ${(props) => props.lineheight || "var(--text-p-line-height)"};
-  letter-spacing: ${(props) =>
-    props.letterSpacing || "var(--text-p-letter-spacing)"};
+  letter-spacing: ${(props) => props.letterSpacing || "var(--text-p-letter-spacing)"};
   color: ${(props) => props.color || "var(--color-midnight)"};
   margin: 0;
-`;
+`
 
 export const ButtonSpan = styled.span<TextProps>`
   font-weight: var(--button-text-font-weight);
@@ -71,7 +70,7 @@ export const ButtonSpan = styled.span<TextProps>`
   letter-spacing: var(--button-text-letter-spacing);
   text-align: var(--button-text-text-align);
   color: ${(props) => props.color || "var(--color-magnolia)"};
-`;
+`
 
 export const ActivitySpan = styled.span<TextProps>`
   font-weight: var(--text-activity-tag-font-weight);
@@ -80,4 +79,4 @@ export const ActivitySpan = styled.span<TextProps>`
   letter-spacing: var(--text-activity-tag-letter-spacing);
   text-align: var(--text-activity-tag-text-align);
   color: ${(props) => props.color || "white"};
-`;
+`

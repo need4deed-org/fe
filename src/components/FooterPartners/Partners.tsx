@@ -1,7 +1,7 @@
-import styled from 'styled-components'
-import { LogoBerlin, LogoClubDialog, LogoEU, LogoSchönebergHilft } from './logos'
-import { useScreenType } from '@/context/DeviceContext'
-import { ScreenTypes } from '@/config/constants'
+import styled from "styled-components"
+import { LogoBerlin, LogoClubDialog, LogoEU, LogoSchönebergHilft } from "./logos"
+import { useScreenType } from "@/context/DeviceContext"
+import { ScreenTypes } from "@/config/constants"
 
 const PartnersContainer = styled.div`
   display: flex;
@@ -21,8 +21,8 @@ const FrameContainer = styled.div<FrameProps>`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  height: ${props => props.height};
-  gap: ${props => props.gap};
+  height: ${(props) => props.height};
+  gap: ${(props) => props.gap};
 `
 
 const partnerLogos = {

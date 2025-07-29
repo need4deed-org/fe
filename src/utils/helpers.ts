@@ -1,6 +1,6 @@
-import { Lang } from 'need4deed-sdk'
+import { Lang } from "need4deed-sdk"
 
-import { n4dLanguageLocalStorageKey } from '@/config/constants'
+import { n4dLanguageLocalStorageKey } from "@/config/constants"
 
 export function setStoredLang(lang: Lang) {
   if (isEnumValue(Lang, lang)) {
@@ -11,11 +11,11 @@ export function setStoredLang(lang: Lang) {
 }
 
 export function isEnumValue<E>(enumObject: object, value: E) {
-  return typeof enumObject === 'object' ? Object.values(enumObject).includes(value) : false
+  return typeof enumObject === "object" ? Object.values(enumObject).includes(value) : false
 }
 
 export function getStoredLang(): Lang | null {
-  if (typeof window === 'undefined') {
+  if (typeof window === "undefined") {
     return null
   }
 

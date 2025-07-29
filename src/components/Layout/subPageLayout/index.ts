@@ -1,1 +1,1 @@
-export * from "./SubPageLayout";
+export * from "./SubPageLayout"

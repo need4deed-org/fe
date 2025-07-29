@@ -1,7 +1,7 @@
-'use client'
+"use client"
 
-import { useState, useEffect, createContext, useContext, ReactNode } from 'react'
-import { screenSizeThresholds, ScreenTypes } from '@/config/constants'
+import { useState, useEffect, createContext, useContext, ReactNode } from "react"
+import { screenSizeThresholds, ScreenTypes } from "@/config/constants"
 
 const getClientScreenType = (): ScreenTypes => {
   if (window.innerWidth < screenSizeThresholds.tablet) return ScreenTypes.MOBILE
@@ -30,12 +30,12 @@ export function DeviceProvider({ children, initialScreenType }: DeviceProviderPr
       setScreenType(getClientScreenType())
     }
 
-    window.addEventListener('resize', handleResize)
+    window.addEventListener("resize", handleResize)
 
     setScreenType(getClientScreenType())
 
     return () => {
-      window.removeEventListener('resize', handleResize)
+      window.removeEventListener("resize", handleResize)
     }
   }, [])
 
@@ -45,7 +45,7 @@ export function DeviceProvider({ children, initialScreenType }: DeviceProviderPr
 export function useScreenType() {
   const context = useContext(DeviceContext)
   if (context === undefined) {
-    throw new Error('useScreenType must be used within a DeviceProvider')
+    throw new Error("useScreenType must be used within a DeviceProvider")
   }
 
   return context.screenType

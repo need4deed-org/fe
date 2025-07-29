@@ -1,12 +1,12 @@
-import { ScreenTypes } from '@/config/constants'
-import FunderLogoBerlin from '../../svg/FunderLogoBerlin'
-import { useScreenType } from '@/context/DeviceContext'
-import { useEffect, useState } from 'react'
+import { ScreenTypes } from "@/config/constants"
+import FunderLogoBerlin from "../../svg/FunderLogoBerlin"
+import { useScreenType } from "@/context/DeviceContext"
+import { useEffect, useState } from "react"
 
 const logoSizeMap = {
-  [ScreenTypes.DESKTOP]: { width: '170', height: '180' },
-  [ScreenTypes.TABLET]: { width: '170', height: '180' },
-  [ScreenTypes.MOBILE]: { width: '112', height: '120' },
+  [ScreenTypes.DESKTOP]: { width: "170", height: "180" },
+  [ScreenTypes.TABLET]: { width: "170", height: "180" },
+  [ScreenTypes.MOBILE]: { width: "112", height: "120" },
 }
 
 export function LogoBerlin() {
@@ -17,11 +17,11 @@ export function LogoBerlin() {
   useEffect(() => {
     // This code will only run on the client-side
     const computedWidth = getComputedStyle(document.documentElement).getPropertyValue(
-      '--homepage-footer-partners-section-logo-berlin-width',
+      "--homepage-footer-partners-section-logo-berlin-width",
     )
 
     const computedHeight = getComputedStyle(document.documentElement).getPropertyValue(
-      '--homepage-footer-partners-section-logo-berlin-height',
+      "--homepage-footer-partners-section-logo-berlin-height",
     )
 
     setLogoWidth(computedWidth)
