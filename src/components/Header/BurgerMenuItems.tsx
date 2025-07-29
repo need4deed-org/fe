@@ -1,11 +1,11 @@
-import { XIcon } from "@phosphor-icons/react";
-import styled, { css, keyframes } from "styled-components";
+import { XIcon } from '@phosphor-icons/react'
+import styled, { css, keyframes } from 'styled-components'
 
-import LanguageSwitcher from "./LanguageSwitcher";
-import { MenuItemsContainer } from "./MenuItems";
-import MenuitemList from "./MenuitemList";
-import { MenuItemType } from "@/types";
-import N4DLogoFlat from "../svg/N4DLogoFlat";
+import LanguageSwitcher from './LanguageSwitcher'
+import { MenuItemsContainer } from './MenuItems'
+import MenuitemList from './MenuitemList'
+import { MenuItemType } from '@/types'
+import N4DLogoFlat from '../svg/N4DLogoFlat'
 
 const slideIn = keyframes`
   from {
@@ -14,7 +14,7 @@ const slideIn = keyframes`
   to {
     transform: translateX(0);
   }
-`;
+`
 
 const slideOut = keyframes`
   from {
@@ -23,9 +23,9 @@ const slideOut = keyframes`
   to {
     transform: translateX(100%);
   }
-`;
+`
 interface BurgerMenuProps {
-  isOpen: boolean;
+  $isOpen: boolean
 }
 
 const BurgerMenuItemsContainer = styled(MenuItemsContainer)<BurgerMenuProps>`
@@ -37,17 +37,9 @@ const BurgerMenuItemsContainer = styled(MenuItemsContainer)<BurgerMenuProps>`
   padding-bottom: var(--homepage-hero-section-header-menu-items-padding-bottom);
   padding-left: var(--homepage-hero-section-header-menu-items-padding-left);
   padding-right: var(--homepage-hero-section-header-menu-items-padding-right);
-  border-bottom-right-radius: var(
-    --homepage-hero-section-header-menu-items-border-bottom-right-radius
-  );
-  border-bottom-left-radius: var(
-    --homepage-hero-section-header-menu-items-border-bottom-left-radius
-  );
-  background: linear-gradient(
-    180deg,
-    var(--color-magnolia)-5.53%,
-    var(--color-orchid-dark) 100%
-  );
+  border-bottom-right-radius: var(--homepage-hero-section-header-menu-items-border-bottom-right-radius);
+  border-bottom-left-radius: var(--homepage-hero-section-header-menu-items-border-bottom-left-radius);
+  background: linear-gradient(180deg, var(--color-magnolia)-5.53%, var(--color-orchid-dark) 100%);
   box-shadow: 0px 4px 25px 0px var(--color-black);
   transform: translateX(100%);
   transition: transform 0.3s ease-in-out;
@@ -57,40 +49,35 @@ const BurgerMenuItemsContainer = styled(MenuItemsContainer)<BurgerMenuProps>`
   }
 
   /* Apply animation based on isOpen prop */
-  ${(props) =>
-    props.isOpen &&
+  ${props =>
+    props.$isOpen &&
     css`
       transform: translateX(0);
       animation: ${slideIn} 0.3s ease-in-out forwards;
     `}
 
-  ${(props) =>
-    !props.isOpen &&
+  ${props =>
+    !props.$isOpen &&
     css`
       animation: ${slideOut} 0.3s ease-in-out forwards;
     `}
-`;
+`
 
 const BurgerMenuHeader = styled.div`
   display: flex;
   justify-content: space-between;
-`;
+`
 
 interface Props {
-  isOpen: boolean;
-  items: MenuItemType[];
-  setIsOpen: (isOpen: boolean) => void;
-  menuItemColor?: string;
+  isOpen: boolean
+  items: MenuItemType[]
+  setIsOpen: (isOpen: boolean) => void
+  menuItemColor?: string
 }
 
-export default function BurgerMenuItems({
-  isOpen,
-  items,
-  setIsOpen,
-  menuItemColor,
-}: Props) {
+export default function BurgerMenuItems({ isOpen, items, setIsOpen, menuItemColor }: Props) {
   return (
-    <BurgerMenuItemsContainer isOpen={isOpen}>
+    <BurgerMenuItemsContainer $isOpen={isOpen}>
       <BurgerMenuHeader>
         <N4DLogoFlat width="146" height="38" />
         <XIcon size={32} onClick={() => setIsOpen(false)} />
@@ -100,5 +87,5 @@ export default function BurgerMenuItems({
 
       <LanguageSwitcher textColor={menuItemColor} />
     </BurgerMenuItemsContainer>
-  );
+  )
 }
