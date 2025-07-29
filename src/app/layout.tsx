@@ -1,35 +1,35 @@
-import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
-import './globals.css'
-import { I18nProvider } from '../config/i18next'
-import StyledComponentsRegistry from '@/lib/styled-components-registry'
-import { ScreenTypes } from '@/config/constants'
-import { headers } from 'next/headers'
-import { DeviceProvider } from '@/context/DeviceContext'
+import type { Metadata } from "next"
+import { Geist, Geist_Mono } from "next/font/google"
+import "./globals.css"
+import { I18nProvider } from "../config/i18next"
+import StyledComponentsRegistry from "@/lib/styled-components-registry"
+import { ScreenTypes } from "@/config/constants"
+import { headers } from "next/headers"
+import { DeviceProvider } from "@/context/DeviceContext"
 
 const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
 })
 
 const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
 })
 
 export const metadata: Metadata = {
-  title: 'Need4Deed',
-  description: 'Need4Deed',
+  title: "Need4Deed",
+  description: "Need4Deed application for volunteers, RACs, and back office",
 }
 
 export const getInitialDeviceType = async () => {
   const headersList = await headers()
-  const deviceTypeHeader = headersList.get('x-device-type')
+  const deviceTypeHeader = headersList.get("x-device-type")
 
   switch (deviceTypeHeader) {
-    case 'mobile':
+    case "mobile":
       return ScreenTypes.MOBILE
-    case 'tablet':
+    case "tablet":
       return ScreenTypes.TABLET
     default:
       return ScreenTypes.DESKTOP
