@@ -1,44 +1,34 @@
-import N4DLogoFlat from '@/components/svg/N4DLogoFlat'
 import { ScreenTypes } from '@/config/constants'
+import FunderLogoBerlin from '../../svg/FunderLogoBerlin'
 import { useScreenType } from '@/context/DeviceContext'
-import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 const logoSizeMap = {
-  [ScreenTypes.DESKTOP]: { width: '230', height: '32' },
-  [ScreenTypes.TABLET]: { width: '230', height: '32' },
-  [ScreenTypes.MOBILE]: { width: '144', height: '24' },
+  [ScreenTypes.DESKTOP]: { width: '170', height: '180' },
+  [ScreenTypes.TABLET]: { width: '170', height: '180' },
+  [ScreenTypes.MOBILE]: { width: '112', height: '120' },
 }
 
-export function N4DLogo() {
+export function LogoBerlin() {
   const screenType = useScreenType()
   const [logoWidth, setLogoWidth] = useState(logoSizeMap[screenType].width)
   const [logoHeight, setLogoHeight] = useState(logoSizeMap[screenType].height)
-  const router = useRouter()
 
   useEffect(() => {
     // This code will only run on the client-side
     const computedWidth = getComputedStyle(document.documentElement).getPropertyValue(
-      '--layout-static-page-n4d-logo-width',
+      '--homepage-footer-partners-section-logo-berlin-width',
     )
+
     const computedHeight = getComputedStyle(document.documentElement).getPropertyValue(
-      '--layout-static-page-n4d-logo-height',
+      '--homepage-footer-partners-section-logo-berlin-height',
     )
 
     setLogoWidth(computedWidth)
     setLogoHeight(computedHeight)
   }, [screenType])
 
-  return (
-    <N4DLogoFlat
-      color="var(--color-orchid-dark)"
-      width={logoWidth}
-      height={logoHeight}
-      onClick={() => {
-        router.push('/')
-      }}
-    />
-  )
+  return <FunderLogoBerlin width={logoWidth} height={logoHeight} />
 }
 
-export default N4DLogo
+export default LogoBerlin

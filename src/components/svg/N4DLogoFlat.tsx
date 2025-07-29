@@ -18,7 +18,7 @@ export default function N4DLogoFlat({
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       style={{ cursor: "pointer" }}
-       
+      // eslint-disable-next-line react/jsx-props-no-spreading
       {...rest}
     >
       <path

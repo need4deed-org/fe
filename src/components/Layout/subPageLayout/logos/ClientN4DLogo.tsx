@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic'
 
-// Todo: move this component if it is not used after finishing entire Admin Dashboard !
+// Todo: remove this component as an example if it is not use, after finishing entire Admin Dashboard !
 const N4DLogo = dynamic(() => import('./N4DLogo'), {
   ssr: false,
 })

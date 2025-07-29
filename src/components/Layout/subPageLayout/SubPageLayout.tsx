@@ -4,11 +4,10 @@ import { ReactNode } from 'react'
 import styled from 'styled-components'
 
 import { N4DLogo } from './logos/N4DLogo'
-// import N4DLogo from './logos/ClientN4DLogo'
 import { ScreenTypes } from '@/config/constants'
 import { Header } from '@/components/Header'
 import { useScreenType } from '@/context/DeviceContext'
-// import { FooterPartnersSection } from "@/components/FooterPartners";
+import { FooterPartnersSection } from '@/components/FooterPartners'
 
 interface Props {
   children: ReactNode
@@ -49,7 +48,7 @@ export function SubPageLayout({ children, background }: Props) {
         />
         {children}
       </PageContentHeaderContainer>
-      {/* <FooterPartnersSection /> */}
+      <FooterPartnersSection />
     </PageContainer>
   )
 }
