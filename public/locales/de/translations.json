@@ -6,6 +6,15 @@
         "volunteeringOpportunities": "EHRENAMTSANGEBOTE",
         "events": "VERANSTALTUNGEN"
       }
+    },
+    "footer": {
+      "about": "ÜBER",
+      "resources": "RESSOURCEN",
+      "faq": "HGF",
+      "legalNotice": "Rechtlicher Hinweis",
+      "privacy": "Datenschutz",
+      "vpa": "Freiwilligenvereinbarung",
+      "contact": "Kontakt"
     }
   }
 }
