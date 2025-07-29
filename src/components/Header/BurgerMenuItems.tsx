@@ -32,7 +32,7 @@ const BurgerMenuItemsContainer = styled(MenuItemsContainer)<BurgerMenuProps>`
   position: absolute;
   top: 0;
   right: 0;
-  z-index: 100; /* Ensure burger menu stays above everything */
+  z-index: 1; /* Ensure burger menu stays above everything */
   padding-top: var(--homepage-hero-section-header-menu-items-padding-top);
   padding-bottom: var(--homepage-hero-section-header-menu-items-padding-bottom);
   padding-left: var(--homepage-hero-section-header-menu-items-padding-left);
