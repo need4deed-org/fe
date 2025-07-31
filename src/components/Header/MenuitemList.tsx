@@ -1,11 +1,11 @@
-import Link from "next/link"
+import Link from "next/link";
 
-import MenuItem from "./MenuItem"
-import { MenuItemType } from "@/types"
+import MenuItem from "./MenuItem";
+import { MenuItemType } from "@/types";
 
 interface Props {
-  items: MenuItemType[]
-  menuItemColor?: string
+  items: MenuItemType[];
+  menuItemColor?: string;
 }
 
 export default function MenuitemList({ items, menuItemColor }: Props) {
@@ -17,5 +17,5 @@ export default function MenuitemList({ items, menuItemColor }: Props) {
         </Link>
       ))}
     </>
-  )
+  );
 }

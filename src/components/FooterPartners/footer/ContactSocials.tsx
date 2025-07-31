@@ -1,31 +1,31 @@
-import { FacebookLogoIcon, InstagramLogoIcon, LinkedinLogoIcon } from "@phosphor-icons/react"
-import { useTranslation } from "react-i18next"
-import styled from "styled-components"
+import { FacebookLogoIcon, InstagramLogoIcon, LinkedinLogoIcon } from "@phosphor-icons/react";
+import { useTranslation } from "react-i18next";
+import styled from "styled-components";
 
-import { Paragraph } from "../../styled/text"
-import { ATag } from "@/components/styled/tags"
+import { Paragraph } from "../../styled/text";
+import { ATag } from "@/components/styled/tags";
 
 const ContactSocialsContainer = styled.div`
   display: flex;
   flex-direction: var(--homepage-footer-partners-section-contact-socials-container-flex-direction);
   justify-content: var(--homepage-footer-partners-section-contact-socials-container-justify-content);
   gap: var(--homepage-footer-partners-section-contact-socials-container-gap);
-`
+`;
 
 const ContactContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: var(--homepage-footer-partners-section-contact-container-gap);
-`
+`;
 
 const SocialsContainer = styled.div`
   display: flex;
   flex-direction: row;
   gap: var(--homepage-footer-partners-section-socials-container-gap);
-`
+`;
 
 function Contact() {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   return (
     <ContactContainer>
@@ -49,7 +49,7 @@ function Contact() {
         info@need4deed.org
       </Paragraph>
     </ContactContainer>
-  )
+  );
 }
 
 function Socials() {
@@ -65,7 +65,7 @@ function Socials() {
         <InstagramLogoIcon weight="bold" size={40} color="var(--color-orchid-light)" />
       </ATag>
     </SocialsContainer>
-  )
+  );
 }
 
 export default function ContactSocials() {
@@ -74,5 +74,5 @@ export default function ContactSocials() {
       <Contact />
       <Socials />
     </ContactSocialsContainer>
-  )
+  );
 }

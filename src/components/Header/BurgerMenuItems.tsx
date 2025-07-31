@@ -1,11 +1,11 @@
-import { XIcon } from "@phosphor-icons/react"
-import styled, { css, keyframes } from "styled-components"
+import { XIcon } from "@phosphor-icons/react";
+import styled, { css, keyframes } from "styled-components";
 
-import LanguageSwitcher from "./LanguageSwitcher"
-import { MenuItemsContainer } from "./MenuItems"
-import MenuitemList from "./MenuitemList"
-import { MenuItemType } from "@/types"
-import N4DLogoFlat from "../svg/N4DLogoFlat"
+import LanguageSwitcher from "./LanguageSwitcher";
+import { MenuItemsContainer } from "./MenuItems";
+import MenuitemList from "./MenuitemList";
+import { MenuItemType } from "@/types";
+import N4DLogoFlat from "../svg/N4DLogoFlat";
 
 const slideIn = keyframes`
   from {
@@ -14,7 +14,7 @@ const slideIn = keyframes`
   to {
     transform: translateX(0);
   }
-`
+`;
 
 const slideOut = keyframes`
   from {
@@ -23,9 +23,9 @@ const slideOut = keyframes`
   to {
     transform: translateX(100%);
   }
-`
+`;
 interface BurgerMenuProps {
-  $isOpen: boolean
+  $isOpen: boolean;
 }
 
 const BurgerMenuItemsContainer = styled(MenuItemsContainer)<BurgerMenuProps>`
@@ -61,18 +61,18 @@ const BurgerMenuItemsContainer = styled(MenuItemsContainer)<BurgerMenuProps>`
     css`
       animation: ${slideOut} 0.3s ease-in-out forwards;
     `}
-`
+`;
 
 const BurgerMenuHeader = styled.div`
   display: flex;
   justify-content: space-between;
-`
+`;
 
 interface Props {
-  isOpen: boolean
-  items: MenuItemType[]
-  setIsOpen: (isOpen: boolean) => void
-  menuItemColor?: string
+  isOpen: boolean;
+  items: MenuItemType[];
+  setIsOpen: (isOpen: boolean) => void;
+  menuItemColor?: string;
 }
 
 export default function BurgerMenuItems({ isOpen, items, setIsOpen, menuItemColor }: Props) {
@@ -87,5 +87,5 @@ export default function BurgerMenuItems({ isOpen, items, setIsOpen, menuItemColo
 
       <LanguageSwitcher textColor={menuItemColor} />
     </BurgerMenuItemsContainer>
-  )
+  );
 }

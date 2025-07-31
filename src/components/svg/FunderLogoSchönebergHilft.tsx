@@ -1,6 +1,6 @@
 interface Props {
-  width: string
-  height: string
+  width: string;
+  height: string;
 }
 
 export default function FunderLogoSchönebergHilft({ width, height }: Props) {
@@ -108,5 +108,5 @@ export default function FunderLogoSchönebergHilft({ width, height }: Props) {
         </clipPath>
       </defs>
     </svg>
-  )
+  );
 }

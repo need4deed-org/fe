@@ -1,16 +1,16 @@
-import { ReactNode, useState } from "react"
-import { useTranslation } from "react-i18next"
-import styled from "styled-components"
-import { ListIcon } from "@phosphor-icons/react"
+import { ReactNode, useState } from "react";
+import { useTranslation } from "react-i18next";
+import styled from "styled-components";
+import { ListIcon } from "@phosphor-icons/react";
 
-import BurgerMenuItems from "./BurgerMenuItems"
-import MenuItems from "./MenuItems"
-import { MenuItemType, Subpage } from "@/types"
-import { eventsSectionContainerId } from "@/config/constants"
+import BurgerMenuItems from "./BurgerMenuItems";
+import MenuItems from "./MenuItems";
+import { MenuItemType, Subpage } from "@/types";
+import { eventsSectionContainerId } from "@/config/constants";
 
 interface HeaderContainerProps {
-  height?: string
-  padding?: string
+  height?: string;
+  padding?: string;
 }
 
 const HeaderContainer = styled.div<HeaderContainerProps>`
@@ -21,15 +21,15 @@ const HeaderContainer = styled.div<HeaderContainerProps>`
   position: relative;
   height: ${(props) => props.height || "auto"};
   padding: ${(props) => props.padding};
-`
+`;
 
 interface Props {
-  logo: ReactNode
-  isBurgerMenu?: boolean
-  height?: string
-  padding?: string
-  menuItemColor: string
-  burgerMenuItemColor?: string
+  logo: ReactNode;
+  isBurgerMenu?: boolean;
+  height?: string;
+  padding?: string;
+  menuItemColor: string;
+  burgerMenuItemColor?: string;
 }
 
 export function Header({
@@ -40,14 +40,14 @@ export function Header({
   menuItemColor,
   burgerMenuItemColor = "var(--color-midnight)",
 }: Props) {
-  const { t } = useTranslation()
-  const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState<boolean>(false)
+  const { t } = useTranslation();
+  const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState<boolean>(false);
 
   const menuItems: MenuItemType[] = [
     [t("homepage.heroSection.menuItems.about"), `/${Subpage.ABOUT}`],
     [t("homepage.heroSection.menuItems.volunteeringOpportunities"), `/${Subpage.OPPORTUNITY_CARDS}`],
     [t("homepage.heroSection.menuItems.events"), `/#${eventsSectionContainerId}`],
-  ]
+  ];
 
   return (
     <HeaderContainer id="header-container" height={height} padding={padding}>
@@ -69,7 +69,7 @@ export function Header({
         <MenuItems items={menuItems} menuItemColor={menuItemColor} />
       )}
     </HeaderContainer>
-  )
+  );
 }
 
-export default Header
+export default Header;

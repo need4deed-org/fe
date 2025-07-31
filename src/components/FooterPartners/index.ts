@@ -1,1 +1,1 @@
-export * from "./FooterPartnersSection"
+export * from "./FooterPartnersSection";

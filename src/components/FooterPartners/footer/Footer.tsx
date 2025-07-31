@@ -1,11 +1,11 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
-import { LogoN4D } from "../logos"
-import ContactSocials from "./ContactSocials"
-import FooterLinks from "./FooterLinks"
-import { useScreenType } from "@/context/DeviceContext"
-import { ScreenTypes } from "@/config/constants"
-import { FooterLink, Subpage } from "@/types"
+import { LogoN4D } from "../logos";
+import ContactSocials from "./ContactSocials";
+import FooterLinks from "./FooterLinks";
+import { useScreenType } from "@/context/DeviceContext";
+import { ScreenTypes } from "@/config/constants";
+import { FooterLink, Subpage } from "@/types";
 
 const FooterContainer = styled.div`
   display: flex;
@@ -13,16 +13,16 @@ const FooterContainer = styled.div`
   justify-content: var(--homepage-footer-partners-section-footer-container-justify-content);
   height: var(--homepage-footer-partners-section-footer-container-height);
   gap: var(--homepage-footer-partners-section-footer-container-gap);
-`
+`;
 
 const FooterLinksN4DLogoContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-`
+`;
 
 interface FooterLinksContainerProps {
-  "flex-direction"?: string
+  "flex-direction"?: string;
 }
 
 const FooterLinksContainer = styled.div<FooterLinksContainerProps>`
@@ -30,19 +30,19 @@ const FooterLinksContainer = styled.div<FooterLinksContainerProps>`
   justify-content: space-between;
   flex-direction: ${(props) => props["flex-direction"] || "row"};
   width: var(--homepage-footer-partners-section-footer-links-container-width);
-`
+`;
 
 const links1: FooterLink[] = [
   ["homepage.footer.about", Subpage.ABOUT],
   ["homepage.footer.resources", "#"],
   ["homepage.footer.faq", Subpage.FAQ],
-]
+];
 
 const links2: FooterLink[] = [
   ["homepage.footer.legalNotice", Subpage.LEGAL_NOTICE],
   ["homepage.footer.privacy", Subpage.DATA_PRIVACY],
   ["homepage.footer.vpa", Subpage.VPA],
-]
+];
 
 const desktopFooter = (
   <FooterContainer>
@@ -53,7 +53,7 @@ const desktopFooter = (
       <ContactSocials />
     </FooterLinksContainer>
   </FooterContainer>
-)
+);
 
 const tabletFooter = (
   <FooterContainer>
@@ -66,7 +66,7 @@ const tabletFooter = (
       <ContactSocials />
     </FooterLinksContainer>
   </FooterContainer>
-)
+);
 
 const mobileFooter = (
   <FooterContainer>
@@ -77,17 +77,17 @@ const mobileFooter = (
     <FooterLinks links={links2} />
     <ContactSocials />
   </FooterContainer>
-)
+);
 
 const footers = {
   [ScreenTypes.DESKTOP]: desktopFooter,
   [ScreenTypes.TABLET]: tabletFooter,
   [ScreenTypes.MOBILE]: mobileFooter,
-}
+};
 
 export function Footer() {
-  const screenType = useScreenType()
+  const screenType = useScreenType();
 
-  return footers[screenType]
+  return footers[screenType];
 }
-export default Footer
+export default Footer;

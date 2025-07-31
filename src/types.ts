@@ -1,8 +1,8 @@
 export interface PropsWithToken {
-  token?: string | null
+  token?: string | null;
 }
 
-export type MenuItemType = [string, string]
+export type MenuItemType = [string, string];
 
 // Please, when adding a new line, ensure it's placed in a sorted way. !!!
 export enum Subpage {
@@ -21,4 +21,4 @@ export enum Env {
   PRODUCTION = "production",
 }
 
-export type FooterLink = [string, string]
+export type FooterLink = [string, string];

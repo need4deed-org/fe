@@ -1,7 +1,7 @@
-import styled from "styled-components"
-import { LogoBerlin, LogoClubDialog, LogoEU, LogoSchönebergHilft } from "./logos"
-import { useScreenType } from "@/context/DeviceContext"
-import { ScreenTypes } from "@/config/constants"
+import styled from "styled-components";
+import { LogoBerlin, LogoClubDialog, LogoEU, LogoSchönebergHilft } from "./logos";
+import { useScreenType } from "@/context/DeviceContext";
+import { ScreenTypes } from "@/config/constants";
 
 const PartnersContainer = styled.div`
   display: flex;
@@ -10,11 +10,11 @@ const PartnersContainer = styled.div`
   height: var(--homepage-footer-partners-section-partners-container-height);
   width: 100%;
   gap: var(--homepage-footer-partners-section-partners-container-gap);
-`
+`;
 
 interface FrameProps {
-  height?: string
-  gap?: string
+  height?: string;
+  gap?: string;
 }
 
 const FrameContainer = styled.div<FrameProps>`
@@ -23,7 +23,7 @@ const FrameContainer = styled.div<FrameProps>`
   justify-content: center;
   height: ${(props) => props.height};
   gap: ${(props) => props.gap};
-`
+`;
 
 const partnerLogos = {
   [ScreenTypes.DESKTOP]: [
@@ -62,12 +62,12 @@ const partnerLogos = {
       <LogoSchönebergHilft />
     </FrameContainer>,
   ],
-}
+};
 
 export function Partners() {
-  const screenType = useScreenType()
+  const screenType = useScreenType();
 
-  return <PartnersContainer>{partnerLogos[screenType]}</PartnersContainer>
+  return <PartnersContainer>{partnerLogos[screenType]}</PartnersContainer>;
 }
 
-export default Partners
+export default Partners;

@@ -1,7 +1,7 @@
 interface Props extends React.SVGProps<SVGSVGElement> {
-  color?: string
-  width: string
-  height: string
+  color?: string;
+  width: string;
+  height: string;
 }
 
 export default function N4DLogoFlat({ color = "var(--color-midnight)", width, height, ...rest }: Props) {
@@ -60,5 +60,5 @@ export default function N4DLogoFlat({ color = "var(--color-midnight)", width, he
         fill={color}
       />
     </svg>
-  )
+  );
 }

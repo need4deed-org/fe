@@ -8,5 +8,5 @@ export default function CloseIcon() {
         fill="#1A2684"
       />
     </svg>
-  )
+  );
 }

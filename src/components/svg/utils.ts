@@ -4,6 +4,6 @@ export const colorMap = {
   "orchid-dark": "var(--color-orchid-dark)",
   "aubergine-light": "var(--color-aubergine-light)",
   magnolia: "var(--color-magnolia)",
-}
+};
 
-export default colorMap
+export default colorMap;

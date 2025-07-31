@@ -1,10 +1,10 @@
-import React from "react"
+import React from "react";
 
 interface Props extends React.SVGProps<SVGSVGElement> {
-  width: string
-  height: string
-  checked?: boolean
-  color?: string
+  width: string;
+  height: string;
+  checked?: boolean;
+  color?: string;
 }
 
 export default function CheckboxSVG({
@@ -27,5 +27,5 @@ export default function CheckboxSVG({
         <rect x="1.31641" y="1.31824" width="15.3636" height="15.3636" rx="1.13636" stroke={color} strokeWidth="1" />
       )}
     </svg>
-  )
+  );
 }

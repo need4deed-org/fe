@@ -1,8 +1,8 @@
-import React, { FC } from "react"
-import { colorMap } from "./utils"
+import React, { FC } from "react";
+import { colorMap } from "./utils";
 
 interface EllipseProps extends React.SVGProps<SVGSVGElement> {
-  color: keyof typeof colorMap
+  color: keyof typeof colorMap;
 }
 
 const Ellipse: FC<EllipseProps> = ({ color, ...props }) => {
@@ -10,7 +10,7 @@ const Ellipse: FC<EllipseProps> = ({ color, ...props }) => {
     <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
       <circle cx="4" cy="4" r="4" fill={colorMap[color]} />
     </svg>
-  )
-}
+  );
+};
 
-export default Ellipse
+export default Ellipse;

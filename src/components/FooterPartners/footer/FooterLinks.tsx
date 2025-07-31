@@ -1,20 +1,20 @@
-import { useTranslation } from "react-i18next"
-import styled from "styled-components"
-import { ATag } from "../../styled/tags"
-import { Paragraph } from "../../styled/text"
-import { FooterLink } from "@/types"
+import { useTranslation } from "react-i18next";
+import styled from "styled-components";
+import { ATag } from "../../styled/tags";
+import { Paragraph } from "../../styled/text";
+import { FooterLink } from "@/types";
 
 interface FooterLinkProps {
-  links: FooterLink[]
+  links: FooterLink[];
 }
 const FrameContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: var(--homepage-footer-partners-section-footer-frame-container-gap);
-`
+`;
 
 export default function FooterLinks({ links }: FooterLinkProps) {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   return (
     <FrameContainer>
@@ -31,8 +31,8 @@ export default function FooterLinks({ links }: FooterLinkProps) {
               {t(link)}
             </Paragraph>
           </ATag>
-        )
+        );
       })}
     </FrameContainer>
-  )
+  );
 }

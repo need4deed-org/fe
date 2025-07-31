@@ -1,7 +1,7 @@
 interface Props {
-  fill?: string
-  width: string
-  height: string
+  fill?: string;
+  width: string;
+  height: string;
 }
 
 export default function N4DLogoIcon({ fill = "var(--color-orchid)", height, width }: Props) {
@@ -27,5 +27,5 @@ export default function N4DLogoIcon({ fill = "var(--color-orchid)", height, widt
         </clipPath>
       </defs>
     </svg>
-  )
+  );
 }

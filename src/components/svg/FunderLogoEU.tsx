@@ -1,6 +1,6 @@
 interface Props {
-  width: string
-  height: string
+  width: string;
+  height: string;
 }
 
 export default function FunderLogoEU({ width, height }: Props) {
@@ -159,5 +159,5 @@ export default function FunderLogoEU({ width, height }: Props) {
         </clipPath>
       </defs>
     </svg>
-  )
+  );
 }

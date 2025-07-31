@@ -1,28 +1,28 @@
-"use client"
+"use client";
 
-import { ReactNode } from "react"
-import styled from "styled-components"
+import { ReactNode } from "react";
+import styled from "styled-components";
 
-import { N4DLogo } from "./logos/N4DLogo"
-import { ScreenTypes } from "@/config/constants"
-import { Header } from "@/components/Header"
-import { useScreenType } from "@/context/DeviceContext"
-import { FooterPartnersSection } from "@/components/FooterPartners"
+import { N4DLogo } from "./logos/N4DLogo";
+import { ScreenTypes } from "@/config/constants";
+import { Header } from "@/components/Header";
+import { useScreenType } from "@/context/DeviceContext";
+import { FooterPartnersSection } from "@/components/FooterPartners";
 
 interface Props {
-  children: ReactNode
-  background?: string
+  children: ReactNode;
+  background?: string;
 }
 
 interface PageContentHeaderContainerProps {
-  background?: string
+  background?: string;
 }
 
 const PageContainer = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-`
+`;
 
 const PageContentHeaderContainer = styled.div<PageContentHeaderContainerProps>`
   display: flex;
@@ -30,11 +30,11 @@ const PageContentHeaderContainer = styled.div<PageContentHeaderContainerProps>`
   flex-direction: column;
   background: ${(props) => props.background || "var(--layout-static-page-background-default)"};
   padding-bottom: var(--layout-static-page-header-content-bottom-padding);
-`
+`;
 
 export function SubPageLayout({ children, background }: Props) {
-  const screenType = useScreenType()
-  const isBurgerMenu = screenType !== ScreenTypes.DESKTOP
+  const screenType = useScreenType();
+  const isBurgerMenu = screenType !== ScreenTypes.DESKTOP;
 
   return (
     <PageContainer>
@@ -50,7 +50,7 @@ export function SubPageLayout({ children, background }: Props) {
       </PageContentHeaderContainer>
       <FooterPartnersSection />
     </PageContainer>
-  )
+  );
 }
 
-export default SubPageLayout
+export default SubPageLayout;

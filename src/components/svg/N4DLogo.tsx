@@ -1,7 +1,7 @@
 interface Props {
-  fill?: string
-  width: string
-  height: string
+  fill?: string;
+  width: string;
+  height: string;
 }
 
 export default function N4DLogo({ fill = "var(--color-orchid)", height, width }: Props) {
@@ -59,5 +59,5 @@ export default function N4DLogo({ fill = "var(--color-orchid)", height, width }:
         </clipPath>
       </defs>
     </svg>
-  )
+  );
 }
