@@ -29,9 +29,7 @@ export default function Login() {
       }).then(async (res) => {
         const body = res.json();
         if (!res.ok) {
-          throw new Error(
-            `HTTP error! status: ${res.status} ${(await body).message}`,
-          );
+          throw new Error(`HTTP error! status: ${res.status} ${(await body).message}`);
         }
         return body;
       });
@@ -117,9 +115,7 @@ export default function Login() {
               <button type="submit" disabled={!state.canSubmit}>
                 {"login".toUpperCase()}
               </button>
-              {!!state.errors.length && (
-                <p>ERRORS: {state.errors.join(", ")}</p>
-              )}
+              {!!state.errors.length && <p>ERRORS: {state.errors.join(", ")}</p>}
             </>
           )}
         </form.Subscribe>

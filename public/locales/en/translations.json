@@ -1,0 +1,20 @@
+{
+  "homepage": {
+    "heroSection": {
+      "menuItems": {
+        "about": "ABOUT",
+        "volunteeringOpportunities": "VOLUNTEERING OPPORTUNITIES",
+        "events": "EVENTS"
+      }
+    },
+    "footer": {
+      "about": "ABOUT",
+      "resources": "RESOURCES",
+      "faq": "FAQ",
+      "legalNotice": "Legal notice",
+      "privacy": "Privacy",
+      "vpa": "Volunteer Participation Agreement",
+      "contact": "Contact"
+    }
+  }
+}
