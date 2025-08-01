@@ -1,15 +1,22 @@
-"use client"
-import styled from "styled-components"
+"use client";
 
-const PageContainer = styled.div`
-display: flex;
-background: var(--color-orchid);
-`
+import { SubPageLayout } from "@/components/Layout/subPageLayout";
+import { Heading2 } from "@/components/styled/text";
+import styled from "styled-components";
+
+const TestPageContainer = styled.div`
+  display: flex;
+  height: 300px;
+  justify-content: center;
+  align-items: center;
+`;
 
 export default function TestPage() {
   return (
-    <PageContainer>
-      <h1>Need4Deed</h1>
-    </PageContainer>
-  )
+    <SubPageLayout>
+      <TestPageContainer>
+        <Heading2>This is a test page...</Heading2>
+      </TestPageContainer>
+    </SubPageLayout>
+  );
 }

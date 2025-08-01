@@ -1,11 +1,17 @@
 body {
-  font-family: "Figtree", sans-serif;
+  font-family: 'Figtree', sans-serif;
   width: 100%;
   margin: 0;
 }
 
 html {
   scroll-behavior: smooth;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
 .gradient-overlay {
@@ -18,11 +24,7 @@ html {
 }
 
 .image-filter-gradient-blue {
-  background: linear-gradient(
-    180deg,
-    var(--color-midnight-misty) 11.02%,
-    var(--color-barely-blue) 89.66%
-  );
+  background: linear-gradient(180deg, var(--color-midnight-misty) 11.02%, var(--color-barely-blue) 89.66%);
 }
 
 :root {
@@ -104,7 +106,7 @@ html {
   );
 
   /* button */
-  --button-gap:12px;
+  --button-gap: 12px;
 
   /* checkbox */
   --checkbox-container-gap: 8px;
@@ -204,9 +206,7 @@ html {
     --homepage-hero-section-header-menu-item-letterSpacing: 0px;
     --homepage-hero-section-header-menu-item-lineheight: 16px;
     --homepage-hero-section-language-option-button-radius: 4px;
-    --homepage-hero-section-language-option-button-text-color: var(
-      --color-midnight-light
-    );
+    --homepage-hero-section-language-option-button-text-color: var(--color-midnight-light);
     --homepage-hero-section-content-container-width: 100%;
     --homepage-hero-section-content-container-height: 440px;
     --homepage-hero-section-content-hero-text-container-gap: 20px;
@@ -231,8 +231,8 @@ html {
     --homepage-footer-partners-section-partners-container-gap: 48px;
     --homepage-footer-partners-section-partners-frame-container-gap: 75px;
     --homepage-footer-partners-section-partners-club-dialog-div-gap: 8px;
-    --homepage-footer-partners-section-logo-club-dialog-width: 200px;
-    --homepage-footer-partners-section-logo-club-dialog-height: 36px;
+    --homepage-footer-partners-section-logo-club-dialog-width: 200;
+    --homepage-footer-partners-section-logo-club-dialog-height: 36;
     --homepage-footer-partners-section-logo-berlin-width: 112;
     --homepage-footer-partners-section-logo-berlin-height: 120;
     --homepage-footer-partners-section-logo-eu-width: 130px;
@@ -325,7 +325,7 @@ html {
     --opportunities-container-width: fit-content;
     --opportunities-container-min-height: none;
     --opportunities-container-gap: 24px;
-    --opportunities-container-padding:12px;
+    --opportunities-container-padding: 12px;
     --opportunities-container-padding-inline: 16px;
     --opportunities-header-title-tabs-gap: 24px;
     --opportunities-header-tabs-searchbar-gap: 12px;
@@ -334,7 +334,7 @@ html {
     --opportunities-header-tabs-border-bottom: 4px;
     --opportunities-header-tabs-padding-bottom: 4px;
     --opportunities-header-result-gap: 10px;
-    --opportunities-header-result-padding:10px;
+    --opportunities-header-result-padding: 10px;
     --opportunities-header-searchbar-flex-direction: column;
     --opportunities-header-searchbar-width: -webkit-fill-available;
     --opportunities-map-view-container-height: 200px;
@@ -343,7 +343,7 @@ html {
     --opportunities-filters-button-width: 48px;
     --opportunities-filters-button-icon-size: 32px;
     --opportunities-filters-container-width: auto;
-    --opportunities-filters-container-border-bottom-radius:40px;
+    --opportunities-filters-container-border-bottom-radius: 40px;
     --opportunities-filters-close-filter-height: 64px;
     --opportunities-filters-close-filter-gap: 12px;
     --opportunities-filters-close-filter-padding: 16px 0px 16px 32px;
@@ -358,12 +358,12 @@ html {
     --opportunities-filters-content-accordion-group-options-checkbox-labelFontSize: 14px;
     --opportunities-filters-content-accordion-header-border-top: 1px;
     --opportunities-filters-content-accordion-header-padding-top: 16px;
-    --opportunities-filters-clear-all-button-padding-bottom:20px;
-    --opportunities-filters-clear-all-button-icon-size:24px;
-    --opportunities-filters-clear-all-button-height:64px;
-    --opportunities-filters-clear-all-button-text-font-size:20px;
-    --opportunities-filters-description-font-size:14px;
-    --opportunities-filters-description-font-weight:400;
+    --opportunities-filters-clear-all-button-padding-bottom: 20px;
+    --opportunities-filters-clear-all-button-icon-size: 24px;
+    --opportunities-filters-clear-all-button-height: 64px;
+    --opportunities-filters-clear-all-button-text-font-size: 20px;
+    --opportunities-filters-description-font-size: 14px;
+    --opportunities-filters-description-font-weight: 400;
 
     --search-container-height: 64px;
     --search-container-border-radius: 40px;
@@ -459,9 +459,7 @@ html {
     --homepage-hero-section-header-menu-item-letterSpacing: 0px;
     --homepage-hero-section-header-menu-item-lineheight: 16px;
     --homepage-hero-section-language-option-button-radius: 4px;
-    --homepage-hero-section-language-option-button-text-color: var(
-      --color-aubergine-light
-    );
+    --homepage-hero-section-language-option-button-text-color: var(--color-aubergine-light);
     --homepage-hero-section-content-container-width: 100%;
     --homepage-hero-section-content-container-height: 440px;
     --homepage-hero-section-content-hero-text-container-gap: 20px;
@@ -487,8 +485,6 @@ html {
     --homepage-footer-partners-section-partners-frame-container-gap-1: 160px;
     --homepage-footer-partners-section-partners-frame-container-gap-2: 120px;
     --homepage-footer-partners-section-partners-club-dialog-div-gap: 16px;
-    --homepage-footer-partners-section-logo-club-dialog-width: 16px;
-    --homepage-footer-partners-section-logo-club-dialog-height: 16px;
     --homepage-footer-partners-section-logo-club-dialog-width: 316;
     --homepage-footer-partners-section-logo-club-dialog-height: 58;
     --homepage-footer-partners-section-logo-berlin-width: 170;
@@ -586,7 +582,7 @@ html {
     --opportunities-container-width: 720px;
     --opportunities-container-min-height: 1700px;
     --opportunities-container-gap: 40px;
-    --opportunities-container-padding:none;
+    --opportunities-container-padding: none;
     --opportunities-container-padding-inline: 16px;
     --opportunities-header-title-tabs-gap: 27px;
     --opportunities-header-tabs-searchbar-gap: 20px;
@@ -595,15 +591,15 @@ html {
     --opportunities-header-tabs-border-bottom: 4px;
     --opportunities-header-tabs-padding-bottom: 4px;
     --opportunities-header-result-gap: 10px;
-    --opportunities-header-result-padding:10px;
-    --opportunities-header-searchbar-width:  466px;
+    --opportunities-header-result-padding: 10px;
+    --opportunities-header-searchbar-width: 466px;
     --opportunities-header-searchbar-flex-direction: row;
     --opportunities-map-view-container-height: 300px;
     --opportunities-cards-container-justify-content: center;
     --opportunities-filters-button-height: 64px;
     --opportunities-filters-button-icon-size: 32px;
     --opportunities-filters-container-width: auto;
-    --opportunities-filters-container-border-bottom-radius:40px;
+    --opportunities-filters-container-border-bottom-radius: 40px;
     --opportunities-filters-close-filter-height: 64px;
     --opportunities-filters-close-filter-gap: 12px;
     --opportunities-filters-close-filter-padding: 16px 0px 16px 32px;
@@ -618,11 +614,11 @@ html {
     --opportunities-filters-content-accordion-group-options-checkbox-labelFontSize: 14px;
     --opportunities-filters-content-accordion-header-border-top: 1px;
     --opportunities-filters-content-accordion-header-padding-top: 16px;
-    --opportunities-filters-clear-all-button-padding-bottom:24px;
-    --opportunities-filters-clear-all-button-icon-size:24px;
-    --opportunities-filters-clear-all-button-text-font-size:16px;
-    --opportunities-filters-description-font-size:14px;
-    --opportunities-filters-description-font-weight:400;
+    --opportunities-filters-clear-all-button-padding-bottom: 24px;
+    --opportunities-filters-clear-all-button-icon-size: 24px;
+    --opportunities-filters-clear-all-button-text-font-size: 16px;
+    --opportunities-filters-description-font-size: 14px;
+    --opportunities-filters-description-font-weight: 400;
 
     --search-container-height: 64px;
     --search-container-border-radius: 40px;
@@ -719,9 +715,7 @@ html {
     --homepage-hero-section-header-menu-item-lineheight: 16px;
     --homepage-hero-section-language-selection-min-width: 95px;
     --homepage-hero-section-language-option-button-radius: 4px;
-    --homepage-hero-section-language-option-button-text-color: var(
-      --color-aubergine-light
-    );
+    --homepage-hero-section-language-option-button-text-color: var(--color-aubergine-light);
     --homepage-hero-section-content-container-width: 680px;
     --homepage-hero-section-content-container-height: 485px;
     --homepage-hero-section-content-hero-text-container-gap: 20px;
@@ -841,7 +835,7 @@ html {
     --opportunities-container-width: 1312px;
     --opportunities-container-min-height: 1800px;
     --opportunities-container-gap: 40px;
-    --opportunities-container-padding:none;
+    --opportunities-container-padding: none;
     --opportunities-container-padding-inline: 16px;
     --opportunities-header-title-tabs-gap: 24px;
     --opportunities-header-tabs-searchbar-gap: 20px;
@@ -850,7 +844,7 @@ html {
     --opportunities-header-tabs-border-bottom: 4px;
     --opportunities-header-tabs-padding-bottom: 4px;
     --opportunities-header-result-gap: 10px;
-    --opportunities-header-result-padding:10px;
+    --opportunities-header-result-padding: 10px;
     --opportunities-header-searchbar-width: 980px;
     --opportunities-header-searchbar-flex-direction: row;
     --opportunities-map-view-container-height: 300px;
@@ -858,7 +852,7 @@ html {
     --opportunities-filters-button-height: 64px;
     --opportunities-filters-button-icon-size: 32px;
     --opportunities-filters-container-width: 320px;
-    --opportunities-filters-container-border-bottom-radius:none;
+    --opportunities-filters-container-border-bottom-radius: none;
     --opportunities-filters-close-filter-height: 64px;
     --opportunities-filters-close-filter-gap: 12px;
     --opportunities-filters-close-filter-padding: 16px 0px 16px 32px;
@@ -873,12 +867,11 @@ html {
     --opportunities-filters-content-accordion-group-options-checkbox-labelFontSize: 14px;
     --opportunities-filters-content-accordion-header-border-top: 1px;
     --opportunities-filters-content-accordion-header-padding-top: 16px;
-    --opportunities-filters-clear-all-button-padding-bottom:24px;
-    --opportunities-filters-clear-all-button-icon-size:24px;
-    --opportunities-filters-clear-all-button-text-font-size:16px;
-    --opportunities-filters-description-font-size:14px;
-    --opportunities-filters-description-font-weight:400;
-
+    --opportunities-filters-clear-all-button-padding-bottom: 24px;
+    --opportunities-filters-clear-all-button-icon-size: 24px;
+    --opportunities-filters-clear-all-button-text-font-size: 16px;
+    --opportunities-filters-description-font-size: 14px;
+    --opportunities-filters-description-font-weight: 400;
 
     --search-container-height: 60px;
     --search-container-border-radius: 160px;

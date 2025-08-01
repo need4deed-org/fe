@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { I18nProvider } from "../config/i18next";
+import StyledComponentsRegistry from "@/lib/styled-components-registry";
+import { ScreenTypes } from "@/config/constants";
+import { headers } from "next/headers";
+import { DeviceProvider } from "@/context/DeviceContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,18 +19,38 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Need4Deed",
-  description: "Need4Deed application for volunteers, RACs, and backoffice",
+  description: "Need4Deed application for volunteers, RACs, and back office",
 };
 
-export default function RootLayout({
+const getInitialDeviceType = async () => {
+  const headersList = await headers();
+  const deviceTypeHeader = headersList.get("x-device-type");
+
+  switch (deviceTypeHeader) {
+    case "mobile":
+      return ScreenTypes.MOBILE;
+    case "tablet":
+      return ScreenTypes.TABLET;
+    default:
+      return ScreenTypes.DESKTOP;
+  }
+};
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const initialScreenType = await getInitialDeviceType();
+
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {children}
+        <StyledComponentsRegistry>
+          <DeviceProvider initialScreenType={initialScreenType}>
+            <I18nProvider>{children}</I18nProvider>
+          </DeviceProvider>
+        </StyledComponentsRegistry>
       </body>
     </html>
   );
