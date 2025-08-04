@@ -882,5 +882,12 @@ html {
     --paginated-grid-pagination-number-width: 36px;
     --paginated-grid-pagination-number-height: 44px;
     --paginated-grid-pagination-number-border-radius: 6px;
+
+    --dashboard-home-bar-container-width: 110px;
+    --dashboard-home-bar-gap: 20px;
+    --dashboard-home-bar-border-radius: 12px;
+    --dashboard-home-bar-padding: 40px 16px 40px 16px;
+    --dashboard-home-bar-option-gap: 4px;
+    --dashboard-home-bar-option-icon-div-size: 40px;
   }
 }

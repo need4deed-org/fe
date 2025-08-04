@@ -16,22 +16,21 @@ const BarContainer = styled.div`
   display: flex;
   flex-direction: column;
   position: absolute;
-  width: 110px;
+  width: var(--dashboard-home-bar-container-width);
   left: 0;
   z-index: 1;
-  gap: 20px;
-
+  gap: var(--dashboard-home-bar-gap);
   background-color: var(--color-orchid-subtle);
-  border-top-right-radius: 12px;
-  border-bottom-right-radius: 12px;
-  padding: 40px 16px 40px 16px;
+  border-top-right-radius: var(--dashboard-home-bar-border-radius);
+  border-bottom-right-radius: var(--dashboard-home-bar-border-radius);
+  padding: var(--dashboard-home-bar-padding);
 `;
 
 const Option = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 4px;
+  gap: var(--dashboard-home-bar-option-gap);
   cursor: pointer;
 `;
 
@@ -44,9 +43,9 @@ const IconDiv = styled.div<IconDivProps>`
   align-items: center;
   justify-content: center;
 
-  width: 40px;
-  height: 40px;
-  border-radius: 40px;
+  width: var(--dashboard-home-bar-option-icon-div-size);
+  height: var(--dashboard-home-bar-option-icon-div-size);
+  border-radius: var(--dashboard-home-bar-option-icon-div-size);
 
   background-color: var(--color-orchid);
   margin: auto;
