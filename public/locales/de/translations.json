@@ -22,7 +22,12 @@
     "home": {
       "sidebar": {
         "home": "Startseite",
-        "volunteers": "Freiwillige"
+        "volunteers": "Freiwillige",
+        "opportunities": "Möglichkeiten",
+        "racs": "RACs",
+        "posts": "Beiträge",
+        "calendar": "Kalender",
+        "profile": "Profil"
       }
     }
   }
