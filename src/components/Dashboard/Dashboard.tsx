@@ -8,8 +8,8 @@ import DashboardContent from "./DashboardContent";
 const DashboardContainer = styled.div`
   display: flex;
   flex-direction: row;
-  padding: 40px 120px 100px 132px;
-  gap: 20px;
+  padding: var(--dashboard-home-container-padding);
+  gap: var(--dashboard-home-container-gap);
 `;
 
 export function Dashboard() {

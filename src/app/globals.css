@@ -883,6 +883,8 @@ html {
     --paginated-grid-pagination-number-height: 44px;
     --paginated-grid-pagination-number-border-radius: 6px;
 
+    --dashboard-home-container-padding: 40px 120px 100px 132px;
+    --dashboard-home-container-gap: 20px;
     --dashboard-home-bar-container-width: 110px;
     --dashboard-home-bar-gap: 20px;
     --dashboard-home-bar-border-radius: 12px;
