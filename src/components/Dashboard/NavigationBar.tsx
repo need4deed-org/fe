@@ -62,10 +62,10 @@ const StyledParagraph = ({ label, isSelected }: StyledParagraphProps) => {
   return (
     <Paragraph
       color={isSelected ? "var(--color-orchid)" : "var(--color-midnight)"}
-      fontSize={"14px"}
-      fontWeight={500}
-      letterSpacing="0.14px"
-      lineheight="14px"
+      fontSize="var(--dashboard-home-bar-option-text-size)"
+      fontWeight="var(--dashboard-home-bar-option-text-weight)"
+      letterSpacing="var(--dashboard-home-bar-option-text-letter-spacing)"
+      lineheight="var(--dashboard-home-bar-option-text-size)"
       margin="auto"
     >
       {label}

@@ -891,5 +891,8 @@ html {
     --dashboard-home-bar-padding: 40px 16px 40px 16px;
     --dashboard-home-bar-option-gap: 4px;
     --dashboard-home-bar-option-icon-div-size: 40px;
+    --dashboard-home-bar-option-text-weight: 500;
+    --dashboard-home-bar-option-text-size: 14px;
+    --dashboard-home-bar-option-text-letter-spacing: 0.14px;
   }
 }
