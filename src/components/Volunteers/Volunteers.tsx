@@ -15,7 +15,7 @@ const VolunteersContainer = styled.div`
 export function Volunteers() {
   const { t } = useTranslation();
 
-  const tabs = [t("opportunityPage.tabs.tab1"), t("opportunityPage.tabs.tab2")];
+  const tabs = [t("dashboard.volunteers.tabs.tab1"), t("dashboard.volunteers.tabs.tab2")];
 
   return (
     <SubPageLayout background="var(--color-white)">

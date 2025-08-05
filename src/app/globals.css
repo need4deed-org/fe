@@ -886,6 +886,11 @@ html {
     --dashboard-volunteers-container-padding: 48px 64px 100px 132px;
     --dashboard-volunteers-container-gap: 40px;
     --dashboard-volunteers-header-searchbar-width: 980px;
+    --dashboard-volunteers-header-filters-button-height: 64px;
+    --dashboard-volunteers-header-filters-button-width: 48px;
+    --dashboard-volunteers-header-filters-button-icon-size: 32px;
+    --dashboard-volunteers-header-result-gap: 10px;
+    --dashboard-volunteers-header-result-padding: 10px;
 
     --search-container-height: 64px;
     --search-container-border-radius: 160px;

@@ -24,7 +24,12 @@
       "tabs": {
         "tab1": "TABLE VIEW",
         "tab2": "MAP VIEW"
-      }
+      },
+      "filters": {
+        "button": "FILTERS"
+      },
+      "resultsFound": "results found",
+      "searchPlaceHolder": "Enter search term"
     }
   }
 }

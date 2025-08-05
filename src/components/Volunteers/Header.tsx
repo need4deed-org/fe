@@ -2,12 +2,11 @@ import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { Heading2, Heading4 } from "../styled/text";
 import { Search } from "../core/common";
-import FiltersButton from "./FiltersButton";
-import useScreenType from "../../hooks/useScreenType";
-import { ScreenTypes } from "../../config/types";
 import ResultsFound from "./ResultsFound";
+import FiltersButton from "./FiltersButton";
+import { ScreenTypes } from "@/config/constants";
+import { useScreenType } from "@/context/DeviceContext";
 import { hyphenationStyles } from "../styled/mixins";
-import { CardsFilter } from "./types";
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -72,11 +71,11 @@ export default function Header({
   setSelectedTabIndex,
   tabs,
   setIsFiltersOpen,
-  cardsFilter,
 }: Props) {
   const { t } = useTranslation();
   const screenSize = useScreenType();
   const isMobile = screenSize === ScreenTypes.MOBILE;
+
   return (
     <HeaderContainer>
       <HyphenatedHeading2>{t("dashboard.volunteers.header")}</HyphenatedHeading2>
@@ -100,10 +99,9 @@ export default function Header({
 
         <SearchBarSectionContainer>
           <Search
-            placeHolder={`${t("opportunityPage.searchPlaceHolder")} ...`}
+            placeHolder={`${t("dashboard.volunteers.searchPlaceHolder")} ...`}
             onInputChange={onSearchInputChange}
             width="var(--dashboard-volunteers-header-searchbar-width)"
-            cardsFilter={cardsFilter}
           />
           {isMobile ? (
             <ResultsFound numOfOpportunities={numOfOpportunities} />
