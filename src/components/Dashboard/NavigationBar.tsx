@@ -15,7 +15,7 @@ import { useState } from "react";
 const BarContainer = styled.div`
   display: flex;
   flex-direction: column;
-  position: absolute;
+  position: fixed;
   width: var(--dashboard-home-bar-container-width);
   left: 0;
   z-index: 1;
