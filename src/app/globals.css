@@ -1,5 +1,5 @@
 body {
-  font-family: 'Figtree', sans-serif;
+  font-family: "Figtree", sans-serif;
   width: 100%;
   margin: 0;
 }
@@ -882,5 +882,13 @@ html {
     --paginated-grid-pagination-number-width: 36px;
     --paginated-grid-pagination-number-height: 44px;
     --paginated-grid-pagination-number-border-radius: 6px;
+
+    --dashboard-volunteers-container-padding: 48px 64px 100px 132px;
+    --dashboard-volunteers-container-gap: 40px;
+    --dashboard-volunteers-header-searchbar-width: 980px;
+
+    --search-container-height: 64px;
+    --search-container-border-radius: 160px;
+    --search-container-padding: 0 32px;
   }
 }

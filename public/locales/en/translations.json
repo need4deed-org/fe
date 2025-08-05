@@ -16,5 +16,15 @@
       "vpa": "Volunteer Participation Agreement",
       "contact": "Contact"
     }
+  },
+
+  "dashboard": {
+    "volunteers": {
+      "header": "Volunteer Directory",
+      "tabs": {
+        "tab1": "TABLE VIEW",
+        "tab2": "MAP VIEW"
+      }
+    }
   }
 }
