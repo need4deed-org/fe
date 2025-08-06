@@ -30,6 +30,18 @@
       },
       "resultsFound": "results found",
       "searchPlaceHolder": "Enter search term"
+    },
+
+    "home": {
+      "sidebar": {
+        "home": "Home",
+        "volunteers": "Volunteers",
+        "opportunities": "Opportunities",
+        "racs": "RAC's",
+        "posts": "Posts",
+        "calendar": "Calendar",
+        "profile": "Profile"
+      }
     }
   }
 }

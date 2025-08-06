@@ -25,6 +25,17 @@
         "tab1": "TABELLE",
         "tab2": "KARTE"
       }
+    },
+    "home": {
+      "sidebar": {
+        "home": "Startseite",
+        "volunteers": "Freiwillige",
+        "opportunities": "Möglichkeiten",
+        "racs": "RACs",
+        "posts": "Beiträge",
+        "calendar": "Kalender",
+        "profile": "Profil"
+      }
     }
   }
 }

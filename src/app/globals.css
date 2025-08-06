@@ -883,6 +883,18 @@ html {
     --paginated-grid-pagination-number-height: 44px;
     --paginated-grid-pagination-number-border-radius: 6px;
 
+    --dashboard-home-container-padding: 40px 120px 100px 132px;
+    --dashboard-home-container-gap: 20px;
+    --dashboard-home-bar-container-width: 110px;
+    --dashboard-home-bar-gap: 20px;
+    --dashboard-home-bar-border-radius: 12px;
+    --dashboard-home-bar-padding: 40px 16px 40px 16px;
+    --dashboard-home-bar-option-gap: 4px;
+    --dashboard-home-bar-option-icon-div-size: 40px;
+    --dashboard-home-bar-option-text-weight: 500;
+    --dashboard-home-bar-option-text-size: 14px;
+    --dashboard-home-bar-option-text-letter-spacing: 0.14px;
+
     --dashboard-volunteers-container-padding: 48px 64px 100px 132px;
     --dashboard-volunteers-container-gap: 40px;
     --dashboard-volunteers-header-searchbar-width: 980px;
