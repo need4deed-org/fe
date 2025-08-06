@@ -16,7 +16,6 @@ export function Dashboard() {
   return (
     <SubPageLayout background="var(--color-white)">
       <DashboardContainer>
-        <NavigationBar />
         <DashboardContent />
       </DashboardContainer>
     </SubPageLayout>

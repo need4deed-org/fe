@@ -8,6 +8,7 @@ import { ScreenTypes } from "@/config/constants";
 import { Header } from "@/components/Header";
 import { useScreenType } from "@/context/DeviceContext";
 import { FooterPartnersSection } from "@/components/FooterPartners";
+import NavigationBar from "@/components/Dashboard/NavigationBar";
 
 interface Props {
   children: ReactNode;
@@ -38,6 +39,8 @@ export function SubPageLayout({ children, background }: Props) {
 
   return (
     <PageContainer>
+      <NavigationBar />
+
       <PageContentHeaderContainer background={background}>
         <Header
           logo={<N4DLogo />}
