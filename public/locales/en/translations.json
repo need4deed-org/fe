@@ -16,5 +16,19 @@
       "vpa": "Volunteer Participation Agreement",
       "contact": "Contact"
     }
+  },
+
+  "dashboard": {
+    "home": {
+      "sidebar": {
+        "home": "Home",
+        "volunteers": "Volunteers",
+        "opportunities": "Opportunities",
+        "racs": "RAC's",
+        "posts": "Posts",
+        "calendar": "Calendar",
+        "profile": "Profile"
+      }
+    }
   }
 }

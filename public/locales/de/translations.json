@@ -16,5 +16,19 @@
       "vpa": "Freiwilligenvereinbarung",
       "contact": "Kontakt"
     }
+  },
+
+  "dashboard": {
+    "home": {
+      "sidebar": {
+        "home": "Startseite",
+        "volunteers": "Freiwillige",
+        "opportunities": "Möglichkeiten",
+        "racs": "RACs",
+        "posts": "Beiträge",
+        "calendar": "Kalender",
+        "profile": "Profil"
+      }
+    }
   }
 }

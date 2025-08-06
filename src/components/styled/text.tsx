@@ -60,7 +60,7 @@ export const Paragraph = styled.p<TextProps>`
   line-height: ${(props) => props.lineheight || "var(--text-p-line-height)"};
   letter-spacing: ${(props) => props.letterSpacing || "var(--text-p-letter-spacing)"};
   color: ${(props) => props.color || "var(--color-midnight)"};
-  margin: 0;
+  margin: ${(props) => props.margin || 0};
 `;
 
 export const ButtonSpan = styled.span<TextProps>`
