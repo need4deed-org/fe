@@ -1,7 +1,7 @@
 "use client";
 
 import styled from "styled-components";
-import CardsHeader from "../CardsHeader";
+import CardsHeader from "../common/CardsHeader/CardsHeader";
 import { useTranslation } from "react-i18next";
 import { DashboardLayout } from "@/components/Layout";
 

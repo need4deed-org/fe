@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Paragraph } from "../styled/text";
 
 import {
   BookOpenTextIcon,
@@ -11,6 +10,7 @@ import {
 } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
+import { Paragraph } from "@/components/styled/text";
 
 const BarContainer = styled.div`
   display: flex;

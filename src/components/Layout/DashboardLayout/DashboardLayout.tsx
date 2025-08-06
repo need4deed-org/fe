@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
-import NavigationBar from "@/components/Dashboard/NavigationBar";
 import { PageLayout } from "../PageLayout";
+import NavigationBar from "./NavigationBar";
 
 interface Props {
   children: ReactNode;

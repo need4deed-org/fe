@@ -1,10 +1,11 @@
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { Heading2, Heading4 } from "../styled/text";
-import { Search } from "../core/common";
-import ResultsFound from "./Volunteers/ResultsFound";
-import FiltersButton from "./Volunteers/FiltersButton";
-import { hyphenationStyles } from "../styled/mixins";
+
+import { Heading2, Heading4 } from "../../../styled/text";
+import { Search } from "../../../core/common";
+import FiltersButton from "./FiltersButton";
+import { hyphenationStyles } from "../../../styled/mixins";
+import ResultsFound from "./ResultsFound";
 
 const HeaderContainer = styled.div`
   display: flex;

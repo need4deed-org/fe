@@ -1,8 +1,8 @@
 import { useTranslation } from "react-i18next";
-import { IconName } from "../../core/button/Button/icon";
+import { IconName } from "../../../core/button/Button/icon";
 import { ScreenTypes } from "@/config/constants";
 import { useScreenType } from "@/context/DeviceContext";
-import { Button } from "../../core/button";
+import { Button } from "../../../core/button";
 
 interface Props {
   setIsFiltersOpen: (isOpen: boolean) => void;
