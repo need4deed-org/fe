@@ -29,9 +29,9 @@
         "button": "FILTERS"
       },
       "resultsFound": "results found",
-      "searchPlaceHolder": "Enter search term"
+      "searchPlaceHolder": "Search volunteers",
+      "volunteers": "Volunteers"
     },
-
     "home": {
       "sidebar": {
         "home": "Home",
@@ -42,6 +42,7 @@
         "calendar": "Calendar",
         "profile": "Profile"
       }
-    }
+    },
+    "found": "found"
   }
 }

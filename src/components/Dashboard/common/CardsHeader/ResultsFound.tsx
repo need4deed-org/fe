@@ -10,16 +10,17 @@ const ResultContainer = styled.div`
 `;
 
 interface Props {
-  numOfOpportunities: number;
+  counter: number;
+  text: string;
 }
 
-export default function ResultsFound({ numOfOpportunities }: Props) {
+export default function ResultsFound({ counter, text }: Props) {
   const { t } = useTranslation();
 
   return (
     <ResultContainer>
-      <Heading4>{numOfOpportunities}</Heading4>
-      <Paragraph>{t("dashboard.volunteers.resultsFound")}</Paragraph>
+      <Heading4>{counter}</Heading4>
+      <Paragraph>{text + " " + t("dashboard.found")}</Paragraph>
     </ResultContainer>
   );
 }

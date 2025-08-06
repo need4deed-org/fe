@@ -24,7 +24,8 @@
       "tabs": {
         "tab1": "TABELLE",
         "tab2": "KARTE"
-      }
+      },
+      "volunteers": "Freiwillige"
     },
     "home": {
       "sidebar": {
@@ -36,6 +37,7 @@
         "calendar": "Kalender",
         "profile": "Profil"
       }
-    }
+    },
+    "found": "gefunden"
   }
 }

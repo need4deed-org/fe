@@ -50,13 +50,14 @@ const TabHeading = styled(Heading4)<TabHeadingProps>`
 `;
 
 interface Props {
-  numOfOpportunities: number;
+  header: string;
+  resultCounter: number;
+  resultText: string;
   onSearchInputChange: (input: string) => void;
   tabs: string[];
   selectedTabIndex: number;
   setSelectedTabIndex: (index: number) => void;
   setIsFiltersOpen: (isOpen: boolean) => void;
-  // cardsFilter?: CardsFilter;
 }
 
 const HyphenatedHeading2 = styled(Heading2)`
@@ -64,7 +65,9 @@ const HyphenatedHeading2 = styled(Heading2)`
 `;
 
 export default function CardsHeader({
-  numOfOpportunities,
+  header,
+  resultCounter,
+  resultText,
   onSearchInputChange,
   selectedTabIndex,
   setSelectedTabIndex,
@@ -75,7 +78,7 @@ export default function CardsHeader({
 
   return (
     <HeaderContainer>
-      <HyphenatedHeading2>{t("dashboard.volunteers.header")}</HyphenatedHeading2>
+      <HyphenatedHeading2>{header}</HyphenatedHeading2>
 
       <TabsSearchBarContainer>
         <TabsSectionContainer>
@@ -87,7 +90,7 @@ export default function CardsHeader({
             ))}
           </Tabs>
 
-          <ResultsFound numOfOpportunities={numOfOpportunities} />
+          <ResultsFound counter={resultCounter} text={resultText} />
         </TabsSectionContainer>
 
         <SearchBarSectionContainer>
@@ -95,6 +98,7 @@ export default function CardsHeader({
             placeHolder={`${t("dashboard.volunteers.searchPlaceHolder")} ...`}
             onInputChange={onSearchInputChange}
             width="var(--dashboard-volunteers-header-searchbar-width)"
+            backgroundColor="var(--color-magnolia-light)"
           />
           <FiltersButton setIsFiltersOpen={setIsFiltersOpen} />
         </SearchBarSectionContainer>

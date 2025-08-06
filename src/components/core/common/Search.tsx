@@ -4,6 +4,7 @@ import { ChangeEvent, useState } from "react";
 
 interface SearchContainerProps {
   width?: string;
+  backgroundColor?: string;
 }
 
 const SearchContainer = styled.div<SearchContainerProps>`
@@ -12,7 +13,7 @@ const SearchContainer = styled.div<SearchContainerProps>`
   justify-content: space-between;
   height: var(--search-container-height);
   width: ${(props) => props.width || "-webkit-fill-available"};
-  background-color: var(--color-white);
+  background-color: ${(props) => props.backgroundColor || "var(--color-white)"};
   border-radius: var(--search-container-border-radius);
   align-items: center;
   padding: var(--search-container-padding);
@@ -21,6 +22,7 @@ const SearchContainer = styled.div<SearchContainerProps>`
 const StyledInput = styled.input`
   font-size: var(--search-input-font-size);
   border: none;
+  background: transparent;
 
   &:focus {
     outline: none;
@@ -31,9 +33,10 @@ interface Props {
   placeHolder?: string;
   onInputChange: (input: string) => void;
   width?: string;
+  backgroundColor?: string;
 }
 
-export function Search({ placeHolder = "Search", onInputChange, width }: Props) {
+export function Search({ placeHolder = "Search", onInputChange, width, backgroundColor }: Props) {
   const [inputValue, setInputValue] = useState("");
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -43,7 +46,7 @@ export function Search({ placeHolder = "Search", onInputChange, width }: Props) 
   };
 
   return (
-    <SearchContainer width={width}>
+    <SearchContainer width={width} backgroundColor={backgroundColor}>
       <StyledInput placeholder={placeHolder} value={inputValue} onChange={handleInputChange} />
       <MagnifyingGlassIcon size={32} />
     </SearchContainer>
