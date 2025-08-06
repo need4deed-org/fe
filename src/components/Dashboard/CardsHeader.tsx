@@ -2,10 +2,8 @@ import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { Heading2, Heading4 } from "../styled/text";
 import { Search } from "../core/common";
-import ResultsFound from "./ResultsFound";
-import FiltersButton from "./FiltersButton";
-import { ScreenTypes } from "@/config/constants";
-import { useScreenType } from "@/context/DeviceContext";
+import ResultsFound from "./Volunteers/ResultsFound";
+import FiltersButton from "./Volunteers/FiltersButton";
 import { hyphenationStyles } from "../styled/mixins";
 
 const HeaderContainer = styled.div`
@@ -57,14 +55,14 @@ interface Props {
   selectedTabIndex: number;
   setSelectedTabIndex: (index: number) => void;
   setIsFiltersOpen: (isOpen: boolean) => void;
-  cardsFilter?: CardsFilter;
+  // cardsFilter?: CardsFilter;
 }
 
 const HyphenatedHeading2 = styled(Heading2)`
   ${hyphenationStyles}
 `;
 
-export default function Header({
+export default function CardsHeader({
   numOfOpportunities,
   onSearchInputChange,
   selectedTabIndex,
@@ -73,8 +71,6 @@ export default function Header({
   setIsFiltersOpen,
 }: Props) {
   const { t } = useTranslation();
-  const screenSize = useScreenType();
-  const isMobile = screenSize === ScreenTypes.MOBILE;
 
   return (
     <HeaderContainer>
@@ -90,11 +86,7 @@ export default function Header({
             ))}
           </Tabs>
 
-          {isMobile ? (
-            <FiltersButton setIsFiltersOpen={setIsFiltersOpen} />
-          ) : (
-            <ResultsFound numOfOpportunities={numOfOpportunities} />
-          )}
+          <ResultsFound numOfOpportunities={numOfOpportunities} />
         </TabsSectionContainer>
 
         <SearchBarSectionContainer>
@@ -103,11 +95,7 @@ export default function Header({
             onInputChange={onSearchInputChange}
             width="var(--dashboard-volunteers-header-searchbar-width)"
           />
-          {isMobile ? (
-            <ResultsFound numOfOpportunities={numOfOpportunities} />
-          ) : (
-            <FiltersButton setIsFiltersOpen={setIsFiltersOpen} />
-          )}
+          <FiltersButton setIsFiltersOpen={setIsFiltersOpen} />
         </SearchBarSectionContainer>
       </TabsSearchBarContainer>
     </HeaderContainer>

@@ -1,4 +1,4 @@
-import { Volunteers } from "@/components/Volunteers";
+import { Volunteers } from "@/components/Dashboard";
 
 export default function VolunteersPage() {
   return <Volunteers />;

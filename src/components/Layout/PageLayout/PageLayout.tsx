@@ -8,7 +8,6 @@ import { ScreenTypes } from "@/config/constants";
 import { Header } from "@/components/Header";
 import { useScreenType } from "@/context/DeviceContext";
 import { FooterPartnersSection } from "@/components/FooterPartners";
-import NavigationBar from "@/components/Dashboard/NavigationBar";
 
 interface Props {
   children: ReactNode;
@@ -33,14 +32,12 @@ const PageContentHeaderContainer = styled.div<PageContentHeaderContainerProps>`
   padding-bottom: var(--layout-static-page-header-content-bottom-padding);
 `;
 
-export function SubPageLayout({ children, background }: Props) {
+export function PageLayout({ children, background }: Props) {
   const screenType = useScreenType();
   const isBurgerMenu = screenType !== ScreenTypes.DESKTOP;
 
   return (
     <PageContainer>
-      <NavigationBar />
-
       <PageContentHeaderContainer background={background}>
         <Header
           logo={<N4DLogo />}
@@ -56,4 +53,4 @@ export function SubPageLayout({ children, background }: Props) {
   );
 }
 
-export default SubPageLayout;
+export default PageLayout;
