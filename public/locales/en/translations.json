@@ -43,6 +43,11 @@
         "profile": "Profile"
       }
     },
-    "found": "found"
+    "found": "found",
+    "sortBy": {
+      "sortBy": "SortBy",
+      "newToOld": "Newest to Oldest",
+      "oldToNew": "Oldest to Newest"
+    }
   }
 }

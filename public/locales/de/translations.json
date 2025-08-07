@@ -38,6 +38,11 @@
         "profile": "Profil"
       }
     },
-    "found": "gefunden"
+    "found": "gefunden",
+    "sortBy": {
+      "sortBy": "Sortieren nach",
+      "newToOld": "Neueste zuerst",
+      "oldToNew": "Älteste zuerst"
+    }
   }
 }

@@ -5,7 +5,9 @@ import { Heading2, Heading4 } from "../../../styled/text";
 import { Search } from "../../../core/common";
 import FiltersButton from "./FiltersButton";
 import { hyphenationStyles } from "../../../styled/mixins";
-import ResultsFound from "./ResultsFound";
+import Results from "./Results";
+import SortBy from "./SortBy";
+import { SortOrder } from "@/config/constants";
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -38,15 +40,22 @@ const SearchBarSectionContainer = styled.div`
   justify-content: space-between;
   gap: 12px;
 `;
+
+const ResultsSortByContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+`;
+
 interface TabHeadingProps {
-  isSelected: boolean;
+  $isSelected: boolean;
 }
 
 const TabHeading = styled(Heading4)<TabHeadingProps>`
   cursor: pointer;
   border-bottom: ${(props) =>
-    props.isSelected ? "var(--opportunities-header-tabs-border-bottom) solid currentColor" : "none"};
-  padding-bottom: ${(props) => (props.isSelected ? "var(--opportunities-header-tabs-padding-bottom)" : "0")};
+    props.$isSelected ? "var(--opportunities-header-tabs-border-bottom) solid currentColor" : "none"};
+  padding-bottom: ${(props) => (props.$isSelected ? "var(--opportunities-header-tabs-padding-bottom)" : "0")};
 `;
 
 interface Props {
@@ -76,6 +85,10 @@ export default function CardsHeader({
 }: Props) {
   const { t } = useTranslation();
 
+  const handleSortOrderChange = (sortorder: SortOrder) => {
+    // Todo: add sorting algo
+  };
+
   return (
     <HeaderContainer>
       <HyphenatedHeading2>{header}</HyphenatedHeading2>
@@ -84,13 +97,16 @@ export default function CardsHeader({
         <TabsSectionContainer>
           <Tabs>
             {tabs.map((tab, index) => (
-              <TabHeading key={tab} onClick={() => setSelectedTabIndex(index)} isSelected={selectedTabIndex === index}>
+              <TabHeading key={tab} onClick={() => setSelectedTabIndex(index)} $isSelected={selectedTabIndex === index}>
                 {tab}
               </TabHeading>
             ))}
           </Tabs>
 
-          <ResultsFound counter={resultCounter} text={resultText} />
+          <ResultsSortByContainer>
+            <Results counter={resultCounter} text={resultText} />
+            <SortBy onChange={handleSortOrderChange} />
+          </ResultsSortByContainer>
         </TabsSectionContainer>
 
         <SearchBarSectionContainer>

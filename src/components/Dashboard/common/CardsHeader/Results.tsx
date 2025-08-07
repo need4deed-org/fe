@@ -5,6 +5,7 @@ import styled from "styled-components";
 const ResultContainer = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center;
   gap: var(--dashboard-volunteers-header-result-gap);
   gap: var(--dashboard-volunteers-header-result-padding);
 `;
@@ -14,7 +15,7 @@ interface Props {
   text: string;
 }
 
-export default function ResultsFound({ counter, text }: Props) {
+export default function Results({ counter, text }: Props) {
   const { t } = useTranslation();
 
   return (
