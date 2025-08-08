@@ -6,8 +6,7 @@ const ResultContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: var(--dashboard-volunteers-header-result-gap);
-  gap: var(--dashboard-volunteers-header-result-padding);
+  gap: var(--opportunities-header-result-gap);
 `;
 
 interface Props {

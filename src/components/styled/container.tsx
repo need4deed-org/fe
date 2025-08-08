@@ -47,3 +47,8 @@ export const IconDiv = styled.div<IconDiVProps>`
     fill: ${(props) => props.color || "var(--icon-color)"};
   }
 `;
+
+export const DashboardBaseContainer = styled.div`
+  margin: 0 auto; // Center it horizontally
+  width: 1244px;
+`;

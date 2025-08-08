@@ -25,7 +25,9 @@ const TabsSectionContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: var(--opportunities-header-tabs-section-width);
+  width: var(
+    --dashboard-cards-header-searchbar-width
+  ); //Todo: take this width value as prop when migrating website opportunities.
 `;
 
 const Tabs = styled.div`
@@ -38,13 +40,12 @@ const SearchBarSectionContainer = styled.div`
   display: flex;
   flex-direction: var(--opportunities-header-searchbar-flex-direction);
   justify-content: space-between;
-  gap: 12px;
 `;
 
 const ResultsSortByContainer = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 20px;
+  gap: var(--dashboard-cards-header-result-sortBy-gap);
 `;
 
 interface TabHeadingProps {
@@ -113,7 +114,7 @@ export default function CardsHeader({
           <Search
             placeHolder={`${t("dashboard.volunteers.searchPlaceHolder")} ...`}
             onInputChange={onSearchInputChange}
-            width="var(--dashboard-volunteers-header-searchbar-width)"
+            width="var(--dashboard-cards-header-searchbar-width)" //Todo: take this width value as prop when migrating website opportunities.
             backgroundColor="var(--color-magnolia-light)"
           />
           <FiltersButton setIsFiltersOpen={setIsFiltersOpen} />

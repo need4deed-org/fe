@@ -17,11 +17,11 @@ export default function FiltersButton({ setIsFiltersOpen }: Props) {
     <Button
       text={isMobile ? undefined : t("dashboard.volunteers.filters.button")}
       backgroundcolor="var(--color-midnight)"
-      height="var(--dashboard-volunteers-header-filters-button-height)"
-      width={isMobile ? "var(--dashboard-volunteers-header-filters-button-width)" : undefined}
+      height="var(--opportunities-filters-button-height)"
+      width={isMobile ? "var(--opportunities-filters-button-width)" : undefined}
       onClick={() => setIsFiltersOpen(true)}
       iconName={IconName.FadersHorizontal}
-      iconSize="var(--dashboard-volunteers-header-filters-button-icon-size)"
+      iconSize="var(--opportunities-filters-button-icon-size)"
     />
   );
 }

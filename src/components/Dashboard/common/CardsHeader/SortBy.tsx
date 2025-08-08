@@ -10,7 +10,7 @@ const SortByContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 4px;
+  gap: var(--dashboard-cards-header-sortBy-container-gap);
 `;
 
 const SortBySwitcherContainer = styled.div`
@@ -24,9 +24,10 @@ const OptionsDiv = styled.div`
   display: flex;
   flex-direction: column;
   width: max-content;
-  gap: 5px;
+  gap: var(--dashboard-cards-header-sortBy-options-gap);
   background: var(--color-orchid);
-  padding: 5px;
+  padding: var(--dashboard-cards-header-sortBy-options-padding);
+  border-radius: var(--dashboard-cards-header-sortBy-option-button-border-radius);
   position: absolute;
   top: 100%;
   left: 0;
@@ -34,11 +35,10 @@ const OptionsDiv = styled.div`
 `;
 
 const OptionButton = styled.button`
-  padding: 5px;
-
+  padding: var(--dashboard-cards-header-sortBy-option-button-padding);
   background: var(--color-orchid-subtle);
   border-color: transparent;
-  border-radius: 5px;
+  border-radius: var(--dashboard-cards-header-sortBy-option-button-border-radius);
   cursor: pointer;
 `;
 
@@ -46,6 +46,7 @@ interface Props {
   initialValue?: SortOrder;
   onChange?: (value: SortOrder) => void;
 }
+
 export default function SortBy({ onChange, initialValue }: Props) {
   const { t } = useTranslation();
   const [isOptionsVisible, setIsOptionsVisible] = useState(false);
@@ -83,7 +84,7 @@ export default function SortBy({ onChange, initialValue }: Props) {
       </SortBySwitcherContainer>
 
       <CircleArrow
-        style={{ marginLeft: "10px" }}
+        style={{ marginLeft: "var(--dashboard-cards-header-sortBy-circle-arrow-margin-left)" }}
         direction={isOptionsVisible ? "up" : "down"}
         color="orchid"
         isFilled

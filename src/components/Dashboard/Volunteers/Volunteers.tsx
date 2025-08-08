@@ -8,8 +8,7 @@ import { useState } from "react";
 
 const VolunteersContainer = styled.div`
   display: flex;
-  flex-direction: row;
-  padding: var(--dashboard-volunteers-container-padding);
+  flex-direction: column;
   gap: var(--dashboard-volunteers-container-gap);
 `;
 
