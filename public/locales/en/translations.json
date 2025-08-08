@@ -28,8 +28,6 @@
       "filters": {
         "button": "FILTERS"
       },
-      "resultsFound": "results found",
-      "searchPlaceHolder": "Search volunteers",
       "volunteers": "Volunteers"
     },
     "home": {
@@ -44,6 +42,7 @@
       }
     },
     "found": "found",
+    "searchPlaceHolder": "Search volunteers",
     "sortBy": {
       "sortBy": "SortBy",
       "newToOld": "Newest to Oldest",

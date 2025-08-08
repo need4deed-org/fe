@@ -112,7 +112,7 @@ export default function CardsHeader({
 
         <SearchBarSectionContainer>
           <Search
-            placeHolder={`${t("dashboard.volunteers.searchPlaceHolder")} ...`}
+            placeHolder={`${t("dashboard.searchPlaceHolder")} ...`}
             onInputChange={onSearchInputChange}
             width="var(--dashboard-cards-header-searchbar-width)" //Todo: take this width value as prop when migrating website opportunities.
             backgroundColor="var(--color-magnolia-light)"

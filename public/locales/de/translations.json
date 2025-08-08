@@ -25,6 +25,9 @@
         "tab1": "TABELLE",
         "tab2": "KARTE"
       },
+      "filters": {
+        "button": "FILTER"
+      },
       "volunteers": "Freiwillige"
     },
     "home": {
@@ -39,6 +42,7 @@
       }
     },
     "found": "gefunden",
+    "searchPlaceHolder": "Freiwillige suchen",
     "sortBy": {
       "sortBy": "Sortieren nach",
       "newToOld": "Neueste zuerst",
