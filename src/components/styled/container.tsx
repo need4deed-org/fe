@@ -50,5 +50,5 @@ export const IconDiv = styled.div<IconDiVProps>`
 
 export const DashboardBaseContainer = styled.div`
   margin: 0 auto; // Center it horizontally
-  width: 1244px;
+  width: var(--dashboard-base-container-width);
 `;

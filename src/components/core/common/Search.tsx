@@ -4,7 +4,7 @@ import { ChangeEvent, useState } from "react";
 
 interface SearchContainerProps {
   width?: string;
-  backgroundColor?: string;
+  $backgroundColor?: string;
 }
 
 const SearchContainer = styled.div<SearchContainerProps>`
@@ -13,7 +13,7 @@ const SearchContainer = styled.div<SearchContainerProps>`
   justify-content: space-between;
   height: var(--search-container-height);
   width: ${(props) => props.width || "-webkit-fill-available"};
-  background-color: ${(props) => props.backgroundColor || "var(--color-white)"};
+  background-color: ${(props) => props.$backgroundColor || "var(--color-white)"};
   border-radius: var(--search-container-border-radius);
   align-items: center;
   padding: var(--search-container-padding);
@@ -46,7 +46,7 @@ export function Search({ placeHolder = "Search", onInputChange, width, backgroun
   };
 
   return (
-    <SearchContainer width={width} backgroundColor={backgroundColor}>
+    <SearchContainer width={width} $backgroundColor={backgroundColor}>
       <StyledInput placeholder={placeHolder} value={inputValue} onChange={handleInputChange} />
       <MagnifyingGlassIcon size={32} />
     </SearchContainer>

@@ -18,7 +18,7 @@ interface StyledButtonProps extends React.HTMLProps<HTMLButtonElement> {
   backgroundcolor?: BackgroundColorKeys;
   gap?: string;
   padding?: string;
-  iconPosition?: "left" | "right";
+  $iconPosition?: "left" | "right";
 }
 
 const StyledButton = styled.button<StyledButtonProps>`
@@ -33,7 +33,7 @@ const StyledButton = styled.button<StyledButtonProps>`
   white-space: pre-wrap;
   gap: ${(props) => props.gap};
   padding: ${(props) => props.padding};
-  flex-direction: ${(props) => (props.iconPosition === "right" ? "row-reverse" : "row")};
+  flex-direction: ${(props) => (props.$iconPosition === "right" ? "row-reverse" : "row")};
 
   &:hover {
     background-color: ${(props) => hoverBGColorMap[props.backgroundcolor || defaultBGColor]};
@@ -75,7 +75,7 @@ export function Button({
       width={width}
       gap={text ? "var(--button-gap)" : "0px"}
       padding={text ? "var(--button-padding)" : "0px"}
-      iconPosition={iconPosition}
+      $iconPosition={iconPosition}
     >
       {iconName && (
         <IconDiv color={iconColor} size={iconSize}>

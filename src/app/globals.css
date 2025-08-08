@@ -884,6 +884,8 @@ html {
     --paginated-grid-pagination-number-height: 44px;
     --paginated-grid-pagination-number-border-radius: 6px;
 
+    --dashboard-base-container-width: 1244px;
+
     --dashboard-navigation-bar-container-width: 110px;
     --dashboard-navigation-bar-gap: 20px;
     --dashboard-navigation-bar-border-radius: 12px;
