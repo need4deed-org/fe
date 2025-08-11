@@ -5,6 +5,12 @@
         "about": "ABOUT",
         "volunteeringOpportunities": "VOLUNTEERING OPPORTUNITIES",
         "events": "EVENTS"
+      },
+      "content": {
+        "heroText": "Voluntary support for refugees",
+        "heroSupportingText": "We connect volunteers to accommodation centers in Berlin",
+        "buttonJoinVolunteer": "Join as a volunteer",
+        "buttonJoinRefugeeCenter": "Join as an accommodation centre"
       }
     },
     "footer": {
@@ -47,6 +53,12 @@
       "sortBy": "SortBy",
       "newToOld": "Newest to Oldest",
       "oldToNew": "Oldest to Newest"
+    },
+    "heroSection": {
+      "heroText": "Need-based voluntary support for refugees in Berlin",
+      "heroSupportingText": "We connect volunteers to refugees accommodation centers in need",
+      "buttonJoinVolunteer": "Join as a volunteer",
+      "buttonJoinRefugeeCenter": "Join as a refugee centre"
     }
   }
 }

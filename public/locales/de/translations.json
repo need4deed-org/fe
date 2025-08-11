@@ -5,6 +5,12 @@
         "about": "ÜBER UNS",
         "volunteeringOpportunities": "EHRENAMTSANGEBOTE",
         "events": "VERANSTALTUNGEN"
+      },
+      "content": {
+        "heroText": "Ehrenamtliche Unterstützung für Geflüchtete",
+        "heroSupportingText": "Wir verbinden Freiwillige mit Gemeinschaftsunterkünften in Berlin",
+        "buttonJoinVolunteer": "Jetzt sich engagieren",
+        "buttonJoinRefugeeCenter": "Unterstützung als Unterkunft beantragen"
       }
     },
     "footer": {
