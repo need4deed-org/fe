@@ -17,10 +17,14 @@ const HeaderContainer = styled.div<HeaderContainerProps>`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: flex-start;
-  position: relative;
+  align-items: center;
   height: ${(props) => props.height || "auto"};
   padding: ${(props) => props.padding};
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  background-color: var(--color-orchid-subtle);
+  width: -webkit-fill-available;
 `;
 
 interface Props {

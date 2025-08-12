@@ -11,6 +11,7 @@ import { Subpage } from "@/types";
 const ContentDiv = styled.div`
   display: flex;
   justify-content: center;
+  padding-top: var(--homepage-hero-section-content-div-padding-top);
 `;
 
 const ContentContainer = styled.div`
