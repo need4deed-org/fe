@@ -115,6 +115,10 @@ html {
   --checkbox-label-line-height: 32px;
   --checkbox-label-font-weight-selected: 400;
   --checkbox-label-font-weight-not-selected: 300;
+
+  /* paginated cards*/
+  --indicators-container-gap: 8px;
+  --arrows-button-container-gap: 8px;
 }
 
 .with-linebreaks {

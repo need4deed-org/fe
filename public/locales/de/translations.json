@@ -21,6 +21,25 @@
       "privacy": "Datenschutz",
       "vpa": "Freiwilligenvereinbarung",
       "contact": "Kontakt"
+    },
+    "volunteeringCategories": {
+      "header": "Wie kannst Du Dich engagieren?",
+      "headerParagraph": "Wir bieten verschiedene Arten von ehrenamtlichen Tätigkeiten an, entweder regelmäßig oder gelegentlich.",
+      "card": {
+        "germanLanguageSupport": "Deutsche Unterstützung",
+        "germanLanguageSupportInfo": "Sprichst Du fließend Deutsch? Unterstütze Geflüchtete, indem du in Sprachcafés unterrichtest oder Nachhilfe gibst – privat oder in Gruppen.",
+        "childcare": "Kinderbetreuung",
+        "childcareInfo": "Hilf Kindern in Unterkünften – bei der Betreuung am Tag oder den Hausaufgaben. Erfahrung mit Kindern ist ein Plus!",
+        "skillsBasedVolunteering": "Ehrenamt mit Fachkenntnissen",
+        "skillsBasedVolunteeringInfo": "Nutze deine Fähigkeiten – z. B. Fahrradreparatur, Gartenarbeit oder Musik.",
+        "events": "Veranstaltungen",
+        "eventsInfo": "Manche Events brauchen extra Hilfe - Festivals, Ausflüge, Gartenarbeit oder Eintichtung von Kleiderkammer.",
+        "sportsActivities": "Allgemeines Engagement",
+        "sportsActivitiesInfo": "Unterstütze mit Kleiderkammer, Tandem oder Sportangebote für Kinder, Jugendliche oder Erwachsene in Unterkünften.",
+        "accompanyARefugee": "Begleitung",
+        "accompanyARefugeeInfo": "Sprichst Du fließend Deutsch und eine weitere Sprache? Begleite Geflüchtete zu Ämtern, Ärzt*innen oder anderen Terminen."
+      },
+      "footerButton": "Siehe Ehrenamtsangebote"
     }
   },
 
@@ -53,6 +72,12 @@
       "sortBy": "Sortieren nach",
       "newToOld": "Neueste zuerst",
       "oldToNew": "Älteste zuerst"
+    },
+    "heroSection": {
+      "heroText": "Bedarfsorientierte freiwillige Unterstützung für Geflüchtete in Berlin",
+      "heroSupportingText": "Wir vermitteln Freiwillige an Flüchtlingsunterkünfte in Not",
+      "buttonJoinVolunteer": "Als Freiwillige/r beitreten",
+      "buttonJoinRefugeeCenter": "Als Flüchtlingsunterkunft beitreten"
     }
   }
 }
