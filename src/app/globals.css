@@ -43,6 +43,7 @@ html {
   --color-sand: rgba(242, 226, 211, 1);
   --color-sand-dark: rgba(184, 172, 137, 1);
   --color-magnolia: rgba(246, 238, 231, 1);
+  --color-magnolia-light: rgba(248, 244, 241, 1);
   --color-papaya: rgba(255, 125, 104, 1);
   --color-white: rgba(255, 255, 255, 1);
   --color-black: rgba(0, 0, 0, 1);
@@ -883,16 +884,32 @@ html {
     --paginated-grid-pagination-number-height: 44px;
     --paginated-grid-pagination-number-border-radius: 6px;
 
+    --dashboard-base-container-width: 1244px;
+
+    --dashboard-navigation-bar-container-width: 110px;
+    --dashboard-navigation-bar-gap: 20px;
+    --dashboard-navigation-bar-border-radius: 12px;
+    --dashboard-navigation-bar-padding: 40px 16px 40px 16px;
+    --dashboard-navigation-bar-option-gap: 4px;
+    --dashboard-navigation-bar-option-icon-div-size: 40px;
+    --dashboard-navigation-bar-option-text-weight: 500;
+    --dashboard-navigation-bar-option-text-size: 14px;
+    --dashboard-navigation-bar-option-text-letter-spacing: 0.14px;
+
+    --dashboard-cards-header-searchbar-width: 928px;
+    --dashboard-cards-header-result-sortBy-gap: 20px;
+    --dashboard-cards-header-sortBy-container-gap: 4px;
+    --dashboard-cards-header-sortBy-options-gap: 6px;
+    --dashboard-cards-header-sortBy-options-padding: 6px;
+    --dashboard-cards-header-sortBy-option-button-padding: 6px;
+    --dashboard-cards-header-sortBy-option-button-border-radius: 6px;
+    --dashboard-cards-header-sortBy-circle-arrow-margin-left: 12px;
+
     --dashboard-home-container-padding: 40px 120px 100px 132px;
     --dashboard-home-container-gap: 20px;
-    --dashboard-home-bar-container-width: 110px;
-    --dashboard-home-bar-gap: 20px;
-    --dashboard-home-bar-border-radius: 12px;
-    --dashboard-home-bar-padding: 40px 16px 40px 16px;
-    --dashboard-home-bar-option-gap: 4px;
-    --dashboard-home-bar-option-icon-div-size: 40px;
-    --dashboard-home-bar-option-text-weight: 500;
-    --dashboard-home-bar-option-text-size: 14px;
-    --dashboard-home-bar-option-text-letter-spacing: 0.14px;
+
+    --search-container-height: 64px;
+    --search-container-border-radius: 160px;
+    --search-container-padding: 0 32px;
   }
 }

@@ -1,5 +1,5 @@
+import { Heading2 } from "@/components/styled/text";
 import React from "react";
-import { Heading2 } from "../styled/text";
 import styled from "styled-components";
 
 const DashboardContentContainer = styled.div`
@@ -7,7 +7,7 @@ const DashboardContentContainer = styled.div`
   height: 300px;
 `;
 
-export default function DashboardContent() {
+export default function DashboardHomeContent() {
   return (
     <DashboardContentContainer>
       <Heading2>Dashboard Content...</Heading2>

@@ -26,3 +26,29 @@ export const SectionContainer = styled.div.attrs<ContainerProps>((props) => ({
   max-width: var(--max-width-section);
   background-color: ${(props) => props["background-color"]};
 `;
+
+interface IconDiVProps {
+  size?: string;
+  color?: string;
+}
+
+export const IconDiv = styled.div<IconDiVProps>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: ${(props) => props.size || "var(--icon-size)"};
+  height: ${(props) => props.size || "var(--icon-size)"};
+
+  svg {
+    // Target the SVG inside IconDiv
+    width: 100%; // Make the SVG fill the IconDiv
+    height: 100%;
+    fill: ${(props) => props.color || "var(--icon-color)"};
+  }
+`;
+
+export const DashboardBaseContainer = styled.div`
+  margin: 0 auto; // Center it horizontally
+  width: var(--dashboard-base-container-width);
+`;

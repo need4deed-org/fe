@@ -19,6 +19,17 @@
   },
 
   "dashboard": {
+    "volunteers": {
+      "header": "Freiwilligenverzeichnis",
+      "tabs": {
+        "tab1": "TABELLE",
+        "tab2": "KARTE"
+      },
+      "filters": {
+        "button": "FILTER"
+      },
+      "volunteers": "Freiwillige"
+    },
     "home": {
       "sidebar": {
         "home": "Startseite",
@@ -29,6 +40,13 @@
         "calendar": "Kalender",
         "profile": "Profil"
       }
+    },
+    "found": "gefunden",
+    "searchPlaceHolder": "Freiwillige suchen",
+    "sortBy": {
+      "sortBy": "Sortieren nach",
+      "newToOld": "Neueste zuerst",
+      "oldToNew": "Älteste zuerst"
     }
   }
 }

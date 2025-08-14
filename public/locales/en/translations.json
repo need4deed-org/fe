@@ -19,6 +19,17 @@
   },
 
   "dashboard": {
+    "volunteers": {
+      "header": "Volunteer Directory",
+      "tabs": {
+        "tab1": "TABLE VIEW",
+        "tab2": "MAP VIEW"
+      },
+      "filters": {
+        "button": "FILTERS"
+      },
+      "volunteers": "Volunteers"
+    },
     "home": {
       "sidebar": {
         "home": "Home",
@@ -29,6 +40,13 @@
         "calendar": "Calendar",
         "profile": "Profile"
       }
+    },
+    "found": "found",
+    "searchPlaceHolder": "Search volunteers",
+    "sortBy": {
+      "sortBy": "SortBy",
+      "newToOld": "Newest to Oldest",
+      "oldToNew": "Oldest to Newest"
     }
   }
 }

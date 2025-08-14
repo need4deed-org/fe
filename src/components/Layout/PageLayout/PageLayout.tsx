@@ -32,7 +32,7 @@ const PageContentHeaderContainer = styled.div<PageContentHeaderContainerProps>`
   padding-bottom: var(--layout-static-page-header-content-bottom-padding);
 `;
 
-export function SubPageLayout({ children, background }: Props) {
+export function PageLayout({ children, background }: Props) {
   const screenType = useScreenType();
   const isBurgerMenu = screenType !== ScreenTypes.DESKTOP;
 
@@ -53,4 +53,4 @@ export function SubPageLayout({ children, background }: Props) {
   );
 }
 
-export default SubPageLayout;
+export default PageLayout;
