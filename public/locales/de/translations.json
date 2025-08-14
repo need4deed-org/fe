@@ -78,6 +78,12 @@
       "heroSupportingText": "Wir vermitteln Freiwillige an Flüchtlingsunterkünfte in Not",
       "buttonJoinVolunteer": "Als Freiwillige/r beitreten",
       "buttonJoinRefugeeCenter": "Als Flüchtlingsunterkunft beitreten"
+    },
+    "header": {
+      "button": {
+        "login": "Anmelden",
+        "joinVolunteer": "Als Freiwillige/r beitreten"
+      }
     }
   }
 }

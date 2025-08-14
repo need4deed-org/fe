@@ -78,6 +78,12 @@
       "heroSupportingText": "We connect volunteers to refugees accommodation centers in need",
       "buttonJoinVolunteer": "Join as a volunteer",
       "buttonJoinRefugeeCenter": "Join as a refugee centre"
+    },
+    "header": {
+      "button": {
+        "login": "Log in",
+        "joinVolunteer": "Join as a volunteer"
+      }
     }
   }
 }

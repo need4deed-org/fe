@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Button } from "../core/button";
+import { useTranslation } from "react-i18next";
 
 const LoginRegisterContainer = styled.div`
   display: flex;
@@ -8,11 +9,12 @@ const LoginRegisterContainer = styled.div`
 `;
 
 export function LoginRegister() {
+  const { t } = useTranslation();
   return (
     <LoginRegisterContainer>
       <Button
         onClick={() => {}}
-        text="Log in"
+        text={t("dashboard.header.button.login")}
         height="var(--layout-static-page-header-button-height)"
         textFontSize="var(--layout-static-page-header-button-text-font-size)"
         backgroundcolor="var(--color-orchid-subtle)"
@@ -21,7 +23,7 @@ export function LoginRegister() {
       />
       <Button
         onClick={() => {}}
-        text="Join as Volunteer"
+        text={t("dashboard.header.button.joinVolunteer")}
         height="var(--layout-static-page-header-button-height)"
         textFontSize="var(--layout-static-page-header-button-text-font-size)"
       />
