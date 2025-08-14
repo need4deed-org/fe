@@ -7,6 +7,7 @@ import BurgerMenuItems from "./BurgerMenuItems";
 import MenuItems from "./MenuItems";
 import { MenuItemType, Subpage } from "@/types";
 import { eventsSectionContainerId } from "@/config/constants";
+import LoginRegister from "./LoginRegister";
 
 interface HeaderContainerProps {
   height?: string;
@@ -72,6 +73,8 @@ export function Header({
       ) : (
         <MenuItems items={menuItems} menuItemColor={menuItemColor} />
       )}
+
+      <LoginRegister />
     </HeaderContainer>
   );
 }

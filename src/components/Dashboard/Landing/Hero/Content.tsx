@@ -64,7 +64,7 @@ export default function HeroContent() {
 
         <HeroButtonsContainer>
           <Button
-            backgroundcolor="var(--color-orchid)"
+            backgroundcolor="var(--color-orchid-light)"
             textColor="var(--color-midnight)"
             onClick={() => {
               router.push(`/${Subpage.VOLUNTEER_FORM}`);
