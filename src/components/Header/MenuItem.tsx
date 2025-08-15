@@ -6,6 +6,7 @@ import { CustomHeading } from "../styled/text";
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   text: string;
   color?: string;
+  fontWeight?: number | string;
 }
 
 const MenuItemDiv = styled.div`
@@ -13,13 +14,13 @@ const MenuItemDiv = styled.div`
   width: fit-content;
 `;
 
-export default function MenuItem({ text, color, onClick }: Props) {
+export default function MenuItem({ text, color, onClick, fontWeight }: Props) {
   return (
     <MenuItemDiv>
       <CustomHeading
         color={color || "var(--color-white)"}
         fontSize="var(--homepage-hero-section-header-menu-item-fontSize)"
-        fontWeight="var(--homepage-hero-section-header-menu-item-fontWeight)"
+        fontWeight={fontWeight || "var(--homepage-hero-section-header-menu-item-fontWeight)"}
         letterSpacing="var(--homepage-hero-section-header-menu-item-letterSpacing)"
         lineheight="var(--homepage-hero-section-header-menu-item-lineheight)"
         onClick={onClick}
