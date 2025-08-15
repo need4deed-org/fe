@@ -914,6 +914,9 @@ html {
     --dashboard-cards-header-sortBy-option-button-padding: 6px;
     --dashboard-cards-header-sortBy-option-button-border-radius: 6px;
     --dashboard-cards-header-sortBy-circle-arrow-margin-left: 12px;
+    --dashboard-cards-header-user-profile-container-gap: 8px;
+    --dashboard-cards-header-user-icon-size: 32px;
+    --dashboard-cards-header-user-icon-border-radius: 16px;
 
     --dashboard-home-container-padding: 40px 120px 100px 132px;
     --dashboard-home-container-gap: 20px;

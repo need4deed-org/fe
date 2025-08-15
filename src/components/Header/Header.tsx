@@ -8,6 +8,7 @@ import MenuItems from "./MenuItems";
 import { MenuItemType, Subpage } from "@/types";
 import { eventsSectionContainerId } from "@/config/constants";
 import LoginRegister from "./LoginRegister";
+// import UserProfile from "./UserProfile";
 
 interface HeaderContainerProps {
   height?: string;
@@ -75,6 +76,8 @@ export function Header({
       )}
 
       <LoginRegister />
+      {/* TODO: add this after user login state implemented */}
+      {/* <UserProfile /> */}
     </HeaderContainer>
   );
 }
