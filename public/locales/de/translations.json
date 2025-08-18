@@ -76,8 +76,14 @@
     "heroSection": {
       "heroText": "Bedarfsorientierte freiwillige Unterstützung für Geflüchtete in Berlin",
       "heroSupportingText": "Wir vermitteln Freiwillige an Flüchtlingsunterkünfte in Not",
-      "buttonJoinVolunteer": "Als Freiwillige/r beitreten",
+      "buttonJoinVolunteer": "Jetzt sich engagieren",
       "buttonJoinRefugeeCenter": "Als Flüchtlingsunterkunft beitreten"
+    },
+    "header": {
+      "button": {
+        "login": "Anmelden",
+        "joinVolunteer": "Jetzt sich engagieren"
+      }
     }
   }
 }
