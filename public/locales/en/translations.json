@@ -5,6 +5,12 @@
         "about": "ABOUT",
         "volunteeringOpportunities": "VOLUNTEERING OPPORTUNITIES",
         "events": "EVENTS"
+      },
+      "content": {
+        "heroText": "Voluntary support for refugees",
+        "heroSupportingText": "We connect volunteers to accommodation centers in Berlin",
+        "buttonJoinVolunteer": "Join as a volunteer",
+        "buttonJoinRefugeeCenter": "Join as an accommodation centre"
       }
     },
     "footer": {
@@ -15,6 +21,25 @@
       "privacy": "Privacy",
       "vpa": "Volunteer Participation Agreement",
       "contact": "Contact"
+    },
+    "volunteeringCategories": {
+      "header": "Ways you can volunteer",
+      "headerParagraph": "We offer various types of volunteer opportunities with refugee accommodation centers, either on a continuous or occasional basis.",
+      "card": {
+        "germanLanguageSupport": "German Language Support",
+        "germanLanguageSupportInfo": "Fluent in German? Support refugees by teaching german at language cafes and tutoring privately or in groups.",
+        "childcare": "Childcare",
+        "childcareInfo": "We are looking for volunteers to support children in refugee accommodation centers by assisting in daycare or helping with homework. Experience with children is a plus!",
+        "skillsBasedVolunteering": "Skills Based Volunteering",
+        "skillsBasedVolunteeringInfo": "Some opportunities may offer a chance to use your special expertise, such as bike repair, gardening, musical skills, or organizational savvy.",
+        "events": "Events",
+        "eventsInfo": "Occasionally events require unique support from volunteers. These might be festivals, dinners, outings, cultural activities, a day of setting up a clothes sorting station, gardening, or a workshop.",
+        "sportsActivities": "General Volunteering",
+        "sportsActivitiesInfo": "We are always looking for volunteers either for tandem, clothes sorting or to help organize sports activities for children, teenagers or adults in accommodation centers.",
+        "accompanyARefugee": "Accompany",
+        "accompanyARefugeeInfo": "Fluent in German and a second language? Support individuals in dealing with bureaucracy at appointments - going with them to the doctor, Job Centre or otherwise."
+      },
+      "footerButton": "See volunteering opportunities"
     }
   },
 
@@ -47,6 +72,12 @@
       "sortBy": "SortBy",
       "newToOld": "Newest to Oldest",
       "oldToNew": "Oldest to Newest"
+    },
+    "heroSection": {
+      "heroText": "Need-based voluntary support for refugees in Berlin",
+      "heroSupportingText": "We connect volunteers to refugees accommodation centers in need",
+      "buttonJoinVolunteer": "Join as a volunteer",
+      "buttonJoinRefugeeCenter": "Join as a refugee centre"
     }
   }
 }

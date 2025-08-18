@@ -1,6 +1,6 @@
 import { Lang } from "need4deed-sdk";
 
-import { n4dLanguageLocalStorageKey } from "@/config/constants";
+import { CLOUDFRONT_URL, n4dLanguageLocalStorageKey } from "@/config/constants";
 
 export function setStoredLang(lang: Lang) {
   if (isEnumValue(Lang, lang)) {
@@ -26,3 +26,7 @@ export function getStoredLang(): Lang | null {
 
   return null;
 }
+
+export const getImageUrl = (imageName: string): string => {
+  return `${CLOUDFRONT_URL}/${imageName}`;
+};

@@ -12,6 +12,7 @@ export enum Subpage {
   LEGAL_NOTICE = "legal-notice",
   LOGIN = "login",
   OPPORTUNITY_CARDS = "opportunity-cards",
+  VOLUNTEER_FORM = "volunteer-form",
   VPA = "vpa",
 }
 
