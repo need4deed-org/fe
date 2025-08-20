@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Button } from "../core/button";
 import { useTranslation } from "react-i18next";
+import { useRouter } from "next/navigation";
 
 const LoginRegisterContainer = styled.div`
   display: flex;
@@ -10,10 +11,12 @@ const LoginRegisterContainer = styled.div`
 
 export function LoginRegister() {
   const { t } = useTranslation();
+  const router = useRouter();
+
   return (
     <LoginRegisterContainer>
       <Button
-        onClick={() => {}}
+        onClick={() => router.push("/login")}
         text={t("dashboard.header.button.login")}
         height="var(--layout-static-page-header-button-height)"
         textFontSize="var(--layout-static-page-header-button-text-font-size)"
@@ -21,6 +24,7 @@ export function LoginRegister() {
         border="var(--layout-static-page-header-button-border)"
         textColor="var(--color-aubergine)"
       />
+
       <Button
         onClick={() => {}}
         text={t("dashboard.header.button.joinVolunteer")}
