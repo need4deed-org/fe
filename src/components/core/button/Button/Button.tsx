@@ -12,6 +12,7 @@ const hoverBGColorMap = {
   "var(--color-white)": "var(--color-orchid-light)",
   "var(--color-orchid-subtle)": "var(--color-aubergine-subtle)",
   "var(--color-orchid-light)": "var(--color-orchid)",
+  "var(--color--grey-50)": "var(--color-aubergine)",
 };
 
 type BackgroundColorKeys = keyof typeof hoverBGColorMap;
@@ -22,6 +23,7 @@ interface StyledButtonProps extends React.HTMLProps<HTMLButtonElement> {
   padding?: string;
   $iconPosition?: "left" | "right";
   border?: string;
+  textHoverColor?: string;
 }
 
 const StyledButton = styled.button<StyledButtonProps>`
@@ -40,6 +42,10 @@ const StyledButton = styled.button<StyledButtonProps>`
 
   &:hover {
     background-color: ${(props) => hoverBGColorMap[props.backgroundcolor || defaultBGColor]};
+
+    ${ButtonSpan} {
+      color: ${(props) => props.textHoverColor};
+    }
   }
 `;
 
@@ -49,6 +55,7 @@ interface Props {
   onClick: () => void;
   backgroundcolor?: BackgroundColorKeys;
   textColor?: string;
+  textHoverColor?: string;
   height?: string;
   width?: string;
   iconName?: IconName;
@@ -64,6 +71,7 @@ export function Button({
   onClick,
   backgroundcolor,
   textColor,
+  textHoverColor,
   height,
   width,
   iconName,
@@ -82,6 +90,7 @@ export function Button({
       padding={text ? "var(--button-padding)" : "0px"}
       $iconPosition={iconPosition}
       border={border}
+      textHoverColor={textHoverColor}
     >
       {iconName && (
         <IconDiv color={iconColor} size={iconSize}>

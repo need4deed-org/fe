@@ -8,6 +8,7 @@ import { DashboardLayout, PageLayout } from "../Layout";
 import { CustomHeading, Paragraph } from "../styled/text";
 import { FormInput } from "../core/common";
 import { useState } from "react";
+import { Button, Checkbox } from "../core/button";
 
 const urlLogin = "/api/auth/login";
 
@@ -42,6 +43,11 @@ const RememberMeDiv = styled.div`
   display: flex;
   flex-direction: row;
   gap: 12px;
+`;
+
+const LoginDiv = styled.div`
+  display: flex;
+  justify-content: center;
 `;
 
 interface LoginData {
@@ -93,6 +99,7 @@ export function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [rememberMeChecked, setRememberMeChecked] = useState(false);
 
   return (
     <PageLayout background="var(--color-white)">
@@ -105,6 +112,30 @@ export function Login() {
 
             <FormInput onInputChange={setEmail} value={email} placeHolder="Email" />
             <FormInput onInputChange={setPassword} value={password} placeHolder="Password" />
+
+            <RememberMeForgotPassDiv>
+              <RememberMeDiv>
+                <Checkbox
+                  checked={rememberMeChecked}
+                  onChange={() => setRememberMeChecked(!rememberMeChecked)}
+                  height="24px"
+                  width="24px"
+                  label="Remember Me"
+                  labelFontSize="20px"
+                />
+              </RememberMeDiv>
+              <Paragraph>Forgot password?</Paragraph>
+            </RememberMeForgotPassDiv>
+
+            <LoginDiv>
+              <Button
+                text="Log in"
+                onClick={() => {}}
+                backgroundcolor="var(--color--grey-50)"
+                textColor="var(--color--grey-400)"
+                textHoverColor="var(--color-magnolia)"
+              />
+            </LoginDiv>
           </LoginContentContainer>
         </LoginSubContainer>
 
