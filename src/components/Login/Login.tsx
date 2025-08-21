@@ -8,8 +8,18 @@ import { CustomHeading, Paragraph } from "../styled/text";
 import { FormInput } from "../core/common";
 import { Checkbox, Button } from "../core/button";
 import { useState } from "react";
+import { ImageWithGradient } from "../core/image";
+import { getImageUrl } from "@/utils/helpers";
+import { useScreenType } from "@/context/DeviceContext";
+import { ScreenTypes } from "@/config/constants";
 
 const urlLogin = "/api/auth/login";
+
+const imageNames: Record<ScreenTypes, string> = {
+  mobile: "hero_mobile.webp",
+  tablet: "hero_tablet.webp",
+  desktop: "new-design-hero.webp",
+};
 
 const LoginContainer = styled.div`
   display: flex;
@@ -61,6 +71,10 @@ interface LoginResponse {
 export function Login() {
   const router = useRouter();
   const [rememberMeChecked, setRememberMeChecked] = useState(false);
+
+  const screenType = useScreenType();
+  const imageUrl = getImageUrl(imageNames[screenType]);
+  const gradientClassName = "image-filter-gradient-blue ";
 
   const { mutate: login } = useMutation<LoginResponse, Error, LoginData>({
     mutationFn: async (data: LoginData): Promise<LoginResponse> => {
@@ -195,8 +209,7 @@ export function Login() {
         </LoginSubContainer>
 
         <LoginSubContainer>
-          <Paragraph>asdf</Paragraph>
-          <Paragraph>werwertwert</Paragraph>
+          <ImageWithGradient imageUrl={imageUrl} gradientClass={gradientClassName} />
         </LoginSubContainer>
       </LoginContainer>
     </PageLayout>
