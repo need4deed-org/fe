@@ -11,9 +11,9 @@ const FormInputContainer = styled.div`
 const ErrorMessageContainer = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 8px;
-  padding: 8px;
   align-items: center;
+  gap: var(--form-input-error-message-container-gap);
+  padding: var(--form-input-error-message-container-padding);
 `;
 
 interface StyledInputProps {
@@ -24,18 +24,17 @@ interface StyledInputProps {
 const StyledInput = styled.input<StyledInputProps>`
   color: var(--color-midnight);
   font-size: var(--form-input-fontSize);
-
-  &:focus {
-    outline: none;
-    border: 2px solid var(--color-green-200);
-  }
-
   height: var(--form-input-container-height);
   width: ${(props) => props.width || "-webkit-fill-available"};
   background-color: ${(props) => props.$backgroundColor || "var(--color-white)"};
   border-radius: var(--form-input-container-border-radius);
   padding: var(--form-input-container-padding);
   border: var(--form-input-container-border);
+
+  &:focus {
+    outline: none;
+    border: var(--form-input-container-border-focus);
+  }
 `;
 
 interface Props {
@@ -78,8 +77,13 @@ export function FormInput({
           .filter((e) => e)
           .map((error) => (
             <ErrorMessageContainer key={error}>
-              <WarningCircleIcon size={20} color="red" />
-              <Paragraph color="red" fontSize="16px" fontWeight={400} lineheight="20px">
+              <WarningCircleIcon size={20} color="var(--form-input-error-message-color)" />
+              <Paragraph
+                color="var(--form-input-error-message-color)"
+                fontSize="var(--form-input-error-message-fontSize)"
+                fontWeight="var(--form-input-error-message-fontWeight)"
+                lineheight="var(--form-input-error-message-lineHeight)"
+              >
                 {error}
               </Paragraph>
             </ErrorMessageContainer>

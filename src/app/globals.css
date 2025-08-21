@@ -64,6 +64,11 @@ html {
   --color-green-200: rgba(108, 225, 206, 1);
   --color-green-500: rgba(98, 205, 187, 1);
   --color-green-700: rgba(59, 124, 113, 1);
+  --color-red-50: rgba(254, 234, 231, 1);
+  --color-red-200: rgba(248, 160, 146, 1);
+  --color-red-400: rgba(243, 90, 65, 1);
+  --color-red-500: rgba(240, 49, 18, 1);
+  --color-red-600: rgba(208, 41, 13, 1);
 
   /* text */
   --text-h2-font-weight: 600;
@@ -126,6 +131,9 @@ html {
   /* paginated cards*/
   --indicators-container-gap: 8px;
   --arrows-button-container-gap: 8px;
+
+  /* form input */
+  --form-input-error-message-color: var(--color-red-600);
 }
 
 .with-linebreaks {
@@ -931,14 +939,22 @@ html {
     --form-input-container-border-radius: 8px;
     --form-input-container-padding: 16px;
     --form-input-container-border: 1px solid var(--color-grey-200);
+    --form-input-container-border-focus: 2px solid var(--color-green-200);
     --form-input-fontSize: 20px;
+    --form-input-error-message-container-gap: 8px;
+    --form-input-error-message-container-padding: 8px;
+    --form-input-error-message-fontSize: 16px;
+    --form-input-error-message-lineHeight: 20px;
+    --form-input-error-message-fontWeight: 400;
 
     --dashboard-login-container-height: 944px;
     --dashboard-login-content-container-width: 638px;
     --dashboard-login-content-container-gap: 32px;
+    --dashboard-login-heading-fontWeight: 600;
     --dashboard-login-heading-fontSize: 48px;
     --dashboard-login-heading-lineHeight: 52px;
     --dashboard-login-heading-letterSpacing: 0.25px;
     --dashboard-login-checkbox-label-fontSize: 20px;
+    --dashboard-login-forgot-password-label-fontWeight: 600;
   }
 }

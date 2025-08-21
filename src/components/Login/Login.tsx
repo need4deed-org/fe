@@ -43,7 +43,7 @@ const RememberMeForgotPassDiv = styled.div`
   justify-content: space-between;
 `;
 
-const LoginDiv = styled.div`
+const LoginButtonDiv = styled.div`
   display: flex;
   justify-content: center;
 `;
@@ -102,7 +102,7 @@ export function Login() {
         <LoginSubContainer>
           <LoginContentContainer>
             <CustomHeading
-              fontWeight={600}
+              fontWeight="var(--dashboard-login-heading-fontWeight)"
               fontSize="var(--dashboard-login-heading-fontSize)"
               lineheight="var(--dashboard-login-heading-lineHeight)"
               letterSpacing="var(--dashboard-login-heading-letterSpacing)"
@@ -169,12 +169,15 @@ export function Login() {
                   label="Remember Me"
                   labelFontSize="var(--dashboard-login-checkbox-label-fontSize)"
                 />
-                <Paragraph fontWeight={600} color="var(--color-midnight-light)">
+                <Paragraph
+                  fontWeight="var(--dashboard-login-forgot-password-label-fontWeight)"
+                  color="var(--color-midnight-light)"
+                >
                   Forgot password?
                 </Paragraph>
               </RememberMeForgotPassDiv>
 
-              <LoginDiv>
+              <LoginButtonDiv>
                 <form.Subscribe selector={(state) => state}>
                   {() => (
                     <Button
@@ -186,7 +189,7 @@ export function Login() {
                     />
                   )}
                 </form.Subscribe>
-              </LoginDiv>
+              </LoginButtonDiv>
             </StyledForm>
           </LoginContentContainer>
         </LoginSubContainer>
