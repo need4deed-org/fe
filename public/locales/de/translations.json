@@ -84,6 +84,13 @@
         "login": "Anmelden",
         "joinVolunteer": "Jetzt sich engagieren"
       }
+    },
+    "login": {
+      "login": "Anmelden",
+      "email": "Email",
+      "password": "Passwort",
+      "rememberMe": "Angemeldet bleiben",
+      "forgotPassword": "Passwort vergessen"
     }
   }
 }

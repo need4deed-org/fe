@@ -84,6 +84,13 @@
         "login": "Log in",
         "joinVolunteer": "Join as a volunteer"
       }
+    },
+    "login": {
+      "login": "Log in",
+      "email": "Email",
+      "password": "Password",
+      "rememberMe": "Remember Me",
+      "forgotPassword": "Forgot Password"
     }
   }
 }

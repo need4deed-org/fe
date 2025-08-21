@@ -12,8 +12,10 @@ import { ImageWithGradient } from "../core/image";
 import { getImageUrl } from "@/utils/helpers";
 import { useScreenType } from "@/context/DeviceContext";
 import { ScreenTypes } from "@/config/constants";
+import { useTranslation } from "react-i18next";
 
 const urlLogin = "/api/auth/login";
+const gradientClassName = "image-filter-gradient-blue ";
 
 const imageNames: Record<ScreenTypes, string> = {
   mobile: "hero_mobile.webp",
@@ -71,10 +73,9 @@ interface LoginResponse {
 export function Login() {
   const router = useRouter();
   const [rememberMeChecked, setRememberMeChecked] = useState(false);
-
   const screenType = useScreenType();
   const imageUrl = getImageUrl(imageNames[screenType]);
-  const gradientClassName = "image-filter-gradient-blue ";
+  const { t } = useTranslation();
 
   const { mutate: login } = useMutation<LoginResponse, Error, LoginData>({
     mutationFn: async (data: LoginData): Promise<LoginResponse> => {
@@ -122,7 +123,7 @@ export function Login() {
               letterSpacing="var(--dashboard-login-heading-letterSpacing)"
               color="var(--color-midnight)"
             >
-              Log in
+              {t("dashboard.login.login")}
             </CustomHeading>
 
             <StyledForm
@@ -148,7 +149,7 @@ export function Login() {
                     type="email"
                     value={field.state.value}
                     onInputChange={(val) => field.handleChange(val)}
-                    placeHolder="Email"
+                    placeHolder={t("dashboard.login.email")}
                     errors={field.state.meta.errors}
                   />
                 )}
@@ -167,7 +168,7 @@ export function Login() {
                     type="password"
                     value={field.state.value}
                     onInputChange={(val) => field.handleChange(val)}
-                    placeHolder="Password"
+                    placeHolder={t("dashboard.login.password")}
                     errors={field.state.meta.errors}
                   />
                 )}
@@ -180,14 +181,14 @@ export function Login() {
                   // !Reason for fixed value: var() definition is not working for SVGs and a value should be given for initial SSR.
                   height="24px"
                   width="24px"
-                  label="Remember Me"
+                  label={t("dashboard.login.rememberMe")}
                   labelFontSize="var(--dashboard-login-checkbox-label-fontSize)"
                 />
                 <Paragraph
                   fontWeight="var(--dashboard-login-forgot-password-label-fontWeight)"
                   color="var(--color-midnight-light)"
                 >
-                  Forgot password?
+                  {t("dashboard.login.forgotPassword")}?
                 </Paragraph>
               </RememberMeForgotPassDiv>
 
@@ -195,7 +196,7 @@ export function Login() {
                 <form.Subscribe selector={(state) => state}>
                   {() => (
                     <Button
-                      text="Log in"
+                      text={t("dashboard.login.login")}
                       backgroundcolor="var(--color-grey-50)"
                       textColor={"var(--color-grey-400)"}
                       textHoverColor="var(--color-magnolia)"
