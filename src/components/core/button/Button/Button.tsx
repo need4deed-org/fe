@@ -12,7 +12,7 @@ const hoverBGColorMap = {
   "var(--color-white)": "var(--color-orchid-light)",
   "var(--color-orchid-subtle)": "var(--color-aubergine-subtle)",
   "var(--color-orchid-light)": "var(--color-orchid)",
-  "var(--color--grey-50)": "var(--color-aubergine)",
+  "var(--color-grey-50)": "var(--color-aubergine)",
 };
 
 type BackgroundColorKeys = keyof typeof hoverBGColorMap;
