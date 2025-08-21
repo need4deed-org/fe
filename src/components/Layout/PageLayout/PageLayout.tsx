@@ -30,6 +30,7 @@ const PageContentHeaderContainer = styled.div<PageContentHeaderContainerProps>`
   flex-direction: column;
   background: ${(props) => props.background || "var(--layout-static-page-background-default)"};
   padding-bottom: var(--layout-static-page-header-content-bottom-padding);
+  padding-top: var(--layout-static-page-header-height);
 `;
 
 export function PageLayout({ children, background }: Props) {

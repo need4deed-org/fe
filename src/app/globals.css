@@ -919,6 +919,16 @@ html {
 
     --form-input-container-height: 56px;
     --form-input-container-border-radius: 8px;
-    --form-input-container-padding: 0 32px;
+    --form-input-container-padding: 16px;
+    --form-input-container-border: 1px solid var(--color--grey-200);
+    --form-input-fontSize: 20px;
+
+    --dashboard-login-container-height: 944px;
+    --dashboard-login-content-container-width: 638px;
+    --dashboard-login-content-container-gap: 32px;
+    --dashboard-login-heading-fontSize: 48px;
+    --dashboard-login-heading-lineHeight: 52px;
+    --dashboard-login-heading-letterSpacing: 0.25px;
+    --dashboard-login-checkbox-label-fontSize: 20px;
   }
 }

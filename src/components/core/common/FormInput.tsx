@@ -15,12 +15,13 @@ const FormInputContainer = styled.div<FormInputContainerProps>`
   background-color: ${(props) => props.$backgroundColor || "var(--color-white)"};
   border-radius: var(--form-input-container-border-radius);
   align-items: center;
-  padding: 16px;
-  border: 1px solid var(--color--grey-200);
+  padding: var(--form-input-container-padding);
+  border: var(--form-input-container-border);
 `;
 
 const StyledInput = styled.input`
-  font-size: var(--search-input-font-size);
+  color: var(--color-midnight);
+  font-size: var(--form-input-fontSize);
   border: none;
   background: transparent;
 

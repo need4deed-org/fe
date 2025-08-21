@@ -2,7 +2,14 @@ import styled from "styled-components";
 import CheckboxSVG from "../../../svg/CheckboxSVG";
 import { Paragraph } from "../../../styled/text";
 
-export interface Props {
+const CheckboxContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--checkbox-container-gap);
+`;
+
+interface Props {
   width: string;
   height: string;
   color?: string;
@@ -11,13 +18,6 @@ export interface Props {
   onChange: (checked: boolean) => void;
   checked: boolean;
 }
-
-const CheckboxContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: var(--checkbox-container-gap);
-`;
 
 export function Checkbox({
   height,
@@ -30,20 +30,12 @@ export function Checkbox({
 }: Props) {
   return (
     <CheckboxContainer>
-      <CheckboxSVG
-        width={width}
-        height={height}
-        checked={checked}
-        onClick={() => onChange(!checked)}
-        color={color}
-      />
+      <CheckboxSVG width={width} height={height} checked={checked} onClick={() => onChange(!checked)} color={color} />
 
       {label && (
         <Paragraph
           fontWeight={
-            checked
-              ? "var(--checkbox-label-font-weight-selected)"
-              : "var(--checkbox-label-font-weight-not-selected)"
+            checked ? "var(--checkbox-label-font-weight-selected)" : "var(--checkbox-label-font-weight-not-selected)"
           }
           fontSize={labelFontSize || "var(--checkbox-label-font-size)"}
           lineheight="var(--checkbox-label-line-height)"

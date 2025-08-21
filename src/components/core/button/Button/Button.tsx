@@ -23,7 +23,7 @@ interface StyledButtonProps extends React.HTMLProps<HTMLButtonElement> {
   padding?: string;
   $iconPosition?: "left" | "right";
   border?: string;
-  textHoverColor?: string;
+  $textHoverColor?: string;
 }
 
 const StyledButton = styled.button<StyledButtonProps>`
@@ -44,7 +44,7 @@ const StyledButton = styled.button<StyledButtonProps>`
     background-color: ${(props) => hoverBGColorMap[props.backgroundcolor || defaultBGColor]};
 
     ${ButtonSpan} {
-      color: ${(props) => props.textHoverColor};
+      color: ${(props) => props.$textHoverColor};
     }
   }
 `;
@@ -90,7 +90,7 @@ export function Button({
       padding={text ? "var(--button-padding)" : "0px"}
       $iconPosition={iconPosition}
       border={border}
-      textHoverColor={textHoverColor}
+      $textHoverColor={textHoverColor}
     >
       {iconName && (
         <IconDiv color={iconColor} size={iconSize}>

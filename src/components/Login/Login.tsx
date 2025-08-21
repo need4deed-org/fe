@@ -4,7 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
 import styled from "styled-components";
-import { DashboardLayout, PageLayout } from "../Layout";
+import { PageLayout } from "../Layout";
 import { CustomHeading, Paragraph } from "../styled/text";
 import { FormInput } from "../core/common";
 import { useState } from "react";
@@ -15,8 +15,7 @@ const urlLogin = "/api/auth/login";
 const LoginContainer = styled.div`
   display: flex;
   flex-direction: row;
-  width: 100%;
-  height: 944px;
+  height: var(--dashboard-login-container-height);
 `;
 
 const LoginSubContainer = styled.div`
@@ -29,20 +28,14 @@ const LoginSubContainer = styled.div`
 const LoginContentContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 32px;
-  width: 638px;
+  width: var(--dashboard-login-content-container-width);
+  gap: var(--dashboard-login-content-container-gap);
 `;
 
 const RememberMeForgotPassDiv = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-`;
-
-const RememberMeDiv = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 12px;
 `;
 
 const LoginDiv = styled.div`
@@ -106,7 +99,13 @@ export function Login() {
       <LoginContainer>
         <LoginSubContainer>
           <LoginContentContainer>
-            <CustomHeading fontWeight={600} fontSize="48px" lineheight="52px" letterSpacing="0.5px">
+            <CustomHeading
+              fontWeight={600}
+              fontSize="var(--dashboard-login-heading-fontSize)"
+              lineheight="var(--dashboard-login-heading-lineHeight)"
+              letterSpacing="var(--dashboard-login-heading-letterSpacing)"
+              color="var(--color-midnight)"
+            >
               Log in
             </CustomHeading>
 
@@ -114,17 +113,18 @@ export function Login() {
             <FormInput onInputChange={setPassword} value={password} placeHolder="Password" />
 
             <RememberMeForgotPassDiv>
-              <RememberMeDiv>
-                <Checkbox
-                  checked={rememberMeChecked}
-                  onChange={() => setRememberMeChecked(!rememberMeChecked)}
-                  height="24px"
-                  width="24px"
-                  label="Remember Me"
-                  labelFontSize="20px"
-                />
-              </RememberMeDiv>
-              <Paragraph>Forgot password?</Paragraph>
+              <Checkbox
+                checked={rememberMeChecked}
+                onChange={() => setRememberMeChecked(!rememberMeChecked)}
+                // !Reason for fixed value: var() definition is not working for SVGs and a value should be given for initial SSR.
+                height="24px"
+                width="24px"
+                label="Remember Me"
+                labelFontSize="var(--dashboard-login-checkbox-label-fontSize)"
+              />
+              <Paragraph fontWeight={600} color="var(--color-midnight-light)">
+                Forgot password?
+              </Paragraph>
             </RememberMeForgotPassDiv>
 
             <LoginDiv>
