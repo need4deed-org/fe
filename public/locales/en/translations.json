@@ -90,7 +90,10 @@
       "email": "Email",
       "password": "Password",
       "rememberMe": "Remember Me",
-      "forgotPassword": "Forgot Password"
+      "forgotPassword": "Forgot Password",
+      "emailMissing": "Email's missing.",
+      "emailMissingAtChar": "Email must contain an '@' character.",
+      "passwordMissing": "Password's missing."
     }
   }
 }

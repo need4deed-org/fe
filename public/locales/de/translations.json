@@ -90,7 +90,10 @@
       "email": "Email",
       "password": "Passwort",
       "rememberMe": "Angemeldet bleiben",
-      "forgotPassword": "Passwort vergessen"
+      "forgotPassword": "Passwort vergessen",
+      "emailMissing": "E-Mail fehlt.",
+      "emailMissingAtChar": "Die E-Mail-Adresse muss ein '@'-Zeichen enthalten.",
+      "passwordMissing": "Passwort fehlt."
     }
   }
 }

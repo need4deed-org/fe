@@ -136,11 +136,11 @@ export function Login() {
               <form.Field
                 name="email"
                 validators={{
-                  onChange: ({ value }) => (!value ? "Email's missing." : undefined),
+                  onChange: ({ value }) => (!value ? t("dashboard.login.emailMissing") : undefined),
                   onChangeAsyncDebounceMs: 500,
                   onChangeAsync: async ({ value }) => {
                     await new Promise((resolve) => setTimeout(resolve, 1000));
-                    return value.includes("@") ? undefined : "Email must contain an '@' character.";
+                    return value.includes("@") ? undefined : t("dashboard.login.emailMissingAtChar");
                   },
                 }}
               >
@@ -159,7 +159,7 @@ export function Login() {
                 name="password"
                 validators={{
                   onChange: ({ value }) => {
-                    return !value ? "Password's missing." : undefined;
+                    return !value ? t("dashboard.login.passwordMissing") : undefined;
                   },
                 }}
               >
