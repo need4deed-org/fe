@@ -18,9 +18,9 @@ const urlLogin = "/api/auth/login";
 const gradientClassName = "image-filter-gradient-blue ";
 
 const imageNames: Record<ScreenTypes, string> = {
-  mobile: "hero_mobile.webp",
-  tablet: "hero_tablet.webp",
-  desktop: "new-design-hero.webp",
+  mobile: "login-hands.webp",
+  tablet: "login-hands.webp",
+  desktop: "login-hands.webp",
 };
 
 const LoginContainer = styled.div`

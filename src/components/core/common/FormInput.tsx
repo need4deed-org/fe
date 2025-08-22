@@ -20,7 +20,9 @@ interface StyledInputProps {
   type: string;
   width?: string;
   $backgroundColor?: string;
+  $errorsExist?: boolean;
 }
+
 const StyledInput = styled.input<StyledInputProps>`
   color: var(--color-midnight);
   font-size: var(--form-input-fontSize);
@@ -29,7 +31,7 @@ const StyledInput = styled.input<StyledInputProps>`
   background-color: ${(props) => props.$backgroundColor || "var(--color-white)"};
   border-radius: var(--form-input-container-border-radius);
   padding: var(--form-input-container-padding);
-  border: var(--form-input-container-border);
+  border: ${(props) => `var(--form-input-container-border${props.$errorsExist ? "-error" : ""})`};
 
   &:focus {
     outline: none;
@@ -60,6 +62,8 @@ export function FormInput({
     onInputChange(e.target.value);
   };
 
+  const errorsExist = errors && errors.length > 0;
+
   return (
     <FormInputContainer>
       <StyledInput
@@ -69,25 +73,23 @@ export function FormInput({
         type={type}
         width={width}
         $backgroundColor={backgroundColor}
+        $errorsExist={errorsExist}
       />
 
-      {errors &&
-        errors.length > 0 &&
-        errors
-          .filter((e) => e)
-          .map((error) => (
-            <ErrorMessageContainer key={error}>
-              <WarningCircleIcon size={20} color="var(--form-input-error-message-color)" />
-              <Paragraph
-                color="var(--form-input-error-message-color)"
-                fontSize="var(--form-input-error-message-fontSize)"
-                fontWeight="var(--form-input-error-message-fontWeight)"
-                lineheight="var(--form-input-error-message-lineHeight)"
-              >
-                {error}
-              </Paragraph>
-            </ErrorMessageContainer>
-          ))}
+      {errorsExist &&
+        errors.map((error) => (
+          <ErrorMessageContainer key={error}>
+            <WarningCircleIcon size={20} color="var(--form-input-error-message-color)" />
+            <Paragraph
+              color="var(--form-input-error-message-color)"
+              fontSize="var(--form-input-error-message-fontSize)"
+              fontWeight="var(--form-input-error-message-fontWeight)"
+              lineheight="var(--form-input-error-message-lineHeight)"
+            >
+              {error}
+            </Paragraph>
+          </ErrorMessageContainer>
+        ))}
     </FormInputContainer>
   );
 }

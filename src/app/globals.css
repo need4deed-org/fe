@@ -940,6 +940,7 @@ html {
     --form-input-container-padding: 16px;
     --form-input-container-border: 1px solid var(--color-grey-200);
     --form-input-container-border-focus: 2px solid var(--color-green-200);
+    --form-input-container-border-error: 2px solid var(--color-red-600);
     --form-input-fontSize: 20px;
     --form-input-error-message-container-gap: 8px;
     --form-input-error-message-container-padding: 8px;
