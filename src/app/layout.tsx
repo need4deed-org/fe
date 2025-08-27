@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
 import { I18nProvider } from "../config/i18next";
 import StyledComponentsRegistry from "@/lib/styled-components-registry";
 import { ScreenTypes } from "@/config/constants";
 import { headers } from "next/headers";
 import { DeviceProvider } from "@/context/DeviceContext";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "./globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -51,6 +53,8 @@ export default async function RootLayout({
             <I18nProvider>{children}</I18nProvider>
           </DeviceProvider>
         </StyledComponentsRegistry>
+
+        <ToastContainer />
       </body>
     </html>
   );

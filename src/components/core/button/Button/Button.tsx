@@ -63,6 +63,7 @@ interface Props {
   iconColor?: string;
   iconPosition?: "left" | "right";
   border?: string;
+  disabled?: boolean;
 }
 
 export function Button({
@@ -79,9 +80,11 @@ export function Button({
   iconColor = "var(--color-white)",
   iconPosition = "left",
   border,
+  disabled,
 }: Props) {
   return (
     <StyledButton
+      disabled={disabled}
       onClick={onClick}
       backgroundcolor={backgroundcolor}
       height={height}

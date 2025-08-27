@@ -93,7 +93,12 @@
       "forgotPassword": "Passwort vergessen",
       "emailMissing": "E-Mail fehlt.",
       "emailMissingAtChar": "Die E-Mail-Adresse muss ein '@'-Zeichen enthalten.",
-      "passwordMissing": "Passwort fehlt."
+      "passwordMissing": "Passwort fehlt.",
+      "successMessage": "Login successful"
     }
+  },
+
+  "message": {
+    "errorGeneric": "Etwas ist schief gelaufen!"
   }
 }

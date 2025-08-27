@@ -1,20 +1,14 @@
 "use client";
-import { useForm } from "@tanstack/react-form";
-import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
 import styled from "styled-components";
 import { PageLayout } from "../Layout";
-import { CustomHeading, Paragraph } from "../styled/text";
-import { FormInput } from "../core/common";
-import { Checkbox, Button } from "../core/button";
-import { useState } from "react";
+import { CustomHeading } from "../styled/text";
 import { ImageWithGradient } from "../core/image";
 import { getImageUrl } from "@/utils/helpers";
 import { useScreenType } from "@/context/DeviceContext";
 import { ScreenTypes } from "@/config/constants";
 import { useTranslation } from "react-i18next";
+import { LoginForm } from "./LoginForm";
 
-const urlLogin = "/api/auth/login";
 const gradientClassName = "image-filter-gradient-blue ";
 
 const imageNames: Record<ScreenTypes, string> = {
@@ -43,73 +37,10 @@ const LoginContentContainer = styled.div`
   gap: var(--dashboard-login-content-container-gap);
 `;
 
-const StyledForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: var(--dashboard-login-content-container-gap);
-`;
-
-const RememberMeForgotPassDiv = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`;
-
-const LoginButtonDiv = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
-interface LoginData {
-  email: string;
-  password: string;
-}
-
-interface LoginResponse {
-  message: string;
-  data: { token: string };
-}
-
 export function Login() {
-  const router = useRouter();
-  const [rememberMeChecked, setRememberMeChecked] = useState(false);
   const screenType = useScreenType();
   const imageUrl = getImageUrl(imageNames[screenType]);
   const { t } = useTranslation();
-
-  const { mutate: login } = useMutation<LoginResponse, Error, LoginData>({
-    mutationFn: async (data: LoginData): Promise<LoginResponse> => {
-      return fetch(urlLogin, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      }).then(async (res) => {
-        const body = res.json();
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status} ${(await body).message}`);
-        }
-        return body;
-      });
-    },
-  });
-
-  const form = useForm({
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-    onSubmit: async ({ value }) => {
-      login(value, {
-        onSuccess: ({ message }) => {
-          console.log("DEBUG:login:message", message);
-          router.push("/");
-        },
-        onError: (err) => {
-          console.error(err);
-        },
-      });
-    },
-  });
 
   return (
     <PageLayout background="var(--color-white)">
@@ -126,86 +57,7 @@ export function Login() {
               {t("dashboard.login.login")}
             </CustomHeading>
 
-            <StyledForm
-              onSubmit={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                form.handleSubmit();
-              }}
-            >
-              <form.Field
-                name="email"
-                validators={{
-                  onChange: ({ value }) => (!value ? t("dashboard.login.emailMissing") : undefined),
-                  onChangeAsyncDebounceMs: 500,
-                  onChangeAsync: async ({ value }) => {
-                    await new Promise((resolve) => setTimeout(resolve, 1000));
-                    return value.includes("@") ? undefined : t("dashboard.login.emailMissingAtChar");
-                  },
-                }}
-              >
-                {(field) => (
-                  <FormInput
-                    type="email"
-                    value={field.state.value}
-                    onInputChange={(val) => field.handleChange(val)}
-                    placeHolder={t("dashboard.login.email")}
-                    errors={field.state.meta.errors}
-                  />
-                )}
-              </form.Field>
-
-              <form.Field
-                name="password"
-                validators={{
-                  onChange: ({ value }) => {
-                    return !value ? t("dashboard.login.passwordMissing") : undefined;
-                  },
-                }}
-              >
-                {(field) => (
-                  <FormInput
-                    type="password"
-                    value={field.state.value}
-                    onInputChange={(val) => field.handleChange(val)}
-                    placeHolder={t("dashboard.login.password")}
-                    errors={field.state.meta.errors}
-                  />
-                )}
-              </form.Field>
-
-              <RememberMeForgotPassDiv>
-                <Checkbox
-                  checked={rememberMeChecked}
-                  onChange={() => setRememberMeChecked(!rememberMeChecked)}
-                  // !Reason for fixed value: var() definition is not working for SVGs and a value should be given for initial SSR.
-                  height="24px"
-                  width="24px"
-                  label={t("dashboard.login.rememberMe")}
-                  labelFontSize="var(--dashboard-login-checkbox-label-fontSize)"
-                />
-                <Paragraph
-                  fontWeight="var(--dashboard-login-forgot-password-label-fontWeight)"
-                  color="var(--color-midnight-light)"
-                >
-                  {t("dashboard.login.forgotPassword")}?
-                </Paragraph>
-              </RememberMeForgotPassDiv>
-
-              <LoginButtonDiv>
-                <form.Subscribe selector={(state) => state}>
-                  {() => (
-                    <Button
-                      text={t("dashboard.login.login")}
-                      backgroundcolor="var(--color-grey-50)"
-                      textColor={"var(--color-grey-400)"}
-                      textHoverColor="var(--color-magnolia)"
-                      onClick={() => {}}
-                    />
-                  )}
-                </form.Subscribe>
-              </LoginButtonDiv>
-            </StyledForm>
+            <LoginForm />
           </LoginContentContainer>
         </LoginSubContainer>
 
