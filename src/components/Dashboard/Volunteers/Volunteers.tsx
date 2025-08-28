@@ -5,6 +5,27 @@ import CardsHeader from "../common/CardsHeader/CardsHeader";
 import { useTranslation } from "react-i18next";
 import { DashboardLayout } from "@/components/Layout";
 import { useState } from "react";
+import VolunteerCard from "./VolunteerCard";
+import { Volunteer } from "./types";
+
+const mockVolunteer: Volunteer = {
+  originOpportunity: 1234,
+  fullName: "Jack Sparrow",
+  phone: "1234",
+  email: "jack@gmail.com",
+  postalCode: 12345,
+  goodConductCertificate: "Yes",
+  ifMeaslesVaccination: true,
+  leadFrom: "Berlin",
+  schedule: [[1, 5]],
+  preferredBerlinLocations: ["Berlin", "Koln"],
+  activities: ["TUTORING", "DAYCARE"],
+  skills: ["childcare", "cooking", "teaching"],
+  nativeLanguages: ["German", "Arabic"],
+  fluentLanguages: ["English"],
+  intermediateLanguages: ["French"],
+  comments: "some random comment",
+};
 
 const VolunteersContainer = styled.div`
   display: flex;
@@ -34,6 +55,8 @@ export function Volunteers() {
           setIsFiltersOpen={setIsFiltersOpen}
           onSearchInputChange={mockHandleInputChange}
         />
+
+        <VolunteerCard volunteer={mockVolunteer} />
       </VolunteersContainer>
     </DashboardLayout>
   );
