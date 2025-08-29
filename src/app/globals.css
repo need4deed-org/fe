@@ -132,6 +132,9 @@ html {
   /* paginated cards*/
   --indicators-container-gap: 8px;
   --arrows-button-container-gap: 8px;
+
+  /* image */
+  --image-circle-pic-size: 60px;
 }
 
 .with-linebreaks {
@@ -946,5 +949,6 @@ html {
     --dashboard-volunteers-card-status-div-padding: 6px 12px 6px 8px;
     --dashboard-volunteers-card-tag-div-gap: 4px;
     --dashboard-volunteers-card-tag-div-padding: 12px 14px 12px 14px;
+    --dashboard-volunteers-card-profile-div-gap: 16px;
   }
 }

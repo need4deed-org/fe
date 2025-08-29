@@ -20,6 +20,7 @@ import { BaseCard } from "@/components/styled/container";
 import { Heading3, Paragraph } from "@/components/styled/text";
 import { hyphenationStyles } from "@/components/styled/mixins";
 import { HourglassIcon, SparkleIcon } from "@phosphor-icons/react";
+import { CirclePic } from "@/components/styled/img";
 
 const Card = styled(BaseCard)`
   background-color: var(--color-orchid-subtle);
@@ -68,6 +69,13 @@ const TagDiv = styled.div`
   gap: var(--dashboard-volunteers-card-tag-div-gap);
 `;
 
+const ProfileDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--dashboard-volunteers-card-profile-div-gap);
+`;
+
 const LanguagesContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -96,22 +104,10 @@ export function VolunteerCard({
   volunteer,
 }: // iconName,
 Props) {
-  console.log(volunteer);
   // const { t, i18n } = useTranslation();
   // const screenType = useScreenType();
 
-  // const {
-  //   title,
-  //   languages,
-  //   schedule,
-  //   locations,
-  //   activities,
-  //   accompanyingDate,
-  //   voInformation,
-  //   opportunityType,
-  //   accompanyingTranslation,
-  //   defaultMainCommunication,
-  // } = opportunity;
+  const { fullName } = volunteer;
 
   // const languagesText = languages.join(", ");
 
@@ -175,6 +171,13 @@ Props) {
           <SparkleIcon size={18} color="var(--color-midnight)" />
         </TagDiv>
       </StatusTagsDiv>
+
+      <ProfileDiv>
+        <CirclePic src="https://d2nwrdddg8skub.cloudfront.net/images/mohsen.webp" size="64px" />
+        <Paragraph fontWeight={600} fontSize="20px" lineheight="24px" color="var(--color-midnight)">
+          {fullName}
+        </Paragraph>
+      </ProfileDiv>
       {/* <IconDiv>{iconNameMap[iconName]}</IconDiv>
       <HyphenatedHeading3 lang={i18n.language}>{title}</HyphenatedHeading3>
       {vo && <Paragraph>{voInformation}</Paragraph>}
