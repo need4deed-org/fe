@@ -950,5 +950,7 @@ html {
     --dashboard-volunteers-card-tag-div-gap: 4px;
     --dashboard-volunteers-card-tag-div-padding: 12px 14px 12px 14px;
     --dashboard-volunteers-card-profile-div-gap: 16px;
+    --dashboard-volunteers-card-languages-gap: 4px;
+    --asdf: 500;
   }
 }

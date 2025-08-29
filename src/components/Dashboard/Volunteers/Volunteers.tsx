@@ -21,8 +21,8 @@ const mockVolunteer: Volunteer = {
   preferredBerlinLocations: ["Berlin", "Koln"],
   activities: ["TUTORING", "DAYCARE"],
   skills: ["childcare", "cooking", "teaching"],
-  nativeLanguages: ["German", "Arabic"],
-  fluentLanguages: ["English"],
+  nativeLanguages: ["German", "Arabic", "Turkish"],
+  fluentLanguages: ["English", "Spanish"],
   intermediateLanguages: ["French"],
   comments: "some random comment",
 };

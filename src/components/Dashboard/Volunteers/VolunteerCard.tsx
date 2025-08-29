@@ -19,7 +19,7 @@ import { Volunteer } from "./types";
 import { BaseCard } from "@/components/styled/container";
 import { Heading3, Paragraph } from "@/components/styled/text";
 import { hyphenationStyles } from "@/components/styled/mixins";
-import { HourglassIcon, SparkleIcon } from "@phosphor-icons/react";
+import { HourglassIcon, SparkleIcon, TranslateIcon } from "@phosphor-icons/react";
 import { CirclePic } from "@/components/styled/img";
 
 const Card = styled(BaseCard)`
@@ -76,21 +76,32 @@ const ProfileDiv = styled.div`
   gap: var(--dashboard-volunteers-card-profile-div-gap);
 `;
 
-const LanguagesContainer = styled.div`
+const LanguagesDiv = styled.div`
   display: flex;
   flex-direction: column;
-  gap: var(--homepage-volunteering-opportunity-details-languages-gap);
+  gap: var(--dashboard-volunteers-card-languages-gap);
 `;
 
 const LanguageDetailContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: var(--homepage-volunteering-opportunity-details-languages-gap);
+  flex-direction: row;
+  gap: var(--dashboard-volunteers-card-languages-gap);
 `;
 
 const HyphenatedHeading3 = styled(Heading3)`
   ${hyphenationStyles}/* Apply the hyphenation mixin */
 `;
+
+interface CardParagraphProps {
+  text: string;
+  isBold?: boolean;
+}
+
+const CardParagraph = ({ text, isBold }: CardParagraphProps) => (
+  <Paragraph fontWeight={isBold ? 600 : 400} fontSize="16px" lineheight="16px">
+    {text}
+  </Paragraph>
+);
 
 interface Props extends React.CSSProperties {
   volunteer: Volunteer;
@@ -107,30 +118,13 @@ Props) {
   // const { t, i18n } = useTranslation();
   // const screenType = useScreenType();
 
-  const { fullName } = volunteer;
+  const { fullName, nativeLanguages, fluentLanguages, intermediateLanguages } = volunteer;
 
-  // const languagesText = languages.join(", ");
-
-  // const languagesComponent = (
-  //   <LanguagesContainer>
-  //     {opportunityType === OpportunityType.GENERAL ? (
-  //       <LanguageDetailContainer>
-  //         <Paragraph fontWeight={400}>{t("homepage.volunteeringOpportunities.mainCommunication")}:</Paragraph>
-  //         <Paragraph>{defaultMainCommunication}</Paragraph>
-  //       </LanguageDetailContainer>
-  //     ) : (
-  //       <LanguageDetailContainer>
-  //         <Paragraph fontWeight={400}>{t("homepage.volunteeringOpportunities.translationTo")}:</Paragraph>
-  //         <Paragraph>{accompanyingTranslation}</Paragraph>
-  //       </LanguageDetailContainer>
-  //     )}
-
-  //     <LanguageDetailContainer>
-  //       <Paragraph fontWeight={400}>{t("homepage.volunteeringOpportunities.residentsSpeak")}:</Paragraph>
-  //       <Paragraph>{languagesText}</Paragraph>
-  //     </LanguageDetailContainer>
-  //   </LanguagesContainer>
-  // );
+  const languages = [
+    { level: "Native", list: nativeLanguages.join(", ") },
+    { level: "Fluent", list: fluentLanguages.join(", ") },
+    { level: "Intermediate", list: intermediateLanguages.join(", ") },
+  ];
 
   // const district = locations.join(", ");
   // const scheduleAsStr = (accompanyingDate && formatAccompanyingDate(accompanyingDate)) || schedule || "";
@@ -165,7 +159,7 @@ Props) {
           </Paragraph>
         </StatusDiv>
         <TagDiv>
-          <Paragraph fontWeight={500} fontSize="18px" lineheight="18px" color="var(--color-midnight)">
+          <Paragraph fontWeight={500} fontSize="18px" lineheight="18px">
             NEW
           </Paragraph>
           <SparkleIcon size={18} color="var(--color-midnight)" />
@@ -174,10 +168,25 @@ Props) {
 
       <ProfileDiv>
         <CirclePic src="https://d2nwrdddg8skub.cloudfront.net/images/mohsen.webp" size="64px" />
-        <Paragraph fontWeight={600} fontSize="20px" lineheight="24px" color="var(--color-midnight)">
+        <Paragraph fontWeight={600} fontSize="20px" lineheight="24px">
           {fullName}
         </Paragraph>
       </ProfileDiv>
+
+      <LanguagesDiv>
+        <LanguageDetailContainer>
+          <TranslateIcon size={20} color="var(--icon-color)" />
+          <CardParagraph text="Languages:" isBold />
+        </LanguageDetailContainer>
+
+        {languages.map(({ level, list }) => (
+          <LanguageDetailContainer key={level}>
+            <CardParagraph text={`${level}:`} isBold />
+            <CardParagraph text={`${list}`} />
+          </LanguageDetailContainer>
+        ))}
+      </LanguagesDiv>
+
       {/* <IconDiv>{iconNameMap[iconName]}</IconDiv>
       <HyphenatedHeading3 lang={i18n.language}>{title}</HyphenatedHeading3>
       {vo && <Paragraph>{voInformation}</Paragraph>}
