@@ -99,6 +99,7 @@ html {
   --activities-container-gap: 8px;
   --activity-tag-border-radius: 4px;
   --activity-tag-padding: 6px 8px;
+  --activity-tag-gap: 8px;
 
   /*homepage volunteering opportunity */
   --homepage-volunteering-opportunity-detail-section-gap: 4px;
@@ -950,7 +951,6 @@ html {
     --dashboard-volunteers-card-tag-div-gap: 4px;
     --dashboard-volunteers-card-tag-div-padding: 12px 14px 12px 14px;
     --dashboard-volunteers-card-profile-div-gap: 16px;
-    --dashboard-volunteers-card-languages-gap: 4px;
-    --asdf: 500;
+    --dashboard-volunteers-card-detail-gap: 4px;
   }
 }

@@ -11,8 +11,8 @@ export interface Volunteer {
   leadFrom: string;
   schedule: [number, OptionId][];
   preferredBerlinLocations: OptionId[];
-  activities: OptionId[];
-  skills: OptionId[];
+  activities: string[];
+  skills: string[];
   nativeLanguages: OptionId[];
   fluentLanguages: OptionId[];
   intermediateLanguages: OptionId[];

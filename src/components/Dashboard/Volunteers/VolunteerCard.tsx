@@ -19,8 +19,11 @@ import { Volunteer } from "./types";
 import { BaseCard } from "@/components/styled/container";
 import { Heading3, Paragraph } from "@/components/styled/text";
 import { hyphenationStyles } from "@/components/styled/mixins";
-import { HourglassIcon, SparkleIcon, TranslateIcon } from "@phosphor-icons/react";
+import { CheckIcon, HourglassIcon, SparkleIcon, TranslateIcon } from "@phosphor-icons/react";
 import { CirclePic } from "@/components/styled/img";
+import { Tags } from "@/components/core/common";
+import CardDetail from "./CardDetail";
+import { IconName } from "./icon";
 
 const Card = styled(BaseCard)`
   background-color: var(--color-orchid-subtle);
@@ -76,16 +79,10 @@ const ProfileDiv = styled.div`
   gap: var(--dashboard-volunteers-card-profile-div-gap);
 `;
 
-const LanguagesDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: var(--dashboard-volunteers-card-languages-gap);
-`;
-
 const LanguageDetailContainer = styled.div`
   display: flex;
   flex-direction: row;
-  gap: var(--dashboard-volunteers-card-languages-gap);
+  gap: var(--dashboard-volunteers-card-detail-gap);
 `;
 
 const HyphenatedHeading3 = styled(Heading3)`
@@ -97,7 +94,7 @@ interface CardParagraphProps {
   isBold?: boolean;
 }
 
-const CardParagraph = ({ text, isBold }: CardParagraphProps) => (
+export const CardParagraph = ({ text, isBold }: CardParagraphProps) => (
   <Paragraph fontWeight={isBold ? 600 : 400} fontSize="16px" lineheight="16px">
     {text}
   </Paragraph>
@@ -118,7 +115,7 @@ Props) {
   // const { t, i18n } = useTranslation();
   // const screenType = useScreenType();
 
-  const { fullName, nativeLanguages, fluentLanguages, intermediateLanguages } = volunteer;
+  const { fullName, nativeLanguages, fluentLanguages, intermediateLanguages, activities, skills } = volunteer;
 
   const languages = [
     { level: "Native", list: nativeLanguages.join(", ") },
@@ -173,19 +170,30 @@ Props) {
         </Paragraph>
       </ProfileDiv>
 
-      <LanguagesDiv>
-        <LanguageDetailContainer>
-          <TranslateIcon size={20} color="var(--icon-color)" />
-          <CardParagraph text="Languages:" isBold />
-        </LanguageDetailContainer>
-
+      <CardDetail header="Languages" iconName={IconName.Translate}>
         {languages.map(({ level, list }) => (
           <LanguageDetailContainer key={level}>
             <CardParagraph text={`${level}:`} isBold />
             <CardParagraph text={`${list}`} />
           </LanguageDetailContainer>
         ))}
-      </LanguagesDiv>
+      </CardDetail>
+
+      <CardDetail header="Activities" iconName={IconName.ShootingStar}>
+        <Tags tags={activities} />
+      </CardDetail>
+
+      <CardDetail header="Skills & Experience" iconName={IconName.Wrench}>
+        <Tags tags={skills} backgroundColor="var(--color-white)" icon={<CheckIcon size={18} />} />
+      </CardDetail>
+
+      <CardDetail header="Preferred Availability" iconName={IconName.CalendarDots}>
+        To be implemented...
+      </CardDetail>
+
+      <CardDetail header="Preferred Districts" iconName={IconName.MapPin}>
+        To be implemented...
+      </CardDetail>
 
       {/* <IconDiv>{iconNameMap[iconName]}</IconDiv>
       <HyphenatedHeading3 lang={i18n.language}>{title}</HyphenatedHeading3>
