@@ -31,7 +31,7 @@
 .form-error em,
 .form-submit em {
   display: inline-block;
-  color: var(--color-red);
+  color: var(--color-red-500);
   background: var(--color-neutral-900);
   padding-inline: 0.3rem;
   margin-inline: 1rem;
@@ -65,7 +65,7 @@
 }
 
 .form-form-field :focus-within {
-  outline: solid 1px var(--color-green-lighter);
+  outline: solid 1px var(--color-green-400);
 }
 
 .form-form-field span {
@@ -112,7 +112,7 @@
 }
 
 .form-container a {
-  color: var(--color-purple);
+  color: var(--color-purple-500);
   margin-top: auto;
   align-self: end;
 }
@@ -174,12 +174,12 @@
 
 .form-pick input:checked+label {
   color: var(--color-neutral-900);
-  background: var(--color-purple);
+  background: var(--color-purple-500);
 }
 
 .form-pick input:checked+label:hover {
   color: var(--color-neutral-900);
-  background: var(--color-purple-lighter);
+  background: var(--color-purple-400);
 }
 
 .form-pick input:focus+label {
@@ -342,7 +342,7 @@
 }
 
 .modal-copied {
-  color: var(--color-purple);
+  color: var(--color-purple-500);
 }
 
 @media (max-width: 768px) {

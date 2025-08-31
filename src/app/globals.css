@@ -42,7 +42,7 @@ html {
 }
 
 .n4d-cta {
-  background-color: var(--n4d-secondary);
+  background-color: var(--color-green-300);
   color: var(--color-neutral-100);
   font-weight: bold;
   border-color: transparent;
@@ -64,7 +64,7 @@ html {
 }
 
 .n4d-cta:hover {
-  background-color: var(--n4d-secondary-darker);
+  background-color: var(--color-green-600);
 }
 
 .n4d-cta[disabled]:hover {
@@ -109,12 +109,12 @@ html {
   --color-neutral-300: #888;
   --color-neutral-200: #444;
   --color-neutral-100: #000;
-  --color-red: #ff0000;
-  --color-green-lighter: #00ce7e;
-  --n4d-secondary: #41f28d;
-  --n4d-secondary-darker: #00c980;
-  --color-purple: #9163f2;
-  --color-purple-lighter: rgb(120, 88, 198);
+  --color-red-500: #ff0000;
+  --color-green-300: #41f28d;
+  --color-green-400: #00ce7e;
+  --color-green-600: #00c980;
+  --color-purple-400: #7858c6;
+  --color-purple-500: #9163f2;
   /* text */
   --text-h2-font-weight: 600;
   --text-h2-font-size: 32px;
