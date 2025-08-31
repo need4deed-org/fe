@@ -15,7 +15,7 @@ export default function Home() {
           <a href="/forms/volunteer" className={styles.secondary}>
             Volunteer form
           </a>
-          <a href="/forms/volunteer" className={styles.secondary}>
+          <a href="/forms/opportunity" className={styles.secondary}>
             Opportunity form
           </a>
         </div>
