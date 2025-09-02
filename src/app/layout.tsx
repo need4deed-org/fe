@@ -3,8 +3,10 @@ import { Figtree } from "next/font/google";
 import "./globals.css";
 import { I18nProvider } from "../config/i18next";
 import StyledComponentsRegistry from "@/lib/styled-components-registry";
-import ClientWrapper from "@/utils/ClientWrapper";
 import QueryProvider from "@/utils/QueryProvider";
+import { headers } from "next/headers";
+import { ScreenTypes } from "@/config/constants";
+import { DeviceProvider } from "@/context/DeviceContext";
 
 const figtree = Figtree({
   subsets: ["latin"],
@@ -21,6 +23,21 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const getInitialDeviceType = async () => {
+    const headersList = await headers();
+    const deviceTypeHeader = headersList.get("x-device-type");
+
+    switch (deviceTypeHeader) {
+      case "mobile":
+        return ScreenTypes.MOBILE;
+      case "tablet":
+        return ScreenTypes.TABLET;
+      default:
+        return ScreenTypes.DESKTOP;
+    }
+  };
+
+  const initialScreenType = await getInitialDeviceType();
   return (
     <html lang="en">
       <head>
@@ -34,9 +51,9 @@ export default async function RootLayout({
       <body className={figtree.variable}>
         <StyledComponentsRegistry>
           <QueryProvider>
-            <ClientWrapper>
+            <DeviceProvider initialScreenType={initialScreenType}>
               <I18nProvider>{children}</I18nProvider>
-            </ClientWrapper>
+            </DeviceProvider>
           </QueryProvider>
         </StyledComponentsRegistry>
       </body>
