@@ -12,6 +12,12 @@ export default function Home() {
           <a href="/persons" className={styles.secondary}>
             Persons
           </a>
+          <a href="/forms/volunteer" className={styles.secondary}>
+            Volunteer form
+          </a>
+          <a href="/forms/opportunity" className={styles.secondary}>
+            Opportunity form
+          </a>
         </div>
       </main>
       <footer className={styles.footer}>FOOTER</footer>

@@ -14,12 +14,22 @@ export enum Subpage {
   OPPORTUNITY_CARDS = "opportunity-cards",
   VOLUNTEER_FORM = "volunteer-form",
   VPA = "vpa",
+  AGREEMENT = "agreement",
+  ANNOUNCEMENT = "announcement",
+  OPPORTUNITY_FORM = "opportunity-form",
+  DATA_PROTECTION = "data-protection",
+  GUIDELINES = "guidelines",
 }
 
 export enum Env {
   DEVELOPMENT = "development",
   TEST = "test",
   PRODUCTION = "production",
+}
+
+export enum YesNo {
+  YES = "Yes",
+  NO = "No",
 }
 
 export type FooterLink = [string, string];

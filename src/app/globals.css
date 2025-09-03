@@ -1,7 +1,8 @@
 body {
-  font-family: "Figtree", sans-serif;
+  font-family: "Figtree", sans-serif !important;
   width: 100%;
   margin: 0;
+
 }
 
 html {
@@ -13,6 +14,8 @@ html {
   padding: 0;
   margin: 0;
 }
+
+
 
 .gradient-overlay {
   position: absolute;
@@ -27,7 +30,55 @@ html {
   background: linear-gradient(180deg, var(--color-midnight-misty) 11.02%, var(--color-barely-blue) 89.66%);
 }
 
+.n4d-information-tooltip-parent {
+  position: relative;
+}
+
+.n4d-container {
+  padding-top: var(--n4d-gap);
+  margin-inline: auto;
+  max-width: var(--n4d-w);
+  direction: var(--n4d-lang-direction);
+}
+
+.n4d-cta {
+  background-color: var(--color-green-300);
+  color: var(--color-neutral-100);
+  font-weight: bold;
+  border-color: transparent;
+  border-radius: 25px;
+  padding: 15px 25px;
+}
+
+.n4d-cta[disabled] {
+  background-color: var(--color-neutral-700);
+  color: var(--color-neutral-200);
+  border-color: transparent;
+  border-radius: 25px;
+  padding: 15px 25px;
+}
+
+.n4d-cta a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.n4d-cta:hover {
+  background-color: var(--color-green-600);
+}
+
+.n4d-cta[disabled]:hover {
+  background-color: var(--color-neutral-700);
+}
+
 :root {
+  --n4d-gap: 0;
+  --n4d-w: min(90vw, 1080px);
+  --n4d-lang-direction: ltr;
+  --bs-body-font-family: "Figtree",
+    sans-serif;
+  --n4d-box-shadow:
+    0px 8px 12px rgba(0, 0, 0, 0.15), 0px 4px 4px rgba(0, 0, 0, 0.3);
   /* color */
   --color-midnight: rgba(26, 38, 132, 1);
   --color-midnight-light: rgba(58, 72, 178, 1);
@@ -58,7 +109,12 @@ html {
   --color-neutral-300: #888;
   --color-neutral-200: #444;
   --color-neutral-100: #000;
-
+  --color-red-500: #ff0000;
+  --color-green-300: #41f28d;
+  --color-green-400: #00ce7e;
+  --color-green-600: #00c980;
+  --color-purple-400: #7858c6;
+  --color-purple-500: #9163f2;
   /* text */
   --text-h2-font-weight: 600;
   --text-h2-font-size: 32px;
@@ -101,11 +157,9 @@ html {
   --homepage-testimonials-profile-gap: 16px;
 
   /* layout-static-page */
-  --layout-static-page-background-default: linear-gradient(
-    180deg,
-    var(--color-magnolia)-5.53%,
-    var(--color-orchid-dark) 100%
-  );
+  --layout-static-page-background-default: linear-gradient(180deg,
+      var(--color-magnolia)-5.53%,
+      var(--color-orchid-dark) 100%);
 
   /* button */
   --button-gap: 12px;
@@ -176,7 +230,8 @@ html {
     --page-opportunity-grid-max-width: 360px;
     --page-opportunity-grid-template-columns: 1fr;
     --page-opportunity-card-width: 312px;
-    --page-opportunity-card-height: auto; /*421px;*/
+    --page-opportunity-card-height: auto;
+    /*421px;*/
     --page-opportunity-popup-card-width: 328px;
     --page-opportunity-popup-card-height: auto;
     --page-opportunity-popup-card-x-margins: 36px;
@@ -433,7 +488,8 @@ html {
     --page-opportunity-grid-max-width: 768px;
     --page-opportunity-grid-template-columns: repeat(2, 1fr);
     --page-opportunity-card-width: 332px;
-    --page-opportunity-card-height: auto; /*472px;*/
+    --page-opportunity-card-height: auto;
+    /*472px;*/
     --page-opportunity-popup-card-width: 688px;
     --page-opportunity-popup-card-height: auto;
     --page-opportunity-popup-card-x-margins: 36px;
@@ -675,7 +731,8 @@ html {
     --page-opportunity-grid-max-width: 1440px;
     --page-opportunity-grid-template-columns: 1fr 1fr 1fr 1fr;
     --page-opportunity-card-width: 310px;
-    --page-opportunity-card-height: auto; /*472px;*/
+    --page-opportunity-card-height: auto;
+    /*472px;*/
     --page-opportunity-popup-card-width: 688px;
     --page-opportunity-popup-card-height: auto;
     --page-opportunity-popup-card-x-margins: 36px;
