@@ -22,11 +22,10 @@ export const usePostMutation = <TData, TResponse, TError = Error>({
       return response.data;
     },
 
-    onSuccess: (data) => {
-      console.log("successMessage", successMessage);
+    onSuccess: (responseData) => {
       toast.success(t(successMessage || "message.successful") + " 🎉");
 
-      if (onSuccessCallback) onSuccessCallback(data);
+      if (onSuccessCallback) onSuccessCallback(responseData);
     },
 
     onError: (error) => {
