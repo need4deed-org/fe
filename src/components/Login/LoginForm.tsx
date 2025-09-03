@@ -39,7 +39,10 @@ const useLoginMutation = () => {
     onError: (error) => {
       let errorMessage = t("message.errorGeneric");
 
-      if (axios.isAxiosError(error)) errorMessage = error.response?.data?.message;
+      if (axios.isAxiosError(error)) {
+        const errorData = error.response?.data;
+        errorMessage = errorData?.message || errorData;
+      }
 
       toast.error(errorMessage);
     },
@@ -153,7 +156,6 @@ export const LoginForm = () => {
               backgroundcolor="var(--color-grey-50)"
               textColor={"var(--color-grey-400)"}
               textHoverColor="var(--color-magnolia)"
-              onClick={() => {}}
               disabled={!form.state.canSubmit || isPending}
             />
           )}
