@@ -99,6 +99,7 @@
   },
 
   "message": {
+    "successful": "Successful",
     "errorGeneric": "Something went wrong!"
   }
 }

@@ -2,15 +2,13 @@ import { useForm } from "@tanstack/react-form";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "next/navigation";
-import { useMutation } from "@tanstack/react-query";
 import { FormInput } from "../core/common";
 import styled from "styled-components";
-import { toast } from "react-toastify";
-import axios from "axios";
 import { Button, Checkbox } from "../core/button";
 import { Paragraph } from "../styled/text";
+import usePostMutation from "@/hooks/usePostMutation";
 
-const URL_LOGIN = "/api/auth/login";
+const API_PATH_LOGIN = "/api/auth/login";
 
 interface LoginData {
   email: string;
@@ -22,29 +20,14 @@ interface LoginResponse {
   data: { token: string };
 }
 
-// --- API Service ---
 const useLoginMutation = () => {
   const router = useRouter();
-  const { t } = useTranslation();
 
-  return useMutation<LoginResponse, Error, LoginData>({
-    mutationFn: async (data) => {
-      const response = await axios.post(URL_LOGIN, data);
-      return response.data;
-    },
-    onSuccess: () => {
-      toast.success(t("dashboard.login.successMessage") + "  🎉");
+  return usePostMutation<LoginData, LoginResponse>({
+    apiPath: API_PATH_LOGIN,
+    successMessage: "dashboard.login.successMessage",
+    onSuccessCallback: () => {
       router.push("/");
-    },
-    onError: (error) => {
-      let errorMessage = t("message.errorGeneric");
-
-      if (axios.isAxiosError(error)) {
-        const errorData = error.response?.data;
-        errorMessage = errorData?.message || errorData;
-      }
-
-      toast.error(errorMessage);
     },
   });
 };
