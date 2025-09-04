@@ -53,7 +53,12 @@
       "filters": {
         "button": "FILTERS"
       },
-      "volunteers": "Volunteers"
+      "volunteers": "Volunteers",
+      "languages": "Languages",
+      "activities": "Activities",
+      "skillsExperience": "Skills & Experience",
+      "preferredAvailability": "Preferred Availability",
+      "preferredDistricts": "Preferred Districts"
     },
     "home": {
       "sidebar": {

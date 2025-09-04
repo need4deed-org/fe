@@ -18,7 +18,7 @@ const mockVolunteer: Volunteer = {
   ifMeaslesVaccination: true,
   leadFrom: "Berlin",
   schedule: [[1, 5]],
-  preferredBerlinLocations: ["Berlin", "Koln"],
+  preferredBerlinLocations: ["Treptow", "Kreuzberg", "Neukölln", "Friedrichshain"],
   activities: ["TUTORING", "UNIQUE SKILLS", "ARTS & CRAFTS", "DAYCARE", "WOMEN'S ACTIVITIES"],
   skills: ["Fitness", "Cooking", "Gardening", "Teaching"],
   nativeLanguages: ["German", "Arabic", "Turkish"],

@@ -952,5 +952,15 @@ html {
     --dashboard-volunteers-card-tag-div-padding: 12px 14px 12px 14px;
     --dashboard-volunteers-card-profile-div-gap: 16px;
     --dashboard-volunteers-card-detail-gap: 4px;
+    --dashboard-volunteers-card-detail-icon-size: 20px;
+    --dashboard-volunteers-card-status-fontWeight: 600;
+    --dashboard-volunteers-card-status-fontSize: 14px;
+    --dashboard-volunteers-card-status-lineHeight: 20px;
+    --dashboard-volunteers-card-tag-fontWeight: 500;
+    --dashboard-volunteers-card-tag-fontSize: 18px;
+    --dashboard-volunteers-card-tag-lineHeight: 18px;
+    --dashboard-volunteers-card-profile-fontWeight: 600;
+    --dashboard-volunteers-card-profile-fontSize: 20px;
+    --dashboard-volunteers-card-profile-lineHeight: 24px;
   }
 }

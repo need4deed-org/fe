@@ -1,29 +1,118 @@
-// import {
-//   CalendarDotsIcon as CalendarDots,
-//   MapPinIcon as MapPin,
-//   TranslateIcon as Translate,
-// } from "@phosphor-icons/react";
-// import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
-// import { OpportunityType } from "need4deed-sdk";
-// import { ScreenTypes } from "../../config/types";
-// import useScreenType from "../../hooks/useScreenType";
-// import { Activities } from "../core/common";
-// import { iconNameMap } from "../VolunteeringCategories/icon";
-// import { IconName } from "../VolunteeringCategories/types";
-// import OpportunityCardDetails, { CardDetail } from "./OpportunityCardDetail";
 import { Volunteer } from "./types";
-// import { formatAccompanyingDate } from "./utils";
-// import { hyphenationStyles } from "../styled/mixins";
 import { BaseCard } from "@/components/styled/container";
-import { Heading3, Paragraph } from "@/components/styled/text";
-import { hyphenationStyles } from "@/components/styled/mixins";
-import { CheckIcon, HourglassIcon, SparkleIcon, TranslateIcon } from "@phosphor-icons/react";
+import { Paragraph } from "@/components/styled/text";
+import { CheckIcon, HourglassIcon, SparkleIcon } from "@phosphor-icons/react";
 import { CirclePic } from "@/components/styled/img";
 import { Tags } from "@/components/core/common";
 import CardDetail from "./CardDetail";
 import { IconName } from "./icon";
+import { useTranslation } from "react-i18next";
+
+interface Props extends React.CSSProperties {
+  volunteer: Volunteer;
+}
+
+export function VolunteerCard({ volunteer }: Props) {
+  const { t } = useTranslation();
+
+  const {
+    fullName,
+    nativeLanguages,
+    fluentLanguages,
+    intermediateLanguages,
+    activities,
+    skills,
+    preferredBerlinLocations,
+  } = volunteer;
+
+  const languages = [
+    { level: "Native", list: nativeLanguages.join(", ") },
+    { level: "Fluent", list: fluentLanguages.join(", ") },
+    { level: "Intermediate", list: intermediateLanguages.join(", ") },
+  ];
+
+  return (
+    <Card>
+      <StatusTagsDiv>
+        <StatusDiv>
+          <HourglassIcon size={18} color="var(--color-red-500)" />
+          <Paragraph
+            fontWeight="var(--dashboard-volunteers-card-status-fontWeight)"
+            fontSize="var(--dashboard-volunteers-card-status-fontSize)"
+            lineheight="var(--dashboard-volunteers-card-status-lineHeight)"
+            color="var(--color-red-500)"
+          >
+            Pending Review
+          </Paragraph>
+        </StatusDiv>
+        <TagDiv>
+          <Paragraph
+            fontWeight="var(--dashboard-volunteers-card-tag-fontWeight)"
+            fontSize="var(--dashboard-volunteers-card-tag-fontSize)"
+            lineheight="var(--dashboard-volunteers-card-tag-lineHeight)"
+          >
+            NEW
+          </Paragraph>
+          <SparkleIcon size={18} color="var(--color-midnight)" />
+        </TagDiv>
+      </StatusTagsDiv>
+
+      <ProfileDiv>
+        <CirclePic src="https://d2nwrdddg8skub.cloudfront.net/images/mohsen.webp" size="64px" />
+        <Paragraph
+          fontWeight="var(--dashboard-volunteers-card-profile-fontWeight)"
+          fontSize="var(--dashboard-volunteers-card-profile-fontSize)"
+          lineheight="var(--dashboard-volunteers-card-profile-lineHeight)"
+        >
+          {fullName}
+        </Paragraph>
+      </ProfileDiv>
+
+      <CardDetail header={t("dashboard.volunteers.languages")} iconName={IconName.Translate}>
+        {languages.map(({ level, list }) => (
+          <LanguageDetailContainer key={level}>
+            <CardParagraph text={`${level}:`} isBold />
+            <CardParagraph text={`${list}`} />
+          </LanguageDetailContainer>
+        ))}
+      </CardDetail>
+
+      <CardDetail header={t("dashboard.volunteers.activities")} iconName={IconName.ShootingStar}>
+        <Tags tags={activities} />
+      </CardDetail>
+
+      <CardDetail header={t("dashboard.volunteers.skillsExperience")} iconName={IconName.Wrench}>
+        <Tags tags={skills} backgroundColor="var(--color-white)" icon={<CheckIcon size={18} />} />
+      </CardDetail>
+
+      <CardDetail header={t("dashboard.volunteers.preferredAvailability")} iconName={IconName.CalendarDots}>
+        <CardParagraph text="Tuesdays & Thursdays, 9:00-11:00 Occasional Saturdays" />
+      </CardDetail>
+
+      <CardDetail header={t("dashboard.volunteers.preferredDistricts")} iconName={IconName.MapPin}>
+        <CardParagraph text={preferredBerlinLocations.join(", ")} />
+      </CardDetail>
+    </Card>
+  );
+}
+
+export default VolunteerCard;
+
+/*  Helper components */
+interface CardParagraphProps {
+  text: string;
+  isBold?: boolean;
+}
+
+export const CardParagraph = ({ text, isBold }: CardParagraphProps) => (
+  <Paragraph fontWeight={isBold ? 600 : 400} fontSize="16px" lineheight="16px">
+    {text}
+  </Paragraph>
+);
+
+/*  Styles */
 
 const Card = styled(BaseCard)`
   background-color: var(--color-orchid-subtle);
@@ -84,125 +173,3 @@ const LanguageDetailContainer = styled.div`
   flex-direction: row;
   gap: var(--dashboard-volunteers-card-detail-gap);
 `;
-
-const HyphenatedHeading3 = styled(Heading3)`
-  ${hyphenationStyles}/* Apply the hyphenation mixin */
-`;
-
-interface CardParagraphProps {
-  text: string;
-  isBold?: boolean;
-}
-
-export const CardParagraph = ({ text, isBold }: CardParagraphProps) => (
-  <Paragraph fontWeight={isBold ? 600 : 400} fontSize="16px" lineheight="16px">
-    {text}
-  </Paragraph>
-);
-
-interface Props extends React.CSSProperties {
-  volunteer: Volunteer;
-  // iconName: IconName;
-  // vo?: boolean;
-  // onClickHandler?: (opportunity: Opportunity) => void;
-  // CTAs?: ({ flexDirection, opportunity }: React.CSSProperties & { opportunity: Opportunity }) => React.ReactNode;
-}
-
-export function VolunteerCard({
-  volunteer,
-}: // iconName,
-Props) {
-  // const { t, i18n } = useTranslation();
-  // const screenType = useScreenType();
-
-  const { fullName, nativeLanguages, fluentLanguages, intermediateLanguages, activities, skills } = volunteer;
-
-  const languages = [
-    { level: "Native", list: nativeLanguages.join(", ") },
-    { level: "Fluent", list: fluentLanguages.join(", ") },
-    { level: "Intermediate", list: intermediateLanguages.join(", ") },
-  ];
-
-  // const district = locations.join(", ");
-  // const scheduleAsStr = (accompanyingDate && formatAccompanyingDate(accompanyingDate)) || schedule || "";
-
-  // const cardDetails: CardDetail[] = [
-  //   {
-  //     icon: <Translate size={20} color="var(--icon-color)" />,
-  //     headerText: t(`homepage.volunteeringOpportunities.languages`),
-  //     bodyTextComponent: languagesComponent,
-  //   },
-  //   {
-  //     icon: <CalendarDots size={20} color="var(--icon-color)" />,
-  //     headerText: accompanyingDate
-  //       ? t(`homepage.volunteeringOpportunities.dateOfAppointment`)
-  //       : t(`homepage.volunteeringOpportunities.schedule`),
-  //     bodyTextComponent: <Paragraph>{scheduleAsStr}</Paragraph>,
-  //   },
-  //   {
-  //     icon: <MapPin size={20} weight="fill" color="var(--icon-color)" />,
-  //     headerText: t(`homepage.volunteeringOpportunities.district`),
-  //     bodyTextComponent: <Paragraph>{district}</Paragraph>,
-  //   },
-  // ];
-
-  return (
-    <Card>
-      <StatusTagsDiv>
-        <StatusDiv>
-          <HourglassIcon size={18} color="var(--color-red-500)" />
-          <Paragraph fontWeight={600} fontSize="14px" lineheight="20px" color="var(--color-red-500)">
-            Pending Review
-          </Paragraph>
-        </StatusDiv>
-        <TagDiv>
-          <Paragraph fontWeight={500} fontSize="18px" lineheight="18px">
-            NEW
-          </Paragraph>
-          <SparkleIcon size={18} color="var(--color-midnight)" />
-        </TagDiv>
-      </StatusTagsDiv>
-
-      <ProfileDiv>
-        <CirclePic src="https://d2nwrdddg8skub.cloudfront.net/images/mohsen.webp" size="64px" />
-        <Paragraph fontWeight={600} fontSize="20px" lineheight="24px">
-          {fullName}
-        </Paragraph>
-      </ProfileDiv>
-
-      <CardDetail header="Languages" iconName={IconName.Translate}>
-        {languages.map(({ level, list }) => (
-          <LanguageDetailContainer key={level}>
-            <CardParagraph text={`${level}:`} isBold />
-            <CardParagraph text={`${list}`} />
-          </LanguageDetailContainer>
-        ))}
-      </CardDetail>
-
-      <CardDetail header="Activities" iconName={IconName.ShootingStar}>
-        <Tags tags={activities} />
-      </CardDetail>
-
-      <CardDetail header="Skills & Experience" iconName={IconName.Wrench}>
-        <Tags tags={skills} backgroundColor="var(--color-white)" icon={<CheckIcon size={18} />} />
-      </CardDetail>
-
-      <CardDetail header="Preferred Availability" iconName={IconName.CalendarDots}>
-        To be implemented...
-      </CardDetail>
-
-      <CardDetail header="Preferred Districts" iconName={IconName.MapPin}>
-        To be implemented...
-      </CardDetail>
-
-      {/* <IconDiv>{iconNameMap[iconName]}</IconDiv>
-      <HyphenatedHeading3 lang={i18n.language}>{title}</HyphenatedHeading3>
-      {vo && <Paragraph>{voInformation}</Paragraph>}
-      <Activities activities={activities} />
-      <OpportunityCardDetails cardDetails={cardDetails} />
-      {CTAs && <CTAs flexDirection={screenType === ScreenTypes.MOBILE ? "column" : "row"} opportunity={opportunity} />} */}
-    </Card>
-  );
-}
-
-export default VolunteerCard;

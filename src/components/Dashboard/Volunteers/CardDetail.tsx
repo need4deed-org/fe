@@ -10,6 +10,21 @@ interface Props {
   iconName: IconName;
 }
 
+export default function CardDetail({ header, children, iconName }: Props) {
+  return (
+    <CardDetailContainer>
+      <CardDetailHeaderDiv>
+        <IconDiv size="var(--dashboard-volunteers-card-detail-icon-size)">{iconNameMap[iconName]}</IconDiv>
+        <CardParagraph text={header + ":"} isBold />
+      </CardDetailHeaderDiv>
+
+      {children}
+    </CardDetailContainer>
+  );
+}
+
+/** Styles */
+
 const CardDetailContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -22,16 +37,3 @@ const CardDetailHeaderDiv = styled.div`
   align-items: center;
   gap: var(--dashboard-volunteers-card-detail-gap);
 `;
-
-export default function CardDetail({ header, children, iconName }: Props) {
-  return (
-    <CardDetailContainer>
-      <CardDetailHeaderDiv>
-        <IconDiv size="20px">{iconNameMap[iconName]}</IconDiv>
-        <CardParagraph text={header + ":"} isBold />
-      </CardDetailHeaderDiv>
-
-      {children}
-    </CardDetailContainer>
-  );
-}
