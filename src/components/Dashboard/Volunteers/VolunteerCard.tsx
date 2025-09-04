@@ -107,7 +107,11 @@ interface CardParagraphProps {
 }
 
 export const CardParagraph = ({ text, isBold }: CardParagraphProps) => (
-  <Paragraph fontWeight={isBold ? 600 : 400} fontSize="16px" lineheight="16px">
+  <Paragraph
+    fontWeight={`var(--dashboard-volunteers-card-paragraph-fontWeight${isBold ? "-bold" : ""})`}
+    fontSize="var(--dashboard-volunteers-card-paragraph-fontSize)"
+    lineheight="var(--dashboard-volunteers-card-paragraph-lineHeight)"
+  >
     {text}
   </Paragraph>
 );

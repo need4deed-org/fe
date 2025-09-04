@@ -6,32 +6,7 @@ import { useTranslation } from "react-i18next";
 import { DashboardLayout } from "@/components/Layout";
 import { useState } from "react";
 import VolunteerCard from "./VolunteerCard";
-import { Volunteer } from "./types";
-
-const mockVolunteer: Volunteer = {
-  originOpportunity: 1234,
-  fullName: "Jack Sparrow",
-  phone: "1234",
-  email: "jack@gmail.com",
-  postalCode: 12345,
-  goodConductCertificate: "Yes",
-  ifMeaslesVaccination: true,
-  leadFrom: "Berlin",
-  schedule: [[1, 5]],
-  preferredBerlinLocations: ["Treptow", "Kreuzberg", "Neukölln", "Friedrichshain"],
-  activities: ["TUTORING", "UNIQUE SKILLS", "ARTS & CRAFTS", "DAYCARE", "WOMEN'S ACTIVITIES"],
-  skills: ["Fitness", "Cooking", "Gardening", "Teaching"],
-  nativeLanguages: ["German", "Arabic", "Turkish"],
-  fluentLanguages: ["English", "Spanish"],
-  intermediateLanguages: ["French"],
-  comments: "some random comment",
-};
-
-const VolunteersContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: var(--dashboard-volunteers-container-gap);
-`;
+import { mockVolunteer } from "./tempMockVolunteer";
 
 export function Volunteers() {
   const { t } = useTranslation();
@@ -63,3 +38,10 @@ export function Volunteers() {
 }
 
 export default Volunteers;
+
+/** Styles */
+const VolunteersContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: var(--dashboard-volunteers-container-gap);
+`;
