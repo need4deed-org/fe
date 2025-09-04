@@ -1,5 +1,5 @@
 body {
-  font-family: "Figtree", sans-serif;
+  font-family: "Figtree", sans-serif !important;
   width: 100%;
   margin: 0;
 }
@@ -27,7 +27,53 @@ html {
   background: linear-gradient(180deg, var(--color-midnight-misty) 11.02%, var(--color-barely-blue) 89.66%);
 }
 
+.n4d-information-tooltip-parent {
+  position: relative;
+}
+
+.n4d-container {
+  padding-top: var(--n4d-gap);
+  margin-inline: auto;
+  max-width: var(--n4d-w);
+  direction: var(--n4d-lang-direction);
+}
+
+.n4d-cta {
+  background-color: var(--color-green-400);
+  color: var(--color-neutral-100);
+  font-weight: bold;
+  border-color: transparent;
+  border-radius: 25px;
+  padding: 15px 25px;
+}
+
+.n4d-cta[disabled] {
+  background-color: var(--color-neutral-700);
+  color: var(--color-neutral-200);
+  border-color: transparent;
+  border-radius: 25px;
+  padding: 15px 25px;
+}
+
+.n4d-cta a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.n4d-cta:hover {
+  background-color: var(--color-green-700);
+}
+
+.n4d-cta[disabled]:hover {
+  background-color: var(--color-neutral-700);
+}
+
 :root {
+  --n4d-gap: 0;
+  --n4d-w: min(90vw, 1080px);
+  --n4d-lang-direction: ltr;
+  --bs-body-font-family: "Figtree", sans-serif;
+  --n4d-box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.15), 0px 4px 4px rgba(0, 0, 0, 0.3);
   /* color */
   --color-midnight: rgba(26, 38, 132, 1);
   --color-midnight-light: rgba(58, 72, 178, 1);
@@ -47,6 +93,7 @@ html {
   --color-magnolia-light: rgba(248, 244, 241, 1);
   --color-papaya: rgba(255, 125, 104, 1);
   --color-dimmed-background: rgba(0, 0, 0, 0.4);
+
   --color-white: rgba(255, 255, 255, 1);
   --color-grey-50: rgba(240, 241, 243, 1);
   --color-grey-200: rgba(185, 189, 199, 1);
@@ -54,21 +101,24 @@ html {
   --color-grey-500: rgba(102, 112, 133, 1);
   --color-grey-700: rgba(72, 80, 94, 1);
   --color-black: rgba(0, 0, 0, 1);
-  --color-grey-50: rgba(240, 241, 243, 1);
-  --color-grey-200: rgba(185, 189, 199, 1);
-  --color-grey-400: rgba(133, 141, 157, 1);
-  --color-grey-500: rgba(102, 112, 133, 1);
-  --color-grey-700: rgba(72, 80, 94, 1);
-  --color-green-50: rgba(223, 248, 244, 1);
-  --color-green-100: rgba(187, 241, 232, 1);
-  --color-green-200: rgba(108, 225, 206, 1);
-  --color-green-500: rgba(98, 205, 187, 1);
-  --color-green-700: rgba(59, 124, 113, 1);
+
+  --color-green-50: rgba(242, 252, 250, 1);
+  --color-green-100: rgba(216, 245, 240, 1);
+  --color-green-200: rgba(198, 240, 232, 1);
+  --color-green-400: rgba(159, 229, 216, 1);
+  --color-green-500: rgba(126, 203, 188, 1);
+  --color-green-700: rgba(98, 158, 146, 1);
+
   --color-red-50: rgba(254, 234, 231, 1);
   --color-red-200: rgba(248, 160, 146, 1);
   --color-red-400: rgba(243, 90, 65, 1);
   --color-red-500: rgba(240, 49, 18, 1);
   --color-red-600: rgba(208, 41, 13, 1);
+
+  --color-violet-200: rgba(193, 178, 228, 1);
+  --color-violet-400: rgba(147, 121, 209, 1);
+  --color-violet-500: rgba(120, 88, 197, 1);
+  --color-violet-700: rgba(85, 62, 140, 1);
 
   /* text */
   --text-h2-font-weight: 600;
@@ -190,7 +240,8 @@ html {
     --page-opportunity-grid-max-width: 360px;
     --page-opportunity-grid-template-columns: 1fr;
     --page-opportunity-card-width: 312px;
-    --page-opportunity-card-height: auto; /*421px;*/
+    --page-opportunity-card-height: auto;
+    /*421px;*/
     --page-opportunity-popup-card-width: 328px;
     --page-opportunity-popup-card-height: auto;
     --page-opportunity-popup-card-x-margins: 36px;
@@ -447,7 +498,8 @@ html {
     --page-opportunity-grid-max-width: 768px;
     --page-opportunity-grid-template-columns: repeat(2, 1fr);
     --page-opportunity-card-width: 332px;
-    --page-opportunity-card-height: auto; /*472px;*/
+    --page-opportunity-card-height: auto;
+    /*472px;*/
     --page-opportunity-popup-card-width: 688px;
     --page-opportunity-popup-card-height: auto;
     --page-opportunity-popup-card-x-margins: 36px;
@@ -689,7 +741,8 @@ html {
     --page-opportunity-grid-max-width: 1440px;
     --page-opportunity-grid-template-columns: 1fr 1fr 1fr 1fr;
     --page-opportunity-card-width: 310px;
-    --page-opportunity-card-height: auto; /*472px;*/
+    --page-opportunity-card-height: auto;
+    /*472px;*/
     --page-opportunity-popup-card-width: 688px;
     --page-opportunity-popup-card-height: auto;
     --page-opportunity-popup-card-x-margins: 36px;
