@@ -18,14 +18,6 @@ const bgTextColorMap = {
 
 type TagBackgroundKeys = keyof typeof bgTextColorMap;
 
-export const TagsContainer = styled.div`
-  display: flex;
-  width: fit-content;
-  justify-content: left;
-  flex-wrap: wrap;
-  gap: var(--activities-container-gap);
-`;
-
 export function Tags({ tags, backgroundColor = defaultBGColor, icon }: Props) {
   return (
     <TagsContainer>
@@ -40,3 +32,12 @@ export function Tags({ tags, backgroundColor = defaultBGColor, icon }: Props) {
 }
 
 export default Tags;
+
+/** Styles */
+export const TagsContainer = styled.div`
+  display: flex;
+  width: fit-content;
+  justify-content: left;
+  flex-wrap: wrap;
+  gap: var(--activities-container-gap);
+`;
