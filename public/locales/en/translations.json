@@ -341,6 +341,22 @@
         "login": "Log in",
         "joinVolunteer": "Join as a volunteer"
       }
+    },
+    "login": {
+      "login": "Log in",
+      "email": "Email",
+      "password": "Password",
+      "rememberMe": "Remember Me",
+      "forgotPassword": "Forgot Password",
+      "emailMissing": "Email's missing.",
+      "emailMissingAtChar": "Email must contain an '@' character.",
+      "passwordMissing": "Password's missing.",
+      "successMessage": "Login successful"
     }
+  },
+
+  "message": {
+    "successful": "Successful",
+    "errorGeneric": "Something went wrong!"
   }
 }

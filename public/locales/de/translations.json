@@ -357,6 +357,22 @@
         "login": "Anmelden",
         "joinVolunteer": "Jetzt sich engagieren"
       }
+    },
+    "login": {
+      "login": "Anmelden",
+      "email": "Email",
+      "password": "Passwort",
+      "rememberMe": "Angemeldet bleiben",
+      "forgotPassword": "Passwort vergessen",
+      "emailMissing": "E-Mail fehlt.",
+      "emailMissingAtChar": "Die E-Mail-Adresse muss ein '@'-Zeichen enthalten.",
+      "passwordMissing": "Passwort fehlt.",
+      "successMessage": "Anmeldung erfolgreich"
     }
+  },
+
+  "message": {
+    "successful": "Erfolgreich",
+    "errorGeneric": "Etwas ist schief gelaufen!"
   }
 }
