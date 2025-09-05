@@ -9,29 +9,28 @@ import { Tags } from "@/components/core/common";
 import CardDetail from "./CardDetail";
 import { IconName } from "./icon";
 import { useTranslation } from "react-i18next";
+import { ApiVolunteerGetList } from "need4deed-sdk";
 
 interface Props extends React.CSSProperties {
-  volunteer: Volunteer;
+  volunteer: ApiVolunteerGetList;
 }
 
 export function VolunteerCard({ volunteer }: Props) {
   const { t } = useTranslation();
 
-  const {
-    fullName,
-    nativeLanguages,
-    fluentLanguages,
-    intermediateLanguages,
-    activities,
-    skills,
-    preferredBerlinLocations,
-  } = volunteer;
+  const { name, nativeLanguages, fluentLanguages, intermediateLanguages, activities, skills, locations, availability } =
+    volunteer;
 
   const languages = [
     { level: "Native", list: nativeLanguages.join(", ") },
     { level: "Fluent", list: fluentLanguages.join(", ") },
     { level: "Intermediate", list: intermediateLanguages.join(", ") },
   ];
+
+  const availabilities = availability.map((a) => {
+    const daytimeString = Array.isArray(a.daytime) ? a.daytime.join("-") : a.daytime;
+    return a.day + ", " + daytimeString;
+  });
 
   return (
     <Card>
@@ -66,7 +65,7 @@ export function VolunteerCard({ volunteer }: Props) {
           fontSize="var(--dashboard-volunteers-card-profile-fontSize)"
           lineheight="var(--dashboard-volunteers-card-profile-lineHeight)"
         >
-          {fullName}
+          {name}
         </Paragraph>
       </ProfileDiv>
 
@@ -88,11 +87,15 @@ export function VolunteerCard({ volunteer }: Props) {
       </CardDetail>
 
       <CardDetail header={t("dashboard.volunteers.preferredAvailability")} iconName={IconName.CalendarDots}>
-        <CardParagraph text="Tuesdays & Thursdays, 9:00-11:00 Occasional Saturdays" />
+        {availabilities.map((a) => (
+          <LanguageDetailContainer key={a}>
+            <CardParagraph text={a} />
+          </LanguageDetailContainer>
+        ))}
       </CardDetail>
 
       <CardDetail header={t("dashboard.volunteers.preferredDistricts")} iconName={IconName.MapPin}>
-        <CardParagraph text={preferredBerlinLocations.join(", ")} />
+        <CardParagraph text={locations.join(", ")} />
       </CardDetail>
     </Card>
   );
