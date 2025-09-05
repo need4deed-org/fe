@@ -39,7 +39,7 @@ html {
 }
 
 .n4d-cta {
-  background-color: var(--color-green-300);
+  background-color: var(--color-green-400);
   color: var(--color-neutral-100);
   font-weight: bold;
   border-color: transparent;
@@ -61,7 +61,7 @@ html {
 }
 
 .n4d-cta:hover {
-  background-color: var(--color-green-600);
+  background-color: var(--color-green-700);
 }
 
 .n4d-cta[disabled]:hover {
@@ -92,24 +92,22 @@ html {
   --color-magnolia: rgba(246, 238, 231, 1);
   --color-magnolia-light: rgba(248, 244, 241, 1);
   --color-papaya: rgba(255, 125, 104, 1);
-  --color-white: rgba(255, 255, 255, 1);
-  --color-black: rgba(0, 0, 0, 1);
   --color-dimmed-background: rgba(0, 0, 0, 0.4);
-  --color-neutral-900: #fff;
-  --color-neutral-800: #eee;
-  --color-neutral-700: #ddd;
-  --color-neutral-600: #ccc;
-  --color-neutral-500: #bbb;
-  --color-neutral-400: #aaa;
-  --color-neutral-300: #888;
-  --color-neutral-200: #444;
-  --color-neutral-100: #000;
 
-  --color-green-50: rgba(223, 248, 244, 1);
-  --color-green-100: rgba(187, 241, 232, 1);
-  --color-green-200: rgba(108, 225, 206, 1);
-  --color-green-500: rgba(98, 205, 187, 1);
-  --color-green-700: rgba(59, 124, 113, 1);
+  --color-white: rgba(255, 255, 255, 1);
+  --color-grey-50: rgba(240, 241, 243, 1);
+  --color-grey-200: rgba(185, 189, 199, 1);
+  --color-grey-400: rgba(133, 141, 157, 1);
+  --color-grey-500: rgba(102, 112, 133, 1);
+  --color-grey-700: rgba(72, 80, 94, 1);
+  --color-black: rgba(0, 0, 0, 1);
+
+  --color-green-50: rgba(242, 252, 250, 1);
+  --color-green-100: rgba(216, 245, 240, 1);
+  --color-green-200: rgba(198, 240, 232, 1);
+  --color-green-400: rgba(159, 229, 216, 1);
+  --color-green-500: rgba(126, 203, 188, 1);
+  --color-green-700: rgba(98, 158, 146, 1);
 
   --color-red-50: rgba(254, 234, 231, 1);
   --color-red-200: rgba(248, 160, 146, 1);
@@ -117,12 +115,10 @@ html {
   --color-red-500: rgba(240, 49, 18, 1);
   --color-red-600: rgba(208, 41, 13, 1);
 
-  /* Todo: below colors does not exist in Figma file, refactor below colors later */
-  --color-green-300: #41f28d;
-  --color-green-400: #00ce7e;
-  --color-green-600: #00c980;
-  --color-purple-400: #7858c6;
-  --color-purple-500: #9163f2;
+  --color-violet-200: rgba(193, 178, 228, 1);
+  --color-violet-400: rgba(147, 121, 209, 1);
+  --color-violet-500: rgba(120, 88, 197, 1);
+  --color-violet-700: rgba(85, 62, 140, 1);
 
   /* text */
   --text-h2-font-weight: 600;
@@ -189,6 +185,9 @@ html {
 
   /* image */
   --image-circle-pic-size: 60px;
+
+  /* form input */
+  --form-input-error-message-color: var(--color-red-600);
 }
 
 .with-linebreaks {
@@ -1022,5 +1021,28 @@ html {
     --dashboard-volunteers-card-paragraph-fontWeight-bold: 600;
     --dashboard-volunteers-card-paragraph-fontSize: 16px;
     --dashboard-volunteers-card-paragraph-lineHeight: 16px;
+
+    --form-input-container-height: 56px;
+    --form-input-container-border-radius: 8px;
+    --form-input-container-padding: 16px;
+    --form-input-container-border: 1px solid var(--color-grey-200);
+    --form-input-container-border-focus: 2px solid var(--color-green-200);
+    --form-input-container-border-error: 2px solid var(--color-red-600);
+    --form-input-fontSize: 20px;
+    --form-input-error-message-container-gap: 8px;
+    --form-input-error-message-container-padding: 8px;
+    --form-input-error-message-fontSize: 16px;
+    --form-input-error-message-lineHeight: 20px;
+    --form-input-error-message-fontWeight: 400;
+
+    --dashboard-login-container-height: 944px;
+    --dashboard-login-content-container-width: 638px;
+    --dashboard-login-content-container-gap: 32px;
+    --dashboard-login-heading-fontWeight: 600;
+    --dashboard-login-heading-fontSize: 48px;
+    --dashboard-login-heading-lineHeight: 52px;
+    --dashboard-login-heading-letterSpacing: 0.25px;
+    --dashboard-login-checkbox-label-fontSize: 20px;
+    --dashboard-login-forgot-password-label-fontWeight: 600;
   }
 }

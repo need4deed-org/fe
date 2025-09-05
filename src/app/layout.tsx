@@ -7,6 +7,9 @@ import QueryProvider from "@/utils/QueryProvider";
 import { headers } from "next/headers";
 import { ScreenTypes } from "@/config/constants";
 import { DeviceProvider } from "@/context/DeviceContext";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "./globals.css";
 
 const figtree = Figtree({
   subsets: ["latin"],
@@ -56,6 +59,8 @@ export default async function RootLayout({
             </DeviceProvider>
           </QueryProvider>
         </StyledComponentsRegistry>
+
+        <ToastContainer />
       </body>
     </html>
   );
