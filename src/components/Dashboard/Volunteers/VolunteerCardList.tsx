@@ -9,46 +9,20 @@ import { useGetQuery } from "@/hooks";
 const API_PATH_VOLUNTEER = "/api/volunteer";
 
 export function VolunteerCardList() {
-  const {
-    data: volunteers,
-    isLoading,
-    isError,
-    error,
-  } = useGetQuery<ApiVolunteerGetList>(
-    ["volunteersList"], // Unique query key for this data
-    API_PATH_VOLUNTEER,
-  );
+  const { data, isLoading, isError, error } = useGetQuery<ApiVolunteerGetList>(["volunteersList"], API_PATH_VOLUNTEER, {
+    limit: 12,
+    page: 2,
+  });
 
-  console.log("****");
+  const volunteers = data;
+
   console.log("volunteers", volunteers);
   console.log("isLoading", isLoading);
   console.log("isError", isError);
   console.log("error", error);
 
-  const items = [
-    <VolunteerCard key={mockVolunteer.name} volunteer={mockVolunteer} />,
-
-    <VolunteerCard key={mockVolunteer.name} volunteer={mockVolunteer} />,
-    <VolunteerCard key={mockVolunteer.name} volunteer={mockVolunteer} />,
-    <VolunteerCard key={mockVolunteer.name} volunteer={mockVolunteer} />,
-    <VolunteerCard key={mockVolunteer.name} volunteer={mockVolunteer} />,
-    <VolunteerCard key={mockVolunteer.name} volunteer={mockVolunteer} />,
-    <VolunteerCard key={mockVolunteer.name} volunteer={mockVolunteer} />,
-    <VolunteerCard key={mockVolunteer.name} volunteer={mockVolunteer} />,
-    <VolunteerCard key={mockVolunteer.name} volunteer={mockVolunteer} />,
-    <VolunteerCard key={mockVolunteer.name} volunteer={mockVolunteer} />,
-    <VolunteerCard key={mockVolunteer.name} volunteer={mockVolunteer} />,
-    <VolunteerCard key={mockVolunteer.name} volunteer={mockVolunteer} />,
-    <VolunteerCard key={mockVolunteer.name} volunteer={mockVolunteer} />,
-    <VolunteerCard key={mockVolunteer.name} volunteer={mockVolunteer} />,
-    <VolunteerCard key={mockVolunteer.name} volunteer={mockVolunteer} />,
-    <VolunteerCard key={mockVolunteer.name} volunteer={mockVolunteer} />,
-    <VolunteerCard key={mockVolunteer.name} volunteer={mockVolunteer} />,
-    <VolunteerCard key={mockVolunteer.name} volunteer={mockVolunteer} />,
-    <VolunteerCard key={mockVolunteer.name} volunteer={mockVolunteer} />,
-    <VolunteerCard key={mockVolunteer.name} volunteer={mockVolunteer} />,
-    ,
-  ];
+  const items = volunteers.map((volunteer) => <VolunteerCard key={volunteer.name} volunteer={volunteer} />);
+  //   const items = [<VolunteerCard key={mockVolunteer.name} volunteer={mockVolunteer} />, ,];
 
   return <PaginatedGrid items={items} columns={4} rows={3} />;
 }
