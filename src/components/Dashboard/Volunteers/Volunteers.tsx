@@ -1,12 +1,11 @@
 "use client";
-
-import styled from "styled-components";
-import CardsHeader from "../common/CardsHeader/CardsHeader";
-import { useTranslation } from "react-i18next";
-import { DashboardLayout } from "@/components/Layout";
 import { useState } from "react";
-import VolunteerCard from "./VolunteerCard";
-import { mockVolunteer } from "./tempMockVolunteer";
+import styled from "styled-components";
+import { useTranslation } from "react-i18next";
+
+import CardsHeader from "../common/CardsHeader/CardsHeader";
+import { DashboardLayout } from "@/components/Layout";
+import VolunteerCardList from "./VolunteerCardList";
 
 export function Volunteers() {
   const { t } = useTranslation();
@@ -31,7 +30,7 @@ export function Volunteers() {
           onSearchInputChange={mockHandleInputChange}
         />
 
-        <VolunteerCard volunteer={mockVolunteer} />
+        <VolunteerCardList />
       </VolunteersContainer>
     </DashboardLayout>
   );
