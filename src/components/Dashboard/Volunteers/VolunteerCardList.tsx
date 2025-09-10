@@ -10,8 +10,8 @@ const API_PATH_VOLUNTEER = "/api/volunteer";
 
 export function VolunteerCardList() {
   const { data, isLoading, isError, error } = useGetQuery<ApiVolunteerGetList>(["volunteersList"], API_PATH_VOLUNTEER, {
-    limit: 12,
-    page: 2,
+    limit: 50,
+    page: 1,
   });
 
   const volunteers = data;
@@ -22,7 +22,7 @@ export function VolunteerCardList() {
   console.log("error", error);
 
   const items = volunteers.map((volunteer) => <VolunteerCard key={volunteer.name} volunteer={volunteer} />);
-  //   const items = [<VolunteerCard key={mockVolunteer.name} volunteer={mockVolunteer} />, ,];
+  //   items.unshift(<VolunteerCard key={mockVolunteer.name} volunteer={mockVolunteer} />);
 
   return <PaginatedGrid items={items} columns={4} rows={3} />;
 }
