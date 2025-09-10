@@ -9,6 +9,8 @@ import CardDetail from "./CardDetail";
 import { IconName } from "./icon";
 import { useTranslation } from "react-i18next";
 import { ApiVolunteerGetList } from "need4deed-sdk";
+import { groupLanguagesByProficiency } from "./helpers";
+import { capitalizeFirstLetter } from "@/utils";
 
 interface Props extends React.CSSProperties {
   volunteer: ApiVolunteerGetList;
@@ -17,14 +19,9 @@ interface Props extends React.CSSProperties {
 export function VolunteerCard({ volunteer }: Props) {
   const { t } = useTranslation();
 
-  const { name, nativeLanguages, fluentLanguages, intermediateLanguages, activities, skills, locations, availability } =
-    volunteer;
+  const { name, languages, activities, skills, locations, availability } = volunteer;
 
-  const languages = [
-    { level: "Native", list: nativeLanguages.join(", ") },
-    { level: "Fluent", list: fluentLanguages.join(", ") },
-    { level: "Intermediate", list: intermediateLanguages.join(", ") },
-  ];
+  const groupedLanguages = groupLanguagesByProficiency(languages);
 
   const availabilities = availability.map((a) => {
     const daytimeString = Array.isArray(a.daytime) ? a.daytime.join("-") : a.daytime;
@@ -69,10 +66,10 @@ export function VolunteerCard({ volunteer }: Props) {
       </ProfileDiv>
 
       <CardDetail header={t("dashboard.volunteers.languages")} iconName={IconName.Translate}>
-        {languages.map(({ level, list }) => (
-          <LanguageDetailContainer key={level}>
-            <CardParagraph text={`${level}:`} isBold />
-            <CardParagraph text={`${list}`} />
+        {groupedLanguages.map(({ proficiency, list }) => (
+          <LanguageDetailContainer key={proficiency}>
+            <CardParagraph text={`${capitalizeFirstLetter(proficiency)}:`} isBold />
+            <CardParagraph text={`${list.join(", ")}`} />
           </LanguageDetailContainer>
         ))}
       </CardDetail>

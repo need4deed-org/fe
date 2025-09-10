@@ -30,3 +30,12 @@ export function getStoredLang(): Lang | null {
 export const getImageUrl = (imageName: string): string => {
   return `${CLOUDFRONT_URL}/${imageName}`;
 };
+
+export function capitalizeFirstLetter(str: string): string {
+  if (!str) {
+    return "";
+  }
+  const firstLetter = str.charAt(0).toUpperCase();
+  const restOfString = str.slice(1);
+  return firstLetter + restOfString;
+}

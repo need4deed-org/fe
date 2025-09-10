@@ -1,11 +1,17 @@
-import { ApiVolunteerGetList, ByDay, Hour } from "need4deed-sdk";
+import { ApiVolunteerGetList, ByDay, Hour, LangProficiency } from "need4deed-sdk";
 
 export const mockVolunteer: ApiVolunteerGetList = {
   name: "Jack Sparrow",
-  nativeLanguages: ["German", "Arabic", "Turkish"],
-  fluentLanguages: ["English", "Spanish"],
-  intermediateLanguages: ["French"],
+  languages: [
+    { title: "English", proficiency: LangProficiency.FLUENT },
+    { title: "Spanish", proficiency: LangProficiency.FLUENT },
 
+    { title: "German", proficiency: LangProficiency.NATIVE },
+    { title: "Arabic", proficiency: LangProficiency.NATIVE },
+    { title: "Turkish", proficiency: LangProficiency.NATIVE },
+
+    { title: "French", proficiency: LangProficiency.INTERMEDIATE },
+  ],
   availability: [
     {
       day: ByDay.MO,
