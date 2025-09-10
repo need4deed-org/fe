@@ -1,6 +1,5 @@
 import styled from "styled-components";
 
-import { Volunteer } from "./types";
 import { BaseCard } from "@/components/styled/container";
 import { Paragraph } from "@/components/styled/text";
 import { CheckIcon, HourglassIcon, SparkleIcon } from "@phosphor-icons/react";
