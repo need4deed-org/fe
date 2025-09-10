@@ -27,9 +27,11 @@ export enum Env {
   PRODUCTION = "production",
 }
 
-export enum YesNo {
-  YES = "Yes",
-  NO = "No",
+
+export enum Language {
+  DE = "de",
+  EN = "en",
 }
+
 
 export type FooterLink = [string, string];

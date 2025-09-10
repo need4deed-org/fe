@@ -1,4 +1,4 @@
-import { Lang, Volunteer } from "need4deed-sdk";
+import { Lang, VolunteerFormData } from "need4deed-sdk";
 
 import { Availability, Selected } from "../types";
 
@@ -34,6 +34,6 @@ export enum VolunteerArrayDataKeys {
 }
 export type VolunteerDataLists = `${VolunteerArrayDataKeys}`;
 
-export interface VolunteerParsedData extends Volunteer {
+export interface VolunteerParsedData extends VolunteerFormData {
   language: Lang;
 }

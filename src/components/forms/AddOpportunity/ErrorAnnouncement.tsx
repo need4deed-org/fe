@@ -2,6 +2,10 @@ import { useTranslation } from "react-i18next";
 
 import Announcement from "../../Announcement";
 
+export interface ErrorAnnouncementProps {
+  copies?: string;
+}
+
 const hrefVolunteering =
   "https://docs.google.com/forms/d/e/1FAIpQLSdAFsyAyV_6i0d-QBemK-S7SZmusIfZqj_TVXilHd6X2ipkZw/viewform?usp=dialog";
 const hrefAccompanying =
@@ -21,6 +25,6 @@ function LinksToGoogleForms() {
   );
 }
 
-export default function ErrorAnnouncement() {
-  return <Announcement copies="form.addOpportunity.wentWrong" render={() => <LinksToGoogleForms />} />;
+export default function ErrorAnnouncement({ copies }: ErrorAnnouncementProps) {
+  return <Announcement copies={copies ?? "form.addOpportunity.wentWrong"} render={() => <LinksToGoogleForms />} />;
 }
