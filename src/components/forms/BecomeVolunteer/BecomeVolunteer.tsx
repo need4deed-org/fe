@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import { useRouter, useParams, useSearchParams } from "next/navigation";
 import Image from "next/image";
 
-import { urlApi } from "../../../config/constants";
+import { apiURL } from "../../../config/constants";
 import { getImageUrl } from "../../../utils/index";
 // import ModalWindow from "../../core/Modal";
 import UploadIcon from "../../svg/Upload";
@@ -48,7 +48,7 @@ export default function BecomeVolunteer() {
   const language = i18n.language as Lang;
 
   const { postRequest } = usePostRequest<VolunteerParsedData, Record<string, string | string[]>>({
-    url: `${urlApi}/volunteer/`,
+    url: `${apiURL}/volunteer/`,
   });
 
   const opportunity: OpportunityInfo = {

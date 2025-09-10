@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { HttpMethod, Option } from "need4deed-sdk";
 import { useEffect, useState } from "react";
 import { fetchFn } from "@/utils";
-import { urlApiVolunteer } from "@/config/constants";
+import { apiPathVolunteer } from "@/config/constants";
 import { fallbackLists } from "@/components/forms/fallbackLists";
 import { ListsOfOptions, ListsOfOptionsType } from "@/components/forms/types";
 
@@ -14,7 +14,7 @@ export function useListQuery() {
     queryFn: () => {
       if (FF_USE_OPTIONS_LISTS) {
         return fetchFn<{ lists: ListsOfOptionsType }, ListsOfOptionsType>({
-          url: urlApiVolunteer,
+          url: apiPathVolunteer,
           options: { method: HttpMethod.OPTIONS },
           fnDTO: ({ lists }) => lists,
         });

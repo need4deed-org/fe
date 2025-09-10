@@ -6,9 +6,8 @@ import { FormInput } from "../core/common";
 import styled from "styled-components";
 import { Button, Checkbox } from "../core/button";
 import { Paragraph } from "../styled/text";
-import usePostMutation from "@/hooks/usePostMutation";
-
-const API_PATH_LOGIN = "/api/auth/login";
+import { usePostMutation } from "@/hooks";
+import { apiPathLogin } from "@/config/constants";
 
 interface LoginData {
   email: string;
@@ -24,7 +23,7 @@ const useLoginMutation = () => {
   const router = useRouter();
 
   return usePostMutation<LoginData, LoginResponse>({
-    apiPath: API_PATH_LOGIN,
+    apiPath: apiPathLogin,
     successMessage: "dashboard.login.successMessage",
     onSuccessCallback: () => {
       router.push("/");
