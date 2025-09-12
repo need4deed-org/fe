@@ -326,7 +326,12 @@
       "filters": {
         "button": "FILTER"
       },
-      "volunteers": "Freiwillige"
+      "volunteers": "Freiwillige",
+      "languages": "Sprachen",
+      "activities": "Aktivitäten",
+      "skillsExperience": "Fähigkeiten & Erfahrungen",
+      "preferredAvailability": "Bevorzugte Verfügbarkeit",
+      "preferredDistricts": "Bevorzugte Bezirke"
     },
     "home": {
       "sidebar": {

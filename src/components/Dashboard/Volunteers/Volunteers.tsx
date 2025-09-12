@@ -5,12 +5,8 @@ import CardsHeader from "../common/CardsHeader/CardsHeader";
 import { useTranslation } from "react-i18next";
 import { DashboardLayout } from "@/components/Layout";
 import { useState } from "react";
-
-const VolunteersContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: var(--dashboard-volunteers-container-gap);
-`;
+import VolunteerCard from "./VolunteerCard";
+import { mockVolunteer } from "./tempMockVolunteer";
 
 export function Volunteers() {
   const { t } = useTranslation();
@@ -34,9 +30,18 @@ export function Volunteers() {
           setIsFiltersOpen={setIsFiltersOpen}
           onSearchInputChange={mockHandleInputChange}
         />
+
+        <VolunteerCard volunteer={mockVolunteer} />
       </VolunteersContainer>
     </DashboardLayout>
   );
 }
 
 export default Volunteers;
+
+/** Styles */
+const VolunteersContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: var(--dashboard-volunteers-container-gap);
+`;

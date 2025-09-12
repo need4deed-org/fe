@@ -1,13 +1,16 @@
 import styled from "styled-components";
 
-interface ActivityTagProps {
-  "background-color": string;
+interface TagProps {
+  $backgroundColor?: string;
 }
 
-export const ActivityTag = styled.div<ActivityTagProps>`
+export const Tag = styled.div<TagProps>`
+  display: flex;
+  flex-direction: row;
   border-radius: var(--activity-tag-border-radius);
   padding: var(--activity-tag-padding);
-  background-color: ${(props) => props["background-color"]};
+  background-color: ${(props) => props["$backgroundColor"]};
+  gap: var(--activity-tag-gap);
 `;
 
 export const ATag = styled.a`

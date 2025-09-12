@@ -2,11 +2,12 @@ import styled from "styled-components";
 
 interface CircleImageProps {
   src: string;
+  size?: string;
 }
 
 export const CirclePic = styled.img<CircleImageProps>`
-  width: 60px;
-  height: 60px;
+  width: ${(props) => props.size || "var(--image-circle-pic-size)"};
+  height: ${(props) => props.size || "var(--image-circle-pic-size)"};
   border-radius: 50%;
   src: ${(props) => props.src};
 `;

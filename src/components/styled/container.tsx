@@ -53,6 +53,8 @@ export const IconDiv = styled.div<IconDiVProps>`
 export const DashboardBaseContainer = styled.div`
   margin: 0 auto; // Center it horizontally
   width: var(--dashboard-base-container-width);
+  padding-top: var(--dashboard-base-container-padding-top);
+  padding-bottom: var(--dashboard-base-container-padding-bottom);
 `;
 
 export const OverlayingSectionContainer = styled(SectionContainer)`
