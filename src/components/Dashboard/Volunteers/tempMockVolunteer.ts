@@ -1,6 +1,7 @@
-import { ApiVolunteerGetList, ByDay, Hour, LangProficiency } from "need4deed-sdk";
+import { ApiVolunteerGetList, ByDay, Hour, LangProficiency, Occasionally, OccasionalType } from "need4deed-sdk";
 
 export const mockVolunteer: ApiVolunteerGetList = {
+  id: 1,
   name: "Jack Sparrow",
   languages: [
     { title: "English", proficiency: LangProficiency.FLUENT },
@@ -22,11 +23,12 @@ export const mockVolunteer: ApiVolunteerGetList = {
       daytime: [Hour.H13, Hour.H17],
     },
     {
-      day: "occasionally",
-      daytime: "weekdays",
+      day: Occasionally.OCCASIONALLY,
+      daytime: [OccasionalType.WEEKDAYS],
     },
   ],
   activities: ["TUTORING", "UNIQUE SKILLS", "ARTS & CRAFTS", "DAYCARE", "WOMEN'S ACTIVITIES"],
   skills: ["Fitness", "Cooking", "Gardening", "Teaching"],
   locations: ["Treptow", "Kreuzberg", "Neukölln", "Friedrichshain"],
+  avatarUrl: "mia.webp",
 };

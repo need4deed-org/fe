@@ -1,6 +1,6 @@
 export * from "./helpers";
 
-import { CLOUDFRONT_URL } from "@/config/constants";
+import { cloudfrontURL } from "@/config/constants";
 import { YesNo } from "@/types";
 
 export function getDateLocalTooUTC(dateStr: string | undefined) {
@@ -63,5 +63,5 @@ export function fetchFn<R, D = R>({
 }
 
 export const getImageUrl = (imageName: string): string => {
-  return `${CLOUDFRONT_URL}/${imageName}`;
+  return `${cloudfrontURL}/${imageName}`;
 };
