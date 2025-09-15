@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { PaginatedGrid } from "@/components/core/paginatedGrid";
 import VolunteerCard from "./VolunteerCard";
@@ -12,7 +12,11 @@ const rows = 3;
 const limit = columns * rows;
 const cacheTTL = 1000 * 60 * 5; // 5 minutes
 
-export function VolunteerCardList() {
+interface VolunteerCardListProps {
+  setNumOfVols: (numOfVols: number) => void;
+}
+
+export function VolunteerCardList({ setNumOfVols }: VolunteerCardListProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const { data: volunteers, count } = useGetQuery<ApiVolunteerGetList>({
     queryKey: ["volunteersList"],
@@ -23,6 +27,10 @@ export function VolunteerCardList() {
       staleTime: cacheTTL,
     },
   });
+
+  useEffect(() => {
+    setNumOfVols(count);
+  }, [count, setNumOfVols]);
 
   const items = volunteers.map((volunteer) => <VolunteerCard key={volunteer.id} volunteer={volunteer} />);
   //   items.unshift(<VolunteerCard key={mockVolunteer.name} volunteer={mockVolunteer} />);

@@ -11,6 +11,7 @@ export function Volunteers() {
   const { t } = useTranslation();
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+  const [numOfVols, setNumOfVols] = useState(0);
 
   const tabs = [t("dashboard.volunteers.tabs.tab1"), t("dashboard.volunteers.tabs.tab2")];
 
@@ -21,7 +22,7 @@ export function Volunteers() {
       <VolunteersContainer>
         <CardsHeader
           header={t("dashboard.volunteers.volunteers")}
-          resultCounter={123}
+          resultCounter={numOfVols}
           resultText={t("dashboard.home.sidebar.volunteers")}
           tabs={tabs}
           selectedTabIndex={selectedTabIndex}
@@ -30,7 +31,7 @@ export function Volunteers() {
           onSearchInputChange={mockHandleInputChange}
         />
 
-        <VolunteerCardList />
+        <VolunteerCardList setNumOfVols={setNumOfVols} />
       </VolunteersContainer>
     </DashboardLayout>
   );

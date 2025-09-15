@@ -19,7 +19,7 @@ export default function Results({ counter, text }: Props) {
 
   return (
     <ResultContainer>
-      <Heading4>{counter}</Heading4>
+      <Heading4 margin={0}>{counter}</Heading4>
       <Paragraph>{text + " " + t("dashboard.found")}</Paragraph>
     </ResultContainer>
   );
