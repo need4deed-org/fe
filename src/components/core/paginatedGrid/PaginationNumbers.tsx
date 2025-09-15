@@ -10,7 +10,7 @@ const PaginationContainer = styled.div`
 `;
 
 interface NumberDivProps {
-  bgColor?: string;
+  $bgColor?: string;
 }
 
 const NumberDiv = styled.div<NumberDivProps>`
@@ -20,7 +20,7 @@ const NumberDiv = styled.div<NumberDivProps>`
   width: var(--paginated-grid-pagination-number-width);
   height: var(--paginated-grid-pagination-number-height);
   border-radius: var(--paginated-grid-pagination-number-border-radius);
-  background-color: ${(props) => props.bgColor};
+  background-color: ${(props) => props.$bgColor};
   cursor: pointer;
 `;
 
@@ -102,7 +102,7 @@ export default function PaginationNumbers({ currentPage, totalPages, goToPage }:
           <Heading4 key={page}>{page}</Heading4>
         ) : (
           <NumberDiv
-            bgColor={page === currentPage ? "var(--color-midnight)" : "none"}
+            $bgColor={page === currentPage ? "var(--color-midnight)" : "none"}
             key={page}
             onClick={() => goToPage(Number(page))}
           >
