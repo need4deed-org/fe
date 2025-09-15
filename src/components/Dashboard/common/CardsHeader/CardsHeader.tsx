@@ -6,7 +6,7 @@ import { Search } from "../../../core/common";
 import FiltersButton from "./FiltersButton";
 import { hyphenationStyles } from "../../../styled/mixins";
 import Results from "./Results";
-import SortBy from "./SortBy";
+import SortBy, { OnChangeSortOrder } from "./SortBy";
 import { SortOrder } from "@/config/constants";
 
 interface Props {
@@ -18,6 +18,8 @@ interface Props {
   selectedTabIndex: number;
   setSelectedTabIndex: (index: number) => void;
   setIsFiltersOpen: (isOpen: boolean) => void;
+  sortOrder: SortOrder;
+  onSortOrderChange?: OnChangeSortOrder;
 }
 
 export default function CardsHeader({
@@ -29,12 +31,10 @@ export default function CardsHeader({
   setSelectedTabIndex,
   tabs,
   setIsFiltersOpen,
+  sortOrder,
+  onSortOrderChange,
 }: Props) {
   const { t } = useTranslation();
-
-  const handleSortOrderChange = (sortorder: SortOrder) => {
-    // Todo: add sorting algo
-  };
 
   return (
     <HeaderContainer>
@@ -52,7 +52,7 @@ export default function CardsHeader({
 
           <ResultsSortByContainer>
             <Results counter={resultCounter} text={resultText} />
-            <SortBy onChange={handleSortOrderChange} />
+            <SortBy sortOrder={sortOrder} onChange={onSortOrderChange} />
           </ResultsSortByContainer>
         </TabsSectionContainer>
 

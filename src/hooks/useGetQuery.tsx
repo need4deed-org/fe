@@ -1,3 +1,4 @@
+import { SortOrder } from "@/config/constants";
 import { useQuery } from "@tanstack/react-query";
 import axios, { AxiosResponse } from "axios";
 import { Lang } from "need4deed-sdk";
@@ -5,10 +6,15 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 
-// A generic function to fetch paginated data
-const fetchData = async <T,>(apiPath: string, page: number, limit: number, language: Lang): Promise<ApiResponse<T>> => {
-  const url = `${apiPath}?page=${page}&limit=${limit}&language=${language}`;
-  const response: AxiosResponse<ApiResponse<T>> = await axios.get(url);
+const fetchData = async <T,>(apiPath: string, page: number, limit: number, language: Lang, sort?: SortOrder) => {
+  const response: AxiosResponse<ApiResponse<T>> = await axios.get(apiPath, {
+    params: {
+      page,
+      limit,
+      language,
+      sort,
+    },
+  });
   return response.data;
 };
 
@@ -21,18 +27,18 @@ interface ApiResponse<T> {
 interface UseGetQuery {
   apiPath: string;
   queryKey: string[];
-  options?: { page?: number; limit?: number; staleTime?: number };
+  options?: { page?: number; limit?: number; staleTime?: number; sortOrder?: SortOrder };
 }
 
-// The generic custom hook with pagination query params
+// The generic custom hook with pagination-sort-language params
 export const useGetQuery = <T,>({ queryKey, apiPath, options }: UseGetQuery) => {
   const { t, i18n } = useTranslation();
   const language = i18n.language as Lang;
-  const { page = 1, limit = 10, staleTime } = options || {};
+  const { page = 1, limit = 10, staleTime, sortOrder } = options || {};
 
   const { data, isLoading, isError, error } = useQuery<ApiResponse<T>, Error>({
-    queryKey: [...queryKey, { page, limit, language }],
-    queryFn: () => fetchData<T>(apiPath, page, limit, language),
+    queryKey: [...queryKey, { page, limit, language, sortOrder }],
+    queryFn: () => fetchData<T>(apiPath, page, limit, language, sortOrder),
     staleTime,
   });
 

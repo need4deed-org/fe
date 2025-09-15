@@ -6,16 +6,22 @@ import { useTranslation } from "react-i18next";
 import CardsHeader from "../common/CardsHeader/CardsHeader";
 import { DashboardLayout } from "@/components/Layout";
 import VolunteerCardList from "./VolunteerCardList";
+import { SortOrder } from "@/config/constants";
 
 export function Volunteers() {
   const { t } = useTranslation();
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [numOfVols, setNumOfVols] = useState(0);
+  const [sortOrder, setSortOrder] = useState(SortOrder.NewToOld);
 
   const tabs = [t("dashboard.volunteers.tabs.tab1"), t("dashboard.volunteers.tabs.tab2")];
 
   const mockHandleInputChange = () => {};
+
+  const handleSortChange = (sortOrder: SortOrder) => {
+    setSortOrder(sortOrder);
+  };
 
   return (
     <DashboardLayout>
@@ -29,9 +35,11 @@ export function Volunteers() {
           setSelectedTabIndex={setSelectedTabIndex}
           setIsFiltersOpen={setIsFiltersOpen}
           onSearchInputChange={mockHandleInputChange}
+          sortOrder={sortOrder}
+          onSortOrderChange={handleSortChange}
         />
 
-        <VolunteerCardList setNumOfVols={setNumOfVols} />
+        <VolunteerCardList setNumOfVols={setNumOfVols} sortOrder={sortOrder} />
       </VolunteersContainer>
     </DashboardLayout>
   );

@@ -5,6 +5,7 @@ import VolunteerCard from "./VolunteerCard";
 import { mockVolunteer } from "./tempMockVolunteer";
 import { ApiVolunteerGetList } from "need4deed-sdk";
 import { useGetQuery } from "@/hooks";
+import { SortOrder } from "@/config/constants";
 
 const API_PATH_VOLUNTEER = "/api/volunteer";
 const columns = 4;
@@ -14,11 +15,11 @@ const cacheTTL = 1000 * 60 * 5; // 5 minutes
 
 interface VolunteerCardListProps {
   setNumOfVols: (numOfVols: number) => void;
+  sortOrder: SortOrder;
 }
 
-export function VolunteerCardList({ setNumOfVols }: VolunteerCardListProps) {
+export function VolunteerCardList({ setNumOfVols, sortOrder }: VolunteerCardListProps) {
   const [currentPage, setCurrentPage] = useState(1);
-
   const { data: volunteers, count } = useGetQuery<ApiVolunteerGetList>({
     queryKey: ["volunteersList"],
     apiPath: API_PATH_VOLUNTEER,
@@ -26,6 +27,7 @@ export function VolunteerCardList({ setNumOfVols }: VolunteerCardListProps) {
       limit: limit,
       page: currentPage,
       staleTime: cacheTTL,
+      sortOrder,
     },
   });
 
