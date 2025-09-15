@@ -1,12 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import axios, { AxiosResponse } from "axios";
+import { Lang } from "need4deed-sdk";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 
 // A generic function to fetch paginated data
-const fetchData = async <T,>(apiPath: string, page: number, limit: number): Promise<ApiResponse<T>> => {
-  const url = `${apiPath}?page=${page}&limit=${limit}`;
+const fetchData = async <T,>(apiPath: string, page: number, limit: number, language: Lang): Promise<ApiResponse<T>> => {
+  const url = `${apiPath}?page=${page}&limit=${limit}&language=${language}`;
   const response: AxiosResponse<ApiResponse<T>> = await axios.get(url);
   return response.data;
 };
@@ -25,13 +26,13 @@ interface UseGetQuery {
 
 // The generic custom hook with pagination query params
 export const useGetQuery = <T,>({ queryKey, apiPath, options }: UseGetQuery) => {
-  const { t } = useTranslation();
-
+  const { t, i18n } = useTranslation();
+  const language = i18n.language as Lang;
   const { page = 1, limit = 10, staleTime } = options || {};
 
   const { data, isLoading, isError, error } = useQuery<ApiResponse<T>, Error>({
-    queryKey: [...queryKey, { page, limit }],
-    queryFn: () => fetchData<T>(apiPath, page, limit),
+    queryKey: [...queryKey, { page, limit, language }],
+    queryFn: () => fetchData<T>(apiPath, page, limit, language),
     staleTime,
   });
 

@@ -18,6 +18,7 @@ interface VolunteerCardListProps {
 
 export function VolunteerCardList({ setNumOfVols }: VolunteerCardListProps) {
   const [currentPage, setCurrentPage] = useState(1);
+
   const { data: volunteers, count } = useGetQuery<ApiVolunteerGetList>({
     queryKey: ["volunteersList"],
     apiPath: API_PATH_VOLUNTEER,
