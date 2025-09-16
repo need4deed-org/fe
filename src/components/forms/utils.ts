@@ -1,11 +1,19 @@
 import { TFunction } from "i18next";
-import { OpportunityType, Option, OptionId, TranslatedIntoType } from "need4deed-sdk";
+import {
+  LangProficiency,
+  OpportunityType,
+  Option,
+  OptionId,
+  TranslatedIntoType,
+  VolunteerFormData,
+} from "need4deed-sdk";
 
 import { maxPLZBerlin, maxPLZGermany, minPLZBerlin, minPLZGermany } from "../../config/constants";
 import { OpportunityData, OpportunityParsedData } from "./AddOpportunity/dataStructure";
-import { VolunteerData, VolunteerParsedData } from "./BecomeVolunteer/dataStructure";
+import { VolunteerData } from "./BecomeVolunteer/dataStructure";
 import { Availability, Selected, TimeSlot, TypePLZ } from "./types";
 import { getDateLocalTooUTC, haveCommonElements, parseYesNo, range } from "@/utils";
+import { Language } from "@/types";
 
 function getSelectedTimeslots(state: Availability): [number, OptionId][] {
   return state.reduce((result: [number, OptionId][], day) => {
@@ -23,25 +31,38 @@ export function getSelectedIds(state: Selected[]): OptionId[] {
   return state.filter(({ selected }) => selected).map(({ id }) => id);
 }
 
-export function parseFormStateDTOVolunteer(value: VolunteerData) {
-  const data = {} as VolunteerParsedData;
-  data.origin_opportunity = value.opportunityId ? +value.opportunityId : undefined;
-  data.full_name = value.name;
+function mapLanguages(options: Selected[] | undefined, proficiency: LangProficiency) {
+  if (!options) return [];
+  return options
+    .filter((opt) => opt.selected)
+    .map((opt) => ({
+      title: opt.title[Language.EN] || "",
+      proficiency,
+    }));
+}
+
+export function parseFormStateDTOVolunteer(value: VolunteerData): VolunteerFormData {
+  const data = {} as VolunteerFormData;
+  data.opportunityId = value.opportunityId ? +value.opportunityId : undefined;
+  data.fullName = value.name;
   data.email = value.email;
   data.phone = value.phone;
-  data.postal_code = +value.postcode;
-  data.preferred_berlin_locations = getSelectedIds(value.locations);
-  data.schedule = getSelectedTimeslots(value.availability);
-  data.intermediate_languages = getSelectedIds(value.languagesIntermediate);
-  data.fluent_languages = getSelectedIds(value.languagesFluent);
-  data.native_languages = getSelectedIds(value.languagesNative);
+  data.postcode = value.postcode;
+  data.districts = getSelectedIds(value.locations);
   data.activities = getSelectedIds(value.activities);
-  data.good_conduct_certificate = parseYesNo(value.certOfGoodConduct);
-  data.if_measles_vaccination = !!value.certMeaslesVaccination;
-  data.lead_from = getSelectedIds(value.leadFrom).join(", ");
   data.skills = getSelectedIds(value.skills);
+  data.leadFrom = getSelectedIds(value.leadFrom);
+  data.schedule = getSelectedTimeslots(value.availability);
+
+  // Languages with proficiency levels
+  data.languages = [
+    ...mapLanguages(value.languagesNative, LangProficiency.NATIVE),
+    ...mapLanguages(value.languagesFluent, LangProficiency.FLUENT),
+    ...mapLanguages(value.languagesIntermediate, LangProficiency.INTERMEDIATE),
+  ];
+  data.goodConductCertificate = parseYesNo(value.certOfGoodConduct);
+  data.measlesVaccination = parseYesNo(value.certMeaslesVaccination);
   data.comments = value.comments;
-  data.language = value.language;
 
   return data;
 }

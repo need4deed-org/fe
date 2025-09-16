@@ -58,7 +58,7 @@ export default function BecomeVolunteer() {
 
   const languages = getAllSelectedFalse(useList(ListsOfOptions.LANGUAGES));
 
-  const formVolunteer = useForm<VolunteerData>({
+  const formVolunteer = useForm({
     defaultValues: {
       opportunityId: opportunity.id,
       name: "",
@@ -81,7 +81,7 @@ export default function BecomeVolunteer() {
       comments: "",
       consent: undefined,
       language,
-    },
+    } as VolunteerData,
     validators: {
       onSubmit: ({ value }) => {
         if (areLanguagesRepeated(value)) {
