@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 
 import { PaginatedGrid } from "@/components/core/paginatedGrid";
 import VolunteerCard from "./VolunteerCard";
-import { mockVolunteer } from "./tempMockVolunteer";
 import { ApiVolunteerGetList } from "need4deed-sdk";
 import { useGetQuery } from "@/hooks";
 import { SortOrder } from "@/config/constants";
