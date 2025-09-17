@@ -36,7 +36,6 @@ export function VolunteerCardList({ setNumOfVols, sortOrder }: VolunteerCardList
   }, [count, setNumOfVols]);
 
   const items = volunteers.map((volunteer) => <VolunteerCard key={volunteer.id} volunteer={volunteer} />);
-  //   items.unshift(<VolunteerCard key={mockVolunteer.name} volunteer={mockVolunteer} />);
 
   return (
     <PaginatedGrid
