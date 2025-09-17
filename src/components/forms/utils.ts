@@ -8,12 +8,12 @@ import {
   VolunteerFormData,
 } from "need4deed-sdk";
 
+import { Language } from "@/types";
+import { getDateLocalTooUTC, haveCommonElements, parseYesNo, range } from "@/utils";
 import { maxPLZBerlin, maxPLZGermany, minPLZBerlin, minPLZGermany } from "../../config/constants";
 import { OpportunityData, OpportunityParsedData } from "./AddOpportunity/dataStructure";
 import { VolunteerData } from "./BecomeVolunteer/dataStructure";
 import { Availability, Selected, TimeSlot, TypePLZ } from "./types";
-import { getDateLocalTooUTC, haveCommonElements, parseYesNo, range } from "@/utils";
-import { Language } from "@/types";
 
 function getSelectedTimeslots(state: Availability): [number, OptionId][] {
   return state.reduce((result: [number, OptionId][], day) => {
@@ -137,12 +137,12 @@ export function getScheduleState(): Availability {
     weekday: 0,
     timeSlots: [
       {
-        id: "Weekdays",
+        id: "weekdays",
         title: { en: "Weekdays", de: "Wochentage" },
         selected: false,
       },
       {
-        id: "Weekends",
+        id: "weekends",
         title: { en: "Weekends", de: "Wocheenden" },
         selected: false,
       },

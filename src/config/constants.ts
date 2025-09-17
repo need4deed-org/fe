@@ -1,9 +1,9 @@
 export const tokenKey = "token";
 
-export const urlApi = "http://localhost:8000/api";
-export const urlApiVolunteer = `${urlApi}/volunteer/`;
+export const urlApi = "/api";
+export const urlApiVolunteer = `${urlApi}/volunteer`;
 
-export const urlApiAuthEmailDomain = `${urlApi}/auth-email-domain/`;
+export const urlApiAuthEmailDomain = `${urlApi}/auth-email-domain`;
 
 export enum ScreenTypes {
   MOBILE = "mobile",

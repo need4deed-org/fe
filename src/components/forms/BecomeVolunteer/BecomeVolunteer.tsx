@@ -2,16 +2,21 @@
 import { useForm } from "@tanstack/react-form";
 import { validate as validateEmail } from "email-validator";
 import { Lang } from "need4deed-sdk";
+import Image from "next/image";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useRouter, useParams, useSearchParams } from "next/navigation";
-import Image from "next/image";
 
-import { urlApi } from "../../../config/constants";
+import { urlApiVolunteer } from "../../../config/constants";
 import { getImageUrl } from "../../../utils/index";
 // import ModalWindow from "../../core/Modal";
 import UploadIcon from "../../svg/Upload";
 
+import WithParentRef from "@/components/withParentRef";
+import useList from "@/hooks/useLists";
+import usePostRequest from "@/hooks/usePostRequest";
+import { Subpage } from "@/types";
+import ErrorAnnouncement from "../AddOpportunity/ErrorAnnouncement";
 import FieldInfo from "../FieldInfo";
 import HeaderWithHelp from "../HeaderWithHelp";
 import style from "../index.module.css";
@@ -30,11 +35,6 @@ import {
   parseFormStateDTOVolunteer,
 } from "../utils";
 import { VolunteerData, VolunteerParsedData } from "./dataStructure";
-import { Subpage } from "@/types";
-import useList from "@/hooks/useLists";
-import usePostRequest from "@/hooks/usePostRequest";
-import ErrorAnnouncement from "../AddOpportunity/ErrorAnnouncement";
-import WithParentRef from "@/components/withParentRef";
 
 const thankYou = "form.becomeVolunteer.thankYou";
 const somethingWrong = "form.becomeVolunteer.somethingWrong";
@@ -48,7 +48,7 @@ export default function BecomeVolunteer() {
   const language = i18n.language as Lang;
 
   const { postRequest } = usePostRequest<VolunteerParsedData, Record<string, string | string[]>>({
-    url: `${urlApi}/volunteer/`,
+    url: urlApiVolunteer,
   });
 
   const opportunity: OpportunityInfo = {
