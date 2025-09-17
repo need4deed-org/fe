@@ -41,3 +41,13 @@ export const minPLZBerlin = 10115;
 export const maxPLZBerlin = 14199;
 
 export const defaultAvatarURL = "head-silhouette.webp";
+
+export enum DashboardRoutes {
+  Home = "/dashboard/home",
+  Volunteers = "/dashboard/volunteers",
+  Opportunities = "/dashboard/opportunities",
+  Racs = "/dashboard/racs",
+  Posts = "/dashboard/posts",
+  Calendar = "/dashboard/calendar",
+  Profile = "/dashboard/profile",
+}
