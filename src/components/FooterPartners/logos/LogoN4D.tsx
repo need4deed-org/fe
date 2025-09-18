@@ -1,3 +1,4 @@
+"use client";
 import { ScreenTypes } from "@/config/constants";
 import { useScreenType } from "@/context/DeviceContext";
 import { useState, useEffect } from "react";

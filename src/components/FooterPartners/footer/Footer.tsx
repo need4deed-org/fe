@@ -1,5 +1,5 @@
+"use client";
 import styled from "styled-components";
-
 import { LogoN4D } from "../logos";
 import ContactSocials from "./ContactSocials";
 import FooterLinks from "./FooterLinks";

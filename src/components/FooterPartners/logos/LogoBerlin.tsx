@@ -1,3 +1,4 @@
+"use client";
 import { ScreenTypes } from "@/config/constants";
 import FunderLogoBerlin from "../../svg/FunderLogoBerlin";
 import { useScreenType } from "@/context/DeviceContext";

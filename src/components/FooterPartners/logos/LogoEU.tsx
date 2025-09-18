@@ -1,3 +1,4 @@
+"use client";
 import { useScreenType } from "@/context/DeviceContext";
 import FunderLogoEU from "../../svg/FunderLogoEU";
 import { useEffect, useState } from "react";

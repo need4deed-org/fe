@@ -1,3 +1,4 @@
+"use client";
 import { ScreenTypes } from "@/config/constants";
 import FunderLogoSchönebergHilft from "../../svg/FunderLogoSchönebergHilft";
 import { useEffect, useState } from "react";

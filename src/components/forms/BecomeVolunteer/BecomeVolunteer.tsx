@@ -48,7 +48,7 @@ export default function BecomeVolunteer() {
   const language = i18n.language as Lang;
 
   const { postRequest } = usePostRequest<VolunteerParsedData, Record<string, string | string[]>>({
-    url: `${urlApi}/volunteer/`,
+    url: `${urlApi}/volunteer`,
   });
 
   const opportunity: OpportunityInfo = {
