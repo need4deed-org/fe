@@ -28,8 +28,6 @@ export function VolunteerListController({ setNumOfVols, sortOrder }: VolunteerLi
     },
   });
 
-  console.log("**volunteers", volunteers);
-
   useEffect(() => {
     setNumOfVols(count);
   }, [count, setNumOfVols]);
