@@ -5,8 +5,8 @@ import { useTranslation } from "react-i18next";
 
 import CardsHeader from "../common/CardsHeader/CardsHeader";
 import { DashboardLayout } from "@/components/Layout";
-import VolunteerCardList from "./VolunteerCardList";
 import { SortOrder } from "@/config/constants";
+import { VolunteerListController } from "./VolunteerListController";
 
 export function Volunteers() {
   const { t } = useTranslation();
@@ -39,7 +39,7 @@ export function Volunteers() {
           onSortOrderChange={handleSortChange}
         />
 
-        <VolunteerCardList setNumOfVols={setNumOfVols} sortOrder={sortOrder} />
+        <VolunteerListController setNumOfVols={setNumOfVols} sortOrder={sortOrder} />
       </VolunteersContainer>
     </DashboardLayout>
   );
