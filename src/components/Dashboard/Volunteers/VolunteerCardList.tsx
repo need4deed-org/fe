@@ -4,9 +4,8 @@ import { PaginatedGrid } from "@/components/core/paginatedGrid";
 import VolunteerCard from "./VolunteerCard";
 import { ApiVolunteerGetList } from "need4deed-sdk";
 import { useGetQuery } from "@/hooks";
-import { SortOrder } from "@/config/constants";
+import { apiPathVolunteer, SortOrder } from "@/config/constants";
 
-const API_PATH_VOLUNTEER = "/api/volunteer";
 const columns = 4;
 const rows = 3;
 const limit = columns * rows;
@@ -21,7 +20,7 @@ export function VolunteerCardList({ setNumOfVols, sortOrder }: VolunteerCardList
   const [currentPage, setCurrentPage] = useState(1);
   const { data: volunteers, count } = useGetQuery<ApiVolunteerGetList>({
     queryKey: ["volunteersList"],
-    apiPath: API_PATH_VOLUNTEER,
+    apiPath: apiPathVolunteer,
     options: {
       limit: limit,
       page: currentPage,

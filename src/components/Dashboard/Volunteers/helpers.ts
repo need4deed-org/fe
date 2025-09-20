@@ -1,5 +1,13 @@
 import { ApiLanguage, LangProficiency } from "need4deed-sdk";
 
+const proficiencyOrder = [
+  LangProficiency.NATIVE,
+  LangProficiency.FLUENT,
+  LangProficiency.ADVANCED,
+  LangProficiency.INTERMEDIATE,
+  LangProficiency.BEGINNER,
+];
+
 interface GroupedLanguage {
   proficiency: LangProficiency;
   list: string[];
@@ -15,6 +23,7 @@ export const groupLanguagesByProficiency = (languages: ApiLanguage[]): GroupedLa
 
   languages.forEach((lang) => {
     const { proficiency, title } = lang;
+
     if (!groupedLanguagesMap.has(proficiency)) {
       groupedLanguagesMap.set(proficiency, []);
     }
@@ -25,6 +34,11 @@ export const groupLanguagesByProficiency = (languages: ApiLanguage[]): GroupedLa
   const groupedLanguages: GroupedLanguage[] = [];
   groupedLanguagesMap.forEach((list, proficiency) => {
     groupedLanguages.push({ proficiency, list });
+  });
+
+  // 👇️ Sorting Languages
+  groupedLanguages.sort((a, b) => {
+    return proficiencyOrder.indexOf(a.proficiency) - proficiencyOrder.indexOf(b.proficiency);
   });
 
   return groupedLanguages;

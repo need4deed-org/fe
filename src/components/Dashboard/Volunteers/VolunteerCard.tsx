@@ -14,7 +14,7 @@ import { capitalizeFirstLetter, getImageUrl } from "@/utils";
 import { defaultAvatarURL } from "@/config/constants";
 import { JSX } from "react";
 
-interface Props extends React.CSSProperties {
+interface Props {
   volunteer: ApiVolunteerGetList;
 }
 
@@ -71,7 +71,7 @@ export function VolunteerCard({ volunteer }: Props) {
       <CardDetail header={t("dashboard.volunteers.languages")} iconName={IconName.Translate}>
         {groupedLanguages.map(({ proficiency, list }) => (
           <LanguageDetailContainer key={proficiency}>
-            <CardParagraph text={`${capitalizeFirstLetter(proficiency)}:`} isBold />
+            <CardParagraph text={`${t(`dashboard.volunteers.langProficiency.${proficiency}`)}:`} isBold />
             <CardParagraph text={`${list.join(", ")}`} />
           </LanguageDetailContainer>
         ))}
