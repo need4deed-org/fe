@@ -1,7 +1,7 @@
 export * from "./helpers";
 
 import { cloudfrontURL } from "@/config/constants";
-import { YesNo } from "@/types";
+import { DocumentStatusType } from "need4deed-sdk";
 
 export function getDateLocalTooUTC(dateStr: string | undefined) {
   if (!dateStr) return undefined;
@@ -15,9 +15,9 @@ export function haveCommonElements(...arrays: Array<Array<unknown>>) {
   return combined.size < totalLength;
 }
 
-export function parseYesNo(value: boolean | undefined): YesNo {
-  if (value) return YesNo.YES;
-  return YesNo.NO;
+export function parseYesNo(value: boolean | undefined): DocumentStatusType {
+  if (value) return DocumentStatusType.YES;
+  return DocumentStatusType.NO;
 }
 
 export function* range(start: number, end: number, step = 1) {
