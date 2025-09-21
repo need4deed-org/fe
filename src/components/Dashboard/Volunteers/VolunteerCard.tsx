@@ -1,65 +1,64 @@
 import styled from "styled-components";
 
-import { Volunteer } from "./types";
 import { BaseCard } from "@/components/styled/container";
 import { Paragraph } from "@/components/styled/text";
-import { CheckIcon, HourglassIcon, SparkleIcon } from "@phosphor-icons/react";
+import { CheckIcon, FlagIcon, HourglassIcon, LinkIcon, SealCheckIcon, SparkleIcon } from "@phosphor-icons/react";
 import { CirclePic } from "@/components/styled/img";
 import { Tags } from "@/components/core/common";
 import CardDetail from "./CardDetail";
 import { IconName } from "./icon";
 import { useTranslation } from "react-i18next";
-import { ApiVolunteerGetList } from "need4deed-sdk";
+import { ApiVolunteerGetList, VolunteerStateType } from "need4deed-sdk";
+import { groupLanguagesByProficiency } from "./helpers";
+import { capitalizeFirstLetter, getImageUrl } from "@/utils";
+import { defaultAvatarURL } from "@/config/constants";
+import { JSX } from "react";
 
-interface Props extends React.CSSProperties {
+interface Props {
   volunteer: ApiVolunteerGetList;
 }
 
 export function VolunteerCard({ volunteer }: Props) {
   const { t } = useTranslation();
 
-  const { name, nativeLanguages, fluentLanguages, intermediateLanguages, activities, skills, locations, availability } =
-    volunteer;
+  const { name, languages, activities, skills, locations, availability, avatarUrl, status } = volunteer;
 
-  const languages = [
-    { level: "Native", list: nativeLanguages.join(", ") },
-    { level: "Fluent", list: fluentLanguages.join(", ") },
-    { level: "Intermediate", list: intermediateLanguages.join(", ") },
-  ];
+  const groupedLanguages = groupLanguagesByProficiency(languages);
 
-  const availabilities = availability.map((a) => {
-    const daytimeString = Array.isArray(a.daytime) ? a.daytime.join("-") : a.daytime;
-    return a.day + ", " + daytimeString;
-  });
+  const availabilities = availability.map((a) => capitalizeFirstLetter(a.day) + ", " + a.daytime.join("-"));
 
   return (
     <Card>
       <StatusTagsDiv>
         <StatusDiv>
-          <HourglassIcon size={18} color="var(--color-red-500)" />
+          {statusIconMap[status]}
+
           <Paragraph
             fontWeight="var(--dashboard-volunteers-card-status-fontWeight)"
             fontSize="var(--dashboard-volunteers-card-status-fontSize)"
             lineheight="var(--dashboard-volunteers-card-status-lineHeight)"
-            color="var(--color-red-500)"
+            color={statusColorMap[status]}
           >
-            Pending Review
+            {status}
           </Paragraph>
         </StatusDiv>
-        <TagDiv>
-          <Paragraph
-            fontWeight="var(--dashboard-volunteers-card-tag-fontWeight)"
-            fontSize="var(--dashboard-volunteers-card-tag-fontSize)"
-            lineheight="var(--dashboard-volunteers-card-tag-lineHeight)"
-          >
-            NEW
-          </Paragraph>
-          <SparkleIcon size={18} color="var(--color-midnight)" />
-        </TagDiv>
+
+        {status === VolunteerStateType.NEW && (
+          <TagDiv>
+            <Paragraph
+              fontWeight="var(--dashboard-volunteers-card-tag-fontWeight)"
+              fontSize="var(--dashboard-volunteers-card-tag-fontSize)"
+              lineheight="var(--dashboard-volunteers-card-tag-lineHeight)"
+            >
+              {status}
+            </Paragraph>
+            <SparkleIcon size={18} color="var(--color-midnight)" />
+          </TagDiv>
+        )}
       </StatusTagsDiv>
 
       <ProfileDiv>
-        <CirclePic src="https://d2nwrdddg8skub.cloudfront.net/images/mohsen.webp" size="64px" />
+        <CirclePic src={getImageUrl(avatarUrl || defaultAvatarURL)} size="64px" />
         <Paragraph
           fontWeight="var(--dashboard-volunteers-card-profile-fontWeight)"
           fontSize="var(--dashboard-volunteers-card-profile-fontSize)"
@@ -70,10 +69,10 @@ export function VolunteerCard({ volunteer }: Props) {
       </ProfileDiv>
 
       <CardDetail header={t("dashboard.volunteers.languages")} iconName={IconName.Translate}>
-        {languages.map(({ level, list }) => (
-          <LanguageDetailContainer key={level}>
-            <CardParagraph text={`${level}:`} isBold />
-            <CardParagraph text={`${list}`} />
+        {groupedLanguages.map(({ proficiency, list }) => (
+          <LanguageDetailContainer key={proficiency}>
+            <CardParagraph text={`${t(`dashboard.volunteers.langProficiency.${proficiency}`)}:`} isBold />
+            <CardParagraph text={`${list.join(", ")}`} />
           </LanguageDetailContainer>
         ))}
       </CardDetail>
@@ -102,6 +101,40 @@ export function VolunteerCard({ volunteer }: Props) {
 }
 
 export default VolunteerCard;
+
+/* Helper maps */
+
+// Todo: this map will be updated Later
+const statusColorMap: Record<VolunteerStateType, string> = {
+  [VolunteerStateType.NEW]: "var(--color-red-500)",
+  [VolunteerStateType.MATCHED]: "var(--color-green-700)",
+  [VolunteerStateType.OPPORTUNITY_SENT]: "var(--color-red-200)",
+  [VolunteerStateType.ACTIVE_REGULAR]: "var(--color-red-200)",
+  [VolunteerStateType.ACTIVE_ACCOMPANY]: "var(--color-red-200)",
+  [VolunteerStateType.ACTIVE_FEST]: "var(--color-red-200)",
+  [VolunteerStateType.TO_REMATCH]: "var(--color-red-200)",
+  [VolunteerStateType.TEMP_INACTIVE]: "var(--color-red-200)",
+  [VolunteerStateType.INACTIVE]: "var(--color-red-200)",
+};
+
+// Todo: this map will be updated Later
+const statusIconMap: Record<VolunteerStateType, JSX.Element> = {
+  [VolunteerStateType.NEW]: <HourglassIcon size={18} color={statusColorMap[VolunteerStateType.NEW]} />,
+  [VolunteerStateType.MATCHED]: <SealCheckIcon size={18} color={statusColorMap[VolunteerStateType.MATCHED]} />,
+  [VolunteerStateType.OPPORTUNITY_SENT]: (
+    <FlagIcon size={18} color={statusColorMap[VolunteerStateType.OPPORTUNITY_SENT]} />
+  ),
+  [VolunteerStateType.ACTIVE_REGULAR]: <LinkIcon size={18} color={statusColorMap[VolunteerStateType.ACTIVE_REGULAR]} />,
+  [VolunteerStateType.ACTIVE_ACCOMPANY]: (
+    <HourglassIcon size={18} color={statusColorMap[VolunteerStateType.ACTIVE_ACCOMPANY]} />
+  ),
+  [VolunteerStateType.ACTIVE_FEST]: <HourglassIcon size={18} color={statusColorMap[VolunteerStateType.ACTIVE_FEST]} />,
+  [VolunteerStateType.TO_REMATCH]: <HourglassIcon size={18} color={statusColorMap[VolunteerStateType.TO_REMATCH]} />,
+  [VolunteerStateType.TEMP_INACTIVE]: (
+    <HourglassIcon size={18} color={statusColorMap[VolunteerStateType.TEMP_INACTIVE]} />
+  ),
+  [VolunteerStateType.INACTIVE]: <FlagIcon size={18} color={statusColorMap[VolunteerStateType.INACTIVE]} />,
+};
 
 /*  Helper components */
 interface CardParagraphProps {

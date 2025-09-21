@@ -1,4 +1,4 @@
-import { CLOUDFRONT_HOSTNAME } from "@/config/constants";
+import { apiPrefix, CLOUDFRONT_HOSTNAME, apiURL } from "@/config/constants";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
     styledComponents: true,
   },
   async rewrites() {
-    return [{ source: "/api/:path*", destination: "http://vmpub:5000/:path*" }];
+    return [{ source: `/${apiPrefix}/:path*`, destination: `${apiURL}/:path*` }];
   },
   images: {
     domains: [CLOUDFRONT_HOSTNAME],

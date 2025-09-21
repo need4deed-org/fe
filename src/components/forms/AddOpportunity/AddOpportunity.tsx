@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useForm } from "@tanstack/react-form";
 import { useTranslation } from "react-i18next";
 import { useRouter, useParams, useSearchParams } from "next/navigation";
-import { eightDays, phoneRegEx, urlApi } from "../../../config/constants";
+import { eightDays, phoneRegEx, apiPathOpportunity } from "../../../config/constants";
 import { getImageUrl } from "../../../utils";
 import UploadIcon from "../../svg/Upload";
 import FieldInfo from "../FieldInfo";
@@ -60,7 +60,7 @@ export default function AddOpportunity() {
   });
 
   const { postRequest } = usePostRequest<OpportunityParsedData, Record<string, string | string[]>>({
-    url: `${urlApi}/opportunity/`,
+    url: apiPathOpportunity,
   });
 
   const formOpportunity = useForm({

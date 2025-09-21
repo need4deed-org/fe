@@ -9,8 +9,10 @@ import {
   UserCheckIcon,
 } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
 import { Paragraph } from "@/components/styled/text";
+import { usePathname, useRouter } from "next/navigation";
+import { DashboardRoutes } from "@/config/constants";
+import { ElementType } from "react";
 
 const BarContainer = styled.div`
   display: flex;
@@ -71,46 +73,68 @@ const StyledParagraph = ({ label, isSelected }: StyledParagraphProps) => {
   );
 };
 
+interface BarOptions {
+  label: string;
+  Icon?: ElementType;
+  route: DashboardRoutes;
+  text?: string;
+}
+
 export default function NavigationBar() {
   const { t } = useTranslation();
-  const [selectedOptionIndex, setSelectedOptionIndex] = useState(0);
+  const router = useRouter();
+  const currentPathname = usePathname();
 
-  const options = [
-    { label: t("dashboard.home.sidebar.home"), Icon: HouseIcon },
-    { label: t("dashboard.home.sidebar.volunteers"), Icon: UserCheckIcon },
+  const options: BarOptions[] = [
+    { label: t("dashboard.home.sidebar.home"), Icon: HouseIcon, route: DashboardRoutes.Home },
+    {
+      label: t("dashboard.home.sidebar.volunteers"),
+      Icon: UserCheckIcon,
+      route: DashboardRoutes.Volunteers,
+    },
     {
       label: t("dashboard.home.sidebar.opportunities"),
       Icon: ShootingStarIcon,
+      route: DashboardRoutes.Opportunities,
     },
     {
       label: t("dashboard.home.sidebar.racs"),
       Icon: BookOpenTextIcon,
+      route: DashboardRoutes.Racs,
     },
     {
       label: t("dashboard.home.sidebar.posts"),
       Icon: NotepadIcon,
+      route: DashboardRoutes.Posts,
     },
     {
       label: t("dashboard.home.sidebar.calendar"),
       Icon: CalendarDotsIcon,
+      route: DashboardRoutes.Calendar,
     },
     {
       label: t("dashboard.home.sidebar.profile"),
       text: "OA", // TODO; after user login enabled, use user info in here !
+      route: DashboardRoutes.Profile,
     },
   ];
 
   return (
     <BarContainer>
-      {options.map(({ label, Icon, text }, index) => {
-        const isSelected = index === selectedOptionIndex;
+      {options.map(({ label, Icon, text, route }) => {
+        const isSelected = currentPathname.startsWith(route);
+
         return (
-          <Option key={label} onClick={() => setSelectedOptionIndex(index)}>
+          <Option
+            key={label}
+            onClick={() => {
+              router.push(route);
+            }}
+          >
             <IconDiv $isSelected={isSelected}>
               {(Icon && <Icon size={24} color={isSelected ? "var(--color-orchid)" : "var(--color-midnight)"} />) ||
                 (text && <StyledParagraph isSelected={isSelected} label={text} />)}
             </IconDiv>
-
             <StyledParagraph label={label} />
           </Option>
         );

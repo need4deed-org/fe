@@ -1,4 +1,6 @@
-import { CLOUDFRONT_URL } from "@/config/constants";
+export * from "./helpers";
+
+import { cloudfrontURL } from "@/config/constants";
 import { DocumentStatusType } from "need4deed-sdk";
 
 export function getDateLocalTooUTC(dateStr: string | undefined) {
@@ -61,5 +63,5 @@ export function fetchFn<R, D = R>({
 }
 
 export const getImageUrl = (imageName: string): string => {
-  return `${CLOUDFRONT_URL}/${imageName}`;
+  return `${cloudfrontURL}/${imageName}`;
 };

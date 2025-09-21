@@ -331,7 +331,14 @@
       "activities": "Aktivitäten",
       "skillsExperience": "Fähigkeiten & Erfahrungen",
       "preferredAvailability": "Bevorzugte Verfügbarkeit",
-      "preferredDistricts": "Bevorzugte Bezirke"
+      "preferredDistricts": "Bevorzugte Bezirke",
+      "langProficiency": {
+        "beginner": "Anfänger",
+        "intermediate": "Mittelstufe",
+        "advanced": "Fortgeschritten",
+        "fluent": "Fließend",
+        "native": "Muttersprache"
+      }
     },
     "home": {
       "sidebar": {

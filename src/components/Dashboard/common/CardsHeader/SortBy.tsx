@@ -43,14 +43,15 @@ const OptionButton = styled.button`
 `;
 
 interface Props {
-  initialValue?: SortOrder;
-  onChange?: (value: SortOrder) => void;
+  sortOrder: SortOrder;
+  onChange?: OnChangeSortOrder;
 }
 
-export default function SortBy({ onChange, initialValue }: Props) {
+export type OnChangeSortOrder = (value: SortOrder) => void;
+
+export default function SortBy({ onChange, sortOrder }: Props) {
   const { t } = useTranslation();
   const [isOptionsVisible, setIsOptionsVisible] = useState(false);
-  const [selectedOptValue, setSelectedOptValue] = useState(initialValue || SortOrder.NewToOld);
 
   const sortByOptions = [
     { value: SortOrder.NewToOld, label: t("dashboard.sortBy.newToOld") },
@@ -58,19 +59,18 @@ export default function SortBy({ onChange, initialValue }: Props) {
   ];
 
   const handleChange = (value: SortOrder) => {
-    setSelectedOptValue(value);
     setIsOptionsVisible(false);
     if (onChange) onChange(value);
   };
 
-  const visibleOptions = sortByOptions.filter((o) => o.value !== selectedOptValue);
+  const visibleOptions = sortByOptions.filter((o) => o.value !== sortOrder);
 
   return (
     <SortByContainer>
       <Paragraph fontWeight={400}>{t("dashboard.sortBy.sortBy")}:</Paragraph>
 
       <SortBySwitcherContainer>
-        <Paragraph fontWeight={600}>{sortByOptions.find((o) => o.value === selectedOptValue)?.label}</Paragraph>
+        <Paragraph fontWeight={600}>{sortByOptions.find((o) => o.value === sortOrder)?.label}</Paragraph>
 
         {isOptionsVisible && (
           <OptionsDiv>
