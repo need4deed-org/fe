@@ -1,4 +1,3 @@
-"use client";
 import N4DLogoFlat from "@/components/svg/N4DLogoFlat";
 import { ScreenTypes } from "@/config/constants";
 import { useScreenType } from "@/context/DeviceContext";

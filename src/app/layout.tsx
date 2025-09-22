@@ -10,7 +10,6 @@ import { DeviceProvider } from "@/context/DeviceContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
-import { PageLayout } from "@/components/Layout";
 
 const figtree = Figtree({
   subsets: ["latin"],
@@ -56,9 +55,7 @@ export default async function RootLayout({
         <StyledComponentsRegistry>
           <QueryProvider>
             <DeviceProvider initialScreenType={initialScreenType}>
-              <I18nProvider>
-                <PageLayout background="var(--color-white)">{children}</PageLayout>
-              </I18nProvider>
+              <I18nProvider>{children}</I18nProvider>
             </DeviceProvider>
           </QueryProvider>
         </StyledComponentsRegistry>

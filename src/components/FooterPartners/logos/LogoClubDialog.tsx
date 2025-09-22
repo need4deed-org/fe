@@ -1,4 +1,3 @@
-"use client";
 import styled from "styled-components";
 import { Paragraph } from "../../styled/text";
 import FunderLogoClubDialog from "../../svg/FunderLogoClubDialog";
