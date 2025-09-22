@@ -3,6 +3,7 @@ import styles from "./page.module.css";
 export default function Home() {
   return (
     <div className={styles.page}>
+      <header>HEADER</header>
       <main className={styles.main}>
         <div className={styles.ctas}>
           <a href="/login" className={styles.secondary}>
@@ -19,6 +20,7 @@ export default function Home() {
           </a>
         </div>
       </main>
+      <footer className={styles.footer}>FOOTER</footer>
     </div>
   );
 }
