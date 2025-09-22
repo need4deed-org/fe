@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import { Paragraph } from "@/components/styled/text";
 import CircleArrow from "@/components/svg/CircleArrow";
-import { SortOrder } from "@/config/constants";
+import { SortOrder } from "need4deed-sdk";
 
 const SortByContainer = styled.div`
   display: flex;

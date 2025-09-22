@@ -7,7 +7,7 @@ import FiltersButton from "./FiltersButton";
 import { hyphenationStyles } from "../../../styled/mixins";
 import Results from "./Results";
 import SortBy, { OnChangeSortOrder } from "./SortBy";
-import { SortOrder } from "@/config/constants";
+import { SortOrder } from "need4deed-sdk";
 
 interface Props {
   header: string;

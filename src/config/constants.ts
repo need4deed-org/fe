@@ -29,11 +29,6 @@ export const eventsSectionContainerId = "events-section-container";
 export const cloudfrontURL = process.env.NEXT_PUBLIC_CLOUDFRONT_URL;
 export const CLOUDFRONT_HOSTNAME = "d2nwrdddg8skub.cloudfront.net";
 
-export enum SortOrder {
-  NewToOld = "newestToOldest",
-  OldToNew = "oldestToNewest",
-}
-
 export const minPLZGermany = 1067;
 export const maxPLZGermany = 99998;
 

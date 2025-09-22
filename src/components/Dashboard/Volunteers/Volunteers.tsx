@@ -5,8 +5,8 @@ import { useTranslation } from "react-i18next";
 
 import CardsHeader from "../common/CardsHeader/CardsHeader";
 import { DashboardLayout } from "@/components/Layout";
-import { SortOrder } from "@/config/constants";
 import { VolunteerListController } from "./VolunteerListController";
+import { SortOrder } from "need4deed-sdk";
 
 export function Volunteers() {
   const { t } = useTranslation();
