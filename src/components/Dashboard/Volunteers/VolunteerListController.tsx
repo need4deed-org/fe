@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 
-import { ApiVolunteerGetList } from "need4deed-sdk";
+import { ApiVolunteerGetList, SortOrder } from "need4deed-sdk";
 import { useGetQuery } from "@/hooks";
-import { apiPathVolunteer, SortOrder } from "@/config/constants";
+import { apiPathVolunteer } from "@/config/constants";
 import { VolunteerCardList } from "./VolunteerCardList"; // We will modify this component
 
 const columns = 4;
