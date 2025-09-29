@@ -10,7 +10,8 @@ import { IconName } from "./icon";
 import { useTranslation } from "react-i18next";
 import { ApiVolunteerGetList } from "need4deed-sdk";
 import { groupLanguagesByProficiency } from "./helpers";
-import { capitalizeFirstLetter } from "@/utils";
+import { capitalizeFirstLetter, getImageUrl } from "@/utils";
+import { defaultAvatarURL } from "@/config/constants";
 
 interface Props extends React.CSSProperties {
   volunteer: ApiVolunteerGetList;
@@ -19,14 +20,11 @@ interface Props extends React.CSSProperties {
 export function VolunteerCard({ volunteer }: Props) {
   const { t } = useTranslation();
 
-  const { name, languages, activities, skills, locations, availability } = volunteer;
+  const { name, languages, activities, skills, locations, availability, avatarUrl } = volunteer;
 
   const groupedLanguages = groupLanguagesByProficiency(languages);
 
-  const availabilities = availability.map((a) => {
-    const daytimeString = Array.isArray(a.daytime) ? a.daytime.join("-") : a.daytime;
-    return a.day + ", " + daytimeString;
-  });
+  const availabilities = availability.map((a) => capitalizeFirstLetter(a.day) + ", " + a.daytime.join("-"));
 
   return (
     <Card>
@@ -55,7 +53,7 @@ export function VolunteerCard({ volunteer }: Props) {
       </StatusTagsDiv>
 
       <ProfileDiv>
-        <CirclePic src="https://d2nwrdddg8skub.cloudfront.net/images/mohsen.webp" size="64px" />
+        <CirclePic src={getImageUrl(avatarUrl || defaultAvatarURL)} size="64px" />
         <Paragraph
           fontWeight="var(--dashboard-volunteers-card-profile-fontWeight)"
           fontSize="var(--dashboard-volunteers-card-profile-fontSize)"

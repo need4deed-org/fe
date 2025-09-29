@@ -22,7 +22,7 @@ export function VolunteerCardList() {
   console.log("error", error);
 
   const items = volunteers.map((volunteer) => <VolunteerCard key={volunteer.name} volunteer={volunteer} />);
-  //   items.unshift(<VolunteerCard key={mockVolunteer.name} volunteer={mockVolunteer} />);
+  items.unshift(<VolunteerCard key={mockVolunteer.name} volunteer={mockVolunteer} />);
 
   return <PaginatedGrid items={items} columns={4} rows={3} />;
 }
