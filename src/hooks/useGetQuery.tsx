@@ -1,7 +1,6 @@
-import { SortOrder } from "@/config/constants";
 import { useQuery } from "@tanstack/react-query";
 import axios, { AxiosResponse } from "axios";
-import { Lang } from "need4deed-sdk";
+import { Lang, SortOrder } from "need4deed-sdk";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
