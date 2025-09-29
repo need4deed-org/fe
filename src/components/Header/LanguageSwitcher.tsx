@@ -1,11 +1,10 @@
-import { Lang } from "need4deed-sdk";
+import { Lang, QueryParams } from "need4deed-sdk";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import MenuItem from "./MenuItem";
 import { Paragraph } from "../styled/text";
-import { QueryParams } from "@/config/constants";
 
 const en = "EN";
 const de = "DE";

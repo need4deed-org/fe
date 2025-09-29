@@ -4,13 +4,13 @@ import { ReactNode, useEffect } from "react";
 import styled from "styled-components";
 
 import { N4DLogo } from "./logos/N4DLogo";
-import { QueryParams, ScreenTypes } from "@/config/constants";
+import { ScreenTypes } from "@/config/constants";
 import { Header } from "@/components/Header";
 import { useScreenType } from "@/context/DeviceContext";
 import { FooterPartnersSection } from "@/components/FooterPartners";
 import { useSearchParams } from "next/navigation";
 import { useTranslation } from "react-i18next";
-import { Lang } from "need4deed-sdk";
+import { Lang, QueryParams } from "need4deed-sdk";
 
 interface Props {
   children: ReactNode;
