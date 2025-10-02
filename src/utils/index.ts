@@ -2,7 +2,6 @@ export * from "./helpers";
 
 import { cloudfrontURL } from "@/config/constants";
 import { DocumentStatusType } from "need4deed-sdk";
-import { cloudfrontURL } from "@/config/constants";
 
 export function getDateLocalTooUTC(dateStr: string | undefined) {
   if (!dateStr) return undefined;
