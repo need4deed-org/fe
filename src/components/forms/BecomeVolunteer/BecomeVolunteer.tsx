@@ -9,7 +9,6 @@ import { useTranslation } from "react-i18next";
 
 import { apiPathVolunteer } from "../../../config/constants";
 import { getImageUrl } from "../../../utils/index";
-// import ModalWindow from "../../core/Modal";
 import UploadIcon from "../../svg/Upload";
 
 import WithParentRef from "@/components/withParentRef";

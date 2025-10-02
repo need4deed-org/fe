@@ -29,8 +29,7 @@ const PageContentHeaderContainer = styled.div<PageContentHeaderContainerProps>`
   flex: 1;
   flex-direction: column;
   background: ${(props) => props.background || "var(--layout-static-page-background-default)"};
-  /* Todo: should we make this assignable for static pages that need margin bottom to make a space between page content and page footer. this margin does not suitable for the login page...*/
-  /* padding-bottom: var(--layout-static-page-header-content-bottom-padding); */
+  padding-bottom: var(--layout-static-page-header-content-bottom-padding);
   padding-top: var(--layout-static-page-header-height);
 `;
 
