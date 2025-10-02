@@ -138,12 +138,12 @@ export function getScheduleState(): Availability {
     timeSlots: [
       {
         id: "weekdays",
-        title: { en: "Weekdays", de: "Wochentage" },
+        title: { en: "weekdays", de: "wochentage" },
         selected: false,
       },
       {
         id: "weekends",
-        title: { en: "Weekends", de: "Wocheenden" },
+        title: { en: "weekends", de: "wocheenden" },
         selected: false,
       },
     ],

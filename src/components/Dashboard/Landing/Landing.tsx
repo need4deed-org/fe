@@ -6,11 +6,9 @@ import { Header } from "@/components/Header";
 import N4DLogo from "@/components/Layout/PageLayout/logos/N4DLogo";
 import { useScreenType } from "@/context/DeviceContext";
 import { ScreenTypes } from "@/config/constants";
-
 export function Landing() {
   const screenType = useScreenType();
   const isBurgerMenu = screenType === ScreenTypes.MOBILE;
-
   return (
     <AppContainer id="app-container">
       <Header
@@ -25,5 +23,4 @@ export function Landing() {
     </AppContainer>
   );
 }
-
 export default Landing;

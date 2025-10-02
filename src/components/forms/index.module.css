@@ -32,7 +32,7 @@
 .form-submit em {
   display: inline-block;
   color: var(--color-red-500);
-  background: var(--color-neutral-900);
+  background: var(--color-white);
   padding-inline: 0.3rem;
   margin-inline: 1rem;
 }
@@ -52,7 +52,7 @@
 .form-form-field input[type="datetime-local"] {
   letter-spacing: 0.12rem;
   text-transform: uppercase;
-  background: var(--color-neutral-900);
+  background: var(--color-white);
   -webkit-appearance: none;
 }
 
@@ -65,7 +65,7 @@
 }
 
 .form-form-field span {
-  background: var(--color-neutral-900);
+  background: var(--color-white);
   padding-inline: 0.3rem;
   position: absolute;
   bottom: 3rem;
@@ -167,12 +167,12 @@
 }
 
 .form-pick input:checked + label {
-  color: var(--color-neutral-900);
+  color: var(--color-white);
   background: var(--color-violet-400);
 }
 
 .form-pick input:checked + label:hover {
-  color: var(--color-neutral-900);
+  color: var(--color-white);
   background: var(--color-violet-500);
 }
 
@@ -182,7 +182,7 @@
 
 .form-pick button:hover,
 .form-pick label:hover {
-  color: var(--color-neutral-100);
+  color: var(--color-black);
   background: var(--color-neutral-700);
 }
 
@@ -215,7 +215,7 @@
 }
 
 .form-section-header button:hover {
-  background: var(--color-neutral-800);
+  background: var(--color-grey-10);
 }
 
 .form-radio-chips label:nth-child(2) {
@@ -250,7 +250,7 @@
 .form-field-group b:first-child {
   position: absolute;
   top: -0.7rem;
-  background: var(--color-neutral-900);
+  background: var(--color-white);
   padding-inline: 0.3rem;
   font-weight: 400;
 }
@@ -290,7 +290,7 @@
   width: 60ch;
   padding: 4rem;
   border-radius: 0.5rem;
-  background: var(--color-neutral-900);
+  background: var(--color-white);
 }
 
 .modal-container p {
@@ -304,7 +304,7 @@
   outline: solid 1px var(--color-neutral-500);
   padding: 0.5rem 2rem 0.5rem 0.5rem !important;
   border-radius: 0.3rem;
-  background: var(--color-neutral-800);
+  background: var(--color-grey-10);
   color: var(--color-neutral-200);
   font-size: 0.9rem;
   font-family: var(--n4d-font-mono);
