@@ -6,8 +6,71 @@ import { Search } from "../../../core/common";
 import FiltersButton from "./FiltersButton";
 import { hyphenationStyles } from "../../../styled/mixins";
 import Results from "./Results";
-import SortBy from "./SortBy";
-import { SortOrder } from "@/config/constants";
+import SortBy, { OnChangeSortOrder } from "./SortBy";
+import { SortOrder } from "need4deed-sdk";
+
+interface Props {
+  header: string;
+  resultCounter: number;
+  resultText: string;
+  onSearchInputChange: (input: string) => void;
+  tabs: string[];
+  selectedTabIndex: number;
+  setSelectedTabIndex: (index: number) => void;
+  setIsFiltersOpen: (isOpen: boolean) => void;
+  sortOrder: SortOrder;
+  onSortOrderChange?: OnChangeSortOrder;
+}
+
+export default function CardsHeader({
+  header,
+  resultCounter,
+  resultText,
+  onSearchInputChange,
+  selectedTabIndex,
+  setSelectedTabIndex,
+  tabs,
+  setIsFiltersOpen,
+  sortOrder,
+  onSortOrderChange,
+}: Props) {
+  const { t } = useTranslation();
+
+  return (
+    <HeaderContainer>
+      <HyphenatedHeading2>{header}</HyphenatedHeading2>
+
+      <TabsSearchBarContainer>
+        <TabsSectionContainer>
+          <Tabs>
+            {tabs.map((tab, index) => (
+              <TabHeading key={tab} onClick={() => setSelectedTabIndex(index)} $isSelected={selectedTabIndex === index}>
+                {tab}
+              </TabHeading>
+            ))}
+          </Tabs>
+
+          <ResultsSortByContainer>
+            <Results counter={resultCounter} text={resultText} />
+            <SortBy sortOrder={sortOrder} onChange={onSortOrderChange} />
+          </ResultsSortByContainer>
+        </TabsSectionContainer>
+
+        <SearchBarSectionContainer>
+          <Search
+            placeHolder={`${t("dashboard.searchPlaceHolder")} ...`}
+            onInputChange={onSearchInputChange}
+            width="var(--dashboard-cards-header-searchbar-width)" //Todo: take this width value as prop when migrating website opportunities.
+            backgroundColor="var(--color-magnolia-light)"
+          />
+          <FiltersButton setIsFiltersOpen={setIsFiltersOpen} />
+        </SearchBarSectionContainer>
+      </TabsSearchBarContainer>
+    </HeaderContainer>
+  );
+}
+
+/* Styles */
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -59,67 +122,6 @@ const TabHeading = styled(Heading4)<TabHeadingProps>`
   padding-bottom: ${(props) => (props.$isSelected ? "var(--opportunities-header-tabs-padding-bottom)" : "0")};
 `;
 
-interface Props {
-  header: string;
-  resultCounter: number;
-  resultText: string;
-  onSearchInputChange: (input: string) => void;
-  tabs: string[];
-  selectedTabIndex: number;
-  setSelectedTabIndex: (index: number) => void;
-  setIsFiltersOpen: (isOpen: boolean) => void;
-}
-
 const HyphenatedHeading2 = styled(Heading2)`
   ${hyphenationStyles}
 `;
-
-export default function CardsHeader({
-  header,
-  resultCounter,
-  resultText,
-  onSearchInputChange,
-  selectedTabIndex,
-  setSelectedTabIndex,
-  tabs,
-  setIsFiltersOpen,
-}: Props) {
-  const { t } = useTranslation();
-
-  const handleSortOrderChange = (sortorder: SortOrder) => {
-    // Todo: add sorting algo
-  };
-
-  return (
-    <HeaderContainer>
-      <HyphenatedHeading2>{header}</HyphenatedHeading2>
-
-      <TabsSearchBarContainer>
-        <TabsSectionContainer>
-          <Tabs>
-            {tabs.map((tab, index) => (
-              <TabHeading key={tab} onClick={() => setSelectedTabIndex(index)} $isSelected={selectedTabIndex === index}>
-                {tab}
-              </TabHeading>
-            ))}
-          </Tabs>
-
-          <ResultsSortByContainer>
-            <Results counter={resultCounter} text={resultText} />
-            <SortBy onChange={handleSortOrderChange} />
-          </ResultsSortByContainer>
-        </TabsSectionContainer>
-
-        <SearchBarSectionContainer>
-          <Search
-            placeHolder={`${t("dashboard.searchPlaceHolder")} ...`}
-            onInputChange={onSearchInputChange}
-            width="var(--dashboard-cards-header-searchbar-width)" //Todo: take this width value as prop when migrating website opportunities.
-            backgroundColor="var(--color-magnolia-light)"
-          />
-          <FiltersButton setIsFiltersOpen={setIsFiltersOpen} />
-        </SearchBarSectionContainer>
-      </TabsSearchBarContainer>
-    </HeaderContainer>
-  );
-}

@@ -5,32 +5,41 @@ import { useTranslation } from "react-i18next";
 
 import CardsHeader from "../common/CardsHeader/CardsHeader";
 import { DashboardLayout } from "@/components/Layout";
-import VolunteerCardList from "./VolunteerCardList";
+import { VolunteerListController } from "./VolunteerListController";
+import { SortOrder } from "need4deed-sdk";
 
 export function Volunteers() {
   const { t } = useTranslation();
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+  const [numOfVols, setNumOfVols] = useState(0);
+  const [sortOrder, setSortOrder] = useState(SortOrder.NewToOld);
 
   const tabs = [t("dashboard.volunteers.tabs.tab1"), t("dashboard.volunteers.tabs.tab2")];
 
   const mockHandleInputChange = () => {};
+
+  const handleSortChange = (sortOrder: SortOrder) => {
+    setSortOrder(sortOrder);
+  };
 
   return (
     <DashboardLayout>
       <VolunteersContainer>
         <CardsHeader
           header={t("dashboard.volunteers.volunteers")}
-          resultCounter={123}
+          resultCounter={numOfVols}
           resultText={t("dashboard.home.sidebar.volunteers")}
           tabs={tabs}
           selectedTabIndex={selectedTabIndex}
           setSelectedTabIndex={setSelectedTabIndex}
           setIsFiltersOpen={setIsFiltersOpen}
           onSearchInputChange={mockHandleInputChange}
+          sortOrder={sortOrder}
+          onSortOrderChange={handleSortChange}
         />
 
-        <VolunteerCardList />
+        <VolunteerListController setNumOfVols={setNumOfVols} sortOrder={sortOrder} />
       </VolunteersContainer>
     </DashboardLayout>
   );

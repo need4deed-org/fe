@@ -22,12 +22,12 @@
       "privacy": "Privacy",
       "contact": "Contact",
       "legal": {
-      "legalHeading": "Legal",
-      "impressum": "Legal notice",
-      "dataPrivacy": "Privacy",
-      "agreement": "Voluntary Participation Agreement",
-      "guidelines": "Need4Deed Guidelines",
-      "cookies": "Cookies"
+        "legalHeading": "Legal",
+        "impressum": "Legal notice",
+        "dataPrivacy": "Privacy",
+        "agreement": "Voluntary Participation Agreement",
+        "guidelines": "Need4Deed Guidelines",
+        "cookies": "Cookies"
       }
     },
     "volunteeringCategories": {
@@ -314,9 +314,16 @@
       "activities": "Activities",
       "skillsExperience": "Skills & Experience",
       "preferredAvailability": "Preferred Availability",
-      "preferredDistricts": "Preferred Districts"
+      "preferredDistricts": "Preferred Districts",
+      "langProficiency": {
+        "beginner": "Beginner",
+        "intermediate": "Intermediate",
+        "advanced": "Advanced",
+        "fluent": "Fluent",
+        "native": "Native"
+      }
     },
-   
+
     "home": {
       "sidebar": {
         "home": "Home",

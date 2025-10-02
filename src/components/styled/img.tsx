@@ -6,6 +6,7 @@ interface CircleImageProps {
 }
 
 export const CirclePic = styled.img<CircleImageProps>`
+  object-fit: contain;
   width: ${(props) => props.size || "var(--image-circle-pic-size)"};
   height: ${(props) => props.size || "var(--image-circle-pic-size)"};
   border-radius: 50%;

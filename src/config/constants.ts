@@ -29,11 +29,6 @@ export const eventsSectionContainerId = "events-section-container";
 export const cloudfrontURL = process.env.NEXT_PUBLIC_CLOUDFRONT_URL;
 export const CLOUDFRONT_HOSTNAME = "d2nwrdddg8skub.cloudfront.net";
 
-export enum SortOrder {
-  NewToOld = "newestToOldest",
-  OldToNew = "oldestToNewest",
-}
-
 export const minPLZGermany = 1067;
 export const maxPLZGermany = 99998;
 
@@ -41,3 +36,13 @@ export const minPLZBerlin = 10115;
 export const maxPLZBerlin = 14199;
 
 export const defaultAvatarURL = "head-silhouette.webp";
+
+export enum DashboardRoutes {
+  Home = "/dashboard/home",
+  Volunteers = "/dashboard/volunteers",
+  Opportunities = "/dashboard/opportunities",
+  Racs = "/dashboard/racs",
+  Posts = "/dashboard/posts",
+  Calendar = "/dashboard/calendar",
+  Profile = "/dashboard/profile",
+}
