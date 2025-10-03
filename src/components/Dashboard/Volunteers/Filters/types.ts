@@ -1,7 +1,8 @@
 import { ByDay, OccasionalType } from "need4deed-sdk";
 import { TimeSlot } from "./constants";
+import { Dispatch, SetStateAction } from "react";
 
-export interface VolunteerCardsFilter {
+export interface CardsFilter {
   search: string;
   accompanying: boolean;
   engagement: Engagement;
@@ -21,3 +22,7 @@ interface Availability {
   days: Record<ByDay, boolean>;
   occasional: Record<OccasionalType, boolean>;
 }
+
+export type CardFilterKeys = keyof CardsFilter;
+
+export type SetFilter = Dispatch<SetStateAction<CardsFilter>>;

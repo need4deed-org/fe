@@ -2,7 +2,7 @@ import styled from "styled-components";
 import CloseFilters from "./CloseFilters";
 import FiltersContent from "./FiltersContent";
 import ClearAllFilters from "./ClearAllFilters";
-import { CardsFilter, SetFilter } from "../types";
+import { CardsFilter, SetFilter } from "./types";
 
 const FiltersContainer = styled.div`
   position: absolute;
@@ -10,12 +10,8 @@ const FiltersContainer = styled.div`
   width: var(--opportunities-filters-container-width);
   z-index: 1;
   background: var(--color-orchid-subtle);
-  border-bottom-left-radius: var(
-    --opportunities-filters-container-border-bottom-radius
-  );
-  border-bottom-right-radius: var(
-    --opportunities-filters-container-border-bottom-radius
-  );
+  border-bottom-left-radius: var(--opportunities-filters-container-border-bottom-radius);
+  border-bottom-right-radius: var(--opportunities-filters-container-border-bottom-radius);
 `;
 
 interface Props {
@@ -25,12 +21,7 @@ interface Props {
   setFilter: SetFilter;
 }
 
-export default function Filters({
-  isFiltersOpen,
-  setIsFiltersOpen,
-  filter,
-  setFilter,
-}: Props) {
+export default function Filters({ isFiltersOpen, setIsFiltersOpen, filter, setFilter }: Props) {
   return isFiltersOpen ? (
     <FiltersContainer>
       <CloseFilters setIsFiltersOpen={setIsFiltersOpen} />

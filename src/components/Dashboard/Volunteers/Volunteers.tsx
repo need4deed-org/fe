@@ -7,6 +7,9 @@ import CardsHeader from "../common/CardsHeader/CardsHeader";
 import { DashboardLayout } from "@/components/Layout";
 import { VolunteerListController } from "./VolunteerListController";
 import { SortOrder } from "need4deed-sdk";
+import Filters from "./Filters/Filters";
+import { defaultVolunteerCardsFilter } from "./Filters/constants";
+import { CardsFilter, SetFilter } from "./Filters/types";
 
 export function Volunteers() {
   const { t } = useTranslation();
@@ -14,6 +17,7 @@ export function Volunteers() {
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [numOfVols, setNumOfVols] = useState(0);
   const [sortOrder, setSortOrder] = useState(SortOrder.NewToOld);
+  const [cardsFilter, setCardsFilter] = useState(defaultVolunteerCardsFilter);
 
   const tabs = [t("dashboard.volunteers.tabs.tab1"), t("dashboard.volunteers.tabs.tab2")];
 
@@ -23,9 +27,22 @@ export function Volunteers() {
     setSortOrder(sortOrder);
   };
 
+  const handleFilterUpdate = (newFilter: CardsFilter | ((prev: CardsFilter) => CardsFilter)) => {
+    const updatedFilter = typeof newFilter === "function" ? newFilter(cardsFilter) : newFilter;
+
+    setCardsFilter(updatedFilter);
+  };
+
   return (
     <DashboardLayout>
       <VolunteersContainer>
+        <Filters
+          isFiltersOpen={isFiltersOpen}
+          setFilter={handleFilterUpdate}
+          filter={cardsFilter}
+          setIsFiltersOpen={setIsFiltersOpen}
+        />
+
         <CardsHeader
           header={t("dashboard.volunteers.volunteers")}
           resultCounter={numOfVols}
@@ -38,8 +55,7 @@ export function Volunteers() {
           sortOrder={sortOrder}
           onSortOrderChange={handleSortChange}
         />
-
-        <VolunteerListController setNumOfVols={setNumOfVols} sortOrder={sortOrder} />
+        <VolunteerListController setNumOfVols={setNumOfVols} sortOrder={sortOrder} isFiltersOpen={isFiltersOpen} />
       </VolunteersContainer>
     </DashboardLayout>
   );

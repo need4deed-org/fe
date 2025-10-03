@@ -1,11 +1,13 @@
 export const tokenKey = "token";
 
+// Todo: Refactor api path using sdk Endpoint enum
 export const apiURL = process.env.NEXT_PUBLIC_URL_API || "http://localhost:8000";
 export const apiPrefix = "api";
-export const apiPathVolunteer = `/${apiPrefix}/volunteer/`;
+export const apiPathVolunteer = `/${apiPrefix}/volunteer`;
 export const apiPathLogin = `/${apiPrefix}/auth/login`;
-export const apiPathAuthEmailDomain = `${apiPrefix}/auth-email-domain/`;
-export const apiPathOpportunity = `${apiPrefix}/opportunity`;
+export const apiPathAuthEmailDomain = `/${apiPrefix}/auth-email-domain`;
+export const apiPathOpportunity = `/${apiPrefix}/opportunity`;
+export const apiPathOption = `/${apiPrefix}/option`;
 
 export enum ScreenTypes {
   MOBILE = "mobile",

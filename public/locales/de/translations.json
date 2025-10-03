@@ -324,7 +324,9 @@
         "tab2": "KARTE"
       },
       "filters": {
-        "button": "FILTER"
+        "accompanying": "Begleitung",
+        "accompanyingDesc": "Offen für die Begleitung von Bewohnern zu einzelnen Terminen. Einmalige Ehrenämter, die Deutschkenntnisse erfordern.",
+        "district": "Bezirk"
       },
       "volunteers": "Freiwillige",
       "languages": "Sprachen",
@@ -380,6 +382,11 @@
       "emailMissingAtChar": "Die E-Mail-Adresse muss ein '@'-Zeichen enthalten.",
       "passwordMissing": "Passwort fehlt.",
       "successMessage": "Anmeldung erfolgreich"
+    },
+    "filters": {
+      "button": "FILTER",
+      "closeFilters": "FILTER SCLIEẞEN",
+      "clearAllFilters": "ALLE FILTER LÖSCHEN"
     }
   },
 

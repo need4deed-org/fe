@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { ArrowLeftIcon } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
-import { Heading4 } from "../../styled/text";
+import { Heading4 } from "@/components/styled/text";
 
 const CloseFiltersDiv = styled.div`
   display: flex;
@@ -38,7 +38,7 @@ export default function CloseFilters({ setIsFiltersOpen }: Props) {
     <CloseFiltersDiv onClick={() => setIsFiltersOpen(false)}>
       <ArrowLeftIcon size={32} />
       <Heading4 margin={0} color="var(--color-midnight)">
-        {t("opportunityPage.filters.closeFilters")}
+        {t("dashboard.filters.closeFilters")}
       </Heading4>
     </CloseFiltersDiv>
   );

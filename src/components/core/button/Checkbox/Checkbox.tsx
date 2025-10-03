@@ -9,7 +9,7 @@ const CheckboxContainer = styled.div`
   gap: var(--checkbox-container-gap);
 `;
 
-interface Props {
+export interface Props {
   width: string;
   height: string;
   color?: string;

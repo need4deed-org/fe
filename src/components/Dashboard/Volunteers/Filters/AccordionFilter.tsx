@@ -1,8 +1,9 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { Heading4, Paragraph } from "../../styled/text";
-import CircleArrow from "../../svg/CircleArrow";
-import { Checkbox, Props as CheckboxProps } from "../../core/button";
+// import { Checkbox, Props as CheckboxProps } from "../../core/button";
+import { Heading4, Paragraph } from "@/components/styled/text";
+import CircleArrow from "@/components/svg/CircleArrow";
+import { Checkbox, Props as CheckboxProps } from "@/components/core/button";
 
 interface Props {
   header: string;
@@ -30,11 +31,8 @@ const FilterHeaderContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  border-top: var(--opportunities-filters-content-accordion-header-border-top)
-    solid var(--color-orchid);
-  padding-top: var(
-    --opportunities-filters-content-accordion-header-padding-top
-  );
+  border-top: var(--opportunities-filters-content-accordion-header-border-top) solid var(--color-orchid);
+  padding-top: var(--opportunities-filters-content-accordion-header-padding-top);
 `;
 
 const OptionsContainer = styled.div`
@@ -58,22 +56,14 @@ const GroupOptionsContainer = styled.div`
   justify-content: space-between;
 `;
 
-export default function AccordionFilter({
-  header,
-  items,
-  groupedItems,
-}: Props) {
+export default function AccordionFilter({ header, items, groupedItems }: Props) {
   const [isOpen, setIsOpen] = useState(true);
 
-  const checkboxHeight = getComputedStyle(
-    document.documentElement,
-  ).getPropertyValue(
+  const checkboxHeight = getComputedStyle(document.documentElement).getPropertyValue(
     "--opportunities-filters-content-accordion-options-checkbox-height",
   );
 
-  const groupCheckboxHeight = getComputedStyle(
-    document.documentElement,
-  ).getPropertyValue(
+  const groupCheckboxHeight = getComputedStyle(document.documentElement).getPropertyValue(
     "--opportunities-filters-content-accordion-group-options-checkbox-height",
   );
 
@@ -81,12 +71,7 @@ export default function AccordionFilter({
     <FilterContainer>
       <FilterHeaderContainer>
         <Heading4 color="var(--color-midnight)">{header}</Heading4>
-        <CircleArrow
-          direction={isOpen ? "up" : "down"}
-          color="orchid"
-          isFilled
-          onClick={() => setIsOpen(!isOpen)}
-        />
+        <CircleArrow direction={isOpen ? "up" : "down"} color="orchid" isFilled onClick={() => setIsOpen(!isOpen)} />
       </FilterHeaderContainer>
 
       {isOpen && items && (

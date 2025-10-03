@@ -1,10 +1,131 @@
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
-import { Heading4, Paragraph } from "../../styled/text";
-import { SwitchButton } from "../../core/button";
 import AccordionFilter from "./AccordionFilter";
-import { CardsFilter, DayKeys, DaysKeys, SetFilter } from "../types";
-import { defaultFilter } from "./constants";
+import { CardsFilter, DayKeys, DaysKeys, SetFilter } from "./types";
+// import { defaultFilter } from "./constants";
+import { Heading4, Paragraph } from "@/components/styled/text";
+import { SwitchButton } from "@/components/core/button";
+import { useGetQuery } from "@/hooks";
+import { ApiOptionLists } from "need4deed-sdk";
+import { apiPathOpportunity, apiPathOption, apiPathVolunteer } from "@/config/constants";
+
+// const weekDays = Object.keys(defaultFilter.days) as DaysKeys[];
+
+// const daySlots = Object.keys(defaultFilter.days.monday) as DayKeys[];
+
+// const daysTranslationMap: Record<DaysKeys, string> = {
+//   monday: "1",
+//   tuesday: "2",
+//   wednesday: "3",
+//   thursday: "4",
+//   friday: "5",
+//   saturday: "6",
+//   sunday: "0",
+// };
+
+interface Props {
+  filter: CardsFilter;
+  setFilter: SetFilter;
+}
+
+export default function FiltersContent({ setFilter, filter }: Props) {
+  const { t } = useTranslation();
+  // const { activityType, district } = filter;
+
+  const { district } = filter;
+  const { data: option } = useGetQuery<ApiOptionLists>({
+    queryKey: ["options"],
+    apiPath: apiPathOption,
+    // apiPath: apiPathVolunteer,
+  });
+
+  console.log("option", option);
+  const {} = option;
+  // const activityTypeFilterItems = Object.keys(activityType)
+  //   .sort()
+  //   .map((a) => {
+  //     return {
+  //       label: a,
+  //       checked: activityType[a],
+  //       onChange: (checked: boolean) => {
+  //         activityType[a] = checked;
+
+  //         setFilter((prevFilter) => ({ ...prevFilter, activityType }));
+  //       },
+  //     };
+  //   });
+
+  const districtFilterItems = Object.keys(district)
+    .sort()
+    .map((d) => {
+      return {
+        label: d,
+        checked: district[d],
+        onChange: (checked: boolean) => {
+          district[d] = checked;
+
+          setFilter((prevFilter) => ({ ...prevFilter, district }));
+        },
+      };
+    });
+
+  console.log("****");
+  console.log("district", district);
+  console.log("districtFilterItems", districtFilterItems);
+
+  // const daysFilterItems = weekDays.map((day) => {
+  //   return {
+  //     label: `${t(`weekdays.${daysTranslationMap[day]}`)}s`,
+  //     items: daySlots.map((daySlot) => {
+  //       return {
+  //         label: t(`opportunityPage.filters.${daySlot}`),
+  //         checked: filter.days[day][daySlot],
+  //         onChange: (checked: boolean) => {
+  //           const { days } = filter;
+
+  //           days[day][daySlot] = checked;
+
+  //           setFilter((prevFilter) => ({ ...prevFilter, days }));
+  //         },
+  //       };
+  //     }),
+  //   };
+  // });
+
+  const accompanyingClickHandler = () => {
+    const accompanying = !filter.accompanying;
+
+    setFilter((prevFilter) => ({ ...prevFilter, accompanying }));
+  };
+
+  return (
+    <FiltersContentContainer>
+      <AccompanyingFilterContainer>
+        <AccompanyingFilterHeaderContainer>
+          <SwitchButton isChecked={filter.accompanying} onToggle={accompanyingClickHandler} />
+          <Heading4 margin={0} color="var(--color-midnight)">
+            {t("dashboard.volunteers.filters.accompanying")}
+          </Heading4>
+        </AccompanyingFilterHeaderContainer>
+
+        <Paragraph
+          fontWeight="var(--opportunities-filters-description-font-weight)"
+          fontSize="var(--opportunities-filters-description-font-size)"
+          color="var(--color-midnight)"
+          lineheight="var(--opportunities-filters-description-font-size)"
+        >
+          {t("dashboard.volunteers.filters.accompanyingDesc")}
+        </Paragraph>
+      </AccompanyingFilterContainer>
+
+      {/* <AccordionFilter header={t("opportunityPage.filters.activityType")} items={activityTypeFilterItems} /> */}
+
+      <AccordionFilter header={t("dashboard.volunteers.filters.district")} items={districtFilterItems} />
+
+      {/* <AccordionFilter header={t("opportunityPage.filters.days")} groupedItems={daysFilterItems} /> */}
+    </FiltersContentContainer>
+  );
+}
 
 const FiltersContentContainer = styled.div`
   display: flex;
@@ -27,120 +148,3 @@ const AccompanyingFilterHeaderContainer = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
-
-const weekDays = Object.keys(defaultFilter.days) as DaysKeys[];
-
-const daySlots = Object.keys(defaultFilter.days.monday) as DayKeys[];
-
-const daysTranslationMap: Record<DaysKeys, string> = {
-  monday: "1",
-  tuesday: "2",
-  wednesday: "3",
-  thursday: "4",
-  friday: "5",
-  saturday: "6",
-  sunday: "0",
-};
-
-interface Props {
-  filter: CardsFilter;
-  setFilter: SetFilter;
-}
-
-export default function FiltersContent({ setFilter, filter }: Props) {
-  const { t } = useTranslation();
-  const { activityType, district } = filter;
-
-  const activityTypeFilterItems = Object.keys(activityType)
-    .sort()
-    .map((a) => {
-      return {
-        label: a,
-        checked: activityType[a],
-        onChange: (checked: boolean) => {
-          activityType[a] = checked;
-
-          setFilter((prevFilter) => ({ ...prevFilter, activityType }));
-        },
-      };
-    });
-
-  const districtFilterItems = Object.keys(district)
-    .sort()
-    .map((d) => {
-      return {
-        label: d,
-        checked: district[d],
-        onChange: (checked: boolean) => {
-          district[d] = checked;
-
-          setFilter((prevFilter) => ({ ...prevFilter, district }));
-        },
-      };
-    });
-
-  const daysFilterItems = weekDays.map((day) => {
-    return {
-      label: `${t(`weekdays.${daysTranslationMap[day]}`)}s`,
-      items: daySlots.map((daySlot) => {
-        return {
-          label: t(`opportunityPage.filters.${daySlot}`),
-          checked: filter.days[day][daySlot],
-          onChange: (checked: boolean) => {
-            const { days } = filter;
-
-            days[day][daySlot] = checked;
-
-            setFilter((prevFilter) => ({ ...prevFilter, days }));
-          },
-        };
-      }),
-    };
-  });
-
-  const accompanyingClickHandler = () => {
-    const accompanying = !filter.accompanying;
-
-    setFilter((prevFilter) => ({ ...prevFilter, accompanying }));
-  };
-
-  return (
-    <FiltersContentContainer>
-      <AccompanyingFilterContainer>
-        <AccompanyingFilterHeaderContainer>
-          <Heading4 margin={0} color="var(--color-midnight)">
-            {t("opportunityPage.filters.accompanying")}
-          </Heading4>
-          <SwitchButton
-            isChecked={filter.accompanying}
-            onToggle={accompanyingClickHandler}
-          />
-        </AccompanyingFilterHeaderContainer>
-
-        <Paragraph
-          fontWeight="var(--opportunities-filters-description-font-weight)"
-          fontSize="var(--opportunities-filters-description-font-size)"
-          color="var(--color-midnight)"
-          lineheight="var(--opportunities-filters-description-font-size)"
-        >
-          {t("opportunityPage.filters.accompanyingDesc")}
-        </Paragraph>
-      </AccompanyingFilterContainer>
-
-      <AccordionFilter
-        header={t("opportunityPage.filters.activityType")}
-        items={activityTypeFilterItems}
-      />
-
-      <AccordionFilter
-        header={t("opportunityPage.filters.district")}
-        items={districtFilterItems}
-      />
-
-      <AccordionFilter
-        header={t("opportunityPage.filters.days")}
-        groupedItems={daysFilterItems}
-      />
-    </FiltersContentContainer>
-  );
-}

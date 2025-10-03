@@ -1,7 +1,7 @@
-import { CardFilterKeys } from "../types";
-import { VolunteerCardsFilter } from "./types";
+// import { CardFilterKeys } from "../types";
+import { CardsFilter } from "./types";
 
-export const defaultFilter: VolunteerCardsFilter = {
+export const defaultVolunteerCardsFilter: CardsFilter = {
   search: "",
   accompanying: false,
   district: {
@@ -39,19 +39,19 @@ export const defaultFilter: VolunteerCardsFilter = {
   },
 };
 
-export const FILTER_KEY = {
-  SEARCH_INPUT: "searchInput",
-  ACTIVITY_TYPE: "activityType",
-  DISTRICT: "district",
-  DAYS: "days",
-  ACCOMPANYING: "accompanying",
-} as const satisfies Record<string, CardFilterKeys>;
+// export const FILTER_KEY = {
+//   SEARCH_INPUT: "searchInput",
+//   ACTIVITY_TYPE: "activityType",
+//   DISTRICT: "district",
+//   DAYS: "days",
+//   ACCOMPANYING: "accompanying",
+// } as const satisfies Record<string, CardFilterKeys>;
 
-export const FILTER_KEY_LIST = Object.values(FILTER_KEY);
+// export const FILTER_KEY_LIST = Object.values(FILTER_KEY);
 
-export type FilterKey = (typeof FILTER_KEY)[keyof typeof FILTER_KEY];
+// export type FilterKey = (typeof FILTER_KEY)[keyof typeof FILTER_KEY];
 
-export const DASH = "-";
+// export const DASH = "-";
 
 export enum TimeSlot {
   morning = "08-11",

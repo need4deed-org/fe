@@ -13,9 +13,10 @@ const cacheTTL = 1000 * 60 * 5; // 5 minutes
 interface VolunteerListControllerProps {
   setNumOfVols: (numOfVols: number) => void;
   sortOrder: SortOrder;
+  isFiltersOpen: boolean;
 }
 
-export function VolunteerListController({ setNumOfVols, sortOrder }: VolunteerListControllerProps) {
+export function VolunteerListController({ setNumOfVols, sortOrder, isFiltersOpen }: VolunteerListControllerProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const { data: volunteers, count } = useGetQuery<ApiVolunteerGetList>({
     queryKey: ["volunteers"],
@@ -36,7 +37,7 @@ export function VolunteerListController({ setNumOfVols, sortOrder }: VolunteerLi
     <VolunteerCardList
       volunteers={volunteers}
       count={count}
-      columns={columns}
+      columns={columns - (isFiltersOpen ? 1 : 0)}
       rows={rows}
       currentPage={currentPage}
       setCurrentPage={setCurrentPage}

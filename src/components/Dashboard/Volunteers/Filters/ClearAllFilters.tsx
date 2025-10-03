@@ -1,9 +1,9 @@
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { IconName } from "../../core/button/Button/icon";
-import { Button } from "../../core/button";
-import { CardsFilter, SetFilter } from "../types";
-import { getClearFilter } from "../helpers";
+import { getClearFilter } from "./helpers";
+import { IconName } from "@/components/core/button/Button/icon";
+import { Button } from "@/components/core/button";
+import { CardsFilter, SetFilter } from "./types";
 
 const ClearAllFiltersContainer = styled.div`
   display: flex;
@@ -21,11 +21,11 @@ export default function ClearAllFilters({ setFilter, filter }: Props) {
   const { t } = useTranslation();
 
   const handleClick = () => {
-    const { searchInput } = filter;
+    const { search } = filter;
     const clearFilter = getClearFilter(filter) as unknown as CardsFilter;
 
-    /* Exclude 'search bar' input from cleaning process */
-    clearFilter.searchInput = searchInput;
+    /* Exclude 'search' input from cleaning process */
+    clearFilter.search = search;
 
     setFilter(clearFilter);
   };
@@ -33,7 +33,7 @@ export default function ClearAllFilters({ setFilter, filter }: Props) {
   return (
     <ClearAllFiltersContainer>
       <Button
-        text={t("opportunityPage.filters.clearAllFilters")}
+        text={t("dashboard.filters.clearAllFilters")}
         iconName={IconName.X}
         iconColor="var(--color-midnight)"
         iconSize="var(--opportunities-filters-clear-all-button-icon-size)"

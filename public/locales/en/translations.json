@@ -307,7 +307,9 @@
         "tab2": "MAP VIEW"
       },
       "filters": {
-        "button": "FILTERS"
+        "accompanying": "Accompanying",
+        "accompanyingDesc": "Open to bring residents to individual appointments. One-time volunteering posts that require german language skills.",
+        "district": "District"
       },
       "volunteers": "Volunteers",
       "languages": "Languages",
@@ -364,6 +366,11 @@
       "emailMissingAtChar": "Email must contain an '@' character.",
       "passwordMissing": "Password's missing.",
       "successMessage": "Login successful"
+    },
+    "filters": {
+      "button": "FILTERS",
+      "closeFilters": "CLOSE FILTERS",
+      "clearAllFilters": "CLEAR ALL FILTERS"
     }
   },
 
