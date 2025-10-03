@@ -18,7 +18,7 @@ interface VolunteerListControllerProps {
 
 export function VolunteerListController({ setNumOfVols, sortOrder, isFiltersOpen }: VolunteerListControllerProps) {
   const [currentPage, setCurrentPage] = useState(1);
-  const { data: volunteers, count } = useGetQuery<ApiVolunteerGetList>({
+  const { data, count } = useGetQuery<ApiVolunteerGetList[]>({
     queryKey: ["volunteers"],
     apiPath: apiPathVolunteer,
     options: {
@@ -28,6 +28,7 @@ export function VolunteerListController({ setNumOfVols, sortOrder, isFiltersOpen
       sortOrder,
     },
   });
+  const volunteers = data || [];
 
   useEffect(() => {
     setNumOfVols(count);

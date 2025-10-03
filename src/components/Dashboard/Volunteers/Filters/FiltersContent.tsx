@@ -1,27 +1,9 @@
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import AccordionFilter from "./AccordionFilter";
-import { CardsFilter, DayKeys, DaysKeys, SetFilter } from "./types";
-// import { defaultFilter } from "./constants";
+import { CardsFilter, SetFilter } from "./types";
 import { Heading4, Paragraph } from "@/components/styled/text";
 import { SwitchButton } from "@/components/core/button";
-import { useGetQuery } from "@/hooks";
-import { ApiOptionLists } from "need4deed-sdk";
-import { apiPathOpportunity, apiPathOption, apiPathVolunteer } from "@/config/constants";
-
-// const weekDays = Object.keys(defaultFilter.days) as DaysKeys[];
-
-// const daySlots = Object.keys(defaultFilter.days.monday) as DayKeys[];
-
-// const daysTranslationMap: Record<DaysKeys, string> = {
-//   monday: "1",
-//   tuesday: "2",
-//   wednesday: "3",
-//   thursday: "4",
-//   friday: "5",
-//   saturday: "6",
-//   sunday: "0",
-// };
 
 interface Props {
   filter: CardsFilter;
@@ -30,30 +12,7 @@ interface Props {
 
 export default function FiltersContent({ setFilter, filter }: Props) {
   const { t } = useTranslation();
-  // const { activityType, district } = filter;
-
   const { district } = filter;
-  const { data: option } = useGetQuery<ApiOptionLists>({
-    queryKey: ["options"],
-    apiPath: apiPathOption,
-    // apiPath: apiPathVolunteer,
-  });
-
-  console.log("option", option);
-  const {} = option;
-  // const activityTypeFilterItems = Object.keys(activityType)
-  //   .sort()
-  //   .map((a) => {
-  //     return {
-  //       label: a,
-  //       checked: activityType[a],
-  //       onChange: (checked: boolean) => {
-  //         activityType[a] = checked;
-
-  //         setFilter((prevFilter) => ({ ...prevFilter, activityType }));
-  //       },
-  //     };
-  //   });
 
   const districtFilterItems = Object.keys(district)
     .sort()
@@ -68,29 +27,6 @@ export default function FiltersContent({ setFilter, filter }: Props) {
         },
       };
     });
-
-  console.log("****");
-  console.log("district", district);
-  console.log("districtFilterItems", districtFilterItems);
-
-  // const daysFilterItems = weekDays.map((day) => {
-  //   return {
-  //     label: `${t(`weekdays.${daysTranslationMap[day]}`)}s`,
-  //     items: daySlots.map((daySlot) => {
-  //       return {
-  //         label: t(`opportunityPage.filters.${daySlot}`),
-  //         checked: filter.days[day][daySlot],
-  //         onChange: (checked: boolean) => {
-  //           const { days } = filter;
-
-  //           days[day][daySlot] = checked;
-
-  //           setFilter((prevFilter) => ({ ...prevFilter, days }));
-  //         },
-  //       };
-  //     }),
-  //   };
-  // });
 
   const accompanyingClickHandler = () => {
     const accompanying = !filter.accompanying;

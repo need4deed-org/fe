@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 
-const fetchData = async <T,>(apiPath: string, page: number, limit: number, language: Lang, sort?: SortOrder) => {
+const fetchData = async <T,>(apiPath: string, page?: number, limit?: number, language?: Lang, sort?: SortOrder) => {
   const response: AxiosResponse<ApiResponse<T>> = await axios.get(apiPath, {
     params: {
       page,
@@ -19,7 +19,7 @@ const fetchData = async <T,>(apiPath: string, page: number, limit: number, langu
 
 interface ApiResponse<T> {
   message: string;
-  data: T[];
+  data: T;
   count: number;
 }
 
@@ -33,7 +33,7 @@ interface UseGetQuery {
 export const useGetQuery = <T,>({ queryKey, apiPath, options }: UseGetQuery) => {
   const { t, i18n } = useTranslation();
   const language = i18n.language as Lang;
-  const { page = 1, limit = 10, staleTime, sortOrder } = options || {};
+  const { page, limit, staleTime, sortOrder } = options || {};
 
   const { data, isLoading, isError, error } = useQuery<ApiResponse<T>, Error>({
     queryKey: [...queryKey, { page, limit, language, sortOrder }],
@@ -59,7 +59,7 @@ export const useGetQuery = <T,>({ queryKey, apiPath, options }: UseGetQuery) => 
   }, [isError, error, t]);
 
   return {
-    data: data?.data || [],
+    data: data?.data,
     message: data?.message || "",
     count: data?.count || 0,
     isLoading,

@@ -1,15 +1,9 @@
-// import { CardFilterKeys } from "../types";
 import { CardsFilter } from "./types";
 
 export const defaultVolunteerCardsFilter: CardsFilter = {
   search: "",
   accompanying: false,
-  district: {
-    Charlottenburg: false,
-    Friedrichshain: false,
-    Hellersdorf: false,
-    Kreuzberg: false,
-  },
+  district: {},
   engagement: {
     active: false,
     inactive: false,

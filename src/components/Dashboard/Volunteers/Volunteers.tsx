@@ -1,15 +1,17 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
 import CardsHeader from "../common/CardsHeader/CardsHeader";
 import { DashboardLayout } from "@/components/Layout";
 import { VolunteerListController } from "./VolunteerListController";
-import { SortOrder } from "need4deed-sdk";
+import { ApiOptionLists, SortOrder } from "need4deed-sdk";
 import Filters from "./Filters/Filters";
 import { defaultVolunteerCardsFilter } from "./Filters/constants";
-import { CardsFilter, SetFilter } from "./Filters/types";
+import { CardsFilter } from "./Filters/types";
+import { useGetQuery } from "@/hooks";
+import { apiPathOption } from "@/config/constants";
 
 export function Volunteers() {
   const { t } = useTranslation();
@@ -32,6 +34,20 @@ export function Volunteers() {
 
     setCardsFilter(updatedFilter);
   };
+
+  const { data: option } = useGetQuery<ApiOptionLists>({
+    queryKey: ["options"],
+    apiPath: apiPathOption,
+  });
+
+  useEffect(() => {
+    if (option?.district) {
+      setCardsFilter((prev) => {
+        const district = option.district!.reduce((acc, curr) => ({ ...acc, [curr.title]: false }), {});
+        return { ...prev, district };
+      });
+    }
+  }, [option]);
 
   return (
     <DashboardLayout>
