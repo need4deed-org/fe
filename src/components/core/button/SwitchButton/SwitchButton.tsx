@@ -29,9 +29,9 @@ export function SwitchButton({ isChecked, onToggle, scale = 5 }: Props) {
         aria-label={`Toggle ${isChecked ? "on" : "off"}`}
         width={width}
         height={height}
-        isChecked={isChecked}
+        $isChecked={isChecked}
       >
-        <SwitchCircle circleSize={circleSize} height={height} width={width} isChecked={isChecked} />
+        <SwitchCircle $circleSize={circleSize} height={height} width={width} $isChecked={isChecked} />
       </SwitchButtonStyled>
     </SwitchContainer>
   );
@@ -51,14 +51,14 @@ const SwitchContainer = styled.div`
 interface SwitchButtonProps extends CSSProperties {
   width: number;
   height: number;
-  isChecked: boolean;
+  $isChecked: boolean;
 }
 
 const SwitchButtonStyled = styled.button<SwitchButtonProps>`
   position: relative;
   cursor: pointer;
   transition: background 0.3s;
-  background: ${(props) => (props.isChecked ? "var(--color-aubergine-light)" : "var(--color-neutral-300)")};
+  background: ${(props) => (props.$isChecked ? "var(--color-green-500)" : "var(--color-grey-200)")};
   border: none;
   padding: 0;
   width: ${(props) => props.width}px;
@@ -67,19 +67,19 @@ const SwitchButtonStyled = styled.button<SwitchButtonProps>`
 `;
 
 interface SwitchCircleProps {
-  circleSize: number;
+  $circleSize: number;
   height: number;
   width: number;
-  isChecked: boolean;
+  $isChecked: boolean;
 }
 
 const SwitchCircle = styled.div<SwitchCircleProps>`
   position: absolute;
   border-radius: 50%;
-  background: var(--color-neutral-900);
+  background: var(--color-white);
   transition: left 0.3s;
-  width: ${(props) => props.circleSize}px;
-  height: ${(props) => props.circleSize}px;
-  top: ${(props) => (props.height - props.circleSize) / 2}px;
-  left: ${(props) => (props.isChecked ? `${props.width - props.circleSize - 2}px` : "2px")};
+  width: ${(props) => props.$circleSize}px;
+  height: ${(props) => props.$circleSize}px;
+  top: ${(props) => (props.height - props.$circleSize) / 2}px;
+  left: ${(props) => (props.$isChecked ? `${props.width - props.$circleSize - 2}px` : "2px")};
 `;
