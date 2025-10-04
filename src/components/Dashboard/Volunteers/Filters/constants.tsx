@@ -1,21 +1,36 @@
 import { CardsFilter } from "./types";
 
+export enum TimeSlot {
+  morning = "08-11",
+  noon = "11-14",
+  afternoon = "14-17",
+  evening = "17-20",
+}
+
+export enum FilterKeys {
+  SEARCH = "search",
+  ACCOMPANYING = "accompanying",
+  DISTRICT = "district",
+  ENGAGEMENT = "engagement",
+  AVAILABILITY = "availability",
+}
+
 export const defaultVolunteerCardsFilter: CardsFilter = {
-  search: "",
-  accompanying: false,
-  district: {},
-  engagement: {
+  [FilterKeys.SEARCH]: "",
+  [FilterKeys.ACCOMPANYING]: false,
+  [FilterKeys.DISTRICT]: {},
+  [FilterKeys.ENGAGEMENT]: {
     active: false,
     inactive: false,
     new: false,
     temporarilyInactive: false,
   },
-  availability: {
+  [FilterKeys.AVAILABILITY]: {
     times: {
-      "08-11": false,
-      "11-14": false,
-      "14-17": false,
-      "17-20": false,
+      [TimeSlot.morning]: false,
+      [TimeSlot.noon]: false,
+      [TimeSlot.afternoon]: false,
+      [TimeSlot.evening]: false,
     },
     days: {
       Monday: false,
@@ -33,23 +48,8 @@ export const defaultVolunteerCardsFilter: CardsFilter = {
   },
 };
 
-// export const FILTER_KEY = {
-//   SEARCH_INPUT: "searchInput",
-//   ACTIVITY_TYPE: "activityType",
-//   DISTRICT: "district",
-//   DAYS: "days",
-//   ACCOMPANYING: "accompanying",
-// } as const satisfies Record<string, CardFilterKeys>;
-
 // export const FILTER_KEY_LIST = Object.values(FILTER_KEY);
 
 // export type FilterKey = (typeof FILTER_KEY)[keyof typeof FILTER_KEY];
 
 // export const DASH = "-";
-
-export enum TimeSlot {
-  morning = "08-11",
-  noon = "11-14",
-  afternoon = "14-17",
-  evening = "17-20",
-}

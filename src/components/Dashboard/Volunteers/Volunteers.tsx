@@ -11,7 +11,9 @@ import Filters from "./Filters/Filters";
 import { defaultVolunteerCardsFilter } from "./Filters/constants";
 import { CardsFilter } from "./Filters/types";
 import { useGetQuery } from "@/hooks";
-import { apiPathOption } from "@/config/constants";
+import { apiPathOption, questionMark } from "@/config/constants";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { deserializeMergeQueryFilters, serializeFilters } from "./helpers";
 
 export function Volunteers() {
   const { t } = useTranslation();
@@ -20,7 +22,13 @@ export function Volunteers() {
   const [numOfVols, setNumOfVols] = useState(0);
   const [sortOrder, setSortOrder] = useState(SortOrder.NewToOld);
   const [cardsFilter, setCardsFilter] = useState(defaultVolunteerCardsFilter);
-
+  const { data: option } = useGetQuery<ApiOptionLists>({
+    queryKey: ["options"],
+    apiPath: apiPathOption,
+  });
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
   const tabs = [t("dashboard.volunteers.tabs.tab1"), t("dashboard.volunteers.tabs.tab2")];
 
   const mockHandleInputChange = () => {};
@@ -33,20 +41,21 @@ export function Volunteers() {
     const updatedFilter = typeof newFilter === "function" ? newFilter(cardsFilter) : newFilter;
 
     setCardsFilter(updatedFilter);
+    router.push(pathname + questionMark + serializeFilters(updatedFilter));
   };
 
-  const { data: option } = useGetQuery<ApiOptionLists>({
-    queryKey: ["options"],
-    apiPath: apiPathOption,
-  });
-
   useEffect(() => {
-    if (option?.district) {
-      setCardsFilter((prev) => {
-        const district = option.district!.reduce((acc, curr) => ({ ...acc, [curr.title]: false }), {});
-        return { ...prev, district };
-      });
-    }
+    if (!option) return;
+
+    // Merge and set 'district' values of query params and API option
+    cardsFilter.district = option.district!.reduce(
+      (acc, curr) => ({ ...acc, [curr.title]: false }),
+      {},
+    ) as CardsFilter["district"];
+
+    const mergedFilter = deserializeMergeQueryFilters(searchParams, cardsFilter);
+
+    setCardsFilter(mergedFilter);
   }, [option]);
 
   return (
