@@ -37,21 +37,23 @@ export default function FiltersContent({ setFilter, filter }: Props) {
   return (
     <FiltersContentContainer>
       <AccompanyingFilterContainer>
+        <Heading4 margin={0} color="var(--color-blue-700)">
+          {t("dashboard.volunteers.filters.accompanying")}
+        </Heading4>
+
         <AccompanyingFilterHeaderContainer>
           <SwitchButton isChecked={filter.accompanying} onToggle={accompanyingClickHandler} />
-          <Heading4 margin={0} color="var(--color-midnight)">
-            {t("dashboard.volunteers.filters.accompanying")}
-          </Heading4>
-        </AccompanyingFilterHeaderContainer>
 
-        <Paragraph
-          fontWeight="var(--opportunities-filters-description-font-weight)"
-          fontSize="var(--opportunities-filters-description-font-size)"
-          color="var(--color-midnight)"
-          lineheight="var(--opportunities-filters-description-font-size)"
-        >
-          {t("dashboard.volunteers.filters.accompanyingDesc")}
-        </Paragraph>
+          <Paragraph
+            fontWeight="var(--filters-description-font-weight)"
+            fontSize="var(--filters-description-font-size)"
+            color="var(--color-blue-700)"
+            lineheight="var(--filters-description-line-height)"
+            letterSpacing="var(--filters-description-letter-spacing)"
+          >
+            {t("dashboard.volunteers.filters.accompanyingDesc")}
+          </Paragraph>
+        </AccompanyingFilterHeaderContainer>
       </AccompanyingFilterContainer>
 
       {/* <AccordionFilter header={t("opportunityPage.filters.activityType")} items={activityTypeFilterItems} /> */}
@@ -81,6 +83,6 @@ const AccompanyingFilterContainer = styled.div`
 const AccompanyingFilterHeaderContainer = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  gap: var(--dashboard-volunteers-filters-accompanying-header-container-gap);
   align-items: center;
 `;

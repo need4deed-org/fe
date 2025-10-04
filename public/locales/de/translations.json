@@ -325,7 +325,7 @@
       },
       "filters": {
         "accompanying": "Begleitung",
-        "accompanyingDesc": "Offen für die Begleitung von Bewohnern zu einzelnen Terminen. Einmalige Ehrenämter, die Deutschkenntnisse erfordern.",
+        "accompanyingDesc": "Nur Freiwillige anzeigen, die bereit sind, Bewohner zu einzelnen Terminen zu begleiten",
         "district": "Bezirk"
       },
       "volunteers": "Freiwillige",

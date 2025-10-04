@@ -308,7 +308,7 @@
       },
       "filters": {
         "accompanying": "Accompanying",
-        "accompanyingDesc": "Open to bring residents to individual appointments. One-time volunteering posts that require german language skills.",
+        "accompanyingDesc": "Only show volunteers that are open to bring residents to individual appointments",
         "district": "District"
       },
       "volunteers": "Volunteers",

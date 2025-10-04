@@ -98,7 +98,6 @@ html {
   --color-white: rgba(255, 255, 255, 1);
   --color-black: rgba(0, 0, 0, 1);
 
-
   --color-grey-10: rgba(238, 238, 238, 1);
   --color-grey-50: rgba(240, 241, 243, 1);
   --color-grey-200: rgba(185, 189, 199, 1);
@@ -106,11 +105,9 @@ html {
   --color-grey-500: rgba(102, 112, 133, 1);
   --color-grey-700: rgba(72, 80, 94, 1);
 
-
   --color-neutral-200: rgb(68, 68, 68);
   --color-neutral-500: rgb(187, 187, 187);
   --color-neutral-700: rgb(221, 221, 221);
-
 
   --color-green-50: rgba(242, 252, 250, 1);
   --color-green-100: rgba(216, 245, 240, 1);
@@ -120,7 +117,6 @@ html {
   --color-green-700: rgba(98, 158, 146, 1);
   --color-green-800: rgba(65, 242, 141, 1);
   --color-green-900: rgba(0, 201, 128, 1);
-
 
   --color-red-50: rgba(254, 234, 231, 1);
   --color-red-200: rgba(248, 160, 146, 1);
@@ -132,6 +128,11 @@ html {
   --color-violet-400: rgba(147, 121, 209, 1);
   --color-violet-500: rgba(120, 88, 197, 1);
   --color-violet-700: rgba(85, 62, 140, 1);
+
+  --color-blue-50: rgba(235, 237, 247, 1);
+  --color-blue-400: rgba(99, 111, 188, 1);
+  --color-blue-500: rgba(58, 72, 178, 1);
+  --color-blue-700: rgba(26, 38, 132, 1);
 
   /* text */
   --text-h2-font-weight: 600;
@@ -176,9 +177,11 @@ html {
   --homepage-testimonials-profile-gap: 16px;
 
   /* layout-static-page */
-  --layout-static-page-background-default: linear-gradient(180deg,
-      var(--color-magnolia)-5.53%,
-      var(--color-orchid-dark) 100%);
+  --layout-static-page-background-default: linear-gradient(
+    180deg,
+    var(--color-magnolia)-5.53%,
+    var(--color-orchid-dark) 100%
+  );
 
   /* button */
   --button-gap: 12px;
@@ -956,8 +959,6 @@ html {
     --opportunities-filters-clear-all-button-padding-bottom: 24px;
     --opportunities-filters-clear-all-button-icon-size: 24px;
     --opportunities-filters-clear-all-button-text-font-size: 16px;
-    --opportunities-filters-description-font-size: 14px;
-    --opportunities-filters-description-font-weight: 400;
 
     --search-container-height: 60px;
     --search-container-border-radius: 160px;
@@ -1034,6 +1035,8 @@ html {
     --dashboard-volunteers-card-paragraph-fontWeight-bold: 500;
     --dashboard-volunteers-card-paragraph-fontSize: 16px;
     --dashboard-volunteers-card-paragraph-lineHeight: 16px;
+    --dashboard-volunteers-card-paragraph-lineHeight: 16px;
+    --dashboard-volunteers-filters-accompanying-header-container-gap: 8px;
 
     --form-input-container-height: 56px;
     --form-input-container-border-radius: 8px;
@@ -1057,5 +1060,10 @@ html {
     --dashboard-login-heading-letterSpacing: 0.25px;
     --dashboard-login-checkbox-label-fontSize: 20px;
     --dashboard-login-forgot-password-label-fontWeight: 600;
+
+    --filters-description-font-size: 16px;
+    --filters-description-font-weight: 400;
+    --filters-description-line-height: 20px;
+    --filters-description-letter-spacing: 0.5%;
   }
 }
