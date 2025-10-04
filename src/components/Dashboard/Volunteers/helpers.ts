@@ -1,4 +1,4 @@
-import { ApiLanguage, LangProficiency } from "need4deed-sdk";
+import { ApiLanguage, ApiOptionLists, LangProficiency } from "need4deed-sdk";
 import { ReadonlyURLSearchParams } from "next/navigation";
 import { CardsFilter } from "./Filters/types";
 import { FilterKeys } from "./Filters/constants";
@@ -47,71 +47,31 @@ export const groupLanguagesByProficiency = (languages: ApiLanguage[]): GroupedLa
   return groupedLanguages;
 };
 
-export function deserializeMergeQueryFilters(queryParams: ReadonlyURLSearchParams, filter: CardsFilter) {
-  const filters: CardsFilter = structuredClone(filter);
+export function serializeFilters(filter: CardsFilter, searchParams: ReadonlyURLSearchParams) {
+  const params = new URLSearchParams(searchParams);
 
-  const search = queryParams.get(FilterKeys.SEARCH);
-  if (search !== null) {
-    filters.search = search;
-  }
+  if (filter.search) params.set(FilterKeys.SEARCH, filter.search);
+  else params.delete(FilterKeys.SEARCH);
 
-  const queryAccompanying = queryParams.get(FilterKeys.ACCOMPANYING);
-  if (queryAccompanying === "true") {
-    filters.accompanying = true;
-  }
+  if (filter.accompanying) params.set(FilterKeys.ACCOMPANYING, "true");
+  else params.delete(FilterKeys.ACCOMPANYING);
 
-  // const activityTypes = queryParams.getAll(FilterKeys.ACTIVITY_TYPE);
-  // activityTypes.forEach((type) => {
-  //   if (hasKey(filters.activityType, type)) {
-  //     filters.activityType[type] = true;
-  //   }
-  // });
-
-  const queryDistricts = queryParams.getAll(FilterKeys.DISTRICT);
-  queryDistricts.forEach((d) => {
-    // Check if the query param value is exist in the filters, if not ignore that query param
-    if (filters[FilterKeys.DISTRICT][d] !== undefined) {
-      filters.district[d] = true;
-    }
-  });
-
-  // const daySlots = queryParams.getAll(FilterKeys.DAYS);
-  // daySlots.forEach((slot) => {
-  //   const [day, time] = slot.split(DASH);
-  //   const dayKey = day as DaysKeys;
-  //   const timeKey = time as DayKeys;
-
-  //   if (filters.days[dayKey] && filters.days[dayKey][timeKey] !== undefined) {
-  //     filters.days[dayKey][timeKey] = true;
-  //   }
-  // });
-
-  return filters;
-}
-
-export function serializeFilters(filters: CardsFilter) {
-  const params = new URLSearchParams();
-
-  if (filters.search) {
-    params.set(FilterKeys.SEARCH, filters.search);
-  }
-
-  if (filters.accompanying) {
-    params.set(FilterKeys.ACCOMPANYING, "true");
-  }
-
-  // if (filters.activityType) {
-  //   Object.entries(filters.activityType).forEach(([key, value]) => {
-  //     if (value === true) {
-  //       params.append(FilterKeys.ACTIVITY_TYPE, key);
-  //     }
-  //   });
-  // }
-
-  if (filters.district) {
-    Object.entries(filters.district).forEach(([key, value]) => {
+  // 2. Clear all existing 'district' params
+  params.delete(FilterKeys.DISTRICT);
+  if (filter.district) {
+    Object.entries(filter.district).forEach(([key, value]) => {
       if (value === true) {
         params.append(FilterKeys.DISTRICT, key);
+      }
+    });
+  }
+
+  // 2. Clear all existing 'district' params
+  params.delete(FilterKeys.LANGUAGE);
+  if (filter.languages) {
+    Object.entries(filter.languages).forEach(([key, value]) => {
+      if (value === true) {
+        params.append(FilterKeys.LANGUAGE, key);
       }
     });
   }
@@ -130,3 +90,49 @@ export function serializeFilters(filters: CardsFilter) {
 
   return params.toString();
 }
+
+export function deserializeFilters(filter: CardsFilter, searchParams: ReadonlyURLSearchParams) {
+  const newFilter: CardsFilter = structuredClone(filter);
+
+  const search = searchParams.get(FilterKeys.SEARCH);
+  if (search !== null) {
+    newFilter.search = search;
+  }
+
+  const queryAccompanying = searchParams.get(FilterKeys.ACCOMPANYING);
+  if (queryAccompanying === "true") {
+    newFilter.accompanying = true;
+  }
+
+  const queryDistricts = searchParams.getAll(FilterKeys.DISTRICT);
+  queryDistricts.forEach((d) => {
+    // Check if the query param value is exist in the filters. if not, ignore that query param !!!
+    if (newFilter.district[d] !== undefined) {
+      newFilter.district[d] = true;
+    }
+  });
+
+  const queryLanguages = searchParams.getAll(FilterKeys.LANGUAGE);
+  queryLanguages.forEach((l) => {
+    // Check if the query param value is exist in the filters. if not, ignore that query param !!!
+    if (newFilter.languages[l] !== undefined) {
+      newFilter.languages[l] = true;
+    }
+  });
+
+  // const daySlots = queryParams.getAll(FilterKeys.DAYS);
+  // daySlots.forEach((slot) => {
+  //   const [day, time] = slot.split(DASH);
+  //   const dayKey = day as DaysKeys;
+  //   const timeKey = time as DayKeys;
+
+  //   if (filters.days[dayKey] && filters.days[dayKey][timeKey] !== undefined) {
+  //     filters.days[dayKey][timeKey] = true;
+  //   }
+  // });
+
+  return newFilter;
+}
+
+export const createFilterFromOption = (option: ApiOptionLists, field: keyof ApiOptionLists) =>
+  option[field] ? option[field].reduce((acc, curr) => ({ ...acc, [curr.title]: false }), {}) : {};

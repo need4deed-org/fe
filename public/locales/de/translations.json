@@ -326,7 +326,8 @@
       "filters": {
         "accompanying": "Begleitung",
         "accompanyingDesc": "Nur Freiwillige anzeigen, die bereit sind, Bewohner zu einzelnen Terminen zu begleiten",
-        "district": "Bezirk"
+        "district": "Bezirk",
+        "languages": "Sprachen"
       },
       "volunteers": "Freiwillige",
       "languages": "Sprachen",

@@ -13,12 +13,14 @@ export enum FilterKeys {
   DISTRICT = "district",
   ENGAGEMENT = "engagement",
   AVAILABILITY = "availability",
+  LANGUAGE = "languages",
 }
 
 export const defaultVolunteerCardsFilter: CardsFilter = {
   [FilterKeys.SEARCH]: "",
   [FilterKeys.ACCOMPANYING]: false,
   [FilterKeys.DISTRICT]: {},
+  [FilterKeys.LANGUAGE]: {},
   [FilterKeys.ENGAGEMENT]: {
     active: false,
     inactive: false,
@@ -48,8 +50,4 @@ export const defaultVolunteerCardsFilter: CardsFilter = {
   },
 };
 
-// export const FILTER_KEY_LIST = Object.values(FILTER_KEY);
-
-// export type FilterKey = (typeof FILTER_KEY)[keyof typeof FILTER_KEY];
-
-// export const DASH = "-";
+export const DASH = "-";

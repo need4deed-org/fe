@@ -6,14 +6,14 @@ import { useTranslation } from "react-i18next";
 import CardsHeader from "../common/CardsHeader/CardsHeader";
 import { DashboardLayout } from "@/components/Layout";
 import { VolunteerListController } from "./VolunteerListController";
-import { ApiOptionLists, SortOrder } from "need4deed-sdk";
+import { ApiOptionLists, EntityTableName, SortOrder } from "need4deed-sdk";
 import Filters from "./Filters/Filters";
 import { defaultVolunteerCardsFilter } from "./Filters/constants";
 import { CardsFilter } from "./Filters/types";
 import { useGetQuery } from "@/hooks";
 import { apiPathOption, questionMark } from "@/config/constants";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { deserializeMergeQueryFilters, serializeFilters } from "./helpers";
+import { createFilterFromOption, deserializeFilters, serializeFilters } from "./helpers";
 
 export function Volunteers() {
   const { t } = useTranslation();
@@ -41,21 +41,20 @@ export function Volunteers() {
     const updatedFilter = typeof newFilter === "function" ? newFilter(cardsFilter) : newFilter;
 
     setCardsFilter(updatedFilter);
-    router.push(pathname + questionMark + serializeFilters(updatedFilter));
+    router.push(pathname + questionMark + serializeFilters(updatedFilter, searchParams));
   };
 
   useEffect(() => {
     if (!option) return;
 
-    // Merge and set 'district' values of query params and API option
-    cardsFilter.district = option.district!.reduce(
-      (acc, curr) => ({ ...acc, [curr.title]: false }),
-      {},
-    ) as CardsFilter["district"];
+    // Merge and set 'district' - 'languages' of query params and API option
+    cardsFilter.district = createFilterFromOption(option, EntityTableName.DISTRICT);
+    cardsFilter.languages = createFilterFromOption(option, EntityTableName.LANGUAGE);
 
-    const mergedFilter = deserializeMergeQueryFilters(searchParams, cardsFilter);
+    const updatedFilter = deserializeFilters(cardsFilter, searchParams);
+    console.log("updatedFilter:", updatedFilter);
 
-    setCardsFilter(mergedFilter);
+    setCardsFilter(updatedFilter);
   }, [option]);
 
   return (

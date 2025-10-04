@@ -12,7 +12,7 @@ interface Props {
 
 export default function FiltersContent({ setFilter, filter }: Props) {
   const { t } = useTranslation();
-  const { district } = filter;
+  const { district, languages } = filter;
 
   const districtFilterItems = Object.keys(district)
     .sort()
@@ -24,6 +24,20 @@ export default function FiltersContent({ setFilter, filter }: Props) {
           district[d] = checked;
 
           setFilter((prevFilter) => ({ ...prevFilter, district }));
+        },
+      };
+    });
+
+  const languageFilterItems = Object.keys(languages)
+    .sort()
+    .map((d) => {
+      return {
+        label: d,
+        checked: languages[d],
+        onChange: (checked: boolean) => {
+          languages[d] = checked;
+
+          setFilter((prevFilter) => ({ ...prevFilter, language: languages }));
         },
       };
     });
@@ -56,9 +70,8 @@ export default function FiltersContent({ setFilter, filter }: Props) {
         </AccompanyingFilterHeaderContainer>
       </AccompanyingFilterContainer>
 
-      {/* <AccordionFilter header={t("opportunityPage.filters.activityType")} items={activityTypeFilterItems} /> */}
-
       <AccordionFilter header={t("dashboard.volunteers.filters.district")} items={districtFilterItems} />
+      <AccordionFilter header={t("dashboard.volunteers.filters.languages")} items={languageFilterItems} />
 
       {/* <AccordionFilter header={t("opportunityPage.filters.days")} groupedItems={daysFilterItems} /> */}
     </FiltersContentContainer>

@@ -1,13 +1,14 @@
 import { ByDay, OccasionalType } from "need4deed-sdk";
-import { TimeSlot } from "./constants";
+import { FilterKeys, TimeSlot } from "./constants";
 import { Dispatch, SetStateAction } from "react";
 
 export interface CardsFilter {
-  search: string;
-  accompanying: boolean;
-  engagement: Engagement;
-  availability: Availability;
-  district: Record<string, boolean>;
+  [FilterKeys.SEARCH]: string;
+  [FilterKeys.ACCOMPANYING]: boolean;
+  [FilterKeys.ENGAGEMENT]: Engagement;
+  [FilterKeys.AVAILABILITY]: Availability;
+  [FilterKeys.DISTRICT]: Record<string, boolean>;
+  [FilterKeys.LANGUAGE]: Record<string, boolean>;
 }
 
 interface Engagement {

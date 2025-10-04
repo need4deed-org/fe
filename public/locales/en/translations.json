@@ -309,7 +309,8 @@
       "filters": {
         "accompanying": "Accompanying",
         "accompanyingDesc": "Only show volunteers that are open to bring residents to individual appointments",
-        "district": "District"
+        "district": "District",
+        "languages": "Languages"
       },
       "volunteers": "Volunteers",
       "languages": "Languages",
