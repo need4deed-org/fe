@@ -8,6 +8,8 @@ import { hyphenationStyles } from "../../../styled/mixins";
 import Results from "./Results";
 import SortBy, { OnChangeSortOrder } from "./SortBy";
 import { SortOrder } from "need4deed-sdk";
+import { CardsFilter } from "../../Volunteers/Filters/types";
+import { XIcon } from "@phosphor-icons/react";
 
 interface Props {
   header: string;
@@ -20,6 +22,7 @@ interface Props {
   setIsFiltersOpen: (isOpen: boolean) => void;
   sortOrder: SortOrder;
   onSortOrderChange?: OnChangeSortOrder;
+  filter: CardsFilter;
 }
 
 export default function CardsHeader({
@@ -33,8 +36,11 @@ export default function CardsHeader({
   setIsFiltersOpen,
   sortOrder,
   onSortOrderChange,
+  filter,
 }: Props) {
   const { t } = useTranslation();
+
+  const serializedFilter = getSelectedKeys(filter);
 
   return (
     <HeaderContainer>
@@ -65,12 +71,83 @@ export default function CardsHeader({
           />
           <FiltersButton setIsFiltersOpen={setIsFiltersOpen} />
         </SearchBarSectionContainer>
+
+        <HeaderFilterItemContainer>
+          {serializedFilter.map((key) => (
+            <HeaderFilterItem key={key}>
+              {key}
+              <XIconDiv>
+                <XIcon size={20} onClick={() => console.log("X clicked")} />
+              </XIconDiv>
+            </HeaderFilterItem>
+          ))}
+        </HeaderFilterItemContainer>
       </TabsSearchBarContainer>
     </HeaderContainer>
   );
 }
 
+const getSelectedKeys = (filter: CardsFilter) => {
+  const keys = [];
+
+  if (filter.accompanying) keys.push("Accompanying");
+
+  Object.entries(filter.district).forEach(([key, value]) => {
+    if (value === true) {
+      keys.push(key);
+    }
+  });
+
+  if (filter.languages) {
+    Object.entries(filter.languages).forEach(([key, value]) => {
+      if (value === true) {
+        keys.push(key);
+      }
+    });
+  }
+
+  if (filter.engagement) {
+    Object.entries(filter.engagement).forEach(([key, value]) => {
+      if (value === true) {
+        keys.push(key);
+      }
+    });
+  }
+
+  return keys;
+};
 /* Styles */
+
+const XIconDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 14px;
+
+  &:hover {
+    background-color: var(--color-pink-200);
+  }
+`;
+
+const HeaderFilterItem = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  height: 44px;
+  gap: 8px;
+  border-radius: 32px;
+  padding: 12px;
+  background-color: var(--color-pink-50);
+`;
+
+const HeaderFilterItemContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+`;
 
 const HeaderContainer = styled.div`
   display: flex;

@@ -327,7 +327,14 @@
         "accompanying": "Begleitung",
         "accompanyingDesc": "Nur Freiwillige anzeigen, die bereit sind, Bewohner zu einzelnen Terminen zu begleiten",
         "district": "Bezirk",
-        "languages": "Sprachen"
+        "languages": "Sprachen",
+        "engagement": {
+          "engagement": "Engagement",
+          "active": "Aktiv",
+          "inactive": "Inaktiv",
+          "new": "Neu",
+          "temporarilyInactive": "Vorübergehend Inaktiv"
+        }
       },
       "volunteers": "Freiwillige",
       "languages": "Sprachen",

@@ -1,6 +1,6 @@
 import { ApiLanguage, ApiOptionLists, LangProficiency } from "need4deed-sdk";
 import { ReadonlyURLSearchParams } from "next/navigation";
-import { CardsFilter } from "./Filters/types";
+import { CardsFilter, Engagement } from "./Filters/types";
 import { FilterKeys } from "./Filters/constants";
 
 const proficiencyOrder = [
@@ -76,6 +76,16 @@ export function serializeFilters(filter: CardsFilter, searchParams: ReadonlyURLS
     });
   }
 
+  // 2. Clear all existing 'engagement' params
+  params.delete(FilterKeys.ENGAGEMENT);
+  if (filter.engagement) {
+    Object.entries(filter.engagement).forEach(([key, value]) => {
+      if (value === true) {
+        params.append(FilterKeys.ENGAGEMENT, key);
+      }
+    });
+  }
+
   // if (filters.days) {
   //   Object.entries(filters.days).forEach(([day, timeSlots]) => {
   //     const dayKey = day as Weekday;
@@ -117,6 +127,15 @@ export function deserializeFilters(filter: CardsFilter, searchParams: ReadonlyUR
     // Check if the query param value is exist in the filters. if not, ignore that query param !!!
     if (newFilter.languages[l] !== undefined) {
       newFilter.languages[l] = true;
+    }
+  });
+
+  const queryEngagement = searchParams.getAll(FilterKeys.ENGAGEMENT);
+  queryEngagement.forEach((eng) => {
+    // Check if the query param value is exist in the filters. if not, ignore that query param !!!
+    const e = eng as keyof Engagement;
+    if (newFilter.engagement[e] !== undefined) {
+      newFilter.engagement[e] = true;
     }
   });
 

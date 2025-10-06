@@ -78,6 +78,7 @@ export function Volunteers() {
           onSearchInputChange={mockHandleInputChange}
           sortOrder={sortOrder}
           onSortOrderChange={handleSortChange}
+          filter={cardsFilter}
         />
         <VolunteerListController setNumOfVols={setNumOfVols} sortOrder={sortOrder} isFiltersOpen={isFiltersOpen} />
       </VolunteersContainer>

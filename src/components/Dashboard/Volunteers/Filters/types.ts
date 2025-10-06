@@ -11,7 +11,7 @@ export interface CardsFilter {
   [FilterKeys.LANGUAGE]: Record<string, boolean>;
 }
 
-interface Engagement {
+export interface Engagement {
   new: boolean;
   active: boolean;
   temporarilyInactive: boolean;
