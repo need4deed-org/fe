@@ -9,7 +9,7 @@ const CheckboxContainer = styled.div`
   gap: var(--checkbox-container-gap);
 `;
 
-export interface Props {
+export interface CheckboxProps {
   width: string;
   height: string;
   color?: string;
@@ -27,7 +27,7 @@ export function Checkbox({
   labelFontSize,
   onChange,
   checked,
-}: Props) {
+}: CheckboxProps) {
   return (
     <CheckboxContainer>
       <CheckboxSVG width={width} height={height} checked={checked} onClick={() => onChange(!checked)} color={color} />

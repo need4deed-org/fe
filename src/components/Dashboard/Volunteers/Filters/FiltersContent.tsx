@@ -1,9 +1,11 @@
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import AccordionFilter from "./AccordionFilter";
-import { CardsFilter, Engagement, SetFilter } from "./types";
+import { Availability, CardsFilter, Engagement, SetFilter } from "./types";
 import { Heading4, Paragraph } from "@/components/styled/text";
 import { SwitchButton } from "@/components/core/button";
+import { ByDay } from "need4deed-sdk";
+import { TFunction } from "i18next";
 
 interface Props {
   filter: CardsFilter;
@@ -12,7 +14,7 @@ interface Props {
 
 export default function FiltersContent({ setFilter, filter }: Props) {
   const { t } = useTranslation();
-  const { district, languages, engagement } = filter;
+  const { district, languages, engagement, availability, accompanying } = filter;
 
   const districtFilterItems = Object.keys(district)
     .sort()
@@ -52,15 +54,15 @@ export default function FiltersContent({ setFilter, filter }: Props) {
         onChange: (checked: boolean) => {
           engagement[e] = checked;
 
-          setFilter((prevFilter) => ({ ...prevFilter, language: engagement }));
+          setFilter((prevFilter) => ({ ...prevFilter, engagement }));
         },
       };
     });
 
-  const accompanyingClickHandler = () => {
-    const accompanying = !filter.accompanying;
+  const availabilityFilterItems = createAvailabilityFilterItems(availability, setFilter, t);
 
-    setFilter((prevFilter) => ({ ...prevFilter, accompanying }));
+  const accompanyingClickHandler = () => {
+    setFilter((prevFilter) => ({ ...prevFilter, accompanying: !accompanying }));
   };
 
   return (
@@ -85,14 +87,41 @@ export default function FiltersContent({ setFilter, filter }: Props) {
         </AccompanyingFilterHeaderContainer>
       </AccompanyingFilterContainer>
 
-      <AccordionFilter header={t("dashboard.volunteers.filters.engagement.engagement")} items={engagementFilterItems} />
+      <AccordionFilter header={t("dashboard.volunteers.filters.engagement.header")} items={engagementFilterItems} />
       <AccordionFilter header={t("dashboard.volunteers.filters.district")} items={districtFilterItems} />
       <AccordionFilter header={t("dashboard.volunteers.filters.languages")} items={languageFilterItems} />
-
-      {/* <AccordionFilter header={t("opportunityPage.filters.days")} groupedItems={daysFilterItems} /> */}
+      <AccordionFilter
+        header={t("dashboard.volunteers.filters.preferredAv.header")}
+        groupedItems={availabilityFilterItems}
+        groupedItemsDisplayType="button"
+      />
     </FiltersContentContainer>
   );
 }
+
+const createAvailabilityFilterItems = (availability: Availability, setFilter: SetFilter, t: TFunction) => {
+  const { days, occasional, times } = availability;
+
+  return [
+    {
+      label: t(`dashboard.volunteers.filters.preferredAv.days.header`),
+      items: Object.keys(days).map((day) => {
+        const d = day as ByDay;
+        return {
+          label: t(`dashboard.volunteers.filters.preferredAv.days.${d}`),
+          checked: days[d],
+          onChange: (checked: boolean) => {
+            days[d] = checked;
+
+            setFilter((prevFilter) => ({ ...prevFilter, availability }));
+          },
+        };
+      }),
+    },
+  ];
+};
+
+/* Styles */
 
 const FiltersContentContainer = styled.div`
   display: flex;
@@ -114,4 +143,16 @@ const AccompanyingFilterHeaderContainer = styled.div`
   flex-direction: row;
   gap: var(--dashboard-volunteers-filters-accompanying-header-container-gap);
   align-items: center;
+`;
+
+const PreferredAvailabilityContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  /* width: 360;
+  height: 354;
+  padding-top: 12px;
+  padding-right: 24px;
+  padding-bottom: 12px;
+  padding-left: 24px; */
 `;

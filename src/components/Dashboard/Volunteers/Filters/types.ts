@@ -18,7 +18,7 @@ export interface Engagement {
   inactive: boolean;
 }
 
-interface Availability {
+export interface Availability {
   times: Record<TimeSlot, boolean>;
   days: Record<ByDay, boolean>;
   occasional: Record<OccasionalType, boolean>;

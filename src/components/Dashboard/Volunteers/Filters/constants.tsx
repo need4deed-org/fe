@@ -1,3 +1,4 @@
+import { ByDay, OccasionalType } from "need4deed-sdk";
 import { CardsFilter } from "./types";
 
 export enum TimeSlot {
@@ -35,17 +36,17 @@ export const defaultVolunteerCardsFilter: CardsFilter = {
       [TimeSlot.evening]: false,
     },
     days: {
-      Monday: false,
-      Tuesday: false,
-      Wednesday: false,
-      Thursday: false,
-      Friday: false,
-      Saturday: false,
-      Sunday: false,
+      [ByDay.MO]: false,
+      [ByDay.TU]: false,
+      [ByDay.WE]: false,
+      [ByDay.TH]: false,
+      [ByDay.FR]: false,
+      [ByDay.SA]: false,
+      [ByDay.SU]: false,
     },
     occasional: {
-      weekdays: false,
-      weekends: false,
+      [OccasionalType.WEEKDAYS]: false,
+      [OccasionalType.WEEKENDS]: false,
     },
   },
 };

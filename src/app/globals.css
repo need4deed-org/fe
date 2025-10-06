@@ -131,7 +131,7 @@ html {
 
   --color-blue-50: rgba(235, 237, 247, 1);
   --color-blue-100: rgba(194, 198, 231, 1);
-
+  --color-blue-200:: rgba(123, 132, 203, 1);
   --color-blue-400: rgba(99, 111, 188, 1);
   --color-blue-500: rgba(58, 72, 178, 1);
   --color-blue-700: rgba(26, 38, 132, 1);
@@ -211,6 +211,13 @@ html {
 
   /* form input */
   --form-input-error-message-color: var(--color-red-600);
+
+  /* checkButton */
+  --check-button-label-font-size: 18px;
+  --check-button-label-font-weight: 400;
+  --check-button-border: solid 1px var(--color-grey-200);
+  --check-button-padding: 12px;
+
 }
 
 .with-linebreaks {
@@ -1074,5 +1081,6 @@ html {
     --filters-description-font-weight: 400;
     --filters-description-line-height: 20px;
     --filters-description-letter-spacing: 0.5%;
+    --filters-accordion-group-options-gap: 16px;
   }
 }

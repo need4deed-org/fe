@@ -312,11 +312,24 @@
         "district": "District",
         "languages": "Languages",
         "engagement": {
-          "engagement": "Engagement",
+          "header": "Engagement",
           "active": "Active",
           "inactive": "Inactive",
           "new": "New",
           "temporarilyInactive": "TemporarilyInactive"
+        },
+        "preferredAv": {
+          "header": "Preferred Availability",
+          "days": {
+            "header": "Days",
+            "Monday": "Mon",
+            "Tuesday": "Tue",
+            "Wednesday": "Wed",
+            "Thursday": "Thu",
+            "Friday": "Fr",
+            "Saturday": "Sat",
+            "Sunday": "Sun"
+          }
         }
       },
       "volunteers": "Volunteers",

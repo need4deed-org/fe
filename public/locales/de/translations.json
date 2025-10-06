@@ -329,7 +329,7 @@
         "district": "Bezirk",
         "languages": "Sprachen",
         "engagement": {
-          "engagement": "Engagement",
+          "header": "Engagement",
           "active": "Aktiv",
           "inactive": "Inaktiv",
           "new": "Neu",
