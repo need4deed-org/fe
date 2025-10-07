@@ -334,6 +334,27 @@
           "inactive": "Inaktiv",
           "new": "Neu",
           "temporarilyInactive": "Vorübergehend Inaktiv"
+        },
+        "preferredAv": {
+          "header": "Bevorzugte Verfügbarkeit",
+          "days": {
+            "header": "Tage",
+            "Monday": "Mo",
+            "Tuesday": "Di",
+            "Wednesday": "Mi",
+            "Thursday": "Do",
+            "Friday": "Fr",
+            "Saturday": "Sa",
+            "Sunday": "So"
+          },
+          "times": {
+            "header": "Zeiten"
+          },
+          "occasional": {
+            "header": "Gelegentlich",
+            "weekdays": "Wochentage",
+            "weekends": "Wochenenden"
+          }
         }
       },
       "volunteers": "Freiwillige",
