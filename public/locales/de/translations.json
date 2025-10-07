@@ -421,7 +421,7 @@
     "filters": {
       "button": "FILTER",
       "closeFilters": "FILTER SCLIEẞEN",
-      "clearAllFilters": "ALLE FILTER LÖSCHEN"
+      "clearAll": "Filter löschen"
     }
   },
 

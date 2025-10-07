@@ -461,7 +461,6 @@ html {
     --opportunities-filters-content-accordion-group-options-checkbox-labelFontSize: 14px;
     --opportunities-filters-content-accordion-header-border-top: 1px;
     --opportunities-filters-content-accordion-header-padding-top: 16px;
-    --opportunities-filters-clear-all-button-padding-bottom: 20px;
     --opportunities-filters-clear-all-button-icon-size: 24px;
     --opportunities-filters-clear-all-button-height: 64px;
     --opportunities-filters-clear-all-button-text-font-size: 20px;
@@ -716,7 +715,6 @@ html {
     --opportunities-filters-content-accordion-group-options-checkbox-labelFontSize: 14px;
     --opportunities-filters-content-accordion-header-border-top: 1px;
     --opportunities-filters-content-accordion-header-padding-top: 16px;
-    --opportunities-filters-clear-all-button-padding-bottom: 24px;
     --opportunities-filters-clear-all-button-icon-size: 24px;
     --opportunities-filters-clear-all-button-text-font-size: 16px;
     --opportunities-filters-description-font-size: 14px;
@@ -972,7 +970,6 @@ html {
     --opportunities-filters-content-accordion-group-options-checkbox-labelFontSize: 14px;
     --opportunities-filters-content-accordion-header-border-top: 1px;
     --opportunities-filters-content-accordion-header-padding-top: 16px;
-    --opportunities-filters-clear-all-button-padding-bottom: 24px;
     --opportunities-filters-clear-all-button-icon-size: 24px;
     --opportunities-filters-clear-all-button-text-font-size: 16px;
 
@@ -1011,6 +1008,7 @@ html {
     --dashboard-cards-header-user-profile-container-gap: 8px;
     --dashboard-cards-header-user-icon-size: 32px;
     --dashboard-cards-header-user-icon-border-radius: 16px;
+    --dashboard-cards-header-filter-item-container-gap: 8px;
 
     --dashboard-home-container-padding: 40px 120px 100px 132px;
     --dashboard-home-container-gap: 20px;

@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
-import { Heading2, Heading4 } from "../../../styled/text";
+import { Heading2, Heading4, Paragraph } from "../../../styled/text";
 import { Search } from "../../../core/common";
 import FiltersButton from "./FiltersButton";
 import { hyphenationStyles } from "../../../styled/mixins";
@@ -11,6 +11,7 @@ import { SortOrder } from "need4deed-sdk";
 import { CardsFilter, SetFilter } from "../../Volunteers/Filters/types";
 import { XIcon } from "@phosphor-icons/react";
 import { createSelectedFilterItemsAsFlatArray } from "../../Volunteers/Filters/helpers";
+import ClearAllFilters from "../../Volunteers/Filters/ClearAllFilters";
 
 interface Props {
   header: string;
@@ -78,12 +79,15 @@ export default function CardsHeader({
         <HeaderFilterItemContainer>
           {selectedFilters.map((f) => (
             <HeaderFilterItem key={f.label}>
-              {f.label}
+              <Paragraph color="var(--color-midnight)" fontSize="16px" fontWeight={400}>
+                {f.label}
+              </Paragraph>
               <XIconDiv>
                 <XIcon size={20} onClick={() => f.onChange(!f.checked)} />
               </XIconDiv>
             </HeaderFilterItem>
           ))}
+          {selectedFilters.length > 1 && <ClearAllFilters filter={filter} setFilter={setFilter} />}
         </HeaderFilterItemContainer>
       </TabsSearchBarContainer>
     </HeaderContainer>
@@ -120,7 +124,8 @@ const HeaderFilterItem = styled.div`
 const HeaderFilterItemContainer = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 8px;
+  gap: var(--dashboard-cards-header-filter-item-container-gap);
+  flex-wrap: wrap;
 `;
 
 const HeaderContainer = styled.div`

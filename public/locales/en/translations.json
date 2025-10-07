@@ -405,7 +405,7 @@
     "filters": {
       "button": "FILTERS",
       "closeFilters": "CLOSE FILTERS",
-      "clearAllFilters": "CLEAR ALL FILTERS"
+      "clearAll": "Clear all"
     }
   },
 

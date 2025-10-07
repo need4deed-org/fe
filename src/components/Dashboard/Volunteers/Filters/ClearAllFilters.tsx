@@ -1,16 +1,7 @@
 import { useTranslation } from "react-i18next";
-import styled from "styled-components";
-import { getClearFilter } from "./helpers";
-import { IconName } from "@/components/core/button/Button/icon";
 import { Button } from "@/components/core/button";
 import { CardsFilter, SetFilter } from "./types";
-
-const ClearAllFiltersContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-bottom: var(--opportunities-filters-clear-all-button-padding-bottom);
-`;
+import { getClearFilter } from "./helpers";
 
 interface Props {
   setFilter: SetFilter;
@@ -31,19 +22,15 @@ export default function ClearAllFilters({ setFilter, filter }: Props) {
   };
 
   return (
-    <ClearAllFiltersContainer>
-      <Button
-        text={t("dashboard.filters.clearAllFilters")}
-        iconName={IconName.X}
-        iconColor="var(--color-midnight)"
-        iconSize="var(--opportunities-filters-clear-all-button-icon-size)"
-        iconPosition="right"
-        onClick={handleClick}
-        backgroundcolor="var(--color-white)"
-        textColor="var(--color-midnight)"
-        height="var(--opportunities-filters-clear-all-button-height)"
-        textFontSize="var(--opportunities-filters-clear-all-button-text-font-size)"
-      />
-    </ClearAllFiltersContainer>
+    <Button
+      text={t("dashboard.filters.clearAll")}
+      onClick={handleClick}
+      backgroundcolor="var(--color-white)"
+      textColor="var(--color-midnight)"
+      height="44px"
+      textFontSize="18px"
+      textFontWeight={600}
+      padding="12px"
+    />
   );
 }
