@@ -1,7 +1,7 @@
 import { ApiLanguage, ApiOptionLists, LangProficiency } from "need4deed-sdk";
 import { ReadonlyURLSearchParams } from "next/navigation";
 import { CardsFilter, Engagement } from "./Filters/types";
-import { FilterKeys } from "./Filters/constants";
+import { SEPERATOR, FilterKeys, AvailabilityKeys, AvailabilitySubKeys } from "./Filters/constants";
 
 const proficiencyOrder = [
   LangProficiency.NATIVE,
@@ -58,45 +58,39 @@ export function serializeFilters(filter: CardsFilter, searchParams: ReadonlyURLS
 
   // 2. Clear all existing 'district' params
   params.delete(FilterKeys.DISTRICT);
-  if (filter.district) {
-    Object.entries(filter.district).forEach(([key, value]) => {
-      if (value === true) {
-        params.append(FilterKeys.DISTRICT, key);
-      }
-    });
-  }
+  Object.entries(filter.district).forEach(([key, value]) => {
+    if (value === true) {
+      params.append(FilterKeys.DISTRICT, key);
+    }
+  });
 
   // 2. Clear all existing 'district' params
   params.delete(FilterKeys.LANGUAGE);
-  if (filter.languages) {
-    Object.entries(filter.languages).forEach(([key, value]) => {
-      if (value === true) {
-        params.append(FilterKeys.LANGUAGE, key);
-      }
-    });
-  }
+  Object.entries(filter.languages).forEach(([key, value]) => {
+    if (value === true) {
+      params.append(FilterKeys.LANGUAGE, key);
+    }
+  });
 
   // 2. Clear all existing 'engagement' params
   params.delete(FilterKeys.ENGAGEMENT);
-  if (filter.engagement) {
-    Object.entries(filter.engagement).forEach(([key, value]) => {
-      if (value === true) {
-        params.append(FilterKeys.ENGAGEMENT, key);
+  Object.entries(filter.engagement).forEach(([key, value]) => {
+    if (value === true) {
+      params.append(FilterKeys.ENGAGEMENT, key);
+    }
+  });
+
+  // 2. Clear all existing 'availability' params
+  params.delete(FilterKeys.AVAILABILITY);
+  Object.entries(filter.availability).forEach(([key, subSlot]) => {
+    const availabilityKey = key as AvailabilityKeys;
+
+    Object.entries(subSlot).forEach(([slot, value]) => {
+      if (value) {
+        params.append(FilterKeys.AVAILABILITY, `${availabilityKey}${SEPERATOR}${slot}`);
       }
     });
-  }
-
-  // if (filters.days) {
-  //   Object.entries(filters.days).forEach(([day, timeSlots]) => {
-  //     const dayKey = day as Weekday;
-
-  //     Object.entries(timeSlots as TimeSlot).forEach(([slot, value]) => {
-  //       if (value) {
-  //         params.append(FilterKeys.DAYS, `${dayKey}${DASH}${slot}`);
-  //       }
-  //     });
-  //   });
-  // }
+  });
 
   return params.toString();
 }
@@ -139,16 +133,19 @@ export function deserializeFilters(filter: CardsFilter, searchParams: ReadonlyUR
     }
   });
 
-  // const daySlots = queryParams.getAll(FilterKeys.DAYS);
-  // daySlots.forEach((slot) => {
-  //   const [day, time] = slot.split(DASH);
-  //   const dayKey = day as DaysKeys;
-  //   const timeKey = time as DayKeys;
+  const queryAvailability = searchParams.getAll(FilterKeys.AVAILABILITY);
+  queryAvailability.forEach((item) => {
+    const [firstKey, secondKey] = item.split(SEPERATOR);
 
-  //   if (filters.days[dayKey] && filters.days[dayKey][timeKey] !== undefined) {
-  //     filters.days[dayKey][timeKey] = true;
-  //   }
-  // });
+    const avKey = firstKey as AvailabilityKeys;
+    const avSubKey = secondKey as AvailabilitySubKeys;
+
+    const subFilter = newFilter.availability[avKey] as Record<AvailabilitySubKeys, boolean>;
+
+    if (subFilter && subFilter[avSubKey] !== undefined) {
+      subFilter[avSubKey] = true;
+    }
+  });
 
   return newFilter;
 }
