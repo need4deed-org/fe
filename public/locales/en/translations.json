@@ -329,6 +329,14 @@
             "Friday": "Fr",
             "Saturday": "Sat",
             "Sunday": "Sun"
+          },
+          "times": {
+            "header": "Times"
+          },
+          "occasional": {
+            "header": "Occasional",
+            "weekdays": "Weekdays",
+            "weekends": "Weekends"
           }
         }
       },

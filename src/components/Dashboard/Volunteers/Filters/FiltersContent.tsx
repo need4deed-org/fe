@@ -4,8 +4,9 @@ import AccordionFilter from "./AccordionFilter";
 import { Availability, CardsFilter, Engagement, SetFilter } from "./types";
 import { Heading4, Paragraph } from "@/components/styled/text";
 import { SwitchButton } from "@/components/core/button";
-import { ByDay } from "need4deed-sdk";
+import { ByDay, OccasionalType } from "need4deed-sdk";
 import { TFunction } from "i18next";
+import { TimeSlot } from "./constants";
 
 interface Props {
   filter: CardsFilter;
@@ -112,6 +113,36 @@ const createAvailabilityFilterItems = (availability: Availability, setFilter: Se
           checked: days[d],
           onChange: (checked: boolean) => {
             days[d] = checked;
+
+            setFilter((prevFilter) => ({ ...prevFilter, availability }));
+          },
+        };
+      }),
+    },
+    {
+      label: t(`dashboard.volunteers.filters.preferredAv.times.header`),
+      items: Object.keys(times).map((timeSlot) => {
+        const t = timeSlot as TimeSlot;
+        return {
+          label: t,
+          checked: times[t],
+          onChange: (checked: boolean) => {
+            times[t] = checked;
+
+            setFilter((prevFilter) => ({ ...prevFilter, availability }));
+          },
+        };
+      }),
+    },
+    {
+      label: t(`dashboard.volunteers.filters.preferredAv.occasional.header`),
+      items: Object.keys(occasional).map((item) => {
+        const o = item as OccasionalType;
+        return {
+          label: t(`dashboard.volunteers.filters.preferredAv.occasional.${o}`),
+          checked: occasional[o],
+          onChange: (checked: boolean) => {
+            occasional[o] = checked;
 
             setFilter((prevFilter) => ({ ...prevFilter, availability }));
           },
