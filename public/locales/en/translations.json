@@ -333,7 +333,11 @@
             "Sunday": "Sun"
           },
           "times": {
-            "header": "Times"
+            "header": "Times",
+            "08-11": "08-11",
+            "11-14": "11-14",
+            "14-17": "14-17",
+            "17-20": "17-20"
           },
           "occasional": {
             "header": "Occasional",

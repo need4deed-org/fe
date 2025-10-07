@@ -1,5 +1,5 @@
 import { TFunction } from "i18next";
-import { Availability, CardsFilter, SetFilter } from "./types";
+import { Availability, CardsFilter, SelectionMap, SetFilter } from "./types";
 import { FilterKeys } from "./constants";
 
 export const getClearFilter = (filter: object) => {
@@ -18,7 +18,7 @@ export const getClearFilter = (filter: object) => {
 /**
  * Generic helper to create a list of checkbox-like filter items from a record of booleans.
  */
-const createFilterList = <T extends Record<string, boolean>>(
+const createFilterList = <T extends SelectionMap>(
   obj: T,
   setFilter: SetFilter,
   key: FilterKeys,
@@ -58,14 +58,10 @@ export const createFilterItems = (filter: CardsFilter, setFilter: SetFilter, t: 
 export const createAvailabilityFilterItems = (availability: Availability, setFilter: SetFilter, t: TFunction) => {
   const { days, times, occasional } = availability;
 
-  const createAvailabilityGroup = <T extends Record<string, boolean>>(
-    labelKey: string,
-    obj: T,
-    keyPrefix?: string,
-  ) => ({
+  const createAvailabilityGroup = <K extends keyof Availability, T extends SelectionMap>(labelKey: K, obj: T) => ({
     label: t(`dashboard.volunteers.filters.preferredAv.${labelKey}.header`),
     items: Object.keys(obj).map((key) => ({
-      label: keyPrefix ? t(`dashboard.volunteers.filters.preferredAv.${keyPrefix}.${key}`) : key,
+      label: t(`dashboard.volunteers.filters.preferredAv.${labelKey}.${key}`),
       checked: obj[key],
       onChange: (checked: boolean) => {
         const updated = { ...obj, [key]: checked };
@@ -78,8 +74,8 @@ export const createAvailabilityFilterItems = (availability: Availability, setFil
   });
 
   return [
-    createAvailabilityGroup<Availability["days"]>("days", days, "days"),
-    createAvailabilityGroup<Availability["times"]>("times", times),
-    createAvailabilityGroup<Availability["occasional"]>("occasional", occasional, "occasional"),
+    createAvailabilityGroup("days", days),
+    createAvailabilityGroup("times", times),
+    createAvailabilityGroup("occasional", occasional),
   ];
 };
