@@ -316,7 +316,9 @@
           "active": "Active",
           "inactive": "Inactive",
           "new": "New",
-          "temporarilyInactive": "TemporarilyInactive"
+          "available": "Available",
+          "temporarilyUnavailable": "Temporarily Unavailable",
+          "unresponsive": "Unresponsive"
         },
         "preferredAv": {
           "header": "Preferred Availability",

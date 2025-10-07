@@ -23,10 +23,12 @@ export const defaultVolunteerCardsFilter: CardsFilter = {
   [FilterKeys.DISTRICT]: {},
   [FilterKeys.LANGUAGE]: {},
   [FilterKeys.ENGAGEMENT]: {
-    active: false,
-    inactive: false,
     new: false,
-    temporarilyInactive: false,
+    active: false,
+    available: false,
+    temporarilyUnavailable: false,
+    inactive: false,
+    unresponsive: false,
   },
   [FilterKeys.AVAILABILITY]: {
     times: {

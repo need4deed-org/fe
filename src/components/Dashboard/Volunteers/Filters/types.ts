@@ -14,8 +14,10 @@ export interface CardsFilter {
 export interface Engagement {
   new: boolean;
   active: boolean;
-  temporarilyInactive: boolean;
+  available: boolean;
+  temporarilyUnavailable: boolean;
   inactive: boolean;
+  unresponsive: boolean;
 }
 
 export interface Availability {
