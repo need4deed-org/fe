@@ -52,7 +52,6 @@ export function Volunteers() {
     cardsFilter.languages = createFilterFromOption(option, EntityTableName.LANGUAGE);
 
     const updatedFilter = deserializeFilters(cardsFilter, searchParams);
-    console.log("updatedFilter:", updatedFilter);
 
     setCardsFilter(updatedFilter);
   }, [option]);

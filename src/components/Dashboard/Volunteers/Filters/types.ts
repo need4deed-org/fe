@@ -5,19 +5,10 @@ import { Dispatch, SetStateAction } from "react";
 export interface CardsFilter {
   [FilterKeys.SEARCH]: string;
   [FilterKeys.ACCOMPANYING]: boolean;
-  [FilterKeys.ENGAGEMENT]: Engagement;
+  [FilterKeys.ENGAGEMENT]: Record<string, boolean>;
   [FilterKeys.AVAILABILITY]: Availability;
   [FilterKeys.DISTRICT]: Record<string, boolean>;
   [FilterKeys.LANGUAGE]: Record<string, boolean>;
-}
-
-export interface Engagement {
-  new: boolean;
-  active: boolean;
-  available: boolean;
-  temporarilyUnavailable: boolean;
-  inactive: boolean;
-  unresponsive: boolean;
 }
 
 export interface Availability {

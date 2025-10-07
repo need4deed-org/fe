@@ -1,3 +1,7 @@
+import { TFunction } from "i18next";
+import { Availability, CardsFilter, SetFilter } from "./types";
+import { FilterKeys } from "./constants";
+
 export const getClearFilter = (filter: object) => {
   const newFilter: Record<string, string | boolean | object> = {};
 
@@ -9,4 +13,73 @@ export const getClearFilter = (filter: object) => {
   }
 
   return newFilter;
+};
+
+/**
+ * Generic helper to create a list of checkbox-like filter items from a record of booleans.
+ */
+const createFilterList = <T extends Record<string, boolean>>(
+  obj: T,
+  setFilter: SetFilter,
+  key: FilterKeys,
+  labelResolver: (key: string) => string,
+) =>
+  Object.keys(obj)
+    .sort()
+    .map((k) => ({
+      label: labelResolver(k),
+      checked: obj[k],
+      onChange: (checked: boolean) => {
+        const updated = { ...obj, [k]: checked };
+        setFilter((prev) => ({ ...prev, [key]: updated }));
+      },
+    }));
+
+/**
+ * Creates filter items for districts, languages, engagement, and availability.
+ */
+export const createFilterItems = (filter: CardsFilter, setFilter: SetFilter, t: TFunction) => {
+  const districtFilter = createFilterList(filter[FilterKeys.DISTRICT], setFilter, FilterKeys.DISTRICT, (key) => key);
+
+  const languageFilter = createFilterList(filter[FilterKeys.LANGUAGE], setFilter, FilterKeys.LANGUAGE, (key) => key);
+
+  const engagementFilter = createFilterList(filter[FilterKeys.ENGAGEMENT], setFilter, FilterKeys.ENGAGEMENT, (key) =>
+    t(`dashboard.volunteers.filters.engagement.${key}`),
+  );
+
+  const availabilityFilter = createAvailabilityFilterItems(filter[FilterKeys.AVAILABILITY], setFilter, t);
+
+  return { districtFilter, languageFilter, engagementFilter, availabilityFilter };
+};
+
+/**
+ * Builds availability-based filter sections (days, times, occasional).
+ */
+export const createAvailabilityFilterItems = (availability: Availability, setFilter: SetFilter, t: TFunction) => {
+  const { days, times, occasional } = availability;
+
+  const createAvailabilityGroup = <T extends Record<string, boolean>>(
+    labelKey: string,
+    obj: T,
+    keyPrefix?: string,
+  ) => ({
+    label: t(`dashboard.volunteers.filters.preferredAv.${labelKey}.header`),
+    items: Object.keys(obj).map((key) => ({
+      label: keyPrefix ? t(`dashboard.volunteers.filters.preferredAv.${keyPrefix}.${key}`) : key,
+      checked: obj[key],
+      onChange: (checked: boolean) => {
+        const updated = { ...obj, [key]: checked };
+        setFilter((prev) => ({
+          ...prev,
+          [FilterKeys.AVAILABILITY]: { ...availability, [labelKey]: updated },
+        }));
+      },
+    })),
+  });
+
+  return [
+    createAvailabilityGroup<Availability["days"]>("days", days, "days"),
+    createAvailabilityGroup<Availability["times"]>("times", times),
+    createAvailabilityGroup<Availability["occasional"]>("occasional", occasional, "occasional"),
+  ];
 };
