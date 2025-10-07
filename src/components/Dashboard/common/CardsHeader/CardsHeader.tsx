@@ -8,8 +8,9 @@ import { hyphenationStyles } from "../../../styled/mixins";
 import Results from "./Results";
 import SortBy, { OnChangeSortOrder } from "./SortBy";
 import { SortOrder } from "need4deed-sdk";
-import { CardsFilter } from "../../Volunteers/Filters/types";
+import { CardsFilter, SetFilter } from "../../Volunteers/Filters/types";
 import { XIcon } from "@phosphor-icons/react";
+import { createSelectedFilterItemsAsFlatArray } from "../../Volunteers/Filters/helpers";
 
 interface Props {
   header: string;
@@ -23,6 +24,7 @@ interface Props {
   sortOrder: SortOrder;
   onSortOrderChange?: OnChangeSortOrder;
   filter: CardsFilter;
+  setFilter: SetFilter;
 }
 
 export default function CardsHeader({
@@ -37,10 +39,11 @@ export default function CardsHeader({
   sortOrder,
   onSortOrderChange,
   filter,
+  setFilter,
 }: Props) {
   const { t } = useTranslation();
 
-  const serializedFilter = getSelectedKeys(filter);
+  const selectedFilters = createSelectedFilterItemsAsFlatArray(filter, setFilter, t);
 
   return (
     <HeaderContainer>
@@ -73,11 +76,11 @@ export default function CardsHeader({
         </SearchBarSectionContainer>
 
         <HeaderFilterItemContainer>
-          {serializedFilter.map((key) => (
-            <HeaderFilterItem key={key}>
-              {key}
+          {selectedFilters.map((f) => (
+            <HeaderFilterItem key={f.label}>
+              {f.label}
               <XIconDiv>
-                <XIcon size={20} onClick={() => console.log("X clicked")} />
+                <XIcon size={20} onClick={() => f.onChange(!f.checked)} />
               </XIconDiv>
             </HeaderFilterItem>
           ))}
@@ -87,35 +90,6 @@ export default function CardsHeader({
   );
 }
 
-const getSelectedKeys = (filter: CardsFilter) => {
-  const keys = [];
-
-  if (filter.accompanying) keys.push("Accompanying");
-
-  Object.entries(filter.district).forEach(([key, value]) => {
-    if (value === true) {
-      keys.push(key);
-    }
-  });
-
-  if (filter.languages) {
-    Object.entries(filter.languages).forEach(([key, value]) => {
-      if (value === true) {
-        keys.push(key);
-      }
-    });
-  }
-
-  if (filter.engagement) {
-    Object.entries(filter.engagement).forEach(([key, value]) => {
-      if (value === true) {
-        keys.push(key);
-      }
-    });
-  }
-
-  return keys;
-};
 /* Styles */
 
 const XIconDiv = styled.div`

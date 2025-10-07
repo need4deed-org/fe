@@ -39,17 +39,17 @@ const createFilterList = <T extends SelectionMap>(
  * Creates filter items for districts, languages, engagement, and availability.
  */
 export const createFilterItems = (filter: CardsFilter, setFilter: SetFilter, t: TFunction) => {
-  const districtFilter = createFilterList(filter[FilterKeys.DISTRICT], setFilter, FilterKeys.DISTRICT, (key) => key);
+  const districtFilters = createFilterList(filter[FilterKeys.DISTRICT], setFilter, FilterKeys.DISTRICT, (key) => key);
 
-  const languageFilter = createFilterList(filter[FilterKeys.LANGUAGE], setFilter, FilterKeys.LANGUAGE, (key) => key);
+  const languageFilters = createFilterList(filter[FilterKeys.LANGUAGE], setFilter, FilterKeys.LANGUAGE, (key) => key);
 
-  const engagementFilter = createFilterList(filter[FilterKeys.ENGAGEMENT], setFilter, FilterKeys.ENGAGEMENT, (key) =>
+  const engagementFilters = createFilterList(filter[FilterKeys.ENGAGEMENT], setFilter, FilterKeys.ENGAGEMENT, (key) =>
     t(`dashboard.volunteers.filters.engagement.${key}`),
   );
 
-  const availabilityFilter = createAvailabilityFilterItems(filter[FilterKeys.AVAILABILITY], setFilter, t);
+  const availabilityFilters = createAvailabilityFilterItems(filter[FilterKeys.AVAILABILITY], setFilter, t);
 
-  return { districtFilter, languageFilter, engagementFilter, availabilityFilter };
+  return { districtFilters, languageFilters, engagementFilters, availabilityFilters };
 };
 
 /**
@@ -78,4 +78,12 @@ export const createAvailabilityFilterItems = (availability: Availability, setFil
     createAvailabilityGroup("times", times),
     createAvailabilityGroup("occasional", occasional),
   ];
+};
+
+export const createSelectedFilterItemsAsFlatArray = (filter: CardsFilter, setFilter: SetFilter, t: TFunction) => {
+  const filterItems = createFilterItems(filter, setFilter, t);
+  const { districtFilters, engagementFilters, languageFilters, availabilityFilters } = filterItems;
+  const flattenAvFilters = availabilityFilters.map((avFilter) => avFilter.items).flat();
+
+  return [...districtFilters, ...engagementFilters, ...languageFilters, ...flattenAvFilters].filter((f) => f.checked);
 };

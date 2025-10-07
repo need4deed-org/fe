@@ -78,6 +78,7 @@ export function Volunteers() {
           sortOrder={sortOrder}
           onSortOrderChange={handleSortChange}
           filter={cardsFilter}
+          setFilter={handleFilterUpdate}
         />
         <VolunteerListController setNumOfVols={setNumOfVols} sortOrder={sortOrder} isFiltersOpen={isFiltersOpen} />
       </VolunteersContainer>
