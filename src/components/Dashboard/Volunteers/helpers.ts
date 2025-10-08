@@ -47,7 +47,7 @@ export const groupLanguagesByProficiency = (languages: ApiLanguage[]): GroupedLa
   return groupedLanguages;
 };
 
-export function serializeFilters(filter: CardsFilter, searchParams: ReadonlyURLSearchParams) {
+export function serializeFilters(filter: CardsFilter, searchParams?: ReadonlyURLSearchParams, asString = true) {
   const params = new URLSearchParams(searchParams);
 
   if (filter.search) params.set(FilterKeys.SEARCH, filter.search);
@@ -92,7 +92,7 @@ export function serializeFilters(filter: CardsFilter, searchParams: ReadonlyURLS
     });
   });
 
-  return params.toString();
+  return asString ? params.toString() : params;
 }
 
 export function deserializeFilters(filter: CardsFilter, searchParams: ReadonlyURLSearchParams) {

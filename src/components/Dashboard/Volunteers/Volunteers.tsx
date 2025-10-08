@@ -80,7 +80,12 @@ export function Volunteers() {
           filter={cardsFilter}
           setFilter={handleFilterUpdate}
         />
-        <VolunteerListController setNumOfVols={setNumOfVols} sortOrder={sortOrder} isFiltersOpen={isFiltersOpen} />
+        <VolunteerListController
+          setNumOfVols={setNumOfVols}
+          sortOrder={sortOrder}
+          isFiltersOpen={isFiltersOpen}
+          filter={cardsFilter}
+        />
       </VolunteersContainer>
     </DashboardLayout>
   );

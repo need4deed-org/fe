@@ -4,6 +4,8 @@ import { ApiVolunteerGetList, SortOrder } from "need4deed-sdk";
 import { useGetQuery } from "@/hooks";
 import { apiPathVolunteer } from "@/config/constants";
 import { VolunteerCardList } from "./VolunteerCardList"; // We will modify this component
+import { CardsFilter } from "./Filters/types";
+import { serializeFilters } from "./helpers";
 
 const columns = 4;
 const rows = 3;
@@ -14,19 +16,27 @@ interface VolunteerListControllerProps {
   setNumOfVols: (numOfVols: number) => void;
   sortOrder: SortOrder;
   isFiltersOpen: boolean;
+  filter: CardsFilter;
 }
 
-export function VolunteerListController({ setNumOfVols, sortOrder, isFiltersOpen }: VolunteerListControllerProps) {
+export function VolunteerListController({
+  setNumOfVols,
+  sortOrder,
+  isFiltersOpen,
+  filter,
+}: VolunteerListControllerProps) {
   const [currentPage, setCurrentPage] = useState(1);
+  const serializedFilter = serializeFilters(filter, undefined, false) as URLSearchParams;
   const { data, count } = useGetQuery<ApiVolunteerGetList[]>({
     queryKey: ["volunteers"],
     apiPath: apiPathVolunteer,
-    options: {
+    params: {
       limit: limit,
       page: currentPage,
-      staleTime: cacheTTL,
       sortOrder,
+      filter: serializedFilter,
     },
+    staleTime: cacheTTL,
   });
   const volunteers = data || [];
 
