@@ -1,7 +1,7 @@
 import { ApiLanguage, ApiOptionLists, LangProficiency } from "need4deed-sdk";
 import { ReadonlyURLSearchParams } from "next/navigation";
-import { CardsFilter, Engagement } from "./Filters/types";
-import { SEPERATOR, FilterKeys, AvailabilityKeys, AvailabilitySubKeys } from "./Filters/constants";
+import { CardsFilter } from "./Filters/types";
+import { SEPARATOR, FilterKeys, AvailabilityKeys, AvailabilitySubKeys } from "./Filters/constants";
 
 const proficiencyOrder = [
   LangProficiency.NATIVE,
@@ -24,14 +24,15 @@ interface GroupedLanguage {
 export const groupLanguagesByProficiency = (languages: ApiLanguage[]): GroupedLanguage[] => {
   const groupedLanguagesMap = new Map<LangProficiency, string[]>();
 
-  languages.forEach((lang) => {
-    const { proficiency, title } = lang;
+  for (const { proficiency, title } of languages) {
+    if (!proficiency) continue;
 
     if (!groupedLanguagesMap.has(proficiency)) {
       groupedLanguagesMap.set(proficiency, []);
     }
+
     groupedLanguagesMap.get(proficiency)!.push(title);
-  });
+  }
 
   // Convert the Map to the desired array format
   const groupedLanguages: GroupedLanguage[] = [];
@@ -87,7 +88,7 @@ export function serializeFilters(filter: CardsFilter, searchParams?: ReadonlyURL
 
     Object.entries(subSlot).forEach(([slot, value]) => {
       if (value) {
-        params.append(FilterKeys.AVAILABILITY, `${availabilityKey}${SEPERATOR}${slot}`);
+        params.append(FilterKeys.AVAILABILITY, `${availabilityKey}${SEPARATOR}${slot}`);
       }
     });
   });
@@ -118,16 +119,13 @@ export function deserializeFilters(filter: CardsFilter, searchParams: ReadonlyUR
 
   const queryLanguages = searchParams.getAll(FilterKeys.LANGUAGE);
   queryLanguages.forEach((l) => {
-    // Check if the query param value is exist in the filters. if not, ignore that query param !!!
     if (newFilter.languages[l] !== undefined) {
       newFilter.languages[l] = true;
     }
   });
 
   const queryEngagement = searchParams.getAll(FilterKeys.ENGAGEMENT);
-  queryEngagement.forEach((eng) => {
-    // Check if the query param value is exist in the filters. if not, ignore that query param !!!
-    const e = eng as keyof Engagement;
+  queryEngagement.forEach((e) => {
     if (newFilter.engagement[e] !== undefined) {
       newFilter.engagement[e] = true;
     }
@@ -135,7 +133,7 @@ export function deserializeFilters(filter: CardsFilter, searchParams: ReadonlyUR
 
   const queryAvailability = searchParams.getAll(FilterKeys.AVAILABILITY);
   queryAvailability.forEach((item) => {
-    const [firstKey, secondKey] = item.split(SEPERATOR);
+    const [firstKey, secondKey] = item.split(SEPARATOR);
 
     const avKey = firstKey as AvailabilityKeys;
     const avSubKey = secondKey as AvailabilitySubKeys;

@@ -53,6 +53,6 @@ export const defaultVolunteerCardsFilter: CardsFilter = {
   },
 };
 
-export const SEPERATOR = "~";
+export const SEPARATOR = "~";
 export type AvailabilityKeys = keyof CardsFilter["availability"];
 export type AvailabilitySubKeys = TimeSlot | ByDay | OccasionalType;
