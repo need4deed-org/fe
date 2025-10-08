@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import CloseFilters from "./CloseFilters";
 import FiltersContent from "./FiltersContent";
-import ClearAllFilters from "./ClearAllFilters";
 import { CardsFilter, SetFilter } from "./types";
 
 const FiltersContainer = styled.div`
@@ -26,7 +25,6 @@ export default function Filters({ isFiltersOpen, setIsFiltersOpen, filter, setFi
     <FiltersContainer>
       <CloseFilters setIsFiltersOpen={setIsFiltersOpen} />
       <FiltersContent setFilter={setFilter} filter={filter} />
-      <ClearAllFilters filter={filter} setFilter={setFilter} />
     </FiltersContainer>
   ) : null;
 }

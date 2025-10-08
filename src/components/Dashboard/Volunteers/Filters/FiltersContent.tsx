@@ -14,17 +14,8 @@ interface Props {
 export default function FiltersContent({ setFilter, filter }: Props) {
   const { t } = useTranslation();
 
-  const { availabilityFilters, districtFilters, engagementFilters, languageFilters } = createFilterItems(
-    filter,
-    setFilter,
-    t,
-  );
-
-  const accompanyingClickHandler = () => {
-    const accompanying = !filter.accompanying;
-
-    setFilter((prevFilter) => ({ ...prevFilter, accompanying }));
-  };
+  const { availabilityFilters, districtFilters, engagementFilters, languageFilters, accompanyingFilter } =
+    createFilterItems(filter, setFilter, t);
 
   return (
     <FiltersContentContainer>
@@ -34,7 +25,10 @@ export default function FiltersContent({ setFilter, filter }: Props) {
         </Heading4>
 
         <AccompanyingFilterHeaderContainer>
-          <SwitchButton isChecked={filter.accompanying} onToggle={accompanyingClickHandler} />
+          <SwitchButton
+            isChecked={accompanyingFilter.checked as boolean}
+            onToggle={() => accompanyingFilter.onChange(!accompanyingFilter.checked)}
+          />
 
           <Paragraph
             fontWeight="var(--filters-description-font-weight)"

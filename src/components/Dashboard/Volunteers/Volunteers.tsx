@@ -22,10 +22,7 @@ export function Volunteers() {
   const [numOfVols, setNumOfVols] = useState(0);
   const [sortOrder, setSortOrder] = useState(SortOrder.NewToOld);
   const [cardsFilter, setCardsFilter] = useState(defaultVolunteerCardsFilter);
-  const { data: option } = useGetQuery<ApiOptionLists>({
-    queryKey: ["options"],
-    apiPath: apiPathOption,
-  });
+  const { data: option } = useGetQuery<ApiOptionLists>({ queryKey: ["options"], apiPath: apiPathOption });
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();

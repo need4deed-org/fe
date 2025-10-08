@@ -35,10 +35,29 @@ const createFilterList = <T extends SelectionMap>(
       },
     }));
 
+const createFilter = (
+  obj: CardsFilter,
+  setFilter: SetFilter,
+  key: FilterKeys,
+  labelResolver: (key: string) => string,
+) => {
+  return {
+    label: labelResolver(key),
+    checked: obj[key],
+    onChange: (checked: boolean) => {
+      setFilter((prev) => ({ ...prev, [key]: checked }));
+    },
+  };
+};
+
 /**
  * Creates filter items for districts, languages, engagement, and availability.
  */
 export const createFilterItems = (filter: CardsFilter, setFilter: SetFilter, t: TFunction) => {
+  const accompanyingFilter = createFilter(filter, setFilter, FilterKeys.ACCOMPANYING, (key) =>
+    t(`dashboard.volunteers.filters.${key}`),
+  );
+
   const districtFilters = createFilterList(filter[FilterKeys.DISTRICT], setFilter, FilterKeys.DISTRICT, (key) => key);
 
   const languageFilters = createFilterList(filter[FilterKeys.LANGUAGE], setFilter, FilterKeys.LANGUAGE, (key) => key);
@@ -49,7 +68,7 @@ export const createFilterItems = (filter: CardsFilter, setFilter: SetFilter, t: 
 
   const availabilityFilters = createAvailabilityFilterItems(filter[FilterKeys.AVAILABILITY], setFilter, t);
 
-  return { districtFilters, languageFilters, engagementFilters, availabilityFilters };
+  return { districtFilters, languageFilters, engagementFilters, availabilityFilters, accompanyingFilter };
 };
 
 /**
@@ -82,8 +101,11 @@ export const createAvailabilityFilterItems = (availability: Availability, setFil
 
 export const createSelectedFilterItemsAsFlatArray = (filter: CardsFilter, setFilter: SetFilter, t: TFunction) => {
   const filterItems = createFilterItems(filter, setFilter, t);
-  const { districtFilters, engagementFilters, languageFilters, availabilityFilters } = filterItems;
-  const flattenAvFilters = availabilityFilters.map((avFilter) => avFilter.items).flat();
 
-  return [...districtFilters, ...engagementFilters, ...languageFilters, ...flattenAvFilters].filter((f) => f.checked);
+  const { districtFilters, engagementFilters, languageFilters, availabilityFilters, accompanyingFilter } = filterItems;
+  const flatAvFilters = availabilityFilters.map((avFilter) => avFilter.items).flat();
+
+  return [accompanyingFilter, ...districtFilters, ...engagementFilters, ...languageFilters, ...flatAvFilters].filter(
+    (f) => f.checked,
+  );
 };
