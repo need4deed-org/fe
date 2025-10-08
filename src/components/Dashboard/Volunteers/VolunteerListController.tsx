@@ -49,7 +49,7 @@ export function VolunteerListController({
       volunteers={volunteers}
       count={count}
       columns={columns - (isFiltersOpen ? 1 : 0)}
-      rows={rows}
+      rows={rows + (isFiltersOpen ? 1 : 0)}
       currentPage={currentPage}
       setCurrentPage={setCurrentPage}
     />

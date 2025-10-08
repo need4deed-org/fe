@@ -445,8 +445,6 @@ html {
     --opportunities-filters-button-height: 48px;
     --opportunities-filters-button-width: 48px;
     --opportunities-filters-button-icon-size: 32px;
-    --opportunities-filters-container-width: auto;
-    --opportunities-filters-container-border-bottom-radius: 40px;
     --opportunities-filters-close-filter-height: 64px;
     --opportunities-filters-close-filter-gap: 12px;
     --opportunities-filters-close-filter-padding: 16px 0px 16px 32px;
@@ -699,8 +697,6 @@ html {
     --opportunities-cards-container-justify-content: center;
     --opportunities-filters-button-height: 64px;
     --opportunities-filters-button-icon-size: 32px;
-    --opportunities-filters-container-width: auto;
-    --opportunities-filters-container-border-bottom-radius: 40px;
     --opportunities-filters-close-filter-height: 64px;
     --opportunities-filters-close-filter-gap: 12px;
     --opportunities-filters-close-filter-padding: 16px 0px 16px 32px;
@@ -954,8 +950,6 @@ html {
     --opportunities-cards-container-justify-content: left;
     --opportunities-filters-button-height: 64px;
     --opportunities-filters-button-icon-size: 32px;
-    --opportunities-filters-container-width: 320px;
-    --opportunities-filters-container-border-bottom-radius: none;
     --opportunities-filters-close-filter-height: 64px;
     --opportunities-filters-close-filter-gap: 12px;
     --opportunities-filters-close-filter-padding: 16px 0px 16px 32px;
@@ -978,12 +972,12 @@ html {
     --search-container-padding: 0 32px;
     --search-input-font-size: 16px;
 
-    --paginated-grid-container-gap: 24px;
+    --paginated-grid-container-gap: 16px;
     --paginated-grid-pagination-number-width: 36px;
     --paginated-grid-pagination-number-height: 44px;
     --paginated-grid-pagination-number-border-radius: 6px;
 
-    --dashboard-base-container-width: 1244px;
+    --dashboard-base-container-width: 1340px;
     --dashboard-base-container-padding-top: 48px;
     --dashboard-base-container-padding-bottom: 100px;
 
@@ -997,7 +991,6 @@ html {
     --dashboard-navigation-bar-option-text-size: 14px;
     --dashboard-navigation-bar-option-text-letter-spacing: 0.14px;
 
-    --dashboard-cards-header-searchbar-width: 928px;
     --dashboard-cards-header-result-sortBy-gap: 20px;
     --dashboard-cards-header-sortBy-container-gap: 4px;
     --dashboard-cards-header-sortBy-options-gap: 6px;
@@ -1021,7 +1014,7 @@ html {
     --app-header-menu-item-fontWeight-secondary: 400;
 
     --dashboard-volunteers-container-gap: 40px;
-    --dashboard-volunteers-card-width: 296px;
+    --dashboard-volunteers-card-width: 320px;
     --dashboard-volunteers-card-height: auto;
     --dashboard-volunteers-card-gap: 20px;
     --dashboard-volunteers-card-padding: 0 20px 24px 20px;
@@ -1075,10 +1068,16 @@ html {
     --dashboard-login-checkbox-label-fontSize: 20px;
     --dashboard-login-forgot-password-label-fontWeight: 600;
 
+    --filters-container-width: 340px;
+    --filters-container-border-radius: 16px;
     --filters-description-font-size: 16px;
     --filters-description-font-weight: 400;
     --filters-description-line-height: 20px;
     --filters-description-letter-spacing: 0.5%;
     --filters-accordion-group-options-gap: 16px;
+    --filters-accordion-group-options-gap: 16px;
+    --filters-search-bar-section-container-gap: 16px;
+    --filters-search-bar-width: 630px;
+
   }
 }

@@ -3,16 +3,6 @@ import CloseFilters from "./CloseFilters";
 import FiltersContent from "./FiltersContent";
 import { CardsFilter, SetFilter } from "./types";
 
-const FiltersContainer = styled.div`
-  position: absolute;
-  right: 0;
-  width: var(--opportunities-filters-container-width);
-  z-index: 1;
-  background: var(--color-orchid-subtle);
-  border-bottom-left-radius: var(--opportunities-filters-container-border-bottom-radius);
-  border-bottom-right-radius: var(--opportunities-filters-container-border-bottom-radius);
-`;
-
 interface Props {
   isFiltersOpen: boolean;
   setIsFiltersOpen: (isOpen: boolean) => void;
@@ -28,3 +18,11 @@ export default function Filters({ isFiltersOpen, setIsFiltersOpen, filter, setFi
     </FiltersContainer>
   ) : null;
 }
+
+const FiltersContainer = styled.div`
+  position: absolute;
+  right: 0;
+  width: var(--filters-container-width);
+  background: var(--color-pink-50);
+  border-bottom-left-radius: var(--filters-container-border-radius);
+`;

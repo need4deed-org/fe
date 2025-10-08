@@ -59,23 +59,21 @@ export default function CardsHeader({
               </TabHeading>
             ))}
           </Tabs>
-
-          <ResultsSortByContainer>
-            <Results counter={resultCounter} text={resultText} />
-            <SortBy sortOrder={sortOrder} onChange={onSortOrderChange} />
-          </ResultsSortByContainer>
+          <SortBy sortOrder={sortOrder} onChange={onSortOrderChange} />
         </TabsSectionContainer>
 
         <SearchBarSectionContainer>
           <Search
             placeHolder={`${t("dashboard.searchPlaceHolder")} ...`}
             onInputChange={onSearchInputChange}
-            width="var(--dashboard-cards-header-searchbar-width)" //Todo: take this width value as prop when migrating website opportunities.
+            width="var(--filters-search-bar-width)" //Todo: take this width value as prop when migrating website opportunities.
             backgroundColor="var(--color-magnolia-light)"
             value={filter.search}
           />
           <FiltersButton setIsFiltersOpen={setIsFiltersOpen} />
         </SearchBarSectionContainer>
+
+        <Results counter={resultCounter} text={resultText} />
 
         <HeaderFilterItemContainer>
           {selectedFilters.map((f) => (
@@ -145,9 +143,7 @@ const TabsSectionContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: var(
-    --dashboard-cards-header-searchbar-width
-  ); //Todo: take this width value as prop when migrating website opportunities.
+  width: var(--filters-search-bar-width);
 `;
 
 const Tabs = styled.div`
@@ -159,13 +155,7 @@ const Tabs = styled.div`
 const SearchBarSectionContainer = styled.div`
   display: flex;
   flex-direction: var(--opportunities-header-searchbar-flex-direction);
-  justify-content: space-between;
-`;
-
-const ResultsSortByContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: var(--dashboard-cards-header-result-sortBy-gap);
+  gap: var(--filters-search-bar-section-container-gap);
 `;
 
 interface TabHeadingProps {

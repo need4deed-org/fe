@@ -16,11 +16,11 @@ export default function FiltersButton({ setIsFiltersOpen }: Props) {
   return (
     <Button
       text={isMobile ? undefined : t("dashboard.filters.button")}
-      backgroundcolor="var(--color-midnight)"
+      backgroundcolor="var(--color-aubergine)"
       height="var(--opportunities-filters-button-height)"
       width={isMobile ? "var(--opportunities-filters-button-width)" : undefined}
       onClick={() => setIsFiltersOpen(true)}
-      iconName={IconName.FadersHorizontal}
+      iconName={IconName.Faders}
       iconSize="var(--opportunities-filters-button-icon-size)"
     />
   );

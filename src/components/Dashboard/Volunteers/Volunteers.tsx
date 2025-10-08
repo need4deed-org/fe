@@ -93,7 +93,9 @@ export function Volunteers() {
 export default Volunteers;
 
 /** Styles */
+
 const VolunteersContainer = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: var(--dashboard-volunteers-container-gap);
