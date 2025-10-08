@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { MagnifyingGlassIcon } from "@phosphor-icons/react";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState, useCallback, useRef, useEffect } from "react";
 
 interface SearchContainerProps {
   width?: string;
@@ -34,16 +34,56 @@ interface Props {
   onInputChange: (input: string) => void;
   width?: string;
   backgroundColor?: string;
+  debounceTime?: number;
+  value?: string;
 }
 
-export function Search({ placeHolder = "Search", onInputChange, width, backgroundColor }: Props) {
-  const [inputValue, setInputValue] = useState("");
+export function Search({
+  placeHolder = "Search",
+  value = "",
+  onInputChange,
+  width,
+  backgroundColor,
+  debounceTime = 1000,
+}: Props) {
+  const [inputValue, setInputValue] = useState(value);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Use useCallback to ensure the debounced function is stable
+  const debouncedOnInputChange = useCallback(
+    (value: string) => {
+      // Clear the previous timeout
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+
+      // Set a new timeout
+      const id = setTimeout(() => {
+        onInputChange(value);
+      }, debounceTime);
+
+      // Store the new timeout ID
+      timeoutRef.current = id;
+    },
+    [debounceTime, onInputChange],
+  );
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
     setInputValue(newValue);
-    onInputChange(newValue);
+    debouncedOnInputChange(newValue);
   };
+
+  useEffect(() => {
+    if (value !== inputValue) setInputValue(value);
+  }, [value]);
+
+  // Cleanup the timeout when the component unmounts
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, []);
 
   return (
     <SearchContainer width={width} $backgroundColor={backgroundColor}>

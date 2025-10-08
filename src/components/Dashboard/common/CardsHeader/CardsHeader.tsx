@@ -72,6 +72,7 @@ export default function CardsHeader({
             onInputChange={onSearchInputChange}
             width="var(--dashboard-cards-header-searchbar-width)" //Todo: take this width value as prop when migrating website opportunities.
             backgroundColor="var(--color-magnolia-light)"
+            value={filter.search}
           />
           <FiltersButton setIsFiltersOpen={setIsFiltersOpen} />
         </SearchBarSectionContainer>

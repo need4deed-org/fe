@@ -8,7 +8,7 @@ import { DashboardLayout } from "@/components/Layout";
 import { VolunteerListController } from "./VolunteerListController";
 import { ApiOptionLists, EntityTableName, SortOrder } from "need4deed-sdk";
 import Filters from "./Filters/Filters";
-import { defaultVolunteerCardsFilter } from "./Filters/constants";
+import { defaultVolunteerCardsFilter, FilterKeys } from "./Filters/constants";
 import { CardsFilter } from "./Filters/types";
 import { useGetQuery } from "@/hooks";
 import { apiPathOption, questionMark } from "@/config/constants";
@@ -28,7 +28,9 @@ export function Volunteers() {
   const router = useRouter();
   const tabs = [t("dashboard.volunteers.tabs.tab1"), t("dashboard.volunteers.tabs.tab2")];
 
-  const mockHandleInputChange = () => {};
+  const handleSearchInputChange = (searchInput: string) => {
+    handleFilterUpdate((prev) => ({ ...prev, [FilterKeys.SEARCH]: searchInput }));
+  };
 
   const handleSortChange = (sortOrder: SortOrder) => {
     setSortOrder(sortOrder);
@@ -71,7 +73,7 @@ export function Volunteers() {
           selectedTabIndex={selectedTabIndex}
           setSelectedTabIndex={setSelectedTabIndex}
           setIsFiltersOpen={setIsFiltersOpen}
-          onSearchInputChange={mockHandleInputChange}
+          onSearchInputChange={handleSearchInputChange}
           sortOrder={sortOrder}
           onSortOrderChange={handleSortChange}
           filter={cardsFilter}
