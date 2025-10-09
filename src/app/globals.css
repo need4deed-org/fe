@@ -1078,6 +1078,19 @@ html {
     --filters-accordion-group-options-gap: 16px;
     --filters-search-bar-section-container-gap: 16px;
     --filters-search-bar-width: 630px;
+    --filters-clear-all-button-height: 44px;
+    --filters-clear-all-button-padding: 12px;
+    --filters-clear-all-button-text-font-size: 18px;
+    --filters-clear-all-button-text-font-weight: 600;
+
+    --cards-header-filter-item-height: 44px;
+    --cards-header-filter-item-gap: 8px;
+    --cards-header-filter-item-border-radius:32px;
+    --cards-header-filter-item-padding:12px;
+    --cards-header-filter-item-font-size: 16px;
+    --cards-header-filter-item-font-weight: 400px;
+    --cards-header-filter-item-icon-div-size: 28px;
+    --cards-header-filter-item-icon-div-border-radius: 14px;
 
   }
 }

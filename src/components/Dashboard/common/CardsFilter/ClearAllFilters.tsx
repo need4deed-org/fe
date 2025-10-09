@@ -22,10 +22,10 @@ export default function ClearAllFilters<TFilter>({ setFilter, filter }: Props<TF
       onClick={handleClick}
       backgroundcolor="var(--color-white)"
       textColor="var(--color-midnight)"
-      height="44px"
-      textFontSize="18px"
-      textFontWeight={600}
-      padding="12px"
+      height="var(--filters-clear-all-button-height)"
+      textFontSize="var(--filters-clear-all-button-text-font-size)"
+      textFontWeight="var(--filters-clear-all-button-text-font-weight)"
+      padding="var(--filters-clear-all-button-padding)"
     />
   );
 }

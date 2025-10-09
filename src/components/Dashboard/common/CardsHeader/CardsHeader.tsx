@@ -65,9 +65,9 @@ export default function CardsHeader({
 
         <SearchBarSectionContainer>
           <Search
-            placeHolder={`${t("dashboard.searchPlaceHolder")} ...`}
+            placeHolder={`${t("dashboard.searchPlaceHolder")}...`}
             onInputChange={onSearchInputChange}
-            width="var(--filters-search-bar-width)" //Todo: take this width value as prop when migrating website opportunities.
+            width="var(--filters-search-bar-width)"
             backgroundColor="var(--color-magnolia-light)"
             value={filter.search}
           />
@@ -79,7 +79,11 @@ export default function CardsHeader({
         <HeaderFilterItemContainer>
           {selectedFilters.map((f) => (
             <HeaderFilterItem key={f.label}>
-              <Paragraph color="var(--color-midnight)" fontSize="16px" fontWeight={400}>
+              <Paragraph
+                color="var(--color-midnight)"
+                fontSize="var(--cards-header-filter-item-font-size)"
+                fontWeight="var(--cards-header-filter-item-font-weight)"
+              >
                 {f.label}
               </Paragraph>
               <XIconDiv>
@@ -100,9 +104,9 @@ const XIconDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 28px;
-  height: 28px;
-  border-radius: 14px;
+  width: var(--cards-header-filter-item-icon-div-size);
+  height: var(--cards-header-filter-item-icon-div-size);
+  border-radius: var(--cards-header-filter-item-icon-div-border-radius);
 
   &:hover {
     background-color: var(--color-pink-200);
@@ -114,10 +118,10 @@ const HeaderFilterItem = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: row;
-  height: 44px;
-  gap: 8px;
-  border-radius: 32px;
-  padding: 12px;
+  height: var(--cards-header-filter-item-height);
+  gap: var(--cards-header-filter-item-gap);
+  border-radius: var(--cards-header-filter-item-border-radius);
+  padding: var(--cards-header-filter-item-padding);
   background-color: var(--color-pink-50);
 `;
 
