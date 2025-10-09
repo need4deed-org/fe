@@ -1,23 +1,18 @@
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/core/button";
-import { CardsFilter, SetFilter } from "./types";
+import { SetFilter } from "./types";
 import { getClearFilter } from "./helpers";
 
-interface Props {
-  setFilter: SetFilter;
-  filter: CardsFilter;
+interface Props<TFilter> {
+  setFilter: SetFilter<TFilter>;
+  filter: TFilter;
 }
 
-export default function ClearAllFilters({ setFilter, filter }: Props) {
+export default function ClearAllFilters<TFilter>({ setFilter, filter }: Props<TFilter>) {
   const { t } = useTranslation();
 
   const handleClick = () => {
-    const { search } = filter;
-    const clearFilter = getClearFilter(filter) as unknown as CardsFilter;
-
-    /* Exclude 'search' input from cleaning process */
-    clearFilter.search = search;
-
+    const clearFilter = getClearFilter(filter as object) as unknown as TFilter;
     setFilter(clearFilter);
   };
 

@@ -8,10 +8,11 @@ import { hyphenationStyles } from "../../../styled/mixins";
 import Results from "./Results";
 import SortBy, { OnChangeSortOrder } from "./SortBy";
 import { SortOrder } from "need4deed-sdk";
-import { CardsFilter, SetFilter } from "../../Volunteers/Filters/types";
+import { CardsFilter } from "../../Volunteers/Filters/types";
 import { XIcon } from "@phosphor-icons/react";
 import { createSelectedFilterItemsAsFlatArray } from "../../Volunteers/Filters/helpers";
-import ClearAllFilters from "../../Volunteers/Filters/ClearAllFilters";
+import ClearAllFilters from "../CardsFilter/ClearAllFilters";
+import { SetFilter } from "../CardsFilter/types";
 
 interface Props {
   header: string;
@@ -25,7 +26,7 @@ interface Props {
   sortOrder: SortOrder;
   onSortOrderChange?: OnChangeSortOrder;
   filter: CardsFilter;
-  setFilter: SetFilter;
+  setFilter: SetFilter<CardsFilter>;
 }
 
 export default function CardsHeader({

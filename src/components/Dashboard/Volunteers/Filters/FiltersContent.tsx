@@ -1,14 +1,15 @@
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
-import AccordionFilter from "./AccordionFilter";
-import { CardsFilter, SetFilter } from "./types";
+import { CardsFilter } from "./types";
 import { Heading4, Paragraph } from "@/components/styled/text";
 import { SwitchButton } from "@/components/core/button";
 import { createFilterItems } from "./helpers";
+import AccordionFilter from "../../common/CardsFilter/AccordionFilter";
+import { SetFilter } from "../../common/CardsFilter/types";
 
 interface Props {
   filter: CardsFilter;
-  setFilter: SetFilter;
+  setFilter: SetFilter<CardsFilter>;
 }
 
 export default function FiltersContent({ setFilter, filter }: Props) {

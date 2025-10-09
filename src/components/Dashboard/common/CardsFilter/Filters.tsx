@@ -1,20 +1,18 @@
 import styled from "styled-components";
 import CloseFilters from "./CloseFilters";
-import FiltersContent from "./FiltersContent";
-import { CardsFilter, SetFilter } from "./types";
+import { ReactNode } from "react";
 
 interface Props {
   isFiltersOpen: boolean;
   setIsFiltersOpen: (isOpen: boolean) => void;
-  filter: CardsFilter;
-  setFilter: SetFilter;
+  filtersContent: ReactNode;
 }
 
-export default function Filters({ isFiltersOpen, setIsFiltersOpen, filter, setFilter }: Props) {
+export default function Filters({ isFiltersOpen, setIsFiltersOpen, filtersContent }: Props) {
   return isFiltersOpen ? (
     <FiltersContainer>
       <CloseFilters setIsFiltersOpen={setIsFiltersOpen} />
-      <FiltersContent setFilter={setFilter} filter={filter} />
+      {filtersContent}
     </FiltersContainer>
   ) : null;
 }

@@ -7,13 +7,14 @@ import CardsHeader from "../common/CardsHeader/CardsHeader";
 import { DashboardLayout } from "@/components/Layout";
 import { VolunteerListController } from "./VolunteerListController";
 import { ApiOptionLists, EntityTableName, SortOrder } from "need4deed-sdk";
-import Filters from "./Filters/Filters";
 import { defaultVolunteerCardsFilter, FilterKeys } from "./Filters/constants";
 import { CardsFilter } from "./Filters/types";
 import { useGetQuery } from "@/hooks";
 import { apiPathOption, questionMark } from "@/config/constants";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { createFilterFromOption, deserializeFilters, serializeFilters } from "./helpers";
+import Filters from "../common/CardsFilter/Filters";
+import FiltersContent from "./Filters/FiltersContent";
 
 export function Volunteers() {
   const { t } = useTranslation();
@@ -60,9 +61,8 @@ export function Volunteers() {
       <VolunteersContainer>
         <Filters
           isFiltersOpen={isFiltersOpen}
-          setFilter={handleFilterUpdate}
-          filter={cardsFilter}
           setIsFiltersOpen={setIsFiltersOpen}
+          filtersContent={<FiltersContent setFilter={handleFilterUpdate} filter={cardsFilter} />}
         />
 
         <CardsHeader

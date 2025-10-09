@@ -1,69 +1,36 @@
 import { TFunction } from "i18next";
-import { Availability, CardsFilter, SelectionMap, SetFilter } from "./types";
+import { Availability, CardsFilter } from "./types";
 import { FilterKeys } from "./constants";
-
-export const getClearFilter = (filter: object) => {
-  const newFilter: Record<string, string | boolean | object> = {};
-
-  for (const [key, val] of Object.entries(filter)) {
-    if (typeof val === "boolean") newFilter[key] = false;
-    else if (typeof val === "string") newFilter[key] = "";
-    else if (typeof val === "object") newFilter[key] = getClearFilter(val);
-    else throw new Error("Unsupported type to clear the filter");
-  }
-
-  return newFilter;
-};
-
-/**
- * Generic helper to create a list of checkbox-like filter items from a record of booleans.
- */
-const createFilterList = <T extends SelectionMap>(
-  obj: T,
-  setFilter: SetFilter,
-  key: FilterKeys,
-  labelResolver: (key: string) => string,
-) =>
-  Object.keys(obj)
-    .sort()
-    .map((k) => ({
-      label: labelResolver(k),
-      checked: obj[k],
-      onChange: (checked: boolean) => {
-        const updated = { ...obj, [k]: checked };
-        setFilter((prev) => ({ ...prev, [key]: updated }));
-      },
-    }));
-
-const createFilter = (
-  obj: CardsFilter,
-  setFilter: SetFilter,
-  key: FilterKeys,
-  labelResolver: (key: string) => string,
-) => {
-  return {
-    label: labelResolver(key),
-    checked: obj[key],
-    onChange: (checked: boolean) => {
-      setFilter((prev) => ({ ...prev, [key]: checked }));
-    },
-  };
-};
+import { generateFilterControlItem, generateNestedFilterControlItems } from "../../common/CardsFilter/helpers";
+import { SelectionMap, SetFilter } from "../../common/CardsFilter/types";
 
 /**
  * Creates filter items for districts, languages, engagement, and availability.
  */
-export const createFilterItems = (filter: CardsFilter, setFilter: SetFilter, t: TFunction) => {
-  const accompanyingFilter = createFilter(filter, setFilter, FilterKeys.ACCOMPANYING, (key) =>
+export const createFilterItems = (filter: CardsFilter, setFilter: SetFilter<CardsFilter>, t: TFunction) => {
+  const accompanyingFilter = generateFilterControlItem(filter, setFilter, FilterKeys.ACCOMPANYING, (key) =>
     t(`dashboard.volunteers.filters.${key}`),
   );
 
-  const districtFilters = createFilterList(filter[FilterKeys.DISTRICT], setFilter, FilterKeys.DISTRICT, (key) => key);
+  const districtFilters = generateNestedFilterControlItems(
+    filter[FilterKeys.DISTRICT],
+    setFilter,
+    FilterKeys.DISTRICT,
+    (key) => key,
+  );
 
-  const languageFilters = createFilterList(filter[FilterKeys.LANGUAGE], setFilter, FilterKeys.LANGUAGE, (key) => key);
+  const languageFilters = generateNestedFilterControlItems(
+    filter[FilterKeys.LANGUAGE],
+    setFilter,
+    FilterKeys.LANGUAGE,
+    (key) => key,
+  );
 
-  const engagementFilters = createFilterList(filter[FilterKeys.ENGAGEMENT], setFilter, FilterKeys.ENGAGEMENT, (key) =>
-    t(`dashboard.volunteers.filters.engagement.${key}`),
+  const engagementFilters = generateNestedFilterControlItems(
+    filter[FilterKeys.ENGAGEMENT],
+    setFilter,
+    FilterKeys.ENGAGEMENT,
+    (key) => t(`dashboard.volunteers.filters.engagement.${key}`),
   );
 
   const availabilityFilters = createAvailabilityFilterItems(filter[FilterKeys.AVAILABILITY], setFilter, t);
@@ -74,7 +41,11 @@ export const createFilterItems = (filter: CardsFilter, setFilter: SetFilter, t: 
 /**
  * Builds availability-based filter sections (days, times, occasional).
  */
-export const createAvailabilityFilterItems = (availability: Availability, setFilter: SetFilter, t: TFunction) => {
+export const createAvailabilityFilterItems = (
+  availability: Availability,
+  setFilter: SetFilter<CardsFilter>,
+  t: TFunction,
+) => {
   const { days, times, occasional } = availability;
 
   const createAvailabilityGroup = <K extends keyof Availability, T extends SelectionMap>(labelKey: K, obj: T) => ({
@@ -99,7 +70,11 @@ export const createAvailabilityFilterItems = (availability: Availability, setFil
   ];
 };
 
-export const createSelectedFilterItemsAsFlatArray = (filter: CardsFilter, setFilter: SetFilter, t: TFunction) => {
+export const createSelectedFilterItemsAsFlatArray = (
+  filter: CardsFilter,
+  setFilter: SetFilter<CardsFilter>,
+  t: TFunction,
+) => {
   const filterItems = createFilterItems(filter, setFilter, t);
 
   const { districtFilters, engagementFilters, languageFilters, availabilityFilters, accompanyingFilter } = filterItems;
