@@ -48,7 +48,7 @@ It is actively developed and will eventually include our public landing page (cu
 
 | Repository                                            | Description                                           |
 | ----------------------------------------------------- | ----------------------------------------------------- |
-| [`backend`](https://github.com/need4deed-org/backend) | Node.js / TypeScript API backend                      |
+| [`backend`](https://github.com/need4deed-org/be) | Node.js / TypeScript API backend                      |
 | [`sdk`](https://github.com/need4deed-org/sdk)         | Shared TypeScript types and helpers used by FE and BE |
 | [`website`](https://github.com/need4deed-org/website) | Legacy React/Vite landing page (currently frozen)     |
 
@@ -61,7 +61,7 @@ The FE, BE, and SDK are designed to work together locally in a **sibling-folder 
 ```
 parent/
 ├── fe/         # Frontend (Next.js app)
-├── backend/    # Backend (API)
+├── be/          # Backend (API)
 └── sdk/        # Shared TypeScript SDK
 ```
 
@@ -71,7 +71,7 @@ Make sure you have all three repos cloned in the same parent directory:
 
 ```bash
 git clone https://github.com/need4deed-org/fe.git
-git clone https://github.com/need4deed-org/backend.git
+git clone https://github.com/need4deed-org/be.git
 git clone https://github.com/need4deed-org/sdk.git
 ```
 
@@ -93,7 +93,7 @@ We **don’t fetch the SDK from npm** — we link it locally.
    npm install ../sdk
    ```
 
-3. Make sure all repos (`fe`, `backend`, `sdk`) are checked out to the same branch name for consistency.
+3. Make sure all repos (`fe`, `be`, `sdk`) are checked out to the same branch name for consistency.
 
 > 💡 If you see TypeScript errors, ensure your local SDK and backend are aligned and up to date.
 
@@ -149,7 +149,7 @@ We welcome all contributions — from bug fixes to feature development.
 
 5. **Push** your branch and open a **Pull Request** to `main`
 
-6. Tag a maintainer for review (`@szymonskorupinski`, etc.)
+6. Tag a maintainer for review (`@arturas`, etc.)
 
 ---
 
