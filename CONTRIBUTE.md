@@ -22,126 +22,191 @@ The following is a set of guidelines for contributing to this project. These are
 
 This project and everyone participating in it is governed by our [Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code.
 
-## How Can I Contribute?
+Perfect 👍 — here’s the **updated and polished `CONTRIBUTING.md`** for your **Need4Deed GitHub organization**, now reflecting:
+
+* Migration from GitLab → GitHub
+* Your **current setup** with `fe`, `be`, and `sdk`
+* SDK linking workflow
+* Mention that **designs are in Figma** and must be followed
+* Clearer instructions for newcomers
+
+---
+
+# Contributing to Need4Deed
+
+Thank you for your interest in contributing to **Need4Deed**!
+We’re building tools that empower people to do good — and every contribution helps. 💪
+
+---
+
+## 🧭 How Can I Contribute?
 
 ### Your First Code Contribution
 
-Unsure where to begin contributing? You can start by looking through `good-first-issue` labeled [issues](https://gitlab.com/need4deed/website/-/issues/?label_name%5B%5D=good-first-issue)
+Not sure where to start?
+Look through [good first issues](https://github.com/orgs/need4deed-org/projects) labeled `good first issue` in the appropriate repository.
 
-### First Merge Request
+Our main repositories:
 
-Step 1: Fork the Repository
+| Repository                                            | Description                                               |
+| ----------------------------------------------------- | --------------------------------------------------------- |
+| [`fe`](https://github.com/need4deed-org/fe)           | Next.js PWA — main app for automating Need4Deed processes |
+| [`be`](https://github.com/need4deed-org/be) | Node.js / TypeScript API for the app                      |
+| [`sdk`](https://github.com/need4deed-org/sdk)         | Shared TypeScript types and utilities between FE and BE   |
+| [`website`](https://github.com/need4deed-org/website) | React/Vite static landing page (currently frozen)         |
 
-1. Go to the our repository: [https://gitlab.com/need4deed/website](https://gitlab.com/need4deed/website).
-1. Click the **Fork** button in the top-right corner.
-1. Choose where to fork the repository (usually your own GitLab account).
+---
 
-Step 2: Clone Your Forked Repository
+## 🚀 Your First Pull Request
 
-1. Go to your forked repository (e.g., `https://gitlab.com/your-username/website`).
-1. Click the **Clone** button and copy it e.g. with HTTPS URL.
+### Step 1: Fork the Repository
+
+1. Go to the repo you want to contribute to (e.g. [`fe`](https://github.com/need4deed-org/fe))
+2. Click **Fork** (top-right)
+3. Select your GitHub account as the destination
+
+### Step 2: Clone Your Fork
+
+```bash
+git clone https://github.com/<your-username>/<repo-name>.git
+cd <repo-name>
+```
+
+### Step 3: Add the Original Repository as a Remote
+
+```bash
+git remote add upstream https://github.com/need4deed-org/<repo-name>.git
+git remote -v
+```
+
+You should see:
+
+* `origin` → your fork
+* `upstream` → the official Need4Deed repository
+
+### Step 4: Create a New Branch
+
+```bash
+git checkout -b your_nick-feature-title
+```
+
+Example:
+`git checkout -b anna-fix-login-form`
+
+---
+
+## 💻 Development Setup
+
+### Monorepo-style workflow
+
+We maintain three sibling repositories that work closely together:
+
+```
+parent/
+├── fe/         # Frontend (Next.js PWA)
+├── be/    # be (API)
+└── sdk/        # Shared types and helpers
+```
+
+### SDK Linking
+
+The **SDK** shares TypeScript types between the **frontend** and **be**.
+We don’t fetch it from npm — we use the **local sibling folder** approach instead.
+
+1. Make sure you have the latest branches checked out in each repo:
+
    ```bash
-   git clone https://gitlab.com/your-username/website.git
+   cd sdk && git pull origin <branch>
+   cd ../fe && git pull origin <branch>
+   cd ../be && git pull origin <branch>
    ```
-1. Navigate into the cloned repository:
+
+2. In `fe` and `be`, install SDK locally:
 
    ```bash
-   cd website
+   npm install ../sdk
    ```
 
-Step 3: Add the Original Repository as a Remote
+3. Ensure that the **same branch name** is checked out in all three repos.
 
-1. Add the original repository as a remote called `upstream`:
-   ```bash
-   git remote add upstream https://gitlab.com/need4deed/website.git
-   ```
-1. Verify the remotes:
+> 🔄 If you get TypeScript errors in the be, make sure SDK and BE are aligned and freshly pulled.
 
-   ```bash
-   git remote -v
-   ```
+---
 
-   You should see:
+## 🎨 Design Guidelines
 
-   - `origin` → Your forked repository.
-   - `upstream` → The original repository.
+All UI and UX designs are maintained in **Figma**.
+Before implementing any new feature or layout change:
 
-1. Create a new branch for your changes:
-   ```bash
-   git checkout -b your-branch-name
-   ```
-   The branch should titled be your_nick-feature-title
+* Always refer to the **Figma file** shared by the design team
+* Match the spacing, typography, and component structure
+* Discuss any deviations with the design lead before committing
 
-Step 4: Commit and Push Your Changes
+> Consistency between Figma and implementation helps ensure a unified user experience.
 
-1. Stage your changes:
-   ```bash
-   git add .
-   ```
-1. Commit your changes - as in the [git commit message](#git-commit-message) section
-   ```bash
-   git commit -m "Your commit message"
-   ```
-1. Push your changes to your forked repository:
-   ```bash
-   git push origin your-branch-name
-   ```
+---
 
-Step 5: Create a merge request
+## 🧩 Frontend Notes
 
-1. Go to your forked repository on GitLab: `https://gitlab.com/your-username/website`.
-1. Click on **Merge Requests** in the left sidebar.
-1. Click **New Merge Request**.
-1. Select your branch (`your-branch-name`) as the **Source Branch** and `main` as the **Target Branch**.
-1. Fill in the Merge Request template
-1. Click **Create Merge Request**.
-1. Let us know about the awaiting review!
+* **FE** is a **Next.js** progressive web app (PWA)
+* You can manually test a page by visiting its URL directly
+* The legacy **website (Vite)** remains online but is **frozen**
+* Future plan: merge the landing page into the `fe` app
 
-### Reporting Bugs
+---
 
-Before creating bug reports, please check [this list](#before-submitting-a-bug-report) as you might find out that you don't need to create one. When you are creating a bug report, please [include as many details as possible](#how-do-i-submit-a-good-bug-report).
+## 🐞 Reporting Bugs
 
-#### Before Submitting A Bug Report
+Before submitting a bug:
 
-- Please check [check](https://gitlab.com/need4deed/website/-/issues/?sort=created_date&state=opened&label_name%5B%5D=Any&first_page_size=20) if the problem has already been reported.
+* Check if it’s already reported under **Issues** in the relevant repository
 
-#### How Do I Submit A Bug Report?
+If not, open a [new issue](https://github.com/need4deed-org) using the **bug report template**.
 
-Bugs are tracked as [GitLab issues](https://gitlab.com/need4deed/website/-/issues). Create a bug issue. All the necesary info should be in the bug template.
+---
 
-### Suggesting features
+## 💡 Suggesting Features
 
-Feature suggestions are also tracked as [GitLab issues](https://gitlab.com/need4deed/website/-/issues). Please refer to the feature template.
+Feature requests are tracked as GitHub issues too.
+Use the **feature request template** in the appropriate repo.
 
-## Styleguides
+---
+
+## 🧾 Styleguides
 
 ### Git Commit Messages
 
-- Use the present tense ("Add feature" not "Added feature")
-- Use the imperative mood ("Move cursor to..." not "Moves cursor to...")
-- Limit the first line to 72 characters or less
-- Reference issues and pull requests can be placed after the first line
-- Consider starting the commit message with an applicable emoji:
-  - 🎨 `:art:` when improving the format/structure of the code
-  - 🐎 `:racehorse:` when improving performance
-  - 📝 `:memo:` when writing docs
-  - 🐛 `:bug:` when fixing a bug
-  - 🔥 `:fire:` when removing code or files
+* Use **present tense** (“Add feature” not “Added feature”)
+* Use **imperative mood** (“Fix bug” not “Fixes bug”)
+* Keep the first line under **72 characters**
+* Include related issue numbers if applicable
 
-### JavaScript Styleguide
+Use emoji prefixes when relevant:
 
-Please refer to the linter.
+* 🎨 `:art:` — improve structure or formatting
+* 🐎 `:racehorse:` — performance improvement
+* 📝 `:memo:` — docs update
+* 🐛 `:bug:` — fix a bug
+* 🔥 `:fire:` — remove code or files
 
-## License
+---
 
-By contributing, you agree that your contributions will be licensed under its [Commons Clause + MIT License](LICENSE).
+## ⚖️ License
 
-## Questions?
+By contributing, you agree that your contributions are licensed under our
+[Commons Clause + MIT License](LICENSE).
 
-Don't hesitate to reach out if you have any questions! You can:
+---
 
-- Open an issue
-- Reach out to [@maintainer](https://gitlab.com/szymon.skorupinski.need4deed])
-- Join our Slack (please request an access h4ck@need4deed.org)
+## 🤝 Questions?
+
+Need help or clarification?
+
+* Open an issue in the relevant repository
+* Tag a maintainer (e.g., `@arturas`)
+* Or email us at **[sowtware@need4deed.org](mailto:software@need4deed.org)** to request Slack access
+
+---
+ 
 
 Any contributions are welcome! 🙏
