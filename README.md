@@ -1,36 +1,107 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Need4Deed Frontend
 
-## Getting Started
+Next.js application serving as the frontend for the Need4Deed platform.
 
-First, run the development server:
+## Overview
+
+This frontend application is part of a three-repository system:
+
+- **[`fe`](https://github.com/need4deed-org/fe)** (this repository) - Next.js frontend application
+- **[`be`](https://github.com/need4deed-org/be)** - Fastify backend API with PostgreSQL database
+- **[`sdk`](https://github.com/need4deed-org/sdk)** - Shared TypeScript SDK used by both frontend and backend
+
+The frontend connects to the backend API and uses the shared SDK for type definitions and utilities.
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- **Node.js** (v18 or higher)
+- **Yarn** package manager
+- **Docker** and **Docker Compose**
+
+### 1. Clone Repositories
+
+Clone all three repositories in the same parent directory:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Create a parent directory
+mkdir need4deed
+cd need4deed
+
+# Clone all repositories
+git clone https://github.com/need4deed-org/fe.git
+git clone https://github.com/need4deed-org/be.git
+git clone https://github.com/need4deed-org/sdk.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Your directory structure should look like:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+need4deed/
+├── fe/          # Frontend
+├── be/          # Backend
+└── sdk/         # SDK
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 2. Backend Setup
 
-## Learn More
+First, start the backend services:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+# Navigate to backend directory
+cd ../be
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Start Docker containers (PostgreSQL database)
+docker-compose up -d
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Install dependencies
+npm install
 
-## Deploy on Vercel
+# Start backend server with CORS enabled
+CORS_ORIGINS="http://localhost:3000" npm run dev
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The backend will be available at `http://localhost:5000`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 3. SDK Setup
+
+The frontend depends on a local SDK that needs to be built:
+
+```bash
+# Navigate to SDK directory (sibling to fe/ and be/)
+cd ../sdk
+
+# Install dependencies
+yarn install
+
+# Build the SDK
+yarn build
+```
+
+### 4. Frontend Setup
+
+```bash
+# Navigate to frontend directory
+cd ../fe
+
+# Install dependencies
+yarn install
+
+# Start development server
+yarn dev
+```
+
+The frontend will be available at `http://localhost:3000`
+
+## 🔐 Authentication
+
+### Test Users
+
+The backend includes pre-configured test users via seed files (`be/src/data/seeds/user.seed.ts`):
+
+- **Admin**: `john.doe@need4deed.org` / `no_password` (ADMIN role)
+- **Coordinator**: `sarah.doe@need4deed.org` / `no_password` (COORDINATOR role)
+- **User**: `anna.doe@need4deed.org` / `no_password` (USER role)
+
+All test users are pre-activated and ready to use.
