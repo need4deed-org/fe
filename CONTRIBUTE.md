@@ -150,7 +150,7 @@ git push origin your_nick-feature-title
 ```
 
 then go to the forked repo on your GitHub account and open the PR.
-And please make sure your opened PR is wired with the issue by using a keyword, e.g. `closes` followed by the link to the issue: `#<issue title>`
+And please make sure your opened PR is wired with the issue by using a keyword, e.g. `closes` followed by the link to the issue: `#<number of issue>`
 
 ## 🎨 Design Guidelines
 
