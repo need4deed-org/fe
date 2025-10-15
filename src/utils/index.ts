@@ -1,7 +1,7 @@
 export * from "./helpers";
 
 import { cloudfrontURL } from "@/config/constants";
-import { DocumentStatusType } from "need4deed-sdk";
+import { Address, DocumentStatusType } from "need4deed-sdk";
 
 export function getDateLocalTooUTC(dateStr: string | undefined) {
   if (!dateStr) return undefined;
@@ -64,4 +64,40 @@ export function fetchFn<R, D = R>({
 
 export const getImageUrl = (imageName: string): string => {
   return `${cloudfrontURL}/${imageName}`;
+};
+
+export function formatDateTime(input: string | Date | undefined): string | undefined {
+  if (!input) return undefined;
+
+  let date: Date;
+
+  if (typeof input === "string") {
+    const parsedDate = new Date(input);
+    if (isNaN(parsedDate.getTime())) {
+      throw new Error("Invalid date string provided.");
+    }
+    date = parsedDate;
+  } else if (input instanceof Date) {
+    date = input;
+  } else {
+    throw new TypeError("Input must be a string or Date.");
+  }
+
+  const options: Intl.DateTimeFormatOptions = {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  };
+
+  return date.toLocaleString("en-US", options);
+}
+
+export const formatAddress = (address?: Address): string => {
+  if (!address) return "-";
+  const { street, city, postcode } = address;
+  const parts = [street?.trim(), city?.trim(), postcode?.code?.trim()].filter(Boolean);
+  return parts.length > 0 ? parts.join(", ") : "-";
 };

@@ -6,6 +6,7 @@ export const apiPathVolunteer = `/${apiPrefix}/volunteer/`;
 export const apiPathLogin = `/${apiPrefix}/auth/login`;
 export const apiPathAuthEmailDomain = `${apiPrefix}/auth-email-domain/`;
 export const apiPathOpportunity = `${apiPrefix}/opportunity`;
+export const apiGetVolunteerProfile = `/volunteer/`;
 
 export enum ScreenTypes {
   MOBILE = "mobile",

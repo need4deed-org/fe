@@ -19,6 +19,7 @@ const ErrorMessageContainer = styled.div`
 interface StyledInputProps {
   type: string;
   width?: string;
+  height?: string;
   $backgroundColor?: string;
   $errorsExist?: boolean;
 }
@@ -26,7 +27,7 @@ interface StyledInputProps {
 const StyledInput = styled.input<StyledInputProps>`
   color: var(--color-midnight);
   font-size: var(--form-input-fontSize);
-  height: var(--form-input-container-height);
+  height: ${(props) => props.height || "var(--form-input-container-height)"};
   width: ${(props) => props.width || "-webkit-fill-available"};
   background-color: ${(props) => props.$backgroundColor || "var(--color-white)"};
   border-radius: var(--form-input-container-border-radius);
@@ -44,6 +45,7 @@ interface Props {
   placeHolder?: string;
   onInputChange: (input: string) => void;
   width?: string;
+  height?: string;
   backgroundColor?: string;
   value?: string;
   errors?: (string | undefined)[];
@@ -57,6 +59,7 @@ export function FormInput({
   width,
   backgroundColor,
   errors,
+  height,
 }: Props) {
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     onInputChange(e.target.value);
@@ -72,6 +75,7 @@ export function FormInput({
         onChange={handleInputChange}
         type={type}
         width={width}
+        height={height}
         $backgroundColor={backgroundColor}
         $errorsExist={errorsExist}
       />

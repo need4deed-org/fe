@@ -10,7 +10,7 @@ type DividerProps = {
 
 const StyledDivider = styled.div<DividerProps>`
   background-color: ${({ color }) => color || "#e0e0e0"};
-  margin: ${({ margin }) => margin || "8px 0"};
+  margin: ${({ margin }) => margin || "1rem 0"};
   ${({ orientation, thickness }) =>
     orientation === "vertical"
       ? `
