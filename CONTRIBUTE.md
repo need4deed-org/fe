@@ -5,7 +5,7 @@ We are lucky to have you! 🎉👍
 The following is a set of guidelines for contributing to this project. These are mostly guidelines, not rules. Use your best judgment, and feel free to propose changes to this document in a merge request.
 
 ## Table of Contents
-
+d
 - [Code of Conduct](#code-of-conduct)
 - [How Can I Contribute?](#how-can-i-contribute)
   - [Your First Code Contribution](#your-first-code-contribution)
