@@ -64,7 +64,10 @@
       "activity": "Please pick at least one activity",
       "language": "Please pick at least one language"
     },
-    "button": { "more": "more...", "submit": "Submit" },
+    "button": {
+      "more": "more...",
+      "submit": "Submit"
+    },
     "schedule": {
       "1": "Monday",
       "2": "Tuesday",
@@ -97,8 +100,12 @@
         "number": "Or via WhatsApp/Telegram at"
       },
       "fields": {
-        "name": { "label": "Name" },
-        "email": { "label": "E-mail" },
+        "name": {
+          "label": "Name"
+        },
+        "email": {
+          "label": "E-mail"
+        },
         "phone": {
           "label": "Phone Number or Telegram Handle"
         },
@@ -226,7 +233,9 @@
             "label": "PLZ",
             "info": "of the accommodation centre"
           },
-          "phone": { "label": "Phone number" }
+          "phone": {
+            "label": "Phone number"
+          }
         },
         "opportunityType": {
           "header": "Type Of Opportunity",
@@ -255,10 +264,18 @@
             "label": "Appointment date and time (YYYY-MM-DD HH:MM)",
             "tooClose": "The appointment must take place after 7 working days at the earliest."
           },
-          "address": { "label": "Appointment Address" },
-          "postcode": { "label": "PLZ" },
-          "refugeeName": { "label": "Name Of Refugee" },
-          "refugeeNumber": { "label": "Phone Number Of Refugee" },
+          "address": {
+            "label": "Appointment Address"
+          },
+          "postcode": {
+            "label": "PLZ"
+          },
+          "refugeeName": {
+            "label": "Name Of Refugee"
+          },
+          "refugeeNumber": {
+            "label": "Phone Number Of Refugee"
+          },
           "information": {
             "label": "Provide information about the task the volunteers are expected to perform"
           }
@@ -298,7 +315,6 @@
       }
     }
   },
-
   "dashboard": {
     "volunteers": {
       "header": "Volunteer Directory",
@@ -323,7 +339,6 @@
         "native": "Native"
       }
     },
-
     "home": {
       "sidebar": {
         "home": "Home",
@@ -366,7 +381,64 @@
       "successMessage": "Login successful"
     }
   },
-
+  "volunteerProfile": {
+    "volunteerHeader": {
+      "modalData": {
+        "title": "Change engagement status",
+        "options": {
+          "unresponsive": "Unresponsive",
+          "description": "Volunteer is not responding to messages or calls.",
+          "temporarily_unavailable": "Temporarily unavailable",
+          "description2": "The volunteer is temporarily unavailable for assignments.",
+          "inactive": "Inactive",
+          "description3": "The volunteer is no longer active in the program.",
+          "returnDate": "Return date",
+          "returnDatePlaceHolder": "Select return date (optional)"
+        },
+        "cancel": "Cancel",
+        "save": "Save"
+      },
+      "notSet": "Not set",
+      "change_status": "Change status",
+      "engagementStatus_title": "Engagement status",
+      "engagementStatus_options": {
+        "new": "New",
+        "active": "Active",
+        "tempInactive": "Temp. inactive",
+        "inactive": "Inactive"
+      },
+      "volunteerType_title": "Volunteer type",
+      "volunteerType_options": {
+        "accompanying": "Accompanying",
+        "other": "Other"
+      },
+      "matchStatus_title": "Match status",
+      "matchStatus_options": {
+        "matched": "Matched",
+        "needsRematch": "Needs to be rematched",
+        "unmatched": "Unmatched"
+      },
+      "communication_title": "Communication",
+      "communication_options": {
+        "called": "Called",
+        "emailSent": "Email sent",
+        "briefed": "Briefed",
+        "triedToCall": "Tried to call",
+        "notResponding": "Not responding"
+      },
+      "appreciation_title": "Appreciation",
+      "appreciation_options": {
+        "tshirt": "T-shirt",
+        "benefitCard": "Benefit card",
+        "toteBag": "Tote bag"
+      },
+      "certificateGC_title": "Certificate of GC",
+      "certificateGC_options": {
+        "uploaded": "Uploaded",
+        "missing": "Missing"
+      }
+    }
+  },
   "message": {
     "successful": "Successful",
     "errorGeneric": "Something went wrong!"
