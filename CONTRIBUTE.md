@@ -24,11 +24,11 @@ This project and everyone participating in it is governed by our [Code of Conduc
 
 Perfect 👍 — here’s the **updated and polished `CONTRIBUTING.md`** for your **Need4Deed GitHub organization**, now reflecting:
 
-* Migration from GitLab → GitHub
-* Your **current setup** with `fe`, `be`, and `sdk`
-* SDK linking workflow
-* Mention that **designs are in Figma** and must be followed
-* Clearer instructions for newcomers
+- Migration from GitLab → GitHub
+- Your **current setup** with `fe`, `be`, and `sdk`
+- SDK linking workflow
+- Mention that **designs are in Figma** and must be followed
+- Clearer instructions for newcomers
 
 ---
 
@@ -51,7 +51,7 @@ Our main repositories:
 | Repository                                            | Description                                               |
 | ----------------------------------------------------- | --------------------------------------------------------- |
 | [`fe`](https://github.com/need4deed-org/fe)           | Next.js PWA — main app for automating Need4Deed processes |
-| [`be`](https://github.com/need4deed-org/be) | Node.js / TypeScript API for the app                      |
+| [`be`](https://github.com/need4deed-org/be)           | Node.js / TypeScript API for the app                      |
 | [`sdk`](https://github.com/need4deed-org/sdk)         | Shared TypeScript types and utilities between FE and BE   |
 | [`website`](https://github.com/need4deed-org/website) | React/Vite static landing page (currently frozen)         |
 
@@ -67,9 +67,16 @@ Our main repositories:
 
 ### Step 2: Clone Your Fork
 
+We prefer using `yarn`. You may use other package manager, but please make sure:
+
+1. `pre-commit` script is invoked before committing
+2. do not clutter a repo with a lock file other than `yarn.lock`
+3. `yarn.lock` is up to date.
+
 ```bash
 git clone https://github.com/<your-username>/<repo-name>.git
 cd <repo-name>
+yarn install
 ```
 
 ### Step 3: Add the Original Repository as a Remote
@@ -81,8 +88,8 @@ git remote -v
 
 You should see:
 
-* `origin` → your fork
-* `upstream` → the official Need4Deed repository
+- `origin` → your fork
+- `upstream` → the official Need4Deed repository
 
 ### Step 4: Create a New Branch
 
@@ -104,7 +111,7 @@ We maintain three sibling repositories that work closely together:
 ```
 parent/
 ├── fe/         # Frontend (Next.js PWA)
-├── be/    # be (API)
+├── be/         # be (API)
 └── sdk/        # Shared types and helpers
 ```
 
@@ -121,26 +128,38 @@ We don’t fetch it from npm — we use the **local sibling folder** approach in
    cd ../be && git pull origin <branch>
    ```
 
-2. In `fe` and `be`, install SDK locally:
+2. In `fe` and `be`, upgrade SDK locally:
 
    ```bash
-   npm install ../sdk
+   yarn upgrade need4deed-sdk
    ```
 
-3. Ensure that the **same branch name** is checked out in all three repos.
-
-> 🔄 If you get TypeScript errors in the be, make sure SDK and BE are aligned and freshly pulled.
+3. Ensure that the **current branch name** is checked out in all three repos. `fe` and `be` default branches are `develop`, `sdk` default branch is `main`. You may use feature branches as well! In such a case
+   > 🔄 if you get TypeScript errors, make sure `sdk` and `be` or `fe` are aligned and freshly pulled.
 
 ---
+
+### Content of a contribution
+
+Please ensure all code changes directly address the issue. Minor flaws, such as a typo, may be corrected; however, if you make such corrections, please note them in the PR comments.
+
+### Step 5: Open the PR
+
+```bash
+git push origin your_nick-feature-title
+```
+
+then go to the forked repo on your GitHub account and open the PR.
+And please make sure your opened PR is wired with the issue by using a keyword, e.g. `closes` followed by the link to the issue: `#<number of issue>`
 
 ## 🎨 Design Guidelines
 
 All UI and UX designs are maintained in **Figma**.
 Before implementing any new feature or layout change:
 
-* Always refer to the **Figma file** shared by the design team
-* Match the spacing, typography, and component structure
-* Discuss any deviations with the design lead before committing
+- Always refer to the **Figma file** shared by the design team
+- Match the spacing, typography, and component structure
+- Discuss any deviations with the design lead before committing
 
 > Consistency between Figma and implementation helps ensure a unified user experience.
 
@@ -148,10 +167,10 @@ Before implementing any new feature or layout change:
 
 ## 🧩 Frontend Notes
 
-* **FE** is a **Next.js** progressive web app (PWA)
-* You can manually test a page by visiting its URL directly
-* The legacy **website (Vite)** remains online but is **frozen**
-* Future plan: merge the landing page into the `fe` app
+- **FE** is a **Next.js** progressive web app (PWA)
+- You can manually test a page by visiting its URL directly
+- The legacy **website (Vite)** remains online but is **frozen**
+- Future plan: merge the landing page into the `fe` app
 
 ---
 
@@ -159,7 +178,7 @@ Before implementing any new feature or layout change:
 
 Before submitting a bug:
 
-* Check if it’s already reported under **Issues** in the relevant repository
+- Check if it’s already reported under **Issues** in the relevant repository
 
 If not, open a [new issue](https://github.com/need4deed-org) using the **bug report template**.
 
@@ -176,18 +195,18 @@ Use the **feature request template** in the appropriate repo.
 
 ### Git Commit Messages
 
-* Use **present tense** (“Add feature” not “Added feature”)
-* Use **imperative mood** (“Fix bug” not “Fixes bug”)
-* Keep the first line under **72 characters**
-* Include related issue numbers if applicable
+- Use **present tense** (“Add feature” not “Added feature”)
+- Use **imperative mood** (“Fix bug” not “Fixes bug”)
+- Keep the first line under **72 characters**
+- Include related issue numbers if applicable
 
 Use emoji prefixes when relevant:
 
-* 🎨 `:art:` — improve structure or formatting
-* 🐎 `:racehorse:` — performance improvement
-* 📝 `:memo:` — docs update
-* 🐛 `:bug:` — fix a bug
-* 🔥 `:fire:` — remove code or files
+- 🎨 `:art:` — improve structure or formatting
+- 🐎 `:racehorse:` — performance improvement
+- 📝 `:memo:` — docs update
+- 🐛 `:bug:` — fix a bug
+- 🔥 `:fire:` — remove code or files
 
 ---
 
@@ -202,11 +221,10 @@ By contributing, you agree that your contributions are licensed under our
 
 Need help or clarification?
 
-* Open an issue in the relevant repository
-* Tag a maintainer (e.g., `@arturas`)
-* Or email us at **[sowtware@need4deed.org](mailto:software@need4deed.org)** to request Slack access
+- Open an issue in the relevant repository
+- Tag a maintainer (e.g., `@arturas`)
+- Or email us at **[sowtware@need4deed.org](mailto:software@need4deed.org)** to request Slack access
 
 ---
- 
 
 Any contributions are welcome! 🙏
