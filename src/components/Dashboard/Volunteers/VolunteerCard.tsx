@@ -11,7 +11,7 @@ import { ApiVolunteerGetList, VolunteerStateType } from "need4deed-sdk";
 import { JSX } from "react";
 import { useTranslation } from "react-i18next";
 import CardDetail from "./CardDetail";
-import { groupLanguagesByProficiency } from "./helpers";
+import { getNormalizedVolunteer, groupLanguagesByProficiency } from "./helpers";
 import { IconName } from "./icon";
 
 interface Props {
@@ -21,7 +21,8 @@ interface Props {
 export function VolunteerCard({ volunteer }: Props) {
   const { t } = useTranslation();
 
-  const { name, languages, activities, skills, locations, availability, avatarUrl, status } = volunteer;
+  const { name, languages, activities, skills, locations, availability, avatarUrl, status } =
+    getNormalizedVolunteer(volunteer);
 
   const groupedLanguages = groupLanguagesByProficiency(languages);
 
