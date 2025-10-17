@@ -24,10 +24,10 @@ export const groupLanguagesByProficiency = (languages: ApiLanguage[]): GroupedLa
   languages.forEach((lang) => {
     const { proficiency, title } = lang;
 
-    if (!groupedLanguagesMap.has(proficiency)) {
-      groupedLanguagesMap.set(proficiency, []);
+    if (!groupedLanguagesMap.has(proficiency || LangProficiency.BEGINNER)) {
+      groupedLanguagesMap.set(proficiency || LangProficiency.BEGINNER, []);
     }
-    groupedLanguagesMap.get(proficiency)!.push(title);
+    groupedLanguagesMap.get(proficiency || LangProficiency.BEGINNER)!.push(title);
   });
 
   // Convert the Map to the desired array format
