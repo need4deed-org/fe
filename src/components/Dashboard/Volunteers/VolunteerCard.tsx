@@ -1,18 +1,18 @@
 import styled from "styled-components";
 
-import { BaseCard } from "@/components/styled/container";
-import { Paragraph } from "@/components/styled/text";
-import { CheckIcon, FlagIcon, HourglassIcon, LinkIcon, SealCheckIcon, SparkleIcon } from "@phosphor-icons/react";
-import { CirclePic } from "@/components/styled/img";
 import { Tags } from "@/components/core/common";
-import CardDetail from "./CardDetail";
-import { IconName } from "./icon";
-import { useTranslation } from "react-i18next";
-import { ApiVolunteerGetList, VolunteerStateType } from "need4deed-sdk";
-import { groupLanguagesByProficiency } from "./helpers";
-import { capitalizeFirstLetter, getImageUrl } from "@/utils";
+import { BaseCard } from "@/components/styled/container";
+import { CirclePic } from "@/components/styled/img";
+import { Paragraph } from "@/components/styled/text";
 import { defaultAvatarURL } from "@/config/constants";
+import { capitalizeFirstLetter, getImageUrl } from "@/utils";
+import { CheckIcon, FlagIcon, HourglassIcon, LinkIcon, SealCheckIcon, SparkleIcon } from "@phosphor-icons/react";
+import { ApiVolunteerGetList, VolunteerStateType } from "need4deed-sdk";
 import { JSX } from "react";
+import { useTranslation } from "react-i18next";
+import CardDetail from "./CardDetail";
+import { groupLanguagesByProficiency } from "./helpers";
+import { IconName } from "./icon";
 
 interface Props {
   volunteer: ApiVolunteerGetList;
@@ -78,11 +78,15 @@ export function VolunteerCard({ volunteer }: Props) {
       </CardDetail>
 
       <CardDetail header={t("dashboard.volunteers.activities")} iconName={IconName.ShootingStar}>
-        <Tags tags={activities} />
+        <Tags tags={activities as unknown as string[]} />
       </CardDetail>
 
       <CardDetail header={t("dashboard.volunteers.skillsExperience")} iconName={IconName.Wrench}>
-        <Tags tags={skills} backgroundColor="var(--color-white)" icon={<CheckIcon size={18} />} />
+        <Tags
+          tags={skills as unknown as string[]}
+          backgroundColor="var(--color-white)"
+          icon={<CheckIcon size={18} />}
+        />
       </CardDetail>
 
       <CardDetail header={t("dashboard.volunteers.preferredAvailability")} iconName={IconName.CalendarDots}>
