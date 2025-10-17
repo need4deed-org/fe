@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
 interface Props {
-  ref: React.RefObject<HTMLElement>; // The element to monitor
+  ref?: React.RefObject<HTMLElement>; // The element to monitor
   handler: (event: Event) => void; // The function to call when a click outside is detected
   msTimeout?: number; // Optional: Delay before calling the handler
 }
