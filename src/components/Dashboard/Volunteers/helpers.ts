@@ -1,4 +1,4 @@
-import { ApiLanguage, LangProficiency } from "need4deed-sdk";
+import { ApiLanguage, ApiVolunteerGetList, LangProficiency, OptionItem } from "need4deed-sdk";
 
 const proficiencyOrder = [
   LangProficiency.NATIVE,
@@ -43,3 +43,22 @@ export const groupLanguagesByProficiency = (languages: ApiLanguage[]): GroupedLa
 
   return groupedLanguages;
 };
+
+function getTitleFromOptionItem(optionItem: OptionItem): string {
+  return optionItem.title;
+}
+
+export function getNormalizedVolunteer(
+  volunteer: ApiVolunteerGetList,
+): Omit<ApiVolunteerGetList, "activities" | "skills" | "locations"> & {
+  activities: string[];
+  skills: string[];
+  locations: string[];
+} {
+  return {
+    ...volunteer,
+    activities: volunteer.activities.map(getTitleFromOptionItem),
+    skills: volunteer.skills.map(getTitleFromOptionItem),
+    locations: volunteer.locations.map(getTitleFromOptionItem),
+  };
+}
