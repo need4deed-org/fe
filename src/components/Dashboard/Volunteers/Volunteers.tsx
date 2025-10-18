@@ -23,7 +23,7 @@ export function Volunteers() {
     setSortOrder(sortOrder);
   };
 
-  if (!isFiltersOpen) {
+  if (isFiltersOpen) {
     return null;
   }
   return (
