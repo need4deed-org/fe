@@ -1,7 +1,8 @@
-import styled from "styled-components";
-import { ChangeEvent } from "react";
 import { Paragraph } from "@/components/styled/text";
 import { WarningCircleIcon } from "@phosphor-icons/react";
+import { ValidationError } from "@tanstack/react-form";
+import { ChangeEvent } from "react";
+import styled from "styled-components";
 
 const FormInputContainer = styled.div`
   display: flex;
@@ -46,7 +47,7 @@ interface Props {
   width?: string;
   backgroundColor?: string;
   value?: string;
-  errors?: (string | undefined)[];
+  errors?: ValidationError[];
 }
 
 export function FormInput({
@@ -78,7 +79,7 @@ export function FormInput({
 
       {errorsExist &&
         errors.map((error) => (
-          <ErrorMessageContainer key={error}>
+          <ErrorMessageContainer key={`${error}`}>
             <WarningCircleIcon size={20} color="var(--form-input-error-message-color)" />
             <Paragraph
               color="var(--form-input-error-message-color)"

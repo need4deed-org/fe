@@ -1,12 +1,12 @@
 "use client";
 import { useState } from "react";
-import styled from "styled-components";
 import { useTranslation } from "react-i18next";
+import styled from "styled-components";
 
-import CardsHeader from "../common/CardsHeader/CardsHeader";
 import { DashboardLayout } from "@/components/Layout";
-import { VolunteerListController } from "./VolunteerListController";
 import { SortOrder } from "need4deed-sdk";
+import CardsHeader from "../common/CardsHeader/CardsHeader";
+import { VolunteerListController } from "./VolunteerListController";
 
 export function Volunteers() {
   const { t } = useTranslation();
@@ -23,6 +23,9 @@ export function Volunteers() {
     setSortOrder(sortOrder);
   };
 
+  if (isFiltersOpen) {
+    return null;
+  }
   return (
     <DashboardLayout>
       <VolunteersContainer>

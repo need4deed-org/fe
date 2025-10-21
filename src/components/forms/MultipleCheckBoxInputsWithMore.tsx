@@ -4,9 +4,8 @@ import { Lang } from "need4deed-sdk";
 import { MouseEvent, RefObject, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Selected } from "./types";
 import useOutsideClick from "../../hooks/useOutsideClick";
-import style from "./index.module.css";
+import { Selected } from "./types";
 
 interface Props<T, K extends DeepKeys<T>> {
   showFirst?: number;
