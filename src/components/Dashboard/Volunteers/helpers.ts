@@ -1,4 +1,4 @@
-import { ApiLanguage, ApiOptionLists, LangProficiency } from "need4deed-sdk";
+import { ApiLanguage, ApiOptionLists, ApiVolunteerGetList, LangProficiency, OptionItem } from "need4deed-sdk";
 import { ReadonlyURLSearchParams } from "next/navigation";
 import { AvailabilityKeys, AvailabilitySubKeys, FilterKeys, SEPARATOR } from "./Filters/constants";
 import { CardsFilter } from "./Filters/types";
@@ -150,3 +150,23 @@ export function deserializeFilters(filter: CardsFilter, searchParams: ReadonlyUR
 
 export const createFilterFromOption = (option: ApiOptionLists, field: keyof ApiOptionLists) =>
   option[field] ? option[field].reduce((acc, curr) => ({ ...acc, [curr.title]: false }), {}) : {};
+
+function getTitleFromOptionItem(optionItem: OptionItem): string {
+  return optionItem.title;
+}
+
+export function getNormalizedVolunteer(volunteer: ApiVolunteerGetList): Omit<
+  ApiVolunteerGetList,
+  "activities" | "skills" | "locations"
+> & {
+  activities: string[];
+  skills: string[];
+  locations: string[];
+} {
+  return {
+    ...volunteer,
+    activities: volunteer.activities.map(getTitleFromOptionItem),
+    skills: volunteer.skills.map(getTitleFromOptionItem),
+    locations: volunteer.locations.map(getTitleFromOptionItem),
+  };
+}
