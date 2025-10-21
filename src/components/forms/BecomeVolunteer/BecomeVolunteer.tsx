@@ -1,7 +1,7 @@
 "use client";
 import { useForm } from "@tanstack/react-form";
 import { validate as validateEmail } from "email-validator";
-import { Lang } from "need4deed-sdk";
+import { Lang, VolunteerFormData } from "need4deed-sdk";
 import Image from "next/image";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -33,7 +33,7 @@ import {
   isValidPLZ,
   parseFormStateDTOVolunteer,
 } from "../utils";
-import { VolunteerData, VolunteerParsedData } from "./dataStructure";
+import { VolunteerData } from "./dataStructure";
 
 const thankYou = "form.becomeVolunteer.thankYou";
 const somethingWrong = "form.becomeVolunteer.somethingWrong";
@@ -46,7 +46,7 @@ export default function BecomeVolunteer() {
   const opportunityParams = useSearchParams();
   const language = i18n.language as Lang;
 
-  const { postRequest } = usePostRequest<VolunteerParsedData, Record<string, string | string[]>>({
+  const { postRequest } = usePostRequest<VolunteerFormData, Record<string, string | string[]>>({
     url: apiPathVolunteer,
   });
 

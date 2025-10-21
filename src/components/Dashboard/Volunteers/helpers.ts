@@ -1,7 +1,7 @@
 import { ApiLanguage, ApiOptionLists, LangProficiency } from "need4deed-sdk";
 import { ReadonlyURLSearchParams } from "next/navigation";
+import { AvailabilityKeys, AvailabilitySubKeys, FilterKeys, SEPARATOR } from "./Filters/constants";
 import { CardsFilter } from "./Filters/types";
-import { SEPARATOR, FilterKeys, AvailabilityKeys, AvailabilitySubKeys } from "./Filters/constants";
 
 const proficiencyOrder = [
   LangProficiency.NATIVE,
@@ -27,8 +27,8 @@ export const groupLanguagesByProficiency = (languages: ApiLanguage[]): GroupedLa
   for (const { proficiency, title } of languages) {
     if (!proficiency) continue;
 
-    if (!groupedLanguagesMap.has(proficiency)) {
-      groupedLanguagesMap.set(proficiency, []);
+    if (!groupedLanguagesMap.has(proficiency || LangProficiency.BEGINNER)) {
+      groupedLanguagesMap.set(proficiency || LangProficiency.BEGINNER, []);
     }
 
     groupedLanguagesMap.get(proficiency)!.push(title);

@@ -7,7 +7,7 @@ export default function WithParentRef({ children, className, onFocus }: Props) {
   const refParent = useRef<HTMLDivElement>(null);
   return (
     <div className={className} ref={refParent} onFocus={onFocus}>
-      {Children.map(children, (child) => cloneElement(child as ReactElement, { refParent }))}
+      {Children.map(children, (child) => cloneElement(child as ReactElement, { refParent } as Partial<unknown>))}
     </div>
   );
 }

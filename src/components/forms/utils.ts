@@ -1,5 +1,6 @@
 import { TFunction } from "i18next";
 import {
+  ApiLanguage,
   LangProficiency,
   OpportunityType,
   Option,
@@ -47,7 +48,7 @@ export function parseFormStateDTOVolunteer(value: VolunteerData): VolunteerFormD
   data.fullName = value.name;
   data.email = value.email;
   data.phone = value.phone;
-  data.postcode = value.postcode;
+  data.postcode = Number(value.postcode);
   data.districts = getSelectedIds(value.locations);
   data.activities = getSelectedIds(value.activities);
   data.skills = getSelectedIds(value.skills);
@@ -59,7 +60,7 @@ export function parseFormStateDTOVolunteer(value: VolunteerData): VolunteerFormD
     ...mapLanguages(value.languagesNative, LangProficiency.NATIVE),
     ...mapLanguages(value.languagesFluent, LangProficiency.FLUENT),
     ...mapLanguages(value.languagesIntermediate, LangProficiency.INTERMEDIATE),
-  ];
+  ] as ApiLanguage[];
   data.goodConductCertificate = parseYesNo(value.certOfGoodConduct);
   data.measlesVaccination = parseYesNo(value.certMeaslesVaccination);
   data.comments = value.comments;
