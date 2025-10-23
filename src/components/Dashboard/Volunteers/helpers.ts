@@ -44,13 +44,14 @@ export const groupLanguagesByProficiency = (languages: ApiLanguage[]): GroupedLa
   return groupedLanguages;
 };
 
-function getTitleFromOptionItem(optionItem: OptionItem): string {
-  return optionItem.title;
+function getTitleFromOptionItem(optionItem: OptionItem | string): string {
+  return typeof optionItem === "string" ? optionItem : optionItem.title;
 }
 
-export function getNormalizedVolunteer(
-  volunteer: ApiVolunteerGetList,
-): Omit<ApiVolunteerGetList, "activities" | "skills" | "locations"> & {
+export function getNormalizedVolunteer(volunteer: ApiVolunteerGetList): Omit<
+  ApiVolunteerGetList,
+  "activities" | "skills" | "locations"
+> & {
   activities: string[];
   skills: string[];
   locations: string[];
