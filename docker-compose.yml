@@ -16,3 +16,7 @@ services:
       - /app/node_modules
     command: >
       sh -c "yarn install --frozen-lockfile && yarn dev"
+
+networks:
+  n4d-net:
+    external: true
