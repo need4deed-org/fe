@@ -1,4 +1,4 @@
-import { apiPrefix, CLOUDFRONT_HOSTNAME, apiURL } from "@/config/constants";
+import { apiPrefix, apiURL, CLOUDFRONT_HOSTNAME } from "@/config/constants";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
@@ -11,6 +11,7 @@ const nextConfig: NextConfig = {
   images: {
     domains: [CLOUDFRONT_HOSTNAME],
   },
+  output: "standalone",
 };
 
 export default nextConfig;
