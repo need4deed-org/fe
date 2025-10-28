@@ -1,6 +1,6 @@
 export const tokenKey = "token";
 
-export const apiURL = process.env.NEXT_PUBLIC_URL_API || "http://be:5000";
+export const apiURL = process.env.API_URL || "http://localhost:5000";
 export const apiPrefix = "api";
 export const apiPathVolunteer = `/${apiPrefix}/volunteer/`;
 export const apiPathLogin = `/${apiPrefix}/auth/login`;
