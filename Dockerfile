@@ -1,5 +1,5 @@
 # Builder
-FROM node:20-alpine AS builder
+FROM node:22-alpine AS builder
 WORKDIR /app
 
 ARG NODE_ENV=production
@@ -14,7 +14,7 @@ RUN if [ "$NODE_ENV" != "development" ]; then yarn build; fi
 
 
 # Runner
-FROM node:20-alpine AS runner
+FROM node:22-alpine AS runner
 WORKDIR /app
 
 ARG NODE_ENV=production
