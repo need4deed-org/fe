@@ -105,7 +105,6 @@ export default function BecomeVolunteer() {
   if (showErrorAnnouncement) {
     return <ErrorAnnouncement copies={somethingWrong} />;
   }
-
   return (
     <div className={`n4d-container ${style["form-container"]}`}>
       <div className={style["form-container-header"]}>
@@ -201,6 +200,7 @@ export default function BecomeVolunteer() {
             );
           }}
         </formVolunteer.Field>
+        <hr />
         <formVolunteer.Field
           name="availability"
           validators={{
@@ -212,63 +212,59 @@ export default function BecomeVolunteer() {
           {(fieldAvailability) => {
             return (
               <fieldset>
-                <HeaderWithHelp
-                  textHelp={t("form.becomeVolunteer.fields.availability.helpText")}
-                  titleHelp={t("form.becomeVolunteer.fields.availability.helpTitle")}
-                  classNamePopup="form-help"
-                >
-                  {t("form.becomeVolunteer.fields.availability.header")}
-                </HeaderWithHelp>
-                <h6>{t("form.becomeVolunteer.fields.availability.para")}</h6>
-                <div
-                  className={style["form-table"]}
-                  onFocus={() => {
-                    setTimeout(fieldAvailability.handleBlur, 0);
-                  }}
-                >
-                  {fieldAvailability.state.value &&
-                    fieldAvailability.state.value.map((availabilityObj, idx) => {
-                      return (
-                        <div className={style["form-table-row"]} key={`availability-${availabilityObj.weekday}`}>
-                          <span className={style["form-availability-weekday"]}>
-                            {t(`form.schedule.${availabilityObj.weekday}`).toLocaleUpperCase()}
-                          </span>
-                          <formVolunteer.Field name={`availability[${idx}].timeSlots`}>
-                            {(fieldWeekday) => {
-                              return (
-                                fieldWeekday.state.value &&
-                                fieldWeekday.state.value.map(({ title, id }, idxTimeframes) => (
-                                  <formVolunteer.Field
-                                    key={`${availabilityObj.weekday}-${id}`}
-                                    name={`availability[${idx}].timeSlots[${idxTimeframes}].selected`}
-                                  >
-                                    {(field) => (
-                                      <span className={style["form-pick"]}>
-                                        <input
-                                          tabIndex={0}
-                                          id={`${availabilityObj.weekday}${id}`}
-                                          type="checkbox"
-                                          onChange={(e) => field.handleChange(e.target.checked)}
-                                        />
-                                        <label htmlFor={`${availabilityObj.weekday}${id}`}>
-                                          {getTimeslotTitle(t, title[i18n.language as Lang] as string)}
-                                        </label>
-                                      </span>
-                                    )}
-                                  </formVolunteer.Field>
-                                ))
-                              );
-                            }}
-                          </formVolunteer.Field>
-                        </div>
-                      );
-                    })}
-                  <FieldInfo field={fieldAvailability} />
+                <div className={style["form-table-wrapper"]}>
+                  <h3>{t("form.becomeVolunteer.fields.availability.header")}</h3>
+                  <div
+                    className={style["form-table"]}
+                    onFocus={() => {
+                      setTimeout(fieldAvailability.handleBlur, 0);
+                    }}
+                  >
+                    {fieldAvailability.state.value &&
+                      fieldAvailability.state.value.map((availabilityObj, idx) => {
+                        return (
+                          <div className={style["form-table-row"]} key={`availability-${availabilityObj.weekday}`}>
+                            <span className={style["form-availability-weekday"]}>
+                              {t(`form.schedule.${availabilityObj.weekday}`).toLocaleUpperCase()}
+                            </span>
+                            <formVolunteer.Field name={`availability[${idx}].timeSlots`}>
+                              {(fieldWeekday) => {
+                                return (
+                                  fieldWeekday.state.value &&
+                                  fieldWeekday.state.value.map(({ title, id }, idxTimeframes) => (
+                                    <formVolunteer.Field
+                                      key={`${availabilityObj.weekday}-${id}`}
+                                      name={`availability[${idx}].timeSlots[${idxTimeframes}].selected`}
+                                    >
+                                      {(field) => (
+                                        <span className={style["form-pick"]}>
+                                          <input
+                                            tabIndex={0}
+                                            id={`${availabilityObj.weekday}${id}`}
+                                            type="checkbox"
+                                            onChange={(e) => field.handleChange(e.target.checked)}
+                                          />
+                                          <label htmlFor={`${availabilityObj.weekday}${id}`}>
+                                            {getTimeslotTitle(t, title[i18n.language as Lang] as string)}
+                                          </label>
+                                        </span>
+                                      )}
+                                    </formVolunteer.Field>
+                                  ))
+                                );
+                              }}
+                            </formVolunteer.Field>
+                          </div>
+                        );
+                      })}
+                  </div>
                 </div>
+                <FieldInfo field={fieldAvailability} />
               </fieldset>
             );
           }}
         </formVolunteer.Field>
+        <hr />
         <fieldset>
           <HeaderWithHelp
             textHelp={t("form.becomeVolunteer.fields.languages.helpText")}

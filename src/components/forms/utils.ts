@@ -162,10 +162,11 @@ export function getAllSelectedFalse(list: Option[]): Selected[] {
 }
 
 export function getTimeslotTitle(t: TFunction<"translation", undefined>, title: string) {
-  if (title === "Weekdays" || title === "Weekends") {
-    return t(`form.schedule.${title.toLowerCase()}`);
+  if (title === "weekdays" || title === "wochentage") {
+    return t(`form.schedule.weekdays`);
+  } else if (title === "weekends" || title === "wocheenden") {
+    return t(`form.schedule.weekends`);
   }
-
   return title;
 }
 
