@@ -1,16 +1,21 @@
 "use client";
+import WithParentRef from "@/components/withParentRef";
+import useList from "@/hooks/useLists";
+import usePostRequest from "@/hooks/usePostRequest";
+import { Subpage } from "@/types";
+import { useForm } from "@tanstack/react-form";
 import { validate as validateEmail } from "email-validator";
 import { Lang, OpportunityType, TranslatedIntoType } from "need4deed-sdk";
-import { useState } from "react";
 import Image from "next/image";
-import { useForm } from "@tanstack/react-form";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useRouter, useParams, useSearchParams } from "next/navigation";
-import { eightDays, phoneRegEx, apiPathOpportunity } from "../../../config/constants";
+import { apiPathOpportunity, eightDays, phoneRegEx } from "../../../config/constants";
 import { getImageUrl } from "../../../utils";
 import UploadIcon from "../../svg/Upload";
 import FieldInfo from "../FieldInfo";
 import HeaderWithHelp from "../HeaderWithHelp";
+import style from "../index.module.css";
 import MultipleCheckBoxInputsWithMore from "../MultipleCheckBoxInputsWithMore";
 import MultipleRadioInputsWithMore from "../MultipleRadioInputsWithMore";
 import SimpleInputField from "../SimpleInputField";
@@ -29,11 +34,6 @@ import {
 import { validateRACEmail } from "../validators";
 import { OpportunityData, OpportunityParsedData } from "./dataStructure";
 import ErrorAnnouncement from "./ErrorAnnouncement";
-import { Subpage } from "@/types";
-import useList from "@/hooks/useLists";
-import usePostRequest from "@/hooks/usePostRequest";
-import WithParentRef from "@/components/withParentRef";
-import style from "../index.module.css";
 
 const thankYou = "form.addOpportunity.thankYou";
 const queryParamsMap: Record<string, keyof ParsedOpportunity> = {
@@ -86,7 +86,7 @@ export default function AddOpportunity() {
       aaInformation: "",
       consent: undefined,
       language,
-    },
+    } as OpportunityData,
     onSubmit: async ({ value }) => {
       const data = parseFormStateDTOOpportunity(value);
 

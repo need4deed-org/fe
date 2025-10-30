@@ -3,7 +3,7 @@ import axios from "axios";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 
-interface PostMutationOptions<TData, TResponse> {
+interface PostMutationOptions<TResponse> {
   apiPath: string;
   successMessage?: string;
   onSuccessCallback?: (data: TResponse) => void;
@@ -13,7 +13,7 @@ export const usePostMutation = <TData, TResponse, TError = Error>({
   apiPath,
   successMessage,
   onSuccessCallback,
-}: PostMutationOptions<TData, TResponse>) => {
+}: PostMutationOptions<TResponse>) => {
   const { t } = useTranslation();
 
   return useMutation<TResponse, TError, TData>({

@@ -6,6 +6,7 @@ export interface IncludeClassName {
 }
 
 interface Props<T, K extends DeepKeys<T>> extends IncludeClassName {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   field: FieldApi<T, K, any, any>;
 }
 

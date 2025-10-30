@@ -1,4 +1,11 @@
-import { ApiLanguage, ApiOptionLists, LangProficiency, QueryParamsKeys } from "need4deed-sdk";
+import {
+  ApiLanguage,
+  ApiOptionLists,
+  ApiVolunteerGetList,
+  LangProficiency,
+  OptionItem,
+  QueryParamsKeys,
+} from "need4deed-sdk";
 import { ReadonlyURLSearchParams } from "next/navigation";
 import { CardsFilter } from "./Filters/types";
 import { SEPARATOR, AvailabilityKeys, AvailabilitySubKeys } from "./Filters/constants";
@@ -27,11 +34,11 @@ export const groupLanguagesByProficiency = (languages: ApiLanguage[]): GroupedLa
   for (const { proficiency, title } of languages) {
     if (!proficiency) continue;
 
-    if (!groupedLanguagesMap.has(proficiency)) {
-      groupedLanguagesMap.set(proficiency, []);
+    if (!groupedLanguagesMap.has(proficiency || LangProficiency.BEGINNER)) {
+      groupedLanguagesMap.set(proficiency || LangProficiency.BEGINNER, []);
     }
 
-    groupedLanguagesMap.get(proficiency)!.push(title);
+    groupedLanguagesMap.get(proficiency || LangProficiency.BEGINNER)!.push(title);
   }
 
   // Convert the Map to the desired array format
@@ -150,3 +157,23 @@ export function deserializeFilters(filter: CardsFilter, searchParams: ReadonlyUR
 
 export const createFilterFromOption = (option: ApiOptionLists, field: keyof ApiOptionLists) =>
   option[field] ? option[field].reduce((acc, curr) => ({ ...acc, [curr.title]: false }), {}) : {};
+
+function getTitleFromOptionItem(optionItem: OptionItem): string {
+  return optionItem.title;
+}
+
+export function getNormalizedVolunteer(volunteer: ApiVolunteerGetList): Omit<
+  ApiVolunteerGetList,
+  "activities" | "skills" | "locations"
+> & {
+  activities: string[];
+  skills: string[];
+  locations: string[];
+} {
+  return {
+    ...volunteer,
+    activities: volunteer.activities.map(getTitleFromOptionItem),
+    skills: volunteer.skills.map(getTitleFromOptionItem),
+    locations: volunteer.locations.map(getTitleFromOptionItem),
+  };
+}

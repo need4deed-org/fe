@@ -1,18 +1,18 @@
+import { CheckIcon, FlagIcon, HourglassIcon, SealCheckIcon, SparkleIcon } from "@phosphor-icons/react";
+import { ApiVolunteerGetList, VolunteerStateEngagementType } from "need4deed-sdk";
+import { JSX } from "react";
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
-import { BaseCard } from "@/components/styled/container";
-import { Paragraph } from "@/components/styled/text";
-import { CheckIcon, FlagIcon, HourglassIcon, LinkIcon, SealCheckIcon, SparkleIcon } from "@phosphor-icons/react";
-import { CirclePic } from "@/components/styled/img";
 import { Tags } from "@/components/core/common";
-import CardDetail from "./CardDetail";
-import { IconName } from "./icon";
-import { useTranslation } from "react-i18next";
-import { ApiVolunteerGetList, VolunteerStateType } from "need4deed-sdk";
-import { groupLanguagesByProficiency } from "./helpers";
-import { capitalizeFirstLetter, getImageUrl } from "@/utils";
+import { BaseCard } from "@/components/styled/container";
+import { CirclePic } from "@/components/styled/img";
+import { Paragraph } from "@/components/styled/text";
 import { defaultAvatarURL } from "@/config/constants";
-import { JSX } from "react";
+import { capitalizeFirstLetter, getImageUrl } from "@/utils";
+import CardDetail from "./CardDetail";
+import { getNormalizedVolunteer, groupLanguagesByProficiency } from "./helpers";
+import { IconName } from "./icon";
 
 interface Props {
   volunteer: ApiVolunteerGetList;
@@ -21,7 +21,8 @@ interface Props {
 export function VolunteerCard({ volunteer }: Props) {
   const { t } = useTranslation();
 
-  const { name, languages, activities, skills, locations, availability, avatarUrl, status } = volunteer;
+  const { name, languages, activities, skills, locations, availability, avatarUrl, stateEngagement, stateType } =
+    getNormalizedVolunteer(volunteer);
 
   const groupedLanguages = groupLanguagesByProficiency(languages);
 
@@ -30,31 +31,37 @@ export function VolunteerCard({ volunteer }: Props) {
   return (
     <Card>
       <StatusTagsDiv>
-        <StatusDiv>
-          {statusIconMap[status]}
+        <>
+          {stateEngagement && (
+            <StatusDiv>
+              {stateEngagementIconMap[stateEngagement]}
 
-          <Paragraph
-            fontWeight="var(--dashboard-volunteers-card-status-fontWeight)"
-            fontSize="var(--dashboard-volunteers-card-status-fontSize)"
-            lineheight="var(--dashboard-volunteers-card-status-lineHeight)"
-            color={statusColorMap[status]}
-          >
-            {status}
-          </Paragraph>
-        </StatusDiv>
+              <Paragraph
+                fontWeight="var(--dashboard-volunteers-card-status-fontWeight)"
+                fontSize="var(--dashboard-volunteers-card-status-fontSize)"
+                lineheight="var(--dashboard-volunteers-card-status-lineHeight)"
+                color={stateEngagementColorMap[stateEngagement]}
+              >
+                {stateEngagement.toUpperCase()}
+              </Paragraph>
+            </StatusDiv>
+          )}
 
-        {status === VolunteerStateType.NEW && (
-          <TagDiv>
-            <Paragraph
-              fontWeight="var(--dashboard-volunteers-card-tag-fontWeight)"
-              fontSize="var(--dashboard-volunteers-card-tag-fontSize)"
-              lineheight="var(--dashboard-volunteers-card-tag-lineHeight)"
-            >
-              {status}
-            </Paragraph>
-            <SparkleIcon size={18} color="var(--color-midnight)" />
-          </TagDiv>
-        )}
+          {stateType && (
+            <>
+              <TagDiv>
+                <Paragraph
+                  fontWeight="var(--dashboard-volunteers-card-tag-fontWeight)"
+                  fontSize="var(--dashboard-volunteers-card-status-fontSize)"
+                  lineheight="var(--dashboard-volunteers-card-tag-lineHeight)"
+                >
+                  {stateType.toUpperCase()}
+                </Paragraph>
+                <SparkleIcon size={18} color="var(--color-midnight)" />
+              </TagDiv>
+            </>
+          )}
+        </>
       </StatusTagsDiv>
 
       <ProfileDiv>
@@ -78,11 +85,15 @@ export function VolunteerCard({ volunteer }: Props) {
       </CardDetail>
 
       <CardDetail header={t("dashboard.volunteers.activities")} iconName={IconName.ShootingStar}>
-        <Tags tags={activities} />
+        <Tags tags={activities as unknown as string[]} />
       </CardDetail>
 
       <CardDetail header={t("dashboard.volunteers.skillsExperience")} iconName={IconName.Wrench}>
-        <Tags tags={skills} backgroundColor="var(--color-white)" icon={<CheckIcon size={18} />} />
+        <Tags
+          tags={skills as unknown as string[]}
+          backgroundColor="var(--color-white)"
+          icon={<CheckIcon size={18} />}
+        />
       </CardDetail>
 
       <CardDetail header={t("dashboard.volunteers.preferredAvailability")} iconName={IconName.CalendarDots}>
@@ -105,35 +116,35 @@ export default VolunteerCard;
 /* Helper maps */
 
 // Todo: this map will be updated Later
-const statusColorMap: Record<VolunteerStateType, string> = {
-  [VolunteerStateType.NEW]: "var(--color-red-500)",
-  [VolunteerStateType.MATCHED]: "var(--color-green-700)",
-  [VolunteerStateType.OPPORTUNITY_SENT]: "var(--color-red-200)",
-  [VolunteerStateType.ACTIVE_REGULAR]: "var(--color-red-200)",
-  [VolunteerStateType.ACTIVE_ACCOMPANY]: "var(--color-red-200)",
-  [VolunteerStateType.ACTIVE_FEST]: "var(--color-red-200)",
-  [VolunteerStateType.TO_REMATCH]: "var(--color-red-200)",
-  [VolunteerStateType.TEMP_INACTIVE]: "var(--color-red-200)",
-  [VolunteerStateType.INACTIVE]: "var(--color-red-200)",
+const stateEngagementColorMap: Record<VolunteerStateEngagementType, string> = {
+  [VolunteerStateEngagementType.NEW]: "var(--color-red-500)",
+  [VolunteerStateEngagementType.ACTIVE]: "var(--color-green-700)",
+  [VolunteerStateEngagementType.AVAILABLE]: "var(--color-green-700)",
+  [VolunteerStateEngagementType.TEMP_UNAVAILABLE]: "var(--color-red-700)",
+  [VolunteerStateEngagementType.INACTIVE]: "var(--color-grey-700)",
+  [VolunteerStateEngagementType.UNRESPONSIVE]: "var(--color-500-200)",
 };
 
 // Todo: this map will be updated Later
-const statusIconMap: Record<VolunteerStateType, JSX.Element> = {
-  [VolunteerStateType.NEW]: <HourglassIcon size={18} color={statusColorMap[VolunteerStateType.NEW]} />,
-  [VolunteerStateType.MATCHED]: <SealCheckIcon size={18} color={statusColorMap[VolunteerStateType.MATCHED]} />,
-  [VolunteerStateType.OPPORTUNITY_SENT]: (
-    <FlagIcon size={18} color={statusColorMap[VolunteerStateType.OPPORTUNITY_SENT]} />
+const stateEngagementIconMap: Record<VolunteerStateEngagementType, JSX.Element> = {
+  [VolunteerStateEngagementType.NEW]: (
+    <HourglassIcon size={18} color={stateEngagementColorMap[VolunteerStateEngagementType.NEW]} />
   ),
-  [VolunteerStateType.ACTIVE_REGULAR]: <LinkIcon size={18} color={statusColorMap[VolunteerStateType.ACTIVE_REGULAR]} />,
-  [VolunteerStateType.ACTIVE_ACCOMPANY]: (
-    <HourglassIcon size={18} color={statusColorMap[VolunteerStateType.ACTIVE_ACCOMPANY]} />
+  [VolunteerStateEngagementType.ACTIVE]: (
+    <SealCheckIcon size={18} color={stateEngagementColorMap[VolunteerStateEngagementType.ACTIVE]} />
   ),
-  [VolunteerStateType.ACTIVE_FEST]: <HourglassIcon size={18} color={statusColorMap[VolunteerStateType.ACTIVE_FEST]} />,
-  [VolunteerStateType.TO_REMATCH]: <HourglassIcon size={18} color={statusColorMap[VolunteerStateType.TO_REMATCH]} />,
-  [VolunteerStateType.TEMP_INACTIVE]: (
-    <HourglassIcon size={18} color={statusColorMap[VolunteerStateType.TEMP_INACTIVE]} />
+  [VolunteerStateEngagementType.TEMP_UNAVAILABLE]: (
+    <FlagIcon size={18} color={stateEngagementColorMap[VolunteerStateEngagementType.TEMP_UNAVAILABLE]} />
   ),
-  [VolunteerStateType.INACTIVE]: <FlagIcon size={18} color={statusColorMap[VolunteerStateType.INACTIVE]} />,
+  [VolunteerStateEngagementType.AVAILABLE]: (
+    <HourglassIcon size={18} color={stateEngagementColorMap[VolunteerStateEngagementType.AVAILABLE]} />
+  ),
+  [VolunteerStateEngagementType.INACTIVE]: (
+    <FlagIcon size={18} color={stateEngagementColorMap[VolunteerStateEngagementType.INACTIVE]} />
+  ),
+  [VolunteerStateEngagementType.UNRESPONSIVE]: (
+    <FlagIcon size={18} color={stateEngagementColorMap[VolunteerStateEngagementType.INACTIVE]} />
+  ),
 };
 
 /*  Helper components */

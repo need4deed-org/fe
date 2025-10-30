@@ -1,5 +1,4 @@
 import { cloudfrontURL } from "@/config/constants";
-import { Lang } from "need4deed-sdk";
 
 export function isEnumValue<E>(enumObject: object, value: E) {
   return typeof enumObject === "object" ? Object.values(enumObject).includes(value) : false;
