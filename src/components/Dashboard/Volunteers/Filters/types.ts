@@ -1,14 +1,13 @@
-import { ByDay, OccasionalType } from "need4deed-sdk";
-import { FilterKeys, TimeSlot } from "./constants";
+import { ByDay, OccasionalType, QueryParamsKeys, TimeSlot } from "need4deed-sdk";
 import { SelectionMap } from "../../common/CardsFilter/types";
 
 export interface CardsFilter {
-  [FilterKeys.SEARCH]: string;
-  [FilterKeys.ACCOMPANYING]: boolean;
-  [FilterKeys.ENGAGEMENT]: SelectionMap;
-  [FilterKeys.AVAILABILITY]: Availability;
-  [FilterKeys.DISTRICT]: SelectionMap;
-  [FilterKeys.LANGUAGE]: SelectionMap;
+  [QueryParamsKeys.SEARCH]: string;
+  [QueryParamsKeys.ACCOMPANYING]: boolean;
+  [QueryParamsKeys.ENGAGEMENT]: SelectionMap;
+  [QueryParamsKeys.AVAILABILITY]: Availability;
+  [QueryParamsKeys.DISTRICT]: SelectionMap;
+  [QueryParamsKeys.LANGUAGE]: SelectionMap;
 }
 
 export interface Availability {

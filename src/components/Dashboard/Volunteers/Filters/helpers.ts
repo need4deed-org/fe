@@ -1,39 +1,39 @@
 import { TFunction } from "i18next";
 import { Availability, CardsFilter } from "./types";
-import { FilterKeys } from "./constants";
 import { generateFilterControlItem, generateNestedFilterControlItems } from "../../common/CardsFilter/helpers";
 import { SelectionMap, SetFilter } from "../../common/CardsFilter/types";
+import { QueryParamsKeys } from "need4deed-sdk";
 
 /**
  * Creates filter items for districts, languages, engagement, and availability.
  */
 export const createFilterItems = (filter: CardsFilter, setFilter: SetFilter<CardsFilter>, t: TFunction) => {
-  const accompanyingFilter = generateFilterControlItem(filter, setFilter, FilterKeys.ACCOMPANYING, (key) =>
+  const accompanyingFilter = generateFilterControlItem(filter, setFilter, QueryParamsKeys.ACCOMPANYING, (key) =>
     t(`dashboard.volunteers.filters.${key}`),
   );
 
   const districtFilters = generateNestedFilterControlItems(
-    filter[FilterKeys.DISTRICT],
+    filter[QueryParamsKeys.DISTRICT],
     setFilter,
-    FilterKeys.DISTRICT,
+    QueryParamsKeys.DISTRICT,
     (key) => key,
   );
 
   const languageFilters = generateNestedFilterControlItems(
-    filter[FilterKeys.LANGUAGE],
+    filter[QueryParamsKeys.LANGUAGE],
     setFilter,
-    FilterKeys.LANGUAGE,
+    QueryParamsKeys.LANGUAGE,
     (key) => key,
   );
 
   const engagementFilters = generateNestedFilterControlItems(
-    filter[FilterKeys.ENGAGEMENT],
+    filter[QueryParamsKeys.ENGAGEMENT],
     setFilter,
-    FilterKeys.ENGAGEMENT,
+    QueryParamsKeys.ENGAGEMENT,
     (key) => t(`dashboard.volunteers.filters.engagement.${key}`),
   );
 
-  const availabilityFilters = createAvailabilityFilterItems(filter[FilterKeys.AVAILABILITY], setFilter, t);
+  const availabilityFilters = createAvailabilityFilterItems(filter[QueryParamsKeys.AVAILABILITY], setFilter, t);
 
   return { districtFilters, languageFilters, engagementFilters, availabilityFilters, accompanyingFilter };
 };
@@ -57,7 +57,7 @@ export const createAvailabilityFilterItems = (
         const updated = { ...obj, [key]: checked };
         setFilter((prev) => ({
           ...prev,
-          [FilterKeys.AVAILABILITY]: { ...availability, [labelKey]: updated },
+          [QueryParamsKeys.AVAILABILITY]: { ...availability, [labelKey]: updated },
         }));
       },
     })),

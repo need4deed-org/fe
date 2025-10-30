@@ -1,28 +1,12 @@
-import { ByDay, OccasionalType } from "need4deed-sdk";
+import { ByDay, OccasionalType, QueryParamsKeys, TimeSlot } from "need4deed-sdk";
 import { CardsFilter } from "./types";
 
-export enum TimeSlot {
-  morning = "08-11",
-  noon = "11-14",
-  afternoon = "14-17",
-  evening = "17-20",
-}
-
-export enum FilterKeys {
-  SEARCH = "search",
-  ACCOMPANYING = "accompanying",
-  DISTRICT = "district",
-  ENGAGEMENT = "engagement",
-  AVAILABILITY = "availability",
-  LANGUAGE = "languages",
-}
-
 export const defaultVolunteerCardsFilter: CardsFilter = {
-  [FilterKeys.SEARCH]: "",
-  [FilterKeys.ACCOMPANYING]: false,
-  [FilterKeys.DISTRICT]: {},
-  [FilterKeys.LANGUAGE]: {},
-  [FilterKeys.ENGAGEMENT]: {
+  [QueryParamsKeys.SEARCH]: "",
+  [QueryParamsKeys.ACCOMPANYING]: false,
+  [QueryParamsKeys.DISTRICT]: {},
+  [QueryParamsKeys.LANGUAGE]: {},
+  [QueryParamsKeys.ENGAGEMENT]: {
     new: false,
     active: false,
     available: false,
@@ -30,7 +14,7 @@ export const defaultVolunteerCardsFilter: CardsFilter = {
     inactive: false,
     unresponsive: false,
   },
-  [FilterKeys.AVAILABILITY]: {
+  [QueryParamsKeys.AVAILABILITY]: {
     times: {
       [TimeSlot.morning]: false,
       [TimeSlot.noon]: false,

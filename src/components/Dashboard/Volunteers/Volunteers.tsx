@@ -6,8 +6,8 @@ import { useTranslation } from "react-i18next";
 import CardsHeader from "../common/CardsHeader/CardsHeader";
 import { DashboardLayout } from "@/components/Layout";
 import { VolunteerListController } from "./VolunteerListController";
-import { ApiOptionLists, EntityTableName, SortOrder } from "need4deed-sdk";
-import { defaultVolunteerCardsFilter, FilterKeys } from "./Filters/constants";
+import { ApiOptionLists, EntityTableName, QueryParamsKeys, SortOrder } from "need4deed-sdk";
+import { defaultVolunteerCardsFilter } from "./Filters/constants";
 import { CardsFilter } from "./Filters/types";
 import { useGetQuery } from "@/hooks";
 import { apiPathOption, questionMark } from "@/config/constants";
@@ -30,7 +30,7 @@ export function Volunteers() {
   const tabs = [t("dashboard.volunteers.tabs.tab1"), t("dashboard.volunteers.tabs.tab2")];
 
   const handleSearchInputChange = (searchInput: string) => {
-    handleFilterUpdate((prev) => ({ ...prev, [FilterKeys.SEARCH]: searchInput }));
+    handleFilterUpdate((prev) => ({ ...prev, [QueryParamsKeys.SEARCH]: searchInput }));
   };
 
   const handleSortChange = (sortOrder: SortOrder) => {
@@ -49,7 +49,7 @@ export function Volunteers() {
 
     // Merge and set 'district' - 'languages' of query params and API option
     cardsFilter.district = createFilterFromOption(option, EntityTableName.DISTRICT);
-    cardsFilter.languages = createFilterFromOption(option, EntityTableName.LANGUAGE);
+    cardsFilter.language = createFilterFromOption(option, EntityTableName.LANGUAGE);
 
     const updatedFilter = deserializeFilters(cardsFilter, searchParams);
 

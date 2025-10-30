@@ -1,7 +1,7 @@
-import { ApiLanguage, ApiOptionLists, LangProficiency } from "need4deed-sdk";
+import { ApiLanguage, ApiOptionLists, LangProficiency, QueryParamsKeys } from "need4deed-sdk";
 import { ReadonlyURLSearchParams } from "next/navigation";
 import { CardsFilter } from "./Filters/types";
-import { SEPARATOR, FilterKeys, AvailabilityKeys, AvailabilitySubKeys } from "./Filters/constants";
+import { SEPARATOR, AvailabilityKeys, AvailabilitySubKeys } from "./Filters/constants";
 
 const proficiencyOrder = [
   LangProficiency.NATIVE,
@@ -51,44 +51,44 @@ export const groupLanguagesByProficiency = (languages: ApiLanguage[]): GroupedLa
 export function serializeFilters(filter: CardsFilter, searchParams?: ReadonlyURLSearchParams, asString = true) {
   const params = new URLSearchParams(searchParams);
 
-  if (filter.search) params.set(FilterKeys.SEARCH, filter.search);
-  else params.delete(FilterKeys.SEARCH);
+  if (filter.search) params.set(QueryParamsKeys.SEARCH, filter.search);
+  else params.delete(QueryParamsKeys.SEARCH);
 
-  if (filter.accompanying) params.set(FilterKeys.ACCOMPANYING, "true");
-  else params.delete(FilterKeys.ACCOMPANYING);
+  if (filter.accompanying) params.set(QueryParamsKeys.ACCOMPANYING, "true");
+  else params.delete(QueryParamsKeys.ACCOMPANYING);
 
   // 2. Clear all existing 'district' params
-  params.delete(FilterKeys.DISTRICT);
+  params.delete(QueryParamsKeys.DISTRICT);
   Object.entries(filter.district).forEach(([key, value]) => {
     if (value === true) {
-      params.append(FilterKeys.DISTRICT, key);
+      params.append(QueryParamsKeys.DISTRICT, key);
     }
   });
 
-  // 2. Clear all existing 'district' params
-  params.delete(FilterKeys.LANGUAGE);
-  Object.entries(filter.languages).forEach(([key, value]) => {
+  // 2. Clear all existing 'language' params
+  params.delete(QueryParamsKeys.LANGUAGE);
+  Object.entries(filter.language).forEach(([key, value]) => {
     if (value === true) {
-      params.append(FilterKeys.LANGUAGE, key);
+      params.append(QueryParamsKeys.LANGUAGE, key);
     }
   });
 
   // 2. Clear all existing 'engagement' params
-  params.delete(FilterKeys.ENGAGEMENT);
+  params.delete(QueryParamsKeys.ENGAGEMENT);
   Object.entries(filter.engagement).forEach(([key, value]) => {
     if (value === true) {
-      params.append(FilterKeys.ENGAGEMENT, key);
+      params.append(QueryParamsKeys.ENGAGEMENT, key);
     }
   });
 
   // 2. Clear all existing 'availability' params
-  params.delete(FilterKeys.AVAILABILITY);
+  params.delete(QueryParamsKeys.AVAILABILITY);
   Object.entries(filter.availability).forEach(([key, subSlot]) => {
     const availabilityKey = key as AvailabilityKeys;
 
     Object.entries(subSlot).forEach(([slot, value]) => {
       if (value) {
-        params.append(FilterKeys.AVAILABILITY, `${availabilityKey}${SEPARATOR}${slot}`);
+        params.append(QueryParamsKeys.AVAILABILITY, `${availabilityKey}${SEPARATOR}${slot}`);
       }
     });
   });
@@ -99,17 +99,17 @@ export function serializeFilters(filter: CardsFilter, searchParams?: ReadonlyURL
 export function deserializeFilters(filter: CardsFilter, searchParams: ReadonlyURLSearchParams) {
   const newFilter: CardsFilter = structuredClone(filter);
 
-  const search = searchParams.get(FilterKeys.SEARCH);
+  const search = searchParams.get(QueryParamsKeys.SEARCH);
   if (search !== null) {
     newFilter.search = search;
   }
 
-  const queryAccompanying = searchParams.get(FilterKeys.ACCOMPANYING);
+  const queryAccompanying = searchParams.get(QueryParamsKeys.ACCOMPANYING);
   if (queryAccompanying === "true") {
     newFilter.accompanying = true;
   }
 
-  const queryDistricts = searchParams.getAll(FilterKeys.DISTRICT);
+  const queryDistricts = searchParams.getAll(QueryParamsKeys.DISTRICT);
   queryDistricts.forEach((d) => {
     // Check if the query param value is exist in the filters. if not, ignore that query param !!!
     if (newFilter.district[d] !== undefined) {
@@ -117,21 +117,21 @@ export function deserializeFilters(filter: CardsFilter, searchParams: ReadonlyUR
     }
   });
 
-  const queryLanguages = searchParams.getAll(FilterKeys.LANGUAGE);
+  const queryLanguages = searchParams.getAll(QueryParamsKeys.LANGUAGE);
   queryLanguages.forEach((l) => {
-    if (newFilter.languages[l] !== undefined) {
-      newFilter.languages[l] = true;
+    if (newFilter.language[l] !== undefined) {
+      newFilter.language[l] = true;
     }
   });
 
-  const queryEngagement = searchParams.getAll(FilterKeys.ENGAGEMENT);
+  const queryEngagement = searchParams.getAll(QueryParamsKeys.ENGAGEMENT);
   queryEngagement.forEach((e) => {
     if (newFilter.engagement[e] !== undefined) {
       newFilter.engagement[e] = true;
     }
   });
 
-  const queryAvailability = searchParams.getAll(FilterKeys.AVAILABILITY);
+  const queryAvailability = searchParams.getAll(QueryParamsKeys.AVAILABILITY);
   queryAvailability.forEach((item) => {
     const [firstKey, secondKey] = item.split(SEPARATOR);
 
