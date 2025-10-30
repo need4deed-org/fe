@@ -10,10 +10,10 @@ import { CardsFilter } from "./Filters/types";
 import { useGetQuery } from "@/hooks";
 import { apiPathOption, questionMark } from "@/config/constants";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { createFilterFromOption, deserializeFilters, serializeFilters } from "./helpers";
 import Filters from "../common/CardsFilter/Filters";
 import FiltersContent from "./Filters/FiltersContent";
 import CardsHeader from "../common/CardsHeader/CardsHeader";
+import { createFilterFromOption, deserializeFilters, serializeFilters } from "./helpers";
 import { VolunteerListController } from "./VolunteerListController";
 
 export function Volunteers() {

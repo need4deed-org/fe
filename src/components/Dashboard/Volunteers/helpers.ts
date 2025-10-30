@@ -7,8 +7,8 @@ import {
   QueryParamsKeys,
 } from "need4deed-sdk";
 import { ReadonlyURLSearchParams } from "next/navigation";
+import { AvailabilityKeys, AvailabilitySubKeys, SEPARATOR } from "./Filters/constants";
 import { CardsFilter } from "./Filters/types";
-import { SEPARATOR, AvailabilityKeys, AvailabilitySubKeys } from "./Filters/constants";
 
 const proficiencyOrder = [
   LangProficiency.NATIVE,
