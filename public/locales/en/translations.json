@@ -66,16 +66,16 @@
     },
     "button": { "more": "more...", "submit": "Submit" },
     "schedule": {
-      "1": "Monday",
-      "2": "Tuesday",
-      "3": "Wednesday",
-      "4": "Thursday",
-      "5": "Friday",
-      "6": "Saturday",
-      "7": "Sunday",
-      "0": "Occasionally available",
-      "weekdays": "Weekdays",
-      "weekends": "Weekends"
+      "1": "Mon",
+      "2": "Tue",
+      "3": "Wed",
+      "4": "Thu",
+      "5": "Fri",
+      "6": "Sat",
+      "7": "Sun",
+      "0": "Other",
+      "weekdays": "Occasionally weekdays",
+      "weekends": "Occasionally Weekends"
     },
     "becomeVolunteer": {
       "header": "Become a Volunteer with",
@@ -112,7 +112,7 @@
           "helpTitle": ""
         },
         "availability": {
-          "header": "Preferred timeframes*",
+          "header": "Availability",
           "para": "*keep in mind that most opportunities are limited to the 9-17 working hours, at least for the beginning!",
           "helpText": "The Mon-Sun availabilities refer to regularly repeating volunteering. If the time frames are limited to some periods or need explaining, please write in the comments at the last section",
           "helpTitle": ""
