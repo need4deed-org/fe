@@ -1,6 +1,4 @@
 .form-container {
-  /* disabled to get full width for availability grid */
-  /* width: clamp(40ch, 80vw, 65ch); */
   display: flex;
   flex-direction: column;
   align-items: center;
