@@ -123,6 +123,17 @@ html {
   --color-violet-500: rgba(120, 88, 197, 1);
   --color-violet-700: rgba(85, 62, 140, 1);
 
+
+  --color-pink-50: rgba(254, 247, 255, 1);
+  --color-pink-100: rgba(251, 231, 255, 1);
+  --color-pink-200: rgba(249, 219, 255, 1);
+  --color-pink-400: rgba(245, 193, 255, 1);
+  --color-pink-500: rgba(242, 177, 255, 1);
+  --color-pink-600: rgba(220, 161, 232, 1);
+
+
+
+
   /* text */
   --text-h2-font-weight: 600;
   --text-h2-font-size: 32px;
