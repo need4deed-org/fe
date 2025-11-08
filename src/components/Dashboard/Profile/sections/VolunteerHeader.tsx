@@ -2,7 +2,7 @@
 import Image from "next/image";
 import styled from "styled-components";
 import { formatDateTime, getImageUrl } from "@/utils";
-import { ApiVolunteerGet, VolunteerStateTypeType } from "need4deed-sdk";
+import { ApiVolunteerGet } from "need4deed-sdk";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import Divider from "../common/Divider";
@@ -11,6 +11,7 @@ import RadioGroup from "../common/RadioGroup";
 import { useUpdateMutation } from "@/hooks/useUpdateMutation";
 import CustomCalendarInput from "../common/CustomCalendarInput";
 import "react-datepicker/dist/react-datepicker.css";
+import StatusBadge from "../common/StatusBadge";
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -77,12 +78,21 @@ const StatusSection = styled.div`
   flex-direction: column;
 `;
 
+const BadgeContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+`;
+
 const StatusGroup = styled.div<{ columns: number }>`
   display: grid;
   grid-template-columns: ${({ columns }) => (columns === 3 ? "1fr 1fr 1fr" : "1fr 2fr")};
   align-items: center;
   column-gap: 1rem;
   row-gap: 0.25rem;
+  ${BadgeContainer} {
+    margin-left: ${({ columns }) => (columns === 3 ? "6px" : "0")};
+  }
 
   @media (max-width: 640px) {
     grid-template-columns: 1fr;
@@ -102,12 +112,6 @@ const StatusChange = styled.span`
   display: flex;
   font-weight: 600;
   justify-self: flex-end;
-`;
-
-const BadgeContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
 `;
 
 const Badge = styled.span<{ variant?: "primary" | "secondary" }>`
@@ -138,7 +142,7 @@ const SaveBtn = styled(CancelBtn)`
   border: none;
 
   &:disabled {
-    background: #d3d3d3; 
+    background: #d3d3d3;
     cursor: not-allowed;
   }
 `;
@@ -157,8 +161,7 @@ interface Props {
 export function VolunteerHeader({ volunteer }: Props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedEngagementStatus, setSelectedEngagementStatus] = useState<string>("");
-  const [optionalDate, setOptionalDate] = useState<Date | null>(null); // State for the optional calendar input
-
+  const [optionalDate, setOptionalDate] = useState<Date | null>(null);
   const { t } = useTranslation();
 
   const joinedSince = formatDateTime(volunteer.createdAt);
@@ -208,7 +211,7 @@ export function VolunteerHeader({ volunteer }: Props) {
                 <StatusGroup columns={3}>
                   <Label>{t("volunteerProfile.volunteerHeader.engagementStatus_title")}</Label>
                   <BadgeContainer>
-                    <Badge variant="primary">{volunteer.statusEngagement}</Badge>
+                    <StatusBadge status={volunteer.statusEngagement} />
                   </BadgeContainer>
                   <StatusChange onClick={handleStatusChangeClick}>
                     {t("volunteerProfile.volunteerHeader.change_status")}
@@ -218,18 +221,14 @@ export function VolunteerHeader({ volunteer }: Props) {
                 <StatusGroup columns={2}>
                   <Label>{t("volunteerProfile.volunteerHeader.matchStatus_title")}</Label>
                   <BadgeContainer>
-                    <Badge variant="primary">{volunteer.statusMatch}</Badge>
+                    <StatusBadge status={volunteer.statusMatch} />
                   </BadgeContainer>
                 </StatusGroup>
                 <Divider />
                 <StatusGroup columns={2}>
                   <Label>{t("volunteerProfile.volunteerHeader.volunteerType_title")}</Label>
                   <BadgeContainer>
-                    {volunteer.statusType.map((type: VolunteerStateTypeType) => (
-                      <Badge key={type} variant="primary">
-                        {type}
-                      </Badge>
-                    ))}
+                    <StatusBadge status={volunteer.statusType} />
                   </BadgeContainer>
                 </StatusGroup>
               </StatusSection>

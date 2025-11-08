@@ -8,17 +8,18 @@ const InputContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
+  margin: 16px auto;
 `;
 
 const InputLabel = styled.label`
   position: absolute;
   top: -8px;
   left: 16px;
-  background: white; /* Matches the background color */
+  background: white;
   padding: 0 4px;
   font-size: 12px;
   color: #6b7280;
-  z-index: 1; /* Ensures the label is above the border */
+  z-index: 1;
 `;
 
 const InputField = styled.div`
@@ -34,7 +35,7 @@ const InputField = styled.div`
   }
 
   &:focus-within {
-    border-color: #1e40af; /* Highlight border when focused */
+    border-color: #1e40af;
   }
 `;
 
@@ -43,39 +44,61 @@ const Icon = styled.span`
   color: #6b7280;
 `;
 
-const StyledDatePicker = styled(DatePicker)`
-  border: none;
-  outline: none;
-  width: 100%;
-  font-size: 14px;
-  color: #374151;
-  background: transparent;
-  cursor: pointer;
+const DatePickerWrapper = styled.div`
+  .react-datepicker__input-container input {
+    border: none;
+    outline: none;
+    font-size: 14px;
+    background: transparent;
+    color: #374151;
+    cursor: pointer;
+  }
+
+  .react-datepicker__header {
+    background-color: #f3f4f6;
+  }
 `;
 
 interface CustomCalendarInputProps {
   value: Date | null;
-  onChange: (date: Date) => void;
+  onChange: (date: Date | null) => void;
   label: string;
+  className?: string;
+  inputClassName?: string;
+  datePickerClassName?: string;
+  containerProps?: React.HTMLAttributes<HTMLDivElement>;
+  inputProps?: React.HTMLAttributes<HTMLDivElement>;
 }
 
-const CustomCalendarInput: React.FC<CustomCalendarInputProps> = ({ value, onChange, label }) => {
+const CustomCalendarInput: React.FC<CustomCalendarInputProps> = ({
+  value,
+  onChange,
+  label,
+  className,
+  inputClassName,
+  datePickerClassName,
+  containerProps,
+  inputProps,
+}) => {
   return (
-    <InputContainer>
+    <InputContainer className={className} {...containerProps}>
       <InputLabel>{label}</InputLabel>
-      <InputField>
+      <InputField className={inputClassName} {...inputProps}>
         <Icon>
           <CalendarBlank />
         </Icon>
-        <StyledDatePicker
-          selected={value}
-          onChange={onChange}
-          dateFormat="dd.MM.yyyy"
-          placeholderText="Select a date"
-          showMonthDropdown
-          showYearDropdown
-          dropdownMode="select"
-        />
+        <DatePickerWrapper>
+          <DatePicker
+            className={datePickerClassName}
+            selected={value}
+            onChange={onChange}
+            dateFormat="dd.MM.yyyy"
+            placeholderText="Select a date"
+            showMonthDropdown
+            showYearDropdown
+            dropdownMode="select"
+          />
+        </DatePickerWrapper>
       </InputField>
     </InputContainer>
   );
