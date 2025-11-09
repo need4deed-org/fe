@@ -10,6 +10,7 @@ import { DeviceProvider } from "@/context/DeviceContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
+import "../middleware/axiosInstance";
 
 const figtree = Figtree({
   subsets: ["latin"],

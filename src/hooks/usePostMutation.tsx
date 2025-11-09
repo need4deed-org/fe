@@ -1,3 +1,4 @@
+import axiosInstance from "@/middleware/axiosInstance";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
@@ -18,7 +19,7 @@ export const usePostMutation = <TData, TResponse, TError = Error>({
 
   return useMutation<TResponse, TError, TData>({
     mutationFn: async (data) => {
-      const response = await axios.post(apiPath, data);
+      const response = await axiosInstance.post(apiPath, data);
       return response.data;
     },
 

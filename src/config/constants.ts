@@ -1,11 +1,12 @@
 export const tokenKey = "token";
 
-export const apiURL = process.env.API_URL || "http://localhost:5000";
+export const apiURL = process.env.NEXT_PUBLIC_URL_API || "http://localhost:5000";
 export const apiPrefix = "api";
 export const apiPathVolunteer = `/${apiPrefix}/volunteer/`;
-export const apiPathLogin = `/${apiPrefix}/auth/login`;
+export const apiPathLogin = `/auth/login`;
 export const apiPathAuthEmailDomain = `${apiPrefix}/auth-email-domain/`;
 export const apiPathOpportunity = `${apiPrefix}/opportunity`;
+export const apiProfilePath = `/volunteer/9`;
 
 export enum ScreenTypes {
   MOBILE = "mobile",
