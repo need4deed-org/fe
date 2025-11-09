@@ -55,7 +55,17 @@ export const groupLanguagesByProficiency = (languages: ApiLanguage[]): GroupedLa
   return groupedLanguages;
 };
 
-export function serializeFilters(filter: CardsFilter, searchParams?: ReadonlyURLSearchParams, asString = true) {
+interface SerializeFiltersOptions {
+  serializeToIDs?: boolean;
+  apiFilterOptions?: ApiOptionLists;
+}
+
+export function serializeFilters(
+  filter: CardsFilter,
+  searchParams?: ReadonlyURLSearchParams,
+  asString = true,
+  options?: SerializeFiltersOptions,
+) {
   const params = new URLSearchParams(searchParams);
 
   if (filter.search) params.set(QueryParamsKeys.SEARCH, filter.search);
@@ -68,7 +78,10 @@ export function serializeFilters(filter: CardsFilter, searchParams?: ReadonlyURL
   params.delete(QueryParamsKeys.DISTRICT);
   Object.entries(filter.district).forEach(([key, value]) => {
     if (value === true) {
-      params.append(QueryParamsKeys.DISTRICT, key);
+      const paramValue =
+        (options?.serializeToIDs && options.apiFilterOptions?.district?.find((d) => d.title === key)?.id) || key;
+
+      params.append(QueryParamsKeys.DISTRICT, String(paramValue));
     }
   });
 
@@ -76,7 +89,10 @@ export function serializeFilters(filter: CardsFilter, searchParams?: ReadonlyURL
   params.delete(QueryParamsKeys.LANGUAGE);
   Object.entries(filter.language).forEach(([key, value]) => {
     if (value === true) {
-      params.append(QueryParamsKeys.LANGUAGE, key);
+      const paramValue =
+        (options?.serializeToIDs && options.apiFilterOptions?.language?.find((d) => d.title === key)?.id) || key;
+
+      params.append(QueryParamsKeys.LANGUAGE, String(paramValue));
     }
   });
 

@@ -23,7 +23,7 @@ export function Volunteers() {
   const [numOfVols, setNumOfVols] = useState(0);
   const [sortOrder, setSortOrder] = useState(SortOrder.NewToOld);
   const [cardsFilter, setCardsFilter] = useState(defaultVolunteerCardsFilter);
-  const { data: option } = useGetQuery<ApiOptionLists>({ queryKey: ["options"], apiPath: apiPathOption });
+  const { data: apiFilterOptions } = useGetQuery<ApiOptionLists>({ queryKey: ["options"], apiPath: apiPathOption });
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
@@ -45,16 +45,16 @@ export function Volunteers() {
   };
 
   useEffect(() => {
-    if (!option) return;
+    if (!apiFilterOptions) return;
 
     // Merge and set 'district' - 'languages' of query params and API option
-    cardsFilter.district = createFilterFromOption(option, EntityTableName.DISTRICT);
-    cardsFilter.language = createFilterFromOption(option, EntityTableName.LANGUAGE);
+    cardsFilter.district = createFilterFromOption(apiFilterOptions, EntityTableName.DISTRICT);
+    cardsFilter.language = createFilterFromOption(apiFilterOptions, EntityTableName.LANGUAGE);
 
     const updatedFilter = deserializeFilters(cardsFilter, searchParams);
 
     setCardsFilter(updatedFilter);
-  }, [option]);
+  }, [apiFilterOptions]);
 
   return (
     <DashboardLayout>
@@ -84,6 +84,7 @@ export function Volunteers() {
           sortOrder={sortOrder}
           isFiltersOpen={isFiltersOpen}
           filter={cardsFilter}
+          apiFilterOptions={apiFilterOptions}
         />
       </VolunteersContainer>
     </DashboardLayout>

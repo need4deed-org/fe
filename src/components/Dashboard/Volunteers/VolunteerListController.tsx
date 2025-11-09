@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { ApiVolunteerGetList, SortOrder } from "need4deed-sdk";
+import { ApiOptionLists, ApiVolunteerGetList, SortOrder } from "need4deed-sdk";
 import { useGetQuery } from "@/hooks";
 import { apiPathVolunteer } from "@/config/constants";
 import { VolunteerCardList } from "./VolunteerCardList"; // We will modify this component
@@ -17,6 +17,7 @@ interface VolunteerListControllerProps {
   sortOrder: SortOrder;
   isFiltersOpen: boolean;
   filter: CardsFilter;
+  apiFilterOptions?: ApiOptionLists;
 }
 
 export function VolunteerListController({
@@ -24,9 +25,13 @@ export function VolunteerListController({
   sortOrder,
   isFiltersOpen,
   filter,
+  apiFilterOptions,
 }: VolunteerListControllerProps) {
   const [currentPage, setCurrentPage] = useState(1);
-  const serializedFilter = serializeFilters(filter, undefined, false) as URLSearchParams;
+  const serializedFilter = serializeFilters(filter, undefined, false, {
+    serializeToIDs: true,
+    apiFilterOptions,
+  }) as URLSearchParams;
   const { data, count } = useGetQuery<ApiVolunteerGetList[]>({
     queryKey: ["volunteers"],
     apiPath: apiPathVolunteer,
