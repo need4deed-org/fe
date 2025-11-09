@@ -21,7 +21,7 @@ interface Props {
 export function VolunteerCard({ volunteer }: Props) {
   const { t } = useTranslation();
 
-  const { name, languages, activities, skills, locations, availability, avatarUrl, stateEngagement, stateType } =
+  const { name, languages, activities, skills, locations, availability, avatarUrl, statusEngagement, statusType } =
     getNormalizedVolunteer(volunteer);
 
   const groupedLanguages = groupLanguagesByProficiency(languages);
@@ -32,22 +32,22 @@ export function VolunteerCard({ volunteer }: Props) {
     <Card>
       <StatusTagsDiv>
         <>
-          {stateEngagement && (
+          {statusEngagement && (
             <StatusDiv>
-              {stateEngagementIconMap[stateEngagement]}
+              {stateEngagementIconMap[statusEngagement]}
 
               <Paragraph
                 fontWeight="var(--dashboard-volunteers-card-status-fontWeight)"
                 fontSize="var(--dashboard-volunteers-card-status-fontSize)"
                 lineheight="var(--dashboard-volunteers-card-status-lineHeight)"
-                color={stateEngagementColorMap[stateEngagement]}
+                color={stateEngagementColorMap[statusEngagement]}
               >
-                {stateEngagement.toUpperCase()}
+                {statusEngagement.toUpperCase()}
               </Paragraph>
             </StatusDiv>
           )}
 
-          {stateType && (
+          {statusType && (
             <>
               <TagDiv>
                 <Paragraph
@@ -55,7 +55,7 @@ export function VolunteerCard({ volunteer }: Props) {
                   fontSize="var(--dashboard-volunteers-card-status-fontSize)"
                   lineheight="var(--dashboard-volunteers-card-tag-lineHeight)"
                 >
-                  {stateType.toUpperCase()}
+                  {statusType.toUpperCase()}
                 </Paragraph>
                 <SparkleIcon size={18} color="var(--color-midnight)" />
               </TagDiv>
