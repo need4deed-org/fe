@@ -1,13 +1,12 @@
 "use client";
 import { DashboardLayout } from "@/components/Layout";
 import { VolunteerController } from "./ProfileController";
+import { VolunteerIdProps } from "@/types";
 
-const ProfileLayout = () => {
+export default function ProfileLayout({ volunteerId }: VolunteerIdProps) {
   return (
     <DashboardLayout>
-      <VolunteerController />
+      <VolunteerController volunteerId={volunteerId} />
     </DashboardLayout>
   );
-};
-
-export default ProfileLayout;
+}

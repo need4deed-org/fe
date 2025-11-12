@@ -2,11 +2,12 @@ import { ApiVolunteerGet } from "need4deed-sdk";
 import { useGetQuery } from "@/hooks";
 import Profile from "./ProfilePage";
 import { apiProfilePath } from "@/config/constants";
+import { VolunteerIdProps } from "@/types";
 
-export function VolunteerController() {
+export function VolunteerController({ volunteerId }: VolunteerIdProps) {
   const { data: volunteerData, isLoading } = useGetQuery<ApiVolunteerGet>({
-    queryKey: ["volunteersProfile"],
-    apiPath: apiProfilePath,
+    queryKey: ["volunteersProfile", volunteerId],
+    apiPath: apiProfilePath(volunteerId),
   });
 
   if (isLoading || !volunteerData) {
