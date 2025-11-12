@@ -3,8 +3,6 @@ import styled from "styled-components";
 import { ProfileCardTypes } from "./types/types";
 import { ArrowLeft } from "@phosphor-icons/react";
 import Link from "next/link";
-import { useGetQuery } from "@/hooks";
-import { apiVolunteerProfile } from "@/config/constants";
 import { ApiVolunteerGet } from "need4deed-sdk";
 import VolunteerHeader from "./sections/VolunteerHeader";
 import { PROFILE_CARD_CONFIG } from "./config/ProfileSectionConfig";
