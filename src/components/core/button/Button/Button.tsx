@@ -52,7 +52,7 @@ const StyledButton = styled.button<StyledButtonProps>`
 interface Props {
   text?: string;
   textFontSize?: string;
-  onClick?: () => void;
+  onClick?: (() => void) | ((e: React.MouseEvent<HTMLButtonElement>) => void);
   backgroundcolor?: BackgroundColorKeys;
   textColor?: string;
   textHoverColor?: string;

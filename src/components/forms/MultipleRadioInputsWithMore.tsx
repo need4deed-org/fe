@@ -37,7 +37,6 @@ export default function MultipleRadioInputsWithMore<T, K extends DeepKeys<T>>({
       firstHiddenInput?.focus();
     }
   }
-
   return (
     <>
       {items.map((item) => {
