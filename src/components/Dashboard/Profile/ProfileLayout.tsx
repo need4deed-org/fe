@@ -4,8 +4,9 @@ import { VolunteerController } from "./ProfileController";
 import { VolunteerIdProps } from "@/types";
 
 export default function ProfileLayout({ volunteerId }: VolunteerIdProps) {
+  const backgroundColor = "var(--layout-static-page-background-default)";
   return (
-    <DashboardLayout>
+    <DashboardLayout background={backgroundColor}>
       <VolunteerController volunteerId={volunteerId} />
     </DashboardLayout>
   );
