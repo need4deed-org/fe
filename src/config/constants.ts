@@ -47,3 +47,5 @@ export enum DashboardRoutes {
   Calendar = "/dashboard/calendar",
   Profile = "/dashboard/profile",
 }
+
+export const questionMark = "?";

@@ -98,7 +98,6 @@ html {
   --color-white: rgba(255, 255, 255, 1);
   --color-black: rgba(0, 0, 0, 1);
 
-
   --color-grey-10: rgba(238, 238, 238, 1);
   --color-grey-50: rgba(240, 241, 243, 1);
   --color-grey-200: rgba(185, 189, 199, 1);
@@ -106,11 +105,9 @@ html {
   --color-grey-500: rgba(102, 112, 133, 1);
   --color-grey-700: rgba(72, 80, 94, 1);
 
-
   --color-neutral-200: rgb(68, 68, 68);
   --color-neutral-500: rgb(187, 187, 187);
   --color-neutral-700: rgb(221, 221, 221);
-
 
   --color-green-50: rgba(242, 252, 250, 1);
   --color-green-100: rgba(216, 245, 240, 1);
@@ -120,7 +117,6 @@ html {
   --color-green-700: rgba(98, 158, 146, 1);
   --color-green-800: rgba(65, 242, 141, 1);
   --color-green-900: rgba(0, 201, 128, 1);
-
 
   --color-red-50: rgba(254, 234, 231, 1);
   --color-red-200: rgba(248, 160, 146, 1);
@@ -132,6 +128,20 @@ html {
   --color-violet-400: rgba(147, 121, 209, 1);
   --color-violet-500: rgba(120, 88, 197, 1);
   --color-violet-700: rgba(85, 62, 140, 1);
+
+  --color-blue-50: rgba(235, 237, 247, 1);
+  --color-blue-100: rgba(194, 198, 231, 1);
+  --color-blue-200:: rgba(123, 132, 203, 1);
+  --color-blue-400: rgba(99, 111, 188, 1);
+  --color-blue-500: rgba(58, 72, 178, 1);
+  --color-blue-700: rgba(26, 38, 132, 1);
+
+  --color-pink-50: rgba(254, 247, 255, 1);
+  --color-pink-100: rgba(251, 231, 255, 1);
+  --color-pink-200: rgba(249, 219, 255, 1);
+  --color-pink-400: rgba(245, 193, 255, 1);
+  --color-pink-500: rgba(242, 177, 255, 1);
+  --color-pink-600: rgba(220, 161, 232, 1);
 
   /* text */
   --text-h2-font-weight: 600;
@@ -176,9 +186,11 @@ html {
   --homepage-testimonials-profile-gap: 16px;
 
   /* layout-static-page */
-  --layout-static-page-background-default: linear-gradient(180deg,
-      var(--color-magnolia)-5.53%,
-      var(--color-orchid-dark) 100%);
+  --layout-static-page-background-default: linear-gradient(
+    180deg,
+    var(--color-magnolia)-5.53%,
+    var(--color-orchid-dark) 100%
+  );
 
   /* button */
   --button-gap: 12px;
@@ -199,6 +211,13 @@ html {
 
   /* form input */
   --form-input-error-message-color: var(--color-red-600);
+
+  /* checkButton */
+  --check-button-label-font-size: 18px;
+  --check-button-label-font-weight: 400;
+  --check-button-border: solid 1px var(--color-grey-200);
+  --check-button-padding: 12px;
+
 }
 
 .with-linebreaks {
@@ -426,8 +445,6 @@ html {
     --opportunities-filters-button-height: 48px;
     --opportunities-filters-button-width: 48px;
     --opportunities-filters-button-icon-size: 32px;
-    --opportunities-filters-container-width: auto;
-    --opportunities-filters-container-border-bottom-radius: 40px;
     --opportunities-filters-close-filter-height: 64px;
     --opportunities-filters-close-filter-gap: 12px;
     --opportunities-filters-close-filter-padding: 16px 0px 16px 32px;
@@ -442,7 +459,6 @@ html {
     --opportunities-filters-content-accordion-group-options-checkbox-labelFontSize: 14px;
     --opportunities-filters-content-accordion-header-border-top: 1px;
     --opportunities-filters-content-accordion-header-padding-top: 16px;
-    --opportunities-filters-clear-all-button-padding-bottom: 20px;
     --opportunities-filters-clear-all-button-icon-size: 24px;
     --opportunities-filters-clear-all-button-height: 64px;
     --opportunities-filters-clear-all-button-text-font-size: 20px;
@@ -681,8 +697,6 @@ html {
     --opportunities-cards-container-justify-content: center;
     --opportunities-filters-button-height: 64px;
     --opportunities-filters-button-icon-size: 32px;
-    --opportunities-filters-container-width: auto;
-    --opportunities-filters-container-border-bottom-radius: 40px;
     --opportunities-filters-close-filter-height: 64px;
     --opportunities-filters-close-filter-gap: 12px;
     --opportunities-filters-close-filter-padding: 16px 0px 16px 32px;
@@ -697,7 +711,6 @@ html {
     --opportunities-filters-content-accordion-group-options-checkbox-labelFontSize: 14px;
     --opportunities-filters-content-accordion-header-border-top: 1px;
     --opportunities-filters-content-accordion-header-padding-top: 16px;
-    --opportunities-filters-clear-all-button-padding-bottom: 24px;
     --opportunities-filters-clear-all-button-icon-size: 24px;
     --opportunities-filters-clear-all-button-text-font-size: 16px;
     --opportunities-filters-description-font-size: 14px;
@@ -937,8 +950,6 @@ html {
     --opportunities-cards-container-justify-content: left;
     --opportunities-filters-button-height: 64px;
     --opportunities-filters-button-icon-size: 32px;
-    --opportunities-filters-container-width: 320px;
-    --opportunities-filters-container-border-bottom-radius: none;
     --opportunities-filters-close-filter-height: 64px;
     --opportunities-filters-close-filter-gap: 12px;
     --opportunities-filters-close-filter-padding: 16px 0px 16px 32px;
@@ -953,23 +964,20 @@ html {
     --opportunities-filters-content-accordion-group-options-checkbox-labelFontSize: 14px;
     --opportunities-filters-content-accordion-header-border-top: 1px;
     --opportunities-filters-content-accordion-header-padding-top: 16px;
-    --opportunities-filters-clear-all-button-padding-bottom: 24px;
     --opportunities-filters-clear-all-button-icon-size: 24px;
     --opportunities-filters-clear-all-button-text-font-size: 16px;
-    --opportunities-filters-description-font-size: 14px;
-    --opportunities-filters-description-font-weight: 400;
 
     --search-container-height: 60px;
     --search-container-border-radius: 160px;
     --search-container-padding: 0 32px;
     --search-input-font-size: 16px;
 
-    --paginated-grid-container-gap: 24px;
+    --paginated-grid-container-gap: 16px;
     --paginated-grid-pagination-number-width: 36px;
     --paginated-grid-pagination-number-height: 44px;
     --paginated-grid-pagination-number-border-radius: 6px;
 
-    --dashboard-base-container-width: 1244px;
+    --dashboard-base-container-width: 1340px;
     --dashboard-base-container-padding-top: 48px;
     --dashboard-base-container-padding-bottom: 100px;
 
@@ -983,7 +991,6 @@ html {
     --dashboard-navigation-bar-option-text-size: 14px;
     --dashboard-navigation-bar-option-text-letter-spacing: 0.14px;
 
-    --dashboard-cards-header-searchbar-width: 928px;
     --dashboard-cards-header-result-sortBy-gap: 20px;
     --dashboard-cards-header-sortBy-container-gap: 4px;
     --dashboard-cards-header-sortBy-options-gap: 6px;
@@ -994,6 +1001,7 @@ html {
     --dashboard-cards-header-user-profile-container-gap: 8px;
     --dashboard-cards-header-user-icon-size: 32px;
     --dashboard-cards-header-user-icon-border-radius: 16px;
+    --dashboard-cards-header-filter-item-container-gap: 8px;
 
     --dashboard-home-container-padding: 40px 120px 100px 132px;
     --dashboard-home-container-gap: 20px;
@@ -1006,7 +1014,7 @@ html {
     --app-header-menu-item-fontWeight-secondary: 400;
 
     --dashboard-volunteers-container-gap: 40px;
-    --dashboard-volunteers-card-width: 296px;
+    --dashboard-volunteers-card-width: 320px;
     --dashboard-volunteers-card-height: auto;
     --dashboard-volunteers-card-gap: 20px;
     --dashboard-volunteers-card-padding: 0 20px 24px 20px;
@@ -1034,6 +1042,8 @@ html {
     --dashboard-volunteers-card-paragraph-fontWeight-bold: 500;
     --dashboard-volunteers-card-paragraph-fontSize: 16px;
     --dashboard-volunteers-card-paragraph-lineHeight: 16px;
+    --dashboard-volunteers-card-paragraph-lineHeight: 16px;
+    --dashboard-volunteers-filters-accompanying-header-container-gap: 8px;
 
     --form-input-container-height: 56px;
     --form-input-container-border-radius: 8px;
@@ -1057,5 +1067,30 @@ html {
     --dashboard-login-heading-letterSpacing: 0.25px;
     --dashboard-login-checkbox-label-fontSize: 20px;
     --dashboard-login-forgot-password-label-fontWeight: 600;
+
+    --filters-container-width: 340px;
+    --filters-container-border-radius: 16px;
+    --filters-description-font-size: 16px;
+    --filters-description-font-weight: 400;
+    --filters-description-line-height: 20px;
+    --filters-description-letter-spacing: 0.5%;
+    --filters-accordion-group-options-gap: 16px;
+    --filters-accordion-group-options-gap: 16px;
+    --filters-search-bar-section-container-gap: 16px;
+    --filters-search-bar-width: 630px;
+    --filters-clear-all-button-height: 44px;
+    --filters-clear-all-button-padding: 12px;
+    --filters-clear-all-button-text-font-size: 18px;
+    --filters-clear-all-button-text-font-weight: 600;
+
+    --cards-header-filter-item-height: 44px;
+    --cards-header-filter-item-gap: 8px;
+    --cards-header-filter-item-border-radius:32px;
+    --cards-header-filter-item-padding:12px;
+    --cards-header-filter-item-font-size: 16px;
+    --cards-header-filter-item-font-weight: 400px;
+    --cards-header-filter-item-icon-div-size: 28px;
+    --cards-header-filter-item-icon-div-border-radius: 14px;
+
   }
 }

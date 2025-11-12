@@ -2,6 +2,7 @@ import React from "react";
 import { PaginatedGrid } from "@/components/core/paginatedGrid";
 import VolunteerCard from "./VolunteerCard";
 import { ApiVolunteerGetList } from "need4deed-sdk";
+import styled from "styled-components";
 
 interface VolunteerCardListProps {
   volunteers: ApiVolunteerGetList[];
@@ -11,6 +12,11 @@ interface VolunteerCardListProps {
   currentPage: number;
   setCurrentPage: (page: number) => void;
 }
+
+const VolunteerCardListContainer = styled.div`
+  display: flex;
+  justify-content: left;
+`;
 
 export function VolunteerCardList({
   volunteers,
@@ -23,14 +29,16 @@ export function VolunteerCardList({
   const items = volunteers.map((volunteer) => <VolunteerCard key={volunteer.id} volunteer={volunteer} />);
 
   return (
-    <PaginatedGrid
-      pageItems={items}
-      columns={columns}
-      rows={rows}
-      currentPage={currentPage}
-      setCurrentPage={setCurrentPage}
-      totalItemCounts={count}
-    />
+    <VolunteerCardListContainer>
+      <PaginatedGrid
+        pageItems={items}
+        columns={columns}
+        rows={rows}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        totalItemCounts={count}
+      />
+    </VolunteerCardListContainer>
   );
 }
 

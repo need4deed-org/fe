@@ -13,6 +13,7 @@ const hoverBGColorMap = {
   "var(--color-orchid-subtle)": "var(--color-aubergine-subtle)",
   "var(--color-orchid-light)": "var(--color-orchid)",
   "var(--color-grey-50)": "var(--color-aubergine)",
+  "var(--color-violet-500)": "var(--color-violet-400)",
 };
 
 type BackgroundColorKeys = keyof typeof hoverBGColorMap;
@@ -49,13 +50,14 @@ const StyledButton = styled.button<StyledButtonProps>`
   }
 `;
 
-interface Props {
+export interface ButtonProps {
   text?: string;
   textFontSize?: string;
   onClick?: () => void;
   backgroundcolor?: BackgroundColorKeys;
   textColor?: string;
   textHoverColor?: string;
+  textFontWeight?: number | string;
   height?: string;
   width?: string;
   iconName?: IconName;
@@ -64,6 +66,7 @@ interface Props {
   iconPosition?: "left" | "right";
   border?: string;
   disabled?: boolean;
+  padding?: string;
 }
 
 export function Button({
@@ -73,6 +76,7 @@ export function Button({
   backgroundcolor,
   textColor,
   textHoverColor,
+  textFontWeight,
   height,
   width,
   iconName,
@@ -81,7 +85,8 @@ export function Button({
   iconPosition = "left",
   border,
   disabled,
-}: Props) {
+  padding,
+}: ButtonProps) {
   return (
     <StyledButton
       disabled={disabled}
@@ -90,7 +95,7 @@ export function Button({
       height={height}
       width={width}
       gap={text ? "var(--button-gap)" : "0px"}
-      padding={text ? "var(--button-padding)" : "0px"}
+      padding={padding || (text ? "var(--button-padding)" : "0px")}
       $iconPosition={iconPosition}
       border={border}
       $textHoverColor={textHoverColor}
@@ -102,7 +107,7 @@ export function Button({
       )}
 
       {text && (
-        <ButtonSpan fontSize={textFontSize} color={textColor}>
+        <ButtonSpan fontSize={textFontSize} color={textColor} fontWeight={textFontWeight}>
           {text}
         </ButtonSpan>
       )}
