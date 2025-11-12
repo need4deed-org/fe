@@ -2,10 +2,11 @@ export const tokenKey = "token";
 
 export const apiURL = process.env.API_URL || "http://localhost:5000";
 export const apiPrefix = "api";
-export const apiPathVolunteer = `/${apiPrefix}/volunteer/`;
+export const apiPathVolunteer = `/${apiPrefix}/volunteer`;
 export const apiPathLogin = `/${apiPrefix}/auth/login`;
-export const apiPathAuthEmailDomain = `${apiPrefix}/auth-email-domain/`;
-export const apiPathOpportunity = `${apiPrefix}/opportunity`;
+export const apiPathAuthEmailDomain = `/${apiPrefix}/auth-email-domain`;
+export const apiPathOpportunity = `/${apiPrefix}/opportunity`;
+export const apiPathOption = `/${apiPrefix}/option`;
 
 export enum ScreenTypes {
   MOBILE = "mobile",
@@ -46,3 +47,5 @@ export enum DashboardRoutes {
   Calendar = "/dashboard/calendar",
   Profile = "/dashboard/profile",
 }
+
+export const questionMark = "?";

@@ -64,7 +64,7 @@ export const Paragraph = styled.p<TextProps>`
 `;
 
 export const ButtonSpan = styled.span<TextProps>`
-  font-weight: var(--button-text-font-weight);
+  font-weight: ${(props) => props.fontWeight || "var(--button-text-font-weight)"};
   font-size: ${(props) => props.fontSize || "var(--button-text-font-size)"};
   line-height: var(--button-text-line-height);
   letter-spacing: var(--button-text-letter-spacing);

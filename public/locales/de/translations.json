@@ -324,7 +324,44 @@
         "tab2": "KARTE"
       },
       "filters": {
-        "button": "FILTER"
+        "accompanying": "Begleitung",
+        "accompanyingDesc": "Nur Freiwillige anzeigen, die bereit sind, Bewohner zu einzelnen Terminen zu begleiten",
+        "district": "Bezirk",
+        "languages": "Sprachen",
+        "engagement": {
+          "header": "Engagement",
+          "active": "Aktiv",
+          "inactive": "Inaktiv",
+          "new": "Neu",
+          "available": "Verfügbar",
+          "temporarilyUnavailable": "Vorübergehend nicht verfügbar",
+          "unresponsive": "Reagiert nicht"
+        },
+        "preferredAv": {
+          "header": "Bevorzugte Verfügbarkeit",
+          "days": {
+            "header": "Tage",
+            "Monday": "Mo",
+            "Tuesday": "Di",
+            "Wednesday": "Mi",
+            "Thursday": "Do",
+            "Friday": "Fr",
+            "Saturday": "Sa",
+            "Sunday": "So"
+          },
+          "times": {
+            "header": "Zeiten",
+            "08-11": "08-11",
+            "11-14": "11-14",
+            "14-17": "14-17",
+            "17-20": "17-20"
+          },
+          "occasional": {
+            "header": "Gelegentlich",
+            "weekdays": "Wochentage",
+            "weekends": "Wochenenden"
+          }
+        }
       },
       "volunteers": "Freiwillige",
       "languages": "Sprachen",
@@ -380,6 +417,11 @@
       "emailMissingAtChar": "Die E-Mail-Adresse muss ein '@'-Zeichen enthalten.",
       "passwordMissing": "Passwort fehlt.",
       "successMessage": "Anmeldung erfolgreich"
+    },
+    "filters": {
+      "button": "FILTER",
+      "closeFilters": "FILTER SCLIEẞEN",
+      "clearAll": "Filter löschen"
     }
   },
 

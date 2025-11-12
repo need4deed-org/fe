@@ -1,13 +1,18 @@
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
-import { Heading2, Heading4 } from "../../../styled/text";
+import { Heading2, Heading4, Paragraph } from "../../../styled/text";
 import { Search } from "../../../core/common";
 import FiltersButton from "./FiltersButton";
 import { hyphenationStyles } from "../../../styled/mixins";
 import Results from "./Results";
 import SortBy, { OnChangeSortOrder } from "./SortBy";
 import { SortOrder } from "need4deed-sdk";
+import { CardsFilter } from "../../Volunteers/Filters/types";
+import { XIcon } from "@phosphor-icons/react";
+import { createSelectedFilterItemsAsFlatArray } from "../../Volunteers/Filters/helpers";
+import ClearAllFilters from "../CardsFilter/ClearAllFilters";
+import { SetFilter } from "../CardsFilter/types";
 
 interface Props {
   header: string;
@@ -20,6 +25,8 @@ interface Props {
   setIsFiltersOpen: (isOpen: boolean) => void;
   sortOrder: SortOrder;
   onSortOrderChange?: OnChangeSortOrder;
+  filter: CardsFilter;
+  setFilter: SetFilter<CardsFilter>;
 }
 
 export default function CardsHeader({
@@ -33,8 +40,12 @@ export default function CardsHeader({
   setIsFiltersOpen,
   sortOrder,
   onSortOrderChange,
+  filter,
+  setFilter,
 }: Props) {
   const { t } = useTranslation();
+
+  const selectedFilters = createSelectedFilterItemsAsFlatArray(filter, setFilter, t);
 
   return (
     <HeaderContainer>
@@ -49,28 +60,77 @@ export default function CardsHeader({
               </TabHeading>
             ))}
           </Tabs>
-
-          <ResultsSortByContainer>
-            <Results counter={resultCounter} text={resultText} />
-            <SortBy sortOrder={sortOrder} onChange={onSortOrderChange} />
-          </ResultsSortByContainer>
+          <SortBy sortOrder={sortOrder} onChange={onSortOrderChange} />
         </TabsSectionContainer>
 
         <SearchBarSectionContainer>
           <Search
-            placeHolder={`${t("dashboard.searchPlaceHolder")} ...`}
+            placeHolder={`${t("dashboard.searchPlaceHolder")}...`}
             onInputChange={onSearchInputChange}
-            width="var(--dashboard-cards-header-searchbar-width)" //Todo: take this width value as prop when migrating website opportunities.
+            width="var(--filters-search-bar-width)"
             backgroundColor="var(--color-magnolia-light)"
+            value={filter.search}
           />
           <FiltersButton setIsFiltersOpen={setIsFiltersOpen} />
         </SearchBarSectionContainer>
+
+        <Results counter={resultCounter} text={resultText} />
+
+        <HeaderFilterItemContainer>
+          {selectedFilters.map((f) => (
+            <HeaderFilterItem key={f.label}>
+              <Paragraph
+                color="var(--color-midnight)"
+                fontSize="var(--cards-header-filter-item-font-size)"
+                fontWeight="var(--cards-header-filter-item-font-weight)"
+              >
+                {f.label}
+              </Paragraph>
+              <XIconDiv>
+                <XIcon size={20} onClick={() => f.onChange(!f.checked)} />
+              </XIconDiv>
+            </HeaderFilterItem>
+          ))}
+          {selectedFilters.length > 1 && <ClearAllFilters filter={filter} setFilter={setFilter} />}
+        </HeaderFilterItemContainer>
       </TabsSearchBarContainer>
     </HeaderContainer>
   );
 }
 
 /* Styles */
+
+const XIconDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: var(--cards-header-filter-item-icon-div-size);
+  height: var(--cards-header-filter-item-icon-div-size);
+  border-radius: var(--cards-header-filter-item-icon-div-border-radius);
+
+  &:hover {
+    background-color: var(--color-pink-200);
+  }
+`;
+
+const HeaderFilterItem = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  height: var(--cards-header-filter-item-height);
+  gap: var(--cards-header-filter-item-gap);
+  border-radius: var(--cards-header-filter-item-border-radius);
+  padding: var(--cards-header-filter-item-padding);
+  background-color: var(--color-pink-50);
+`;
+
+const HeaderFilterItemContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: var(--dashboard-cards-header-filter-item-container-gap);
+  flex-wrap: wrap;
+`;
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -88,9 +148,7 @@ const TabsSectionContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: var(
-    --dashboard-cards-header-searchbar-width
-  ); //Todo: take this width value as prop when migrating website opportunities.
+  width: var(--filters-search-bar-width);
 `;
 
 const Tabs = styled.div`
@@ -102,13 +160,7 @@ const Tabs = styled.div`
 const SearchBarSectionContainer = styled.div`
   display: flex;
   flex-direction: var(--opportunities-header-searchbar-flex-direction);
-  justify-content: space-between;
-`;
-
-const ResultsSortByContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: var(--dashboard-cards-header-result-sortBy-gap);
+  gap: var(--filters-search-bar-section-container-gap);
 `;
 
 interface TabHeadingProps {
