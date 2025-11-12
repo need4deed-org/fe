@@ -6,6 +6,7 @@ export const apiPathVolunteer = `/volunteer/`;
 export const apiPathLogin = `/auth/login`;
 export const apiPathAuthEmailDomain = `${apiPrefix}/auth-email-domain/`;
 export const apiPathOpportunity = `${apiPrefix}/opportunity`;
+export const apiPathOption = `/${apiPrefix}/option`;
 export const apiProfilePath = (id: string) => `${apiPathVolunteer}${id}`;
 
 export enum ScreenTypes {
