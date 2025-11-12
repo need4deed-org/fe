@@ -6,6 +6,7 @@ import Link from "next/link";
 import { ApiVolunteerGet } from "need4deed-sdk";
 import VolunteerHeader from "./sections/VolunteerHeader";
 import { PROFILE_CARD_CONFIG } from "./config/ProfileSectionConfig";
+import { useTranslation } from "react-i18next";
 
 const PageContainer = styled.div`
   max-width: 1200px;
@@ -60,14 +61,15 @@ const CardComponent = ({ type, volunteers }: ProfilePageProps) => {
   return <Component volunteer={volunteers} />;
 };
 
-const Profile = ({ volunteers }: ProfilePageProps) => {
+const ProfilePage = ({ volunteers }: ProfilePageProps) => {
+  const { t } = useTranslation();
   return (
     <PageContainer>
       <BackLink href="/dashboard">
         <ArrowLeft size={16} />
-        Back to dashboard
+        {t("dashboard.volunteerProfile.backToDashboard")}
       </BackLink>
-      <h1>Volunteers Profile</h1>
+      <h1>{t("dashboard.volunteerProfile.volunteersProfile")}</h1>
       {PROFILE_CARD_CONFIG.map((card) => (
         <Card key={card.type}>
           <CardComponent type={card.type} volunteers={volunteers} />
@@ -77,4 +79,4 @@ const Profile = ({ volunteers }: ProfilePageProps) => {
   );
 };
 
-export default Profile;
+export default ProfilePage;
