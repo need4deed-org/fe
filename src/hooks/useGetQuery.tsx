@@ -6,15 +6,8 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 
-const fetchData = async <T,>(apiPath: string, page?: number, limit?: number, language?: Lang, sort?: SortOrder) => {
-  const response: AxiosResponse<ApiResponse<T>> = await axiosInstance.get(apiPath, {
-    params: {
-      page,
-      limit,
-      language,
-      sort,
-    },
-  });
+const fetchData = async <T,>(apiPath: string, params: Params) => {
+  const response: AxiosResponse<ApiResponse<T>> = await axiosInstance.get(apiPath, { params });
   return response.data;
 };
 
