@@ -33,7 +33,7 @@ const Overlay = styled.div<{ $isOpen: boolean }>`
   z-index: 1000;
   padding: 20px;
   overflow-y: auto;
-  /* Bloquear interacción con el contenido de fondo */
+  /* Block interaction with background content */
   pointer-events: auto;
 `;
 
@@ -47,9 +47,9 @@ const ModalContent = styled.div`
   box-shadow: var(--n4d-box-shadow);
   width: 100%;
   padding: 24px;
-  /* Asegurar que el contenido del modal puede recibir eventos */
+  /* Ensure modal content can receive events */
   pointer-events: auto;
-  /* Asegurar que el modal puede recibir foco */
+  /* Ensure modal can receive focus */
   outline: none;
 
   @media (min-width: 768px) {
@@ -95,13 +95,13 @@ export function Modal({
     if (!modalRef.current) return [];
 
     const focusableSelectors = [
-      'a[href]',
-      'button:not([disabled])',
-      'textarea:not([disabled])',
-      'input:not([disabled])',
-      'select:not([disabled])',
-      '[tabindex]:not([tabindex="-1"])',
-    ].join(', ');
+      "a[href]",
+      "button:not([disabled])",
+      "textarea:not([disabled])",
+      "input:not([disabled])",
+      "select:not([disabled])",
+      "[tabindex]:not([tabindex=\"-1\"])",
+    ].join(", ");
 
     return Array.from(modalRef.current.querySelectorAll<HTMLElement>(focusableSelectors));
   }, []);
@@ -125,13 +125,13 @@ export function Modal({
 
     const handleKeyDown = (e: KeyboardEvent) => {
       // Close on Escape key
-      if (e.key === 'Escape') {
+      if (e.key === "Escape") {
         onClose();
         return;
       }
 
       // Focus trap: handle Tab key
-      if (e.key !== 'Tab') return;
+      if (e.key !== "Tab") return;
 
       if (focusableElements.length === 0) {
         e.preventDefault();
