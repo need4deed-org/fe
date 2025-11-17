@@ -1,11 +1,12 @@
 "use client";
 import { DeepKeys, DeepValue, FieldApi, useForm } from "@tanstack/react-form";
 import { Lang } from "need4deed-sdk";
-import React, { useCallback, type ChangeEvent } from "react";
+import React, { useMemo, type ChangeEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { Selected } from "./types";
 import style from "./index.module.css";
 import { Button } from "../core/button";
+import { LanguageLevel, LanguageObject } from "@/types";
 
 interface Props<T, K extends DeepKeys<T>> {
   label: string;
@@ -15,18 +16,18 @@ interface Props<T, K extends DeepKeys<T>> {
   id: number;
   prevLevel: "languagesNative" | "languagesFluent" | "languagesIntermediate";
   prevLanguage: string;
-  currentLangArray: Array<string>;
+  languageArray: Array<LanguageObject>;
   disabledLanguages: Array<string>;
   showRemove: boolean;
   removeLanguage: (id: number) => void;
   updateLanguage: (id: number, newLang: string) => void;
-  updateLevel: (id: number, newLevel: "languagesNative" | "languagesFluent" | "languagesIntermediate") => void;
+  updateLevel: (id: number, newLevel: LanguageLevel) => void;
 }
 
 export default function SelectInputField<T, K extends DeepKeys<T>>({
   label,
   field,
-  currentLangArray,
+  languageArray,
   disabledLanguages,
   prevLevel,
   prevLanguage,
@@ -39,9 +40,14 @@ export default function SelectInputField<T, K extends DeepKeys<T>>({
 }: Props<T, K>) {
   const { t, i18n } = useTranslation();
 
-  const languageLevels = ["languagesNative", "languagesFluent", "languagesIntermediate"];
+  const languageLevels: Array<LanguageLevel> = [LanguageLevel.NATIVE, LanguageLevel.FLUENT, LanguageLevel.INTERMEDIATE];
 
-  const handlePrevValue = useCallback(() => {
+  const currentLangArray = useMemo(
+    () => languageArray.filter((l) => l.level === prevLevel).map((item) => item.language),
+    [languageArray, prevLevel],
+  );
+
+  const handlePrevValue = () => {
     if (prevLanguage) {
       const oldLevelLanguages = form.state.values[prevLevel as keyof T] as Selected[];
       const oldLangIndex = oldLevelLanguages.findIndex((item) => item.id === prevLanguage);
@@ -52,40 +58,34 @@ export default function SelectInputField<T, K extends DeepKeys<T>>({
     } else {
       return;
     }
-  }, [prevLanguage, form]);
+  };
 
-  const handleLevelChange = useCallback(
-    (e: ChangeEvent<HTMLSelectElement>) => {
-      if (e.target) {
-        const newLangLevelKey = e.target.value as keyof T;
-        const newLevelLanguages = form.state.values[newLangLevelKey] as Selected[];
-        const newLangIndex = newLevelLanguages.findIndex((item) => item.id === prevLanguage);
+  const handleLevelChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    if (e.target) {
+      const newLangLevelKey = e.target.value as keyof T;
+      const newLevelLanguages = form.state.values[newLangLevelKey] as Selected[];
+      const newLangIndex = newLevelLanguages.findIndex((item) => item.id === prevLanguage);
 
-        if (newLangIndex !== -1) {
-          form.setFieldValue(
-            `${String(newLangLevelKey)}[${newLangIndex}].selected` as DeepKeys<T>,
-            true as DeepValue<T, K>,
-          );
-        }
-      } else {
-        return;
+      if (newLangIndex !== -1) {
+        form.setFieldValue(
+          `${String(newLangLevelKey)}[${newLangIndex}].selected` as DeepKeys<T>,
+          true as DeepValue<T, K>,
+        );
       }
-    },
-    [prevLanguage, form],
-  );
+    } else {
+      return;
+    }
+  };
 
-  const handleLanguageChange = useCallback(
-    (e: ChangeEvent<HTMLSelectElement>) => {
-      const newArr = [...currentLangArray].filter((item) => item !== prevLanguage);
-      const currentLanguages = field.state.value as Selected[];
-      const newLanguages = currentLanguages.map((item) => ({
-        ...item,
-        selected: item.id === e.target.value || newArr.some((lang) => lang === item.id),
-      }));
-      field.handleChange(newLanguages as DeepValue<T, K>);
-    },
-    [currentLangArray, prevLanguage],
-  );
+  const handleLanguageChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    const newArr = [...currentLangArray].filter((item) => item !== prevLanguage);
+    const currentLanguages = field.state.value as Selected[];
+    const newLanguages = currentLanguages.map((item) => ({
+      ...item,
+      selected: item.id === e.target.value || newArr.some((lang) => lang === item.id),
+    }));
+    field.handleChange(newLanguages as DeepValue<T, K>);
+  };
 
   return (
     <div className={style["form-languages-grid"]}>
@@ -120,7 +120,7 @@ export default function SelectInputField<T, K extends DeepKeys<T>>({
           onChange={(e) => {
             handlePrevValue();
             handleLevelChange(e);
-            updateLevel(id, e.target.value as "languagesNative" | "languagesFluent" | "languagesIntermediate");
+            updateLevel(id, e.target.value as LanguageLevel);
           }}
         >
           {languageLevels.map((level, idx) => (

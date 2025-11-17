@@ -14,7 +14,7 @@ import UploadIcon from "../../svg/Upload";
 import WithParentRef from "@/components/withParentRef";
 import useList from "@/hooks/useLists";
 import usePostRequest from "@/hooks/usePostRequest";
-import { Subpage } from "@/types";
+import { LanguageLevel, LanguageObject, Subpage } from "@/types";
 import ErrorAnnouncement from "../AddOpportunity/ErrorAnnouncement";
 import FieldInfo from "../FieldInfo";
 import HeaderWithHelp from "../HeaderWithHelp";
@@ -43,7 +43,9 @@ const somethingWrong = "form.becomeVolunteer.somethingWrong";
 export default function BecomeVolunteer() {
   const [showErrorAnnouncement, setShowErrorAnnouncement] = useState(false);
   const [langId, setLangId] = useState(2);
-  const [languageArray, setLanguageArray] = useState([{ id: 1, language: "", level: "languagesNative" }]);
+  const [languageArray, setLanguageArray] = useState<Array<LanguageObject>>([
+    { id: 1, language: "", level: LanguageLevel.NATIVE },
+  ]);
   const navigate = useRouter();
   const { lng } = useParams();
   const { t, i18n } = useTranslation();
@@ -114,12 +116,9 @@ export default function BecomeVolunteer() {
     setLanguageArray((prevArray) => prevArray.map((item) => (item.id === id ? { ...item, language: newLang } : item)));
   }, []);
 
-  const updateLevel = useCallback(
-    (id: number, newLevel: "languagesNative" | "languagesFluent" | "languagesIntermediate") => {
-      setLanguageArray((prevArray) => prevArray.map((item) => (item.id === id ? { ...item, level: newLevel } : item)));
-    },
-    [],
-  );
+  const updateLevel = useCallback((id: number, newLevel: LanguageLevel) => {
+    setLanguageArray((prevArray) => prevArray.map((item) => (item.id === id ? { ...item, level: newLevel } : item)));
+  }, []);
 
   const removeLanguage = useCallback((id: number) => {
     setLanguageArray((prevArray) => prevArray.filter((item) => item.id !== id));
@@ -133,7 +132,7 @@ export default function BecomeVolunteer() {
         {
           id: langId,
           language: "",
-          level: "languagesNative",
+          level: LanguageLevel.NATIVE,
         },
       ]);
       setLangId((prev) => prev + 1);
@@ -245,7 +244,7 @@ export default function BecomeVolunteer() {
             <div className={style["form-languages-wrapper"]}>
               {languageArray.map((lang) => (
                 <formVolunteer.Field
-                  name={lang.level as "languagesNative" | "languagesFluent" | "languagesIntermediate"}
+                  name={lang.level as LanguageLevel}
                   key={`${lang.id}${lang.language}${lang.level}`}
                   validators={{
                     onChange: ({ value }) => {
@@ -255,10 +254,6 @@ export default function BecomeVolunteer() {
                   }}
                 >
                   {(field) => {
-                    const currentLevelLangArray = useMemo(
-                      () => languageArray.filter((l) => l.level === lang.level).map((item) => item.language),
-                      [languageArray, lang.level],
-                    );
                     return (
                       <>
                         <WithParentRef
@@ -266,18 +261,15 @@ export default function BecomeVolunteer() {
                             setTimeout(field.handleBlur, 0);
                           }}
                         >
-                          <SelectInputField<
-                            VolunteerData,
-                            "languagesNative" | "languagesFluent" | "languagesIntermediate"
-                          >
+                          <SelectInputField<VolunteerData, LanguageLevel>
                             label={t("form.becomeVolunteer.fields.languages.headerWithoutAsterick")}
                             field={field}
                             id={lang.id}
                             form={formVolunteer}
                             prevLanguage={lang.language}
-                            prevLevel={lang.level as "languagesNative" | "languagesFluent" | "languagesIntermediate"}
+                            prevLevel={lang.level as LanguageLevel}
                             disabledLanguages={disabledLanguages}
-                            currentLangArray={currentLevelLangArray}
+                            languageArray={languageArray}
                             showRemove={lang.id !== 1}
                             removeLanguage={removeLanguage}
                             updateLanguage={updateLanguage}

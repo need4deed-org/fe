@@ -21,7 +21,7 @@
 
 .form-languages-grid {
   display: grid;
-  grid-template-columns: 70% 20% 10%;
+  grid-template-columns: minmax(40%, 70%) 20% 20%;
   gap: 2rem;
   width: 100%;
   align-items: center;
