@@ -148,6 +148,7 @@
   display: flex;
   gap: 5rem;
   width: 100%;
+  width: 100%;
 }
 
 .form-table {
@@ -372,6 +373,18 @@
 
   .form-container-header img {
     height: 1.3rem;
+  }
+
+  .form-languages-grid {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    & label {
+      width: 100%;
+    }
+    & button {
+      align-self: flex-end;
+    }
   }
 
   .form-languages-grid {

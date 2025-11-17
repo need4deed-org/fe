@@ -308,6 +308,7 @@ export default function BecomeVolunteer() {
             return (
               <fieldset>
                 <hr />
+                <hr />
                 <div className={style["form-table-wrapper"]}>
                   <h3>{t("form.becomeVolunteer.fields.availability.header")}</h3>
                   <div
