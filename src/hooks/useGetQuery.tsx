@@ -54,7 +54,6 @@ interface UseGetQuery {
 // The generic custom hook with pagination-sort-language params
 export const useGetQuery = <T,>({ queryKey, apiPath, params = {}, staleTime }: UseGetQuery) => {
   const { t, i18n } = useTranslation();
-
   params.language = i18n.language as Lang;
   params.filter = getReducedFilter(params.filter);
 
