@@ -11,7 +11,6 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { I18nProvider } from "../config/i18next";
 import "./globals.css";
-import "../middleware/axiosInstance";
 
 const figtree = Figtree({
   subsets: ["latin"],
