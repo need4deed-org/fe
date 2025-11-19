@@ -114,14 +114,13 @@ interface Props {
 }
 
 export function VolunteerHeader({ volunteer }: Props) {
-  // const [isModalOpen, setIsModalOpen] = useState(false);
   const { t } = useTranslation();
 
   const joinedSince = formatDateTime(volunteer.createdAt);
   const fullName = `${volunteer.person.firstName} ${volunteer.person.lastName}`;
 
   const handleStatusChangeClick = () => {
-    // setIsModalOpen(true);
+    //setting modal open logic here
   };
 
   const isAvatarAvailable = () => {
