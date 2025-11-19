@@ -424,7 +424,63 @@
     },
     "volunteerProfile": {
       "backToDashboard": "Back to Dashboard",
-      "volunteersProfile": "Profil des Freiwilligen"
+      "volunteersProfile": "Volunteer’s profile",
+      "volunteerHeader": {
+        "modalData": {
+          "title": "Change engagement status",
+          "options": {
+            "unresponsive": "Unresponsive",
+            "description": "Volunteer is not responding to messages or calls.",
+            "temporarily_unavailable": "Temporarily unavailable",
+            "description2": "The volunteer is temporarily unavailable for assignments.",
+            "inactive": "Inactive",
+            "description3": "The volunteer is no longer active in the program.",
+            "returnDate": "Return date",
+            "returnDatePlaceHolder": "Select return date (optional)"
+          },
+          "cancel": "Cancel",
+          "save": "Save"
+        },
+        "notSet": "Not set",
+        "change_status": "Change status",
+        "engagementStatus_title": "Engagement status",
+        "engagementStatus_options": {
+          "new": "New",
+          "active": "Active",
+          "tempInactive": "Temp. inactive",
+          "inactive": "Inactive"
+        },
+        "volunteerType_title": "Volunteer type",
+        "volunteerType_options": {
+          "accompanying": "Accompanying",
+          "other": "Other"
+        },
+        "matchStatus_title": "Match status",
+        "matchStatus_options": {
+          "matched": "Matched",
+          "needsRematch": "Needs to be rematched",
+          "unmatched": "Unmatched"
+        },
+        "communication_title": "Communication",
+        "communication_options": {
+          "called": "Called",
+          "emailSent": "Email sent",
+          "briefed": "Briefed",
+          "triedToCall": "Tried to call",
+          "notResponding": "Not responding"
+        },
+        "appreciation_title": "Appreciation",
+        "appreciation_options": {
+          "tshirt": "T-shirt",
+          "benefitCard": "Benefit card",
+          "toteBag": "Tote bag"
+        },
+        "certificateGC_title": "Certificate of GC",
+        "certificateGC_options": {
+          "uploaded": "Uploaded",
+          "missing": "Missing"
+        }
+      }
     }
   },
   "message": {

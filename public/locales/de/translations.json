@@ -424,11 +424,67 @@
     },
     "volunteerProfile": {
       "backToDashboard": "Zurück zum Dashboard",
-      "volunteersProfile": "Profil des Freiwilligen"
+      "volunteersProfile": "Profil des Freiwilligen",
+      "volunteerHeader": {
+        "modalData": {
+          "title": "Engagement-Status ändern",
+          "options": {
+            "unresponsive": "Nicht ansprechbar",
+            "description": "Freiwillige(r) reagiert nicht auf Nachrichten oder Anrufe.",
+            "temporarily_unavailable": "Vorübergehend nicht verfügbar",
+            "description2": "Der/Die Freiwillige ist vorübergehend nicht für Einsätze verfügbar.",
+            "inactive": "Inaktiv",
+            "description3": "Der/Die Freiwillige ist nicht mehr im Programm aktiv.",
+            "returnDate": "Rückkehrdatum",
+            "returnDatePlaceHolder": "Rückkehrdatum auswählen (optional)"
+          },
+          "cancel": "Abbrechen",
+          "save": "Speichern"
+        },
+        "notSet": "Nicht festgelegt",
+        "change_status": "Status ändern",
+        "engagementStatus_title": "Engagement-Status",
+        "engagementStatus_options": {
+          "new": "Neu",
+          "active": "Aktiv",
+          "tempInactive": "Vorübergehend inaktiv",
+          "inactive": "Inaktiv"
+        },
+        "volunteerType_title": "Freiwilligen-Typ",
+        "volunteerType_options": {
+          "accompanying": "Begleitend",
+          "other": "Andere"
+        },
+        "matchStatus_title": "Zuweisungs-Status",
+        "matchStatus_options": {
+          "matched": "Zugewiesen",
+          "needsRematch": "Neu-Zuweisung erforderlich",
+          "unmatched": "Nicht zugewiesen"
+        },
+        "communication_title": "Kommunikation",
+        "communication_options": {
+          "called": "Angerufen",
+          "emailSent": "E-Mail gesendet",
+          "briefed": "Briefing erfolgt",
+          "triedToCall": "Versucht anzurufen",
+          "notResponding": "Keine Reaktion"
+        },
+        "appreciation_title": "Anerkennung",
+        "appreciation_options": {
+          "tshirt": "T-Shirt",
+          "benefitCard": "Vorteilskarte",
+          "toteBag": "Stofftasche"
+        },
+        "certificateGC_title": "GC-Zertifikat",
+        "certificateGC_options": {
+          "uploaded": "Hochgeladen",
+          "missing": "Fehlend"
+        }
+      }
+    },
+    "message": {
+      "successful": "Erfolgreich",
+      "errorGeneric": "Etwas ist schief gelaufen!"
     }
-  },
-  "message": {
-    "successful": "Erfolgreich",
-    "errorGeneric": "Etwas ist schief gelaufen!"
   }
 }

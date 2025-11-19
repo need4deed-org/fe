@@ -22,15 +22,15 @@ export function ProfileController() {
           longitude: -1.9027,
         },
       },
-      avatarUrl: "https://example.com/avatar.jpg",
+      avatarUrl: "",
     },
 
     status: "New",
-    statusEngagement: "new",
+    statusEngagement: "New",
     statusCommunication: "called",
     statusAppreciation: "t-shirt",
     statusType: "accompanying",
-    statusMatch: "matched",
+    statusMatch: "Matched",
     statusCgcProcess: "accompanying",
 
     languages: [
