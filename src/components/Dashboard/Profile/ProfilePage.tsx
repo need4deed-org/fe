@@ -12,14 +12,7 @@ const PageContainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding: 22px 20px;
-  background: #f1a9f5;
   color: var(--color-midnight);
-  background: linear-gradient(
-    0deg,
-    rgba(241, 169, 245, 1) 3%,
-    rgba(241, 176, 244, 1) 36%,
-    rgba(246, 238, 231, 1) 77%
-  ); /* White background based on new design */
 `;
 
 const Card = styled.section`
@@ -33,14 +26,17 @@ const BackLink = styled(Link)`
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 0.875rem;
-  color: #6b7280;
+  font-size: 20px;
+  color: var(--color-midnight);
   text-decoration: none;
   transition: color 0.2s;
+  margin-bottom: 24px;
+`;
 
-  &:hover {
-    color: #111827;
-  }
+const Heading = styled.h1`
+  font-size: 48px;
+  margin-bottom: 24px;
+  font-weight: 600;
 `;
 
 const SECTION_COMPONENTS: Partial<
@@ -66,10 +62,10 @@ const ProfilePage = ({ volunteers }: ProfilePageProps) => {
   return (
     <PageContainer>
       <BackLink href="/dashboard">
-        <ArrowLeft size={16} />
+        <ArrowLeft size={24} />
         {t("dashboard.volunteerProfile.backToDashboard")}
       </BackLink>
-      <h1>{t("dashboard.volunteerProfile.volunteersProfile")}</h1>
+      <Heading>{t("dashboard.volunteerProfile.volunteersProfile")}</Heading>
       {PROFILE_CARD_CONFIG.map((card) => (
         <Card key={card.type}>
           <CardComponent type={card.type} volunteers={volunteers} />
