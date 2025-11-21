@@ -6,7 +6,7 @@ import { ApiVolunteerGet } from "need4deed-sdk";
 import { useTranslation } from "react-i18next";
 import Divider from "../common/Divider";
 import StatusBadge from "../common/StatusBadge";
-import avatarImage from "@/assets/images/profile.svg";
+import { defaultAvatarVolunteerProfile } from "@/config/constants";
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -123,28 +123,17 @@ export function VolunteerHeader({ volunteer }: Props) {
     //setting modal open logic here
   };
 
-  const isAvatarAvailable = () => {
-    return (
-      <>
-        {volunteer.person.avatarUrl ? (
-          <Image
-            src={getImageUrl(volunteer.person.avatarUrl)}
-            alt={volunteer.person.firstName || "Volunteer Avatar"}
-            fill
-            style={{ objectFit: "cover" }}
-          />
-        ) : (
-          <Image src={avatarImage} alt="Avatar Placeholder" fill style={{ objectFit: "cover" }} />
-        )}
-      </>
-    );
-  };
+  const initialAvatarUrl = volunteer.person.avatarUrl
+    ? getImageUrl(volunteer.person.avatarUrl)
+    : getImageUrl(defaultAvatarVolunteerProfile);
 
   return (
     <HeaderContainer>
       <Card>
         <ProfileContent>
-          <AvatarContainer>{isAvatarAvailable()}</AvatarContainer>
+          <AvatarContainer>
+            <Image src={initialAvatarUrl} alt={volunteer.person.firstName} fill style={{ objectFit: "cover" }} />
+          </AvatarContainer>
 
           <ProfileInfo>
             <NameSection>
