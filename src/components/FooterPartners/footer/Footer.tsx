@@ -1,15 +1,21 @@
 import styled from "styled-components";
+
+import { ScreenTypes } from "@/config/constants";
+import { useScreenType } from "@/context/DeviceContext";
+import { FooterLink, Subpage } from "@/types";
+
 import { LogoN4D } from "../logos";
 import ContactSocials from "./ContactSocials";
 import FooterLinks from "./FooterLinks";
-import { useScreenType } from "@/context/DeviceContext";
-import { ScreenTypes } from "@/config/constants";
-import { FooterLink, Subpage } from "@/types";
 
 const FooterContainer = styled.div`
   display: flex;
-  flex-direction: var(--homepage-footer-partners-section-footer-container-flex-direction);
-  justify-content: var(--homepage-footer-partners-section-footer-container-justify-content);
+  flex-direction: var(
+    --homepage-footer-partners-section-footer-container-flex-direction
+  );
+  justify-content: var(
+    --homepage-footer-partners-section-footer-container-justify-content
+  );
   height: var(--homepage-footer-partners-section-footer-container-height);
   gap: var(--homepage-footer-partners-section-footer-container-gap);
 `;

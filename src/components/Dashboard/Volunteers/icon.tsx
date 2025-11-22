@@ -1,4 +1,10 @@
-import { CalendarDotsIcon, MapPinIcon, ShootingStarIcon, TranslateIcon, WrenchIcon } from "@phosphor-icons/react";
+import {
+  CalendarDotsIcon,
+  MapPinIcon,
+  ShootingStarIcon,
+  TranslateIcon,
+  WrenchIcon,
+} from "@phosphor-icons/react";
 import { JSX } from "react";
 
 export enum IconName {

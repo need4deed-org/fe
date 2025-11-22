@@ -1,6 +1,8 @@
+import { useEffect, useState } from "react";
+
 import { ScreenTypes } from "@/config/constants";
 import { useScreenType } from "@/context/DeviceContext";
-import { useState, useEffect } from "react";
+
 import N4DLogoIcon from "../../svg/N4DLogoIcon";
 
 const logoSizeMap = {
@@ -16,13 +18,13 @@ export function LogoN4D() {
 
   useEffect(() => {
     // This code will only run on the client-side
-    const computedHeight = getComputedStyle(document.documentElement).getPropertyValue(
-      "--homepage-footer-partners-section-logo-n4d-height",
-    );
+    const computedHeight = getComputedStyle(
+      document.documentElement,
+    ).getPropertyValue("--homepage-footer-partners-section-logo-n4d-height");
 
-    const computedWidth = getComputedStyle(document.documentElement).getPropertyValue(
-      "--homepage-footer-partners-section-logo-n4d-width",
-    );
+    const computedWidth = getComputedStyle(
+      document.documentElement,
+    ).getPropertyValue("--homepage-footer-partners-section-logo-n4d-width");
 
     setLogoWidth(computedWidth);
     setLogoHeight(computedHeight);

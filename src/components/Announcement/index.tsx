@@ -1,4 +1,5 @@
 "use client";
+
 import { useSearchParams } from "next/navigation";
 import { ReactNode } from "react";
 import { useTranslation } from "react-i18next";

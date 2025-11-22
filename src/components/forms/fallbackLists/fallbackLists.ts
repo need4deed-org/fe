@@ -1,6 +1,6 @@
 import { ListsOfOptionsType } from "../types";
-import { locations } from "./locationsFallback";
 import { activities, activitiesAccompanying } from "./activitiesFallback";
+import { locations } from "./locationsFallback";
 
 export const fallbackLists: ListsOfOptionsType = {
   locations,

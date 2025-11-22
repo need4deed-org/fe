@@ -6,7 +6,11 @@ interface Props {
   msTimeout?: number; // Optional: Delay before calling the handler
 }
 
-export default function useOutsideClick({ ref, handler, msTimeout = 0 }: Props) {
+export default function useOutsideClick({
+  ref,
+  handler,
+  msTimeout = 0,
+}: Props) {
   useEffect(() => {
     const listener = (event: Event) => {
       // Check if the click is outside the ref element

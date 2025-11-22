@@ -1,4 +1,5 @@
 import { ArrowsButtonContainer } from "@/components/styled/container";
+
 import CircleArrow from "../../svg/CircleArrow";
 import { colorMap } from "../../svg/utils";
 
@@ -9,7 +10,12 @@ interface Props {
   color: keyof typeof colorMap;
 }
 
-export function ArrowButtons({ currentIndex, setCurrentIndex, lastIndex, color }: Props) {
+export function ArrowButtons({
+  currentIndex,
+  setCurrentIndex,
+  lastIndex,
+  color,
+}: Props) {
   const firstIndex = 0;
 
   return (
@@ -18,13 +24,21 @@ export function ArrowButtons({ currentIndex, setCurrentIndex, lastIndex, color }
         direction="left"
         color={color}
         isFilled={currentIndex !== firstIndex}
-        onClick={currentIndex !== firstIndex ? () => setCurrentIndex(currentIndex - 1) : undefined}
+        onClick={
+          currentIndex !== firstIndex
+            ? () => setCurrentIndex(currentIndex - 1)
+            : undefined
+        }
       />
       <CircleArrow
         direction="right"
         color={color}
         isFilled={currentIndex !== lastIndex}
-        onClick={currentIndex !== lastIndex ? () => setCurrentIndex(currentIndex + 1) : undefined}
+        onClick={
+          currentIndex !== lastIndex
+            ? () => setCurrentIndex(currentIndex + 1)
+            : undefined
+        }
       />
     </ArrowsButtonContainer>
   );

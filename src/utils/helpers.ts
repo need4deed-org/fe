@@ -1,7 +1,9 @@
 import { cloudfrontURL } from "@/config/constants";
 
 export function isEnumValue<E>(enumObject: object, value: E) {
-  return typeof enumObject === "object" ? Object.values(enumObject).includes(value) : false;
+  return typeof enumObject === "object"
+    ? Object.values(enumObject).includes(value)
+    : false;
 }
 
 export const getImageUrl = (imageName: string): string => {

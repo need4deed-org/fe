@@ -1,8 +1,5 @@
 "use client";
-import WithParentRef from "@/components/withParentRef";
-import useList from "@/hooks/useLists";
-import usePostRequest from "@/hooks/usePostRequest";
-import { Subpage } from "@/types";
+
 import { useForm } from "@tanstack/react-form";
 import { validate as validateEmail } from "email-validator";
 import { Lang, OpportunityType, TranslatedIntoType } from "need4deed-sdk";
@@ -10,15 +7,25 @@ import Image from "next/image";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { apiPathOpportunity, eightDays, phoneRegEx } from "../../../config/constants";
+
+import WithParentRef from "@/components/withParentRef";
+import useList from "@/hooks/useLists";
+import usePostRequest from "@/hooks/usePostRequest";
+import { Subpage } from "@/types";
+
+import {
+  apiPathOpportunity,
+  eightDays,
+  phoneRegEx,
+} from "../../../config/constants";
 import { getImageUrl } from "../../../utils";
 import UploadIcon from "../../svg/Upload";
 import FieldInfo from "../FieldInfo";
 import HeaderWithHelp from "../HeaderWithHelp";
-import style from "../index.module.css";
 import MultipleCheckBoxInputsWithMore from "../MultipleCheckBoxInputsWithMore";
 import MultipleRadioInputsWithMore from "../MultipleRadioInputsWithMore";
 import SimpleInputField from "../SimpleInputField";
+import style from "../index.module.css";
 import { ListsOfOptions, TypePLZ } from "../types";
 import {
   getAllSelectedFalse,
@@ -32,8 +39,8 @@ import {
   parseFormStateDTOOpportunity,
 } from "../utils";
 import { validateRACEmail } from "../validators";
-import { OpportunityData, OpportunityParsedData } from "./dataStructure";
 import ErrorAnnouncement from "./ErrorAnnouncement";
+import { OpportunityData, OpportunityParsedData } from "./dataStructure";
 
 const thankYou = "form.addOpportunity.thankYou";
 const queryParamsMap: Record<string, keyof ParsedOpportunity> = {
@@ -44,7 +51,10 @@ const queryParamsMap: Record<string, keyof ParsedOpportunity> = {
   postcode: "racPostcode",
 };
 
-type ParsedOpportunity = Pick<OpportunityData, "fullName" | "email" | "racPhone" | "racAddress" | "racPostcode">;
+type ParsedOpportunity = Pick<
+  OpportunityData,
+  "fullName" | "email" | "racPhone" | "racAddress" | "racPostcode"
+>;
 
 export default function AddOpportunity() {
   const navigate = useRouter();
@@ -59,7 +69,10 @@ export default function AddOpportunity() {
     parsedOpportunity[mappedParam] = queryParams.get(queryParam) || "";
   });
 
-  const { postRequest } = usePostRequest<OpportunityParsedData, Record<string, string | string[]>>({
+  const { postRequest } = usePostRequest<
+    OpportunityParsedData,
+    Record<string, string | string[]>
+  >({
     url: apiPathOpportunity,
   });
 
@@ -71,7 +84,9 @@ export default function AddOpportunity() {
       opportunityType: undefined,
       locations: getAllSelectedFalse(useList(ListsOfOptions.LOCATIONS)),
       activities: getAllSelectedFalse(useList(ListsOfOptions.ACTIVITIES)),
-      activitiesAccompanying: getAllSelectedFalse(useList(ListsOfOptions.ACTIVITIES_ACCOMPANYING)),
+      activitiesAccompanying: getAllSelectedFalse(
+        useList(ListsOfOptions.ACTIVITIES_ACCOMPANYING),
+      ),
       languages: getAllSelectedFalse(useList(ListsOfOptions.LANGUAGES)),
       skills: getAllSelectedFalse(useList(ListsOfOptions.SKILLS)),
       aaAddress: "",
@@ -108,7 +123,12 @@ export default function AddOpportunity() {
       <div className={style["form-container-header"]}>
         <h1>
           {t("form.addOpportunity.header").toLocaleUpperCase()}
-          <Image src={getImageUrl("N4D-logo-purple-on-transparent-h.webp")} alt="" width={180} height={100} />
+          <Image
+            src={getImageUrl("N4D-logo-purple-on-transparent-h.webp")}
+            alt=""
+            width={180}
+            height={100}
+          />
         </h1>
       </div>
       <form
@@ -155,20 +175,27 @@ export default function AddOpportunity() {
               return undefined;
             }}
             onChangeAsyncValidator={({ value }) => {
-              return validateRACEmail(value as string, t("form.error.badEmail"));
+              return validateRACEmail(
+                value as string,
+                t("form.error.badEmail"),
+              );
             }}
           />
           <SimpleInputField<OpportunityData>
             name="fullName"
             FieldTag={formOpportunity.Field}
             label={t("form.addOpportunity.fields.contactGroup.fullName.label")}
-            onChangeValidator={({ value }) => (!value ? t("form.error.required") : undefined)}
+            onChangeValidator={({ value }) =>
+              !value ? t("form.error.required") : undefined
+            }
           />
           <SimpleInputField<OpportunityData>
             name="racAddress"
             FieldTag={formOpportunity.Field}
             label={t("form.addOpportunity.fields.contactGroup.address.label")}
-            onChangeValidator={({ value }) => (!value ? t("form.error.required") : undefined)}
+            onChangeValidator={({ value }) =>
+              !value ? t("form.error.required") : undefined
+            }
           />
           <SimpleInputField<OpportunityData>
             name="racPostcode"
@@ -193,7 +220,8 @@ export default function AddOpportunity() {
             onChangeValidator={({ value }) => {
               if (!value) return t("form.error.required");
 
-              if (!(value as string).match(phoneRegEx)) return t("form.error.number");
+              if (!(value as string).match(phoneRegEx))
+                return t("form.error.number");
 
               return undefined;
             }}
@@ -202,7 +230,8 @@ export default function AddOpportunity() {
         <formOpportunity.Field
           name="opportunityType"
           validators={{
-            onBlur: ({ value }) => (value === undefined ? t("form.error.required") : undefined),
+            onBlur: ({ value }) =>
+              value === undefined ? t("form.error.required") : undefined,
           }}
         >
           {(field) => (
@@ -213,8 +242,12 @@ export default function AddOpportunity() {
               }}
             >
               <HeaderWithHelp
-                textHelp={t("form.addOpportunity.fields.opportunityType.helpText")}
-                titleHelp={t("form.addOpportunity.fields.opportunityType.helpTitle")}
+                textHelp={t(
+                  "form.addOpportunity.fields.opportunityType.helpText",
+                )}
+                titleHelp={t(
+                  "form.addOpportunity.fields.opportunityType.helpTitle",
+                )}
                 classNamePopup="form-help"
               >
                 {t("form.addOpportunity.fields.opportunityType.header")}
@@ -239,23 +272,31 @@ export default function AddOpportunity() {
                   <formOpportunity.Field
                     name="activitiesAccompanying"
                     validators={{
-                      onBlur: ({ value }) => isSelected(value, t("form.error.required")),
+                      onBlur: ({ value }) =>
+                        isSelected(value, t("form.error.required")),
                     }}
                   >
                     {(field) => {
                       return (
                         <fieldset>
                           <HeaderWithHelp
-                            className={style["form-chiplist-header-within-group"]}
+                            className={
+                              style["form-chiplist-header-within-group"]
+                            }
                             classNamePopup={style["form-help"]}
                           >
-                            {t("form.addOpportunity.fields.aaGroup.activities.header")}
+                            {t(
+                              "form.addOpportunity.fields.aaGroup.activities.header",
+                            )}
                           </HeaderWithHelp>
                           <WithParentRef
                             className={`${style["form-chip-list"]} ${style["form-pick"]}`}
                             onFocus={() => setTimeout(field.handleBlur, 0)}
                           >
-                            <MultipleCheckBoxInputsWithMore<OpportunityData, "activitiesAccompanying">
+                            <MultipleCheckBoxInputsWithMore<
+                              OpportunityData,
+                              "activitiesAccompanying"
+                            >
                               FieldTag={formOpportunity.Field}
                               field={field}
                             />
@@ -268,7 +309,10 @@ export default function AddOpportunity() {
                   <formOpportunity.Field
                     name="translatedInto"
                     validators={{
-                      onBlur: ({ value }) => (value === undefined ? t("form.error.required") : undefined),
+                      onBlur: ({ value }) =>
+                        value === undefined
+                          ? t("form.error.required")
+                          : undefined,
                     }}
                   >
                     {(field) => (
@@ -279,11 +323,15 @@ export default function AddOpportunity() {
                         }}
                       >
                         <HeaderWithHelp
-                          textHelp={t("form.addOpportunity.fields.aaGroup.translatedInto.helpText")}
+                          textHelp={t(
+                            "form.addOpportunity.fields.aaGroup.translatedInto.helpText",
+                          )}
                           className={style["form-chiplist-header-within-group"]}
                           classNamePopup={style["form-help"]}
                         >
-                          {t("form.addOpportunity.fields.aaGroup.translatedInto.header")}
+                          {t(
+                            "form.addOpportunity.fields.aaGroup.translatedInto.header",
+                          )}
                         </HeaderWithHelp>
                         <div className={style["form-chip-list"]}>
                           <MultipleRadioInputsWithMore
@@ -296,56 +344,81 @@ export default function AddOpportunity() {
                       </fieldset>
                     )}
                   </formOpportunity.Field>
-                  {state.values.translatedInto && state.values.translatedInto !== TranslatedIntoType.NO_TRANSLATION && (
-                    <formOpportunity.Field
-                      name="languages"
-                      validators={{
-                        onBlur: ({ value }) => {
-                          return isSelected(value, t("form.error.language"));
-                        },
-                      }}
-                    >
-                      {(field) => {
-                        return (
-                          <fieldset
-                            onFocus={() => {
-                              setTimeout(field.handleBlur, 0);
-                            }}
-                          >
-                            <HeaderWithHelp
-                              textHelp={t("form.addOpportunity.fields.aaGroup.languagesTranslation.helpText")}
-                              className={style["form-chiplist-header-within-group"]}
-                              classNamePopup={style["form-help"]}
+                  {state.values.translatedInto &&
+                    state.values.translatedInto !==
+                      TranslatedIntoType.NO_TRANSLATION && (
+                      <formOpportunity.Field
+                        name="languages"
+                        validators={{
+                          onBlur: ({ value }) => {
+                            return isSelected(value, t("form.error.language"));
+                          },
+                        }}
+                      >
+                        {(field) => {
+                          return (
+                            <fieldset
+                              onFocus={() => {
+                                setTimeout(field.handleBlur, 0);
+                              }}
                             >
-                              {t("form.addOpportunity.fields.aaGroup.languagesTranslation.header")}
-                            </HeaderWithHelp>
-                            <WithParentRef className={`${style["form-chip-list"]} ${style["form-pick"]}`}>
-                              <MultipleCheckBoxInputsWithMore<OpportunityData, "languages">
-                                FieldTag={formOpportunity.Field}
-                                field={field}
-                                hiddenChips={
-                                  state.values.translatedInto === TranslatedIntoType.ENGLISH_OK
-                                    ? ["German", "Deutsch", "English", "Englisch"]
-                                    : ["German", "Deutsch"]
+                              <HeaderWithHelp
+                                textHelp={t(
+                                  "form.addOpportunity.fields.aaGroup.languagesTranslation.helpText",
+                                )}
+                                className={
+                                  style["form-chiplist-header-within-group"]
                                 }
-                              />
-                              <FieldInfo field={field} />
-                            </WithParentRef>
-                          </fieldset>
-                        );
-                      }}
-                    </formOpportunity.Field>
-                  )}
+                                classNamePopup={style["form-help"]}
+                              >
+                                {t(
+                                  "form.addOpportunity.fields.aaGroup.languagesTranslation.header",
+                                )}
+                              </HeaderWithHelp>
+                              <WithParentRef
+                                className={`${style["form-chip-list"]} ${style["form-pick"]}`}
+                              >
+                                <MultipleCheckBoxInputsWithMore<
+                                  OpportunityData,
+                                  "languages"
+                                >
+                                  FieldTag={formOpportunity.Field}
+                                  field={field}
+                                  hiddenChips={
+                                    state.values.translatedInto ===
+                                    TranslatedIntoType.ENGLISH_OK
+                                      ? [
+                                          "German",
+                                          "Deutsch",
+                                          "English",
+                                          "Englisch",
+                                        ]
+                                      : ["German", "Deutsch"]
+                                  }
+                                />
+                                <FieldInfo field={field} />
+                              </WithParentRef>
+                            </fieldset>
+                          );
+                        }}
+                      </formOpportunity.Field>
+                    )}
                   <SimpleInputField<OpportunityData>
                     name="aaAddress"
                     FieldTag={formOpportunity.Field}
-                    label={t("form.addOpportunity.fields.aaGroup.address.label")}
-                    onChangeValidator={({ value }) => (!value ? t("form.error.required") : undefined)}
+                    label={t(
+                      "form.addOpportunity.fields.aaGroup.address.label",
+                    )}
+                    onChangeValidator={({ value }) =>
+                      !value ? t("form.error.required") : undefined
+                    }
                   />
                   <SimpleInputField<OpportunityData>
                     name="aaPostcode"
                     FieldTag={formOpportunity.Field}
-                    label={t("form.addOpportunity.fields.aaGroup.postcode.label")}
+                    label={t(
+                      "form.addOpportunity.fields.aaGroup.postcode.label",
+                    )}
                     onChangeValidator={({ value }) => {
                       if (!value) {
                         return t("form.error.required");
@@ -361,7 +434,9 @@ export default function AddOpportunity() {
                   <SimpleInputField<OpportunityData>
                     name="dateTime"
                     FieldTag={formOpportunity.Field}
-                    label={t("form.addOpportunity.fields.aaGroup.dateTime.label")}
+                    label={t(
+                      "form.addOpportunity.fields.aaGroup.dateTime.label",
+                    )}
                     inputType="datetime-local"
                     onChangeValidator={({ value }) => {
                       if (!value) {
@@ -370,9 +445,12 @@ export default function AddOpportunity() {
                       if (Number.isNaN(getDate(value as string).getTime())) {
                         return t("form.error.badTime");
                       }
-                      const difference = getDate(value as string).valueOf() - Date.now();
+                      const difference =
+                        getDate(value as string).valueOf() - Date.now();
                       if (difference < eightDays) {
-                        return t("form.addOpportunity.fields.aaGroup.dateTime.tooClose");
+                        return t(
+                          "form.addOpportunity.fields.aaGroup.dateTime.tooClose",
+                        );
                       }
                       return undefined;
                     }}
@@ -380,17 +458,24 @@ export default function AddOpportunity() {
                   <SimpleInputField<OpportunityData>
                     name="refugeeName"
                     FieldTag={formOpportunity.Field}
-                    label={t("form.addOpportunity.fields.aaGroup.refugeeName.label")}
-                    onChangeValidator={({ value }) => (!value ? t("form.error.required") : undefined)}
+                    label={t(
+                      "form.addOpportunity.fields.aaGroup.refugeeName.label",
+                    )}
+                    onChangeValidator={({ value }) =>
+                      !value ? t("form.error.required") : undefined
+                    }
                   />
                   <SimpleInputField<OpportunityData>
                     name="refugeeNumber"
                     FieldTag={formOpportunity.Field}
-                    label={t("form.addOpportunity.fields.aaGroup.refugeeNumber.label")}
+                    label={t(
+                      "form.addOpportunity.fields.aaGroup.refugeeNumber.label",
+                    )}
                     onChangeValidator={({ value }) => {
                       if (!value) return t("form.error.required");
 
-                      if (!(value as string).match(phoneRegEx)) return t("form.error.number");
+                      if (!(value as string).match(phoneRegEx))
+                        return t("form.error.number");
 
                       return undefined;
                     }}
@@ -398,8 +483,12 @@ export default function AddOpportunity() {
                   <SimpleInputField<OpportunityData>
                     name="aaInformation"
                     FieldTag={formOpportunity.Field}
-                    label={t("form.addOpportunity.fields.aaGroup.information.label")}
-                    onChangeValidator={({ value }) => (!value ? t("form.error.required") : undefined)}
+                    label={t(
+                      "form.addOpportunity.fields.aaGroup.information.label",
+                    )}
+                    onChangeValidator={({ value }) =>
+                      !value ? t("form.error.required") : undefined
+                    }
                   />
                 </fieldset>
               );
@@ -415,23 +504,31 @@ export default function AddOpportunity() {
                   <formOpportunity.Field
                     name="locations"
                     validators={{
-                      onBlur: ({ value }) => isSelected(value, t("form.error.location")),
+                      onBlur: ({ value }) =>
+                        isSelected(value, t("form.error.location")),
                     }}
                   >
                     {(field) => {
                       return (
                         <fieldset>
                           <HeaderWithHelp
-                            className={style["form-chiplist-header-within-group"]}
+                            className={
+                              style["form-chiplist-header-within-group"]
+                            }
                             classNamePopup={style["form-help"]}
                           >
-                            {t("form.addOpportunity.fields.voGroup.locations.header")}
+                            {t(
+                              "form.addOpportunity.fields.voGroup.locations.header",
+                            )}
                           </HeaderWithHelp>
                           <WithParentRef
                             className={`${style["form-chip-list"]} ${style["form-pick"]}`}
                             onFocus={() => setTimeout(field.handleBlur, 0)}
                           >
-                            <MultipleCheckBoxInputsWithMore<OpportunityData, "locations">
+                            <MultipleCheckBoxInputsWithMore<
+                              OpportunityData,
+                              "locations"
+                            >
                               FieldTag={formOpportunity.Field}
                               field={field}
                             />
@@ -444,23 +541,31 @@ export default function AddOpportunity() {
                   <formOpportunity.Field
                     name="activities"
                     validators={{
-                      onBlur: ({ value }) => isSelected(value, t("form.error.activity")),
+                      onBlur: ({ value }) =>
+                        isSelected(value, t("form.error.activity")),
                     }}
                   >
                     {(field) => {
                       return (
                         <fieldset>
                           <HeaderWithHelp
-                            className={style["form-chiplist-header-within-group"]}
+                            className={
+                              style["form-chiplist-header-within-group"]
+                            }
                             classNamePopup={style["form-help"]}
                           >
-                            {t("form.addOpportunity.fields.voGroup.activities.header")}
+                            {t(
+                              "form.addOpportunity.fields.voGroup.activities.header",
+                            )}
                           </HeaderWithHelp>
                           <WithParentRef
                             className={`${style["form-chip-list"]} ${style["form-pick"]}`}
                             onFocus={() => setTimeout(field.handleBlur, 0)}
                           >
-                            <MultipleCheckBoxInputsWithMore<OpportunityData, "activities">
+                            <MultipleCheckBoxInputsWithMore<
+                              OpportunityData,
+                              "activities"
+                            >
                               FieldTag={formOpportunity.Field}
                               field={field}
                             />
@@ -473,24 +578,34 @@ export default function AddOpportunity() {
                   <formOpportunity.Field
                     name="languages"
                     validators={{
-                      onBlur: ({ value }) => isSelected(value, t("form.error.language")),
+                      onBlur: ({ value }) =>
+                        isSelected(value, t("form.error.language")),
                     }}
                   >
                     {(field) => {
                       return (
                         <fieldset>
                           <HeaderWithHelp
-                            textHelp={t("form.addOpportunity.fields.voGroup.languagesRefugee.helpText")}
-                            className={style["form-chiplist-header-within-group"]}
+                            textHelp={t(
+                              "form.addOpportunity.fields.voGroup.languagesRefugee.helpText",
+                            )}
+                            className={
+                              style["form-chiplist-header-within-group"]
+                            }
                             classNamePopup={style["form-help"]}
                           >
-                            {t("form.addOpportunity.fields.voGroup.languagesRefugee.header")}
+                            {t(
+                              "form.addOpportunity.fields.voGroup.languagesRefugee.header",
+                            )}
                           </HeaderWithHelp>
                           <WithParentRef
                             className={`${style["form-chip-list"]} ${style["form-pick"]}`}
                             onFocus={() => setTimeout(field.handleBlur, 0)}
                           >
-                            <MultipleCheckBoxInputsWithMore<OpportunityData, "languages">
+                            <MultipleCheckBoxInputsWithMore<
+                              OpportunityData,
+                              "languages"
+                            >
                               FieldTag={formOpportunity.Field}
                               field={field}
                             />
@@ -505,14 +620,25 @@ export default function AddOpportunity() {
                       return (
                         <fieldset>
                           <HeaderWithHelp
-                            textHelp={t("form.addOpportunity.fields.voGroup.skills.helpText")}
-                            className={style["form-chiplist-header-within-group"]}
+                            textHelp={t(
+                              "form.addOpportunity.fields.voGroup.skills.helpText",
+                            )}
+                            className={
+                              style["form-chiplist-header-within-group"]
+                            }
                             classNamePopup={style["form-help"]}
                           >
-                            {t("form.addOpportunity.fields.voGroup.skills.header")}
+                            {t(
+                              "form.addOpportunity.fields.voGroup.skills.header",
+                            )}
                           </HeaderWithHelp>
-                          <WithParentRef className={`${style["form-chip-list"]} ${style["form-pick"]}`}>
-                            <MultipleCheckBoxInputsWithMore<OpportunityData, "skills">
+                          <WithParentRef
+                            className={`${style["form-chip-list"]} ${style["form-pick"]}`}
+                          >
+                            <MultipleCheckBoxInputsWithMore<
+                              OpportunityData,
+                              "skills"
+                            >
                               FieldTag={formOpportunity.Field}
                               field={field}
                             />
@@ -526,13 +652,25 @@ export default function AddOpportunity() {
                     name="schedule"
                     validators={{
                       onBlur: ({ value, fieldApi }) => {
-                        setTimeout(() => fieldApi.form.validateField("onetimeDateTime", "change"), 0);
-                        const isDateTime = !!fieldApi.form.getFieldValue("onetimeDateTime");
+                        setTimeout(
+                          () =>
+                            fieldApi.form.validateField(
+                              "onetimeDateTime",
+                              "change",
+                            ),
+                          0,
+                        );
+                        const isDateTime =
+                          !!fieldApi.form.getFieldValue("onetimeDateTime");
                         const isScheduleEmpty = !isTimeSlotSelected(value);
                         if (!isScheduleEmpty && isDateTime)
-                          return t("form.addOpportunity.fields.voGroup.schedule.errorBoth");
+                          return t(
+                            "form.addOpportunity.fields.voGroup.schedule.errorBoth",
+                          );
                         if (isScheduleEmpty && !isDateTime)
-                          return t("form.addOpportunity.fields.voGroup.schedule.error");
+                          return t(
+                            "form.addOpportunity.fields.voGroup.schedule.error",
+                          );
 
                         return undefined;
                       },
@@ -543,11 +681,17 @@ export default function AddOpportunity() {
                       return (
                         <fieldset className={style["form-schedule"]}>
                           <HeaderWithHelp
-                            textHelp={t("form.addOpportunity.fields.voGroup.schedule.helpText")}
-                            className={style["form-chiplist-header-within-group"]}
+                            textHelp={t(
+                              "form.addOpportunity.fields.voGroup.schedule.helpText",
+                            )}
+                            className={
+                              style["form-chiplist-header-within-group"]
+                            }
                             classNamePopup={style["form-help"]}
                           >
-                            {t("form.addOpportunity.fields.voGroup.schedule.header")}
+                            {t(
+                              "form.addOpportunity.fields.voGroup.schedule.header",
+                            )}
                           </HeaderWithHelp>
                           <div
                             className={style["form-table"]}
@@ -558,45 +702,69 @@ export default function AddOpportunity() {
                             {field.state.value &&
                               field.state.value.map(({ weekday }, idx) => {
                                 return (
-                                  <div className={style["form-table-row"]} key={`weekday${weekday}`}>
-                                    <span className={style["form-availability-weekday"]}>
-                                      {t(`form.schedule.${weekday}`).toLocaleUpperCase()}
+                                  <div
+                                    className={style["form-table-row"]}
+                                    key={`weekday${weekday}`}
+                                  >
+                                    <span
+                                      className={
+                                        style["form-availability-weekday"]
+                                      }
+                                    >
+                                      {t(
+                                        `form.schedule.${weekday}`,
+                                      ).toLocaleUpperCase()}
                                     </span>
 
-                                    <formOpportunity.Field name={`schedule[${idx}].timeSlots`}>
+                                    <formOpportunity.Field
+                                      name={`schedule[${idx}].timeSlots`}
+                                    >
                                       {(fieldWeekday) => {
                                         return (
                                           fieldWeekday.state.value &&
-                                          fieldWeekday.state.value.map(({ title, id }, idxInner) => {
-                                            return (
-                                              <formOpportunity.Field
-                                                key={`${weekday}${id}`}
-                                                name={`schedule[${idx}].timeSlots[${idxInner}].selected`}
-                                              >
-                                                {(fieldTimeslot) => {
-                                                  return (
-                                                    <span className={style["form-pick"]}>
-                                                      <input
-                                                        tabIndex={0}
-                                                        id={`${weekday}${idxInner}${fieldWeekday.state.value[idxInner].id}`}
-                                                        type="checkbox"
-                                                        onChange={(e) => {
-                                                          fieldTimeslot.handleChange(e.target.checked);
-                                                        }}
-                                                      />
-                                                      <label
-                                                        htmlFor={`${weekday}${idxInner}${fieldWeekday.state.value[idxInner].id}`}
+                                          fieldWeekday.state.value.map(
+                                            ({ title, id }, idxInner) => {
+                                              return (
+                                                <formOpportunity.Field
+                                                  key={`${weekday}${id}`}
+                                                  name={`schedule[${idx}].timeSlots[${idxInner}].selected`}
+                                                >
+                                                  {(fieldTimeslot) => {
+                                                    return (
+                                                      <span
+                                                        className={
+                                                          style["form-pick"]
+                                                        }
                                                       >
-                                                        <span>
-                                                          {getTimeslotTitle(t, title[i18n.language as Lang] as string)}
-                                                        </span>
-                                                      </label>
-                                                    </span>
-                                                  );
-                                                }}
-                                              </formOpportunity.Field>
-                                            );
-                                          })
+                                                        <input
+                                                          tabIndex={0}
+                                                          id={`${weekday}${idxInner}${fieldWeekday.state.value[idxInner].id}`}
+                                                          type="checkbox"
+                                                          onChange={(e) => {
+                                                            fieldTimeslot.handleChange(
+                                                              e.target.checked,
+                                                            );
+                                                          }}
+                                                        />
+                                                        <label
+                                                          htmlFor={`${weekday}${idxInner}${fieldWeekday.state.value[idxInner].id}`}
+                                                        >
+                                                          <span>
+                                                            {getTimeslotTitle(
+                                                              t,
+                                                              title[
+                                                                i18n.language as Lang
+                                                              ] as string,
+                                                            )}
+                                                          </span>
+                                                        </label>
+                                                      </span>
+                                                    );
+                                                  }}
+                                                </formOpportunity.Field>
+                                              );
+                                            },
+                                          )
                                         );
                                       }}
                                     </formOpportunity.Field>
@@ -605,20 +773,45 @@ export default function AddOpportunity() {
                               })}
                           </div>
                           <h6>
-                            <i>{t("form.addOpportunity.fields.voGroup.schedule.or").toUpperCase()}</i>
+                            <i>
+                              {t(
+                                "form.addOpportunity.fields.voGroup.schedule.or",
+                              ).toUpperCase()}
+                            </i>
                           </h6>
                           <SimpleInputField<OpportunityData>
                             name="onetimeDateTime"
                             FieldTag={formOpportunity.Field}
-                            label={t("form.addOpportunity.fields.voGroup.schedule.oneTimeLabel")}
+                            label={t(
+                              "form.addOpportunity.fields.voGroup.schedule.oneTimeLabel",
+                            )}
                             inputType="datetime-local"
                             validators={{
                               onChange: ({ value, fieldApi }) => {
-                                setTimeout(() => fieldApi.form.validateField("schedule", "blur"), 0);
-                                if (!value && !isTimeSlotSelected(fieldApi.form.getFieldValue("schedule"))) {
-                                  return t("form.addOpportunity.fields.voGroup.schedule.error");
+                                setTimeout(
+                                  () =>
+                                    fieldApi.form.validateField(
+                                      "schedule",
+                                      "blur",
+                                    ),
+                                  0,
+                                );
+                                if (
+                                  !value &&
+                                  !isTimeSlotSelected(
+                                    fieldApi.form.getFieldValue("schedule"),
+                                  )
+                                ) {
+                                  return t(
+                                    "form.addOpportunity.fields.voGroup.schedule.error",
+                                  );
                                 }
-                                if (value && Number.isNaN(getDate(value as string).getTime())) {
+                                if (
+                                  value &&
+                                  Number.isNaN(
+                                    getDate(value as string).getTime(),
+                                  )
+                                ) {
                                   return t("form.error.badTime");
                                 }
                                 return undefined;
@@ -637,14 +830,18 @@ export default function AddOpportunity() {
                   <SimpleInputField<OpportunityData>
                     name="numberVolunteers"
                     FieldTag={formOpportunity.Field}
-                    label={t("form.addOpportunity.fields.voGroup.numberVolunteers.label")}
+                    label={t(
+                      "form.addOpportunity.fields.voGroup.numberVolunteers.label",
+                    )}
                     onChangeValidator={({ value }) => {
                       if (!value) {
                         return t("form.error.required");
                       }
                       const numVolunteers = Number(value as string);
                       if (Number.isNaN(numVolunteers)) {
-                        return t("form.addOpportunity.fields.voGroup.numberVolunteers.error");
+                        return t(
+                          "form.addOpportunity.fields.voGroup.numberVolunteers.error",
+                        );
                       }
                       return undefined;
                     }}
@@ -652,8 +849,12 @@ export default function AddOpportunity() {
                   <SimpleInputField<OpportunityData>
                     name="voInformation"
                     FieldTag={formOpportunity.Field}
-                    label={t("form.addOpportunity.fields.voGroup.information.label")}
-                    onChangeValidator={({ value }) => (!value ? t("form.error.required") : undefined)}
+                    label={t(
+                      "form.addOpportunity.fields.voGroup.information.label",
+                    )}
+                    onChangeValidator={({ value }) =>
+                      !value ? t("form.error.required") : undefined
+                    }
                   />
                 </fieldset>
               );
@@ -663,13 +864,16 @@ export default function AddOpportunity() {
         <formOpportunity.Field
           name="consent"
           validators={{
-            onChange: ({ value }) => (value ? undefined : t("form.error.required")),
+            onChange: ({ value }) =>
+              value ? undefined : t("form.error.required"),
           }}
         >
           {(field) => {
             return (
               <div>
-                <div className={`${style["form-chip-list"]} ${style["form-pick"]}`}>
+                <div
+                  className={`${style["form-chip-list"]} ${style["form-pick"]}`}
+                >
                   <input
                     id="consent"
                     type="checkbox"
@@ -679,12 +883,19 @@ export default function AddOpportunity() {
                       field.validate("change");
                     }}
                   />
-                  <label htmlFor="consent">{getTickMark(!!field.state.value)}</label>
+                  <label htmlFor="consent">
+                    {getTickMark(!!field.state.value)}
+                  </label>
                   <span>
-                    {t("form.addOpportunity.fields.consent.header")} {t("form.addOpportunity.fields.consent.agree")}{" "}
-                    <a href={`/${Subpage.GUIDELINES}/${lng}`}>{t("homepage.footer.legal.guidelines")}</a>{" "}
+                    {t("form.addOpportunity.fields.consent.header")}{" "}
+                    {t("form.addOpportunity.fields.consent.agree")}{" "}
+                    <a href={`/${Subpage.GUIDELINES}/${lng}`}>
+                      {t("homepage.footer.legal.guidelines")}
+                    </a>{" "}
                     {t("form.addOpportunity.fields.consent.and")}{" "}
-                    <a href={`/${Subpage.DATA_PROTECTION}/${lng}`}>{t("homepage.footer.legal.dataPrivacy")}</a>
+                    <a href={`/${Subpage.DATA_PROTECTION}/${lng}`}>
+                      {t("homepage.footer.legal.dataPrivacy")}
+                    </a>
                   </span>
                 </div>
                 <FieldInfo field={field} />
@@ -699,9 +910,9 @@ export default function AddOpportunity() {
                 Object.keys(formOpportunity.state.fieldMeta)
                   .reduce((errorList: string[], key) => {
                     const errorsMsgs =
-                      formOpportunity.state.fieldMeta[key as keyof typeof formOpportunity.state.fieldMeta].errors?.join(
-                        ", ",
-                      );
+                      formOpportunity.state.fieldMeta[
+                        key as keyof typeof formOpportunity.state.fieldMeta
+                      ].errors?.join(", ");
                     errorList.push(errorsMsgs);
                     return errorList;
                   }, [])
@@ -710,7 +921,11 @@ export default function AddOpportunity() {
             ).join(", ");
             return (
               <div className={style["form-submit"]}>
-                <button className="n4d-cta" type="submit" disabled={!state.canSubmit}>
+                <button
+                  className="n4d-cta"
+                  type="submit"
+                  disabled={!state.canSubmit}
+                >
                   {state.isSubmitting ? (
                     "..."
                   ) : (

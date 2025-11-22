@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+
 import Close from "../svg/Close";
 import style from "./index.module.css";
 
@@ -10,7 +11,13 @@ interface Props {
   close?: () => void;
 }
 
-export default function Popup({ className, children, title, close, closeComponent = <Close /> }: Props) {
+export default function Popup({
+  className,
+  children,
+  title,
+  close,
+  closeComponent = <Close />,
+}: Props) {
   return (
     <div className={className || style["popup-information-tooltip"]}>
       {title && <h1>{title}</h1>}

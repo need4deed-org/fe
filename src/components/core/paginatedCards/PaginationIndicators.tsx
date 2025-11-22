@@ -1,4 +1,5 @@
 import { IndicatorsContainer } from "@/components/styled/container";
+
 import Ellipse from "../../svg/Ellipse";
 import { colorMap } from "../../svg/utils";
 

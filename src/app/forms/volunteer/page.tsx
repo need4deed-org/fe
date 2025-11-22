@@ -1,6 +1,7 @@
 "use client";
-import BecomeVolunteer from "@/components/forms/BecomeVolunteer/BecomeVolunteer";
+
 import { PageLayout } from "@/components/Layout";
+import BecomeVolunteer from "@/components/forms/BecomeVolunteer/BecomeVolunteer";
 
 export default function VolunteerPage() {
   return (

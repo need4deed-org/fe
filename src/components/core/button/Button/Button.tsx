@@ -1,7 +1,9 @@
 import styled from "styled-components";
+
+import { IconDiv } from "@/components/styled/container";
+
 import { ButtonSpan } from "../../../styled/text";
 import { IconName, iconNameMap } from "./icon";
-import { IconDiv } from "@/components/styled/container";
 
 const defaultBGColor = "var(--color-aubergine)";
 
@@ -38,10 +40,12 @@ const StyledButton = styled.button<StyledButtonProps>`
   white-space: pre-wrap;
   gap: ${(props) => props.gap};
   padding: ${(props) => props.padding};
-  flex-direction: ${(props) => (props.$iconPosition === "right" ? "row-reverse" : "row")};
+  flex-direction: ${(props) =>
+    props.$iconPosition === "right" ? "row-reverse" : "row"};
 
   &:hover {
-    background-color: ${(props) => hoverBGColorMap[props.backgroundcolor || defaultBGColor]};
+    background-color: ${(props) =>
+      hoverBGColorMap[props.backgroundcolor || defaultBGColor]};
 
     ${ButtonSpan} {
       color: ${(props) => props.$textHoverColor};

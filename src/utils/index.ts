@@ -1,7 +1,8 @@
-export * from "./helpers";
+import { DocumentStatusType } from "need4deed-sdk";
 
 import { cloudfrontURL } from "@/config/constants";
-import { DocumentStatusType } from "need4deed-sdk";
+
+export * from "./helpers";
 
 export function getDateLocalTooUTC(dateStr: string | undefined) {
   if (!dateStr) return undefined;
@@ -21,7 +22,11 @@ export function parseYesNo(value: boolean | undefined): DocumentStatusType {
 }
 
 export function* range(start: number, end: number, step = 1) {
-  if (typeof start !== "number" || typeof end !== "number" || typeof step !== "number") {
+  if (
+    typeof start !== "number" ||
+    typeof end !== "number" ||
+    typeof step !== "number"
+  ) {
     throw new TypeError("Start, end, and step must be numbers.");
   }
 

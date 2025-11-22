@@ -1,5 +1,3 @@
-import styled from "styled-components";
-
 import {
   BookOpenTextIcon,
   CalendarDotsIcon,
@@ -8,11 +6,13 @@ import {
   ShootingStarIcon,
   UserCheckIcon,
 } from "@phosphor-icons/react";
-import { useTranslation } from "react-i18next";
-import { Paragraph } from "@/components/styled/text";
 import { usePathname, useRouter } from "next/navigation";
-import { DashboardRoutes } from "@/config/constants";
 import { ElementType } from "react";
+import { useTranslation } from "react-i18next";
+import styled from "styled-components";
+
+import { Paragraph } from "@/components/styled/text";
+import { DashboardRoutes } from "@/config/constants";
 
 const BarContainer = styled.div`
   display: flex;
@@ -50,7 +50,8 @@ const IconDiv = styled.div<IconDivProps>`
   border-radius: var(--dashboard-navigation-bar-option-icon-div-size);
   background-color: var(--color-orchid);
   margin: auto;
-  background-color: ${({ $isSelected }) => ($isSelected ? "var(--color-midnight)" : "var(--color-orchid)")};
+  background-color: ${({ $isSelected }) =>
+    $isSelected ? "var(--color-midnight)" : "var(--color-orchid)"};
 `;
 
 interface StyledParagraphProps {
@@ -86,7 +87,11 @@ export default function NavigationBar() {
   const currentPathname = usePathname();
 
   const options: BarOptions[] = [
-    { label: t("dashboard.home.sidebar.home"), Icon: HouseIcon, route: DashboardRoutes.Home },
+    {
+      label: t("dashboard.home.sidebar.home"),
+      Icon: HouseIcon,
+      route: DashboardRoutes.Home,
+    },
     {
       label: t("dashboard.home.sidebar.volunteers"),
       Icon: UserCheckIcon,
@@ -132,8 +137,17 @@ export default function NavigationBar() {
             }}
           >
             <IconDiv $isSelected={isSelected}>
-              {(Icon && <Icon size={24} color={isSelected ? "var(--color-orchid)" : "var(--color-midnight)"} />) ||
-                (text && <StyledParagraph isSelected={isSelected} label={text} />)}
+              {(Icon && (
+                <Icon
+                  size={24}
+                  color={
+                    isSelected ? "var(--color-orchid)" : "var(--color-midnight)"
+                  }
+                />
+              )) ||
+                (text && (
+                  <StyledParagraph isSelected={isSelected} label={text} />
+                ))}
             </IconDiv>
             <StyledParagraph label={label} />
           </Option>

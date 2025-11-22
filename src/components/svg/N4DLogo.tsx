@@ -4,9 +4,19 @@ interface Props {
   height: string;
 }
 
-export default function N4DLogo({ fill = "var(--color-orchid)", height, width }: Props) {
+export default function N4DLogo({
+  fill = "var(--color-orchid)",
+  height,
+  width,
+}: Props) {
   return (
-    <svg width={width} height={height} viewBox="0 0 451 244" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width={width}
+      height={height}
+      viewBox="0 0 451 244"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <g clipPath="url(#clip0_3523_16)">
         <path
           d="M63.4876 112.16L27.5766 55.7661V112.16H0V0H24.0989L60.0098 56.3942V0H87.5712V112.16H63.4722H63.4876Z"

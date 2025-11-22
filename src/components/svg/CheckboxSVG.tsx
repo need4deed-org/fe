@@ -15,7 +15,14 @@ export default function CheckboxSVG({
   ...props
 }: Props) {
   return (
-    <svg width={width} height={height} viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <svg
+      width={width}
+      height={height}
+      viewBox="0 0 18 18"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
       {checked ? (
         <path
           fillRule="evenodd"
@@ -24,7 +31,15 @@ export default function CheckboxSVG({
           fill={color}
         />
       ) : (
-        <rect x="1.31641" y="1.31824" width="15.3636" height="15.3636" rx="1.13636" stroke={color} strokeWidth="1" />
+        <rect
+          x="1.31641"
+          y="1.31824"
+          width="15.3636"
+          height="15.3636"
+          rx="1.13636"
+          stroke={color}
+          strokeWidth="1"
+        />
       )}
     </svg>
   );

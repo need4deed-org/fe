@@ -1,11 +1,14 @@
 "use client";
-import { AppContainer } from "@/components/styled/container";
-import { Hero } from "./Hero";
-import { VolunteeringCategoriesSection } from "@/components/VolunteeringCategories";
+
 import { Header } from "@/components/Header";
 import N4DLogo from "@/components/Layout/PageLayout/logos/N4DLogo";
-import { useScreenType } from "@/context/DeviceContext";
+import { VolunteeringCategoriesSection } from "@/components/VolunteeringCategories";
+import { AppContainer } from "@/components/styled/container";
 import { ScreenTypes } from "@/config/constants";
+import { useScreenType } from "@/context/DeviceContext";
+
+import { Hero } from "./Hero";
+
 export function Landing() {
   const screenType = useScreenType();
   const isBurgerMenu = screenType === ScreenTypes.MOBILE;

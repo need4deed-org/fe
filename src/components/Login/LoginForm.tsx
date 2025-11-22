@@ -1,13 +1,15 @@
 import { useForm } from "@tanstack/react-form";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useRouter } from "next/navigation";
-import { FormInput } from "../core/common";
 import styled from "styled-components";
-import { Button, Checkbox } from "../core/button";
-import { Paragraph } from "../styled/text";
-import { usePostMutation } from "@/hooks";
+
 import { apiPathLogin } from "@/config/constants";
+import { usePostMutation } from "@/hooks";
+
+import { Button, Checkbox } from "../core/button";
+import { FormInput } from "../core/common";
+import { Paragraph } from "../styled/text";
 
 interface LoginData {
   email: string;
@@ -75,12 +77,15 @@ export const LoginForm = () => {
       <form.Field
         name="email"
         validators={{
-          onChange: ({ value }) => (!value ? t("dashboard.login.emailMissing") : undefined),
+          onChange: ({ value }) =>
+            !value ? t("dashboard.login.emailMissing") : undefined,
           onChangeAsyncDebounceMs: 500,
           onChangeAsync: async ({ value }) => {
             // Simulating a network request for validation
             await new Promise((resolve) => setTimeout(resolve, 500));
-            return value.includes("@") ? undefined : t("dashboard.login.emailMissingAtChar");
+            return value.includes("@")
+              ? undefined
+              : t("dashboard.login.emailMissingAtChar");
           },
         }}
       >
@@ -98,7 +103,8 @@ export const LoginForm = () => {
       <form.Field
         name="password"
         validators={{
-          onChange: ({ value }) => (!value ? t("dashboard.login.passwordMissing") : undefined),
+          onChange: ({ value }) =>
+            !value ? t("dashboard.login.passwordMissing") : undefined,
         }}
       >
         {(field) => (

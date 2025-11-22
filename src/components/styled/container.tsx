@@ -75,27 +75,37 @@ export const AppContainer = styled.div.attrs<ContainerProps>((props) => ({
   overflow-x: hidden;
 `;
 
-export const SectionHeaderContainer = styled.div.attrs<ContainerProps>((props) => ({
-  id: props.id,
-}))<ContainerProps>`
+export const SectionHeaderContainer = styled.div.attrs<ContainerProps>(
+  (props) => ({
+    id: props.id,
+  }),
+)<ContainerProps>`
   display: flex;
   flex-direction: column;
   gap: ${(props) => props.gap};
 `;
 
-export const CategoriesContainer = styled.div.attrs<ContainerProps>((props) => ({
-  id: props.id,
-}))<ContainerProps>`
+export const CategoriesContainer = styled.div.attrs<ContainerProps>(
+  (props) => ({
+    id: props.id,
+  }),
+)<ContainerProps>`
   display: grid;
   margin: 0 auto; // Center the grid
-  grid-template-columns: var(--homepage-volunteering-categories-grid-template-columns);
-  grid-template-rows: var(--homepage-volunteering-categories-grid-template-rows);
+  grid-template-columns: var(
+    --homepage-volunteering-categories-grid-template-columns
+  );
+  grid-template-rows: var(
+    --homepage-volunteering-categories-grid-template-rows
+  );
   gap: var(--homepage-volunteering-categories-grid-gap);
 `;
 
-export const PaginatedCardsContainer = styled.div.attrs<ContainerProps>((props) => ({
-  id: props.id,
-}))<ContainerProps>`
+export const PaginatedCardsContainer = styled.div.attrs<ContainerProps>(
+  (props) => ({
+    id: props.id,
+  }),
+)<ContainerProps>`
   display: flex;
   flex-direction: column;
   gap: var(--paginated-cards-container-gap);
@@ -126,23 +136,32 @@ export const NextVisibleCardContainer = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, rgba(246, 238, 231, 0.2) 0%, rgba(247, 220, 244, 0.8) 34.82%, #f7cdff 100%);
+    background: linear-gradient(
+      90deg,
+      rgba(246, 238, 231, 0.2) 0%,
+      rgba(247, 220, 244, 0.8) 34.82%,
+      #f7cdff 100%
+    );
     pointer-events: none; /* Allows clicks to pass through to the elements beneath */
     z-index: 1;
     border-radius: var(--card-border-radius);
   }
 `;
 
-export const VisibleCardsContainer = styled.div.attrs<ContainerProps>((props) => ({
-  id: props.id,
-}))<ContainerProps>`
+export const VisibleCardsContainer = styled.div.attrs<ContainerProps>(
+  (props) => ({
+    id: props.id,
+  }),
+)<ContainerProps>`
   display: flex;
   gap: var(--paginated-cards-visible-cards-container-gap);
 `;
 
-export const IndicatorsContainer = styled.div.attrs<ContainerProps>((props) => ({
-  id: props.id,
-}))<ContainerProps>`
+export const IndicatorsContainer = styled.div.attrs<ContainerProps>(
+  (props) => ({
+    id: props.id,
+  }),
+)<ContainerProps>`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -150,9 +169,11 @@ export const IndicatorsContainer = styled.div.attrs<ContainerProps>((props) => (
   gap: var(--indicators-container-gap);
 `;
 
-export const ArrowsButtonContainer = styled.div.attrs<ContainerProps>((props) => ({
-  id: props.id,
-}))<ContainerProps>`
+export const ArrowsButtonContainer = styled.div.attrs<ContainerProps>(
+  (props) => ({
+    id: props.id,
+  }),
+)<ContainerProps>`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -166,9 +187,11 @@ export const BaseCard = styled.div`
   border-radius: var(--card-border-radius);
 `;
 
-export const BaseFooterContainer = styled.div.attrs<ContainerProps>((props) => ({
-  id: props.id,
-}))<ContainerProps>`
+export const BaseFooterContainer = styled.div.attrs<ContainerProps>(
+  (props) => ({
+    id: props.id,
+  }),
+)<ContainerProps>`
   display: flex;
   flex-direction: row;
   align-items: center;

@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+
 import { colorMap } from "./utils";
 
 interface Props extends React.SVGProps<SVGSVGElement> {
@@ -25,8 +26,22 @@ const CircleArrow: FC<Props> = ({ color, direction, isFilled, ...props }) => {
   const arrowColor = isFilled ? arrowColorMap[color] : colorMap[color];
 
   return (
-    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-      <circle cx="14" cy="14" r="13.5" transform="rotate(-90 14 14)" fill={circleFill} stroke={colorMap[color]} />
+    <svg
+      width="28"
+      height="28"
+      viewBox="0 0 28 28"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <circle
+        cx="14"
+        cy="14"
+        r="13.5"
+        transform="rotate(-90 14 14)"
+        fill={circleFill}
+        stroke={colorMap[color]}
+      />
       <path
         d={arrowDirectionMap[direction]}
         stroke={arrowColor}

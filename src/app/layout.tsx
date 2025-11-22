@@ -1,14 +1,16 @@
 import type { Metadata } from "next";
 import { Figtree } from "next/font/google";
-import "./globals.css";
-import { I18nProvider } from "../config/i18next";
-import StyledComponentsRegistry from "@/lib/styled-components-registry";
-import QueryProvider from "@/utils/QueryProvider";
 import { headers } from "next/headers";
-import { ScreenTypes } from "@/config/constants";
-import { DeviceProvider } from "@/context/DeviceContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+import { ScreenTypes } from "@/config/constants";
+import { DeviceProvider } from "@/context/DeviceContext";
+import StyledComponentsRegistry from "@/lib/styled-components-registry";
+import QueryProvider from "@/utils/QueryProvider";
+
+import { I18nProvider } from "../config/i18next";
+import "./globals.css";
 import "./globals.css";
 
 const figtree = Figtree({

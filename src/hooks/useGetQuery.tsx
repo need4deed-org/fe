@@ -5,7 +5,13 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 
-const fetchData = async <T,>(apiPath: string, page: number, limit: number, language: Lang, sort?: SortOrder) => {
+const fetchData = async <T,>(
+  apiPath: string,
+  page: number,
+  limit: number,
+  language: Lang,
+  sort?: SortOrder,
+) => {
   const response: AxiosResponse<ApiResponse<T>> = await axios.get(apiPath, {
     params: {
       page,
@@ -26,11 +32,20 @@ interface ApiResponse<T> {
 interface UseGetQuery {
   apiPath: string;
   queryKey: string[];
-  options?: { page?: number; limit?: number; staleTime?: number; sortOrder?: SortOrder };
+  options?: {
+    page?: number;
+    limit?: number;
+    staleTime?: number;
+    sortOrder?: SortOrder;
+  };
 }
 
 // The generic custom hook with pagination-sort-language params
-export const useGetQuery = <T,>({ queryKey, apiPath, options }: UseGetQuery) => {
+export const useGetQuery = <T,>({
+  queryKey,
+  apiPath,
+  options,
+}: UseGetQuery) => {
   const { t, i18n } = useTranslation();
   const language = i18n.language as Lang;
   const { page = 1, limit = 10, staleTime, sortOrder } = options || {};

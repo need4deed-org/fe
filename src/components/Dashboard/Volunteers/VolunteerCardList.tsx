@@ -1,7 +1,9 @@
-import React from "react";
-import { PaginatedGrid } from "@/components/core/paginatedGrid";
-import VolunteerCard from "./VolunteerCard";
 import { ApiVolunteerGetList } from "need4deed-sdk";
+import React from "react";
+
+import { PaginatedGrid } from "@/components/core/paginatedGrid";
+
+import VolunteerCard from "./VolunteerCard";
 
 interface VolunteerCardListProps {
   volunteers: ApiVolunteerGetList[];
@@ -20,7 +22,9 @@ export function VolunteerCardList({
   currentPage,
   setCurrentPage,
 }: VolunteerCardListProps) {
-  const items = volunteers.map((volunteer) => <VolunteerCard key={volunteer.id} volunteer={volunteer} />);
+  const items = volunteers.map((volunteer) => (
+    <VolunteerCard key={volunteer.id} volunteer={volunteer} />
+  ));
 
   return (
     <PaginatedGrid

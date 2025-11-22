@@ -16,15 +16,24 @@ function LinksToGoogleForms() {
   return (
     <>
       <p>
-        <a href={hrefVolunteering}>{t("form.addOpportunity.wentWrong.volunteeringLink")}</a>
+        <a href={hrefVolunteering}>
+          {t("form.addOpportunity.wentWrong.volunteeringLink")}
+        </a>
       </p>
       <p>
-        <a href={hrefAccompanying}>{t("form.addOpportunity.wentWrong.accompanyingLink")}</a>
+        <a href={hrefAccompanying}>
+          {t("form.addOpportunity.wentWrong.accompanyingLink")}
+        </a>
       </p>
     </>
   );
 }
 
 export default function ErrorAnnouncement({ copies }: ErrorAnnouncementProps) {
-  return <Announcement copies={copies ?? "form.addOpportunity.wentWrong"} render={() => <LinksToGoogleForms />} />;
+  return (
+    <Announcement
+      copies={copies ?? "form.addOpportunity.wentWrong"}
+      render={() => <LinksToGoogleForms />}
+    />
+  );
 }

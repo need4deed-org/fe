@@ -1,11 +1,12 @@
 import { XIcon } from "@phosphor-icons/react";
 import styled, { css, keyframes } from "styled-components";
 
+import { MenuItemType } from "@/types";
+
+import N4DLogoFlat from "../svg/N4DLogoFlat";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { MenuItemsContainer } from "./MenuItems";
 import MenuitemList from "./MenuitemList";
-import { MenuItemType } from "@/types";
-import N4DLogoFlat from "../svg/N4DLogoFlat";
 
 const slideIn = keyframes`
   from {
@@ -37,9 +38,17 @@ const BurgerMenuItemsContainer = styled(MenuItemsContainer)<BurgerMenuProps>`
   padding-bottom: var(--homepage-hero-section-header-menu-items-padding-bottom);
   padding-left: var(--homepage-hero-section-header-menu-items-padding-left);
   padding-right: var(--homepage-hero-section-header-menu-items-padding-right);
-  border-bottom-right-radius: var(--homepage-hero-section-header-menu-items-border-bottom-right-radius);
-  border-bottom-left-radius: var(--homepage-hero-section-header-menu-items-border-bottom-left-radius);
-  background: linear-gradient(180deg, var(--color-magnolia)-5.53%, var(--color-orchid-dark) 100%);
+  border-bottom-right-radius: var(
+    --homepage-hero-section-header-menu-items-border-bottom-right-radius
+  );
+  border-bottom-left-radius: var(
+    --homepage-hero-section-header-menu-items-border-bottom-left-radius
+  );
+  background: linear-gradient(
+    180deg,
+    var(--color-magnolia)-5.53%,
+    var(--color-orchid-dark) 100%
+  );
   box-shadow: 0px 4px 25px 0px var(--color-black);
   transform: translateX(100%);
   transition: transform 0.3s ease-in-out;
@@ -75,7 +84,12 @@ interface Props {
   menuItemColor?: string;
 }
 
-export default function BurgerMenuItems({ isOpen, items, setIsOpen, menuItemColor }: Props) {
+export default function BurgerMenuItems({
+  isOpen,
+  items,
+  setIsOpen,
+  menuItemColor,
+}: Props) {
   return (
     <BurgerMenuItemsContainer $isOpen={isOpen}>
       <BurgerMenuHeader>

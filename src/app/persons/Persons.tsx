@@ -1,9 +1,10 @@
 "use client";
-import { useEffect, useState } from "react";
 
 import { useRouter } from "next/navigation";
-import styles from "./page.module.css";
+import { useEffect, useState } from "react";
+
 import Person, { PersonType } from "./Person";
+import styles from "./page.module.css";
 
 export default function Persons() {
   const [persons, setPersons] = useState<PersonType[]>([]);

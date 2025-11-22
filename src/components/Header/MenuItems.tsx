@@ -1,8 +1,9 @@
 import styled from "styled-components";
 
+import { MenuItemType } from "@/types";
+
 import LanguageSwitcher from "./LanguageSwitcher";
 import MenuitemList from "./MenuitemList";
-import { MenuItemType } from "@/types";
 
 export const MenuItemsContainer = styled.div`
   display: flex;

@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
+import { FullWidthContainer, SectionContainer } from "../styled/container";
 import { Partners } from "./Partners";
 import { Footer } from "./footer/Footer";
-import { FullWidthContainer, SectionContainer } from "../styled/container";
 
 const FooterPartnersSectionContainer = styled(SectionContainer)`
   height: var(--homepage-footer-partners-section-container-height);
@@ -12,7 +12,10 @@ const FooterPartnersSectionContainer = styled(SectionContainer)`
 
 export function FooterPartnersSection() {
   return (
-    <FullWidthContainer id="FooterPartnersSection-FWContainer" background-color="var(--color-midnight)">
+    <FullWidthContainer
+      id="FooterPartnersSection-FWContainer"
+      background-color="var(--color-midnight)"
+    >
       <FooterPartnersSectionContainer id="footerPartners-section-container">
         <Partners />
         <Footer />

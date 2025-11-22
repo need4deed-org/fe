@@ -2,10 +2,12 @@
 
 import i18next from "i18next";
 import { Lang } from "need4deed-sdk";
-import { initReactI18next, I18nextProvider } from "react-i18next";
+import { I18nextProvider, initReactI18next } from "react-i18next";
+
+import { Env } from "@/types";
+
 import deTranslation from "../../public/locales/de/translations.json";
 import enTranslation from "../../public/locales/en/translations.json";
-import { Env } from "@/types";
 
 i18next.use(initReactI18next).init({
   fallbackLng: Lang.DE,

@@ -9,4 +9,5 @@ export async function validateRACEmail(email: string, errorMsg = "Bad email.") {
   return isAuth ? undefined : errorMsg;
 }
 
+// TODO: Is this export still required?
 export default {};

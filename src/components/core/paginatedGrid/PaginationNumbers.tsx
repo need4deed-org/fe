@@ -1,5 +1,6 @@
 import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react";
 import styled from "styled-components";
+
 import { Heading4 } from "../../styled/text";
 
 const PaginationContainer = styled.div`
@@ -30,7 +31,11 @@ interface Props {
   goToPage: (pageNumber: number) => void;
 }
 
-export default function PaginationNumbers({ currentPage, totalPages, goToPage }: Props) {
+export default function PaginationNumbers({
+  currentPage,
+  totalPages,
+  goToPage,
+}: Props) {
   if (totalPages === 0) return null;
 
   const handlePrevPage = (): void => {
@@ -52,8 +57,14 @@ export default function PaginationNumbers({ currentPage, totalPages, goToPage }:
   pages.push(1);
 
   // Determine the range of pages to show around the current page
-  let startPage = Math.max(2, currentPage - Math.floor((maxPagesToShow - 3) / 2));
-  let endPage = Math.min(totalPages - 1, currentPage + Math.ceil((maxPagesToShow - 3) / 2));
+  let startPage = Math.max(
+    2,
+    currentPage - Math.floor((maxPagesToShow - 3) / 2),
+  );
+  let endPage = Math.min(
+    totalPages - 1,
+    currentPage + Math.ceil((maxPagesToShow - 3) / 2),
+  );
 
   // Adjust startPage and endPage to ensure maxPagesToShow is maintained
   if (endPage - startPage + 1 < maxPagesToShow - 2) {
@@ -106,7 +117,14 @@ export default function PaginationNumbers({ currentPage, totalPages, goToPage }:
             key={page}
             onClick={() => goToPage(Number(page))}
           >
-            <Heading4 margin={0} color={page === currentPage ? "var(--color-white)" : "var(--color-midnight)"}>
+            <Heading4
+              margin={0}
+              color={
+                page === currentPage
+                  ? "var(--color-white)"
+                  : "var(--color-midnight)"
+              }
+            >
               {page}
             </Heading4>
           </NumberDiv>

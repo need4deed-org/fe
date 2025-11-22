@@ -1,10 +1,12 @@
 import { useTranslation } from "react-i18next";
-import CategoryCard from "./CategoryCard";
-import { Category, IconName } from "./types";
-import { PaginatedCards } from "../core/paginatedCards";
-import { CategoriesContainer } from "../styled/container";
+
 import { ScreenTypes } from "@/config/constants";
 import { useScreenType } from "@/context/DeviceContext";
+
+import { PaginatedCards } from "../core/paginatedCards";
+import { CategoriesContainer } from "../styled/container";
+import CategoryCard from "./CategoryCard";
+import { Category, IconName } from "./types";
 
 function Categories() {
   const screenType = useScreenType();
@@ -15,7 +17,9 @@ function Categories() {
     {
       iconName: IconName.ChatsTeardrop,
       title: t("homepage.volunteeringCategories.card.germanLanguageSupport"),
-      description: t("homepage.volunteeringCategories.card.germanLanguageSupportInfo"),
+      description: t(
+        "homepage.volunteeringCategories.card.germanLanguageSupportInfo",
+      ),
     },
     {
       iconName: IconName.Baby,
@@ -25,7 +29,9 @@ function Categories() {
     {
       iconName: IconName.Bicycle,
       title: t("homepage.volunteeringCategories.card.skillsBasedVolunteering"),
-      description: t("homepage.volunteeringCategories.card.skillsBasedVolunteeringInfo"),
+      description: t(
+        "homepage.volunteeringCategories.card.skillsBasedVolunteeringInfo",
+      ),
     },
     {
       iconName: IconName.CalendarStar,
@@ -35,16 +41,22 @@ function Categories() {
     {
       iconName: IconName.PingPong,
       title: t("homepage.volunteeringCategories.card.sportsActivities"),
-      description: t("homepage.volunteeringCategories.card.sportsActivitiesInfo"),
+      description: t(
+        "homepage.volunteeringCategories.card.sportsActivitiesInfo",
+      ),
     },
     {
       iconName: IconName.Users,
       title: t("homepage.volunteeringCategories.card.accompanyARefugee"),
-      description: t("homepage.volunteeringCategories.card.accompanyARefugeeInfo"),
+      description: t(
+        "homepage.volunteeringCategories.card.accompanyARefugeeInfo",
+      ),
     },
   ];
 
-  const cards = categories.map((category) => <CategoryCard key={category.title} {...category} />);
+  const cards = categories.map((category) => (
+    <CategoryCard key={category.title} {...category} />
+  ));
 
   return (
     <CategoriesContainer id="categories-container">

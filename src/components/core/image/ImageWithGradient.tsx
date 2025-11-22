@@ -1,5 +1,6 @@
-import { BackgroundImg } from "@/components/styled/img";
 import styled from "styled-components";
+
+import { BackgroundImg } from "@/components/styled/img";
 
 interface ImageContainerProps {
   height?: string;

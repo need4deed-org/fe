@@ -1,12 +1,15 @@
 "use client";
-import styled from "styled-components";
-import { PageLayout } from "../Layout";
-import { CustomHeading } from "../styled/text";
-import { ImageWithGradient } from "../core/image";
-import { getImageUrl } from "@/utils/helpers";
-import { useScreenType } from "@/context/DeviceContext";
-import { ScreenTypes } from "@/config/constants";
+
 import { useTranslation } from "react-i18next";
+import styled from "styled-components";
+
+import { ScreenTypes } from "@/config/constants";
+import { useScreenType } from "@/context/DeviceContext";
+import { getImageUrl } from "@/utils/helpers";
+
+import { PageLayout } from "../Layout";
+import { ImageWithGradient } from "../core/image";
+import { CustomHeading } from "../styled/text";
 import { LoginForm } from "./LoginForm";
 
 const gradientClassName = "image-filter-gradient-blue ";
@@ -62,7 +65,10 @@ export function Login() {
         </LoginSubContainer>
 
         <LoginSubContainer>
-          <ImageWithGradient imageUrl={imageUrl} gradientClass={gradientClassName} />
+          <ImageWithGradient
+            imageUrl={imageUrl}
+            gradientClass={gradientClassName}
+          />
         </LoginSubContainer>
       </LoginContainer>
     </PageLayout>

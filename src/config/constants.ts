@@ -20,7 +20,8 @@ export const screenSizeThresholds = {
 
 export const eightDays = 1000 * 60 * 60 * 24 * 8;
 
-export const phoneRegEx = /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/;
+export const phoneRegEx =
+  /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/;
 
 export const n4dLanguageLocalStorageKey = "n4d-language";
 

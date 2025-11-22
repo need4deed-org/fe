@@ -1,13 +1,15 @@
+import { ListIcon } from "@phosphor-icons/react";
 import { ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { ListIcon } from "@phosphor-icons/react";
+
+import { eventsSectionContainerId } from "@/config/constants";
+import { MenuItemType, Subpage } from "@/types";
 
 import BurgerMenuItems from "./BurgerMenuItems";
-import MenuItems from "./MenuItems";
-import { MenuItemType, Subpage } from "@/types";
-import { eventsSectionContainerId } from "@/config/constants";
 import LoginRegister from "./LoginRegister";
+import MenuItems from "./MenuItems";
+
 // import UserProfile from "./UserProfile";
 
 interface HeaderContainerProps {
@@ -51,8 +53,14 @@ export function Header({
 
   const menuItems: MenuItemType[] = [
     [t("homepage.heroSection.menuItems.about"), `/${Subpage.ABOUT}`],
-    [t("homepage.heroSection.menuItems.volunteeringOpportunities"), `/${Subpage.OPPORTUNITY_CARDS}`],
-    [t("homepage.heroSection.menuItems.events"), `/#${eventsSectionContainerId}`],
+    [
+      t("homepage.heroSection.menuItems.volunteeringOpportunities"),
+      `/${Subpage.OPPORTUNITY_CARDS}`,
+    ],
+    [
+      t("homepage.heroSection.menuItems.events"),
+      `/#${eventsSectionContainerId}`,
+    ],
   ];
 
   return (
@@ -61,7 +69,11 @@ export function Header({
 
       {isBurgerMenu ? (
         <>
-          <ListIcon size={32} color={menuItemColor} onClick={() => setIsBurgerMenuOpen(true)} />
+          <ListIcon
+            size={32}
+            color={menuItemColor}
+            onClick={() => setIsBurgerMenuOpen(true)}
+          />
           {isBurgerMenuOpen && (
             <BurgerMenuItems
               isOpen={isBurgerMenuOpen}

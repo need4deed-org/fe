@@ -24,7 +24,11 @@ html {
 }
 
 .image-filter-gradient-blue {
-  background: linear-gradient(180deg, var(--color-midnight-misty) 11.02%, var(--color-barely-blue) 89.66%);
+  background: linear-gradient(
+    180deg,
+    var(--color-midnight-misty) 11.02%,
+    var(--color-barely-blue) 89.66%
+  );
 }
 
 .n4d-information-tooltip-parent {
@@ -73,7 +77,8 @@ html {
   --n4d-w: min(90vw, 1080px);
   --n4d-lang-direction: ltr;
   --bs-body-font-family: "Figtree", sans-serif;
-  --n4d-box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.15), 0px 4px 4px rgba(0, 0, 0, 0.3);
+  --n4d-box-shadow:
+    0px 8px 12px rgba(0, 0, 0, 0.15), 0px 4px 4px rgba(0, 0, 0, 0.3);
   /* color */
   --color-midnight: rgba(26, 38, 132, 1);
   --color-midnight-light: rgba(58, 72, 178, 1);
@@ -98,7 +103,6 @@ html {
   --color-white: rgba(255, 255, 255, 1);
   --color-black: rgba(0, 0, 0, 1);
 
-
   --color-grey-10: rgba(238, 238, 238, 1);
   --color-grey-50: rgba(240, 241, 243, 1);
   --color-grey-200: rgba(185, 189, 199, 1);
@@ -106,11 +110,9 @@ html {
   --color-grey-500: rgba(102, 112, 133, 1);
   --color-grey-700: rgba(72, 80, 94, 1);
 
-
   --color-neutral-200: rgb(68, 68, 68);
   --color-neutral-500: rgb(187, 187, 187);
   --color-neutral-700: rgb(221, 221, 221);
-
 
   --color-green-50: rgba(242, 252, 250, 1);
   --color-green-100: rgba(216, 245, 240, 1);
@@ -120,7 +122,6 @@ html {
   --color-green-700: rgba(98, 158, 146, 1);
   --color-green-800: rgba(65, 242, 141, 1);
   --color-green-900: rgba(0, 201, 128, 1);
-
 
   --color-red-50: rgba(254, 234, 231, 1);
   --color-red-200: rgba(248, 160, 146, 1);
@@ -176,9 +177,11 @@ html {
   --homepage-testimonials-profile-gap: 16px;
 
   /* layout-static-page */
-  --layout-static-page-background-default: linear-gradient(180deg,
-      var(--color-magnolia)-5.53%,
-      var(--color-orchid-dark) 100%);
+  --layout-static-page-background-default: linear-gradient(
+    180deg,
+    var(--color-magnolia)-5.53%,
+    var(--color-orchid-dark) 100%
+  );
 
   /* button */
   --button-gap: 12px;

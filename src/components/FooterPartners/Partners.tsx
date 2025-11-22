@@ -1,12 +1,23 @@
 import styled from "styled-components";
-import { LogoBerlin, LogoClubDialog, LogoEU, LogoSchönebergHilft } from "./logos";
-import { useScreenType } from "@/context/DeviceContext";
+
 import { ScreenTypes } from "@/config/constants";
+import { useScreenType } from "@/context/DeviceContext";
+
+import {
+  LogoBerlin,
+  LogoClubDialog,
+  LogoEU,
+  LogoSchönebergHilft,
+} from "./logos";
 
 const PartnersContainer = styled.div`
   display: flex;
-  flex-direction: var(--homepage-footer-partners-section-partners-container-flex-direction);
-  justify-content: var(--homepage-footer-partners-section-partners-container-justify-content);
+  flex-direction: var(
+    --homepage-footer-partners-section-partners-container-flex-direction
+  );
+  justify-content: var(
+    --homepage-footer-partners-section-partners-container-justify-content
+  );
   height: var(--homepage-footer-partners-section-partners-container-height);
   width: 100%;
   gap: var(--homepage-footer-partners-section-partners-container-gap);
@@ -54,7 +65,10 @@ const partnerLogos = {
     <FrameContainer key="club">
       <LogoClubDialog />
     </FrameContainer>,
-    <FrameContainer key="eu-berlin" gap="var(--homepage-footer-partners-section-partners-frame-container-gap)">
+    <FrameContainer
+      key="eu-berlin"
+      gap="var(--homepage-footer-partners-section-partners-frame-container-gap)"
+    >
       <LogoEU />
       <LogoBerlin />
     </FrameContainer>,

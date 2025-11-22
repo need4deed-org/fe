@@ -2,9 +2,6 @@
 
 import { ReactNode, useState } from "react";
 
-import { ArrowButtons } from "./ArrowButtons";
-import { colorMap } from "../../svg/utils";
-import { PaginationIndicators } from "./PaginationIndicators";
 import {
   NextVisibleCardContainer,
   OverlayingVisibleCardsContainer,
@@ -12,6 +9,10 @@ import {
   VisibleCardsContainer,
 } from "@/components/styled/container";
 import { useSwipe } from "@/hooks";
+
+import { colorMap } from "../../svg/utils";
+import { ArrowButtons } from "./ArrowButtons";
+import { PaginationIndicators } from "./PaginationIndicators";
 
 interface Props {
   cards: ReactNode[];
@@ -32,7 +33,8 @@ export function PaginatedCards({
 }: Props) {
   const [currentPage, setCurrentPage] = useState(0);
 
-  const totalPages = Math.ceil(cards.length / cardsPerPage) - (isOverlayingCards ? 1 : 0);
+  const totalPages =
+    Math.ceil(cards.length / cardsPerPage) - (isOverlayingCards ? 1 : 0);
   const startIndex = currentPage * cardsPerPage;
   const endIndex = startIndex + cardsPerPage;
   const visibleCards = cards.slice(startIndex, endIndex);
@@ -49,7 +51,10 @@ export function PaginatedCards({
   );
 
   return (
-    <PaginatedCardsContainer id="paginated-cards-container" {...{ onTouchStart, onTouchEnd }}>
+    <PaginatedCardsContainer
+      id="paginated-cards-container"
+      {...{ onTouchStart, onTouchEnd }}
+    >
       {showNavigation && (
         <ArrowButtons
           currentIndex={currentPage}
@@ -65,11 +70,15 @@ export function PaginatedCards({
           {endIndex === totalPages ? (
             nextCardElement
           ) : (
-            <NextVisibleCardContainer>{nextCardElement}</NextVisibleCardContainer>
+            <NextVisibleCardContainer>
+              {nextCardElement}
+            </NextVisibleCardContainer>
           )}
         </OverlayingVisibleCardsContainer>
       ) : (
-        <VisibleCardsContainer id="visible-cards-container">{visibleCards}</VisibleCardsContainer>
+        <VisibleCardsContainer id="visible-cards-container">
+          {visibleCards}
+        </VisibleCardsContainer>
       )}
 
       {showNavigation && (

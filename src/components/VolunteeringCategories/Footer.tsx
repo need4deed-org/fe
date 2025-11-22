@@ -1,8 +1,9 @@
-import { useTranslation } from "react-i18next";
 import { useRouter } from "next/navigation";
+import { useTranslation } from "react-i18next";
+
+import { Subpage } from "@/types";
 
 import { Button } from "../core/button";
-import { Subpage } from "@/types";
 import { BaseFooterContainer } from "../styled/container";
 
 export default function Footer() {

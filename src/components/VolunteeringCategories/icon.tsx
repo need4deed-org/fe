@@ -7,8 +7,9 @@ import {
   SparkleIcon,
   UsersIcon,
 } from "@phosphor-icons/react";
-import { IconName } from "./types";
 import { JSX } from "react";
+
+import { IconName } from "./types";
 
 type IconMap = {
   [key in IconName]: JSX.Element;

@@ -58,7 +58,8 @@ export const Paragraph = styled.p<TextProps>`
   font-weight: ${(props) => props.fontWeight || "var(--text-p-font-weight)"};
   font-size: ${(props) => props.fontSize || "var(--text-p-font-size)"};
   line-height: ${(props) => props.lineheight || "var(--text-p-line-height)"};
-  letter-spacing: ${(props) => props.letterSpacing || "var(--text-p-letter-spacing)"};
+  letter-spacing: ${(props) =>
+    props.letterSpacing || "var(--text-p-letter-spacing)"};
   color: ${(props) => props.color || "var(--color-midnight)"};
   margin: ${(props) => props.margin || 0};
 `;

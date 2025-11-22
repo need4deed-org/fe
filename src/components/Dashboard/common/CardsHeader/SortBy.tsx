@@ -1,10 +1,10 @@
+import { SortOrder } from "need4deed-sdk";
 import { useState } from "react";
-import styled from "styled-components";
 import { useTranslation } from "react-i18next";
+import styled from "styled-components";
 
 import { Paragraph } from "@/components/styled/text";
 import CircleArrow from "@/components/svg/CircleArrow";
-import { SortOrder } from "need4deed-sdk";
 
 const SortByContainer = styled.div`
   display: flex;
@@ -27,7 +27,9 @@ const OptionsDiv = styled.div`
   gap: var(--dashboard-cards-header-sortBy-options-gap);
   background: var(--color-orchid);
   padding: var(--dashboard-cards-header-sortBy-options-padding);
-  border-radius: var(--dashboard-cards-header-sortBy-option-button-border-radius);
+  border-radius: var(
+    --dashboard-cards-header-sortBy-option-button-border-radius
+  );
   position: absolute;
   top: 100%;
   left: 0;
@@ -38,7 +40,9 @@ const OptionButton = styled.button`
   padding: var(--dashboard-cards-header-sortBy-option-button-padding);
   background: var(--color-orchid-subtle);
   border-color: transparent;
-  border-radius: var(--dashboard-cards-header-sortBy-option-button-border-radius);
+  border-radius: var(
+    --dashboard-cards-header-sortBy-option-button-border-radius
+  );
   cursor: pointer;
 `;
 
@@ -70,7 +74,9 @@ export default function SortBy({ onChange, sortOrder }: Props) {
       <Paragraph fontWeight={400}>{t("dashboard.sortBy.sortBy")}:</Paragraph>
 
       <SortBySwitcherContainer>
-        <Paragraph fontWeight={600}>{sortByOptions.find((o) => o.value === sortOrder)?.label}</Paragraph>
+        <Paragraph fontWeight={600}>
+          {sortByOptions.find((o) => o.value === sortOrder)?.label}
+        </Paragraph>
 
         {isOptionsVisible && (
           <OptionsDiv>
@@ -84,7 +90,10 @@ export default function SortBy({ onChange, sortOrder }: Props) {
       </SortBySwitcherContainer>
 
       <CircleArrow
-        style={{ marginLeft: "var(--dashboard-cards-header-sortBy-circle-arrow-margin-left)" }}
+        style={{
+          marginLeft:
+            "var(--dashboard-cards-header-sortBy-circle-arrow-margin-left)",
+        }}
         direction={isOptionsVisible ? "up" : "down"}
         color="orchid"
         isFilled

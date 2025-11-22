@@ -1,9 +1,12 @@
+import { ApiVolunteerGetList, SortOrder } from "need4deed-sdk";
 import React, { useEffect, useState } from "react";
 
-import { ApiVolunteerGetList, SortOrder } from "need4deed-sdk";
-import { useGetQuery } from "@/hooks";
 import { apiPathVolunteer } from "@/config/constants";
-import { VolunteerCardList } from "./VolunteerCardList"; // We will modify this component
+import { useGetQuery } from "@/hooks";
+
+import { VolunteerCardList } from "./VolunteerCardList";
+
+// We will modify this component
 
 const columns = 4;
 const rows = 3;
@@ -15,7 +18,10 @@ interface VolunteerListControllerProps {
   sortOrder: SortOrder;
 }
 
-export function VolunteerListController({ setNumOfVols, sortOrder }: VolunteerListControllerProps) {
+export function VolunteerListController({
+  setNumOfVols,
+  sortOrder,
+}: VolunteerListControllerProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const { data: volunteers, count } = useGetQuery<ApiVolunteerGetList>({
     queryKey: ["volunteers"],

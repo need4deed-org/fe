@@ -1,7 +1,8 @@
-import styled from "styled-components";
-import { Button } from "../core/button";
-import { useTranslation } from "react-i18next";
 import { useRouter } from "next/navigation";
+import { useTranslation } from "react-i18next";
+import styled from "styled-components";
+
+import { Button } from "../core/button";
 
 const LoginRegisterContainer = styled.div`
   display: flex;

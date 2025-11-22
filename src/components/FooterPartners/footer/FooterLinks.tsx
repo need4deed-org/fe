@@ -1,8 +1,10 @@
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
+
+import { FooterLink } from "@/types";
+
 import { ATag } from "../../styled/tags";
 import { Paragraph } from "../../styled/text";
-import { FooterLink } from "@/types";
 
 interface FooterLinkProps {
   links: FooterLink[];

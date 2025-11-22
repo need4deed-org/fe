@@ -1,10 +1,12 @@
 "use client";
+
+import { SortOrder } from "need4deed-sdk";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
 import { DashboardLayout } from "@/components/Layout";
-import { SortOrder } from "need4deed-sdk";
+
 import CardsHeader from "../common/CardsHeader/CardsHeader";
 import { VolunteerListController } from "./VolunteerListController";
 
@@ -15,7 +17,10 @@ export function Volunteers() {
   const [numOfVols, setNumOfVols] = useState(0);
   const [sortOrder, setSortOrder] = useState(SortOrder.NewToOld);
 
-  const tabs = [t("dashboard.volunteers.tabs.tab1"), t("dashboard.volunteers.tabs.tab2")];
+  const tabs = [
+    t("dashboard.volunteers.tabs.tab1"),
+    t("dashboard.volunteers.tabs.tab2"),
+  ];
 
   const mockHandleInputChange = () => {};
 
@@ -42,7 +47,10 @@ export function Volunteers() {
           onSortOrderChange={handleSortChange}
         />
 
-        <VolunteerListController setNumOfVols={setNumOfVols} sortOrder={sortOrder} />
+        <VolunteerListController
+          setNumOfVols={setNumOfVols}
+          sortOrder={sortOrder}
+        />
       </VolunteersContainer>
     </DashboardLayout>
   );

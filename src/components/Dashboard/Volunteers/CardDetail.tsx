@@ -1,7 +1,9 @@
 import { ReactNode } from "react";
 import styled from "styled-components";
-import { CardParagraph } from "./VolunteerCard";
+
 import { IconDiv } from "@/components/styled/container";
+
+import { CardParagraph } from "./VolunteerCard";
 import { IconName, iconNameMap } from "./icon";
 
 interface Props {
@@ -14,7 +16,9 @@ export default function CardDetail({ header, children, iconName }: Props) {
   return (
     <CardDetailContainer>
       <CardDetailHeaderDiv>
-        <IconDiv size="var(--dashboard-volunteers-card-detail-icon-size)">{iconNameMap[iconName]}</IconDiv>
+        <IconDiv size="var(--dashboard-volunteers-card-detail-icon-size)">
+          {iconNameMap[iconName]}
+        </IconDiv>
         <CardParagraph text={header + ":"} isBold />
       </CardDetailHeaderDiv>
 

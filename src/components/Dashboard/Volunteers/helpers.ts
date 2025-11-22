@@ -1,4 +1,9 @@
-import { ApiLanguage, ApiVolunteerGetList, LangProficiency, OptionItem } from "need4deed-sdk";
+import {
+  ApiLanguage,
+  ApiVolunteerGetList,
+  LangProficiency,
+  OptionItem,
+} from "need4deed-sdk";
 
 const proficiencyOrder = [
   LangProficiency.NATIVE,
@@ -18,7 +23,9 @@ interface GroupedLanguage {
  * @param languages The input array of ApiLanguage objects.
  * @returns An array of GroupedLanguage objects.
  */
-export const groupLanguagesByProficiency = (languages: ApiLanguage[]): GroupedLanguage[] => {
+export const groupLanguagesByProficiency = (
+  languages: ApiLanguage[],
+): GroupedLanguage[] => {
   const groupedLanguagesMap = new Map<LangProficiency, string[]>();
 
   languages.forEach((lang) => {
@@ -27,7 +34,9 @@ export const groupLanguagesByProficiency = (languages: ApiLanguage[]): GroupedLa
     if (!groupedLanguagesMap.has(proficiency || LangProficiency.BEGINNER)) {
       groupedLanguagesMap.set(proficiency || LangProficiency.BEGINNER, []);
     }
-    groupedLanguagesMap.get(proficiency || LangProficiency.BEGINNER)!.push(title);
+    groupedLanguagesMap
+      .get(proficiency || LangProficiency.BEGINNER)!
+      .push(title);
   });
 
   // Convert the Map to the desired array format
@@ -38,7 +47,10 @@ export const groupLanguagesByProficiency = (languages: ApiLanguage[]): GroupedLa
 
   // 👇️ Sorting Languages
   groupedLanguages.sort((a, b) => {
-    return proficiencyOrder.indexOf(a.proficiency) - proficiencyOrder.indexOf(b.proficiency);
+    return (
+      proficiencyOrder.indexOf(a.proficiency) -
+      proficiencyOrder.indexOf(b.proficiency)
+    );
   });
 
   return groupedLanguages;

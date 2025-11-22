@@ -10,9 +10,23 @@ import {
 } from "need4deed-sdk";
 
 import { Language } from "@/types";
-import { getDateLocalTooUTC, haveCommonElements, parseYesNo, range } from "@/utils";
-import { maxPLZBerlin, maxPLZGermany, minPLZBerlin, minPLZGermany } from "../../config/constants";
-import { OpportunityData, OpportunityParsedData } from "./AddOpportunity/dataStructure";
+import {
+  getDateLocalTooUTC,
+  haveCommonElements,
+  parseYesNo,
+  range,
+} from "@/utils";
+
+import {
+  maxPLZBerlin,
+  maxPLZGermany,
+  minPLZBerlin,
+  minPLZGermany,
+} from "../../config/constants";
+import {
+  OpportunityData,
+  OpportunityParsedData,
+} from "./AddOpportunity/dataStructure";
 import { VolunteerData } from "./BecomeVolunteer/dataStructure";
 import { Availability, Selected, TimeSlot, TypePLZ } from "./types";
 
@@ -32,7 +46,10 @@ export function getSelectedIds(state: Selected[]): OptionId[] {
   return state.filter(({ selected }) => selected).map(({ id }) => id);
 }
 
-function mapLanguages(options: Selected[] | undefined, proficiency: LangProficiency) {
+function mapLanguages(
+  options: Selected[] | undefined,
+  proficiency: LangProficiency,
+) {
   if (!options) return [];
   return options
     .filter((opt) => opt.selected)
@@ -42,7 +59,9 @@ function mapLanguages(options: Selected[] | undefined, proficiency: LangProficie
     }));
 }
 
-export function parseFormStateDTOVolunteer(value: VolunteerData): VolunteerFormData {
+export function parseFormStateDTOVolunteer(
+  value: VolunteerData,
+): VolunteerFormData {
   const data = {} as VolunteerFormData;
   data.opportunityId = value.opportunityId ? +value.opportunityId : undefined;
   data.fullName = value.name;
@@ -76,7 +95,9 @@ export function parseFormStateDTOOpportunity(value: OpportunityData) {
   data.accomp_address = value.aaAddress;
   data.accomp_postcode = value.aaPostcode;
   data.accomp_datetime = getDateLocalTooUTC(
-    value.opportunityType === OpportunityType.ACCOMPANYING ? value.dateTime : value.onetimeDateTime,
+    value.opportunityType === OpportunityType.ACCOMPANYING
+      ? value.dateTime
+      : value.onetimeDateTime,
   );
   data.accomp_name = value.refugeeName;
   data.accomp_phone = value.refugeeNumber;
@@ -89,8 +110,14 @@ export function parseFormStateDTOOpportunity(value: OpportunityData) {
   data.rac_plz = value.racPostcode;
   data.volunteers_number = parseInt(value.numberVolunteers, 10);
   data.berlin_locations = getSelectedIds(value.locations);
-  data.languages = value.translatedInto !== TranslatedIntoType.NO_TRANSLATION ? getSelectedIds(value.languages) : [];
-  data.activities = getSelectedIds([...value.activities, ...value.activitiesAccompanying]);
+  data.languages =
+    value.translatedInto !== TranslatedIntoType.NO_TRANSLATION
+      ? getSelectedIds(value.languages)
+      : [];
+  data.activities = getSelectedIds([
+    ...value.activities,
+    ...value.activitiesAccompanying,
+  ]);
   data.skills = getSelectedIds(value.skills);
   data.timeslots = getSelectedTimeslots(value.schedule);
   data.language = value.language;
@@ -122,13 +149,17 @@ export function getDate(datetime: string) {
 
 export function getScheduleState(): Availability {
   const timeSlots: Selected[] = Object.values(TimeSlot)
-    .filter((timeSlot) => timeSlot !== TimeSlot.WEEKDAYS && timeSlot !== TimeSlot.WEEKENDS)
+    .filter(
+      (timeSlot) =>
+        timeSlot !== TimeSlot.WEEKDAYS && timeSlot !== TimeSlot.WEEKENDS,
+    )
     .map((timeSlot) => ({
       id: timeSlot,
       title: { en: timeSlot, de: timeSlot },
       selected: false,
     }));
   const schedule: Availability = [];
+  // TODO: Is this still necessary?
   // eslint-disable-next-line no-restricted-syntax
   for (const weekday of range(1, 8)) {
     schedule.push({ weekday, timeSlots });
@@ -161,7 +192,10 @@ export function getAllSelectedFalse(list: Option[]): Selected[] {
   }));
 }
 
-export function getTimeslotTitle(t: TFunction<"translation", undefined>, title: string) {
+export function getTimeslotTitle(
+  t: TFunction<"translation", undefined>,
+  title: string,
+) {
   if (title === "weekdays" || title === "wochentage") {
     return t(`form.schedule.weekdays`);
   } else if (title === "weekends" || title === "wocheenden") {
@@ -171,8 +205,16 @@ export function getTimeslotTitle(t: TFunction<"translation", undefined>, title: 
 }
 
 export function areLanguagesRepeated(values: VolunteerData) {
-  const languages = ["languagesNative", "languagesFluent", "languagesIntermediate"].map((key: string) =>
-    getSelectedIds(values[key as "languagesNative" | "languagesFluent" | "languagesIntermediate"]),
+  const languages = [
+    "languagesNative",
+    "languagesFluent",
+    "languagesIntermediate",
+  ].map((key: string) =>
+    getSelectedIds(
+      values[
+        key as "languagesNative" | "languagesFluent" | "languagesIntermediate"
+      ],
+    ),
   );
   return haveCommonElements(...languages);
 }
@@ -184,6 +226,9 @@ export function isTimeSlotSelected(state: Availability) {
     .some(({ selected }) => selected);
 }
 
-export function isSelected<T extends { selected: boolean }>(items: T[], errorMsg: string) {
+export function isSelected<T extends { selected: boolean }>(
+  items: T[],
+  errorMsg: string,
+) {
   return items.some(({ selected }) => selected) ? undefined : errorMsg;
 }

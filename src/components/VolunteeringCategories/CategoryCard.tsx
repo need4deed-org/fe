@@ -1,8 +1,9 @@
 import styled from "styled-components";
-import { IconName } from "./types";
-import { iconNameMap } from "./icon";
-import { Heading3, Paragraph } from "../styled/text";
+
 import { BaseCard, IconDiv } from "../styled/container";
+import { Heading3, Paragraph } from "../styled/text";
+import { iconNameMap } from "./icon";
+import { IconName } from "./types";
 
 const Card = styled(BaseCard)`
   background-color: var(--color-sand);

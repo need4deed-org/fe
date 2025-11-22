@@ -1,14 +1,23 @@
-import { FacebookLogoIcon, InstagramLogoIcon, LinkedinLogoIcon } from "@phosphor-icons/react";
+import {
+  FacebookLogoIcon,
+  InstagramLogoIcon,
+  LinkedinLogoIcon,
+} from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
-import { Paragraph } from "../../styled/text";
 import { ATag } from "@/components/styled/tags";
+
+import { Paragraph } from "../../styled/text";
 
 const ContactSocialsContainer = styled.div`
   display: flex;
-  flex-direction: var(--homepage-footer-partners-section-contact-socials-container-flex-direction);
-  justify-content: var(--homepage-footer-partners-section-contact-socials-container-justify-content);
+  flex-direction: var(
+    --homepage-footer-partners-section-contact-socials-container-flex-direction
+  );
+  justify-content: var(
+    --homepage-footer-partners-section-contact-socials-container-justify-content
+  );
   gap: var(--homepage-footer-partners-section-contact-socials-container-gap);
 `;
 
@@ -56,13 +65,25 @@ function Socials() {
   return (
     <SocialsContainer>
       <ATag href="https://www.linkedin.com/company/need4deed/">
-        <LinkedinLogoIcon size={40} weight="fill" color="var(--color-orchid-light)" />
+        <LinkedinLogoIcon
+          size={40}
+          weight="fill"
+          color="var(--color-orchid-light)"
+        />
       </ATag>
       <ATag href="https://www.facebook.com/need4deedberlin/">
-        <FacebookLogoIcon size={40} weight="fill" color="var(--color-orchid-light)" />
+        <FacebookLogoIcon
+          size={40}
+          weight="fill"
+          color="var(--color-orchid-light)"
+        />
       </ATag>
       <ATag href="https://www.instagram.com/need4deed/">
-        <InstagramLogoIcon weight="bold" size={40} color="var(--color-orchid-light)" />
+        <InstagramLogoIcon
+          weight="bold"
+          size={40}
+          color="var(--color-orchid-light)"
+        />
       </ATag>
     </SocialsContainer>
   );

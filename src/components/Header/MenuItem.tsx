@@ -20,7 +20,10 @@ export default function MenuItem({ text, color, onClick, fontWeight }: Props) {
       <CustomHeading
         color={color || "var(--color-white)"}
         fontSize="var(--homepage-hero-section-header-menu-item-fontSize)"
-        fontWeight={fontWeight || "var(--homepage-hero-section-header-menu-item-fontWeight)"}
+        fontWeight={
+          fontWeight ||
+          "var(--homepage-hero-section-header-menu-item-fontWeight)"
+        }
         letterSpacing="var(--homepage-hero-section-header-menu-item-letterSpacing)"
         lineheight="var(--homepage-hero-section-header-menu-item-lineheight)"
         onClick={onClick}

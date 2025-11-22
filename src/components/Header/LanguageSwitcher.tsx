@@ -1,10 +1,10 @@
 import { Lang, QueryParams } from "need4deed-sdk";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { useRouter, useSearchParams } from "next/navigation";
 
-import MenuItem from "./MenuItem";
 import { Paragraph } from "../styled/text";
+import MenuItem from "./MenuItem";
 
 const en = "EN";
 const de = "DE";
@@ -42,7 +42,11 @@ export default function LanguageSwitcher({ textColor }: Props) {
         text={en}
         color={textColor}
         onClick={() => handleLangChange(Lang.EN)}
-        fontWeight={i18n.language !== Lang.EN ? "var(--app-header-menu-item-fontWeight-secondary)" : undefined}
+        fontWeight={
+          i18n.language !== Lang.EN
+            ? "var(--app-header-menu-item-fontWeight-secondary)"
+            : undefined
+        }
       />
 
       <Paragraph
@@ -57,7 +61,11 @@ export default function LanguageSwitcher({ textColor }: Props) {
         text={de}
         color={textColor}
         onClick={() => handleLangChange(Lang.DE)}
-        fontWeight={i18n.language !== Lang.DE ? "var(--app-header-menu-item-fontWeight-secondary)" : undefined}
+        fontWeight={
+          i18n.language !== Lang.DE
+            ? "var(--app-header-menu-item-fontWeight-secondary)"
+            : undefined
+        }
       />
     </LanguageSwitcherContainer>
   );

@@ -2,7 +2,11 @@
 
 import { useRef } from "react";
 
-export const useSwipe = (onSwipeLeft: () => void, onSwipeRight: () => void, threshold = 50) => {
+export const useSwipe = (
+  onSwipeLeft: () => void,
+  onSwipeRight: () => void,
+  threshold = 50,
+) => {
   const startX = useRef<number | null>(null);
 
   const processSwipe = (deltaX: number) => {

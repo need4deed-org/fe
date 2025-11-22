@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import styled from "styled-components";
+
 import PaginationNumbers from "./PaginationNumbers";
 
 interface Props {
@@ -11,7 +12,14 @@ interface Props {
   totalItemCounts: number;
 }
 
-export function PaginatedGrid({ pageItems, columns, rows, currentPage, setCurrentPage, totalItemCounts }: Props) {
+export function PaginatedGrid({
+  pageItems,
+  columns,
+  rows,
+  currentPage,
+  setCurrentPage,
+  totalItemCounts,
+}: Props) {
   const itemsPerPage = columns * rows;
   const totalPages = Math.ceil(totalItemCounts / itemsPerPage);
 
@@ -27,7 +35,11 @@ export function PaginatedGrid({ pageItems, columns, rows, currentPage, setCurren
         {pageItems}
       </GridContainer>
 
-      <PaginationNumbers currentPage={currentPage} goToPage={goToPage} totalPages={totalPages} />
+      <PaginationNumbers
+        currentPage={currentPage}
+        goToPage={goToPage}
+        totalPages={totalPages}
+      />
     </MainContainer>
   );
 }

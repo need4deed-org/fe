@@ -1,12 +1,17 @@
 "use client";
 
 import styled from "styled-components";
-import { ImageWithGradient } from "../../../core/image";
-import HeroContent from "./Content";
+
 import { ScreenTypes } from "@/config/constants";
 import { useScreenType } from "@/context/DeviceContext";
 import { getImageUrl } from "@/utils/helpers";
-import { FullWidthContainer, OverlayingSectionContainer } from "../../../styled/container";
+
+import { ImageWithGradient } from "../../../core/image";
+import {
+  FullWidthContainer,
+  OverlayingSectionContainer,
+} from "../../../styled/container";
+import HeroContent from "./Content";
 
 const HeroSectionContainer = styled(OverlayingSectionContainer)`
   padding: 0;

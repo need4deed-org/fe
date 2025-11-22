@@ -1,11 +1,20 @@
 "use client";
 
-import { useState, useEffect, createContext, useContext, ReactNode } from "react";
-import { screenSizeThresholds, ScreenTypes } from "@/config/constants";
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+
+import { ScreenTypes, screenSizeThresholds } from "@/config/constants";
 
 const getClientScreenType = (): ScreenTypes => {
-  if (window.innerWidth < screenSizeThresholds.tablet) return ScreenTypes.MOBILE;
-  if (window.innerWidth < screenSizeThresholds.desktop) return ScreenTypes.TABLET;
+  if (window.innerWidth < screenSizeThresholds.tablet)
+    return ScreenTypes.MOBILE;
+  if (window.innerWidth < screenSizeThresholds.desktop)
+    return ScreenTypes.TABLET;
   return ScreenTypes.DESKTOP;
 };
 
@@ -21,7 +30,10 @@ interface DeviceProviderProps {
   initialScreenType: ScreenTypes;
 }
 
-export function DeviceProvider({ children, initialScreenType }: DeviceProviderProps) {
+export function DeviceProvider({
+  children,
+  initialScreenType,
+}: DeviceProviderProps) {
   const [screenType, setScreenType] = useState<ScreenTypes>(initialScreenType);
 
   useEffect(() => {
@@ -39,7 +51,11 @@ export function DeviceProvider({ children, initialScreenType }: DeviceProviderPr
     };
   }, []);
 
-  return <DeviceContext.Provider value={{ screenType }}>{children}</DeviceContext.Provider>;
+  return (
+    <DeviceContext.Provider value={{ screenType }}>
+      {children}
+    </DeviceContext.Provider>
+  );
 }
 
 export function useScreenType() {

@@ -1,6 +1,7 @@
-import { Heading4, Paragraph } from "@/components/styled/text";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
+
+import { Heading4, Paragraph } from "@/components/styled/text";
 
 const ResultContainer = styled.div`
   display: flex;

@@ -1,7 +1,9 @@
 "use client";
+
 import { DeepKeys, DeepValue, FieldApi } from "@tanstack/react-form";
 import { MouseEvent, RefObject, useState } from "react";
 import { useTranslation } from "react-i18next";
+
 import useOutsideClick from "../../hooks/useOutsideClick";
 import styles from "./index.module.css";
 
@@ -33,7 +35,9 @@ export default function MultipleRadioInputsWithMore<T, K extends DeepKeys<T>>({
     setNumItems((prev) => (prev ? 0 : showFirst));
 
     if (e.screenX === 0 && e.screenY === 0) {
-      const firstHiddenInput = document.getElementById(`${items[showFirst - 1]}`);
+      const firstHiddenInput = document.getElementById(
+        `${items[showFirst - 1]}`,
+      );
       firstHiddenInput?.focus();
     }
   }

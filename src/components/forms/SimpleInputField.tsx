@@ -1,4 +1,5 @@
 "use client";
+
 import {
   DeepKeys,
   DeepValue,
@@ -66,18 +67,31 @@ export default function SimpleInputField<T>({
       {(field) => {
         return (
           <>
-            {infoMsg && <i className={style["simple-input-form-info"]}>{infoMsg}</i>}
-            <label htmlFor={`${field.name}`} className={style["form-form-field"]} onFocus={onFocus}>
+            {infoMsg && (
+              <i className={style["simple-input-form-info"]}>{infoMsg}</i>
+            )}
+            <label
+              htmlFor={`${field.name}`}
+              className={style["form-form-field"]}
+              onFocus={onFocus}
+            >
               <span>{label}</span>
               <input
                 id={`${field.name}`}
                 name={`${field.name}`}
                 type={inputType}
                 onBlur={field.handleBlur}
-                onChange={(e) => field.handleChange(e.target.value as DeepValue<T, DeepKeys<T>>)}
+                onChange={(e) =>
+                  field.handleChange(
+                    e.target.value as DeepValue<T, DeepKeys<T>>,
+                  )
+                }
                 value={field.state.value as string | number | undefined}
               />
-              <FieldInfo className={style["simple-input-form-error"]} field={field} />
+              <FieldInfo
+                className={style["simple-input-form-error"]}
+                field={field}
+              />
             </label>
           </>
         );

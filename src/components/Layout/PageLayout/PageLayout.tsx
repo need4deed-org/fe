@@ -1,16 +1,17 @@
 "use client";
 
+import { Lang, QueryParams } from "need4deed-sdk";
+import { useSearchParams } from "next/navigation";
 import { ReactNode, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
-import { N4DLogo } from "./logos/N4DLogo";
-import { ScreenTypes } from "@/config/constants";
-import { Header } from "@/components/Header";
-import { useScreenType } from "@/context/DeviceContext";
 import { FooterPartnersSection } from "@/components/FooterPartners";
-import { useSearchParams } from "next/navigation";
-import { useTranslation } from "react-i18next";
-import { Lang, QueryParams } from "need4deed-sdk";
+import { Header } from "@/components/Header";
+import { ScreenTypes } from "@/config/constants";
+import { useScreenType } from "@/context/DeviceContext";
+
+import { N4DLogo } from "./logos/N4DLogo";
 
 interface Props {
   children: ReactNode;
@@ -31,7 +32,8 @@ const PageContentHeaderContainer = styled.div<PageContentHeaderContainerProps>`
   display: flex;
   flex: 1;
   flex-direction: column;
-  background: ${(props) => props.background || "var(--layout-static-page-background-default)"};
+  background: ${(props) =>
+    props.background || "var(--layout-static-page-background-default)"};
   padding-bottom: var(--layout-static-page-header-content-bottom-padding);
   padding-top: var(--layout-static-page-header-height);
 `;

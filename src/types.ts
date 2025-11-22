@@ -27,11 +27,9 @@ export enum Env {
   PRODUCTION = "production",
 }
 
-
 export enum Language {
   DE = "de",
   EN = "en",
 }
-
 
 export type FooterLink = [string, string];

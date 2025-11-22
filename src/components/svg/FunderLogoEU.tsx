@@ -5,9 +5,18 @@ interface Props {
 
 export default function FunderLogoEU({ width, height }: Props) {
   return (
-    <svg width={width} height={height} viewBox="0 0 195 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width={width}
+      height={height}
+      viewBox="0 0 195 180"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <g clipPath="url(#clip0_2378_8300)">
-        <path d="M183.825 3.3418H11.168V118.45H183.825V3.3418Z" fill="#003399" />
+        <path
+          d="M183.825 3.3418H11.168V118.45H183.825V3.3418Z"
+          fill="#003399"
+        />
         <path
           d="M93.8176 28.4192L97.4549 25.7623L101.102 28.4192L99.7196 24.1251L103.416 21.4584H98.8568L97.4549 17.1055L96.0627 21.4682L91.5039 21.4584L95.2 24.1251L93.8176 28.4192Z"
           fill="#FFF200"
@@ -155,7 +164,12 @@ export default function FunderLogoEU({ width, height }: Props) {
       </g>
       <defs>
         <clipPath id="clip0_2378_8300">
-          <rect width="193.892" height="180" fill="white" transform="translate(0.767578)" />
+          <rect
+            width="193.892"
+            height="180"
+            fill="white"
+            transform="translate(0.767578)"
+          />
         </clipPath>
       </defs>
     </svg>

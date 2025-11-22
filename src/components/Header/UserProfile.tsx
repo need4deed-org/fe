@@ -1,7 +1,8 @@
+import { CaretDownIcon, CaretUpIcon } from "@phosphor-icons/react";
 import React, { useState } from "react";
 import styled from "styled-components";
+
 import { Paragraph } from "../styled/text";
-import { CaretUpIcon, CaretDownIcon } from "@phosphor-icons/react";
 
 const UserProfileContainer = styled.div`
   display: flex;
@@ -28,7 +29,13 @@ export function UserProfile() {
   return (
     <UserProfileContainer onClick={() => setIsCaretDown(!isCaretDown)}>
       <UserIconDiv>
-        <Paragraph color="var(--color-white)" fontWeight={400} fontSize="14px" lineheight="18px" letterSpacing="0.2px">
+        <Paragraph
+          color="var(--color-white)"
+          fontWeight={400}
+          fontSize="14px"
+          lineheight="18px"
+          letterSpacing="0.2px"
+        >
           {userName}
         </Paragraph>
       </UserIconDiv>

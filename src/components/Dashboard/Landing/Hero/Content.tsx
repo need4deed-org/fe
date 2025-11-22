@@ -1,12 +1,12 @@
-import { useTranslation } from "react-i18next";
 import { useRouter } from "next/navigation";
-
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
+
+import { Subpage } from "@/types";
 
 import { Button } from "../../../core/button";
 import { ATag } from "../../../styled/tags";
 import { CustomHeading } from "../../../styled/text";
-import { Subpage } from "@/types";
 
 const ContentDiv = styled.div`
   display: flex;
@@ -30,7 +30,9 @@ const HeroTextContainer = styled.div`
 
 const HeroButtonsContainer = styled.div`
   display: flex;
-  flex-direction: var(--homepage-hero-section-content-hero-button-container-flex-direction);
+  flex-direction: var(
+    --homepage-hero-section-content-hero-button-container-flex-direction
+  );
   gap: var(--homepage-hero-section-content-hero-button-container-gap);
 `;
 
@@ -72,7 +74,10 @@ export default function HeroContent() {
             text={t("dashboard.heroSection.buttonJoinVolunteer")}
           />
           <ATag href="#rac-section-container">
-            <Button onClick={() => {}} text={t("dashboard.heroSection.buttonJoinRefugeeCenter")} />
+            <Button
+              onClick={() => {}}
+              text={t("dashboard.heroSection.buttonJoinRefugeeCenter")}
+            />
           </ATag>
         </HeroButtonsContainer>
       </ContentContainer>

@@ -1,12 +1,16 @@
 "use client";
-import Header from "./Header";
+
+import { FullWidthContainer, SectionContainer } from "../styled/container";
 import Categories from "./Categories";
 import Footer from "./Footer";
-import { FullWidthContainer, SectionContainer } from "../styled/container";
+import Header from "./Header";
 
 export function VolunteeringCategoriesSection() {
   return (
-    <FullWidthContainer id="volunteering-categories-fullWidthContainer" background-color="var(--color-magnolia)">
+    <FullWidthContainer
+      id="volunteering-categories-fullWidthContainer"
+      background-color="var(--color-magnolia)"
+    >
       <SectionContainer id="volunteering-categories-container">
         <Header />
         <Categories />

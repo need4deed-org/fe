@@ -1,7 +1,8 @@
-import { Tag } from "@/components/styled/tags";
-import { ActivitySpan } from "@/components/styled/text";
 import { ReactNode } from "react";
 import styled from "styled-components";
+
+import { Tag } from "@/components/styled/tags";
+import { ActivitySpan } from "@/components/styled/text";
 
 interface Props {
   tags: string[];
@@ -24,7 +25,9 @@ export function Tags({ tags, backgroundColor = defaultBGColor, icon }: Props) {
       {tags.filter(Boolean).map((tag) => (
         <Tag key={tag} $backgroundColor={backgroundColor}>
           {icon}
-          <ActivitySpan color={bgTextColorMap[backgroundColor]}>{tag}</ActivitySpan>
+          <ActivitySpan color={bgTextColorMap[backgroundColor]}>
+            {tag}
+          </ActivitySpan>
         </Tag>
       ))}
     </TagsContainer>

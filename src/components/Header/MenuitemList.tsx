@@ -1,7 +1,8 @@
 import Link from "next/link";
 
-import MenuItem from "./MenuItem";
 import { MenuItemType } from "@/types";
+
+import MenuItem from "./MenuItem";
 
 interface Props {
   items: MenuItemType[];

@@ -1,5 +1,14 @@
-import { CheckIcon, FlagIcon, HourglassIcon, SealCheckIcon, SparkleIcon } from "@phosphor-icons/react";
-import { ApiVolunteerGetList, VolunteerStateEngagementType } from "need4deed-sdk";
+import {
+  CheckIcon,
+  FlagIcon,
+  HourglassIcon,
+  SealCheckIcon,
+  SparkleIcon,
+} from "@phosphor-icons/react";
+import {
+  ApiVolunteerGetList,
+  VolunteerStateEngagementType,
+} from "need4deed-sdk";
 import { JSX } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
@@ -10,6 +19,7 @@ import { CirclePic } from "@/components/styled/img";
 import { Paragraph } from "@/components/styled/text";
 import { defaultAvatarURL } from "@/config/constants";
 import { capitalizeFirstLetter, getImageUrl } from "@/utils";
+
 import CardDetail from "./CardDetail";
 import { getNormalizedVolunteer, groupLanguagesByProficiency } from "./helpers";
 import { IconName } from "./icon";
@@ -21,12 +31,23 @@ interface Props {
 export function VolunteerCard({ volunteer }: Props) {
   const { t } = useTranslation();
 
-  const { name, languages, activities, skills, locations, availability, avatarUrl, stateEngagement, stateType } =
-    getNormalizedVolunteer(volunteer);
+  const {
+    name,
+    languages,
+    activities,
+    skills,
+    locations,
+    availability,
+    avatarUrl,
+    stateEngagement,
+    stateType,
+  } = getNormalizedVolunteer(volunteer);
 
   const groupedLanguages = groupLanguagesByProficiency(languages);
 
-  const availabilities = availability.map((a) => capitalizeFirstLetter(a.day) + ", " + a.daytime.join("-"));
+  const availabilities = availability.map(
+    (a) => capitalizeFirstLetter(a.day) + ", " + a.daytime.join("-"),
+  );
 
   return (
     <Card>
@@ -65,7 +86,10 @@ export function VolunteerCard({ volunteer }: Props) {
       </StatusTagsDiv>
 
       <ProfileDiv>
-        <CirclePic src={getImageUrl(avatarUrl || defaultAvatarURL)} size="64px" />
+        <CirclePic
+          src={getImageUrl(avatarUrl || defaultAvatarURL)}
+          size="64px"
+        />
         <Paragraph
           fontWeight="var(--dashboard-volunteers-card-profile-fontWeight)"
           fontSize="var(--dashboard-volunteers-card-profile-fontSize)"
@@ -75,20 +99,32 @@ export function VolunteerCard({ volunteer }: Props) {
         </Paragraph>
       </ProfileDiv>
 
-      <CardDetail header={t("dashboard.volunteers.languages")} iconName={IconName.Translate}>
+      <CardDetail
+        header={t("dashboard.volunteers.languages")}
+        iconName={IconName.Translate}
+      >
         {groupedLanguages.map(({ proficiency, list }) => (
           <LanguageDetailContainer key={proficiency}>
-            <CardParagraph text={`${t(`dashboard.volunteers.langProficiency.${proficiency}`)}:`} isBold />
+            <CardParagraph
+              text={`${t(`dashboard.volunteers.langProficiency.${proficiency}`)}:`}
+              isBold
+            />
             <CardParagraph text={`${list.join(", ")}`} />
           </LanguageDetailContainer>
         ))}
       </CardDetail>
 
-      <CardDetail header={t("dashboard.volunteers.activities")} iconName={IconName.ShootingStar}>
+      <CardDetail
+        header={t("dashboard.volunteers.activities")}
+        iconName={IconName.ShootingStar}
+      >
         <Tags tags={activities as unknown as string[]} />
       </CardDetail>
 
-      <CardDetail header={t("dashboard.volunteers.skillsExperience")} iconName={IconName.Wrench}>
+      <CardDetail
+        header={t("dashboard.volunteers.skillsExperience")}
+        iconName={IconName.Wrench}
+      >
         <Tags
           tags={skills as unknown as string[]}
           backgroundColor="var(--color-white)"
@@ -96,7 +132,10 @@ export function VolunteerCard({ volunteer }: Props) {
         />
       </CardDetail>
 
-      <CardDetail header={t("dashboard.volunteers.preferredAvailability")} iconName={IconName.CalendarDots}>
+      <CardDetail
+        header={t("dashboard.volunteers.preferredAvailability")}
+        iconName={IconName.CalendarDots}
+      >
         {availabilities.map((a) => (
           <LanguageDetailContainer key={a}>
             <CardParagraph text={a} />
@@ -104,7 +143,10 @@ export function VolunteerCard({ volunteer }: Props) {
         ))}
       </CardDetail>
 
-      <CardDetail header={t("dashboard.volunteers.preferredDistricts")} iconName={IconName.MapPin}>
+      <CardDetail
+        header={t("dashboard.volunteers.preferredDistricts")}
+        iconName={IconName.MapPin}
+      >
         <CardParagraph text={locations.join(", ")} />
       </CardDetail>
     </Card>
@@ -126,24 +168,47 @@ const stateEngagementColorMap: Record<VolunteerStateEngagementType, string> = {
 };
 
 // Todo: this map will be updated Later
-const stateEngagementIconMap: Record<VolunteerStateEngagementType, JSX.Element> = {
+const stateEngagementIconMap: Record<
+  VolunteerStateEngagementType,
+  JSX.Element
+> = {
   [VolunteerStateEngagementType.NEW]: (
-    <HourglassIcon size={18} color={stateEngagementColorMap[VolunteerStateEngagementType.NEW]} />
+    <HourglassIcon
+      size={18}
+      color={stateEngagementColorMap[VolunteerStateEngagementType.NEW]}
+    />
   ),
   [VolunteerStateEngagementType.ACTIVE]: (
-    <SealCheckIcon size={18} color={stateEngagementColorMap[VolunteerStateEngagementType.ACTIVE]} />
+    <SealCheckIcon
+      size={18}
+      color={stateEngagementColorMap[VolunteerStateEngagementType.ACTIVE]}
+    />
   ),
   [VolunteerStateEngagementType.TEMP_UNAVAILABLE]: (
-    <FlagIcon size={18} color={stateEngagementColorMap[VolunteerStateEngagementType.TEMP_UNAVAILABLE]} />
+    <FlagIcon
+      size={18}
+      color={
+        stateEngagementColorMap[VolunteerStateEngagementType.TEMP_UNAVAILABLE]
+      }
+    />
   ),
   [VolunteerStateEngagementType.AVAILABLE]: (
-    <HourglassIcon size={18} color={stateEngagementColorMap[VolunteerStateEngagementType.AVAILABLE]} />
+    <HourglassIcon
+      size={18}
+      color={stateEngagementColorMap[VolunteerStateEngagementType.AVAILABLE]}
+    />
   ),
   [VolunteerStateEngagementType.INACTIVE]: (
-    <FlagIcon size={18} color={stateEngagementColorMap[VolunteerStateEngagementType.INACTIVE]} />
+    <FlagIcon
+      size={18}
+      color={stateEngagementColorMap[VolunteerStateEngagementType.INACTIVE]}
+    />
   ),
   [VolunteerStateEngagementType.UNRESPONSIVE]: (
-    <FlagIcon size={18} color={stateEngagementColorMap[VolunteerStateEngagementType.INACTIVE]} />
+    <FlagIcon
+      size={18}
+      color={stateEngagementColorMap[VolunteerStateEngagementType.INACTIVE]}
+    />
   ),
 };
 
@@ -171,7 +236,9 @@ const Card = styled(BaseCard)`
   height: var(--dashboard-volunteers-card-height);
   gap: var(--dashboard-volunteers-card-gap);
   padding: var(--dashboard-volunteers-card-padding);
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  transition:
+    transform 0.3s ease-in-out,
+    box-shadow 0.3s ease-in-out;
   cursor: pointer;
 
   &:hover {
@@ -193,8 +260,12 @@ const StatusDiv = styled.div`
   align-items: center;
   background: var(--color-white);
   height: var(--dashboard-volunteers-card-status-div-height);
-  border-bottom-left-radius: var(--dashboard-volunteers-card-status-div-bordor-bottom);
-  border-bottom-right-radius: var(--dashboard-volunteers-card-status-div-bordor-bottom);
+  border-bottom-left-radius: var(
+    --dashboard-volunteers-card-status-div-bordor-bottom
+  );
+  border-bottom-right-radius: var(
+    --dashboard-volunteers-card-status-div-bordor-bottom
+  );
   gap: var(--dashboard-volunteers-card-status-div-gap);
   padding: var(--dashboard-volunteers-card-status-div-padding);
 `;
@@ -206,8 +277,12 @@ const TagDiv = styled.div`
   align-items: center;
   background: var(--color-green-200);
   height: var(--dashboard-volunteers-card-status-div-height);
-  border-bottom-left-radius: var(--dashboard-volunteers-card-status-div-bordor-bottom);
-  border-bottom-right-radius: var(--dashboard-volunteers-card-status-div-bordor-bottom);
+  border-bottom-left-radius: var(
+    --dashboard-volunteers-card-status-div-bordor-bottom
+  );
+  border-bottom-right-radius: var(
+    --dashboard-volunteers-card-status-div-bordor-bottom
+  );
   padding: var(--dashboard-volunteers-card-tag-div-padding);
   gap: var(--dashboard-volunteers-card-tag-div-gap);
 `;

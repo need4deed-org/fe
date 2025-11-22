@@ -1,8 +1,9 @@
-import { Paragraph } from "@/components/styled/text";
 import { WarningCircleIcon } from "@phosphor-icons/react";
 import { ValidationError } from "@tanstack/react-form";
 import { ChangeEvent } from "react";
 import styled from "styled-components";
+
+import { Paragraph } from "@/components/styled/text";
 
 const FormInputContainer = styled.div`
   display: flex;
@@ -29,10 +30,12 @@ const StyledInput = styled.input<StyledInputProps>`
   font-size: var(--form-input-fontSize);
   height: var(--form-input-container-height);
   width: ${(props) => props.width || "-webkit-fill-available"};
-  background-color: ${(props) => props.$backgroundColor || "var(--color-white)"};
+  background-color: ${(props) =>
+    props.$backgroundColor || "var(--color-white)"};
   border-radius: var(--form-input-container-border-radius);
   padding: var(--form-input-container-padding);
-  border: ${(props) => `var(--form-input-container-border${props.$errorsExist ? "-error" : ""})`};
+  border: ${(props) =>
+    `var(--form-input-container-border${props.$errorsExist ? "-error" : ""})`};
 
   &:focus {
     outline: none;
@@ -80,7 +83,10 @@ export function FormInput({
       {errorsExist &&
         errors.map((error) => (
           <ErrorMessageContainer key={`${error}`}>
-            <WarningCircleIcon size={20} color="var(--form-input-error-message-color)" />
+            <WarningCircleIcon
+              size={20}
+              color="var(--form-input-error-message-color)"
+            />
             <Paragraph
               color="var(--form-input-error-message-color)"
               fontSize="var(--form-input-error-message-fontSize)"

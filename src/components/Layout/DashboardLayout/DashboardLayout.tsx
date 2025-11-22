@@ -1,7 +1,10 @@
 import { ReactNode } from "react";
+
+import { DashboardBaseContainer } from "@/components/styled/container";
+
 import { PageLayout } from "../PageLayout";
 import NavigationBar from "./NavigationBar";
-import { DashboardBaseContainer } from "@/components/styled/container";
+
 interface Props {
   children: ReactNode;
 }

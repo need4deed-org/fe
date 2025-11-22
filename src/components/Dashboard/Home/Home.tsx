@@ -1,8 +1,10 @@
 "use client";
 
 import styled from "styled-components";
-import DashboardHomeContent from "./HomeContent";
+
 import { DashboardLayout } from "@/components/Layout";
+
+import DashboardHomeContent from "./HomeContent";
 
 const HomeContainer = styled.div`
   display: flex;

@@ -1,6 +1,7 @@
-import { Heading2 } from "@/components/styled/text";
 import React from "react";
 import styled from "styled-components";
+
+import { Heading2 } from "@/components/styled/text";
 
 const DashboardContentContainer = styled.div`
   display: flex;

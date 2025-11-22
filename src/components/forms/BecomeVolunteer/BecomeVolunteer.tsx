@@ -1,4 +1,5 @@
 "use client";
+
 import { useForm } from "@tanstack/react-form";
 import { validate as validateEmail } from "email-validator";
 import { Lang, VolunteerFormData } from "need4deed-sdk";
@@ -7,21 +8,21 @@ import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { apiPathVolunteer } from "../../../config/constants";
-import { getImageUrl } from "../../../utils/index";
-import UploadIcon from "../../svg/Upload";
-
 import WithParentRef from "@/components/withParentRef";
 import useList from "@/hooks/useLists";
 import usePostRequest from "@/hooks/usePostRequest";
 import { Subpage } from "@/types";
+
+import { apiPathVolunteer } from "../../../config/constants";
+import { getImageUrl } from "../../../utils/index";
+import UploadIcon from "../../svg/Upload";
 import ErrorAnnouncement from "../AddOpportunity/ErrorAnnouncement";
 import FieldInfo from "../FieldInfo";
 import HeaderWithHelp from "../HeaderWithHelp";
-import style from "../index.module.css";
 import MultipleCheckBoxInputsWithMore from "../MultipleCheckBoxInputsWithMore";
 import MultipleRadioInputsWithMore from "../MultipleRadioInputsWithMore";
 import SimpleInputField from "../SimpleInputField";
+import style from "../index.module.css";
 import { ListsOfOptions, OpportunityInfo } from "../types";
 import {
   areLanguagesRepeated,
@@ -46,7 +47,10 @@ export default function BecomeVolunteer() {
   const opportunityParams = useSearchParams();
   const language = i18n.language as Lang;
 
-  const { postRequest } = usePostRequest<VolunteerFormData, Record<string, string | string[]>>({
+  const { postRequest } = usePostRequest<
+    VolunteerFormData,
+    Record<string, string | string[]>
+  >({
     url: apiPathVolunteer,
   });
 
@@ -110,7 +114,12 @@ export default function BecomeVolunteer() {
       <div className={style["form-container-header"]}>
         <h1>
           {t("form.becomeVolunteer.header").toLocaleUpperCase()}
-          <Image src={getImageUrl("N4D-logo-purple-on-transparent-h.webp")} alt="" width={180} height={100} />
+          <Image
+            src={getImageUrl("N4D-logo-purple-on-transparent-h.webp")}
+            alt=""
+            width={180}
+            height={100}
+          />
         </h1>
         {opportunity.title ? (
           <h6>
@@ -130,7 +139,9 @@ export default function BecomeVolunteer() {
           name="name"
           FieldTag={formVolunteer.Field}
           label={t("form.becomeVolunteer.fields.name.label")}
-          onChangeValidator={({ value }) => (!value ? t("form.error.required") : undefined)}
+          onChangeValidator={({ value }) =>
+            !value ? t("form.error.required") : undefined
+          }
         />
         <SimpleInputField<VolunteerData>
           name="email"
@@ -150,7 +161,9 @@ export default function BecomeVolunteer() {
           name="phone"
           FieldTag={formVolunteer.Field}
           label={t("form.becomeVolunteer.fields.phone.label")}
-          onChangeValidator={({ value }) => (!value ? t("form.error.required") : undefined)}
+          onChangeValidator={({ value }) =>
+            !value ? t("form.error.required") : undefined
+          }
         />
         <SimpleInputField<VolunteerData>
           name="postcode"
@@ -170,7 +183,8 @@ export default function BecomeVolunteer() {
           name="locations"
           validators={{
             onBlur: ({ value }) => {
-              const isSelected = !!value.filter(({ selected }) => selected).length;
+              const isSelected = !!value.filter(({ selected }) => selected)
+                .length;
               return isSelected ? undefined : t("form.error.location");
             },
           }}
@@ -180,7 +194,9 @@ export default function BecomeVolunteer() {
               <fieldset>
                 <HeaderWithHelp
                   textHelp={t("form.becomeVolunteer.fields.locations.helpText")}
-                  titleHelp={t("form.becomeVolunteer.fields.locations.helpTitle")}
+                  titleHelp={t(
+                    "form.becomeVolunteer.fields.locations.helpTitle",
+                  )}
                   classNamePopup="form-help"
                 >
                   {t("form.becomeVolunteer.fields.locations.header")}
@@ -205,7 +221,9 @@ export default function BecomeVolunteer() {
           name="availability"
           validators={{
             onBlur: ({ value }) => {
-              return isTimeSlotSelected(value) ? undefined : t("form.error.availability");
+              return isTimeSlotSelected(value)
+                ? undefined
+                : t("form.error.availability");
             },
           }}
         >
@@ -213,7 +231,9 @@ export default function BecomeVolunteer() {
             return (
               <fieldset>
                 <div className={style["form-table-wrapper"]}>
-                  <h3>{t("form.becomeVolunteer.fields.availability.header")}</h3>
+                  <h3>
+                    {t("form.becomeVolunteer.fields.availability.header")}
+                  </h3>
                   <div
                     className={style["form-table"]}
                     onFocus={() => {
@@ -221,42 +241,68 @@ export default function BecomeVolunteer() {
                     }}
                   >
                     {fieldAvailability.state.value &&
-                      fieldAvailability.state.value.map((availabilityObj, idx) => {
-                        return (
-                          <div className={style["form-table-row"]} key={`availability-${availabilityObj.weekday}`}>
-                            <span className={style["form-availability-weekday"]}>
-                              {t(`form.schedule.${availabilityObj.weekday}`).toLocaleUpperCase()}
-                            </span>
-                            <formVolunteer.Field name={`availability[${idx}].timeSlots`}>
-                              {(fieldWeekday) => {
-                                return (
-                                  fieldWeekday.state.value &&
-                                  fieldWeekday.state.value.map(({ title, id }, idxTimeframes) => (
-                                    <formVolunteer.Field
-                                      key={`${availabilityObj.weekday}-${id}`}
-                                      name={`availability[${idx}].timeSlots[${idxTimeframes}].selected`}
-                                    >
-                                      {(field) => (
-                                        <span className={style["form-pick"]}>
-                                          <input
-                                            tabIndex={0}
-                                            id={`${availabilityObj.weekday}${id}`}
-                                            type="checkbox"
-                                            onChange={(e) => field.handleChange(e.target.checked)}
-                                          />
-                                          <label htmlFor={`${availabilityObj.weekday}${id}`}>
-                                            {getTimeslotTitle(t, title[i18n.language as Lang] as string)}
-                                          </label>
-                                        </span>
-                                      )}
-                                    </formVolunteer.Field>
-                                  ))
-                                );
-                              }}
-                            </formVolunteer.Field>
-                          </div>
-                        );
-                      })}
+                      fieldAvailability.state.value.map(
+                        (availabilityObj, idx) => {
+                          return (
+                            <div
+                              className={style["form-table-row"]}
+                              key={`availability-${availabilityObj.weekday}`}
+                            >
+                              <span
+                                className={style["form-availability-weekday"]}
+                              >
+                                {t(
+                                  `form.schedule.${availabilityObj.weekday}`,
+                                ).toLocaleUpperCase()}
+                              </span>
+                              <formVolunteer.Field
+                                name={`availability[${idx}].timeSlots`}
+                              >
+                                {(fieldWeekday) => {
+                                  return (
+                                    fieldWeekday.state.value &&
+                                    fieldWeekday.state.value.map(
+                                      ({ title, id }, idxTimeframes) => (
+                                        <formVolunteer.Field
+                                          key={`${availabilityObj.weekday}-${id}`}
+                                          name={`availability[${idx}].timeSlots[${idxTimeframes}].selected`}
+                                        >
+                                          {(field) => (
+                                            <span
+                                              className={style["form-pick"]}
+                                            >
+                                              <input
+                                                tabIndex={0}
+                                                id={`${availabilityObj.weekday}${id}`}
+                                                type="checkbox"
+                                                onChange={(e) =>
+                                                  field.handleChange(
+                                                    e.target.checked,
+                                                  )
+                                                }
+                                              />
+                                              <label
+                                                htmlFor={`${availabilityObj.weekday}${id}`}
+                                              >
+                                                {getTimeslotTitle(
+                                                  t,
+                                                  title[
+                                                    i18n.language as Lang
+                                                  ] as string,
+                                                )}
+                                              </label>
+                                            </span>
+                                          )}
+                                        </formVolunteer.Field>
+                                      ),
+                                    )
+                                  );
+                                }}
+                              </formVolunteer.Field>
+                            </div>
+                          );
+                        },
+                      )}
                   </div>
                 </div>
                 <FieldInfo field={fieldAvailability} />
@@ -278,7 +324,8 @@ export default function BecomeVolunteer() {
             name="languagesNative"
             validators={{
               onBlur: ({ value }) => {
-                const isSelected = !!value.filter(({ selected }) => selected).length;
+                const isSelected = !!value.filter(({ selected }) => selected)
+                  .length;
                 return isSelected ? undefined : t("form.error.language");
               },
             }}
@@ -286,14 +333,21 @@ export default function BecomeVolunteer() {
             {(fieldLanguagesNative) => {
               return (
                 <>
-                  <h6>{t("form.becomeVolunteer.fields.languages.languagesNative.header")}</h6>
+                  <h6>
+                    {t(
+                      "form.becomeVolunteer.fields.languages.languagesNative.header",
+                    )}
+                  </h6>
                   <WithParentRef
                     onFocus={() => {
                       setTimeout(fieldLanguagesNative.handleBlur, 0);
                     }}
                     className={`${style["form-chip-list"]} ${style["form-pick"]}`}
                   >
-                    <MultipleCheckBoxInputsWithMore<VolunteerData, "languagesNative">
+                    <MultipleCheckBoxInputsWithMore<
+                      VolunteerData,
+                      "languagesNative"
+                    >
                       FieldTag={formVolunteer.Field}
                       field={fieldLanguagesNative}
                     />
@@ -307,14 +361,21 @@ export default function BecomeVolunteer() {
             {(fieldLanguagesFluent) => {
               return (
                 <>
-                  <h6>{t("form.becomeVolunteer.fields.languages.languagesFluent.header")}</h6>
+                  <h6>
+                    {t(
+                      "form.becomeVolunteer.fields.languages.languagesFluent.header",
+                    )}
+                  </h6>
                   <WithParentRef
                     onFocus={() => {
                       setTimeout(fieldLanguagesFluent.handleBlur, 0);
                     }}
                     className={`${style["form-chip-list"]} ${style["form-pick"]}`}
                   >
-                    <MultipleCheckBoxInputsWithMore<VolunteerData, "languagesFluent">
+                    <MultipleCheckBoxInputsWithMore<
+                      VolunteerData,
+                      "languagesFluent"
+                    >
                       FieldTag={formVolunteer.Field}
                       field={fieldLanguagesFluent}
                     />
@@ -328,9 +389,18 @@ export default function BecomeVolunteer() {
             {(fieldLanguagesIntermediate) => {
               return (
                 <>
-                  <h6>{t("form.becomeVolunteer.fields.languages.languagesIntermediate.header")}</h6>
-                  <WithParentRef className={`${style["form-chip-list"]} ${style["form-pick"]}`}>
-                    <MultipleCheckBoxInputsWithMore<VolunteerData, "languagesIntermediate">
+                  <h6>
+                    {t(
+                      "form.becomeVolunteer.fields.languages.languagesIntermediate.header",
+                    )}
+                  </h6>
+                  <WithParentRef
+                    className={`${style["form-chip-list"]} ${style["form-pick"]}`}
+                  >
+                    <MultipleCheckBoxInputsWithMore<
+                      VolunteerData,
+                      "languagesIntermediate"
+                    >
                       FieldTag={formVolunteer.Field}
                       field={fieldLanguagesIntermediate}
                     />
@@ -345,8 +415,11 @@ export default function BecomeVolunteer() {
           name="activities"
           validators={{
             onBlur: ({ value }) => {
-              const isSelected = !!value.filter(({ selected }) => selected).length;
-              return isSelected ? undefined : t("form.becomeVolunteer.fields.activities.error");
+              const isSelected = !!value.filter(({ selected }) => selected)
+                .length;
+              return isSelected
+                ? undefined
+                : t("form.becomeVolunteer.fields.activities.error");
             },
           }}
         >
@@ -354,8 +427,12 @@ export default function BecomeVolunteer() {
             return (
               <fieldset>
                 <HeaderWithHelp
-                  textHelp={t("form.becomeVolunteer.fields.activities.helpText")}
-                  titleHelp={t("form.becomeVolunteer.fields.activities.helpTitle")}
+                  textHelp={t(
+                    "form.becomeVolunteer.fields.activities.helpText",
+                  )}
+                  titleHelp={t(
+                    "form.becomeVolunteer.fields.activities.helpTitle",
+                  )}
                   classNamePopup="form-help"
                 >
                   {t("form.becomeVolunteer.fields.activities.header")}
@@ -387,7 +464,9 @@ export default function BecomeVolunteer() {
                 >
                   {t("form.becomeVolunteer.fields.skills.header")}
                 </HeaderWithHelp>
-                <WithParentRef className={`${style["form-chip-list"]} ${style["form-pick"]}`}>
+                <WithParentRef
+                  className={`${style["form-chip-list"]} ${style["form-pick"]}`}
+                >
                   <MultipleCheckBoxInputsWithMore<VolunteerData, "skills">
                     FieldTag={formVolunteer.Field}
                     field={fieldSkills}
@@ -401,7 +480,8 @@ export default function BecomeVolunteer() {
         <formVolunteer.Field
           name="certOfGoodConduct"
           validators={{
-            onBlur: ({ value }) => (value === undefined ? t("form.error.required") : undefined),
+            onBlur: ({ value }) =>
+              value === undefined ? t("form.error.required") : undefined,
           }}
         >
           {(field) => (
@@ -413,8 +493,12 @@ export default function BecomeVolunteer() {
                 }}
               >
                 <HeaderWithHelp
-                  textHelp={t("form.becomeVolunteer.fields.certOfGoodConduct.helpText")}
-                  titleHelp={t("form.becomeVolunteer.fields.certOfGoodConduct.helpTitle")}
+                  textHelp={t(
+                    "form.becomeVolunteer.fields.certOfGoodConduct.helpText",
+                  )}
+                  titleHelp={t(
+                    "form.becomeVolunteer.fields.certOfGoodConduct.helpTitle",
+                  )}
                   classNamePopup="form-help"
                 >
                   {t("form.becomeVolunteer.fields.certOfGoodConduct.header")}
@@ -429,7 +513,10 @@ export default function BecomeVolunteer() {
                 <FieldInfo field={field} />
               </div>
               <h6>
-                <a href="https://www.berlin.de/laf/engagement/fuehrungszeugnis/" target="_blanc">
+                <a
+                  href="https://www.berlin.de/laf/engagement/fuehrungszeugnis/"
+                  target="_blanc"
+                >
                   {t("form.becomeVolunteer.fields.certOfGoodConduct.why")}
                 </a>
               </h6>
@@ -439,7 +526,8 @@ export default function BecomeVolunteer() {
         <formVolunteer.Field
           name="certMeaslesVaccination"
           validators={{
-            onBlur: ({ value }) => (value === undefined ? t("form.error.required") : undefined),
+            onBlur: ({ value }) =>
+              value === undefined ? t("form.error.required") : undefined,
           }}
         >
           {(field) => (
@@ -450,8 +538,12 @@ export default function BecomeVolunteer() {
               }}
             >
               <HeaderWithHelp
-                textHelp={t("form.becomeVolunteer.fields.certMeaslesVaccination.helpText")}
-                titleHelp={t("form.becomeVolunteer.fields.certMeaslesVaccination.helpTitle")}
+                textHelp={t(
+                  "form.becomeVolunteer.fields.certMeaslesVaccination.helpText",
+                )}
+                titleHelp={t(
+                  "form.becomeVolunteer.fields.certMeaslesVaccination.helpTitle",
+                )}
                 classNamePopup="form-help"
               >
                 {t("form.becomeVolunteer.fields.certMeaslesVaccination.header")}
@@ -473,12 +565,16 @@ export default function BecomeVolunteer() {
               <fieldset>
                 <HeaderWithHelp
                   textHelp={t("form.becomeVolunteer.fields.leadFrom.helpText")}
-                  titleHelp={t("form.becomeVolunteer.fields.leadFrom.helpTitle")}
+                  titleHelp={t(
+                    "form.becomeVolunteer.fields.leadFrom.helpTitle",
+                  )}
                   classNamePopup="form-help"
                 >
                   {t("form.becomeVolunteer.fields.leadFrom.header")}
                 </HeaderWithHelp>
-                <WithParentRef className={`${style["form-chip-list"]} ${style["form-pick"]}`}>
+                <WithParentRef
+                  className={`${style["form-chip-list"]} ${style["form-pick"]}`}
+                >
                   <MultipleCheckBoxInputsWithMore<VolunteerData, "leadFrom">
                     FieldTag={formVolunteer.Field}
                     field={fieldLeadFrom}
@@ -497,13 +593,16 @@ export default function BecomeVolunteer() {
         <formVolunteer.Field
           name="consent"
           validators={{
-            onChange: ({ value }) => (value ? undefined : t("form.error.required")),
+            onChange: ({ value }) =>
+              value ? undefined : t("form.error.required"),
           }}
         >
           {(fieldConsent) => {
             return (
               <div>
-                <div className={`${style["form-chip-list"]} ${style["form-pick"]}`}>
+                <div
+                  className={`${style["form-chip-list"]} ${style["form-pick"]}`}
+                >
                   <input
                     id="consent"
                     type="checkbox"
@@ -513,12 +612,18 @@ export default function BecomeVolunteer() {
                       fieldConsent.validate("change");
                     }}
                   />
-                  <label htmlFor="consent">{getTickMark(!!fieldConsent.state.value)}</label>
+                  <label htmlFor="consent">
+                    {getTickMark(!!fieldConsent.state.value)}
+                  </label>
                   <span>
                     {t("form.becomeVolunteer.fields.consent.header")}{" "}
-                    <a href={`/${Subpage.DATA_PROTECTION}/${lng}`}>{t("homepage.footer.legal.dataPrivacy")}</a>{" "}
+                    <a href={`/${Subpage.DATA_PROTECTION}/${lng}`}>
+                      {t("homepage.footer.legal.dataPrivacy")}
+                    </a>{" "}
                     {t("form.becomeVolunteer.fields.consent.and")}{" "}
-                    <a href={`/${Subpage.AGREEMENT}/${lng}`}>{t("homepage.footer.legal.agreement")}</a>
+                    <a href={`/${Subpage.AGREEMENT}/${lng}`}>
+                      {t("homepage.footer.legal.agreement")}
+                    </a>
                   </span>
                 </div>
                 <FieldInfo field={fieldConsent} />
@@ -532,7 +637,10 @@ export default function BecomeVolunteer() {
               new Set(
                 Object.keys(state.fieldMeta)
                   .reduce((errorList: string[], key) => {
-                    const fieldErrors = state.fieldMeta[key as keyof typeof state.fieldMeta].errors.join(", ");
+                    const fieldErrors =
+                      state.fieldMeta[
+                        key as keyof typeof state.fieldMeta
+                      ].errors.join(", ");
                     errorList.push(fieldErrors);
                     return errorList;
                   }, [])
@@ -543,7 +651,11 @@ export default function BecomeVolunteer() {
               .join(", ");
             return (
               <div className={style["form-submit"]}>
-                <button className="n4d-cta" type="submit" disabled={!state.canSubmit}>
+                <button
+                  className="n4d-cta"
+                  type="submit"
+                  disabled={!state.canSubmit}
+                >
                   {state.isSubmitting ? (
                     "..."
                   ) : (
