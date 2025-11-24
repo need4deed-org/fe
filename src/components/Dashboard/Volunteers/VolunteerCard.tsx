@@ -1,5 +1,6 @@
 import { CheckIcon, FlagIcon, HourglassIcon, SealCheckIcon, SparkleIcon } from "@phosphor-icons/react";
 import { ApiVolunteerGetList, VolunteerStateEngagementType } from "need4deed-sdk";
+import { useRouter } from "next/navigation";
 import { JSX } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
@@ -20,16 +21,23 @@ interface Props {
 
 export function VolunteerCard({ volunteer }: Props) {
   const { t } = useTranslation();
+  const router = useRouter();
 
-  const { name, languages, activities, skills, locations, availability, avatarUrl, statusEngagement, statusType } =
+  const { id, name, languages, activities, skills, locations, availability, avatarUrl, statusEngagement, statusType } =
     getNormalizedVolunteer(volunteer);
 
   const groupedLanguages = groupLanguagesByProficiency(languages);
 
   const availabilities = availability.map((a) => capitalizeFirstLetter(a.day) + ", " + a.daytime.join("-"));
 
+  const handleCardClick = () => {
+    if (!id) return;
+
+    router.push(`/dashboard/volunteers/${id}`);
+  };
+
   return (
-    <Card>
+    <Card onClick={handleCardClick}>
       <StatusTagsDiv>
         <>
           {statusEngagement && (
