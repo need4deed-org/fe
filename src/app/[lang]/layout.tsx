@@ -9,7 +9,7 @@ import { Figtree } from "next/font/google";
 import { headers } from "next/headers";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { I18nProvider } from "../config/i18next";
+import { I18nProvider } from "../../config/i18next";
 import "./globals.css";
 
 const figtree = Figtree({
@@ -24,9 +24,14 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode;
+  params: Promise<{ lang: string }>;
 }>) {
+  // const param = await params
+  const { lang } = await params;
+
   const getInitialDeviceType = async () => {
     const headersList = await headers();
     const deviceTypeHeader = headersList.get("x-device-type");
@@ -57,7 +62,7 @@ export default async function RootLayout({
         <StyledComponentsRegistry>
           <QueryProvider>
             <DeviceProvider initialScreenType={initialScreenType}>
-              <I18nProvider>{children}</I18nProvider>
+              <I18nProvider initialLang={lang}>{children}</I18nProvider>
             </DeviceProvider>
           </QueryProvider>
         </StyledComponentsRegistry>

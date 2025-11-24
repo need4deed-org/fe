@@ -19,8 +19,26 @@ i18next.use(initReactI18next).init({
 
 interface I18nProviderProps {
   children: React.ReactNode;
+  initialLang: string;
 }
 
-export function I18nProvider({ children }: I18nProviderProps) {
+export function I18nProvider({ children, initialLang }: I18nProviderProps) {
+  const supportedLangs = Object.values(Lang) as string[];
+
+  const lang = supportedLangs.includes(initialLang) ? initialLang : Lang.DE;
+
+  console.log("initialLang", initialLang);
+  console.log("lang", lang);
+
+  if (i18next.language !== lang) {
+    i18next.changeLanguage(lang);
+  }
+
+  // useEffect(() => {
+  //   if (i18next.language !== lang) {
+  //     i18next.changeLanguage(lang);
+  //   }
+  // }, [lang]);
+
   return <I18nextProvider i18n={i18next}>{children}</I18nextProvider>;
 }

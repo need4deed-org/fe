@@ -38,19 +38,20 @@ const PageContentHeaderContainer = styled.div<PageContentHeaderContainerProps>`
 
 export function PageLayout({ children, background }: Props) {
   const screenType = useScreenType();
-  const searchParams = useSearchParams();
-  const { i18n } = useTranslation();
+  // const searchParams = useSearchParams();
+  // const { i18n } = useTranslation();
 
   const isBurgerMenu = screenType !== ScreenTypes.DESKTOP;
-  const language = searchParams.get(QueryParams.Language);
 
-  useEffect(() => {
-    const isValidLanguage = Object.values(Lang).includes(language as Lang);
+  // const language = searchParams.get(QueryParams.Language);
 
-    if (isValidLanguage && i18n.language !== language) {
-      i18n.changeLanguage(language as Lang);
-    }
-  }, [language, i18n]);
+  // useEffect(() => {
+  //   const isValidLanguage = Object.values(Lang).includes(language as Lang);
+
+  //   if (isValidLanguage && i18n.language !== language) {
+  //     i18n.changeLanguage(language as Lang);
+  //   }
+  // }, [language, i18n]);
 
   return (
     <PageContainer>
