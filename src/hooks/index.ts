@@ -1,3 +1,3 @@
 export * from "./useSwipe";
-export * from "./usePostMutation";
+export * from "./useMutationQuery";
 export * from "./useGetQuery";
