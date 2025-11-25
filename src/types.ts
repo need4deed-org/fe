@@ -44,4 +44,4 @@ export enum Language {
 
 export type FooterLink = [string, string];
 
-export type HttpMethod = "POST" | "PATCH" | "PUT";
+export type HttpMethod = "post" | "patch" | "put";

@@ -17,7 +17,7 @@ interface DataMutationOptions<TResponse> {
 // Generic function to perform the API call
 async function mutateData<TData, TResponse>(apiPath: string, method: HttpMethod, data: TData): Promise<TResponse> {
   // Dynamically call the appropriate axios method
-  const response = await axios[method.toLowerCase() as "post" | "patch" | "put"](apiPath, data);
+  const response = await axios[method.toLowerCase() as HttpMethod](apiPath, data);
   return response.data;
 }
 
@@ -29,7 +29,7 @@ async function mutateData<TData, TResponse>(apiPath: string, method: HttpMethod,
  */
 export const useMutationQuery = <TData, TResponse, TError = AxiosError<{ message?: string }>>({
   apiPath,
-  method = "POST",
+  method = "post",
   successMessage,
   onSuccessCallback,
   queryKeyToInvalidate,
