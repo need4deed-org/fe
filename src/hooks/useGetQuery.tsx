@@ -5,39 +5,61 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 
-const fetchData = async <T,>(apiPath: string, page: number, limit: number, language: Lang, sort?: SortOrder) => {
-  const response: AxiosResponse<ApiResponse<T>> = await axios.get(apiPath, {
-    params: {
-      page,
-      limit,
-      language,
-      sort,
-    },
-  });
+const fetchData = async <T,>(apiPath: string, params: Params) => {
+  const response: AxiosResponse<ApiResponse<T>> = await axios.get(apiPath, { params });
   return response.data;
+};
+
+const getReducedFilter = (filter?: FilterParam) => {
+  if (!filter) return;
+
+  let reducedFilter: Record<string, unknown> = {};
+
+  //If URLSearchParams, convert to a flat object where multi-value keys become arrays.
+  if (filter instanceof URLSearchParams) {
+    filter.forEach((_value, key) => {
+      const values = filter.getAll(key);
+      // If multiple values, use an array; otherwise, use the single value.
+      reducedFilter[key] = values.length > 1 ? values : values[0];
+    });
+  } else {
+    // If it's a JSON object, use it directly.
+    reducedFilter = filter as Record<string, unknown>;
+  }
+
+  return reducedFilter;
 };
 
 interface ApiResponse<T> {
   message: string;
-  data: T[];
+  data: T;
   count: number;
 }
 
+type FilterParam = URLSearchParams | Record<string, unknown>;
+interface Params {
+  language?: Lang;
+  page?: number;
+  limit?: number;
+  sortOrder?: SortOrder;
+  filter?: FilterParam;
+}
 interface UseGetQuery {
   apiPath: string;
   queryKey: string[];
-  options?: { page?: number; limit?: number; staleTime?: number; sortOrder?: SortOrder };
+  params?: Params;
+  staleTime?: number;
 }
 
 // The generic custom hook with pagination-sort-language params
-export const useGetQuery = <T,>({ queryKey, apiPath, options }: UseGetQuery) => {
+export const useGetQuery = <T,>({ queryKey, apiPath, params = {}, staleTime }: UseGetQuery) => {
   const { t, i18n } = useTranslation();
-  const language = i18n.language as Lang;
-  const { page = 1, limit = 10, staleTime, sortOrder } = options || {};
+  params.language = i18n.language as Lang;
+  params.filter = getReducedFilter(params.filter);
 
   const { data, isLoading, isError, error } = useQuery<ApiResponse<T>, Error>({
-    queryKey: [...queryKey, { page, limit, language, sortOrder }],
-    queryFn: () => fetchData<T>(apiPath, page, limit, language, sortOrder),
+    queryKey: [...queryKey, params],
+    queryFn: () => fetchData<T>(apiPath, params),
     staleTime,
   });
 
@@ -59,7 +81,7 @@ export const useGetQuery = <T,>({ queryKey, apiPath, options }: UseGetQuery) => 
   }, [isError, error, t]);
 
   return {
-    data: data?.data || [],
+    data: data?.data,
     message: data?.message || "",
     count: data?.count || 0,
     isLoading,

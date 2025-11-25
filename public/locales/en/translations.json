@@ -64,7 +64,10 @@
       "activity": "Please pick at least one activity",
       "language": "Please pick at least one language"
     },
-    "button": { "more": "more...", "submit": "Submit" },
+    "button": {
+      "more": "more...",
+      "submit": "Submit"
+    },
     "schedule": {
       "1": "Mon",
       "2": "Tue",
@@ -97,8 +100,12 @@
         "number": "Or via WhatsApp/Telegram at"
       },
       "fields": {
-        "name": { "label": "Name" },
-        "email": { "label": "E-mail" },
+        "name": {
+          "label": "Name"
+        },
+        "email": {
+          "label": "E-mail"
+        },
         "phone": {
           "label": "Phone Number or Telegram Handle"
         },
@@ -226,7 +233,9 @@
             "label": "PLZ",
             "info": "of the accommodation centre"
           },
-          "phone": { "label": "Phone number" }
+          "phone": {
+            "label": "Phone number"
+          }
         },
         "opportunityType": {
           "header": "Type Of Opportunity",
@@ -255,10 +264,18 @@
             "label": "Appointment date and time (YYYY-MM-DD HH:MM)",
             "tooClose": "The appointment must take place after 7 working days at the earliest."
           },
-          "address": { "label": "Appointment Address" },
-          "postcode": { "label": "PLZ" },
-          "refugeeName": { "label": "Name Of Refugee" },
-          "refugeeNumber": { "label": "Phone Number Of Refugee" },
+          "address": {
+            "label": "Appointment Address"
+          },
+          "postcode": {
+            "label": "PLZ"
+          },
+          "refugeeName": {
+            "label": "Name Of Refugee"
+          },
+          "refugeeNumber": {
+            "label": "Phone Number Of Refugee"
+          },
           "information": {
             "label": "Provide information about the task the volunteers are expected to perform"
           }
@@ -298,7 +315,6 @@
       }
     }
   },
-
   "dashboard": {
     "volunteers": {
       "header": "Volunteer Directory",
@@ -307,7 +323,44 @@
         "tab2": "MAP VIEW"
       },
       "filters": {
-        "button": "FILTERS"
+        "accompanying": "Accompanying",
+        "accompanyingDesc": "Only show volunteers that are open to bring residents to individual appointments",
+        "district": "District",
+        "languages": "Languages",
+        "engagement": {
+          "header": "Engagement",
+          "active": "Active",
+          "inactive": "Inactive",
+          "new": "New",
+          "available": "Available",
+          "temporarilyUnavailable": "Temporarily Unavailable",
+          "unresponsive": "Unresponsive"
+        },
+        "preferredAv": {
+          "header": "Preferred Availability",
+          "days": {
+            "header": "Days",
+            "Monday": "Mon",
+            "Tuesday": "Tue",
+            "Wednesday": "Wed",
+            "Thursday": "Thu",
+            "Friday": "Fr",
+            "Saturday": "Sat",
+            "Sunday": "Sun"
+          },
+          "times": {
+            "header": "Times",
+            "08-11": "08-11",
+            "11-14": "11-14",
+            "14-17": "14-17",
+            "17-20": "17-20"
+          },
+          "occasional": {
+            "header": "Occasional",
+            "weekdays": "Weekdays",
+            "weekends": "Weekends"
+          }
+        }
       },
       "volunteers": "Volunteers",
       "languages": "Languages",
@@ -323,7 +376,6 @@
         "native": "Native"
       }
     },
-
     "home": {
       "sidebar": {
         "home": "Home",
@@ -364,9 +416,17 @@
       "emailMissingAtChar": "Email must contain an '@' character.",
       "passwordMissing": "Password's missing.",
       "successMessage": "Login successful"
+    },
+    "filters": {
+      "button": "FILTERS",
+      "closeFilters": "CLOSE FILTERS",
+      "clearAll": "Clear all"
+    },
+    "volunteerProfile": {
+      "backToDashboard": "Back to Dashboard",
+      "volunteersProfile": "Profil des Freiwilligen"
     }
   },
-
   "message": {
     "successful": "Successful",
     "errorGeneric": "Something went wrong!"
