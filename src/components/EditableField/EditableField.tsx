@@ -3,87 +3,88 @@ import styled from "styled-components";
 import { IoIosArrowDown } from "react-icons/io";
 
  const FieldWrapper = styled.div`
-  display: flex;
-  border-bottom: 1px solid #EBEDF7;
-  padding: 1rem;
-  color: #1A2684;
-  font-size: 1.2rem;
-  width: 100%;
-  align-items: center;
-  justify-content: flex-start;
+  display: var(--editableField-fieldWrapper-display);
+  border-bottom: var(--editableField-fieldWrapper-borderBottom);
+  padding: var(--editableField-fieldWrapper-padding);
+  color: var(--color-midnight);
+  width: var(--editableField-fieldWrapper-width);
+  align-items: var(--editableField-fieldWrapper-alignItems);
+  font-size: var(--editableField-fieldWrapper-fontSize);
 
   label {
-    font-weight: bold;
-    width: 10rem
+    font-weight: var(--editableField-fieldWrapper-label-fontWeight);
+    font-size: var(--editableField-fieldWrapper-label-fontSize);
+    width: var(--editableField-fieldWrapper-label-width);
     }
 
   input {
-    border-radius: 1rem;
-    width: 100%;
-    padding: 0.5rem;
-    color:#1A2684;
-    border-color: #1A2684;}
+    border-radius: var(--editableField-fieldWrapper-input-borderRadius);
+    width: var(--editableField-fieldWrapper-input-width);
+    padding: var(--editableField-fieldWrapper-input-padding);
+    color: var(--color-midnight);
+    border: var(--editableField-fieldWrapper-input-border);
+    }
   `;
 
   const DropdownWrapper = styled.div`
-  position: relative;
-  width: 100%;
+  position: var(--editableField-dropdownWrapper-position);
+  width: var(--editableField-dropdownWrapper-width);
 `;
 
 const DropdownButton = styled.div`
-  border: 1px solid #1A2684;
-  padding: 0.7rem 1rem;
-  border-radius: 1rem;
-  cursor: pointer;
-  color: #1A2684;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  user-select: none;
+  border: var(--editableField-dropdownButton-border);
+  padding: var(--editableField-dropdownButton-padding);
+  border-radius: var(--editableField-dropdownButton-borderRadius);
+  cursor: var(--editableField-dropdownButton-cursor);
+  color: var(--color-midnight);
+  display: var(--editableField-dropdownButton-display);
+  justify-content: var(--editableField-dropdownButton-justifyContent);
+  align-items: var(--editableField-dropdownButton-alignItems);
+  user-select: var(--editableField-dropdownButton-userSelect);
 `;
 
 const Arrow = styled(IoIosArrowDown)`
-  transition: 0.2s;
-  transform: rotate(0deg);
+  transition: var(--editableField-arrow-transition);
+  transform: var(--editableField-arrow-transform);
 
   &.open {
-    transform: rotate(180deg);
+    transform: var(--editableField-arrow-open-transform);
   }
 `;
 
 const DropdownList = styled.div`
-  position: absolute;
-  top: 110%;
-  left: 0;
-  width: 100%;
-  background: white;
-  border: 1px solid #1A2684;
-  border-radius: 0.8rem;
-  padding: 0.7rem;
-  z-index: 20;
+  position: var(--editableField-dropdownList-position);
+  top: var(--editableField-dropdownList-top);
+  left: var(--editableField-dropdownList-left);
+  width: var(--editableField-dropdownList-width);
+  background: var(--editableField-dropdownList-background);
+  border: var(--editableField-dropdownList-border);
+  border-radius: var(--editableField-dropdownList-borderRadius);
+  padding: var(--editableField-dropdownList-padding);
+  z-index: var(--editableField-dropdownList-zIndex);
 `;
 
 const OptionRow = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.4rem 0.2rem;
-  cursor: pointer;
-  user-select: none;
-  width: 100%;
+  display: var(--editableField-optionRow-display);
+  align-items: var(--editableField-optionRow-alignItems);
+  justify-content: var(--editableField-optionRow-justifyContent);
+  padding: var(--editableField-optionRow-padding);
+  cursor: var(--editableField-optionRow-cursor);
+  user-select: var(--editableField-optionRow-userSelect);
+  width: var(--editableField-optionRow-width);
 
   input {
-  width: 10%
+  width: var(--editableField-optionRow-input-width);
   }
   
 `;
 
 const Text = styled.span`
-  flex: 1;
-  margin-left: 0.7rem;
-  white-space: normal;
-  overflow-wrap: break-word;
-  word-break: break-word;
+  flex: var(--editableField-text-flex);
+  margin-left: var(--editableField-text-marginLeft);
+  white-space: var(--editableField-text-whiteSpace);
+  overflow-wrap: var(--editableField-text-overflow);
+  word-break: var(--editableField-text-wordBreak);
 `;
 
 type EditableFieldType = "text" | "number" | "checkbox-list" | "radio-list";
