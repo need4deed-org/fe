@@ -129,7 +129,7 @@ export function getScheduleState(): Availability {
       selected: false,
     }));
   const schedule: Availability = [];
-  // eslint-disable-next-line no-restricted-syntax
+   
   for (const weekday of range(1, 8)) {
     schedule.push({ weekday, timeSlots });
   }

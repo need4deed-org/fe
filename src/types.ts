@@ -4,6 +4,14 @@ export interface PropsWithToken {
 
 export type MenuItemType = [string, string];
 
+export type RouteParams<T extends string = string> = {
+  params: { id: T };
+};
+
+export type VolunteerIdProps = {
+  volunteerId: string;
+};
+
 // Please, when adding a new line, ensure it's placed in a sorted way. !!!
 export enum Subpage {
   ABOUT = "about",
@@ -27,11 +35,23 @@ export enum Env {
   PRODUCTION = "production",
 }
 
-
 export enum Language {
   DE = "de",
   EN = "en",
 }
 
+export enum LanguageLevel {
+  NATIVE = "languagesNative",
+  FLUENT = "languagesFluent",
+  INTERMEDIATE = "languagesIntermediate",
+}
+
+export type LanguageObject = {
+  id: number;
+  language: string;
+  level: LanguageLevel;
+};
 
 export type FooterLink = [string, string];
+
+export type HttpMethod = "post" | "patch" | "put";

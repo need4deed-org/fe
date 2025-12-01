@@ -123,7 +123,11 @@
         },
         "languages": {
           "header": "Sprachen",
+          "headerWithoutAsterick": "Sprachen",
           "para": "*Wenn Du Deine Sprache nicht findest, wähle bitte \"Andere\" und gib Deine bevorzugte Sprache im Kommentarfeld unten an",
+          "addLanguage": "Sprache hinzufügen",
+          "chooseLanguage": "Sprache auswählen",
+          "removeLanguage": "Entfernen",
           "languagesNative": {
             "header": "Muttersprache",
             "error": ""
@@ -315,7 +319,6 @@
       }
     }
   },
-
   "dashboard": {
     "volunteers": {
       "header": "Freiwilligenverzeichnis",
@@ -422,9 +425,12 @@
       "button": "FILTER",
       "closeFilters": "FILTER SCLIEẞEN",
       "clearAll": "Filter löschen"
+    },
+    "volunteerProfile": {
+      "backToDashboard": "Zurück zum Dashboard",
+      "volunteersProfile": "Profil des Freiwilligen"
     }
   },
-
   "message": {
     "successful": "Erfolgreich",
     "errorGeneric": "Etwas ist schief gelaufen!"
