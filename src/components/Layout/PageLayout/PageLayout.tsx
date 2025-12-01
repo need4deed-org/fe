@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useEffect } from "react";
+import { ReactNode } from "react";
 import styled from "styled-components";
 
 import { N4DLogo } from "./logos/N4DLogo";
@@ -8,9 +8,6 @@ import { ScreenTypes } from "@/config/constants";
 import { Header } from "@/components/Header";
 import { useScreenType } from "@/context/DeviceContext";
 import { FooterPartnersSection } from "@/components/FooterPartners";
-import { useSearchParams } from "next/navigation";
-import { useTranslation } from "react-i18next";
-import { Lang, QueryParams } from "need4deed-sdk";
 
 interface Props {
   children: ReactNode;
@@ -38,20 +35,7 @@ const PageContentHeaderContainer = styled.div<PageContentHeaderContainerProps>`
 
 export function PageLayout({ children, background }: Props) {
   const screenType = useScreenType();
-  // const searchParams = useSearchParams();
-  // const { i18n } = useTranslation();
-
   const isBurgerMenu = screenType !== ScreenTypes.DESKTOP;
-
-  // const language = searchParams.get(QueryParams.Language);
-
-  // useEffect(() => {
-  //   const isValidLanguage = Object.values(Lang).includes(language as Lang);
-
-  //   if (isValidLanguage && i18n.language !== language) {
-  //     i18n.changeLanguage(language as Lang);
-  //   }
-  // }, [language, i18n]);
 
   return (
     <PageContainer>

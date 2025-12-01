@@ -29,8 +29,8 @@ export default async function RootLayout({
   children: React.ReactNode;
   params: Promise<{ lang: string }>;
 }>) {
-  // const param = await params
-  const { lang } = await params;
+  const resolvedParams = await params;
+  const { lang } = resolvedParams;
 
   const getInitialDeviceType = async () => {
     const headersList = await headers();

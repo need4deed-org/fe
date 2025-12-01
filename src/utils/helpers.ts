@@ -1,4 +1,4 @@
-import { cloudfrontURL } from "@/config/constants";
+import { cloudfrontURL, supportedLangs } from "@/config/constants";
 
 export function isEnumValue<E>(enumObject: object, value: E) {
   return typeof enumObject === "object" ? Object.values(enumObject).includes(value) : false;
@@ -16,3 +16,7 @@ export function capitalizeFirstLetter(str: string): string {
   const restOfString = str.slice(1);
   return firstLetter + restOfString;
 }
+
+export const isValidLanguage = (language: string) => {
+  return supportedLangs.includes(language);
+};
