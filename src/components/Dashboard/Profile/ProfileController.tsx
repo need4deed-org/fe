@@ -1,8 +1,17 @@
+import { ApiVolunteerGet, ByDay, DocumentStatusType, Hour, LangProficiency, VolunteerStateAppreciationType, VolunteerStateCGCType, VolunteerStateCommunicationType, VolunteerStateEngagementType, VolunteerStateMatchType, VolunteerStateType, VolunteerStateTypeType } from "need4deed-sdk";
 import ProfilePage from "./ProfilePage";
 
-export function ProfileController() {
+type ProfileControllerProps = {
+  volunteerId?: string;
+};
+
+export function ProfileController({ volunteerId }: ProfileControllerProps) {
+  
+  if (!volunteerId) {
+    return <div>Volunteer ID is missing.</div>;
+  }
   //Mock Data
-  const volunteerData = {
+  const volunteerData: ApiVolunteerGet = {
     id: 1,
     person: {
       id: 101,
@@ -12,11 +21,11 @@ export function ProfileController() {
       email: "jagdish.mehra@example.com",
       phone: "+447912345678",
       address: {
-        id: "addr_001",
+        id: 1,
         street: "123 High Street",
         city: "Birmingham",
         postcode: {
-          id: "pc_001",
+          id: 1,
           code: "B1 1AA",
           latitude: 52.4797,
           longitude: -1.9027,
@@ -25,38 +34,36 @@ export function ProfileController() {
       avatarUrl: "https://example.com/avatar.jpg",
     },
 
-    status: "New",
-    statusEngagement: "new",
-    statusCommunication: "called",
-    statusAppreciation: "t-shirt",
-    statusType: "accompanying",
-    statusMatch: "matched",
-    statusCgcProcess: "accompanying",
+    status: "new" as VolunteerStateType, // Use proper enum value
+    statusEngagement: VolunteerStateEngagementType.ACTIVE,
+    statusCommunication: VolunteerStateCommunicationType.CALLED,
+    statusAppreciation: VolunteerStateAppreciationType.T_SHIRT,
+    statusType: VolunteerStateTypeType.REGULAR,
+    statusMatch: VolunteerStateMatchType.MATCHED,
+    statusCgcProcess: VolunteerStateCGCType.UPLOADED,
 
     languages: [
       {
         id: 1,
         title: "English",
-        proficiency: "beginner",
+        proficiency: LangProficiency.FLUENT,
       },
       {
         id: 2,
         title: "Hindi",
-        proficiency: "native",
+        proficiency: LangProficiency.NATIVE,
       },
     ],
 
     availability: [
       {
-        id: 10,
-        day: "Monday",
-        daytime: ["09:00", "17:00"],
-      },
-      {
-        id: 11,
-        day: "Wednesday",
-        daytime: ["10:00", "14:00"],
-      },
+        id: "10",
+        day: ByDay.MO,
+        daytime: [Hour.H09, Hour.H17],
+        timeslotId: 0,
+        description: "",
+        start: new Date("2025-11-01T09:00:00Z"),
+      }
     ],
 
     activities: [
@@ -84,53 +91,43 @@ export function ProfileController() {
       },
     ],
 
-    createdAt: "2025-11-15T18:03:05.996Z",
-    updatedAt: "2025-11-15T18:03:05.996Z",
+    createdAt: new Date("2025-11-15T18:03:05.996Z"),
+    updatedAt: new Date("2025-11-15T18:03:05.996Z"),
 
-    goodConductCertificate: "not provided",
-    measlesVaccination: "provided",
+    goodConductCertificate: DocumentStatusType.UNDEFINED,
+    measlesVaccination: DocumentStatusType.YES,
 
     infoAbout: "Interested in volunteering for community outreach.",
     infoExperience: "2 years experience in student events and tech support.",
 
     timelineLogs: [
       {
-        date: "2025-11-15T18:03:05.996Z",
-        type: "create",
-        text: "Volunteer profile created by admin.",
-      },
-      {
-        date: "2025-11-16T10:20:30.220Z",
-        type: "update",
-        text: "Added language and availability details.",
-      },
+        id: 1,
+        timestamp: new Date("2025-11-15T18:03:05.996Z"),
+        content: "Volunteer profile created by admin.",
+      }
     ],
 
     comments: [
       {
-        date: "2025-11-16T11:45:10.120Z",
-        type: "note",
-        text: "Very motivated candidate. Good communication skills.",
+        id: 1,
+        timestamp: new Date("2025-11-16T11:45:10.120Z"),
+        content: "Very motivated candidate. Good communication skills.",
       },
     ],
 
     opportunitiesApplied: [
       {
-        id: "opp_001",
-        title: {
-          en: "Community Outreach Assistant",
-          de: "Gemeinschaftsbetreuungsassistent",
-        },
+        id: 1,
+        title: "Community Outreach Assistant"
       },
+
     ],
 
     opportunitiesMatched: [
       {
-        id: "opp_002",
-        title: {
-          en: "Tech Support Volunteer",
-          de: "Technischer Support Freiwilliger",
-        },
+        id: 2,
+        title: "Tech Support Volunteer",
       },
     ],
   };

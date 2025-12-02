@@ -4,11 +4,11 @@ import NavigationBar from "./NavigationBar";
 import { DashboardBaseContainer } from "@/components/styled/container";
 interface Props {
   children: ReactNode;
-  background: string;
+  background?: string;
 }
-export function DashboardLayout({ children, background }: Props) {
+export function DashboardLayout({ children, background = "var(--color-white)" }: Props) {
   return (
-    <PageLayout background={background || "var(--color-white)"}>
+    <PageLayout background={background}>
       <NavigationBar />
       <DashboardBaseContainer>{children}</DashboardBaseContainer>
     </PageLayout>
