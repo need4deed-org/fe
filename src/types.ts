@@ -35,12 +35,22 @@ export enum Env {
   PRODUCTION = "production",
 }
 
-
 export enum Language {
   DE = "de",
   EN = "en",
 }
 
+export enum LanguageLevel {
+  NATIVE = "languagesNative",
+  FLUENT = "languagesFluent",
+  INTERMEDIATE = "languagesIntermediate",
+}
+
+export type LanguageObject = {
+  id: number;
+  language: string;
+  level: LanguageLevel;
+};
 
 export type FooterLink = [string, string];
 

@@ -123,7 +123,11 @@
         },
         "languages": {
           "header": "Sprachen",
+          "headerWithoutAsterick": "Sprachen",
           "para": "*Wenn Du Deine Sprache nicht findest, wähle bitte \"Andere\" und gib Deine bevorzugte Sprache im Kommentarfeld unten an",
+          "addLanguage": "Sprache hinzufügen",
+          "chooseLanguage": "Sprache auswählen",
+          "removeLanguage": "Entfernen",
           "languagesNative": {
             "header": "Muttersprache",
             "error": ""
