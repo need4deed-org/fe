@@ -32,7 +32,7 @@ const StatusDiv = styled.div<{ bg?: string }>`
   height: var(--dashboard-volunteers-card-status-div-height);
   gap: var(--dashboard-volunteers-card-status-div-gap);
   padding: var(--dashboard-volunteers-card-status-div-padding);
-  border-radius: 4px;
+  border-radius: var(--activity-tag-border-radius);
 `;
 
 type StatusValue = VolunteerStateType | VolunteerStateEngagementType | VolunteerStateTypeType | VolunteerStateMatchType;
@@ -88,7 +88,11 @@ const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
   return (
     <StatusDiv bg={bg}>
       {IconEl}
-      <Paragraph fontSize="20px" fontWeight="600" lineheight="var(--dashboard-volunteers-card-status-lineHeight)">
+      <Paragraph
+        fontSize={"var(--text-p-font-size)"}
+        fontWeight="var(--text-h4-font-weight)"
+        lineheight="var(--dashboard-volunteers-card-status-lineHeight)"
+      >
         {String(status)}
       </Paragraph>
     </StatusDiv>

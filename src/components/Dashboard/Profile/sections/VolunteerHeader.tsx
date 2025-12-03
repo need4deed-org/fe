@@ -11,18 +11,18 @@ import { defaultAvatarVolunteerProfile } from "@/config/constants";
 const HeaderContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: var(--homepage-process-section-header-gap);
 `;
 
 const Card = styled.div`
-  background: white;
-  border-radius: 1rem;
+  background: var(--color-white);
+  border-radius: var(--numbering-div-border-radius);
 `;
 
 const ProfileContent = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: var(--homepage-process-section-header-gap);
   align-items: center;
 
   @media (min-width: 768px) {
@@ -32,9 +32,9 @@ const ProfileContent = styled.div`
 
 const AvatarContainer = styled.div`
   position: relative;
-  height: 280px;
-  width: 280px;
-  border-radius: 50%;
+  height: var(--homepage-hero-section-logo-width);
+  width: var(--homepage-hero-section-logo-width);
+  border-radius: var(--percent-50);
   overflow: hidden;
   flex-shrink: 0;
 `;
@@ -48,24 +48,24 @@ const ProfileInfo = styled.div`
 const NameSection = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: var(--dashboard-navigation-bar-option-gap);
 `;
 
 const Name = styled.h2`
-  font-size: 28px;
-  font-weight: 600;
+  font-size: var(--text-h1-font-size);
+  font-weight: var(--text-h2-font-weight);
 `;
 
 const VolunteerSince = styled.p`
-  font-size: 16px;
-  font-weight: 400;
+  font-size: var(--homepage-testimonial-card-text-p-font-size);
+  font-weight: var(--homepage-process-section-card-info-text-fontWeight);
 `;
 
 const BadgesGrid = styled.div`
-  margin-top: 1rem;
+  margin-top: var(--homepage-section-container-gap);
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--homepage-section-container-gap);
 `;
 
 const StatusSection = styled.div`
@@ -76,36 +76,36 @@ const StatusSection = styled.div`
 const BadgeContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: var(--activities-container-gap);
 `;
 
 const StatusGroup = styled.div<{ columns: number }>`
   display: grid;
   grid-template-columns: ${({ columns }) => (columns === 3 ? "1fr 1fr 1fr" : "1fr 2fr")};
   align-items: center;
-  column-gap: 1rem;
-  row-gap: 0.25rem;
+  column-gap: var(--homepage-section-container-gap);
+  row-gap: var(--dashboard-navigation-bar-option-gap);
   ${BadgeContainer} {
     margin-left: ${({ columns }) => (columns === 3 ? "6px" : "0")};
   }
 
   @media (max-width: 640px) {
     grid-template-columns: 1fr;
-    row-gap: 0.5rem;
+    row-gap: var(--dashboard-navigation-bar-option-gap);
   }
 `;
 
 const Label = styled.span`
-  font-weight: 600;
-  font-size: 20px;
+  font-weight: var(--text-activity-tag-font-weight);
+  font-size: var(--text-h3-font-size);
 `;
 
 const StatusChange = styled.span`
-  font-size: 16px;
+  font-size: var(--text-p-font-size);
   cursor: pointer;
   width: fit-content;
   display: flex;
-  font-weight: 600;
+  font-weight: var(--text-activity-tag-font-weight);
   justify-self: flex-end;
 `;
 
