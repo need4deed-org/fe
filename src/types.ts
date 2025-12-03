@@ -5,7 +5,7 @@ export interface PropsWithToken {
 export type MenuItemType = [string, string];
 
 export type RouteParams<T extends string = string> = {
-  params: { id: T };
+  params: Promise<{ id: T }>;
 };
 
 export type VolunteerIdProps = {
