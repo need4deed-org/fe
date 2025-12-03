@@ -1,10 +1,10 @@
+import { DashboardBaseContainer } from "@/components/styled/container";
 import { ReactNode } from "react";
 import { PageLayout } from "../PageLayout";
 import NavigationBar from "./NavigationBar";
-import { DashboardBaseContainer } from "@/components/styled/container";
 interface Props {
   children: ReactNode;
-  background: string;
+  background?: string;
 }
 export function DashboardLayout({ children, background }: Props) {
   return (
