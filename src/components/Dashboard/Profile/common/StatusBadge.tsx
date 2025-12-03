@@ -20,15 +20,7 @@ import {
   StopCircle,
   Users,
 } from "@phosphor-icons/react";
-
-interface TextProps {
-  color?: string;
-  fontWeight?: number | string;
-  fontSize?: string;
-  lineheight?: string;
-  letterSpacing?: string;
-  margin?: number | string;
-}
+import { Paragraph } from "@/components/styled/text";
 
 /* StatusDiv now accepts a bg prop so background can be set per-status */
 const StatusDiv = styled.div<{ bg?: string }>`
@@ -41,15 +33,6 @@ const StatusDiv = styled.div<{ bg?: string }>`
   gap: var(--dashboard-volunteers-card-status-div-gap);
   padding: var(--dashboard-volunteers-card-status-div-padding);
   border-radius: 4px;
-`;
-
-export const Paragraph = styled.p<TextProps>`
-  font-weight: ${(props) => props.fontWeight || "var(--text-p-font-weight)"};
-  font-size: ${(props) => props.fontSize || "var(--text-p-font-size)"};
-  line-height: ${(props) => props.lineheight || "var(--text-p-line-height)"};
-  letter-spacing: ${(props) => props.letterSpacing || "var(--text-p-letter-spacing)"};
-  color: ${(props) => props.color || "var(--color-midnight)"};
-  margin: ${(props) => props.margin || 0};
 `;
 
 type StatusValue = VolunteerStateType | VolunteerStateEngagementType | VolunteerStateTypeType | VolunteerStateMatchType;
