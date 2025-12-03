@@ -1,9 +1,23 @@
+import {
+  ByDay,
+  Daytime,
+  DocumentStatusType,
+  Hour,
+  LangProficiency,
+  VolunteerStateAppreciationType,
+  VolunteerStateCGCType,
+  VolunteerStateCommunicationType,
+  VolunteerStateEngagementType,
+  VolunteerStateMatchType,
+  VolunteerStateType,
+  VolunteerStateTypeType,
+} from "need4deed-sdk";
 import ProfilePage from "./ProfilePage";
 
-export function ProfileController() {
+export function ProfileController({ volunteerId }: { volunteerId?: string }) {
   //Mock Data
   const volunteerData = {
-    id: 1,
+    id: volunteerId ? parseInt(volunteerId) : 100,
     person: {
       id: 101,
       firstName: "Jagdish",
@@ -12,11 +26,11 @@ export function ProfileController() {
       email: "jagdish.mehra@example.com",
       phone: "+447912345678",
       address: {
-        id: "addr_001",
+        id: 1,
         street: "123 High Street",
         city: "Birmingham",
         postcode: {
-          id: "pc_001",
+          id: 1,
           code: "B1 1AA",
           latitude: 52.4797,
           longitude: -1.9027,
@@ -25,37 +39,45 @@ export function ProfileController() {
       avatarUrl: "https://example.com/avatar.jpg",
     },
 
-    status: "New",
-    statusEngagement: "new",
-    statusCommunication: "called",
-    statusAppreciation: "t-shirt",
-    statusType: "accompanying",
-    statusMatch: "matched",
-    statusCgcProcess: "accompanying",
+    status: VolunteerStateType.NEW,
+    statusEngagement: VolunteerStateEngagementType.NEW,
+    statusCommunication: VolunteerStateCommunicationType.CALLED,
+    statusAppreciation: VolunteerStateAppreciationType.T_SHIRT,
+    statusType: VolunteerStateTypeType.ACCOMPANYING,
+    statusMatch: VolunteerStateMatchType.MATCHED,
+    statusCgcProcess: VolunteerStateCGCType.MISSING,
 
     languages: [
       {
         id: 1,
         title: "English",
-        proficiency: "beginner",
+        proficiency: LangProficiency.BEGINNER,
       },
       {
         id: 2,
         title: "Hindi",
-        proficiency: "native",
+        proficiency: LangProficiency.NATIVE,
       },
     ],
 
     availability: [
       {
-        id: 10,
-        day: "Monday",
-        daytime: ["09:00", "17:00"],
+        id: "10",
+        timeslotId: 100,
+        description: "",
+        start: new Date("2025-12-01T09:00:00Z"),
+        end: new Date("2025-12-01T11:00:00Z"),
+        day: ByDay.MO,
+        daytime: [Hour.H09, Hour.H11] as Daytime,
       },
       {
-        id: 11,
-        day: "Wednesday",
-        daytime: ["10:00", "14:00"],
+        id: "11",
+        timeslotId: 100,
+        description: "",
+        start: new Date("2025-12-01T11:00:00Z"),
+        end: new Date("2025-12-01T14:00:00Z"),
+        day: ByDay.WE,
+        daytime: [Hour.H11, Hour.H14] as Daytime,
       },
     ],
 
@@ -84,53 +106,47 @@ export function ProfileController() {
       },
     ],
 
-    createdAt: "2025-11-15T18:03:05.996Z",
-    updatedAt: "2025-11-15T18:03:05.996Z",
+    createdAt: new Date("2025-11-15T18:03:05.996Z"),
+    updatedAt: new Date("2025-11-15T18:03:05.996Z"),
 
-    goodConductCertificate: "not provided",
-    measlesVaccination: "provided",
+    goodConductCertificate: DocumentStatusType.NO,
+    measlesVaccination: DocumentStatusType.YES,
 
     infoAbout: "Interested in volunteering for community outreach.",
     infoExperience: "2 years experience in student events and tech support.",
 
     timelineLogs: [
       {
-        date: "2025-11-15T18:03:05.996Z",
-        type: "create",
-        text: "Volunteer profile created by admin.",
+        timestamp: new Date("2025-11-15T18:03:05.996Z"),
+        id: 1,
+        content: "Volunteer profile created by admin.",
       },
       {
-        date: "2025-11-16T10:20:30.220Z",
-        type: "update",
-        text: "Added language and availability details.",
+        timestamp: new Date("2025-11-16T10:20:30.220Z"),
+        id: 2,
+        content: "Added language and availability details.",
       },
     ],
 
     comments: [
       {
-        date: "2025-11-16T11:45:10.120Z",
-        type: "note",
-        text: "Very motivated candidate. Good communication skills.",
+        timestamp: new Date("2025-11-16T11:45:10.120Z"),
+        id: 3,
+        content: "Very motivated candidate. Good communication skills.",
       },
     ],
 
     opportunitiesApplied: [
       {
-        id: "opp_001",
-        title: {
-          en: "Community Outreach Assistant",
-          de: "Gemeinschaftsbetreuungsassistent",
-        },
+        id: 1,
+        title: "Gemeinschaftsbetreuungsassistent",
       },
     ],
 
     opportunitiesMatched: [
       {
-        id: "opp_002",
-        title: {
-          en: "Tech Support Volunteer",
-          de: "Technischer Support Freiwilliger",
-        },
+        id: 2,
+        title: "Technischer Support Freiwilliger",
       },
     ],
   };
