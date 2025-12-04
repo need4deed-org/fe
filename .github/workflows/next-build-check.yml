@@ -1,9 +1,13 @@
 name: Next Build Check
 
 on:
-  pull_request:
-    branches:
-      - develop
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: 'Run before merging'
+        required: false
+        default: 'Testing Next Build'
+        type: 'string'
 
 jobs:
   build:
