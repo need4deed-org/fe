@@ -123,9 +123,7 @@ export function VolunteerHeader({ volunteer }: Props) {
     //setting modal open logic here
   };
 
-  const initialAvatarUrl = volunteer.person.avatarUrl
-    ? getImageUrl(volunteer.person.avatarUrl)
-    : getImageUrl(defaultAvatarVolunteerProfile);
+  const initialAvatarUrl = getImageUrl(volunteer.person.avatarUrl || defaultAvatarVolunteerProfile)
 
   return (
     <HeaderContainer>
