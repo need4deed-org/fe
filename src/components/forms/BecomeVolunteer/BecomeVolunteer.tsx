@@ -11,6 +11,7 @@ import { apiPathVolunteer } from "../../../config/constants";
 import { getImageUrl } from "../../../utils/index";
 import UploadIcon from "../../svg/Upload";
 
+import { Button } from "@/components/core/button";
 import WithParentRef from "@/components/withParentRef";
 import useList from "@/hooks/useLists";
 import usePostRequest from "@/hooks/usePostRequest";
@@ -21,6 +22,7 @@ import HeaderWithHelp from "../HeaderWithHelp";
 import style from "../index.module.css";
 import MultipleCheckBoxInputsWithMore from "../MultipleCheckBoxInputsWithMore";
 import MultipleRadioInputsWithMore from "../MultipleRadioInputsWithMore";
+import SelectInputField from "../SelectInputField";
 import SimpleInputField from "../SimpleInputField";
 import { ListsOfOptions, OpportunityInfo } from "../types";
 import {
@@ -34,8 +36,6 @@ import {
   parseFormStateDTOVolunteer,
 } from "../utils";
 import { VolunteerData } from "./dataStructure";
-import SelectInputField from "../SelectInputField";
-import { Button } from "@/components/core/button";
 
 const thankYou = "form.becomeVolunteer.thankYou";
 const somethingWrong = "form.becomeVolunteer.somethingWrong";
@@ -108,10 +108,6 @@ export default function BecomeVolunteer() {
     },
   });
 
-  if (showErrorAnnouncement) {
-    return <ErrorAnnouncement copies={somethingWrong} />;
-  }
-
   const updateLanguage = useCallback((id: number, newLang: string) => {
     setLanguageArray((prevArray) => prevArray.map((item) => (item.id === id ? { ...item, language: newLang } : item)));
   }, []);
@@ -141,6 +137,11 @@ export default function BecomeVolunteer() {
   );
 
   const disabledLanguages = useMemo(() => languageArray.map((item) => item.language), [languageArray]);
+
+  if (showErrorAnnouncement) {
+    return <ErrorAnnouncement copies={somethingWrong} />;
+  }
+
   return (
     <div className={`n4d-container ${style["form-container"]}`}>
       <div className={style["form-container-header"]}>

@@ -1,6 +1,6 @@
-import styled from "styled-components";
 import { MagnifyingGlassIcon } from "@phosphor-icons/react";
-import { ChangeEvent, useState, useCallback, useRef, useEffect } from "react";
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
+import styled from "styled-components";
 
 interface SearchContainerProps {
   width?: string;
@@ -76,7 +76,7 @@ export function Search({
 
   useEffect(() => {
     if (value !== inputValue) setInputValue(value);
-  }, [value]);
+  }, [inputValue, value]);
 
   // Cleanup the timeout when the component unmounts
   useEffect(() => {
