@@ -23,7 +23,10 @@ import {
 import { Paragraph } from "@/components/styled/text";
 
 /* StatusDiv now accepts a bg prop so background can be set per-status */
-const StatusDiv = styled.div<{ bg?: string }>`
+interface StatusDivProps {
+  bg?: string;
+}
+const StatusDiv = styled.div<StatusDivProps>`
   display: flex;
   flex-direction: row;
   justify-content: center;
