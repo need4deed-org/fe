@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import Divider from "../common/Divider";
 import StatusBadge from "../common/StatusBadge";
 import { defaultAvatarVolunteerProfile } from "@/config/constants";
+import { Heading4 } from "@/components/styled/text";
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -95,10 +96,7 @@ const StatusGroup = styled.div<{ columns: number }>`
   }
 `;
 
-const Label = styled.span`
-  font-weight: var(--text-activity-tag-font-weight);
-  font-size: var(--text-h3-font-size);
-`;
+
 
 const StatusChange = styled.span`
   font-size: var(--text-p-font-size);
@@ -141,7 +139,7 @@ export function VolunteerHeader({ volunteer }: Props) {
             <BadgesGrid>
               <StatusSection>
                 <StatusGroup columns={3}>
-                  <Label>{t("dashboard.volunteerProfile.volunteerHeader.engagementStatus_title")}</Label>
+                  <Heading4>{t("dashboard.volunteerProfile.volunteerHeader.engagementStatus_title")}</Heading4>
                   <BadgeContainer>
                     <StatusBadge status={volunteer.statusEngagement} />
                   </BadgeContainer>
@@ -151,14 +149,14 @@ export function VolunteerHeader({ volunteer }: Props) {
                 </StatusGroup>
                 <Divider />
                 <StatusGroup columns={2}>
-                  <Label>{t("dashboard.volunteerProfile.volunteerHeader.matchStatus_title")}</Label>
+                  <Heading4>{t("dashboard.volunteerProfile.volunteerHeader.matchStatus_title")}</Heading4>
                   <BadgeContainer>
                     <StatusBadge status={volunteer.statusMatch} />
                   </BadgeContainer>
                 </StatusGroup>
                 <Divider />
                 <StatusGroup columns={2}>
-                  <Label>{t("dashboard.volunteerProfile.volunteerHeader.volunteerType_title")}</Label>
+                  <Heading4>{t("dashboard.volunteerProfile.volunteerHeader.volunteerType_title")}</Heading4>
                   <BadgeContainer>
                     {" "}
                     <StatusBadge status={volunteer.statusType} />
