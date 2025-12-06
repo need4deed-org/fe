@@ -92,7 +92,6 @@ const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
     <StatusDiv bg={bg}>
       {IconEl}
       <Paragraph
-        fontSize={"var(--text-p-font-size)"}
         fontWeight="var(--text-h4-font-weight)"
         lineheight="var(--dashboard-volunteers-card-status-lineHeight)"
       >
