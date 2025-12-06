@@ -226,7 +226,9 @@ html {
   --check-button-label-font-weight: 400;
   --check-button-border: solid 1px var(--color-grey-200);
   --check-button-padding: 12px;
-
+  --avatar-img-logo-width: 280px;
+  --custom-px-17: 17px;
+  --zero: 0px;
 }
 
 .with-linebreaks {

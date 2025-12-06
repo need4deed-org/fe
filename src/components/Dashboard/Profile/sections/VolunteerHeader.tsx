@@ -22,19 +22,15 @@ const Card = styled.div`
 
 const ProfileContent = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: var(--opportunities-header-searchbar-flex-direction);
   gap: var(--homepage-process-section-header-gap);
   align-items: center;
-
-  @media (min-width: 768px) {
-    flex-direction: row;
-  }
 `;
 
 const AvatarContainer = styled.div`
   position: relative;
-  height: var(--homepage-hero-section-logo-width);
-  width: var(--homepage-hero-section-logo-width);
+  height: var(--avatar-img-logo-width);
+  width: var(--avatar-img-logo-width);
   border-radius: var(--percent-50);
   overflow: hidden;
   flex-shrink: 0;
@@ -87,16 +83,9 @@ const StatusGroup = styled.div<{ columns: number }>`
   column-gap: var(--homepage-section-container-gap);
   row-gap: var(--dashboard-navigation-bar-option-gap);
   ${BadgeContainer} {
-    margin-left: ${({ columns }) => (columns === 3 ? "6px" : "0")};
-  }
-
-  @media (max-width: 640px) {
-    grid-template-columns: 1fr;
-    row-gap: var(--dashboard-navigation-bar-option-gap);
+    margin-left: ${({ columns }) => (columns === 3 ? "var(--custom-px-17)" : "var(--zero)")};
   }
 `;
-
-
 
 const StatusChange = styled.span`
   font-size: var(--text-p-font-size);
@@ -121,7 +110,7 @@ export function VolunteerHeader({ volunteer }: Props) {
     //setting modal open logic here
   };
 
-  const initialAvatarUrl = getImageUrl(volunteer.person.avatarUrl || defaultAvatarVolunteerProfile)
+  const initialAvatarUrl = getImageUrl(volunteer.person.avatarUrl || defaultAvatarVolunteerProfile);
 
   return (
     <HeaderContainer>
