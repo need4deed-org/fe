@@ -4,16 +4,16 @@ import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
 import { DashboardLayout } from "@/components/Layout";
-import { ApiOptionLists, EntityTableName, QueryParamsKeys, SortOrder } from "need4deed-sdk";
-import { defaultVolunteerCardsFilter } from "./Filters/constants";
-import { CardsFilter } from "./Filters/types";
-import { useGetQuery } from "@/hooks";
 import { apiPathOption, questionMark } from "@/config/constants";
+import { useGetQuery } from "@/hooks";
+import { ApiOptionLists, EntityTableName, QueryParamsKeys, SortOrder } from "need4deed-sdk";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Filters from "../common/CardsFilter/Filters";
-import FiltersContent from "./Filters/FiltersContent";
 import CardsHeader from "../common/CardsHeader/CardsHeader";
-import { createFilterFromOption, deserializeFilters, serializeFilters } from "./helpers";
+import { defaultVolunteerCardsFilter } from "./Filters/constants";
+import FiltersContent from "./Filters/FiltersContent";
+import { CardsFilter } from "./Filters/types";
+import { createFilterFromOption, serializeFilters } from "./helpers";
 import { VolunteerListController } from "./VolunteerListController";
 
 export function Volunteers() {
@@ -48,12 +48,12 @@ export function Volunteers() {
     if (!apiFilterOptions) return;
 
     // Merge and set 'district' - 'languages' of query params and API option
-    cardsFilter.district = createFilterFromOption(apiFilterOptions, EntityTableName.DISTRICT);
-    cardsFilter.language = createFilterFromOption(apiFilterOptions, EntityTableName.LANGUAGE);
+    setCardsFilter((prev) => {
+      const district = createFilterFromOption(apiFilterOptions, EntityTableName.DISTRICT);
+      const language = createFilterFromOption(apiFilterOptions, EntityTableName.LANGUAGE);
 
-    const updatedFilter = deserializeFilters(cardsFilter, searchParams);
-
-    setCardsFilter(updatedFilter);
+      return { ...prev, district, language };
+    });
   }, [apiFilterOptions]);
 
   return (

@@ -126,7 +126,11 @@
         },
         "languages": {
           "header": "Languages*",
+          "headerWithoutAsterick": "Languages",
           "para": "*if you can't find your language, please select \"Other\" and indicate your preferable language in comments section bellow",
+          "addLanguage": "Add language",
+          "chooseLanguage": "Choose a language",
+          "removeLanguage": "Remove",
           "languagesNative": {
             "header": "Native"
           },

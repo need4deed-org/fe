@@ -5,7 +5,7 @@ export interface PropsWithToken {
 export type MenuItemType = [string, string];
 
 export type RouteParams<T extends string = string> = {
-  params: { id: T };
+  params: Promise<{ id: T }>;
 };
 
 export type VolunteerIdProps = {
@@ -35,11 +35,23 @@ export enum Env {
   PRODUCTION = "production",
 }
 
-
 export enum Language {
   DE = "de",
   EN = "en",
 }
 
+export enum LanguageLevel {
+  NATIVE = "languagesNative",
+  FLUENT = "languagesFluent",
+  INTERMEDIATE = "languagesIntermediate",
+}
+
+export type LanguageObject = {
+  id: number;
+  language: string;
+  level: LanguageLevel;
+};
 
 export type FooterLink = [string, string];
+
+export type HttpMethod = "post" | "patch" | "put";

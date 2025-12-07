@@ -4,23 +4,25 @@ import { validate as validateEmail } from "email-validator";
 import { Lang, VolunteerFormData } from "need4deed-sdk";
 import Image from "next/image";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { apiPathVolunteer } from "../../../config/constants";
 import { getImageUrl } from "../../../utils/index";
 import UploadIcon from "../../svg/Upload";
 
+import { Button } from "@/components/core/button";
 import WithParentRef from "@/components/withParentRef";
 import useList from "@/hooks/useLists";
 import usePostRequest from "@/hooks/usePostRequest";
-import { Subpage } from "@/types";
+import { LanguageLevel, LanguageObject, Subpage } from "@/types";
 import ErrorAnnouncement from "../AddOpportunity/ErrorAnnouncement";
 import FieldInfo from "../FieldInfo";
 import HeaderWithHelp from "../HeaderWithHelp";
 import style from "../index.module.css";
 import MultipleCheckBoxInputsWithMore from "../MultipleCheckBoxInputsWithMore";
 import MultipleRadioInputsWithMore from "../MultipleRadioInputsWithMore";
+import SelectInputField from "../SelectInputField";
 import SimpleInputField from "../SimpleInputField";
 import { ListsOfOptions, OpportunityInfo } from "../types";
 import {
@@ -40,6 +42,10 @@ const somethingWrong = "form.becomeVolunteer.somethingWrong";
 
 export default function BecomeVolunteer() {
   const [showErrorAnnouncement, setShowErrorAnnouncement] = useState(false);
+  const [langId, setLangId] = useState(2);
+  const [languageArray, setLanguageArray] = useState<Array<LanguageObject>>([
+    { id: 1, language: "", level: LanguageLevel.NATIVE },
+  ]);
   const navigate = useRouter();
   const { lng } = useParams();
   const { t, i18n } = useTranslation();
@@ -102,9 +108,40 @@ export default function BecomeVolunteer() {
     },
   });
 
+  const updateLanguage = useCallback((id: number, newLang: string) => {
+    setLanguageArray((prevArray) => prevArray.map((item) => (item.id === id ? { ...item, language: newLang } : item)));
+  }, []);
+
+  const updateLevel = useCallback((id: number, newLevel: LanguageLevel) => {
+    setLanguageArray((prevArray) => prevArray.map((item) => (item.id === id ? { ...item, level: newLevel } : item)));
+  }, []);
+
+  const removeLanguage = useCallback((id: number) => {
+    setLanguageArray((prevArray) => prevArray.filter((item) => item.id !== id));
+  }, []);
+
+  const handleAddLanguage = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+      setLanguageArray((prev) => [
+        ...prev,
+        {
+          id: langId,
+          language: "",
+          level: LanguageLevel.NATIVE,
+        },
+      ]);
+      setLangId((prev) => prev + 1);
+    },
+    [langId],
+  );
+
+  const disabledLanguages = useMemo(() => languageArray.map((item) => item.language), [languageArray]);
+
   if (showErrorAnnouncement) {
     return <ErrorAnnouncement copies={somethingWrong} />;
   }
+
   return (
     <div className={`n4d-container ${style["form-container"]}`}>
       <div className={style["form-container-header"]}>
@@ -201,6 +238,64 @@ export default function BecomeVolunteer() {
           }}
         </formVolunteer.Field>
         <hr />
+        <fieldset>
+          <div className={style["form-table-wrapper"]}>
+            <h3>{t("form.becomeVolunteer.fields.languages.headerWithoutAsterick")}</h3>
+            <div className={style["form-languages-wrapper"]}>
+              {languageArray.map((lang) => (
+                <formVolunteer.Field
+                  name={lang.level as LanguageLevel}
+                  key={`${lang.id}${lang.language}${lang.level}`}
+                  validators={{
+                    onChange: ({ value }) => {
+                      const isSelected = !!value.filter(({ selected }) => selected).length;
+                      return isSelected ? undefined : t("form.error.language");
+                    },
+                  }}
+                >
+                  {(field) => {
+                    return (
+                      <>
+                        <WithParentRef
+                          onFocus={() => {
+                            setTimeout(field.handleBlur, 0);
+                          }}
+                        >
+                          <SelectInputField<VolunteerData, LanguageLevel>
+                            label={t("form.becomeVolunteer.fields.languages.headerWithoutAsterick")}
+                            field={field}
+                            id={lang.id}
+                            form={formVolunteer}
+                            prevLanguage={lang.language}
+                            prevLevel={lang.level as LanguageLevel}
+                            disabledLanguages={disabledLanguages}
+                            languageArray={languageArray}
+                            showRemove={lang.id !== 1}
+                            removeLanguage={removeLanguage}
+                            updateLanguage={updateLanguage}
+                            updateLevel={updateLevel}
+                          />
+                        </WithParentRef>
+                        {field.state.meta.isTouched && field.state.meta.errors.length > 0 && (
+                          <FieldInfo field={field} />
+                        )}
+                      </>
+                    );
+                  }}
+                </formVolunteer.Field>
+              ))}
+              <Button
+                onClick={(e) => handleAddLanguage(e)}
+                text={"+ " + t("form.becomeVolunteer.fields.languages.addLanguage")}
+                textFontSize="1rem"
+                backgroundcolor="var(--color-white)"
+                textColor="#000000"
+                border="2px solid var(--color-neutral-700)"
+                height="3rem"
+              />
+            </div>
+          </div>
+        </fieldset>
         <formVolunteer.Field
           name="availability"
           validators={{
@@ -265,82 +360,6 @@ export default function BecomeVolunteer() {
           }}
         </formVolunteer.Field>
         <hr />
-        <fieldset>
-          <HeaderWithHelp
-            textHelp={t("form.becomeVolunteer.fields.languages.helpText")}
-            titleHelp={t("form.becomeVolunteer.fields.languages.helpTitle")}
-            classNamePopup="form-help"
-          >
-            {t("form.becomeVolunteer.fields.languages.header")}
-          </HeaderWithHelp>
-          <h6>{t("form.becomeVolunteer.fields.languages.para")}</h6>
-          <formVolunteer.Field
-            name="languagesNative"
-            validators={{
-              onBlur: ({ value }) => {
-                const isSelected = !!value.filter(({ selected }) => selected).length;
-                return isSelected ? undefined : t("form.error.language");
-              },
-            }}
-          >
-            {(fieldLanguagesNative) => {
-              return (
-                <>
-                  <h6>{t("form.becomeVolunteer.fields.languages.languagesNative.header")}</h6>
-                  <WithParentRef
-                    onFocus={() => {
-                      setTimeout(fieldLanguagesNative.handleBlur, 0);
-                    }}
-                    className={`${style["form-chip-list"]} ${style["form-pick"]}`}
-                  >
-                    <MultipleCheckBoxInputsWithMore<VolunteerData, "languagesNative">
-                      FieldTag={formVolunteer.Field}
-                      field={fieldLanguagesNative}
-                    />
-                    <FieldInfo field={fieldLanguagesNative} />
-                  </WithParentRef>
-                </>
-              );
-            }}
-          </formVolunteer.Field>
-          <formVolunteer.Field name="languagesFluent">
-            {(fieldLanguagesFluent) => {
-              return (
-                <>
-                  <h6>{t("form.becomeVolunteer.fields.languages.languagesFluent.header")}</h6>
-                  <WithParentRef
-                    onFocus={() => {
-                      setTimeout(fieldLanguagesFluent.handleBlur, 0);
-                    }}
-                    className={`${style["form-chip-list"]} ${style["form-pick"]}`}
-                  >
-                    <MultipleCheckBoxInputsWithMore<VolunteerData, "languagesFluent">
-                      FieldTag={formVolunteer.Field}
-                      field={fieldLanguagesFluent}
-                    />
-                    <FieldInfo field={fieldLanguagesFluent} />
-                  </WithParentRef>
-                </>
-              );
-            }}
-          </formVolunteer.Field>
-          <formVolunteer.Field name="languagesIntermediate">
-            {(fieldLanguagesIntermediate) => {
-              return (
-                <>
-                  <h6>{t("form.becomeVolunteer.fields.languages.languagesIntermediate.header")}</h6>
-                  <WithParentRef className={`${style["form-chip-list"]} ${style["form-pick"]}`}>
-                    <MultipleCheckBoxInputsWithMore<VolunteerData, "languagesIntermediate">
-                      FieldTag={formVolunteer.Field}
-                      field={fieldLanguagesIntermediate}
-                    />
-                    <FieldInfo field={fieldLanguagesIntermediate} />
-                  </WithParentRef>
-                </>
-              );
-            }}
-          </formVolunteer.Field>
-        </fieldset>
         <formVolunteer.Field
           name="activities"
           validators={{
@@ -532,7 +551,7 @@ export default function BecomeVolunteer() {
               new Set(
                 Object.keys(state.fieldMeta)
                   .reduce((errorList: string[], key) => {
-                    const fieldErrors = state.fieldMeta[key as keyof typeof state.fieldMeta].errors.join(", ");
+                    const fieldErrors = state.fieldMeta[key as keyof typeof state.fieldMeta].errors?.join(", ");
                     errorList.push(fieldErrors);
                     return errorList;
                   }, [])
