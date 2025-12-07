@@ -4,9 +4,9 @@ import { ProfileCardTypes } from "./types/types";
 import { ArrowLeft } from "@phosphor-icons/react";
 import Link from "next/link";
 import { ApiVolunteerGet } from "need4deed-sdk";
-import VolunteerHeader from "./sections/VolunteerHeader";
 import { PROFILE_CARD_CONFIG } from "./config/ProfileSectionConfig";
 import { useTranslation } from "react-i18next";
+import { VolunteerHeader } from "./sections/VolunteerHeader";
 
 const PageContainer = styled.div`
   max-width: 1200px;
