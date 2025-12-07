@@ -36,7 +36,7 @@ export function ProfileController({ volunteerId }: { volunteerId?: string }) {
           longitude: -1.9027,
         },
       },
-      avatarUrl: "https://example.com/avatar.jpg",
+      avatarUrl: "",
     },
 
     status: VolunteerStateType.NEW,

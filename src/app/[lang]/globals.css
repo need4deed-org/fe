@@ -131,7 +131,7 @@ html {
 
   --color-blue-50: rgba(235, 237, 247, 1);
   --color-blue-100: rgba(194, 198, 231, 1);
-  --color-blue-200:: rgba(123, 132, 203, 1);
+  --color-blue-200: rgba(123, 132, 203, 1);
   --color-blue-400: rgba(99, 111, 188, 1);
   --color-blue-500: rgba(58, 72, 178, 1);
   --color-blue-700: rgba(26, 38, 132, 1);
@@ -186,11 +186,20 @@ html {
   --homepage-testimonials-profile-gap: 16px;
 
   /* layout-static-page */
-  --layout-static-page-background-default: linear-gradient(
-    180deg,
-    var(--color-magnolia)-5.53%,
-    var(--color-orchid-dark) 100%
-  );
+  --layout-static-page-background-default: linear-gradient(180deg,
+      var(--color-magnolia)-5.53%,
+      var(--color-orchid-dark) 100%);
+  /* percentages */
+  --percent-10: 10%;
+  --percent-20: 20%;
+  --percent-25: 25%;
+  --percent-30: 30%;
+  --percent-35: 35%;
+  --percent-40: 40%;
+  --percent-45: 45%;
+  --percent-50: 50%;
+  --percent-75: 75%;
+  --percent-100: 100%;
 
   /* button */
   --button-gap: 12px;
@@ -217,7 +226,9 @@ html {
   --check-button-label-font-weight: 400;
   --check-button-border: solid 1px var(--color-grey-200);
   --check-button-padding: 12px;
-
+  --avatar-img-logo-width: 280px;
+  --custom-px-17: 17px;
+  --zero: 0px;
 }
 
 .with-linebreaks {
@@ -1085,8 +1096,8 @@ html {
 
     --cards-header-filter-item-height: 44px;
     --cards-header-filter-item-gap: 8px;
-    --cards-header-filter-item-border-radius:32px;
-    --cards-header-filter-item-padding:12px;
+    --cards-header-filter-item-border-radius: 32px;
+    --cards-header-filter-item-padding: 12px;
     --cards-header-filter-item-font-size: 16px;
     --cards-header-filter-item-font-weight: 400px;
     --cards-header-filter-item-icon-div-size: 28px;
