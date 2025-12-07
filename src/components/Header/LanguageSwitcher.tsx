@@ -1,7 +1,7 @@
-import { Lang, QueryParams } from "need4deed-sdk";
+import { Lang } from "need4deed-sdk";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import MenuItem from "./MenuItem";
 import { Paragraph } from "../styled/text";
@@ -23,16 +23,19 @@ interface Props {
 export default function LanguageSwitcher({ textColor }: Props) {
   const { i18n } = useTranslation();
   const router = useRouter();
-  const searchParams = useSearchParams();
+  const pathname = usePathname();
 
-  const handleLangChange = (lang: Lang) => {
-    if (i18n.language !== lang) {
-      // Create a new URLSearchParams instance to manage the query params
-      const params = new URLSearchParams(searchParams.toString());
-      params.set(QueryParams.Language, lang);
+  const handleLangChange = (newLang: Lang) => {
+    const currentLang = i18n.language;
 
-      // Update the URL without a full page reload
-      router.push(`?${params.toString()}`);
+    if (currentLang !== newLang) {
+      const segments = pathname.split("/");
+
+      segments[1] = newLang;
+
+      const newPath = segments.join("/");
+
+      router.push(newPath);
     }
   };
 

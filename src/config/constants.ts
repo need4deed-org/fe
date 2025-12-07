@@ -1,3 +1,5 @@
+import { Lang } from "need4deed-sdk";
+
 export const tokenKey = "token";
 
 export const apiURL = process.env.NEXT_PUBLIC_URL_API || "http://localhost:5000";
@@ -51,3 +53,5 @@ export enum DashboardRoutes {
 }
 
 export const questionMark = "?";
+
+export const supportedLangs = Object.values(Lang) as string[];
