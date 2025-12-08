@@ -1155,6 +1155,71 @@ html {
   --editableField-text-whiteSpace: normal;
   --editableField-text-overflow: break-word;
   --editableField-text-wordBreak: break-word;
-  
 
+  --opportunitiesSectionContainer-wrapContainer-width: 100%;
+  --opportunitiesSectionContainer-wrapContainer-padding: 1.5rem;
+  --opportunitiesSectionContainer-wrapContainer-display: flex;
+  --opportunitiesSectionContainer-wrapContainer-flexDirection: column;
+  --opportunitiesSectionContainer-wrapContainer-gap: 0.5rem;
+  --opportunitiesSectionContainer-wrapContainer-color: var(--color-midnight);
+  --opportunitiesSectionContainer-wrapContainer-backgroundColor: var(--color-white);
+  --opportunitiesSectionContainer-wrapContainer-borderRadius: 1.5rem;
+
+  --opportunitiesSectionContainer-mainContainer-width: 100%;
+  --opportunitiesSectionContainer-mainContainer-display: flex;
+  --opportunitiesSectionContainer-mainContainer-flexDirection: column;
+  --opportunitiesSectionContainer-mainContainer-gap: 1.5rem;
+  --opportunitiesSectionContainer-mainContainer-borderBottom: 1px solid var(--color-blue-50);
+
+  --opportunitiesSectionContainer-upperContainer-width: 100%;
+  --opportunitiesSectionContainer-upperContainer-display: flex;
+  --opportunitiesSectionContainer-upperContainer-alignItems: center;
+  --opportunitiesSectionContainer-upperContainer-justifyContent: space-between;
+
+  --opportunitiesSectionContainer-titleContainer-display: flex;
+  --opportunitiesSectionContainer-titleContainer-gap: 1rem;
+  --opportunitiesSectionContainer-titleContainer-alignItems: center;
+  --opportunitiesSectionContainer-titleContainer-h1-fontSize: 32px;
+  --opportunitiesSectionContainer-titleContainer-h1-fontWeight: 600;
+  --opportunitiesSectionContainer-titleContainer-h1-margin: 0;
+
+  --opportunitiesSectionContainer-findOpportunityButton-height: 56px;
+  --opportunitiesSectionContainer-findOpportunityButton-borderRadius: 9999px;
+  --opportunitiesSectionContainer-findOpportunityButton-fontSize: 20px;
+  --opportunitiesSectionContainer-findOpportunityButton-fontWeight: 600;
+  --opportunitiesSectionContainer-findOpportunityButton-paddingLeft: 20px;
+  --opportunitiesSectionContainer-findOpportunityButton-paddingRight: 20px;
+
+  --opportunitiesSectionContainer-optionsContainer-width: 100%;
+  --opportunitiesSectionContainer-optionsContainer-height: 56px;
+  --opportunitiesSectionContainer-optionsContainer-display: flex;
+  --opportunitiesSectionContainer-optionsContainer-gap: 1.5rem;
+  --opportunitiesSectionContainer-optionsContainer-button-paddingLeft: 0.5rem;
+  --opportunitiesSectionContainer-optionsContainer-button-paddingRight: 0.5rem;
+  --opportunitiesSectionContainer-optionsContainer-button-border: none;
+  --opportunitiesSectionContainer-optionsContainer-button-fontSize: 20px;
+  --opportunitiesSectionContainer-optionsContainer-button-fontWeight: 600;
+  --opportunitiesSectionContainer-optionsContainer-button-display: flex;
+  --opportunitiesSectionContainer-optionsContainer-button-gap: 0.5rem;
+  --opportunitiesSectionContainer-optionsContainer-button-alignItems: center;
+  --opportunitiesSectionContainer-optionsContainer-button-div-borderRadius: 9999px;
+  --opportunitiesSectionContainer-optionsContainer-button-div-width: 1.5rem;
+  --opportunitiesSectionContainer-optionsContainer-button-div-height: 1.5rem;
+  --opportunitiesSectionContainer-optionsContainer-button-div-display: flex;
+  --opportunitiesSectionContainer-optionsContainer-button-div-alignItems: center;
+  --opportunitiesSectionContainer-optionsContainer-button-div-justifyContent: center;
+  --opportunitiesSectionContainer-optionsContainer-buttonActive-borderBottom: 2px solid var(--color-violet-500);
+}
+
+@media (max-width: 640px) {
+  :root {
+    --opportunitiesSectionContainer-upperContainer-flexDirection: column;
+    --opportunitiesSectionContainer-upperContainer-gap: 1rem;
+
+    --opportunitiesSectionContainer-optionsContainer-heightMobile: auto;
+    --opportunitiesSectionContainer-optionsContainer-displayMobile: grid;
+    --opportunitiesSectionContainer-optionsContainer-gridTemplateColumnsMobile: repeat(2, 1fr);
+    --opportunitiesSectionContainer-optionsContainer-gapMobile: 1rem;
+    --opportunitiesSectionContainer-optionsContainer-button-justifyContentMobile: center;
+  }
 }
