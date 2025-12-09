@@ -151,5 +151,5 @@ export function ProfileController({ volunteerId }: { volunteerId?: string }) {
     ],
   };
 
-  return <ProfilePage volunteers={volunteerData} />;
+  return <ProfilePage volunteer={volunteerData} />;
 }
