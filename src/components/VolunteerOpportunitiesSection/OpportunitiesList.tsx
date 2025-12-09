@@ -6,7 +6,7 @@ type Opportunity = {
 }
 const OpportunitiesList = ({opportunities, activeTab} : {opportunities: Opportunity[], activeTab: string}) => {
   return (
-    <div style = {{paddingTop: "1rem"}}>OpportunitiesList</div>
+    <div style = {{paddingTop: "1rem"}}>{ opportunities.map(opportunity => <div key = {opportunity.id}>{opportunity.title}, {activeTab}</div>)}</div> //TODO: change later in issue-#146
   )
 }
 

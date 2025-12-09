@@ -102,7 +102,7 @@ button {
 `
 const VolunteerOpportunitiesSectionContainer = () => {
 
-const {opportunities, isLoading, error} = useVolunteerOpportunities();
+const {opportunities} = useVolunteerOpportunities();
 const [activeTab, setActiveTab] = useState('Pending');
 const pendingsQuantity = 1; // TODO: later I plan this number to be calculated by how many expandable bars are marked as pending
 
