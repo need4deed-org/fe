@@ -55,6 +55,14 @@ Our main repositories:
 | [`sdk`](https://github.com/need4deed-org/sdk)         | Shared TypeScript types and utilities between FE and BE   |
 | [`website`](https://github.com/need4deed-org/website) | React/Vite static landing page (currently frozen)         |
 
+### Assignment Timeout
+
+Once an issue is picked up by a developer, it should be assigned to their GitHub account. If a developer lacks sufficient permissions for self-assignment, they should ask a team member to do it.
+
+The assignment for issues labeled "good first issue" or "ready for dev" will expire after 3 business days. After expiration, the assignment no longer guarantees that nobody else has taken the issue.
+
+If a developer needs more time to finalize and open a PR, they can post a comment on the issue page to notify the team. This will extend the expiration period by another 3 business days. This extension is possible only once.
+
 ---
 
 ## 🚀 Your First Pull Request
