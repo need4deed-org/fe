@@ -492,7 +492,10 @@
         "email": "Email",
         "address": "Address",
         "waysToContact": "Ways to contact",
-        "notProvided": "Not provided"
+        "notProvided": "Not provided",
+        "cancel": "Cancel",
+        "saveChanges": "Save changes",
+        "saveSuccess": "Contact details updated successfully"
       }
     }
   },

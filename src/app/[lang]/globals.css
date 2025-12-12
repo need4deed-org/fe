@@ -1108,14 +1108,16 @@ html {
 
 :root {
   --editableField-fieldWrapper-display: flex;
-  --editableField-fieldWrapper-borderBottom: 1px solid var(--color-blue-50);
-  --editableField-fieldWrapper-padding: 1rem;
+  --editableField-fieldWrapper-borderBottom: none;
+  --editableField-fieldWrapper-padding: 1rem 0;
   --editableField-fieldWrapper-fontSize: 20px;
   --editableField-fieldWrapper-width: 100%;
   --editableField-fieldWrapper-alignItems: center;
+  --editableField-fieldWrapper-gap: 32px;
   --editableField-fieldWrapper-label-fontWeight: bold;
-  --editableField-fieldWrapper-label-fontSize: 24px;
-  --editableField-fieldWrapper-label-width: 10rem;
+  --editableField-fieldWrapper-label-fontSize: 20px;
+  --editableField-fieldWrapper-label-width: 220px;
+  --editableField-fieldWrapper-label-flexShrink: 0;
   --editableField-fieldWrapper-input-borderRadius: 8px;
   --editableField-fieldWrapper-input-width: 100%;
   --editableField-fieldWrapper-input-padding: 16px;
@@ -1155,6 +1157,6 @@ html {
   --editableField-text-whiteSpace: normal;
   --editableField-text-overflow: break-word;
   --editableField-text-wordBreak: break-word;
-  
+
 
 }

@@ -2,6 +2,10 @@ import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "re
 import { IoIosArrowDown } from "react-icons/io";
 import styled from "styled-components";
 
+const EditModeWrapper = styled.div`
+  width: 100%;
+`;
+
 const FieldWrapper = styled.div`
   display: var(--editableField-fieldWrapper-display);
   border-bottom: var(--editableField-fieldWrapper-borderBottom);
@@ -10,25 +14,33 @@ const FieldWrapper = styled.div`
   width: var(--editableField-fieldWrapper-width);
   align-items: var(--editableField-fieldWrapper-alignItems);
   font-size: var(--editableField-fieldWrapper-fontSize);
+  gap: var(--editableField-fieldWrapper-gap);
 
   label {
     font-weight: var(--editableField-fieldWrapper-label-fontWeight);
     font-size: var(--editableField-fieldWrapper-label-fontSize);
     width: var(--editableField-fieldWrapper-label-width);
+    flex-shrink: var(--editableField-fieldWrapper-label-flexShrink);
+  }
+
+  > span {
+    flex: 1;
   }
 
   input {
     border-radius: var(--editableField-fieldWrapper-input-borderRadius);
-    width: var(--editableField-fieldWrapper-input-width);
     padding: var(--editableField-fieldWrapper-input-padding);
     color: var(--color-midnight);
     border: var(--editableField-fieldWrapper-input-border);
+    flex: 1;
+    min-width: 0;
   }
 `;
 
 const DropdownWrapper = styled.div`
   position: var(--editableField-dropdownWrapper-position);
   width: var(--editableField-dropdownWrapper-width);
+  flex: 1;
 `;
 
 const DropdownButton = styled.div`
@@ -180,7 +192,7 @@ export const EditableField = forwardRef(function EditableField<T extends string 
 
   // edit mode
   return (
-    <div>
+    <EditModeWrapper>
       <FieldWrapper>
         {label && <label>{label}: </label>}
 
@@ -255,6 +267,6 @@ export const EditableField = forwardRef(function EditableField<T extends string 
         )}
       </FieldWrapper>
       {error && <p style={{ color: "red", paddingLeft: "1rem" }}>{error}</p>}
-    </div>
+    </EditModeWrapper>
   );
 });
