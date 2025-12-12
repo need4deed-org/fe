@@ -2,13 +2,12 @@
 import Button from "@/components/core/button/Button/Button";
 import { EditableField } from "@/components/EditableField/EditableField";
 import { Heading2 } from "@/components/styled/text";
+import { useUpdateVolunteerContact } from "@/hooks/useUpdateVolunteerContact";
 import { ChatsCircle } from "@phosphor-icons/react";
 import { ApiVolunteerGet } from "need4deed-sdk";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { useMutationQuery } from "@/hooks";
-import { apiPathVolunteer } from "@/config/constants";
 
 const Container = styled.div<{ $isEditing: boolean }>`
   display: flex;
@@ -60,29 +59,13 @@ const ButtonRow = styled.div`
   width: 100%;
 `;
 
-type UpdateVolunteerContactData = {
-  person: {
-    id: number;
-    phone?: string;
-    email?: string;
-    address?: {
-      id: string | number;
-      street?: string;
-      city?: string;
-      postcode?: {
-        code?: string;
-      };
-    };
-  };
-};
-
-const useUpdateVolunteerContact = (volunteerId: number) => {
-  return useMutationQuery<UpdateVolunteerContactData, ApiVolunteerGet>({
-    apiPath: `${apiPathVolunteer}${volunteerId}`,
-    method: "patch",
-    successMessage: "dashboard.volunteerProfile.contactDetails.saveSuccess",
-    queryKeyToInvalidate: ["volunteer", volunteerId],
-  });
+const formatAddress = (address: ApiVolunteerGet["person"]["address"]) => {
+  if (!address || typeof address !== "object") {
+    return "";
+  }
+  const postcode = address.postcode && typeof address.postcode === "object" ? address.postcode.code : address.postcode;
+  const parts = [address.street, address.city, postcode].filter(Boolean);
+  return parts.join(", ");
 };
 
 interface Props {
@@ -94,26 +77,16 @@ export function ContactDetails({ volunteer }: Props) {
   const [isEditing, setIsEditing] = useState(false);
   const { mutate: updateContact, isPending } = useUpdateVolunteerContact(volunteer.id);
 
-  const formatAddress = () => {
-    const addr = volunteer.person.address;
-    if (!addr || typeof addr !== "object") {
-      return "";
-    }
-    const postcode = addr.postcode && typeof addr.postcode === "object" ? addr.postcode.code : addr.postcode;
-    const parts = [addr.street, addr.city, postcode].filter(Boolean);
-    return parts.join(", ");
-  };
-
   const [phoneNumber, setPhoneNumber] = useState(volunteer.person.phone || "");
   const [email, setEmail] = useState(volunteer.person.email || "");
-  const [address, setAddress] = useState(formatAddress());
+  const [address, setAddress] = useState(formatAddress(volunteer.person.address));
   const [waysToContact, setWaysToContact] = useState<string[]>(["Whatsapp", "Telegram", "Mobile phone"]);
 
   // Sync local state when volunteer data changes (after refetch)
   useEffect(() => {
     setPhoneNumber(volunteer.person.phone || "");
     setEmail(volunteer.person.email || "");
-    setAddress(formatAddress());
+    setAddress(formatAddress(volunteer.person.address));
   }, [volunteer]);
 
   const handleEditClick = () => {
@@ -123,7 +96,7 @@ export function ContactDetails({ volunteer }: Props) {
   const handleCancel = () => {
     setPhoneNumber(volunteer.person.phone || "");
     setEmail(volunteer.person.email || "");
-    setAddress(formatAddress());
+    setAddress(formatAddress(volunteer.person.address));
     setWaysToContact(["Whatsapp", "Telegram", "Mobile phone"]);
     setIsEditing(false);
   };
@@ -161,7 +134,7 @@ export function ContactDetails({ volunteer }: Props) {
         onSuccess: () => {
           setIsEditing(false);
         },
-      }
+      },
     );
   };
 
