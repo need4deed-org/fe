@@ -8,6 +8,9 @@ import { ApiVolunteerGet } from "need4deed-sdk";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
+import { useForm, Controller, ControllerRenderProps } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { createContactDetailsSchema, ContactDetailsFormData } from "./ContactDetails/contactDetailsSchema";
 
 const Container = styled.div<{ $isEditing: boolean }>`
   display: flex;
@@ -59,6 +62,18 @@ const ButtonRow = styled.div`
   width: 100%;
 `;
 
+const ErrorMessage = styled.p`
+  color: var(--color-red-600);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  margin-top: 8px;
+  margin-left: 252px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`;
+
 const formatAddress = (address: ApiVolunteerGet["person"]["address"]) => {
   if (!address || typeof address !== "object") {
     return "";
@@ -74,30 +89,44 @@ interface Props {
 
 export function ContactDetails({ volunteer }: Props) {
   const { t } = useTranslation();
-  const [isEditing, setIsEditing] = useState(false);
   const { mutate: updateContact, isPending } = useUpdateVolunteerContact(volunteer.id);
+  const [isEditing, setIsEditing] = useState(false);
 
-  const [phoneNumber, setPhoneNumber] = useState(volunteer.person.phone || "");
-  const [email, setEmail] = useState(volunteer.person.email || "");
-  const [address, setAddress] = useState(formatAddress(volunteer.person.address));
-  const [waysToContact, setWaysToContact] = useState<string[]>(["Whatsapp", "Telegram", "Mobile phone"]);
+  const schema = createContactDetailsSchema(t);
 
-  // Sync local state when volunteer data changes (after refetch)
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors, isValid },
+  } = useForm<ContactDetailsFormData>({
+    resolver: zodResolver(schema),
+    mode: "onChange",
+    defaultValues: {
+      phoneNumber: volunteer.person.phone || "",
+      email: volunteer.person.email || "",
+      address: formatAddress(volunteer.person.address),
+      waysToContact: ["Whatsapp", "Telegram", "Mobile phone"],
+    },
+  });
+
+  // Sync form when volunteer data changes (after refetch)
   useEffect(() => {
-    setPhoneNumber(volunteer.person.phone || "");
-    setEmail(volunteer.person.email || "");
-    setAddress(formatAddress(volunteer.person.address));
-  }, [volunteer]);
+    reset({
+      phoneNumber: volunteer.person.phone || "",
+      email: volunteer.person.email || "",
+      address: formatAddress(volunteer.person.address),
+      waysToContact: ["Whatsapp", "Telegram", "Mobile phone"],
+    });
+    setIsEditing(false);
+  }, [volunteer, reset]);
 
   const handleEditClick = () => {
     setIsEditing(true);
   };
 
   const handleCancel = () => {
-    setPhoneNumber(volunteer.person.phone || "");
-    setEmail(volunteer.person.email || "");
-    setAddress(formatAddress(volunteer.person.address));
-    setWaysToContact(["Whatsapp", "Telegram", "Mobile phone"]);
+    reset();
     setIsEditing(false);
   };
 
@@ -111,15 +140,15 @@ export function ContactDetails({ volunteer }: Props) {
     };
   };
 
-  const handleSave = () => {
-    const addressData = parseAddress(address);
+  const onSubmit = (data: ContactDetailsFormData) => {
+    const addressData = parseAddress(data.address);
 
     updateContact(
       {
         person: {
           id: volunteer.person.id,
-          phone: phoneNumber,
-          email: email,
+          phone: data.phoneNumber,
+          email: data.email,
           address: {
             id: volunteer.person.address?.id || "",
             street: addressData.street,
@@ -132,6 +161,7 @@ export function ContactDetails({ volunteer }: Props) {
       },
       {
         onSuccess: () => {
+          reset(data);
           setIsEditing(false);
         },
       },
@@ -158,37 +188,76 @@ export function ContactDetails({ volunteer }: Props) {
       </Header>
 
       <Details>
-        <EditableField
-          mode={isEditing ? "edit" : "display"}
-          type="text"
-          label={t("dashboard.volunteerProfile.contactDetails.phoneNumber")}
-          value={phoneNumber}
-          setValue={(v) => setPhoneNumber(v as string)}
+        <Controller
+          name="phoneNumber"
+          control={control}
+          render={({ field }: { field: ControllerRenderProps<ContactDetailsFormData, "phoneNumber"> }) => (
+            <>
+              <EditableField
+                mode={isEditing ? "edit" : "display"}
+                type="text"
+                label={t("dashboard.volunteerProfile.contactDetails.phoneNumber")}
+                value={field.value}
+                setValue={field.onChange}
+                hasError={!!errors.phoneNumber}
+              />
+              {errors.phoneNumber && <ErrorMessage>{errors.phoneNumber.message}</ErrorMessage>}
+            </>
+          )}
         />
 
-        <EditableField
-          mode={isEditing ? "edit" : "display"}
-          type="text"
-          label={t("dashboard.volunteerProfile.contactDetails.email")}
-          value={email}
-          setValue={(v) => setEmail(v as string)}
+        <Controller
+          name="email"
+          control={control}
+          render={({ field }: { field: ControllerRenderProps<ContactDetailsFormData, "email"> }) => (
+            <>
+              <EditableField
+                mode={isEditing ? "edit" : "display"}
+                type="text"
+                label={t("dashboard.volunteerProfile.contactDetails.email")}
+                value={field.value}
+                setValue={field.onChange}
+                hasError={!!errors.email}
+              />
+              {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
+            </>
+          )}
         />
 
-        <EditableField
-          mode={isEditing ? "edit" : "display"}
-          type="text"
-          label={t("dashboard.volunteerProfile.contactDetails.address")}
-          value={address}
-          setValue={(v) => setAddress(v as string)}
+        <Controller
+          name="address"
+          control={control}
+          render={({ field }: { field: ControllerRenderProps<ContactDetailsFormData, "address"> }) => (
+            <>
+              <EditableField
+                mode={isEditing ? "edit" : "display"}
+                type="text"
+                label={t("dashboard.volunteerProfile.contactDetails.address")}
+                value={field.value}
+                setValue={field.onChange}
+                hasError={!!errors.address}
+              />
+              {errors.address && <ErrorMessage>{errors.address.message}</ErrorMessage>}
+            </>
+          )}
         />
 
-        <EditableField
-          mode={isEditing ? "edit" : "display"}
-          type="checkbox-list"
-          label={t("dashboard.volunteerProfile.contactDetails.waysToContact")}
-          value={waysToContact}
-          setValue={(v) => setWaysToContact(v as string[])}
-          options={["Whatsapp", "Telegram", "Mobile phone", "Email", "SMS"]}
+        <Controller
+          name="waysToContact"
+          control={control}
+          render={({ field }: { field: ControllerRenderProps<ContactDetailsFormData, "waysToContact"> }) => (
+            <>
+              <EditableField
+                mode={isEditing ? "edit" : "display"}
+                type="checkbox-list"
+                label={t("dashboard.volunteerProfile.contactDetails.waysToContact")}
+                value={field.value}
+                setValue={field.onChange}
+                options={["Whatsapp", "Telegram", "Mobile phone", "Email", "SMS"]}
+              />
+              {errors.waysToContact && <ErrorMessage>{errors.waysToContact.message}</ErrorMessage>}
+            </>
+          )}
         />
       </Details>
 
@@ -205,10 +274,10 @@ export function ContactDetails({ volunteer }: Props) {
           />
           <Button
             text={t("dashboard.volunteerProfile.contactDetails.saveChanges")}
-            onClick={handleSave}
+            onClick={handleSubmit(onSubmit)}
             width="auto"
             padding="16px 24px"
-            disabled={isPending}
+            disabled={!isValid || isPending}
           />
         </ButtonRow>
       )}

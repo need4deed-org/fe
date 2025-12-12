@@ -1,5 +1,6 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
+import { X } from "@phosphor-icons/react";
 import styled from "styled-components";
 
 const EditModeWrapper = styled.div`
@@ -34,6 +35,50 @@ const FieldWrapper = styled.div`
     border: var(--editableField-fieldWrapper-input-border);
     flex: 1;
     min-width: 0;
+  }
+`;
+
+const InputWrapper = styled.div<{ $hasError?: boolean }>`
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  width: 100%;
+
+  input {
+    border-radius: var(--editableField-fieldWrapper-input-borderRadius);
+    padding: var(--editableField-fieldWrapper-input-padding);
+    padding-right: 48px;
+    color: var(--color-midnight);
+    border: ${(props) =>
+      props.$hasError ? "2px solid var(--color-red-600)" : "var(--editableField-fieldWrapper-input-border)"};
+    flex: 1;
+    min-width: 0;
+    width: 100%;
+
+    &:focus {
+      outline: none;
+      border: ${(props) =>
+        props.$hasError ? "2px solid var(--color-red-600)" : "2px solid var(--color-green-200)"};
+    }
+  }
+`;
+
+const ClearButton = styled.button`
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-grey-400);
+  transition: color 0.2s;
+
+  &:hover {
+    color: var(--color-midnight);
   }
 `;
 
@@ -114,6 +159,7 @@ interface EditableFieldProps<T = string | number | string[]> {
   submit?: (value: T) => void | Promise<void>;
   validator?: (value: T) => string | null;
   options?: string[];
+  hasError?: boolean;
 }
 
 export const EditableField = forwardRef(function EditableField<T extends string | number | string[]>(
@@ -126,6 +172,7 @@ export const EditableField = forwardRef(function EditableField<T extends string 
     // submit, // TODO: implement submit (on blur or enter?)
     validator,
     options = [],
+    hasError = false,
   }: EditableFieldProps<T>,
   ref: React.Ref<EditableFieldRef<T>>,
 ) {
@@ -197,27 +244,55 @@ export const EditableField = forwardRef(function EditableField<T extends string 
         {label && <label>{label}: </label>}
 
         {type === "text" && (
-          <input
-            type="text"
-            value={localValue as string}
-            onChange={(e) => {
-              const v = e.target.value as T;
-              setLocalValue(v);
-              setValue(v);
-            }}
-          />
+          <InputWrapper $hasError={hasError}>
+            <input
+              type="text"
+              value={localValue as string}
+              onChange={(e) => {
+                const v = e.target.value as T;
+                setLocalValue(v);
+                setValue(v);
+              }}
+            />
+            {(localValue as string).length > 0 && (
+              <ClearButton
+                type="button"
+                onClick={() => {
+                  const v = "" as T;
+                  setLocalValue(v);
+                  setValue(v);
+                }}
+              >
+                <X size={20} weight="bold" />
+              </ClearButton>
+            )}
+          </InputWrapper>
         )}
 
         {type === "number" && (
-          <input
-            type="number"
-            value={localValue as number}
-            onChange={(e) => {
-              const v = e.target.value as T;
-              setLocalValue(v);
-              setValue(v);
-            }}
-          />
+          <InputWrapper $hasError={hasError}>
+            <input
+              type="number"
+              value={localValue as number}
+              onChange={(e) => {
+                const v = e.target.value as T;
+                setLocalValue(v);
+                setValue(v);
+              }}
+            />
+            {String(localValue).length > 0 && (
+              <ClearButton
+                type="button"
+                onClick={() => {
+                  const v = "" as T;
+                  setLocalValue(v);
+                  setValue(v);
+                }}
+              >
+                <X size={20} weight="bold" />
+              </ClearButton>
+            )}
+          </InputWrapper>
         )}
 
         {(type === "checkbox-list" || type === "radio-list") && (

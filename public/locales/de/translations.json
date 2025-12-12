@@ -495,7 +495,15 @@
         "notProvided": "Nicht angegeben",
         "cancel": "Abbrechen",
         "saveChanges": "Änderungen speichern",
-        "saveSuccess": "Kontaktdaten erfolgreich aktualisiert"
+        "saveSuccess": "Kontaktdaten erfolgreich aktualisiert",
+        "validation": {
+          "phoneRequired": "Telefonnummer ist erforderlich",
+          "phoneInvalid": "Bitte geben Sie eine gültige Telefonnummer ein",
+          "emailRequired": "E-Mail ist erforderlich",
+          "emailInvalid": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+          "addressRequired": "Adresse ist erforderlich",
+          "waysToContactRequired": "Bitte wählen Sie mindestens eine Kontaktmöglichkeit aus"
+        }
       }
     },
     "message": {
