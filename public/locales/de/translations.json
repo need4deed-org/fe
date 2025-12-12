@@ -484,6 +484,15 @@
           "uploaded": "Hochgeladen",
           "missing": "Fehlend"
         }
+      },
+      "contactDetails": {
+        "title": "Kontaktdaten",
+        "edit": "Bearbeiten",
+        "phoneNumber": "Telefonnummer",
+        "email": "E-Mail",
+        "address": "Adresse",
+        "waysToContact": "Kontaktmöglichkeiten",
+        "notProvided": "Nicht angegeben"
       }
     },
     "message": {

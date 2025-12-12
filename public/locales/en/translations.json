@@ -484,6 +484,15 @@
           "uploaded": "Uploaded",
           "missing": "Missing"
         }
+      },
+      "contactDetails": {
+        "title": "Contact details",
+        "edit": "Edit",
+        "phoneNumber": "Phone number",
+        "email": "Email",
+        "address": "Address",
+        "waysToContact": "Ways to contact",
+        "notProvided": "Not provided"
       }
     }
   },
