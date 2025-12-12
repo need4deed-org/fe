@@ -62,18 +62,6 @@ const ButtonRow = styled.div`
   width: 100%;
 `;
 
-const ErrorMessage = styled.p`
-  color: var(--color-red-600);
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 20px;
-  margin-top: 8px;
-  margin-left: 252px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-`;
-
 const formatAddress = (address: ApiVolunteerGet["person"]["address"]) => {
   if (!address || typeof address !== "object") {
     return "";
@@ -192,17 +180,15 @@ export function ContactDetails({ volunteer }: Props) {
           name="phoneNumber"
           control={control}
           render={({ field }: { field: ControllerRenderProps<ContactDetailsFormData, "phoneNumber"> }) => (
-            <>
-              <EditableField
-                mode={isEditing ? "edit" : "display"}
-                type="text"
-                label={t("dashboard.volunteerProfile.contactDetails.phoneNumber")}
-                value={field.value}
-                setValue={field.onChange}
-                hasError={!!errors.phoneNumber}
-              />
-              {errors.phoneNumber && <ErrorMessage>{errors.phoneNumber.message}</ErrorMessage>}
-            </>
+            <EditableField
+              mode={isEditing ? "edit" : "display"}
+              type="text"
+              label={t("dashboard.volunteerProfile.contactDetails.phoneNumber")}
+              value={field.value}
+              setValue={field.onChange}
+              hasError={!!errors.phoneNumber}
+              errorMessage={errors.phoneNumber?.message}
+            />
           )}
         />
 
@@ -210,17 +196,15 @@ export function ContactDetails({ volunteer }: Props) {
           name="email"
           control={control}
           render={({ field }: { field: ControllerRenderProps<ContactDetailsFormData, "email"> }) => (
-            <>
-              <EditableField
-                mode={isEditing ? "edit" : "display"}
-                type="text"
-                label={t("dashboard.volunteerProfile.contactDetails.email")}
-                value={field.value}
-                setValue={field.onChange}
-                hasError={!!errors.email}
-              />
-              {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
-            </>
+            <EditableField
+              mode={isEditing ? "edit" : "display"}
+              type="text"
+              label={t("dashboard.volunteerProfile.contactDetails.email")}
+              value={field.value}
+              setValue={field.onChange}
+              hasError={!!errors.email}
+              errorMessage={errors.email?.message}
+            />
           )}
         />
 
@@ -228,17 +212,15 @@ export function ContactDetails({ volunteer }: Props) {
           name="address"
           control={control}
           render={({ field }: { field: ControllerRenderProps<ContactDetailsFormData, "address"> }) => (
-            <>
-              <EditableField
-                mode={isEditing ? "edit" : "display"}
-                type="text"
-                label={t("dashboard.volunteerProfile.contactDetails.address")}
-                value={field.value}
-                setValue={field.onChange}
-                hasError={!!errors.address}
-              />
-              {errors.address && <ErrorMessage>{errors.address.message}</ErrorMessage>}
-            </>
+            <EditableField
+              mode={isEditing ? "edit" : "display"}
+              type="text"
+              label={t("dashboard.volunteerProfile.contactDetails.address")}
+              value={field.value}
+              setValue={field.onChange}
+              hasError={!!errors.address}
+              errorMessage={errors.address?.message}
+            />
           )}
         />
 
@@ -246,17 +228,16 @@ export function ContactDetails({ volunteer }: Props) {
           name="waysToContact"
           control={control}
           render={({ field }: { field: ControllerRenderProps<ContactDetailsFormData, "waysToContact"> }) => (
-            <>
-              <EditableField
-                mode={isEditing ? "edit" : "display"}
-                type="checkbox-list"
-                label={t("dashboard.volunteerProfile.contactDetails.waysToContact")}
-                value={field.value}
-                setValue={field.onChange}
-                options={["Whatsapp", "Telegram", "Mobile phone", "Email", "SMS"]}
-              />
-              {errors.waysToContact && <ErrorMessage>{errors.waysToContact.message}</ErrorMessage>}
-            </>
+            <EditableField
+              mode={isEditing ? "edit" : "display"}
+              type="checkbox-list"
+              label={t("dashboard.volunteerProfile.contactDetails.waysToContact")}
+              value={field.value}
+              setValue={field.onChange}
+              options={["Whatsapp", "Telegram", "Mobile phone", "Email", "SMS"]}
+              hasError={!!errors.waysToContact}
+              errorMessage={errors.waysToContact?.message}
+            />
           )}
         />
       </Details>

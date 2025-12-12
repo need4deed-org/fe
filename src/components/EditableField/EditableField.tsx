@@ -1,6 +1,6 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
-import { X } from "@phosphor-icons/react";
+import { XCircle, WarningCircle } from "@phosphor-icons/react";
 import styled from "styled-components";
 
 const EditModeWrapper = styled.div`
@@ -88,8 +88,9 @@ const DropdownWrapper = styled.div`
   flex: 1;
 `;
 
-const DropdownButton = styled.div`
-  border: var(--editableField-dropdownButton-border);
+const DropdownButton = styled.div<{ $hasError?: boolean }>`
+  border: ${(props) =>
+    props.$hasError ? "2px solid var(--color-red-600)" : "var(--editableField-dropdownButton-border)"};
   padding: var(--editableField-dropdownButton-padding);
   border-radius: var(--editableField-dropdownButton-borderRadius);
   cursor: var(--editableField-dropdownButton-cursor);
@@ -98,6 +99,13 @@ const DropdownButton = styled.div`
   justify-content: var(--editableField-dropdownButton-justifyContent);
   align-items: var(--editableField-dropdownButton-alignItems);
   user-select: var(--editableField-dropdownButton-userSelect);
+  transition: border 0.2s ease;
+
+  &:focus-within {
+    outline: none;
+    border: ${(props) =>
+      props.$hasError ? "2px solid var(--color-red-600)" : "2px solid var(--color-green-200)"};
+  }
 `;
 
 const Arrow = styled(IoIosArrowDown)`
@@ -119,28 +127,62 @@ const DropdownList = styled.div`
   border-radius: var(--editableField-dropdownList-borderRadius);
   padding: var(--editableField-dropdownList-padding);
   z-index: var(--editableField-dropdownList-zIndex);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
 `;
 
-const OptionRow = styled.div`
-  display: var(--editableField-optionRow-display);
-  align-items: var(--editableField-optionRow-alignItems);
-  justify-content: var(--editableField-optionRow-justifyContent);
-  padding: var(--editableField-optionRow-padding);
-  cursor: var(--editableField-optionRow-cursor);
-  user-select: var(--editableField-optionRow-userSelect);
-  width: var(--editableField-optionRow-width);
+const OptionRow = styled.div<{ $isSelected?: boolean }>`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 8px 12px;
+  cursor: pointer;
+  user-select: none;
+  width: 100%;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+  gap: 12px;
+  background-color: ${(props) => (props.$isSelected ? "var(--color-orchid-subtle)" : "transparent")};
 
-  input {
-    width: var(--editableField-optionRow-input-width);
+  &:hover {
+    background-color: var(--color-orchid-light);
+  }
+
+  input[type="checkbox"],
+  input[type="radio"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    margin: 0;
+    flex: 0 0 auto;
+    accent-color: var(--color-green-500);
   }
 `;
 
 const Text = styled.span`
-  flex: var(--editableField-text-flex);
-  margin-left: var(--editableField-text-marginLeft);
-  white-space: var(--editableField-text-whiteSpace);
-  overflow-wrap: var(--editableField-text-overflow);
-  word-break: var(--editableField-text-wordBreak);
+  flex: 1;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  cursor: pointer;
+  font-size: 16px;
+  color: var(--color-midnight);
+`;
+
+const ErrorMessage = styled.div`
+  color: var(--color-red-600);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  margin: 0;
+  padding-left: 252px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
 `;
 
 type EditableFieldType = "text" | "number" | "checkbox-list" | "radio-list";
@@ -160,6 +202,7 @@ interface EditableFieldProps<T = string | number | string[]> {
   validator?: (value: T) => string | null;
   options?: string[];
   hasError?: boolean;
+  errorMessage?: string;
 }
 
 export const EditableField = forwardRef(function EditableField<T extends string | number | string[]>(
@@ -173,6 +216,7 @@ export const EditableField = forwardRef(function EditableField<T extends string 
     validator,
     options = [],
     hasError = false,
+    errorMessage,
   }: EditableFieldProps<T>,
   ref: React.Ref<EditableFieldRef<T>>,
 ) {
@@ -222,17 +266,19 @@ export const EditableField = forwardRef(function EditableField<T extends string 
 
   if (mode === "display") {
     if (type === "checkbox-list" && Array.isArray(value)) {
+      const displayValue = value.length > 0 ? value.join(", ") : "–";
       return (
         <FieldWrapper>
           {label && <label>{label}: </label>}
-          <span>{(value as string[]).join(", ")}</span>
+          <span>{displayValue}</span>
         </FieldWrapper>
       );
     }
+    const displayValue = value && String(value).trim().length > 0 ? value : "–";
     return (
       <FieldWrapper>
         {label && <label>{label}: </label>}
-        <span>{value}</span>
+        <span>{displayValue}</span>
       </FieldWrapper>
     );
   }
@@ -263,7 +309,7 @@ export const EditableField = forwardRef(function EditableField<T extends string 
                   setValue(v);
                 }}
               >
-                <X size={20} weight="bold" />
+                <XCircle size={20} weight="bold" />
               </ClearButton>
             )}
           </InputWrapper>
@@ -289,7 +335,7 @@ export const EditableField = forwardRef(function EditableField<T extends string 
                   setValue(v);
                 }}
               >
-                <X size={20} weight="bold" />
+                <XCircle size={20} weight="bold" />
               </ClearButton>
             )}
           </InputWrapper>
@@ -297,7 +343,7 @@ export const EditableField = forwardRef(function EditableField<T extends string 
 
         {(type === "checkbox-list" || type === "radio-list") && (
           <DropdownWrapper ref={wrapperRef}>
-            <DropdownButton onClick={() => setOpen((o) => !o)}>
+            <DropdownButton $hasError={hasError} onClick={() => setOpen((o) => !o)}>
               <span>
                 {type === "checkbox-list"
                   ? Array.isArray(localValue) && localValue.length > 0
@@ -311,18 +357,16 @@ export const EditableField = forwardRef(function EditableField<T extends string 
 
             {open && (
               <DropdownList>
-                {options.map((option) => (
-                  <OptionRow key={option}>
-                    <input
-                      type={type === "checkbox-list" ? "checkbox" : "radio"}
-                      name={label}
-                      value={option}
-                      checked={
-                        type === "checkbox-list"
-                          ? Array.isArray(localValue) && localValue.includes(option)
-                          : localValue === option
-                      }
-                      onChange={() => {
+                {options.map((option) => {
+                  const isSelected =
+                    type === "checkbox-list"
+                      ? Array.isArray(localValue) && localValue.includes(option)
+                      : localValue === option;
+                  return (
+                    <OptionRow
+                      key={option}
+                      $isSelected={isSelected}
+                      onClick={() => {
                         if (type === "checkbox-list") {
                           handleCheckboxChange(option);
                         } else {
@@ -332,16 +376,33 @@ export const EditableField = forwardRef(function EditableField<T extends string 
                           setOpen(false);
                         }
                       }}
-                    />
-                    <Text>{option}</Text>
-                  </OptionRow>
-                ))}
+                    >
+                      <input
+                        type={type === "checkbox-list" ? "checkbox" : "radio"}
+                        name={label}
+                        value={option}
+                        checked={isSelected}
+                        onChange={() => {
+                          // Handled by parent OptionRow onClick
+                        }}
+                        onClick={(e) => e.stopPropagation()}
+                      />
+                      <Text>{option}</Text>
+                    </OptionRow>
+                  );
+                })}
               </DropdownList>
             )}
           </DropdownWrapper>
         )}
       </FieldWrapper>
       {error && <p style={{ color: "red", paddingLeft: "1rem" }}>{error}</p>}
+      {errorMessage && (
+        <ErrorMessage>
+          <WarningCircle size={20} weight="fill" />
+          {errorMessage}
+        </ErrorMessage>
+      )}
     </EditModeWrapper>
   );
 });
