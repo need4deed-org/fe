@@ -55,7 +55,7 @@ Our main repositories:
 | [`sdk`](https://github.com/need4deed-org/sdk)         | Shared TypeScript types and utilities between FE and BE   |
 | [`website`](https://github.com/need4deed-org/website) | React/Vite static landing page (currently frozen)         |
 
-### Assignment Timeout
+### ⏳ Assignment Timeout
 
 Once an issue is picked up by a developer, it should be assigned to their GitHub account. If a developer lacks sufficient permissions for self-assignment, they should ask a team member to do it.
 
