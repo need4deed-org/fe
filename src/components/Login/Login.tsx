@@ -48,7 +48,7 @@ export function Login() {
         <LoginSubContainer>
           <LoginContentContainer>
             <CustomHeading
-              fontWeight="var(--dashboard-login-heading-fontWeight)"
+              fontWeight="var(--font-weight-semibold)"
               fontSize="var(--dashboard-login-heading-fontSize)"
               lineheight="var(--dashboard-login-heading-lineHeight)"
               letterSpacing="var(--dashboard-login-heading-letterSpacing)"

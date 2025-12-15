@@ -45,7 +45,7 @@ export default function HeroContent() {
           <CustomHeading
             color="var(--homepage-hero-section-content-hero-text-color)"
             fontSize="var(--homepage-hero-section-content-hero-text-fontSize)"
-            fontWeight="var(--homepage-hero-section-content-hero-text-fontWeight)"
+            fontWeight="var(--font-weight-semibold)"
             letterSpacing="var(--homepage-hero-section-content-hero-text-letterSpacing)"
             lineheight="var(--homepage-hero-section-content-hero-text-lineheight)"
           >

@@ -28,7 +28,7 @@ export const Heading1 = styled.h1<TextProps>`
 `;
 
 export const Heading2 = styled.h2<TextProps>`
-  font-weight: var(--text-h2-font-weight);
+  font-weight: var(--font-weight-semibold);
   font-size: var(--text-h2-font-size);
   line-height: var(--text-h2-line-height);
   letter-spacing: var(--text-h2-letter-spacing);
@@ -37,7 +37,7 @@ export const Heading2 = styled.h2<TextProps>`
 `;
 
 export const Heading3 = styled.h3<TextProps>`
-  font-weight: var(--text-h3-font-weight);
+  font-weight: var(--font-weight-semibold);
   font-size: var(--text-h3-font-size);
   line-height: var(--text-h3-line-height);
   letter-spacing: var(--text-h3-letter-spacing);
@@ -73,7 +73,7 @@ export const ButtonSpan = styled.span<TextProps>`
 `;
 
 export const ActivitySpan = styled.span<TextProps>`
-  font-weight: var(--text-activity-tag-font-weight);
+  font-weight: var(--font-weight-semibold);
   font-size: var(--text-activity-tag-font-size);
   line-height: var(--text-activity-tag-line-height);
   letter-spacing: var(--text-activity-tag-letter-spacing);

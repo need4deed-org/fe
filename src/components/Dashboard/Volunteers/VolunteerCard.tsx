@@ -45,7 +45,7 @@ export function VolunteerCard({ volunteer }: Props) {
               {stateEngagementIconMap[statusEngagement]}
 
               <Paragraph
-                fontWeight="var(--dashboard-volunteers-card-status-fontWeight)"
+                fontWeight="var(--font-weight-semibold)"
                 fontSize="var(--dashboard-volunteers-card-status-fontSize)"
                 lineheight="var(--dashboard-volunteers-card-status-lineHeight)"
                 color={stateEngagementColorMap[statusEngagement]}
@@ -75,7 +75,7 @@ export function VolunteerCard({ volunteer }: Props) {
       <ProfileDiv>
         <CirclePic src={getImageUrl(avatarUrl || defaultAvatarURL)} size="64px" />
         <Paragraph
-          fontWeight="var(--dashboard-volunteers-card-profile-fontWeight)"
+          fontWeight="var(--font-weight-semibold)"
           fontSize="var(--dashboard-volunteers-card-profile-fontSize)"
           lineheight="var(--dashboard-volunteers-card-profile-lineHeight)"
         >

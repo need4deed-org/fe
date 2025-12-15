@@ -122,10 +122,7 @@ export const LoginForm = () => {
           label={t("dashboard.login.rememberMe")}
           labelFontSize="var(--dashboard-login-checkbox-label-fontSize)"
         />
-        <Paragraph
-          fontWeight="var(--dashboard-login-forgot-password-label-fontWeight)"
-          color="var(--color-midnight-light)"
-        >
+        <Paragraph fontWeight="var(--font-weight-semibold)" color="var(--color-midnight-light)">
           {t("dashboard.login.forgotPassword")}?
         </Paragraph>
       </FormActions>

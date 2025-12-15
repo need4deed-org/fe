@@ -178,11 +178,9 @@ html {
     --border-radius-full: 9999px;
 
   /* text */
-  --text-h2-font-weight: 600;
   --text-h2-font-size: 32px;
   --text-h2-line-height: 38px;
 
-  --text-h3-font-weight: 600;
   --text-h3-font-size: 24px;
   --text-h3-line-height: 30px;
   --text-h3-letter-spacing: 0.1px;
@@ -196,7 +194,6 @@ html {
   --card-border-radius: 24px;
 
   /* text-activity-tag */
-  --text-activity-tag-font-weight: 600;
   --text-activity-tag-font-size: 14px;
   --text-activity-tag-line-height: 17px;
   --text-activity-tag-text-align: center;
@@ -349,7 +346,6 @@ html {
     --homepage-hero-section-header-menu-items-border-bottom-right-radius: 10px;
     --homepage-hero-section-header-menu-items-border-bottom-left-radius: 10px;
     --homepage-hero-section-header-menu-item-fontSize: 16px;
-    --homepage-hero-section-header-menu-item-fontWeight: 600;
     --homepage-hero-section-header-menu-item-letterSpacing: 0px;
     --homepage-hero-section-header-menu-item-lineheight: 16px;
     --homepage-hero-section-content-container-width: 100%;
@@ -357,7 +353,6 @@ html {
     --homepage-hero-section-content-hero-text-container-gap: 20px;
     --homepage-hero-section-content-hero-text-color: var(--color-white);
     --homepage-hero-section-content-hero-text-fontSize: 32px;
-    --homepage-hero-section-content-hero-text-fontWeight: 600;
     --homepage-hero-section-content-hero-text-letterSpacing: 0.1px;
     --homepage-hero-section-content-hero-text-lineheight: 36px;
     --homepage-hero-section-content-hero-supporting-text-fontSize: 20px;
@@ -529,7 +524,6 @@ html {
     --text-h1-line-height: 32px;
     --text-h1-letter-spacing: 0.1px;
 
-    --text-h4-font-weight: 600;
     --text-h4-font-size: 20px;
     --text-h4-line-height: 20px;
     --text-h4-letter-spacing: 0.1;
@@ -593,7 +587,6 @@ html {
     --homepage-hero-section-header-menu-items-gap: 24px;
     --homepage-hero-section-header-menu-items-flex-direction: column;
     --homepage-hero-section-header-menu-item-fontSize: 16px;
-    --homepage-hero-section-header-menu-item-fontWeight: 600;
     --homepage-hero-section-header-menu-item-letterSpacing: 0px;
     --homepage-hero-section-header-menu-item-lineheight: 16px;
     --homepage-hero-section-content-container-width: 100%;
@@ -601,7 +594,6 @@ html {
     --homepage-hero-section-content-hero-text-container-gap: 20px;
     --homepage-hero-section-content-hero-text-color: var(--color-white);
     --homepage-hero-section-content-hero-text-fontSize: 48px;
-    --homepage-hero-section-content-hero-text-fontWeight: 600;
     --homepage-hero-section-content-hero-text-letterSpacing: 0.1px;
     --homepage-hero-section-content-hero-text-lineheight: 48px;
     --homepage-hero-section-content-hero-supporting-text-fontSize: 24px;
@@ -774,7 +766,6 @@ html {
     --text-h1-line-height: 32px;
     --text-h1-letter-spacing: 0.1px;
 
-    --text-h4-font-weight: 600;
     --text-h4-font-size: 20px;
     --text-h4-line-height: 20px;
     --text-h4-letter-spacing: 0.1;
@@ -838,7 +829,6 @@ html {
     --homepage-hero-section-header-menu-items-width: 680px;
     --homepage-hero-section-header-menu-items-gap: 20px;
     --homepage-hero-section-header-menu-item-fontSize: 16px;
-    --homepage-hero-section-header-menu-item-fontWeight: 600;
     --homepage-hero-section-header-menu-item-letterSpacing: 0px;
     --homepage-hero-section-header-menu-item-lineheight: 16px;
     --homepage-hero-section-content-div-padding-top: 200px;
@@ -847,7 +837,6 @@ html {
     --homepage-hero-section-content-hero-text-container-gap: 20px;
     --homepage-hero-section-content-hero-text-color: var(--color-white);
     --homepage-hero-section-content-hero-text-fontSize: 48px;
-    --homepage-hero-section-content-hero-text-fontWeight: 600;
     --homepage-hero-section-content-hero-text-letterSpacing: 0.1px;
     --homepage-hero-section-content-hero-text-lineheight: 48px;
     --homepage-hero-section-content-hero-supporting-text-fontSize: 24px;
@@ -1053,12 +1042,10 @@ html {
     --dashboard-volunteers-card-profile-div-gap: 16px;
     --dashboard-volunteers-card-detail-gap: 4px;
     --dashboard-volunteers-card-detail-icon-size: 20px;
-    --dashboard-volunteers-card-status-fontWeight: 600;
     --dashboard-volunteers-card-status-fontSize: 14px;
     --dashboard-volunteers-card-status-lineHeight: 20px;
     --dashboard-volunteers-card-tag-fontSize: 18px;
     --dashboard-volunteers-card-tag-lineHeight: 18px;
-    --dashboard-volunteers-card-profile-fontWeight: 600;
     --dashboard-volunteers-card-profile-fontSize: 20px;
     --dashboard-volunteers-card-profile-lineHeight: 24px;
     --dashboard-volunteers-card-paragraph-fontSize: 16px;
@@ -1082,12 +1069,11 @@ html {
     --dashboard-login-container-height: 944px;
     --dashboard-login-content-container-width: 638px;
     --dashboard-login-content-container-gap: 32px;
-    --dashboard-login-heading-fontWeight: 600;
     --dashboard-login-heading-fontSize: 48px;
     --dashboard-login-heading-lineHeight: 52px;
     --dashboard-login-heading-letterSpacing: 0.25px;
     --dashboard-login-checkbox-label-fontSize: 20px;
-    --dashboard-login-forgot-password-label-fontWeight: 600;
+
 
     --filters-container-width: 340px;
     --filters-container-border-radius: 16px;
@@ -1101,7 +1087,6 @@ html {
     --filters-clear-all-button-height: 44px;
     --filters-clear-all-button-padding: 12px;
     --filters-clear-all-button-text-font-size: 18px;
-    --filters-clear-all-button-text-font-weight: 600;
 
     --cards-header-filter-item-height: 44px;
     --cards-header-filter-item-gap: 8px;

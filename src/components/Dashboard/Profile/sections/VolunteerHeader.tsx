@@ -50,7 +50,7 @@ const NameSection = styled.div`
 
 const Name = styled.h2`
   font-size: var(--text-h1-font-size);
-  font-weight: var(--text-h2-font-weight);
+  font-weight: var(--font-weight-semibold);
 `;
 
 const VolunteerSince = styled.p`
@@ -92,7 +92,7 @@ const StatusChange = styled.span`
   cursor: pointer;
   width: fit-content;
   display: flex;
-  font-weight: var(--text-activity-tag-font-weight);
+  font-weight: var(--font-weight-semibold);
   justify-self: flex-end;
 `;
 

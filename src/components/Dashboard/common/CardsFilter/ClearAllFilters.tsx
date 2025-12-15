@@ -24,7 +24,7 @@ export default function ClearAllFilters<TFilter>({ setFilter, filter }: Props<TF
       textColor="var(--color-midnight)"
       height="var(--filters-clear-all-button-height)"
       textFontSize="var(--filters-clear-all-button-text-font-size)"
-      textFontWeight="var(--filters-clear-all-button-text-font-weight)"
+      textFontWeight="var(--font-weight-semibold)"
       padding="var(--filters-clear-all-button-padding)"
     />
   );
