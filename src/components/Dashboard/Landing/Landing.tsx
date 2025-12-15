@@ -2,6 +2,7 @@
 import { AppContainer } from "@/components/styled/container";
 import { Hero } from "./Hero";
 import { VolunteeringCategoriesSection } from "@/components/VolunteeringCategories";
+import { FooterPartnersSection } from "@/components/FooterPartners";
 import { Header } from "@/components/Header";
 import N4DLogo from "@/components/Layout/PageLayout/logos/N4DLogo";
 import { useScreenType } from "@/context/DeviceContext";
@@ -20,6 +21,7 @@ export function Landing() {
       />
       <Hero />
       <VolunteeringCategoriesSection />
+      <FooterPartnersSection />
     </AppContainer>
   );
 }
