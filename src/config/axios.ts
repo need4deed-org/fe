@@ -1,6 +1,6 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-import { apiPrefix } from "./constants";
+import { apiPathAuthRefresh } from "./constants";
 
 let isRefreshing = false;
 let failedQueue: { resolve: (value?: unknown) => void; reject: (reason?: unknown) => void }[] = [];
@@ -27,7 +27,7 @@ axios.interceptors.response.use(
     // If error response is not 401 or 403, or if it's a refresh request itself, reject
     if (
       (error.response?.status !== 401 && error.response?.status !== 403) ||
-      originalRequest.url.includes(`${apiPrefix}/auth/refresh`) ||
+      originalRequest.url.includes(apiPathAuthRefresh) ||
       !originalRequest.url // Skip if URL is not set
     ) {
       return Promise.reject(error);
@@ -49,7 +49,7 @@ axios.interceptors.response.use(
 
     try {
       // Attempt to refresh token
-      const response = await axios.post(`${apiPrefix}/auth/refresh`);
+      const response = await axios.post(apiPathAuthRefresh);
       const { access } = response.data;
 
       // Update Authorization header for original request
@@ -63,7 +63,10 @@ axios.interceptors.response.use(
       // If refresh fails, process queue with error and redirect to login
       processQueue(refreshError, null);
       toast.error("Session expired. Please log in again.");
-      window.location.href = "/login"; // Redirect to login page
+
+      // Redirect to login page
+      window.location.href = "/login";
+
       return Promise.reject(refreshError);
     } finally {
       isRefreshing = false;
