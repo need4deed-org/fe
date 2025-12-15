@@ -45,12 +45,12 @@ export default function LanguageSwitcher({ textColor }: Props) {
         text={en}
         color={textColor}
         onClick={() => handleLangChange(Lang.EN)}
-        fontWeight={i18n.language !== Lang.EN ? "var(--app-header-menu-item-fontWeight-secondary)" : undefined}
+        fontWeight={i18n.language !== Lang.EN ? "var(--font-weight-regular)" : undefined}
       />
 
       <Paragraph
         color={textColor}
-        fontWeight={"var(--app-header-menu-item-fontWeight-secondary)"}
+        fontWeight={"var(--font-weight-regular)"}
         fontSize="var(--homepage-hero-section-header-menu-item-fontSize)"
       >
         |
@@ -60,7 +60,7 @@ export default function LanguageSwitcher({ textColor }: Props) {
         text={de}
         color={textColor}
         onClick={() => handleLangChange(Lang.DE)}
-        fontWeight={i18n.language !== Lang.DE ? "var(--app-header-menu-item-fontWeight-secondary)" : undefined}
+        fontWeight={i18n.language !== Lang.DE ? "var(--font-weight-regular)" : undefined}
       />
     </LanguageSwitcherContainer>
   );

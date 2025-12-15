@@ -32,7 +32,7 @@ export default function FiltersContent({ setFilter, filter }: Props) {
           />
 
           <Paragraph
-            fontWeight="var(--filters-description-font-weight)"
+            fontWeight="var(--font-weight-regular)"
             fontSize="var(--filters-description-font-size)"
             color="var(--color-blue-700)"
             lineheight="var(--filters-description-line-height)"

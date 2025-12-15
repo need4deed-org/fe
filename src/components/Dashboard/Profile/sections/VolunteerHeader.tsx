@@ -55,7 +55,7 @@ const Name = styled.h2`
 
 const VolunteerSince = styled.p`
   font-size: var(--homepage-testimonial-card-text-p-font-size);
-  font-weight: var(--homepage-process-section-card-info-text-fontWeight);
+  font-weight: var(--font-weight-regular);
 `;
 
 const BadgesGrid = styled.div`

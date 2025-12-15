@@ -34,9 +34,7 @@ export function Checkbox({
 
       {label && (
         <Paragraph
-          fontWeight={
-            checked ? "var(--checkbox-label-font-weight-selected)" : "var(--checkbox-label-font-weight-not-selected)"
-          }
+          fontWeight={checked ? "var(--font-weight-regular)" : "var(--checkbox-label-font-weight-not-selected)"}
           fontSize={labelFontSize || "var(--checkbox-label-font-size)"}
           lineheight="var(--checkbox-label-line-height)"
         >

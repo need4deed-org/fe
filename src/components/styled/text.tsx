@@ -55,7 +55,7 @@ export const Heading4 = styled.h4<TextProps>`
 `;
 
 export const Paragraph = styled.p<TextProps>`
-  font-weight: ${(props) => props.fontWeight || "var(--text-p-font-weight)"};
+  font-weight: ${(props) => props.fontWeight || "var(--font-weight-light)"};
   font-size: ${(props) => props.fontSize || "var(--text-p-font-size)"};
   line-height: ${(props) => props.lineheight || "var(--text-p-line-height)"};
   letter-spacing: ${(props) => props.letterSpacing || "var(--text-p-letter-spacing)"};

@@ -84,7 +84,7 @@ export function FormInput({
             <Paragraph
               color="var(--form-input-error-message-color)"
               fontSize="var(--form-input-error-message-fontSize)"
-              fontWeight="var(--form-input-error-message-fontWeight)"
+              fontWeight="var(--font-weight-regular)"
               lineheight="var(--form-input-error-message-lineHeight)"
             >
               {error}

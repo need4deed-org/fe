@@ -42,7 +42,7 @@ function Contact() {
       <Paragraph
         key="email"
         color="var(--color-magnolia)"
-        fontWeight="var(--homepage-footer-partners-section-p-fontWeight-small)"
+        fontWeight="var(--font-weight-regular)"
         fontSize="var(--homepage-footer-partners-section-p-fontSize)"
         lineheight="var(--homepage-footer-partners-section-p-fontSize)"
       >

@@ -13,7 +13,7 @@ export function CheckButton({ height, width, label, labelFontSize, onChange, che
       textColor={checked ? "var(--color-white)" : "var(--color-midnight)"}
       padding="var(--check-button-padding)"
       border="var(--check-button-border)"
-      textFontWeight="var(--check-button-label-font-weight)"
+      textFontWeight="var(--font-weight-regular)"
     />
   );
 }

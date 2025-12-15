@@ -187,7 +187,7 @@ html {
   --text-h3-line-height: 30px;
   --text-h3-letter-spacing: 0.1px;
 
-  --text-p-font-weight: 300;
+
 
   /* icon */
   --icon-color: var(--color-papaya);
@@ -242,7 +242,6 @@ html {
   --checkbox-container-gap: 8px;
   --checkbox-label-font-size: 18px;
   --checkbox-label-line-height: 32px;
-  --checkbox-label-font-weight-selected: 400;
   --checkbox-label-font-weight-not-selected: 300;
 
   /* paginated cards*/
@@ -257,7 +256,6 @@ html {
 
   /* checkButton */
   --check-button-label-font-size: 18px;
-  --check-button-label-font-weight: 400;
   --check-button-border: solid 1px var(--color-grey-200);
   --check-button-padding: 12px;
   --avatar-img-logo-width: 280px;
@@ -364,7 +362,7 @@ html {
     --homepage-hero-section-content-hero-text-letterSpacing: 0.1px;
     --homepage-hero-section-content-hero-text-lineheight: 36px;
     --homepage-hero-section-content-hero-supporting-text-fontSize: 20px;
-    --homepage-hero-section-content-hero-supporting-text-fontWeight: 400;
+
     --homepage-hero-section-content-hero-supporting-text-letterSpacing: 0.25px;
     --homepage-hero-section-content-hero-supporting-text-lineheight: 20px;
     --homepage-hero-section-content-hero-button-container-gap: 16px;
@@ -400,7 +398,6 @@ html {
     --homepage-footer-partners-section-footer-links-container-width: 310px;
     --homepage-footer-partners-section-footer-frame-container-gap: 16px;
     --homepage-footer-partners-section-p-fontWeight-large: 500;
-    --homepage-footer-partners-section-p-fontWeight-small: 400;
     --homepage-footer-partners-section-p-fontSize: 16px;
 
     --homepage-rac-section-container-height: 720px;
@@ -433,7 +430,6 @@ html {
     --homepage-process-section-card-info-headline-div-gap: 12px;
     --homepage-process-section-card-info-bullet-div-padding-left: 8px;
     --homepage-process-section-card-info-text-div-gap: 24px;
-    --homepage-process-section-card-info-text-fontWeight: 400;
     --homepage-process-section-card-info-text-fontSize: 16px;
     --homepage-process-section-card-info-text-lineheight: 20px;
     --homepage-process-section-card-info-text-letterSpacing: 0px;
@@ -508,7 +504,6 @@ html {
     --opportunities-filters-clear-all-button-height: 64px;
     --opportunities-filters-clear-all-button-text-font-size: 20px;
     --opportunities-filters-description-font-size: 14px;
-    --opportunities-filters-description-font-weight: 400;
 
     --search-container-height: 64px;
     --search-container-border-radius: 40px;
@@ -651,7 +646,6 @@ html {
     --homepage-footer-partners-section-footer-links-container-width: 500px;
     --homepage-footer-partners-section-footer-frame-container-gap: 20px;
     --homepage-footer-partners-section-p-fontWeight-large: 500;
-    --homepage-footer-partners-section-p-fontWeight-small: 400;
     --homepage-footer-partners-section-p-fontSize: 18px;
 
     --homepage-rac-section-container-height: 720px;
@@ -684,7 +678,6 @@ html {
     --homepage-process-section-card-info-headline-div-gap: 20px;
     --homepage-process-section-card-info-bullet-div-padding-left: 8px;
     --homepage-process-section-card-info-text-div-gap: 28px;
-    --homepage-process-section-card-info-text-fontWeight: 400;
     --homepage-process-section-card-info-text-fontSize: 16px;
     --homepage-process-section-card-info-text-lineheight: 20px;
     --homepage-process-section-card-info-text-letterSpacing: 0px;
@@ -759,7 +752,6 @@ html {
     --opportunities-filters-clear-all-button-icon-size: 24px;
     --opportunities-filters-clear-all-button-text-font-size: 16px;
     --opportunities-filters-description-font-size: 14px;
-    --opportunities-filters-description-font-weight: 400;
 
     --search-container-height: 64px;
     --search-container-border-radius: 40px;
@@ -900,7 +892,6 @@ html {
     --homepage-footer-partners-section-footer-links-container-width: 770px;
     --homepage-footer-partners-section-footer-frame-container-gap: 20px;
     --homepage-footer-partners-section-p-fontWeight-large: 500;
-    --homepage-footer-partners-section-p-fontWeight-small: 400;
     --homepage-footer-partners-section-p-fontSize: 18px;
 
     --homepage-rac-section-container-height: 720px;
@@ -932,7 +923,6 @@ html {
     --homepage-process-section-card-info-div-gap: 20px;
     --homepage-process-section-card-info-headline-div-gap: 16px;
     --homepage-process-section-card-info-text-div-gap: 24px;
-    --homepage-process-section-card-info-text-fontWeight: 400;
     --homepage-process-section-card-info-text-fontSize: 20px;
     --homepage-process-section-card-info-text-lineheight: 20px;
     --homepage-process-section-card-info-text-letterSpacing: 0px;
@@ -1056,7 +1046,6 @@ html {
     --search-container-padding: 0 32px;
 
     --app-header-language-switcher-gap: 8px;
-    --app-header-menu-item-fontWeight-secondary: 400;
 
     --dashboard-volunteers-container-gap: 40px;
     --dashboard-volunteers-card-width: 320px;
@@ -1083,7 +1072,6 @@ html {
     --dashboard-volunteers-card-profile-fontWeight: 600;
     --dashboard-volunteers-card-profile-fontSize: 20px;
     --dashboard-volunteers-card-profile-lineHeight: 24px;
-    --dashboard-volunteers-card-paragraph-fontWeight: 400;
     --dashboard-volunteers-card-paragraph-fontWeight-bold: 500;
     --dashboard-volunteers-card-paragraph-fontSize: 16px;
     --dashboard-volunteers-card-paragraph-lineHeight: 16px;
@@ -1101,7 +1089,7 @@ html {
     --form-input-error-message-container-padding: 8px;
     --form-input-error-message-fontSize: 16px;
     --form-input-error-message-lineHeight: 20px;
-    --form-input-error-message-fontWeight: 400;
+
 
     --dashboard-login-container-height: 944px;
     --dashboard-login-content-container-width: 638px;
@@ -1116,7 +1104,6 @@ html {
     --filters-container-width: 340px;
     --filters-container-border-radius: 16px;
     --filters-description-font-size: 16px;
-    --filters-description-font-weight: 400;
     --filters-description-line-height: 20px;
     --filters-description-letter-spacing: 0.5%;
     --filters-accordion-group-options-gap: 16px;
