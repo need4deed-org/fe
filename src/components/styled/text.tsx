@@ -19,7 +19,7 @@ export const CustomHeading = styled.h1<TextProps>`
 `;
 
 export const Heading1 = styled.h1<TextProps>`
-  font-weight: var(--text-h1-font-weight);
+  font-weight: var(--font-weight-bold);
   font-size: var(--text-h1-font-size);
   line-height: var(--text-h1-line-height);
   letter-spacing: var(--text-h1-letter-spacing);

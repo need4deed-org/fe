@@ -272,7 +272,6 @@ html {
     --text-p-line-height: 21px;
     --text-p-letter-spacing: 0;
 
-    --text-h1-font-weight: 700;
     --text-h1-font-size: 28px;
     --text-h1-line-height: 28px;
 
@@ -396,7 +395,6 @@ html {
     --homepage-rac-section-container-height: 720px;
     --homepage-rac-section-content-container-gap: 80px;
     --homepage-rac-section-content-headLine-container-gap: 16px;
-    --homepage-rac-section-content-headLine2-fontWeight: 700;
     --homepage-rac-section-content-headLine2-fontSize: 40px;
     --homepage-rac-section-content-headLine2-lineheight: 40px;
     --homepage-rac-section-content-headLine2-letterSpacing: 0.1px;
@@ -519,7 +517,6 @@ html {
     --text-p-line-height: 24px;
     --text-p-letter-spacing: 0.1px;
 
-    --text-h1-font-weight: 700;
     --text-h1-font-size: 32px;
     --text-h1-line-height: 32px;
     --text-h1-letter-spacing: 0.1px;
@@ -638,7 +635,6 @@ html {
     --homepage-rac-section-container-height: 720px;
     --homepage-rac-section-content-container-gap: 80px;
     --homepage-rac-section-content-headLine-container-gap: 24px;
-    --homepage-rac-section-content-headLine2-fontWeight: 700;
     --homepage-rac-section-content-headLine2-fontSize: 48px;
     --homepage-rac-section-content-headLine2-lineheight: 48px;
     --homepage-rac-section-content-headLine2-letterSpacing: 0.1px;
@@ -761,7 +757,6 @@ html {
     --text-p-line-height: 24px;
     --text-p-letter-spacing: 0.1px;
 
-    --text-h1-font-weight: 700;
     --text-h1-font-size: 32px;
     --text-h1-line-height: 32px;
     --text-h1-letter-spacing: 0.1px;
@@ -878,7 +873,6 @@ html {
     --homepage-rac-section-container-height: 720px;
     --homepage-rac-section-content-container-gap: 80px;
     --homepage-rac-section-content-headLine-container-gap: 24px;
-    --homepage-rac-section-content-headLine2-fontWeight: 700;
     --homepage-rac-section-content-headLine2-fontSize: 48px;
     --homepage-rac-section-content-headLine2-lineheight: 48px;
     --homepage-rac-section-content-headLine2-letterSpacing: 0.1px;
