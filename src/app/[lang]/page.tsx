@@ -1,5 +1,6 @@
 import Link from "next/link";
 import styles from "./page.module.css";
+import { FooterPartnersSection } from "@/components/FooterPartners";
 
 export default function Home() {
   return (
@@ -22,6 +23,7 @@ export default function Home() {
         </div>
       </main>
       <footer className={styles.footer}>FOOTER</footer>
+      <FooterPartnersSection />
     </div>
   );
 }
