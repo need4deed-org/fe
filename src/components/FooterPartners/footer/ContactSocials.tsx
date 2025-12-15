@@ -32,7 +32,7 @@ function Contact() {
       <Paragraph
         key="Contact"
         color="var(--color-magnolia)"
-        fontWeight="var(--homepage-footer-partners-section-p-fontWeight-large)"
+        fontWeight="var(--font-weight-medium)"
         fontSize="var(--homepage-footer-partners-section-p-fontSize)"
         lineheight="var(--homepage-footer-partners-section-p-fontSize)"
       >

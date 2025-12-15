@@ -36,10 +36,7 @@ const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
   return (
     <StatusDiv bg={bg}>
       <IconComp size={20} />
-      <Paragraph
-        fontWeight="var(--text-h4-font-weight)"
-        lineheight="var(--dashboard-volunteers-card-status-lineHeight)"
-      >
+      <Paragraph fontWeight="var(--font-weight-medium)" lineheight="var(--dashboard-volunteers-card-status-lineHeight)">
         {String(status)}
       </Paragraph>
     </StatusDiv>

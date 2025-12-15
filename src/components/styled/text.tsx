@@ -46,7 +46,7 @@ export const Heading3 = styled.h3<TextProps>`
 `;
 
 export const Heading4 = styled.h4<TextProps>`
-  font-weight: var(--text-h4-font-weight);
+  font-weight: var(--font-weight-medium);
   font-size: var(--text-h4-font-size);
   line-height: var(--text-h4-line-height);
   letter-spacing: var(--text-h4-letter-spacing);
@@ -64,7 +64,7 @@ export const Paragraph = styled.p<TextProps>`
 `;
 
 export const ButtonSpan = styled.span<TextProps>`
-  font-weight: ${(props) => props.fontWeight || "var(--button-text-font-weight)"};
+  font-weight: ${(props) => props.fontWeight || "var(--font-weight-medium)"};
   font-size: ${(props) => props.fontSize || "var(--button-text-font-size)"};
   line-height: var(--button-text-line-height);
   letter-spacing: var(--button-text-letter-spacing);

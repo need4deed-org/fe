@@ -59,7 +59,7 @@ export function VolunteerCard({ volunteer }: Props) {
             <>
               <TagDiv>
                 <Paragraph
-                  fontWeight="var(--dashboard-volunteers-card-tag-fontWeight)"
+                  fontWeight="var(--font-weight-medium)"
                   fontSize="var(--dashboard-volunteers-card-status-fontSize)"
                   lineheight="var(--dashboard-volunteers-card-tag-lineHeight)"
                 >

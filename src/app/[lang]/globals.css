@@ -279,7 +279,6 @@ html {
     --text-h1-font-size: 28px;
     --text-h1-line-height: 28px;
 
-    --text-h4-font-weight: 500;
     --text-h4-font-size: 18px;
     --text-h4-line-height: 18px;
     --text-h4-letter-spacing: 0.1;
@@ -397,7 +396,6 @@ html {
     --homepage-footer-partners-section-socials-container-gap: 20px;
     --homepage-footer-partners-section-footer-links-container-width: 310px;
     --homepage-footer-partners-section-footer-frame-container-gap: 16px;
-    --homepage-footer-partners-section-p-fontWeight-large: 500;
     --homepage-footer-partners-section-p-fontSize: 16px;
 
     --homepage-rac-section-container-height: 720px;
@@ -450,7 +448,6 @@ html {
     --button-width: auto;
     --button-padding: 12px 24px;
     --button-border-radius: 125px;
-    --button-text-font-weight: 500;
     --button-text-font-size: 18px;
     --button-text-line-height: 25px;
     --button-text-letter-spacing: 0.13px;
@@ -608,7 +605,6 @@ html {
     --homepage-hero-section-content-hero-text-letterSpacing: 0.1px;
     --homepage-hero-section-content-hero-text-lineheight: 48px;
     --homepage-hero-section-content-hero-supporting-text-fontSize: 24px;
-    --homepage-hero-section-content-hero-supporting-text-fontWeight: 500;
     --homepage-hero-section-content-hero-supporting-text-letterSpacing: 0.25px;
     --homepage-hero-section-content-hero-supporting-text-lineheight: 24px;
     --homepage-hero-section-content-hero-button-container-gap: 24px;
@@ -645,7 +641,6 @@ html {
     --homepage-footer-partners-section-footer-links-container-gap: 40px;
     --homepage-footer-partners-section-footer-links-container-width: 500px;
     --homepage-footer-partners-section-footer-frame-container-gap: 20px;
-    --homepage-footer-partners-section-p-fontWeight-large: 500;
     --homepage-footer-partners-section-p-fontSize: 18px;
 
     --homepage-rac-section-container-height: 720px;
@@ -698,7 +693,6 @@ html {
     --button-width: fit-content;
     --button-padding: 16px 36px;
     --button-border-radius: 125px;
-    --button-text-font-weight: 500;
     --button-text-font-size: 24px;
     --button-text-line-height: 25px;
     --button-text-letter-spacing: 0.13px;
@@ -857,7 +851,6 @@ html {
     --homepage-hero-section-content-hero-text-letterSpacing: 0.1px;
     --homepage-hero-section-content-hero-text-lineheight: 48px;
     --homepage-hero-section-content-hero-supporting-text-fontSize: 24px;
-    --homepage-hero-section-content-hero-supporting-text-fontWeight: 500;
     --homepage-hero-section-content-hero-supporting-text-letterSpacing: 0.25px;
     --homepage-hero-section-content-hero-supporting-text-lineheight: 24px;
     --homepage-hero-section-content-hero-button-container-gap: 24px;
@@ -891,7 +884,6 @@ html {
     --homepage-footer-partners-section-footer-links-container-gap: 100px;
     --homepage-footer-partners-section-footer-links-container-width: 770px;
     --homepage-footer-partners-section-footer-frame-container-gap: 20px;
-    --homepage-footer-partners-section-p-fontWeight-large: 500;
     --homepage-footer-partners-section-p-fontSize: 18px;
 
     --homepage-rac-section-container-height: 720px;
@@ -944,7 +936,6 @@ html {
     --button-width: fit-content;
     --button-padding: 16px 36px;
     --button-border-radius: 125px;
-    --button-text-font-weight: 500;
     --button-text-font-size: 24px;
     --button-text-line-height: 25px;
     --button-text-letter-spacing: 0.13px;
@@ -1022,7 +1013,6 @@ html {
     --dashboard-navigation-bar-padding: 40px 16px 40px 16px;
     --dashboard-navigation-bar-option-gap: 4px;
     --dashboard-navigation-bar-option-icon-div-size: 40px;
-    --dashboard-navigation-bar-option-text-weight: 500;
     --dashboard-navigation-bar-option-text-size: 14px;
     --dashboard-navigation-bar-option-text-letter-spacing: 0.14px;
 
@@ -1066,13 +1056,11 @@ html {
     --dashboard-volunteers-card-status-fontWeight: 600;
     --dashboard-volunteers-card-status-fontSize: 14px;
     --dashboard-volunteers-card-status-lineHeight: 20px;
-    --dashboard-volunteers-card-tag-fontWeight: 500;
     --dashboard-volunteers-card-tag-fontSize: 18px;
     --dashboard-volunteers-card-tag-lineHeight: 18px;
     --dashboard-volunteers-card-profile-fontWeight: 600;
     --dashboard-volunteers-card-profile-fontSize: 20px;
     --dashboard-volunteers-card-profile-lineHeight: 24px;
-    --dashboard-volunteers-card-paragraph-fontWeight-bold: 500;
     --dashboard-volunteers-card-paragraph-fontSize: 16px;
     --dashboard-volunteers-card-paragraph-lineHeight: 16px;
     --dashboard-volunteers-card-paragraph-lineHeight: 16px;
