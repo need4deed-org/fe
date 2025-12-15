@@ -1,9 +1,12 @@
+import { Lang } from "need4deed-sdk";
+
 export const tokenKey = "token";
 
 export const apiURL = process.env.NEXT_PUBLIC_URL_API || "http://localhost:5000";
 export const apiPrefix = "api";
 export const apiPathVolunteer = `/${apiPrefix}/volunteer/`;
-export const apiPathLogin = `/auth/login`;
+export const apiPathLogin = `/${apiPrefix}/auth/login`;
+export const apiPathAuthRefresh = `/${apiPrefix}/auth/refresh`;
 export const apiPathAuthEmailDomain = `${apiPrefix}/auth-email-domain/`;
 export const apiPathOpportunity = `${apiPrefix}/opportunity`;
 export const apiPathOption = `/${apiPrefix}/option`;
@@ -38,6 +41,7 @@ export const minPLZBerlin = 10115;
 export const maxPLZBerlin = 14199;
 
 export const defaultAvatarURL = "head-silhouette.webp";
+export const defaultAvatarVolunteerProfile = "all_genders_avatar.png";
 
 export enum DashboardRoutes {
   Home = "/dashboard/home",
@@ -50,3 +54,5 @@ export enum DashboardRoutes {
 }
 
 export const questionMark = "?";
+
+export const supportedLangs = Object.values(Lang) as string[];

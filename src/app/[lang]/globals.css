@@ -131,7 +131,7 @@ html {
 
   --color-blue-50: rgba(235, 237, 247, 1);
   --color-blue-100: rgba(194, 198, 231, 1);
-  --color-blue-200:: rgba(123, 132, 203, 1);
+  --color-blue-200: rgba(123, 132, 203, 1);
   --color-blue-400: rgba(99, 111, 188, 1);
   --color-blue-500: rgba(58, 72, 178, 1);
   --color-blue-700: rgba(26, 38, 132, 1);
@@ -186,11 +186,20 @@ html {
   --homepage-testimonials-profile-gap: 16px;
 
   /* layout-static-page */
-  --layout-static-page-background-default: linear-gradient(
-    180deg,
-    var(--color-magnolia)-5.53%,
-    var(--color-orchid-dark) 100%
-  );
+  --layout-static-page-background-default: linear-gradient(180deg,
+      var(--color-magnolia)-5.53%,
+      var(--color-orchid-dark) 100%);
+  /* percentages */
+  --percent-10: 10%;
+  --percent-20: 20%;
+  --percent-25: 25%;
+  --percent-30: 30%;
+  --percent-35: 35%;
+  --percent-40: 40%;
+  --percent-45: 45%;
+  --percent-50: 50%;
+  --percent-75: 75%;
+  --percent-100: 100%;
 
   /* button */
   --button-gap: 12px;
@@ -217,7 +226,9 @@ html {
   --check-button-label-font-weight: 400;
   --check-button-border: solid 1px var(--color-grey-200);
   --check-button-padding: 12px;
-
+  --avatar-img-logo-width: 280px;
+  --custom-px-17: 17px;
+  --zero: 0px;
 }
 
 .with-linebreaks {
@@ -1085,12 +1096,65 @@ html {
 
     --cards-header-filter-item-height: 44px;
     --cards-header-filter-item-gap: 8px;
-    --cards-header-filter-item-border-radius:32px;
-    --cards-header-filter-item-padding:12px;
+    --cards-header-filter-item-border-radius: 32px;
+    --cards-header-filter-item-padding: 12px;
     --cards-header-filter-item-font-size: 16px;
     --cards-header-filter-item-font-weight: 400px;
     --cards-header-filter-item-icon-div-size: 28px;
     --cards-header-filter-item-icon-div-border-radius: 14px;
 
   }
+}
+
+:root {
+  --editableField-fieldWrapper-display: flex;
+  --editableField-fieldWrapper-borderBottom: 1px solid var(--color-blue-50);
+  --editableField-fieldWrapper-padding: 1rem;
+  --editableField-fieldWrapper-fontSize: 20px;
+  --editableField-fieldWrapper-width: 100%;
+  --editableField-fieldWrapper-alignItems: center;
+  --editableField-fieldWrapper-label-fontWeight: bold;
+  --editableField-fieldWrapper-label-fontSize: 24px;
+  --editableField-fieldWrapper-label-width: 10rem;
+  --editableField-fieldWrapper-input-borderRadius: 8px;
+  --editableField-fieldWrapper-input-width: 100%;
+  --editableField-fieldWrapper-input-padding: 16px;
+  --editableField-fieldWrapper-input-border: 1px solid var(--color-grey-200);
+  --editableField-dropdownWrapper-position: relative;
+  --editableField-dropdownWrapper-width: 100%;
+  --editableField-dropdownButton-border: 1px solid var(--color-grey-200);
+  --editableField-dropdownButton-padding: 16px;
+  --editableField-dropdownButton-borderRadius: 8px;
+  --editableField-dropdownButton-cursor: pointer;
+  --editableField-dropdownButton-display: flex;
+  --editableField-dropdownButton-justifyContent: space-between;
+  --editableField-dropdownButton-alignItems: center;
+  --editableField-dropdownButton-userSelect: none;
+  --editableField-arrow-transition: 0.2s;
+  --editableField-arrow-transform: rotate(0deg);
+  --editableField-arrow-open-transform: rotate(180deg);
+  --editableField-dropdownList-position: absolute;
+  --editableField-dropdownList-top: 110%;
+  --editableField-dropdownList-left: 0;
+  --editableField-dropdownList-width:100%;
+  --editableField-dropdownList-background: white;
+  --editableField-dropdownList-border: 1px solid var(--color-grey-200);
+  --editableField-dropdownList-borderRadius: 8px;
+  --editableField-dropdownList-padding: 16px;
+  --editableField-dropdownList-zIndex: 20;
+  --editableField-optionRow-display: flex;
+  --editableField-optionRow-alignItems: center;
+  --editableField-optionRow-justifyContent: space-between;
+  --editableField-optionRow-padding: 0.4rem 0.2rem;
+  --editableField-optionRow-cursor: pointer;
+  --editableField-optionRow-userSelect: none;
+  --editableField-optionRow-width: 100%;
+  --editableField-optionRow-input-width: 10%;
+  --editableField-text-flex: 1;
+  --editableField-text-marginLeft: 0.7rem;
+  --editableField-text-whiteSpace: normal;
+  --editableField-text-overflow: break-word;
+  --editableField-text-wordBreak: break-word;
+  
+
 }
