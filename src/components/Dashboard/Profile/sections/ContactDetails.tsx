@@ -3,14 +3,14 @@ import Button from "@/components/core/button/Button/Button";
 import { EditableField } from "@/components/EditableField/EditableField";
 import { Heading2 } from "@/components/styled/text";
 import { useUpdateVolunteerContact } from "@/hooks/useUpdateVolunteerContact";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { ChatsCircle } from "@phosphor-icons/react";
 import { ApiVolunteerGet } from "need4deed-sdk";
 import { useEffect, useState } from "react";
+import { Controller, ControllerRenderProps, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { useForm, Controller, ControllerRenderProps } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { createContactDetailsSchema, ContactDetailsFormData } from "./ContactDetails/contactDetailsSchema";
+import { ContactDetailsFormData, createContactDetailsSchema } from "./ContactDetails/contactDetailsSchema";
 
 const Container = styled.div<{ $isEditing: boolean }>`
   display: flex;
@@ -104,7 +104,7 @@ export function ContactDetails({ volunteer }: Props) {
       phoneNumber: volunteer.person.phone || "",
       email: volunteer.person.email || "",
       address: formatAddress(volunteer.person.address),
-      waysToContact: ["Whatsapp", "Telegram", "Mobile phone"],
+      waysToContact: ["WhatsApp"],
     },
   });
 
@@ -114,7 +114,8 @@ export function ContactDetails({ volunteer }: Props) {
       phoneNumber: volunteer.person.phone || "",
       email: volunteer.person.email || "",
       address: formatAddress(volunteer.person.address),
-      waysToContact: ["Whatsapp", "Telegram", "Mobile phone"],
+      // TODO: Load actual waysToContact from volunteer data when available
+      waysToContact: ["WhatsApp"],
     });
     setIsEditing(false);
   }, [volunteer, reset]);
@@ -146,6 +147,7 @@ export function ContactDetails({ volunteer }: Props) {
             },
           },
         },
+        waysToContact: data.waysToContact,
       },
       {
         onSuccess: () => {
@@ -231,7 +233,7 @@ export function ContactDetails({ volunteer }: Props) {
               label={t("dashboard.volunteerProfile.contactDetails.waysToContact")}
               value={field.value}
               setValue={field.onChange}
-              options={["Whatsapp", "Telegram", "Mobile phone", "Email", "SMS"]}
+              options={["WhatsApp", "Telegram", "Mobile phone", "Email", "SMS"]}
               errorMessage={errors.waysToContact?.message}
             />
           )}

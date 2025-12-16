@@ -16,9 +16,7 @@ export const createContactDetailsSchema = (t: (key: string) => string) => {
     address: z
       .string()
       .min(1, t("dashboard.volunteerProfile.contactDetails.validation.addressRequired")),
-    waysToContact: z
-      .array(z.string())
-      .min(1, t("dashboard.volunteerProfile.contactDetails.validation.waysToContactRequired")),
+    waysToContact: z.array(z.string()).min(1, t("dashboard.volunteerProfile.contactDetails.validation.waysToContactRequired")),
   });
 };
 
