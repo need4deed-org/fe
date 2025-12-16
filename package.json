@@ -28,6 +28,7 @@
     "react-icons": "^5.5.0",
     "react-toastify": "^11.0.5",
     "styled-components": "^6.1.19",
+    "ts-type-safe": "^1.5.0",
     "zod": "^4.1.13"
   },
   "devDependencies": {

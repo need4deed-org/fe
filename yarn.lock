@@ -2969,6 +2969,11 @@ ts-api-utils@^2.1.0:
   resolved "https://registry.yarnpkg.com/ts-api-utils/-/ts-api-utils-2.1.0.tgz#595f7094e46eed364c13fd23e75f9513d29baf91"
   integrity sha512-CUgTZL1irw8u29bzrOD/nH85jqyc74D6SshFgujOIA7osm2Rz7dYH77agkx7H4FBNxDq7Cjf+IjaX/8zwFW+ZQ==
 
+ts-type-safe@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/ts-type-safe/-/ts-type-safe-1.5.0.tgz#92e126411145666ce8ab26a7f1a229787dd117eb"
+  integrity sha512-iQnih1wD7sZ2MQYtpSEIm+TThiVOLjC1jVAHsnHjD8a3Z2OsQQXow38bVXqX1xkBGuYoHhnJbzqPSjywWJcmCA==
+
 tsconfig-paths@^3.15.0:
   version "3.15.0"
   resolved "https://registry.yarnpkg.com/tsconfig-paths/-/tsconfig-paths-3.15.0.tgz#5299ec605e55b1abb23ec939ef15edaf483070d4"

@@ -138,7 +138,7 @@ export function ContactDetails({ volunteer }: Props) {
           phone: data.phoneNumber,
           email: data.email,
           address: {
-            id: volunteer.person.address?.id || "",
+            id: volunteer.person.address?.id,
             street: addressData.street,
             city: addressData.city,
             postcode: {
