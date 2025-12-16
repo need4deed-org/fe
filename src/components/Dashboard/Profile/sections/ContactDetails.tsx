@@ -71,6 +71,16 @@ const formatAddress = (address: ApiVolunteerGet["person"]["address"]) => {
   return parts.join(", ");
 };
 
+const parseAddress = (addressString: string) => {
+  // Address format: "street, city, postcode"
+  const parts = addressString.split(",").map((part) => part.trim());
+  return {
+    street: parts[0] || "",
+    city: parts[1] || "",
+    postcode: parts[2] || "",
+  };
+};
+
 interface Props {
   volunteer: ApiVolunteerGet;
 }
@@ -116,16 +126,6 @@ export function ContactDetails({ volunteer }: Props) {
   const handleCancel = () => {
     reset();
     setIsEditing(false);
-  };
-
-  const parseAddress = (addressString: string) => {
-    // Address format: "street, city, postcode"
-    const parts = addressString.split(",").map((part) => part.trim());
-    return {
-      street: parts[0] || "",
-      city: parts[1] || "",
-      postcode: parts[2] || "",
-    };
   };
 
   const onSubmit = (data: ContactDetailsFormData) => {
