@@ -85,10 +85,25 @@ interface Props {
   volunteer: ApiVolunteerGet;
 }
 
+// TODO: use enum-values from backend / sdk when available
+const waysToContactKeys = ["whatsapp", "telegram", "mobilePhone", "email", "sms"];
+
 export function ContactDetails({ volunteer }: Props) {
   const { t } = useTranslation();
   const { mutate: updateContact, isPending } = useUpdateVolunteerContact(volunteer.id);
   const [isEditing, setIsEditing] = useState(false);
+
+  const waysToContactOptions = waysToContactKeys.map((key) =>
+    t(`dashboard.volunteerProfile.contactDetails.waysToContact.${key}`),
+  );
+
+  const keyToLabel: Record<string, string> = {};
+  const labelToKey: Record<string, string> = {};
+  waysToContactKeys.forEach((key, index) => {
+    const label = waysToContactOptions[index];
+    keyToLabel[key] = label;
+    labelToKey[label] = key;
+  });
 
   const schema = createContactDetailsSchema(t);
 
@@ -104,7 +119,7 @@ export function ContactDetails({ volunteer }: Props) {
       phoneNumber: volunteer.person.phone || "",
       email: volunteer.person.email || "",
       address: formatAddress(volunteer.person.address),
-      waysToContact: ["WhatsApp"],
+      waysToContact: ["whatsapp"],
     },
   });
 
@@ -115,7 +130,7 @@ export function ContactDetails({ volunteer }: Props) {
       email: volunteer.person.email || "",
       address: formatAddress(volunteer.person.address),
       // TODO: Load actual waysToContact from volunteer data when available
-      waysToContact: ["WhatsApp"],
+      waysToContact: ["whatsapp"],
     });
     setIsEditing(false);
   }, [volunteer, reset]);
@@ -231,9 +246,12 @@ export function ContactDetails({ volunteer }: Props) {
               mode={isEditing ? "edit" : "display"}
               type="checkbox-list"
               label={t("dashboard.volunteerProfile.contactDetails.waysToContact")}
-              value={field.value}
-              setValue={field.onChange}
-              options={["WhatsApp", "Telegram", "Mobile phone", "Email", "SMS"]}
+              value={field.value.map((key) => keyToLabel[key])}
+              setValue={(value) => {
+                const labels = Array.isArray(value) ? value : [value];
+                field.onChange(labels.map((label) => labelToKey[label]));
+              }}
+              options={waysToContactOptions}
               errorMessage={errors.waysToContact?.message}
             />
           )}
