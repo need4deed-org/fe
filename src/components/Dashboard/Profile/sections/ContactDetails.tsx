@@ -186,7 +186,6 @@ export function ContactDetails({ volunteer }: Props) {
               label={t("dashboard.volunteerProfile.contactDetails.phoneNumber")}
               value={field.value}
               setValue={field.onChange}
-              hasError={!!errors.phoneNumber}
               errorMessage={errors.phoneNumber?.message}
             />
           )}
@@ -202,7 +201,6 @@ export function ContactDetails({ volunteer }: Props) {
               label={t("dashboard.volunteerProfile.contactDetails.email")}
               value={field.value}
               setValue={field.onChange}
-              hasError={!!errors.email}
               errorMessage={errors.email?.message}
             />
           )}
@@ -218,7 +216,6 @@ export function ContactDetails({ volunteer }: Props) {
               label={t("dashboard.volunteerProfile.contactDetails.address")}
               value={field.value}
               setValue={field.onChange}
-              hasError={!!errors.address}
               errorMessage={errors.address?.message}
             />
           )}
@@ -235,7 +232,6 @@ export function ContactDetails({ volunteer }: Props) {
               value={field.value}
               setValue={field.onChange}
               options={["Whatsapp", "Telegram", "Mobile phone", "Email", "SMS"]}
-              hasError={!!errors.waysToContact}
               errorMessage={errors.waysToContact?.message}
             />
           )}

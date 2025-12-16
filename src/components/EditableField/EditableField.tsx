@@ -201,7 +201,6 @@ interface EditableFieldProps<T = string | number | string[]> {
   submit?: (value: T) => void | Promise<void>;
   validator?: (value: T) => string | null;
   options?: string[];
-  hasError?: boolean;
   errorMessage?: string;
 }
 
@@ -215,7 +214,6 @@ export const EditableField = forwardRef(function EditableField<T extends string 
     // submit, // TODO: implement submit (on blur or enter?)
     validator,
     options = [],
-    hasError = false,
     errorMessage,
   }: EditableFieldProps<T>,
   ref: React.Ref<EditableFieldRef<T>>,
@@ -290,7 +288,7 @@ export const EditableField = forwardRef(function EditableField<T extends string 
         {label && <label>{label}: </label>}
 
         {type === "text" && (
-          <InputWrapper $hasError={hasError}>
+          <InputWrapper $hasError={!!errorMessage}>
             <input
               type="text"
               value={localValue as string}
@@ -316,7 +314,7 @@ export const EditableField = forwardRef(function EditableField<T extends string 
         )}
 
         {type === "number" && (
-          <InputWrapper $hasError={hasError}>
+          <InputWrapper $hasError={!!errorMessage}>
             <input
               type="number"
               value={localValue as number}
@@ -343,7 +341,7 @@ export const EditableField = forwardRef(function EditableField<T extends string 
 
         {(type === "checkbox-list" || type === "radio-list") && (
           <DropdownWrapper ref={wrapperRef}>
-            <DropdownButton $hasError={hasError} onClick={() => setOpen((o) => !o)}>
+            <DropdownButton $hasError={!!errorMessage} onClick={() => setOpen((o) => !o)}>
               <span>
                 {type === "checkbox-list"
                   ? Array.isArray(localValue) && localValue.length > 0
