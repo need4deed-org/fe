@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import OpportunitiesList from './OpportunitiesList'
 import useVolunteerOpportunities from './useVolunteerOpportinities'
+import { useTranslation } from "react-i18next"
 
 const WrapContainer = styled.div`
 width: var(--opportunitiesSectionContainer-wrapContainer-width);
@@ -100,10 +101,14 @@ button {
     }
   }
 `
+
+type TabKey = "Pending" | "Matched" | "Active" | "Past";
 const VolunteerOpportunitiesSectionContainer = () => {
 
+const { t } = useTranslation();
+
 const {opportunities} = useVolunteerOpportunities();
-const [activeTab, setActiveTab] = useState('Pending');
+const [activeTab, setActiveTab] = useState<TabKey>("Pending");
 const pendingsQuantity = 1; // TODO: later I plan this number to be calculated by how many expandable bars are marked as pending
 
   return (
@@ -111,23 +116,23 @@ const pendingsQuantity = 1; // TODO: later I plan this number to be calculated b
       <MainContainer>
         <UpperContainer>
           <TitleContainer>
-            <div>Star</div>
-            <h1>Opportunities</h1>
+            <div>{t("vosc.star")}</div>
+            <h1>{t("vosc.opportunities")}</h1>
           </TitleContainer>
-          <FindOpportunityButton>Find Opportunity</FindOpportunityButton>
+          <FindOpportunityButton>{t("vosc.findOpportunity")}</FindOpportunityButton>
         </UpperContainer>
         <OptionsContainer>
-          <button onClick={() => setActiveTab('Pending')} 
-          className={activeTab === 'Pending' ? 'active' : ''}>
-            <span>Pending</span>
+          <button onClick={() => setActiveTab("Pending")} 
+          className={activeTab === "Pending" ? 'active' : ''}>
+            <span>{t("vosc.pending")}</span>
             <div>{pendingsQuantity}</div>
           </button>
           <button onClick={() => setActiveTab('Matched')}
-          className={activeTab === 'Matched' ? 'active' : ''}>Matched</button>
+          className={activeTab === "Matched" ? 'active' : ''}>{t("vosc.matched")}</button>
           <button onClick={() => setActiveTab('Active')}
-          className={activeTab === 'Active' ? 'active' : ''}>Active</button>
+          className={activeTab === "Active" ? 'active' : ''}>{t("vosc.active")}</button>
           <button onClick={() => setActiveTab('Past')}
-          className={activeTab === 'Past' ? 'active' : ''}>Past</button>
+          className={activeTab === "Past" ? 'active' : ''}>{t("vosc.past")}</button>
         </OptionsContainer>
       </MainContainer>
       <OpportunitiesList opportunities={opportunities} activeTab={activeTab}/>

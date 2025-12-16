@@ -490,5 +490,15 @@
       "successful": "Erfolgreich",
       "errorGeneric": "Etwas ist schief gelaufen!"
     }
+  },
+
+  "vosc": {
+    "star": "Stern",
+    "opportunities": "Möglichkeiten",
+    "findOpportunity": "Möglichkeit finden",
+    "pending": "Ausstehend",
+    "matched": "Zugeordnet",
+    "active": "Aktiv",
+    "past": "Vergangen"
   }
 }

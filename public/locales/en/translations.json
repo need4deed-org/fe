@@ -490,5 +490,14 @@
   "message": {
     "successful": "Successful",
     "errorGeneric": "Something went wrong!"
+  },
+  "vosc" : {
+    "star": "Star",
+    "opportunities": "Opportunities",
+    "findOpportunity": "Find Opportunity",
+    "pending": "Pending",
+    "matched": "Matched",
+    "active": "Active",
+    "past": "Past"
   }
 }
