@@ -6,14 +6,7 @@ import styled from "styled-components";
 import useOutsideClick from "@/hooks/useOutsideClick";
 import { Paragraph } from "@/components/styled/text";
 import { Button } from "../button";
-
-interface Comment {
-  id: string;
-  userId: string;
-  userName: string;
-  text: string;
-  timestamp: string;
-}
+import { Comment } from "@/types";
 
 interface CommentDisplayProps {
   comment: Comment;

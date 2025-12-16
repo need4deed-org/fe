@@ -3,15 +3,9 @@
 import styled from "styled-components";
 import { CommentDisplay, AddComment } from "./index";
 import { Paragraph } from "@/components/styled/text";
-import SpeechBubbleIcon from "./SpeechBubbleIcon";
-
-interface Comment {
-  id: string;
-  userId: string;
-  userName: string;
-  text: string;
-  timestamp: string;
-}
+import SpeechBubbleIcon from "@/components/svg/SpeechBubbleIcon";
+import CenteredWrapper from "../common/CenteredWrapper";
+import { Comment } from "@/types";
 
 interface CommentsListProps {
   comments: Comment[];
@@ -25,9 +19,9 @@ export function CommentsList({ comments, onPatch, onDelete, onAdd, title = "Coor
   return (
     <CommentsCard>
       <CommentsHeader>
-        <SpeechBubbleIconWrapper>
+        <CenteredWrapper>
           <SpeechBubbleIcon />
-        </SpeechBubbleIconWrapper>
+        </CenteredWrapper>
         <Paragraph fontWeight={600} fontSize="16px" lineheight="20px" color="var(--color-midnight)">
           {title} • {comments.length}
         </Paragraph>
@@ -74,11 +68,5 @@ const CommentsListContainer = styled.div`
   gap: 12px;
   padding: 16px;
   background-color: var(--color-white);
-`;
-
-const SpeechBubbleIconWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `;
 
