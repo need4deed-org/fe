@@ -6,7 +6,7 @@ import { useUpdateVolunteerContact } from "@/hooks/useUpdateVolunteerContact";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ChatsCircle } from "@phosphor-icons/react";
 import { ApiVolunteerGet, VolunteerCommunicationType } from "need4deed-sdk";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Controller, ControllerRenderProps, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
@@ -89,7 +89,7 @@ const waysToContactKeys = Object.values(VolunteerCommunicationType);
 
 export function ContactDetails({ volunteer }: Props) {
   const { t } = useTranslation();
-  const { mutate: updateContact, isPending } = useUpdateVolunteerContact(volunteer.id);
+  const { mutate: updateContact, isPending } = useUpdateVolunteerContact(String(volunteer.id));
   const [isEditing, setIsEditing] = useState(false);
 
   const waysToContactOptions = waysToContactKeys.map((key) =>
@@ -106,6 +106,17 @@ export function ContactDetails({ volunteer }: Props) {
 
   const schema = createContactDetailsSchema(t);
 
+  const initialFormValues = useMemo(
+    () => ({
+      phoneNumber: volunteer.person.phone || "",
+      email: volunteer.person.email || "",
+      address: formatAddress(volunteer.person.address),
+      // TODO: Load actual waysToContact from volunteer data when available
+      waysToContact: [],
+    }),
+    [volunteer],
+  );
+
   const {
     control,
     handleSubmit,
@@ -114,16 +125,7 @@ export function ContactDetails({ volunteer }: Props) {
   } = useForm<ContactDetailsFormData>({
     resolver: zodResolver(schema),
     mode: "onChange",
-    defaultValues: useMemo(
-      () => ({
-        phoneNumber: volunteer.person.phone || "",
-        email: volunteer.person.email || "",
-        address: formatAddress(volunteer.person.address),
-        // TODO: Load actual waysToContact from volunteer data when available
-        waysToContact: [],
-      }),
-      [volunteer],
-    ),
+    defaultValues: initialFormValues,
   });
 
   const handleEditClick = () => {
@@ -157,12 +159,18 @@ export function ContactDetails({ volunteer }: Props) {
       },
       {
         onSuccess: () => {
-          reset(values);
           setIsEditing(false);
         },
       },
     );
   };
+
+  // Reset form when volunteer data changes (after successful mutation & refetch)
+  useEffect(() => {
+    if (!isEditing) {
+      reset(initialFormValues);
+    }
+  }, [initialFormValues, isEditing, reset]);
 
   return (
     <Container data-testid="contact-details-container" $isEditing={isEditing}>
