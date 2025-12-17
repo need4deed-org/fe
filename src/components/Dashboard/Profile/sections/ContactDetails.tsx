@@ -19,6 +19,7 @@ const Container = styled.div<{ $isEditing: boolean }>`
   gap: ${(props) => (props.$isEditing ? "16px" : "8px")};
   background: var(--color-white);
   border-radius: 24px;
+  margin-bottom: 24px;
 `;
 
 const Header = styled.div`

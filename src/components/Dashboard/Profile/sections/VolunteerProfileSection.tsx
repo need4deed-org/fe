@@ -98,17 +98,6 @@ const TagsWrapper = styled.div`
   gap: 8px;
 `;
 
-const SkillsWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-
-  span {
-    font-size: 16px;
-    color: var(--color-midnight);
-  }
-`;
-
 interface Props {
   volunteer: ApiVolunteerGet;
 }
@@ -133,10 +122,12 @@ export function VolunteerProfileSection({ volunteer }: Props) {
   // Transform complex types to displayable formats
   const formatLanguages = (langs: typeof volunteer.languages): string => {
     if (!langs || langs.length === 0) return "English – native, French – fluent";
-    return langs.map((lang) => {
-      const proficiency = lang.proficiency ? ` – ${lang.proficiency}` : "";
-      return `${lang.title}${proficiency}`;
-    }).join(", ");
+    return langs
+      .map((lang) => {
+        const proficiency = lang.proficiency ? ` – ${lang.proficiency}` : "";
+        return `${lang.title}${proficiency}`;
+      })
+      .join(", ");
   };
 
   const formatAvailability = (avails: typeof volunteer.availability): string => {
@@ -160,12 +151,9 @@ export function VolunteerProfileSection({ volunteer }: Props) {
   const availability = formatAvailability(volunteer.availability);
   const districts = "Kreuzberg, Friedrichshain";
   const volunteerType = "Accompanying";
-  const activities = extractTitles(volunteer.activities).length > 0
-    ? extractTitles(volunteer.activities)
-    : ["Tutoring", "Daycare"];
-  const skills = extractTitles(volunteer.skills).length > 0
-    ? extractTitles(volunteer.skills)
-    : ["Cooking", "Singing"];
+  const activities =
+    extractTitles(volunteer.activities).length > 0 ? extractTitles(volunteer.activities) : ["Tutoring", "Daycare"];
+  const skills = extractTitles(volunteer.skills).length > 0 ? extractTitles(volunteer.skills) : ["Cooking", "Singing"];
 
   return (
     <Container data-testid="volunteer-profile-section-container" $isEditing={isEditing}>
@@ -271,11 +259,9 @@ export function VolunteerProfileSection({ volunteer }: Props) {
             <FieldRow>
               <FieldLabel>{t("dashboard.volunteerProfile.profileSection.skills")}</FieldLabel>
               <FieldValue>
-                <SkillsWrapper>
-                  {skills.map((skill) => (
-                    <span key={skill}>{skill}</span>
-                  ))}
-                </SkillsWrapper>
+                <TagsWrapper>
+                  <Tags tags={skills} backgroundColor="var(--color-pink-50)" />
+                </TagsWrapper>
               </FieldValue>
             </FieldRow>
           </>
