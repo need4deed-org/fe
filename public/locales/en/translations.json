@@ -491,7 +491,14 @@
         "phoneNumber": "Phone number",
         "email": "Email",
         "address": "Address",
-        "waysToContact": "Ways to contact",
+        "waysToContact": {
+          "label": "Ways to contact",
+          "whatsapp": "WhatsApp",
+          "telegram": "Telegram",
+          "mobilePhone": "Mobile Phone",
+          "email": "Email",
+          "sms": "SMS"
+        },
         "notProvided": "Not provided",
         "cancel": "Cancel",
         "saveChanges": "Save changes",
