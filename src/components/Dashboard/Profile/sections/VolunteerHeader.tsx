@@ -2,7 +2,12 @@
 import Image from "next/image";
 import styled from "styled-components";
 import { formatDateTime, getImageUrl } from "@/utils";
-import { ApiVolunteerGet } from "need4deed-sdk";
+import {
+  ApiVolunteerGet,
+  VolunteerStateEngagementType,
+  VolunteerStateMatchType,
+  VolunteerStateTypeType,
+} from "need4deed-sdk";
 import { useTranslation } from "react-i18next";
 import Divider from "../common/Divider";
 import StatusBadge from "../common/StatusBadge";
@@ -112,6 +117,10 @@ export function VolunteerHeader({ volunteer }: Props) {
 
   const initialAvatarUrl = getImageUrl(volunteer.person.avatarUrl || defaultAvatarVolunteerProfile);
 
+  const statusEngagement = volunteer.statusEngagement || VolunteerStateEngagementType.NEW;
+  const statusMatch = volunteer.statusMatch || VolunteerStateMatchType.NO_MATCHES;
+  const statusType = volunteer.statusType || VolunteerStateTypeType.REGULAR;
+
   return (
     <HeaderContainer>
       <Card>
@@ -130,7 +139,7 @@ export function VolunteerHeader({ volunteer }: Props) {
                 <StatusGroup columns={3}>
                   <Heading4>{t("dashboard.volunteerProfile.volunteerHeader.engagementStatus_title")}</Heading4>
                   <BadgeContainer>
-                    <StatusBadge status={volunteer.statusEngagement} />
+                    <StatusBadge status={statusEngagement} />
                   </BadgeContainer>
                   <StatusChange onClick={handleStatusChangeClick}>
                     {t("dashboard.volunteerProfile.volunteerHeader.change_status")}
@@ -140,15 +149,14 @@ export function VolunteerHeader({ volunteer }: Props) {
                 <StatusGroup columns={2}>
                   <Heading4>{t("dashboard.volunteerProfile.volunteerHeader.matchStatus_title")}</Heading4>
                   <BadgeContainer>
-                    <StatusBadge status={volunteer.statusMatch} />
+                    <StatusBadge status={statusMatch} />
                   </BadgeContainer>
                 </StatusGroup>
                 <Divider />
                 <StatusGroup columns={2}>
                   <Heading4>{t("dashboard.volunteerProfile.volunteerHeader.volunteerType_title")}</Heading4>
                   <BadgeContainer>
-                    {" "}
-                    <StatusBadge status={volunteer.statusType} />
+                    <StatusBadge status={statusType} />
                   </BadgeContainer>
                 </StatusGroup>
               </StatusSection>

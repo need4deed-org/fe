@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-import { ApiOptionLists, ApiVolunteerGetList, SortOrder } from "need4deed-sdk";
+import { apiPathVolunteer, cacheTTL } from "@/config/constants";
 import { useGetQuery } from "@/hooks";
-import { apiPathVolunteer } from "@/config/constants";
-import { VolunteerCardList } from "./VolunteerCardList"; // We will modify this component
+import { ApiOptionLists, ApiVolunteerGetList, SortOrder } from "need4deed-sdk";
 import { CardsFilter } from "./Filters/types";
 import { serializeFilters } from "./helpers";
+import { VolunteerCardList } from "./VolunteerCardList"; // We will modify this component
 
 const columns = 4;
 const rows = 3;
 const limit = columns * rows;
-const cacheTTL = 1000 * 60 * 5; // 5 minutes
 
 interface VolunteerListControllerProps {
   setNumOfVols: (numOfVols: number) => void;
