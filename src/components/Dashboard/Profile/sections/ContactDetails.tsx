@@ -5,8 +5,8 @@ import { Heading2 } from "@/components/styled/text";
 import { useUpdateVolunteerContact } from "@/hooks/useUpdateVolunteerContact";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ChatsCircle } from "@phosphor-icons/react";
-import { ApiVolunteerGet } from "need4deed-sdk";
-import { useEffect, useState } from "react";
+import { ApiVolunteerGet, VolunteerCommunicationType } from "need4deed-sdk";
+import { useMemo, useState } from "react";
 import { Controller, ControllerRenderProps, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
@@ -85,8 +85,7 @@ interface Props {
   volunteer: ApiVolunteerGet;
 }
 
-// TODO: use enum-values from backend / sdk when available
-const waysToContactKeys = ["whatsapp", "telegram", "mobilePhone", "email", "sms"];
+const waysToContactKeys = Object.values(VolunteerCommunicationType);
 
 export function ContactDetails({ volunteer }: Props) {
   const { t } = useTranslation();
@@ -115,25 +114,17 @@ export function ContactDetails({ volunteer }: Props) {
   } = useForm<ContactDetailsFormData>({
     resolver: zodResolver(schema),
     mode: "onChange",
-    defaultValues: {
-      phoneNumber: volunteer.person.phone || "",
-      email: volunteer.person.email || "",
-      address: formatAddress(volunteer.person.address),
-      waysToContact: ["whatsapp"],
-    },
+    defaultValues: useMemo(
+      () => ({
+        phoneNumber: volunteer.person.phone || "",
+        email: volunteer.person.email || "",
+        address: formatAddress(volunteer.person.address),
+        // TODO: Load actual waysToContact from volunteer data when available
+        waysToContact: [],
+      }),
+      [volunteer],
+    ),
   });
-
-  // Sync form when volunteer data changes (after refetch)
-  useEffect(() => {
-    reset({
-      phoneNumber: volunteer.person.phone || "",
-      email: volunteer.person.email || "",
-      address: formatAddress(volunteer.person.address),
-      // TODO: Load actual waysToContact from volunteer data when available
-      waysToContact: ["whatsapp"],
-    });
-    setIsEditing(false);
-  }, [volunteer, reset]);
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -144,15 +135,15 @@ export function ContactDetails({ volunteer }: Props) {
     setIsEditing(false);
   };
 
-  const onSubmit = (data: ContactDetailsFormData) => {
-    const addressData = parseAddress(data.address);
+  const onSubmit = (values: ContactDetailsFormData) => {
+    const addressData = parseAddress(values.address);
 
     updateContact(
       {
         person: {
           id: volunteer.person.id,
-          phone: data.phoneNumber,
-          email: data.email,
+          phone: values.phoneNumber,
+          email: values.email,
           address: {
             id: volunteer.person.address?.id,
             street: addressData.street,
@@ -162,11 +153,11 @@ export function ContactDetails({ volunteer }: Props) {
             },
           },
         },
-        waysToContact: data.waysToContact,
+        waysToContact: values.waysToContact,
       },
       {
         onSuccess: () => {
-          reset(data);
+          reset(values);
           setIsEditing(false);
         },
       },

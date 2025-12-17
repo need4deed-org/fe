@@ -496,8 +496,7 @@
           "whatsapp": "WhatsApp",
           "telegram": "Telegram",
           "mobilePhone": "Mobile Phone",
-          "email": "Email",
-          "sms": "SMS"
+          "email": "Email"
         },
         "notProvided": "Not provided",
         "cancel": "Cancel",
