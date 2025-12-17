@@ -245,7 +245,7 @@ export function ContactDetails({ volunteer }: Props) {
             <EditableField
               mode={isEditing ? "edit" : "display"}
               type="checkbox-list"
-              label={t("dashboard.volunteerProfile.contactDetails.waysToContact")}
+              label={t("dashboard.volunteerProfile.contactDetails.waysToContact.label")}
               value={field.value.map((key) => keyToLabel[key])}
               setValue={(value) => {
                 const labels = Array.isArray(value) ? value : [value];
