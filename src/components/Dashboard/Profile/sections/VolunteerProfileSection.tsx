@@ -1,9 +1,9 @@
 "use client";
 import Button from "@/components/core/button/Button/Button";
-import { EditableField } from "@/components/EditableField/EditableField";
 import Tags from "@/components/core/common/Tags";
+import { EditableField } from "@/components/EditableField/EditableField";
 import { Heading2 } from "@/components/styled/text";
-import { User, UsersFour, Backpack, Lightbulb } from "@phosphor-icons/react";
+import { User, UsersFour } from "@phosphor-icons/react";
 import { ApiVolunteerGet } from "need4deed-sdk";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -130,13 +130,42 @@ export function VolunteerProfileSection({ volunteer }: Props) {
     setIsEditing(false);
   };
 
-  // Mock data - replace with actual volunteer data when available
-  const languages = "English – native, French – fluent";
-  const availability = "Tuesdays & Thursdays, 9:00-11:00";
+  // Transform complex types to displayable formats
+  const formatLanguages = (langs: typeof volunteer.languages): string => {
+    if (!langs || langs.length === 0) return "English – native, French – fluent";
+    return langs.map((lang) => {
+      const proficiency = lang.proficiency ? ` – ${lang.proficiency}` : "";
+      return `${lang.title}${proficiency}`;
+    }).join(", ");
+  };
+
+  const formatAvailability = (avails: typeof volunteer.availability): string => {
+    if (!avails || avails.length === 0) return "Tuesdays & Thursdays, 9:00-11:00";
+    const days = avails.map((a) => a.day).join(" & ");
+    const times = avails[0]?.daytime
+      ? Array.isArray(avails[0].daytime) && avails[0].daytime.length === 2
+        ? `${avails[0].daytime[0]}-${avails[0].daytime[1]}`
+        : ""
+      : "";
+    return times ? `${days}, ${times}` : days;
+  };
+
+  const extractTitles = (items: typeof volunteer.activities): string[] => {
+    if (!items || items.length === 0) return [];
+    return items.map((item) => item.title);
+  };
+
+  // Use volunteer prop data with mock data as fallback
+  const languages = formatLanguages(volunteer.languages);
+  const availability = formatAvailability(volunteer.availability);
   const districts = "Kreuzberg, Friedrichshain";
   const volunteerType = "Accompanying";
-  const activities = ["Tutoring", "Daycare"];
-  const skills = ["Cooking", "Singing"];
+  const activities = extractTitles(volunteer.activities).length > 0
+    ? extractTitles(volunteer.activities)
+    : ["Tutoring", "Daycare"];
+  const skills = extractTitles(volunteer.skills).length > 0
+    ? extractTitles(volunteer.skills)
+    : ["Cooking", "Singing"];
 
   return (
     <Container data-testid="volunteer-profile-section-container" $isEditing={isEditing}>
