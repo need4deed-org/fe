@@ -14,6 +14,7 @@ const defaultBGColor = "var(--color-papaya)";
 const bgTextColorMap = {
   [defaultBGColor]: "var(--color-white)",
   "var(--color-white)": "var(--color-midnight)",
+  "var(--color-pink-100)": "var(--color-midnight)",
 };
 
 type TagBackgroundKeys = keyof typeof bgTextColorMap;

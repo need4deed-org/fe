@@ -504,6 +504,18 @@
           "addressRequired": "Address is required",
           "waysToContactRequired": "Please select at least one way to contact"
         }
+      },
+      "profileSection": {
+        "title": "Volunteer profile",
+        "edit": "Edit",
+        "languages": "Languages",
+        "availability": "Availability",
+        "districts": "Districts",
+        "volunteerType": "Volunteer type",
+        "activities": "Activities",
+        "skills": "Skills & experience",
+        "cancel": "Cancel",
+        "saveChanges": "Save changes"
       }
     }
   },

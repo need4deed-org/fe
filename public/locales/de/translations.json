@@ -504,6 +504,18 @@
           "addressRequired": "Adresse ist erforderlich",
           "waysToContactRequired": "Bitte wählen Sie mindestens eine Kontaktmöglichkeit aus"
         }
+      },
+      "profileSection": {
+        "title": "Freiwilligenprofil",
+        "edit": "Bearbeiten",
+        "languages": "Sprachen",
+        "availability": "Verfügbarkeit",
+        "districts": "Bezirke",
+        "volunteerType": "Freiwilligen-Typ",
+        "activities": "Aktivitäten",
+        "skills": "Fähigkeiten & Erfahrungen",
+        "cancel": "Abbrechen",
+        "saveChanges": "Änderungen speichern"
       }
     },
     "message": {
