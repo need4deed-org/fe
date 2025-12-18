@@ -127,6 +127,7 @@
           "para": "*Wenn Du Deine Sprache nicht findest, wähle bitte \"Andere\" und gib Deine bevorzugte Sprache im Kommentarfeld unten an",
           "addLanguage": "Sprache hinzufügen",
           "chooseLanguage": "Sprache auswählen",
+          "chooseLevel": "Niveau auswählen",
           "removeLanguage": "Entfernen",
           "languagesNative": {
             "header": "Muttersprache",
@@ -517,7 +518,8 @@
         "cancel": "Abbrechen",
         "saveChanges": "Änderungen speichern",
         "validation": {
-          "languagesRequired": "Bitte wähle mindestens eine Sprache aus",
+          "languageRequired": "Wähle eine Sprache aus",
+          "levelRequired": "Wähle ein Niveau aus",
           "availabilityRequired": "Bitte wähle mindestens eine Verfügbarkeit aus",
           "districtsRequired": "Bitte wähle mindestens einen Bezirk aus",
           "volunteerTypeRequired": "Freiwilligen-Typ ist erforderlich",

@@ -9,8 +9,7 @@ import {
   VolunteerFormData,
 } from "need4deed-sdk";
 
-import { Language } from "@/types";
-import { getDateLocalTooUTC, haveCommonElements, parseYesNo, range } from "@/utils";
+import { getDateLocalTooUTC, parseYesNo, range } from "@/utils";
 import { maxPLZBerlin, maxPLZGermany, minPLZBerlin, minPLZGermany } from "../../config/constants";
 import { OpportunityData, OpportunityParsedData } from "./AddOpportunity/dataStructure";
 import { VolunteerData } from "./BecomeVolunteer/dataStructure";
@@ -32,16 +31,6 @@ export function getSelectedIds(state: Selected[]): OptionId[] {
   return state.filter(({ selected }) => selected).map(({ id }) => id);
 }
 
-function mapLanguages(options: Selected[] | undefined, proficiency: LangProficiency) {
-  if (!options) return [];
-  return options
-    .filter((opt) => opt.selected)
-    .map((opt) => ({
-      title: opt.title[Language.EN] || "",
-      proficiency,
-    }));
-}
-
 export function parseFormStateDTOVolunteer(value: VolunteerData): VolunteerFormData {
   const data = {} as VolunteerFormData;
   data.opportunityId = value.opportunityId ? +value.opportunityId : undefined;
@@ -56,11 +45,19 @@ export function parseFormStateDTOVolunteer(value: VolunteerData): VolunteerFormD
   data.schedule = getSelectedTimeslots(value.availability);
 
   // Languages with proficiency levels
-  data.languages = [
-    ...mapLanguages(value.languagesNative, LangProficiency.NATIVE),
-    ...mapLanguages(value.languagesFluent, LangProficiency.FLUENT),
-    ...mapLanguages(value.languagesIntermediate, LangProficiency.INTERMEDIATE),
-  ] as ApiLanguage[];
+  const levelToProficiency: Record<string, LangProficiency> = {
+    native: LangProficiency.NATIVE,
+    fluent: LangProficiency.FLUENT,
+    intermediate: LangProficiency.INTERMEDIATE,
+  };
+
+  data.languages = value.languages
+    .filter((lang) => lang.language)
+    .map((lang) => ({
+      title: lang.language,
+      proficiency: levelToProficiency[lang.level] || LangProficiency.INTERMEDIATE,
+    })) as ApiLanguage[];
+
   data.goodConductCertificate = parseYesNo(value.certOfGoodConduct);
   data.measlesVaccination = parseYesNo(value.certMeaslesVaccination);
   data.comments = value.comments;
@@ -168,13 +165,6 @@ export function getTimeslotTitle(t: TFunction<"translation", undefined>, title: 
     return t(`form.schedule.weekends`);
   }
   return title;
-}
-
-export function areLanguagesRepeated(values: VolunteerData) {
-  const languages = ["languagesNative", "languagesFluent", "languagesIntermediate"].map((key: string) =>
-    getSelectedIds(values[key as "languagesNative" | "languagesFluent" | "languagesIntermediate"]),
-  );
-  return haveCommonElements(...languages);
 }
 
 export function isTimeSlotSelected(state: Availability) {

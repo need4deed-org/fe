@@ -163,7 +163,7 @@ export function ContactDetails({ volunteer }: Props) {
             },
           },
         },
-        waysToContact: data.waysToContact,
+        // waysToContact: data.waysToContact,
       },
       {
         onSuccess: () => {

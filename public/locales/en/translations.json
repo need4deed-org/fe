@@ -130,6 +130,7 @@
           "para": "*if you can't find your language, please select \"Other\" and indicate your preferable language in comments section bellow",
           "addLanguage": "Add language",
           "chooseLanguage": "Choose a language",
+          "chooseLevel": "Choose a level",
           "removeLanguage": "Remove",
           "languagesNative": {
             "header": "Native"
@@ -515,7 +516,16 @@
         "activities": "Activities",
         "skills": "Skills & experience",
         "cancel": "Cancel",
-        "saveChanges": "Save changes"
+        "saveChanges": "Save changes",
+        "validation": {
+          "languageRequired": "Choose a language",
+          "levelRequired": "Choose a level",
+          "availabilityRequired": "Please select your availability",
+          "districtsRequired": "Please select at least one district",
+          "volunteerTypeRequired": "Please select a volunteer type",
+          "activitiesRequired": "Please select at least one activity",
+          "skillsRequired": "Please select at least one skill"
+        }
       }
     }
   },

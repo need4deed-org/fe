@@ -1,18 +1,22 @@
 "use client";
 import Button from "@/components/core/button/Button/Button";
 import { Tags } from "@/components/core/common/Tags";
+import { ErrorMessage } from "@/components/core/common";
 import { EditableField } from "@/components/EditableField/EditableField";
 import { AvailabilityGrid } from "@/components/forms/AvailabilityGrid/AvailabilityGrid";
+import { LanguageFields } from "@/components/forms/LanguageFields";
 import { Availability } from "@/components/forms/types";
 import { getScheduleState } from "@/components/forms/utils";
 import { Heading2 } from "@/components/styled/text";
+import { LanguageLevel, LanguageObject } from "@/types";
 import { useUpdateVolunteerProfile } from "@/hooks/useUpdateVolunteerProfile";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { User, UsersFour } from "@phosphor-icons/react";
-import { Availability as ApiAvailability, ApiVolunteerGet, ByDay, Hour, Lang } from "need4deed-sdk";
+import { Availability as ApiAvailability, ApiVolunteerGet, ByDay, Hour, Lang, LangProficiency } from "need4deed-sdk";
 import { useCallback, useEffect, useState } from "react";
-import { Controller, ControllerRenderProps, useForm } from "react-hook-form";
+import { Control, Controller, ControllerRenderProps, FieldErrors, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { TFunction } from "i18next";
 import styled from "styled-components";
 
 import {
@@ -65,7 +69,7 @@ const Details = styled.div`
 const FieldRow = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
   width: 100%;
   gap: 32px;
   padding: 16px 0;
@@ -116,6 +120,10 @@ const ButtonRow = styled.div`
   align-items: center;
   gap: 24px;
   width: 100%;
+`;
+
+const LanguageFieldsWrapper = styled.div`
+  margin-bottom: 8px;
 `;
 
 interface Props {
@@ -312,29 +320,32 @@ function DisplayFields({
 }
 
 type FormFieldsProps = {
-  control: any;
-  errors: any;
-  t: (key: string) => string;
-  i18n: any;
-  volunteer: ApiVolunteerGet;
-  formatAvailability: (avails: ApiAvailability[]) => string;
+  control: Control<VolunteerProfileFormData>;
+  errors: FieldErrors<VolunteerProfileFormData>;
+  t: TFunction<"translation", undefined>;
+  i18n: { language: string };
 };
 
-function FormFields({ control, errors, t, i18n, volunteer, formatAvailability }: FormFieldsProps) {
+function FormFields({ control, errors, t, i18n }: FormFieldsProps) {
   return (
     <>
       <Controller
         name="languages"
         control={control}
         render={({ field }: { field: ControllerRenderProps<VolunteerProfileFormData, "languages"> }) => (
-          <EditableField
-            mode="edit"
-            type="text"
-            label={t("dashboard.volunteerProfile.profileSection.languages")}
-            value={field.value}
-            setValue={field.onChange}
-            errorMessage={errors.languages?.message}
-          />
+          <FieldRow>
+            <FieldLabel>{t("dashboard.volunteerProfile.profileSection.languages")}:</FieldLabel>
+            <FieldValue>
+              <LanguageFieldsWrapper>
+                <LanguageFields
+                  languages={field.value}
+                  onChange={field.onChange}
+                  t={t}
+                />
+              </LanguageFieldsWrapper>
+              {errors.languages?.message && <ErrorMessage message={errors.languages.message} />}
+            </FieldValue>
+          </FieldRow>
         )}
       />
 
@@ -342,13 +353,18 @@ function FormFields({ control, errors, t, i18n, volunteer, formatAvailability }:
         name="availability"
         control={control}
         render={({ field }: { field: ControllerRenderProps<VolunteerProfileFormData, "availability"> }) => (
-          <AvailabilityGrid
-            availability={field.value}
-            onChange={field.onChange}
-            header={t("dashboard.volunteerProfile.profileSection.availability")}
-            t={t}
-            currentLanguage={i18n.language as Lang}
-          />
+          <FieldRow>
+            <FieldLabel>{t("dashboard.volunteerProfile.profileSection.availability")}:</FieldLabel>
+            <FieldValue>
+              <AvailabilityGrid
+                availability={field.value}
+                onChange={field.onChange}
+                t={t}
+                currentLanguage={i18n.language as Lang}
+              />
+              {errors.availability?.message && <ErrorMessage message={errors.availability.message} />}
+            </FieldValue>
+          </FieldRow>
         )}
       />
 
@@ -428,8 +444,32 @@ export function VolunteerProfileSection({ volunteer }: Props) {
   const { mutate: updateProfile, isPending } = useUpdateVolunteerProfile(volunteer.id);
   const [isEditing, setIsEditing] = useState(false);
 
-  // Transform complex types to displayable formats
+  // Transform API languages to form format
   const formatLanguages = useCallback(
+    (langs: typeof volunteer.languages): LanguageObject[] => {
+      if (!langs || langs.length === 0) {
+        return [{ id: 1, language: "", level: "" }];
+      }
+
+      const proficiencyToLevel: Record<string, LanguageLevel> = {
+        native: LanguageLevel.NATIVE,
+        fluent: LanguageLevel.FLUENT,
+        intermediate: LanguageLevel.INTERMEDIATE,
+        advanced: LanguageLevel.FLUENT,
+        beginner: LanguageLevel.INTERMEDIATE,
+      };
+
+      return langs.map((lang, index) => ({
+        id: index + 1,
+        language: lang.title,
+        level: proficiencyToLevel[lang.proficiency?.toLowerCase() || "native"] || LanguageLevel.NATIVE,
+      }));
+    },
+    [volunteer],
+  );
+
+  // Format languages for display
+  const formatLanguagesForDisplay = useCallback(
     (langs: typeof volunteer.languages): string => {
       if (!langs || langs.length === 0) return "English – native, French – fluent";
       return langs
@@ -530,11 +570,22 @@ export function VolunteerProfileSection({ volunteer }: Props) {
   };
 
   const onSubmit = (data: VolunteerProfileFormData) => {
+    const levelToProficiency: Record<LanguageLevel, LangProficiency> = {
+      [LanguageLevel.NATIVE]: LangProficiency.NATIVE,
+      [LanguageLevel.FLUENT]: LangProficiency.FLUENT,
+      [LanguageLevel.INTERMEDIATE]: LangProficiency.INTERMEDIATE,
+    };
+
     updateProfile(
       {
         availability: formToApiAvailability(data.availability),
+        languages: data.languages
+          .filter((lang) => lang.language)
+          .map((lang) => ({
+            title: lang.language,
+            proficiency: levelToProficiency[lang.level],
+          })),
         // TODO: Convert other form data back to API format
-        // languages: data.languages,
         // activities: data.activities,
         // skills: data.skills,
         // locations: data.districts,
@@ -574,12 +625,10 @@ export function VolunteerProfileSection({ volunteer }: Props) {
             errors={errors}
             t={t}
             i18n={i18n}
-            volunteer={volunteer}
-            formatAvailability={formatAvailability}
           />
         ) : (
           <DisplayFields
-            languages={formatLanguages(volunteer.languages)}
+            languages={formatLanguagesForDisplay(volunteer.languages)}
             availability={formatAvailability(volunteer.availability)}
             districts="Kreuzberg, Friedrichshain"
             volunteerType="Accompanying"

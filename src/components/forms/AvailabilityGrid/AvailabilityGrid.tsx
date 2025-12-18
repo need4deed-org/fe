@@ -8,7 +8,7 @@ type Props = {
   availability: Availability;
   onChange: (newAvailability: Availability) => void;
   onFocus?: () => void;
-  header: string;
+  header?: string;
   t: TFunction<"translation", undefined>;
   currentLanguage: Lang;
 };
@@ -40,7 +40,7 @@ export function AvailabilityGrid({ availability, onChange, onFocus, header, t, c
 
   return (
     <div className={style["form-table-wrapper"]} data-testid="availability-grid">
-      <h3>{header}</h3>
+      {header && <h3>{header}</h3>}
       <div className={style["form-table"]} onFocus={onFocus}>
         {availability.map((availabilityObj, weekdayIndex) => (
           <div className={style["form-table-row"]} key={`availability-${availabilityObj.weekday}`}>
