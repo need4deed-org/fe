@@ -79,19 +79,22 @@ export function LanguageFieldRow({
         </select>
       </label>
       {showRemove ? (
-        <Button
-          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-            e.preventDefault();
-            onRemove(language.id);
-          }}
-          text={t("form.becomeVolunteer.fields.languages.removeLanguage")}
-          textFontSize="1rem"
-          backgroundcolor="transparent"
-          textColor="var(--color-aubergine)"
-          border="none"
-          height="auto"
-          className={style["remove-language-button"]}
-        />
+        <div className={style["remove-language-button"]}>
+          <Button
+            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+              e.preventDefault();
+              onRemove(language.id);
+            }}
+            text={t("form.becomeVolunteer.fields.languages.removeLanguage")}
+            textFontSize="20px"
+            textFontWeight="600"
+            backgroundcolor="transparent"
+            textColor="#4B5BD4"
+            border="none"
+            height="auto"
+            padding="0.5rem"
+          />
+        </div>
       ) : (
         <div className={style["language-button-spacer"]} />
       )}

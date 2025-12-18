@@ -28,19 +28,20 @@
 }
 
 .remove-language-button {
-  all: unset;
-  color: var(--color-aubergine);
-  font-size: 1rem;
-  cursor: pointer;
   align-self: end;
   justify-self: end;
-  text-decoration: none;
-  padding-bottom: 0.875rem;
-  min-width: 80px;
 }
 
-.remove-language-button:hover {
-  text-decoration: underline;
+.remove-language-button button {
+  letter-spacing: 0.005em;
+}
+
+.remove-language-button button:hover {
+  background: var(--color-neutral-700) !important;
+}
+
+.remove-language-button button:hover span {
+  color: var(--color-black) !important;
 }
 
 .language-button-spacer {
@@ -97,9 +98,19 @@
   background-repeat: no-repeat;
   background-position: right 1rem center;
   background-size: 24px 24px;
+  background-color: var(--color-white);
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
+  cursor: pointer;
+}
+
+.form-form-field select:hover {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M7 10l5 5 5-5' stroke='%231A2684' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 24px 24px;
+  background-color: var(--color-neutral-700);
 }
 
 .form-form-field input[type="datetime-local"] {
@@ -129,6 +140,10 @@
   line-height: 20px;
   letter-spacing: 0.005em;
   color: #1A2684;
+}
+
+.form-form-field:has(select:hover) span {
+  background: transparent;
 }
 
 .form-container p {
