@@ -491,7 +491,7 @@
         "phoneNumber": "Phone number",
         "email": "Email",
         "address": "Address",
-        "waysToContact": {
+        "preferredCommunicationType": {
           "label": "Ways to contact",
           "whatsapp": "WhatsApp",
           "telegram": "Telegram",
@@ -508,7 +508,7 @@
           "emailRequired": "Email is required",
           "emailInvalid": "Please enter a valid email address",
           "addressRequired": "Address is required",
-          "waysToContactRequired": "Please select at least one way to contact"
+          "preferredCommunicationTypeRequired": "Please select at least one way to contact"
         }
       }
     }

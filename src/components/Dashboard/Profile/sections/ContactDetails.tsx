@@ -85,21 +85,21 @@ interface Props {
   volunteer: ApiVolunteerGet;
 }
 
-const waysToContactKeys = Object.values(VolunteerCommunicationType);
+const preferredCommunicationTypeKeys = Object.values(VolunteerCommunicationType);
 
 export function ContactDetails({ volunteer }: Props) {
   const { t } = useTranslation();
   const { mutate: updateContact, isPending } = useUpdateVolunteerContact(String(volunteer.id));
   const [isEditing, setIsEditing] = useState(false);
 
-  const waysToContactOptions = waysToContactKeys.map((key) =>
-    t(`dashboard.volunteerProfile.contactDetails.waysToContact.${key}`),
+  const preferredCommunicationTypeOptions = preferredCommunicationTypeKeys.map((key) =>
+    t(`dashboard.volunteerProfile.contactDetails.preferredCommunicationType.${key}`),
   );
 
   const keyToLabel: Record<string, string> = {};
   const labelToKey: Record<string, string> = {};
-  waysToContactKeys.forEach((key, index) => {
-    const label = waysToContactOptions[index];
+  preferredCommunicationTypeKeys.forEach((key, index) => {
+    const label = preferredCommunicationTypeOptions[index];
     keyToLabel[key] = label;
     labelToKey[label] = key;
   });
@@ -108,10 +108,10 @@ export function ContactDetails({ volunteer }: Props) {
 
   const initialFormValues = useMemo(
     () => ({
-      phoneNumber: volunteer.person.phone || "",
+      phone: volunteer.person.phone || "",
       email: volunteer.person.email || "",
       address: formatAddress(volunteer.person.address),
-      waysToContact: volunteer.waysToContact || [],
+      preferredCommunicationType: volunteer.preferredCommunicationType || [],
     }),
     [volunteer],
   );
@@ -143,7 +143,7 @@ export function ContactDetails({ volunteer }: Props) {
       {
         person: {
           id: volunteer.person.id,
-          phone: values.phoneNumber,
+          phone: values.phone,
           email: values.email,
           address: {
             id: volunteer.person.address?.id,
@@ -154,7 +154,7 @@ export function ContactDetails({ volunteer }: Props) {
             },
           },
         },
-        waysToContact: values.waysToContact,
+        preferredCommunicationType: values.preferredCommunicationType,
       },
       {
         onSuccess: () => {
@@ -192,16 +192,16 @@ export function ContactDetails({ volunteer }: Props) {
 
       <Details>
         <Controller
-          name="phoneNumber"
+          name="phone"
           control={control}
-          render={({ field }: { field: ControllerRenderProps<ContactDetailsFormData, "phoneNumber"> }) => (
+          render={({ field }: { field: ControllerRenderProps<ContactDetailsFormData, "phone"> }) => (
             <EditableField
               mode={isEditing ? "edit" : "display"}
               type="text"
-              label={t("dashboard.volunteerProfile.contactDetails.phoneNumber")}
+              label={t("dashboard.volunteerProfile.contactDetails.phone")}
               value={field.value}
               setValue={field.onChange}
-              errorMessage={errors.phoneNumber?.message}
+              errorMessage={errors.phone?.message}
             />
           )}
         />
@@ -237,20 +237,24 @@ export function ContactDetails({ volunteer }: Props) {
         />
 
         <Controller
-          name="waysToContact"
+          name="preferredCommunicationType"
           control={control}
-          render={({ field }: { field: ControllerRenderProps<ContactDetailsFormData, "waysToContact"> }) => (
+          render={({
+            field,
+          }: {
+            field: ControllerRenderProps<ContactDetailsFormData, "preferredCommunicationType">;
+          }) => (
             <EditableField
               mode={isEditing ? "edit" : "display"}
               type="checkbox-list"
-              label={t("dashboard.volunteerProfile.contactDetails.waysToContact.label")}
+              label={t("dashboard.volunteerProfile.contactDetails.preferredCommunicationType.label")}
               value={field.value.map((key) => keyToLabel[key])}
               setValue={(value) => {
                 const labels = Array.isArray(value) ? value : [value];
                 field.onChange(labels.map((label) => labelToKey[label]));
               }}
-              options={waysToContactOptions}
-              errorMessage={errors.waysToContact?.message}
+              options={preferredCommunicationTypeOptions}
+              errorMessage={errors.preferredCommunicationType?.message}
             />
           )}
         />
