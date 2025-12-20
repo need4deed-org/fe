@@ -111,8 +111,7 @@ export function ContactDetails({ volunteer }: Props) {
       phoneNumber: volunteer.person.phone || "",
       email: volunteer.person.email || "",
       address: formatAddress(volunteer.person.address),
-      // TODO: Load actual waysToContact from volunteer data when available
-      waysToContact: [],
+      waysToContact: volunteer.waysToContact || [],
     }),
     [volunteer],
   );
