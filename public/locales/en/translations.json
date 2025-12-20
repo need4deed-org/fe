@@ -488,7 +488,7 @@
       "contactDetails": {
         "title": "Contact details",
         "edit": "Edit",
-        "phoneNumber": "Phone number",
+        "phone": "Phone number",
         "email": "Email",
         "address": "Address",
         "preferredCommunicationType": {
