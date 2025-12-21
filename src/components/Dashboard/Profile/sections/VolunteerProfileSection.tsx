@@ -580,7 +580,9 @@ export function VolunteerProfileSection({ volunteer }: Props) {
       {
         availability: formToApiAvailability(data.availability),
         languages: data.languages
-          .filter((lang) => lang.language)
+          .filter((lang): lang is LanguageObject & { level: LanguageLevel } =>
+            lang.language !== "" && lang.level !== ""
+          )
           .map((lang) => ({
             title: lang.language,
             proficiency: levelToProficiency[lang.level],

@@ -9,7 +9,7 @@ export const createVolunteerProfileSchema = (t: (key: string) => string) => {
         z.object({
           id: z.number(),
           language: z.string(),
-          level: z.union([z.nativeEnum(LanguageLevel), z.literal("")]),
+          level: z.union([z.enum(LanguageLevel), z.literal("")]),
         }) satisfies z.ZodType<LanguageObject>,
       )
       .min(1, t("dashboard.volunteerProfile.profileSection.validation.languageRequired"))
