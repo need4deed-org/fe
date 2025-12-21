@@ -35,7 +35,7 @@ export const SectionCard = ({ iconName, title, headerButtonName, subComponent }:
     <Card>
       <CardHeader>
         <CardHeaderInfo>
-          <IconDiv size="40px">{iconNameMap[iconName]}</IconDiv>
+          <IconDiv size="var(--volunteer-profile-section-card-icon-size)">{iconNameMap[iconName]}</IconDiv>
           <Heading2>{title}</Heading2>
         </CardHeaderInfo>
 

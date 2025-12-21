@@ -1113,6 +1113,7 @@ html {
     --volunteer-profile-section-card-border-radius: 16px;
     --volunteer-profile-section-card-padding: 24px;
     --volunteer-profile-section-card-header-gap: 24px;
+    --volunteer-profile-section-card-icon-size: 40px;
   }
 }
 
