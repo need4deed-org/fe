@@ -458,7 +458,8 @@
         "volunteerType_title": "Volunteer type",
         "volunteerType_options": {
           "accompanying": "Accompanying",
-          "other": "Other"
+          "regular": "Regular",
+          "events": "Events"
         },
         "matchStatus_title": "Match status",
         "matchStatus_options": {

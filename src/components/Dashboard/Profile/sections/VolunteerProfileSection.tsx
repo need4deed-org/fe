@@ -12,7 +12,7 @@ import { LanguageLevel, LanguageObject } from "@/types";
 import { useUpdateVolunteerProfile } from "@/hooks/useUpdateVolunteerProfile";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { User, UsersFour } from "@phosphor-icons/react";
-import { Availability as ApiAvailability, ApiVolunteerGet, ByDay, Hour, Lang, LangProficiency } from "need4deed-sdk";
+import { Availability as ApiAvailability, ApiVolunteerGet, ByDay, Hour, Lang, LangProficiency, VolunteerStateTypeType } from "need4deed-sdk";
 import { useCallback, useEffect, useState } from "react";
 import { Control, Controller, ControllerRenderProps, FieldErrors, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -389,10 +389,15 @@ function FormFields({ control, errors, t, i18n }: FormFieldsProps) {
         render={({ field }: { field: ControllerRenderProps<VolunteerProfileFormData, "volunteerType"> }) => (
           <EditableField
             mode="edit"
-            type="text"
+            type="radio-list"
             label={t("dashboard.volunteerProfile.profileSection.volunteerType")}
             value={field.value}
             setValue={field.onChange}
+            options={[
+              t(`dashboard.volunteerProfile.volunteerHeader.volunteerType_options.${VolunteerStateTypeType.ACCOMPANYING}`),
+              t(`dashboard.volunteerProfile.volunteerHeader.volunteerType_options.${VolunteerStateTypeType.REGULAR}`),
+              t(`dashboard.volunteerProfile.volunteerHeader.volunteerType_options.${VolunteerStateTypeType.EVENTS}`),
+            ]}
             errorMessage={errors.volunteerType?.message}
           />
         )}
@@ -525,6 +530,14 @@ export function VolunteerProfileSection({ volunteer }: Props) {
     [volunteer],
   );
 
+  const getVolunteerTypeLabel = useCallback(
+    (statusType: VolunteerStateTypeType | undefined): string => {
+      if (!statusType) return t("dashboard.volunteerProfile.volunteerHeader.volunteerType_options.regular");
+      return t(`dashboard.volunteerProfile.volunteerHeader.volunteerType_options.${statusType}`);
+    },
+    [t],
+  );
+
   const schema = createVolunteerProfileSchema(t);
 
   const {
@@ -539,7 +552,7 @@ export function VolunteerProfileSection({ volunteer }: Props) {
       languages: formatLanguages(volunteer.languages),
       availability: apiToFormAvailability(volunteer.availability),
       districts: "Kreuzberg, Friedrichshain",
-      volunteerType: "Accompanying",
+      volunteerType: getVolunteerTypeLabel(volunteer.statusType),
       activities:
         extractTitles(volunteer.activities).length > 0 ? extractTitles(volunteer.activities) : ["Tutoring", "Daycare"],
       skills: extractTitles(volunteer.skills).length > 0 ? extractTitles(volunteer.skills) : ["Cooking", "Singing"],
@@ -552,13 +565,13 @@ export function VolunteerProfileSection({ volunteer }: Props) {
       languages: formatLanguages(volunteer.languages),
       availability: apiToFormAvailability(volunteer.availability),
       districts: "Kreuzberg, Friedrichshain",
-      volunteerType: "Accompanying",
+      volunteerType: getVolunteerTypeLabel(volunteer.statusType),
       activities:
         extractTitles(volunteer.activities).length > 0 ? extractTitles(volunteer.activities) : ["Tutoring", "Daycare"],
       skills: extractTitles(volunteer.skills).length > 0 ? extractTitles(volunteer.skills) : ["Cooking", "Singing"],
     });
     setIsEditing(false);
-  }, [volunteer, reset, formatLanguages, extractTitles]);
+  }, [volunteer, reset, formatLanguages, extractTitles, getVolunteerTypeLabel]);
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -633,7 +646,7 @@ export function VolunteerProfileSection({ volunteer }: Props) {
             languages={formatLanguagesForDisplay(volunteer.languages)}
             availability={formatAvailability(volunteer.availability)}
             districts="Kreuzberg, Friedrichshain"
-            volunteerType="Accompanying"
+            volunteerType={getVolunteerTypeLabel(volunteer.statusType)}
             activities={
               extractTitles(volunteer.activities).length > 0
                 ? extractTitles(volunteer.activities)

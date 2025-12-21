@@ -458,7 +458,8 @@
         "volunteerType_title": "Freiwilligen-Typ",
         "volunteerType_options": {
           "accompanying": "Begleitend",
-          "other": "Andere"
+          "regular": "Regelmäßig",
+          "events": "Veranstaltungen"
         },
         "matchStatus_title": "Zuweisungs-Status",
         "matchStatus_options": {
