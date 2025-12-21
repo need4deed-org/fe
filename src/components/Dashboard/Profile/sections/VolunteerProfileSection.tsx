@@ -23,7 +23,7 @@ import {
   LangProficiency,
   VolunteerStateTypeType,
 } from "need4deed-sdk";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Control, Controller, ControllerRenderProps, FieldErrors, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
@@ -495,6 +495,7 @@ export function VolunteerProfileSection({ volunteer }: Props) {
   const activitiesAccompanyingList = useList(ListsOfOptions.ACTIVITIES_ACCOMPANYING);
   const allActivitiesList = [...activitiesList, ...activitiesAccompanyingList];
   const skillsList = useList(ListsOfOptions.SKILLS);
+  const languagesList = useList(ListsOfOptions.LANGUAGES);
 
   const locationOptions = locationsList.map((loc) =>
     typeof loc.title === "string"
@@ -538,6 +539,30 @@ export function VolunteerProfileSection({ volunteer }: Props) {
     skillLabelToId[label] = skill.id;
   });
 
+  // Create language title to ID mappings
+  const languageTitleToId = useMemo(() => {
+    const map: Record<string, string | number> = {};
+    languagesList.forEach((lang) => {
+      const titles = typeof lang.title === "string" ? [lang.title] : Object.values(lang.title);
+      titles.forEach((title) => {
+        map[title] = lang.id;
+      });
+    });
+    return map;
+  }, [languagesList]);
+
+  const languageIdToTitle = useMemo(() => {
+    const map: Record<string | number, string> = {};
+    languagesList.forEach((lang) => {
+      const title =
+        typeof lang.title === "string"
+          ? lang.title
+          : lang.title[i18n.language as Lang] || lang.title.en || lang.title.de || String(lang.id);
+      map[lang.id] = title;
+    });
+    return map;
+  }, [languagesList, i18n.language]);
+
   // Transform API languages to form format
   const formatLanguages = useCallback(
     (langs: typeof volunteer.languages): LanguageObject[] => {
@@ -553,19 +578,19 @@ export function VolunteerProfileSection({ volunteer }: Props) {
         beginner: LanguageLevel.INTERMEDIATE,
       };
 
-      return langs.map((lang, index) => ({
-        id: index + 1,
-        language: lang.title,
+      return langs.map((lang) => ({
+        id: lang.id,
+        language: String(languageTitleToId[lang.title] || ""),
         level: proficiencyToLevel[lang.proficiency?.toLowerCase() || "native"] || LanguageLevel.NATIVE,
       }));
     },
-    [volunteer],
+    [volunteer, languageTitleToId],
   );
 
   // Format languages for display
   const formatLanguagesForDisplay = useCallback(
     (langs: typeof volunteer.languages): string => {
-      if (!langs || langs.length === 0) return "English – native, French – fluent";
+      if (!langs || langs.length === 0) return "–";
       return langs
         .map((lang) => {
           const proficiency = lang.proficiency ? ` – ${lang.proficiency}` : "";
@@ -695,10 +720,23 @@ export function VolunteerProfileSection({ volunteer }: Props) {
           .filter(
             (lang): lang is LanguageObject & { level: LanguageLevel } => lang.language !== "" && lang.level !== "",
           )
-          .map((lang) => ({
-            title: lang.language,
-            proficiency: levelToProficiency[lang.level],
-          })),
+          .map((lang, index) => {
+            const languageTitle = languageIdToTitle[lang.language] || lang.language;
+
+            // Check if this language is unchanged from the original
+            const originalLang = volunteer.languages.find(
+              (orig) =>
+                orig.id === lang.id &&
+                orig.title === languageTitle &&
+                orig.proficiency?.toLowerCase() === lang.level.toLowerCase(),
+            );
+
+            return {
+              id: originalLang ? originalLang.id : index,
+              title: languageTitle,
+              proficiency: levelToProficiency[lang.level],
+            };
+          }),
         locations: data.districts
           .map((districtId) => {
             const location = locationsList.find((loc) => String(loc.id) === districtId);
