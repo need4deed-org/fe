@@ -489,10 +489,16 @@
       "contactDetails": {
         "title": "Contact details",
         "edit": "Edit",
-        "phoneNumber": "Phone number",
+        "phone": "Phone number",
         "email": "Email",
         "address": "Address",
-        "waysToContact": "Ways to contact",
+        "preferredCommunicationType": {
+          "label": "Ways to contact",
+          "whatsapp": "WhatsApp",
+          "telegram": "Telegram",
+          "mobilePhone": "Mobile Phone",
+          "email": "Email"
+        },
         "notProvided": "Not provided",
         "cancel": "Cancel",
         "saveChanges": "Save changes",
@@ -503,7 +509,7 @@
           "emailRequired": "Email is required",
           "emailInvalid": "Please enter a valid email address",
           "addressRequired": "Address is required",
-          "waysToContactRequired": "Please select at least one way to contact"
+          "preferredCommunicationTypeRequired": "Please select at least one way to contact"
         }
       },
       "profileSection": {

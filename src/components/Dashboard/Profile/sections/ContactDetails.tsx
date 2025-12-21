@@ -5,8 +5,8 @@ import { Heading2 } from "@/components/styled/text";
 import { useUpdateVolunteerContact } from "@/hooks/useUpdateVolunteerContact";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ChatsCircle } from "@phosphor-icons/react";
-import { ApiVolunteerGet } from "need4deed-sdk";
-import { useEffect, useState } from "react";
+import { ApiVolunteerGet, VolunteerCommunicationType } from "need4deed-sdk";
+import { useEffect, useMemo, useState } from "react";
 import { Controller, ControllerRenderProps, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
@@ -86,27 +86,36 @@ interface Props {
   volunteer: ApiVolunteerGet;
 }
 
-// TODO: use enum-values from backend / sdk when available
-const waysToContactKeys = ["whatsapp", "telegram", "mobilePhone", "email", "sms"];
+const preferredCommunicationTypeKeys = Object.values(VolunteerCommunicationType);
 
 export function ContactDetails({ volunteer }: Props) {
   const { t } = useTranslation();
-  const { mutate: updateContact, isPending } = useUpdateVolunteerContact(volunteer.id);
+  const { mutate: updateContact, isPending } = useUpdateVolunteerContact(String(volunteer.id));
   const [isEditing, setIsEditing] = useState(false);
 
-  const waysToContactOptions = waysToContactKeys.map((key) =>
-    t(`dashboard.volunteerProfile.contactDetails.waysToContact.${key}`),
+  const preferredCommunicationTypeOptions = preferredCommunicationTypeKeys.map((key) =>
+    t(`dashboard.volunteerProfile.contactDetails.preferredCommunicationType.${key}`),
   );
 
   const keyToLabel: Record<string, string> = {};
   const labelToKey: Record<string, string> = {};
-  waysToContactKeys.forEach((key, index) => {
-    const label = waysToContactOptions[index];
+  preferredCommunicationTypeKeys.forEach((key, index) => {
+    const label = preferredCommunicationTypeOptions[index];
     keyToLabel[key] = label;
     labelToKey[label] = key;
   });
 
   const schema = createContactDetailsSchema(t);
+
+  const initialFormValues = useMemo(
+    () => ({
+      phone: volunteer.person.phone || "",
+      email: volunteer.person.email || "",
+      address: formatAddress(volunteer.person.address),
+      preferredCommunicationType: volunteer.preferredCommunicationType || [],
+    }),
+    [volunteer],
+  );
 
   const {
     control,
@@ -116,25 +125,8 @@ export function ContactDetails({ volunteer }: Props) {
   } = useForm<ContactDetailsFormData>({
     resolver: zodResolver(schema),
     mode: "onChange",
-    defaultValues: {
-      phoneNumber: volunteer.person.phone || "",
-      email: volunteer.person.email || "",
-      address: formatAddress(volunteer.person.address),
-      waysToContact: ["whatsapp"],
-    },
+    defaultValues: initialFormValues,
   });
-
-  // Sync form when volunteer data changes (after refetch)
-  useEffect(() => {
-    reset({
-      phoneNumber: volunteer.person.phone || "",
-      email: volunteer.person.email || "",
-      address: formatAddress(volunteer.person.address),
-      // TODO: Load actual waysToContact from volunteer data when available
-      waysToContact: ["whatsapp"],
-    });
-    setIsEditing(false);
-  }, [volunteer, reset]);
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -145,15 +137,15 @@ export function ContactDetails({ volunteer }: Props) {
     setIsEditing(false);
   };
 
-  const onSubmit = (data: ContactDetailsFormData) => {
-    const addressData = parseAddress(data.address);
+  const onSubmit = (values: ContactDetailsFormData) => {
+    const addressData = parseAddress(values.address);
 
     updateContact(
       {
         person: {
           id: volunteer.person.id,
-          phone: data.phoneNumber,
-          email: data.email,
+          phone: values.phone,
+          email: values.email,
           address: {
             id: volunteer.person.address?.id,
             street: addressData.street,
@@ -163,16 +155,22 @@ export function ContactDetails({ volunteer }: Props) {
             },
           },
         },
-        // waysToContact: data.waysToContact,
+        preferredCommunicationType: values.preferredCommunicationType,
       },
       {
         onSuccess: () => {
-          reset(data);
           setIsEditing(false);
         },
       },
     );
   };
+
+  // Reset form when volunteer data changes (after successful mutation & refetch)
+  useEffect(() => {
+    if (!isEditing) {
+      reset(initialFormValues);
+    }
+  }, [initialFormValues, isEditing, reset]);
 
   return (
     <Container data-testid="contact-details-container" $isEditing={isEditing}>
@@ -195,16 +193,16 @@ export function ContactDetails({ volunteer }: Props) {
 
       <Details>
         <Controller
-          name="phoneNumber"
+          name="phone"
           control={control}
-          render={({ field }: { field: ControllerRenderProps<ContactDetailsFormData, "phoneNumber"> }) => (
+          render={({ field }: { field: ControllerRenderProps<ContactDetailsFormData, "phone"> }) => (
             <EditableField
               mode={isEditing ? "edit" : "display"}
               type="text"
-              label={t("dashboard.volunteerProfile.contactDetails.phoneNumber")}
+              label={t("dashboard.volunteerProfile.contactDetails.phone")}
               value={field.value}
               setValue={field.onChange}
-              errorMessage={errors.phoneNumber?.message}
+              errorMessage={errors.phone?.message}
             />
           )}
         />
@@ -240,20 +238,24 @@ export function ContactDetails({ volunteer }: Props) {
         />
 
         <Controller
-          name="waysToContact"
+          name="preferredCommunicationType"
           control={control}
-          render={({ field }: { field: ControllerRenderProps<ContactDetailsFormData, "waysToContact"> }) => (
+          render={({
+            field,
+          }: {
+            field: ControllerRenderProps<ContactDetailsFormData, "preferredCommunicationType">;
+          }) => (
             <EditableField
               mode={isEditing ? "edit" : "display"}
               type="checkbox-list"
-              label={t("dashboard.volunteerProfile.contactDetails.waysToContact")}
+              label={t("dashboard.volunteerProfile.contactDetails.preferredCommunicationType.label")}
               value={field.value.map((key) => keyToLabel[key])}
               setValue={(value) => {
                 const labels = Array.isArray(value) ? value : [value];
                 field.onChange(labels.map((label) => labelToKey[label]));
               }}
-              options={waysToContactOptions}
-              errorMessage={errors.waysToContact?.message}
+              options={preferredCommunicationTypeOptions}
+              errorMessage={errors.preferredCommunicationType?.message}
             />
           )}
         />

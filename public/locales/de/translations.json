@@ -489,10 +489,16 @@
       "contactDetails": {
         "title": "Kontaktdaten",
         "edit": "Bearbeiten",
-        "phoneNumber": "Telefonnummer",
+        "phone": "Telefonnummer",
         "email": "E-Mail",
         "address": "Adresse",
-        "waysToContact": "Kontaktmöglichkeiten",
+        "preferredCommunicationType": {
+          "label": "Kontaktmöglichkeiten",
+          "whatsapp": "WhatsApp",
+          "telegram": "Telegram",
+          "mobilePhone": "Mobiltelefon",
+          "email": "E-Mail"
+        },
         "notProvided": "Nicht angegeben",
         "cancel": "Abbrechen",
         "saveChanges": "Änderungen speichern",
@@ -503,7 +509,7 @@
           "emailRequired": "E-Mail ist erforderlich",
           "emailInvalid": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
           "addressRequired": "Adresse ist erforderlich",
-          "waysToContactRequired": "Bitte wählen Sie mindestens eine Kontaktmöglichkeit aus"
+          "preferredCommunicationTypeRequired": "Bitte wählen Sie mindestens eine Kontaktmöglichkeit aus"
         }
       },
       "profileSection": {
