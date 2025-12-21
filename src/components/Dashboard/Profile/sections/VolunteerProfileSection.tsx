@@ -323,9 +323,13 @@ function DisplayFields({
       <FieldRow>
         <FieldLabel>{t("dashboard.volunteerProfile.profileSection.skills")}</FieldLabel>
         <FieldValue>
-          <TagsWrapper>
-            <Tags tags={skills} backgroundColor="var(--color-pink-50)" />
-          </TagsWrapper>
+          {skills.length > 0 ? (
+            <TagsWrapper>
+              <Tags tags={skills} backgroundColor="var(--color-pink-50)" />
+            </TagsWrapper>
+          ) : (
+            "–"
+          )}
         </FieldValue>
       </FieldRow>
     </>
@@ -343,6 +347,9 @@ type FormFieldsProps = {
   activitiesOptions: string[];
   activityIdToLabel: Record<string | number, string>;
   activityLabelToId: Record<string, string | number>;
+  skillsOptions: string[];
+  skillIdToLabel: Record<string | number, string>;
+  skillLabelToId: Record<string, string | number>;
 };
 
 function FormFields({
@@ -356,6 +363,9 @@ function FormFields({
   activitiesOptions,
   activityIdToLabel,
   activityLabelToId,
+  skillsOptions,
+  skillIdToLabel,
+  skillLabelToId,
 }: FormFieldsProps) {
   return (
     <>
@@ -460,14 +470,14 @@ function FormFields({
         render={({ field }: { field: ControllerRenderProps<VolunteerProfileFormData, "skills"> }) => (
           <EditableField
             mode="edit"
-            type="text"
+            type="checkbox-list"
             label={t("dashboard.volunteerProfile.profileSection.skills")}
-            value={field.value.join(", ")}
+            value={field.value.map((id) => skillIdToLabel[id] || String(id))}
             setValue={(value) => {
-              if (typeof value === "string") {
-                field.onChange(value.split(", ").map((v: string) => v.trim()));
-              }
+              const labels = Array.isArray(value) ? value : [value];
+              field.onChange(labels.map((label) => skillLabelToId[label]));
             }}
+            options={skillsOptions}
             errorMessage={errors.skills?.message}
           />
         )}
@@ -484,6 +494,7 @@ export function VolunteerProfileSection({ volunteer }: Props) {
   const activitiesList = useList(ListsOfOptions.ACTIVITIES);
   const activitiesAccompanyingList = useList(ListsOfOptions.ACTIVITIES_ACCOMPANYING);
   const allActivitiesList = [...activitiesList, ...activitiesAccompanyingList];
+  const skillsList = useList(ListsOfOptions.SKILLS);
 
   const locationOptions = locationsList.map((loc) =>
     typeof loc.title === "string"
@@ -511,6 +522,20 @@ export function VolunteerProfileSection({ volunteer }: Props) {
     const label = activitiesOptions[index];
     activityIdToLabel[activity.id] = label;
     activityLabelToId[label] = activity.id;
+  });
+
+  const skillsOptions = skillsList.map((skill) =>
+    typeof skill.title === "string"
+      ? skill.title
+      : skill.title[i18n.language as Lang] || skill.title.en || skill.title.de || String(skill.id),
+  );
+
+  const skillIdToLabel: Record<string | number, string> = {};
+  const skillLabelToId: Record<string, string | number> = {};
+  skillsList.forEach((skill, index) => {
+    const label = skillsOptions[index];
+    skillIdToLabel[skill.id] = label;
+    skillLabelToId[label] = skill.id;
   });
 
   // Transform API languages to form format
@@ -628,7 +653,7 @@ export function VolunteerProfileSection({ volunteer }: Props) {
       volunteerType: getVolunteerTypeLabel(volunteer.statusType),
       activities:
         volunteer.activities && volunteer.activities.length > 0 ? volunteer.activities.map((act) => String(act.id)) : [],
-      skills: extractTitles(volunteer.skills).length > 0 ? extractTitles(volunteer.skills) : ["Cooking", "Singing"],
+      skills: volunteer.skills && volunteer.skills.length > 0 ? volunteer.skills.map((skill) => String(skill.id)) : [],
     },
   });
 
@@ -642,7 +667,7 @@ export function VolunteerProfileSection({ volunteer }: Props) {
       volunteerType: getVolunteerTypeLabel(volunteer.statusType),
       activities:
         volunteer.activities && volunteer.activities.length > 0 ? volunteer.activities.map((act) => String(act.id)) : [],
-      skills: extractTitles(volunteer.skills).length > 0 ? extractTitles(volunteer.skills) : ["Cooking", "Singing"],
+      skills: volunteer.skills && volunteer.skills.length > 0 ? volunteer.skills.map((skill) => String(skill.id)) : [],
     });
     setIsEditing(false);
   }, [volunteer, reset, formatLanguages, extractTitles, getVolunteerTypeLabel]);
@@ -708,8 +733,20 @@ export function VolunteerProfileSection({ volunteer }: Props) {
             };
           })
           .filter((act): act is { id: number; title: string } => act !== null),
-        // TODO: Convert other form data back to API format
-        // skills: data.skills,
+        skills: data.skills
+          .map((skillId) => {
+            const skill = skillsList.find((s) => String(s.id) === skillId);
+            if (!skill) return null;
+            const title =
+              typeof skill.title === "string"
+                ? skill.title
+                : skill.title[i18n.language as Lang] || skill.title.en || skill.title.de || String(skill.id);
+            return {
+              id: typeof skill.id === "number" ? skill.id : parseInt(String(skill.id), 10),
+              title,
+            };
+          })
+          .filter((s): s is { id: number; title: string } => s !== null),
       },
       {
         onSuccess: () => {
@@ -752,6 +789,9 @@ export function VolunteerProfileSection({ volunteer }: Props) {
             activitiesOptions={activitiesOptions}
             activityIdToLabel={activityIdToLabel}
             activityLabelToId={activityLabelToId}
+            skillsOptions={skillsOptions}
+            skillIdToLabel={skillIdToLabel}
+            skillLabelToId={skillLabelToId}
           />
         ) : (
           <DisplayFields
@@ -760,9 +800,7 @@ export function VolunteerProfileSection({ volunteer }: Props) {
             districts={formatLocationsForDisplay(volunteer.locations)}
             volunteerType={getVolunteerTypeLabel(volunteer.statusType)}
             activities={extractTitles(volunteer.activities)}
-            skills={
-              extractTitles(volunteer.skills).length > 0 ? extractTitles(volunteer.skills) : ["Cooking", "Singing"]
-            }
+            skills={extractTitles(volunteer.skills)}
             t={t}
           />
         )}
