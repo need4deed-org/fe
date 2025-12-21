@@ -310,9 +310,13 @@ function DisplayFields({
       <FieldRow>
         <FieldLabel>{t("dashboard.volunteerProfile.profileSection.activities")}</FieldLabel>
         <FieldValue>
-          <TagsWrapper>
-            <Tags tags={activities} backgroundColor="var(--color-pink-100)" />
-          </TagsWrapper>
+          {activities.length > 0 ? (
+            <TagsWrapper>
+              <Tags tags={activities} backgroundColor="var(--color-pink-100)" />
+            </TagsWrapper>
+          ) : (
+            "–"
+          )}
         </FieldValue>
       </FieldRow>
 
@@ -336,9 +340,23 @@ type FormFieldsProps = {
   locationOptions: string[];
   idToLabel: Record<string | number, string>;
   labelToId: Record<string, string | number>;
+  activitiesOptions: string[];
+  activityIdToLabel: Record<string | number, string>;
+  activityLabelToId: Record<string, string | number>;
 };
 
-function FormFields({ control, errors, t, i18n, locationOptions, idToLabel, labelToId }: FormFieldsProps) {
+function FormFields({
+  control,
+  errors,
+  t,
+  i18n,
+  locationOptions,
+  idToLabel,
+  labelToId,
+  activitiesOptions,
+  activityIdToLabel,
+  activityLabelToId,
+}: FormFieldsProps) {
   return (
     <>
       <Controller
@@ -423,14 +441,14 @@ function FormFields({ control, errors, t, i18n, locationOptions, idToLabel, labe
         render={({ field }: { field: ControllerRenderProps<VolunteerProfileFormData, "activities"> }) => (
           <EditableField
             mode="edit"
-            type="text"
+            type="checkbox-list"
             label={t("dashboard.volunteerProfile.profileSection.activities")}
-            value={field.value.join(", ")}
+            value={field.value.map((id) => activityIdToLabel[id] || String(id))}
             setValue={(value) => {
-              if (typeof value === "string") {
-                field.onChange(value.split(", ").map((v: string) => v.trim()));
-              }
+              const labels = Array.isArray(value) ? value : [value];
+              field.onChange(labels.map((label) => activityLabelToId[label]));
             }}
+            options={activitiesOptions}
             errorMessage={errors.activities?.message}
           />
         )}
@@ -463,6 +481,9 @@ export function VolunteerProfileSection({ volunteer }: Props) {
   const { mutate: updateProfile, isPending } = useUpdateVolunteerProfile(volunteer.id);
   const [isEditing, setIsEditing] = useState(false);
   const locationsList = useList(ListsOfOptions.LOCATIONS);
+  const activitiesList = useList(ListsOfOptions.ACTIVITIES);
+  const activitiesAccompanyingList = useList(ListsOfOptions.ACTIVITIES_ACCOMPANYING);
+  const allActivitiesList = [...activitiesList, ...activitiesAccompanyingList];
 
   const locationOptions = locationsList.map((loc) =>
     typeof loc.title === "string"
@@ -476,6 +497,20 @@ export function VolunteerProfileSection({ volunteer }: Props) {
     const label = locationOptions[index];
     idToLabel[loc.id] = label;
     labelToId[label] = loc.id;
+  });
+
+  const activitiesOptions = allActivitiesList.map((activity) =>
+    typeof activity.title === "string"
+      ? activity.title
+      : activity.title[i18n.language as Lang] || activity.title.en || activity.title.de || String(activity.id),
+  );
+
+  const activityIdToLabel: Record<string | number, string> = {};
+  const activityLabelToId: Record<string, string | number> = {};
+  allActivitiesList.forEach((activity, index) => {
+    const label = activitiesOptions[index];
+    activityIdToLabel[activity.id] = label;
+    activityLabelToId[label] = activity.id;
   });
 
   // Transform API languages to form format
@@ -592,7 +627,7 @@ export function VolunteerProfileSection({ volunteer }: Props) {
         volunteer.locations && volunteer.locations.length > 0 ? volunteer.locations.map((loc) => String(loc.id)) : [],
       volunteerType: getVolunteerTypeLabel(volunteer.statusType),
       activities:
-        extractTitles(volunteer.activities).length > 0 ? extractTitles(volunteer.activities) : ["Tutoring", "Daycare"],
+        volunteer.activities && volunteer.activities.length > 0 ? volunteer.activities.map((act) => String(act.id)) : [],
       skills: extractTitles(volunteer.skills).length > 0 ? extractTitles(volunteer.skills) : ["Cooking", "Singing"],
     },
   });
@@ -606,7 +641,7 @@ export function VolunteerProfileSection({ volunteer }: Props) {
         volunteer.locations && volunteer.locations.length > 0 ? volunteer.locations.map((loc) => String(loc.id)) : [],
       volunteerType: getVolunteerTypeLabel(volunteer.statusType),
       activities:
-        extractTitles(volunteer.activities).length > 0 ? extractTitles(volunteer.activities) : ["Tutoring", "Daycare"],
+        volunteer.activities && volunteer.activities.length > 0 ? volunteer.activities.map((act) => String(act.id)) : [],
       skills: extractTitles(volunteer.skills).length > 0 ? extractTitles(volunteer.skills) : ["Cooking", "Singing"],
     });
     setIsEditing(false);
@@ -656,8 +691,24 @@ export function VolunteerProfileSection({ volunteer }: Props) {
             };
           })
           .filter((loc): loc is { id: number; title: string } => loc !== null),
+        activities: data.activities
+          .map((activityId) => {
+            const activity = allActivitiesList.find((act) => String(act.id) === activityId);
+            if (!activity) return null;
+            const title =
+              typeof activity.title === "string"
+                ? activity.title
+                : activity.title[i18n.language as Lang] ||
+                  activity.title.en ||
+                  activity.title.de ||
+                  String(activity.id);
+            return {
+              id: typeof activity.id === "number" ? activity.id : parseInt(String(activity.id), 10),
+              title,
+            };
+          })
+          .filter((act): act is { id: number; title: string } => act !== null),
         // TODO: Convert other form data back to API format
-        // activities: data.activities,
         // skills: data.skills,
       },
       {
@@ -698,6 +749,9 @@ export function VolunteerProfileSection({ volunteer }: Props) {
             locationOptions={locationOptions}
             idToLabel={idToLabel}
             labelToId={labelToId}
+            activitiesOptions={activitiesOptions}
+            activityIdToLabel={activityIdToLabel}
+            activityLabelToId={activityLabelToId}
           />
         ) : (
           <DisplayFields
@@ -705,11 +759,7 @@ export function VolunteerProfileSection({ volunteer }: Props) {
             availability={formatAvailability(volunteer.availability)}
             districts={formatLocationsForDisplay(volunteer.locations)}
             volunteerType={getVolunteerTypeLabel(volunteer.statusType)}
-            activities={
-              extractTitles(volunteer.activities).length > 0
-                ? extractTitles(volunteer.activities)
-                : ["Tutoring", "Daycare"]
-            }
+            activities={extractTitles(volunteer.activities)}
             skills={
               extractTitles(volunteer.skills).length > 0 ? extractTitles(volunteer.skills) : ["Cooking", "Singing"]
             }
