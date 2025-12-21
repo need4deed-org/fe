@@ -110,7 +110,6 @@
   background-repeat: no-repeat;
   background-position: right 1rem center;
   background-size: 24px 24px;
-  background-color: var(--color-neutral-700);
 }
 
 .form-form-field input[type="datetime-local"] {
@@ -140,10 +139,6 @@
   line-height: 20px;
   letter-spacing: 0.005em;
   color: #1A2684;
-}
-
-.form-form-field:has(select:hover) span {
-  background: transparent;
 }
 
 .form-container p {
