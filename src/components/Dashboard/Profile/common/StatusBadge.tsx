@@ -30,8 +30,8 @@ const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
     return null;
   }
 
-  const bg = statusColorMap[status];
-  const IconComp = statusIconMap[status];
+  const bg = statusColorMap[status as keyof typeof statusColorMap];
+  const IconComp = statusIconMap[status as keyof typeof statusColorMap];
 
   return (
     <StatusDiv bg={bg}>

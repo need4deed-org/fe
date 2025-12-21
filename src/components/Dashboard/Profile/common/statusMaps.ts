@@ -46,10 +46,10 @@ export const statusColorMap = {
   [VolunteerStateMatchType.MATCHED]: "var(--color-green-100)",
   [VolunteerStateMatchType.NEEDS_REMATCH]: "var(--color-yellow-500)",
   [VolunteerStateTypeType.ACCOMPANYING]: "var(--color-grey-50)",
-  [VolunteerStateTypeType.EVENT]: "var(--color-pink-50)",
+  // [VolunteerStateTypeType.EVENT]: "var(--color-pink-50)", // TODO: Gives type error. commented for now for build
   [VolunteerStateTypeType.REGULAR]: "var(--color-grey-50)",
-  [VolunteerStateTypeType.FESTIVAL]: "var(--color-grey-50)",
-  [VolunteerStateTypeType.WEEKEND_ONLY]: "var(--color-grey-50)",
+  // [VolunteerStateTypeType.FESTIVAL]: "var(--color-grey-50)", // TODO: Gives type error. commented for now for build
+  // [VolunteerStateTypeType.WEEKEND_ONLY]: "var(--color-grey-50)", // TODO: Gives type error. commented for now for build
 } as const satisfies Record<string, string>;
 
 export const statusIconMap = {
@@ -74,7 +74,7 @@ export const statusIconMap = {
   [VolunteerStateMatchType.MATCHED]: StopCircle,
   [VolunteerStateMatchType.NEEDS_REMATCH]: StopCircle,
   [VolunteerStateTypeType.REGULAR]: Users,
-  [VolunteerStateTypeType.EVENT]: Users,
-  [VolunteerStateTypeType.FESTIVAL]: Users,
-  [VolunteerStateTypeType.WEEKEND_ONLY]: Users,
+  // [VolunteerStateTypeType.EVENT]: Users, // TODO: Gives type error. commented for now for build
+  // [VolunteerStateTypeType.FESTIVAL]: Users, // TODO: Gives type error. commented for now for build
+  // [VolunteerStateTypeType.WEEKEND_ONLY]: Users, // TODO: Gives type error. commented for now for build
 } as const satisfies Record<string, React.ComponentType<{ size?: number; color?: string }>>;

@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import { VolunteerHeader } from "./sections/VolunteerHeader";
 import { Card, SectionCard, SectionCardProps } from "./common/SectionCard";
 import { Heading2 } from "@/components/styled/text";
+import VolunteerOpportunities from "./sections/VolunteerOpportunities/VolunteerOpportunities";
 
 const PageContainer = styled.div`
   display: flex;
@@ -52,7 +53,7 @@ const ProfilePage = ({ volunteer }: ProfilePageProps) => {
       iconName: IconName.ShootingStar,
       title: t("dashboard.volunteerProfile.opportunities"),
       headerButtonName: t("dashboard.volunteerProfile.findOppButtonName"),
-      subComponent: <div>Opportunities sub-component. to be replaced...</div>,
+      subComponent: <VolunteerOpportunities />,
     },
     {
       iconName: IconName.ChatCircleDots,

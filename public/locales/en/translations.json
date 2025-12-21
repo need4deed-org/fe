@@ -493,6 +493,14 @@
           "uploaded": "Uploaded",
           "missing": "Missing"
         }
+      },
+      "opportunitiesSec": {
+        "tabs": {
+          "pending": "Pending",
+          "matched": "Matched",
+          "active": "Active",
+          "past": "Past"
+        }
       }
     }
   },

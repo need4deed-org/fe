@@ -493,6 +493,14 @@
           "uploaded": "Hochgeladen",
           "missing": "Fehlend"
         }
+      },
+      "opportunitiesSec": {
+        "tabs": {
+          "pending": "Ausstehend",
+          "matched": "Zugeordnet",
+          "active": "Aktiv",
+          "past": "Vergangen"
+        }
       }
     },
     "message": {

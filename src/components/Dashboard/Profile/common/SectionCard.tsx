@@ -10,6 +10,9 @@ export const Card = styled.div`
   background-color: var(--color-white);
   border-radius: var(--volunteer-profile-section-card-border-radius);
   padding: var(--volunteer-profile-section-card-padding);
+  gap: 8px;
+  display: flex;
+  flex-direction: column;
 `;
 
 const CardHeader = styled.div`
