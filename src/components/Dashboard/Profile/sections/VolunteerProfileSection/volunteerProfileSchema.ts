@@ -47,7 +47,7 @@ export const createVolunteerProfileSchema = (t: (key: string) => string) => {
       if (!Array.isArray(data)) return false;
       return data.some((day) => day.timeSlots.some((slot: { selected: boolean }) => slot.selected));
     }, t("dashboard.volunteerProfile.profileSection.validation.availabilityRequired")),
-    districts: z.string().min(1, t("dashboard.volunteerProfile.profileSection.validation.districtsRequired")),
+    districts: z.array(z.string()).min(1, t("dashboard.volunteerProfile.profileSection.validation.districtsRequired")),
     volunteerType: z.string().min(1, t("dashboard.volunteerProfile.profileSection.validation.volunteerTypeRequired")),
     activities: z
       .array(z.string())

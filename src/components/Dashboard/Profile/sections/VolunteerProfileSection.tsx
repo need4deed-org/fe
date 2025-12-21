@@ -1,22 +1,31 @@
 "use client";
 import Button from "@/components/core/button/Button/Button";
-import { Tags } from "@/components/core/common/Tags";
 import { ErrorMessage } from "@/components/core/common";
+import { Tags } from "@/components/core/common/Tags";
 import { EditableField } from "@/components/EditableField/EditableField";
 import { AvailabilityGrid } from "@/components/forms/AvailabilityGrid/AvailabilityGrid";
 import { LanguageFields } from "@/components/forms/LanguageFields";
-import { Availability } from "@/components/forms/types";
+import { Availability, ListsOfOptions } from "@/components/forms/types";
 import { getScheduleState } from "@/components/forms/utils";
 import { Heading2 } from "@/components/styled/text";
-import { LanguageLevel, LanguageObject } from "@/types";
+import useList from "@/hooks/useLists";
 import { useUpdateVolunteerProfile } from "@/hooks/useUpdateVolunteerProfile";
+import { LanguageLevel, LanguageObject } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { User, UsersFour } from "@phosphor-icons/react";
-import { Availability as ApiAvailability, ApiVolunteerGet, ByDay, Hour, Lang, LangProficiency, VolunteerStateTypeType } from "need4deed-sdk";
+import { UserCircle, UsersFour } from "@phosphor-icons/react";
+import { TFunction } from "i18next";
+import {
+  Availability as ApiAvailability,
+  ApiVolunteerGet,
+  ByDay,
+  Hour,
+  Lang,
+  LangProficiency,
+  VolunteerStateTypeType,
+} from "need4deed-sdk";
 import { useCallback, useEffect, useState } from "react";
 import { Control, Controller, ControllerRenderProps, FieldErrors, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { TFunction } from "i18next";
 import styled from "styled-components";
 
 import {
@@ -324,9 +333,12 @@ type FormFieldsProps = {
   errors: FieldErrors<VolunteerProfileFormData>;
   t: TFunction<"translation", undefined>;
   i18n: { language: string };
+  locationOptions: string[];
+  idToLabel: Record<string | number, string>;
+  labelToId: Record<string, string | number>;
 };
 
-function FormFields({ control, errors, t, i18n }: FormFieldsProps) {
+function FormFields({ control, errors, t, i18n, locationOptions, idToLabel, labelToId }: FormFieldsProps) {
   return (
     <>
       <Controller
@@ -337,11 +349,7 @@ function FormFields({ control, errors, t, i18n }: FormFieldsProps) {
             <FieldLabel>{t("dashboard.volunteerProfile.profileSection.languages")}:</FieldLabel>
             <FieldValue>
               <LanguageFieldsWrapper>
-                <LanguageFields
-                  languages={field.value}
-                  onChange={field.onChange}
-                  t={t}
-                />
+                <LanguageFields languages={field.value} onChange={field.onChange} t={t} />
               </LanguageFieldsWrapper>
               {errors.languages?.message && <ErrorMessage message={errors.languages.message} />}
             </FieldValue>
@@ -374,10 +382,14 @@ function FormFields({ control, errors, t, i18n }: FormFieldsProps) {
         render={({ field }: { field: ControllerRenderProps<VolunteerProfileFormData, "districts"> }) => (
           <EditableField
             mode="edit"
-            type="text"
+            type="checkbox-list"
             label={t("dashboard.volunteerProfile.profileSection.districts")}
-            value={field.value}
-            setValue={field.onChange}
+            value={field.value.map((id) => idToLabel[id] || String(id))}
+            setValue={(value) => {
+              const labels = Array.isArray(value) ? value : [value];
+              field.onChange(labels.map((label) => labelToId[label]));
+            }}
+            options={locationOptions}
             errorMessage={errors.districts?.message}
           />
         )}
@@ -394,7 +406,9 @@ function FormFields({ control, errors, t, i18n }: FormFieldsProps) {
             value={field.value}
             setValue={field.onChange}
             options={[
-              t(`dashboard.volunteerProfile.volunteerHeader.volunteerType_options.${VolunteerStateTypeType.ACCOMPANYING}`),
+              t(
+                `dashboard.volunteerProfile.volunteerHeader.volunteerType_options.${VolunteerStateTypeType.ACCOMPANYING}`,
+              ),
               t(`dashboard.volunteerProfile.volunteerHeader.volunteerType_options.${VolunteerStateTypeType.REGULAR}`),
               t(`dashboard.volunteerProfile.volunteerHeader.volunteerType_options.${VolunteerStateTypeType.EVENTS}`),
             ]}
@@ -448,6 +462,21 @@ export function VolunteerProfileSection({ volunteer }: Props) {
   const { t, i18n } = useTranslation();
   const { mutate: updateProfile, isPending } = useUpdateVolunteerProfile(volunteer.id);
   const [isEditing, setIsEditing] = useState(false);
+  const locationsList = useList(ListsOfOptions.LOCATIONS);
+
+  const locationOptions = locationsList.map((loc) =>
+    typeof loc.title === "string"
+      ? loc.title
+      : loc.title[i18n.language as Lang] || loc.title.en || loc.title.de || String(loc.id),
+  );
+
+  const idToLabel: Record<string | number, string> = {};
+  const labelToId: Record<string, string | number> = {};
+  locationsList.forEach((loc, index) => {
+    const label = locationOptions[index];
+    idToLabel[loc.id] = label;
+    labelToId[label] = loc.id;
+  });
 
   // Transform API languages to form format
   const formatLanguages = useCallback(
@@ -538,6 +567,14 @@ export function VolunteerProfileSection({ volunteer }: Props) {
     [t],
   );
 
+  const formatLocationsForDisplay = useCallback(
+    (locations: typeof volunteer.locations): string => {
+      if (!locations || locations.length === 0) return "–";
+      return locations.map((loc) => loc.title).join(", ");
+    },
+    [volunteer],
+  );
+
   const schema = createVolunteerProfileSchema(t);
 
   const {
@@ -551,7 +588,8 @@ export function VolunteerProfileSection({ volunteer }: Props) {
     defaultValues: {
       languages: formatLanguages(volunteer.languages),
       availability: apiToFormAvailability(volunteer.availability),
-      districts: "Kreuzberg, Friedrichshain",
+      districts:
+        volunteer.locations && volunteer.locations.length > 0 ? volunteer.locations.map((loc) => String(loc.id)) : [],
       volunteerType: getVolunteerTypeLabel(volunteer.statusType),
       activities:
         extractTitles(volunteer.activities).length > 0 ? extractTitles(volunteer.activities) : ["Tutoring", "Daycare"],
@@ -564,7 +602,8 @@ export function VolunteerProfileSection({ volunteer }: Props) {
     reset({
       languages: formatLanguages(volunteer.languages),
       availability: apiToFormAvailability(volunteer.availability),
-      districts: "Kreuzberg, Friedrichshain",
+      districts:
+        volunteer.locations && volunteer.locations.length > 0 ? volunteer.locations.map((loc) => String(loc.id)) : [],
       volunteerType: getVolunteerTypeLabel(volunteer.statusType),
       activities:
         extractTitles(volunteer.activities).length > 0 ? extractTitles(volunteer.activities) : ["Tutoring", "Daycare"],
@@ -593,17 +632,33 @@ export function VolunteerProfileSection({ volunteer }: Props) {
       {
         availability: formToApiAvailability(data.availability),
         languages: data.languages
-          .filter((lang): lang is LanguageObject & { level: LanguageLevel } =>
-            lang.language !== "" && lang.level !== ""
+          .filter(
+            (lang): lang is LanguageObject & { level: LanguageLevel } => lang.language !== "" && lang.level !== "",
           )
           .map((lang) => ({
             title: lang.language,
             proficiency: levelToProficiency[lang.level],
           })),
+        locations: data.districts
+          .map((districtId) => {
+            const location = locationsList.find((loc) => String(loc.id) === districtId);
+            if (!location) return null;
+            const title =
+              typeof location.title === "string"
+                ? location.title
+                : location.title[i18n.language as Lang] ||
+                  location.title.en ||
+                  location.title.de ||
+                  String(location.id);
+            return {
+              id: typeof location.id === "number" ? location.id : parseInt(String(location.id), 10),
+              title,
+            };
+          })
+          .filter((loc): loc is { id: number; title: string } => loc !== null),
         // TODO: Convert other form data back to API format
         // activities: data.activities,
         // skills: data.skills,
-        // locations: data.districts,
       },
       {
         onSuccess: () => {
@@ -619,7 +674,7 @@ export function VolunteerProfileSection({ volunteer }: Props) {
       <Header>
         <TitleRow>
           <IconContainer>
-            <User size={40} weight="fill" />
+            <UserCircle size={40} weight="fill" />
           </IconContainer>
           <Heading2>{t("dashboard.volunteerProfile.profileSection.title")}</Heading2>
         </TitleRow>
@@ -640,12 +695,15 @@ export function VolunteerProfileSection({ volunteer }: Props) {
             errors={errors}
             t={t}
             i18n={i18n}
+            locationOptions={locationOptions}
+            idToLabel={idToLabel}
+            labelToId={labelToId}
           />
         ) : (
           <DisplayFields
             languages={formatLanguagesForDisplay(volunteer.languages)}
             availability={formatAvailability(volunteer.availability)}
-            districts="Kreuzberg, Friedrichshain"
+            districts={formatLocationsForDisplay(volunteer.locations)}
             volunteerType={getVolunteerTypeLabel(volunteer.statusType)}
             activities={
               extractTitles(volunteer.activities).length > 0
