@@ -6,11 +6,10 @@ import { IconName } from "../types/types";
 import { Heading2 } from "@/components/styled/text";
 import { Button } from "@/components/core/button";
 
-const Card = styled.div`
+export const Card = styled.div`
   background-color: var(--color-white);
-  border-radius: 16px;
-  padding: 24px;
-  margin-bottom: 24px;
+  border-radius: var(--volunteer-profile-section-card-border-radius);
+  padding: var(--volunteer-profile-section-card-padding);
 `;
 
 const CardHeader = styled.div`
@@ -21,7 +20,7 @@ const CardHeader = styled.div`
 const CardHeaderInfo = styled.div`
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: var(--volunteer-profile-section-card-header-gap);
 `;
 
 export interface SectionCardProps extends PropsWithChildren {

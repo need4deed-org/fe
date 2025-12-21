@@ -6,31 +6,25 @@ import Link from "next/link";
 import { ApiVolunteerGet } from "need4deed-sdk";
 import { useTranslation } from "react-i18next";
 import { VolunteerHeader } from "./sections/VolunteerHeader";
-import { SectionCard, SectionCardProps } from "./common/SectionCard";
+import { Card, SectionCard, SectionCardProps } from "./common/SectionCard";
+import { Heading2 } from "@/components/styled/text";
 
 const PageContainer = styled.div`
   display: flex;
   flex-direction: column;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 22px 20px;
-  color: var(--color-midnight);
-  gap: 24px;
+  justify-content: center;
+  width: var(--volunteer-profile-container-width);
+  gap: var(--volunteer-profile-container-gap);
 `;
 
 const BackLink = styled(Link)`
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 20px;
+  gap: var(--volunteer-profile-back-link-gap);
+  font-size: var(--volunteer-profile-back-link-font-size);
   color: var(--color-midnight);
   text-decoration: none;
-  transition: color 0.2s;
-`;
-
-const Heading = styled.h1`
-  font-size: 48px;
-  font-weight: 600;
+  transition: var(--volunteer-profile-back-link-transition);
 `;
 
 interface ProfilePageProps {
@@ -87,9 +81,11 @@ const ProfilePage = ({ volunteer }: ProfilePageProps) => {
         {t("dashboard.volunteerProfile.backToDashboard")}
       </BackLink>
 
-      <Heading>{t("dashboard.volunteerProfile.volunteersProfile")}</Heading>
+      <Heading2>{t("dashboard.volunteerProfile.volunteersProfile")}</Heading2>
 
-      <VolunteerHeader volunteer={volunteer} />
+      <Card>
+        <VolunteerHeader volunteer={volunteer} />
+      </Card>
 
       {sections.map((s) => (
         <SectionCard key={s.title} {...s} />
