@@ -1,0 +1,51 @@
+import { IconDiv } from "@/components/styled/container";
+import { PropsWithChildren, ReactNode } from "react";
+import styled from "styled-components";
+import { iconNameMap } from "./icon";
+import { IconName } from "../types/types";
+import { Heading2 } from "@/components/styled/text";
+import { Button } from "@/components/core/button";
+
+const Card = styled.div`
+  background-color: var(--color-white);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+`;
+
+const CardHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const CardHeaderInfo = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 24px;
+`;
+
+export interface SectionCardProps extends PropsWithChildren {
+  iconName: IconName;
+  title: string;
+  headerButtonName?: string;
+  subComponent: ReactNode;
+}
+
+export const SectionCard = ({ iconName, title, headerButtonName, subComponent }: SectionCardProps) => {
+  return (
+    <Card>
+      <CardHeader>
+        <CardHeaderInfo>
+          <IconDiv size="40px">{iconNameMap[iconName]}</IconDiv>
+          <Heading2>{title}</Heading2>
+        </CardHeaderInfo>
+
+        {headerButtonName && (
+          <Button onClick={() => {}} text={headerButtonName} height="56px" textFontSize="20px" padding="16px 24px" />
+        )}
+      </CardHeader>
+
+      {subComponent}
+    </Card>
+  );
+};
