@@ -133,6 +133,8 @@ const DropdownList = styled.div`
   flex-direction: column;
   align-items: stretch;
   gap: 4px;
+  max-height: 240px;
+  overflow-y: auto;
 `;
 
 const OptionRow = styled.div<{ $isSelected?: boolean }>`
