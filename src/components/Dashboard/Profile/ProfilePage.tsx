@@ -38,38 +38,35 @@ const ProfilePage = ({ volunteer }: ProfilePageProps) => {
   const sections: SectionCardProps[] = [
     {
       iconName: IconName.ChatsCircle,
-      title: "Contact Details",
-      headerButtonName: "Edit",
+      title: t("dashboard.volunteerProfile.contactDetails"),
+      headerButtonName: t("dashboard.volunteerProfile.editButtonName"),
       subComponent: <div>Contact Details sub-component. to be replaced...</div>,
     },
-
     {
       iconName: IconName.ChatsCircle,
-      title: "Volunteer Profile",
-      headerButtonName: "Edit",
+      title: t("dashboard.volunteerProfile.volunteerProfile"),
+      headerButtonName: t("dashboard.volunteerProfile.editButtonName"),
       subComponent: <div>Volunteer Profile sub-component. to be replaced...</div>,
     },
-
     {
       iconName: IconName.ShootingStar,
-      title: "Opportunities",
-      headerButtonName: "Find Opportunity",
+      title: t("dashboard.volunteerProfile.opportunities"),
+      headerButtonName: t("dashboard.volunteerProfile.findOppButtonName"),
       subComponent: <div>Opportunities sub-component. to be replaced...</div>,
     },
-
     {
       iconName: IconName.ChatCircleDots,
-      title: "Coordinator Comments - 2",
+      title: t("dashboard.volunteerProfile.coordinatorComments"),
       subComponent: <div>Coordinator Comments sub-component. to be replaced...</div>,
     },
     {
       iconName: IconName.ClipboardText,
-      title: "Documents",
+      title: t("dashboard.volunteerProfile.documents"),
       subComponent: <div>Documents sub-component. to be replaced...</div>,
     },
     {
       iconName: IconName.ChartLine,
-      title: "Activity Log",
+      title: t("dashboard.volunteerProfile.activityLog"),
       subComponent: <div>Activity Log sub-component. to be replaced...</div>,
     },
   ];

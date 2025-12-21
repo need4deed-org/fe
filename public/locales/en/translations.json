@@ -429,6 +429,15 @@
     "volunteerProfile": {
       "backToDashboard": "Back to Dashboard",
       "volunteersProfile": "Volunteer’s profile",
+      "contactDetails": "Contact Details",
+      "volunteerProfile": "Volunteer Profile",
+      "opportunities": "Opportunities",
+      "coordinatorComments": "Coordinator Comments",
+      "documents": "Documents",
+      "activityLog": "Activity Log",
+      "editButtonName": "Edit",
+      "findOppButtonName": "Find Opportunity",
+
       "volunteerHeader": {
         "modalData": {
           "title": "Change engagement status",

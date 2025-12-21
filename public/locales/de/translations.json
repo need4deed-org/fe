@@ -429,6 +429,15 @@
     "volunteerProfile": {
       "backToDashboard": "Zurück zum Dashboard",
       "volunteersProfile": "Profil des Freiwilligen",
+      "contactDetails": "Kontaktdaten",
+      "volunteerProfile": "Freiwilligenprofil",
+      "opportunities": "Möglichkeiten",
+      "coordinatorComments": "Kommentare der Koordination",
+      "documents": "Dokumente",
+      "activityLog": "Aktivitätsprotokoll",
+      "editButtonName": "Bearbeiten",
+      "findOppButtonName": "Möglichkeit finden",
+
       "volunteerHeader": {
         "modalData": {
           "title": "Engagement-Status ändern",
