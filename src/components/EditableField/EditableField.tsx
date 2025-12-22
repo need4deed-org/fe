@@ -2,7 +2,6 @@ import { WarningCircle, XCircle } from "@phosphor-icons/react";
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import styled from "styled-components";
-import { isDefined } from "ts-type-safe";
 
 const EditModeWrapper = styled.div`
   width: 100%;
@@ -297,7 +296,7 @@ export const EditableField = forwardRef(function EditableField<T extends string 
                 setValue(v);
               }}
             />
-            {isDefined(localValue) && (
+            {Boolean(localValue) && (
               <ClearButton
                 type="button"
                 onClick={() => {
