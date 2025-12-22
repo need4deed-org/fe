@@ -1,5 +1,6 @@
 import { TFunction } from "i18next";
 import { useMemo } from "react";
+import { Option } from "need4deed-sdk";
 
 import { Button } from "@/components/core/button";
 import { LanguageLevel, LanguageObject } from "@/types";
@@ -11,9 +12,10 @@ type Props = {
   onChange: (languages: LanguageObject[]) => void;
   onFocus?: () => void;
   t: TFunction<"translation", undefined>;
+  availableLanguages?: Option[];
 };
 
-export function LanguageFields({ languages, onChange, onFocus, t }: Props) {
+export function LanguageFields({ languages, onChange, onFocus, t, availableLanguages }: Props) {
   const updateLanguage = (id: number, newLang: string) => {
     onChange(languages.map((item) => (item.id === id ? { ...item, language: newLang } : item)));
   };
@@ -53,6 +55,7 @@ export function LanguageFields({ languages, onChange, onFocus, t }: Props) {
           onUpdateLevel={updateLevel}
           onRemove={removeLanguage}
           t={t}
+          availableLanguages={availableLanguages}
         />
       ))}
       <Button

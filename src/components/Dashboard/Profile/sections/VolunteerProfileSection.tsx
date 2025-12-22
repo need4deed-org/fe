@@ -8,11 +8,13 @@ import { LanguageFields } from "@/components/forms/LanguageFields";
 import { Availability, ListsOfOptions } from "@/components/forms/types";
 import { getScheduleState } from "@/components/forms/utils";
 import { Heading2 } from "@/components/styled/text";
+import { apiPathOption } from "@/config/constants";
 import useList from "@/hooks/useLists";
 import { useUpdateVolunteerProfile } from "@/hooks/useUpdateVolunteerProfile";
 import { LanguageLevel, LanguageObject } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UserCircle, UsersFour } from "@phosphor-icons/react";
+import { useQuery } from "@tanstack/react-query";
 import { TFunction } from "i18next";
 import {
   Availability as ApiAvailability,
@@ -159,6 +161,28 @@ const reverseDayMap: Record<string, number> = {
   Saturday: 6,
   Sunday: 7,
 };
+
+type ApiLanguageOption = {
+  id: number;
+  title: string;
+  isoCode?: string;
+};
+
+// Hook to fetch languages from API
+function useApiLanguages(currentLanguage: Lang) {
+  return useQuery<ApiLanguageOption[]>({
+    queryKey: ["languages", currentLanguage],
+    queryFn: async () => {
+      const response = await fetch(`${apiPathOption}/language?language=${currentLanguage}`, {
+        credentials: "include",
+      });
+      if (!response.ok) throw new Error("Failed to fetch languages");
+      const data = await response.json();
+      return data.data.language || [];
+    },
+    staleTime: Infinity,
+  });
+}
 
 const hourMap: Record<number, Hour> = {
   0: Hour.H00,
@@ -350,6 +374,7 @@ type FormFieldsProps = {
   skillsOptions: string[];
   skillIdToLabel: Record<string | number, string>;
   skillLabelToId: Record<string, string | number>;
+  languagesForForm: Array<{ id: number | string; title: Record<Lang, string> }>;
 };
 
 function FormFields({
@@ -366,6 +391,7 @@ function FormFields({
   skillsOptions,
   skillIdToLabel,
   skillLabelToId,
+  languagesForForm,
 }: FormFieldsProps) {
   return (
     <>
@@ -377,7 +403,12 @@ function FormFields({
             <FieldLabel>{t("dashboard.volunteerProfile.profileSection.languages")}:</FieldLabel>
             <FieldValue>
               <LanguageFieldsWrapper>
-                <LanguageFields languages={field.value} onChange={field.onChange} t={t} />
+                <LanguageFields
+                  languages={field.value}
+                  onChange={field.onChange}
+                  t={t}
+                  availableLanguages={languagesForForm}
+                />
               </LanguageFieldsWrapper>
               {errors.languages?.message && <ErrorMessage message={errors.languages.message} />}
             </FieldValue>
@@ -495,7 +526,26 @@ export function VolunteerProfileSection({ volunteer }: Props) {
   const activitiesAccompanyingList = useList(ListsOfOptions.ACTIVITIES_ACCOMPANYING);
   const allActivitiesList = [...activitiesList, ...activitiesAccompanyingList];
   const skillsList = useList(ListsOfOptions.SKILLS);
-  const languagesList = useList(ListsOfOptions.LANGUAGES);
+
+  // Fetch languages from API
+  const { data: apiLanguages = [] } = useApiLanguages(i18n.language as Lang);
+
+  // Create a lookup map from volunteer's language titles to database IDs
+  const languageTitleToDbId = useMemo(() => {
+    const map: Record<string, number> = {};
+    apiLanguages.forEach((lang) => {
+      map[lang.title.toLowerCase()] = lang.id;
+    });
+    return map;
+  }, [apiLanguages]);
+
+  // Convert API languages to the format expected by LanguageFieldRow
+  const languagesForForm = useMemo(() => {
+    return apiLanguages.map((lang) => ({
+      id: lang.id,
+      title: { [i18n.language as Lang]: lang.title } as Record<Lang, string>,
+    }));
+  }, [apiLanguages, i18n.language]);
 
   const locationOptions = locationsList.map((loc) =>
     typeof loc.title === "string"
@@ -539,29 +589,14 @@ export function VolunteerProfileSection({ volunteer }: Props) {
     skillLabelToId[label] = skill.id;
   });
 
-  // Create language title to ID mappings
-  const languageTitleToId = useMemo(() => {
-    const map: Record<string, string | number> = {};
-    languagesList.forEach((lang) => {
-      const titles = typeof lang.title === "string" ? [lang.title] : Object.values(lang.title);
-      titles.forEach((title) => {
-        map[title] = lang.id;
-      });
-    });
-    return map;
-  }, [languagesList]);
-
+  // Create ID to title mapping for display
   const languageIdToTitle = useMemo(() => {
-    const map: Record<string | number, string> = {};
-    languagesList.forEach((lang) => {
-      const title =
-        typeof lang.title === "string"
-          ? lang.title
-          : lang.title[i18n.language as Lang] || lang.title.en || lang.title.de || String(lang.id);
-      map[lang.id] = title;
+    const map: Record<number, string> = {};
+    apiLanguages.forEach((lang) => {
+      map[lang.id] = lang.title;
     });
     return map;
-  }, [languagesList, i18n.language]);
+  }, [apiLanguages]);
 
   // Transform API languages to form format
   const formatLanguages = useCallback(
@@ -578,13 +613,19 @@ export function VolunteerProfileSection({ volunteer }: Props) {
         beginner: LanguageLevel.INTERMEDIATE,
       };
 
-      return langs.map((lang) => ({
-        id: lang.id,
-        language: String(languageTitleToId[lang.title] || ""),
-        level: proficiencyToLevel[lang.proficiency?.toLowerCase() || "native"] || LanguageLevel.NATIVE,
-      }));
+      return langs.map((lang) => {
+        // Find the database ID by matching the title (case-insensitive)
+        const dbId = languageTitleToDbId[lang.title.toLowerCase()] || lang.id;
+
+        return {
+          id: lang.id,
+          language: String(dbId),
+          level: proficiencyToLevel[lang.proficiency?.toLowerCase() || "native"] || LanguageLevel.NATIVE,
+        };
+      });
     },
-    [volunteer, languageTitleToId],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [languageTitleToDbId],
   );
 
   // Format languages for display
@@ -677,7 +718,9 @@ export function VolunteerProfileSection({ volunteer }: Props) {
         volunteer.locations && volunteer.locations.length > 0 ? volunteer.locations.map((loc) => String(loc.id)) : [],
       volunteerType: getVolunteerTypeLabel(volunteer.statusType),
       activities:
-        volunteer.activities && volunteer.activities.length > 0 ? volunteer.activities.map((act) => String(act.id)) : [],
+        volunteer.activities && volunteer.activities.length > 0
+          ? volunteer.activities.map((act) => String(act.id))
+          : [],
       skills: volunteer.skills && volunteer.skills.length > 0 ? volunteer.skills.map((skill) => String(skill.id)) : [],
     },
   });
@@ -691,7 +734,9 @@ export function VolunteerProfileSection({ volunteer }: Props) {
         volunteer.locations && volunteer.locations.length > 0 ? volunteer.locations.map((loc) => String(loc.id)) : [],
       volunteerType: getVolunteerTypeLabel(volunteer.statusType),
       activities:
-        volunteer.activities && volunteer.activities.length > 0 ? volunteer.activities.map((act) => String(act.id)) : [],
+        volunteer.activities && volunteer.activities.length > 0
+          ? volunteer.activities.map((act) => String(act.id))
+          : [],
       skills: volunteer.skills && volunteer.skills.length > 0 ? volunteer.skills.map((skill) => String(skill.id)) : [],
     });
     setIsEditing(false);
@@ -720,19 +765,12 @@ export function VolunteerProfileSection({ volunteer }: Props) {
           .filter(
             (lang): lang is LanguageObject & { level: LanguageLevel } => lang.language !== "" && lang.level !== "",
           )
-          .map((lang, index) => {
-            const languageTitle = languageIdToTitle[lang.language] || lang.language;
-
-            // Check if this language is unchanged from the original
-            const originalLang = volunteer.languages.find(
-              (orig) =>
-                orig.id === lang.id &&
-                orig.title === languageTitle &&
-                orig.proficiency?.toLowerCase() === lang.level.toLowerCase(),
-            );
+          .map((lang) => {
+            const dbId = parseInt(lang.language, 10);
+            const languageTitle = languageIdToTitle[dbId] || "";
 
             return {
-              id: originalLang ? originalLang.id : index,
+              id: dbId,
               title: languageTitle,
               proficiency: levelToProficiency[lang.level],
             };
@@ -830,6 +868,7 @@ export function VolunteerProfileSection({ volunteer }: Props) {
             skillsOptions={skillsOptions}
             skillIdToLabel={skillIdToLabel}
             skillLabelToId={skillLabelToId}
+            languagesForForm={languagesForForm}
           />
         ) : (
           <DisplayFields

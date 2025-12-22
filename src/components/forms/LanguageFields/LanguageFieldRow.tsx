@@ -1,5 +1,5 @@
 import { TFunction } from "i18next";
-import { Lang } from "need4deed-sdk";
+import { Lang, Option } from "need4deed-sdk";
 import { useTranslation } from "react-i18next";
 
 import { Button } from "@/components/core/button";
@@ -16,6 +16,7 @@ type Props = {
   onUpdateLevel: (id: number, level: LanguageLevel) => void;
   onRemove: (id: number) => void;
   t: TFunction<"translation", undefined>;
+  availableLanguages?: Option[];
 };
 
 const languageLevels: LanguageLevel[] = [LanguageLevel.NATIVE, LanguageLevel.FLUENT, LanguageLevel.INTERMEDIATE];
@@ -34,9 +35,11 @@ export function LanguageFieldRow({
   onUpdateLevel,
   onRemove,
   t,
+  availableLanguages: providedLanguages,
 }: Props) {
   const { i18n } = useTranslation();
-  const availableLanguages = useList(ListsOfOptions.LANGUAGES);
+  const fallbackLanguages = useList(ListsOfOptions.LANGUAGES);
+  const availableLanguages = providedLanguages || fallbackLanguages;
 
   return (
     <div className={style["form-languages-grid"]} data-testid={`language-row-${language.id}`}>
