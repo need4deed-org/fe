@@ -1,3 +1,4 @@
+import type React from "react";
 import {
   CalendarBlank,
   CalendarX,
@@ -46,10 +47,8 @@ export const statusColorMap = {
   [VolunteerStateMatchType.MATCHED]: "var(--color-green-100)",
   [VolunteerStateMatchType.NEEDS_REMATCH]: "var(--color-yellow-500)",
   [VolunteerStateTypeType.ACCOMPANYING]: "var(--color-grey-50)",
-  [VolunteerStateTypeType.EVENT]: "var(--color-pink-50)",
+  [VolunteerStateTypeType.EVENTS]: "var(--color-pink-50)",
   [VolunteerStateTypeType.REGULAR]: "var(--color-grey-50)",
-  [VolunteerStateTypeType.FESTIVAL]: "var(--color-grey-50)",
-  [VolunteerStateTypeType.WEEKEND_ONLY]: "var(--color-grey-50)",
 } as const satisfies Record<string, string>;
 
 export const statusIconMap = {
@@ -66,15 +65,13 @@ export const statusIconMap = {
   [VolunteerStateEngagementType.AVAILABLE]: CalendarBlank,
   [VolunteerStateEngagementType.TEMP_UNAVAILABLE]: CalendarX,
   [VolunteerStateEngagementType.UNRESPONSIVE]: PhoneX,
-  [VolunteerStateTypeType.ACCOMPANYING]: Users,
   [VolunteerStateEngagementType.INACTIVE]: StopCircle,
   [VolunteerStateEngagementType.NEW]: StopCircle,
   [VolunteerStateMatchType.NO_MATCHES]: StopCircle,
   [VolunteerStateMatchType.PENDING_MATCH]: StopCircle,
   [VolunteerStateMatchType.MATCHED]: StopCircle,
   [VolunteerStateMatchType.NEEDS_REMATCH]: StopCircle,
+  [VolunteerStateTypeType.ACCOMPANYING]: Users,
   [VolunteerStateTypeType.REGULAR]: Users,
-  [VolunteerStateTypeType.EVENT]: Users,
-  [VolunteerStateTypeType.FESTIVAL]: Users,
-  [VolunteerStateTypeType.WEEKEND_ONLY]: Users,
+  [VolunteerStateTypeType.EVENTS]: Users,
 } as const satisfies Record<string, React.ComponentType<{ size?: number; color?: string }>>;

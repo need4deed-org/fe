@@ -484,6 +484,32 @@
           "uploaded": "Uploaded",
           "missing": "Missing"
         }
+      },
+      "contactDetails": {
+        "title": "Contact details",
+        "edit": "Edit",
+        "phone": "Phone number",
+        "email": "Email",
+        "address": "Address",
+        "preferredCommunicationType": {
+          "label": "Ways to contact",
+          "whatsapp": "WhatsApp",
+          "telegram": "Telegram",
+          "mobilePhone": "Mobile Phone",
+          "email": "Email"
+        },
+        "notProvided": "Not provided",
+        "cancel": "Cancel",
+        "saveChanges": "Save changes",
+        "saveSuccess": "Contact details updated successfully",
+        "validation": {
+          "phoneRequired": "Phone number is required",
+          "phoneInvalid": "Phone number must start with + and contain only digits (no spaces)",
+          "emailRequired": "Email is required",
+          "emailInvalid": "Please enter a valid email address",
+          "addressRequired": "Address is required",
+          "preferredCommunicationTypeRequired": "Please select at least one way to contact"
+        }
       }
     }
   },

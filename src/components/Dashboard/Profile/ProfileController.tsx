@@ -5,7 +5,7 @@ import ProfilePage from "./ProfilePage";
 
 export function ProfileController({ volunteerId }: { volunteerId: string }) {
   const { data } = useGetQuery<ApiVolunteerGet>({
-    queryKey: ["volunteers", volunteerId],
+    queryKey: ["volunteer", volunteerId],
     apiPath: `${apiPathVolunteer}${volunteerId}`,
     staleTime: cacheTTL,
   });

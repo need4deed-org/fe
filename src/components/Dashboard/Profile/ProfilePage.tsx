@@ -7,6 +7,7 @@ import { ApiVolunteerGet } from "need4deed-sdk";
 // import { PROFILE_CARD_CONFIG } from "./config/ProfileSectionConfig";
 import { useTranslation } from "react-i18next";
 import { VolunteerHeader } from "./sections/VolunteerHeader";
+import { ContactDetails } from "./sections/ContactDetails";
 
 const PageContainer = styled.div`
   max-width: 1200px;
@@ -78,6 +79,8 @@ const ProfilePage = ({ volunteer }: ProfilePageProps) => {
       <Card>
         <VolunteerHeader volunteer={volunteer} />
       </Card>
+
+      <ContactDetails volunteer={volunteer} />
     </PageContainer>
   );
 };
