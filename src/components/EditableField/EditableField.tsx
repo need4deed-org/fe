@@ -1,7 +1,8 @@
+import { WarningCircle, XCircle } from "@phosphor-icons/react";
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
-import { XCircle, WarningCircle } from "@phosphor-icons/react";
 import styled from "styled-components";
+import { isDefined } from "ts-type-safe";
 
 const EditModeWrapper = styled.div`
   width: 100%;
@@ -58,8 +59,7 @@ const InputWrapper = styled.div<{ $hasError?: boolean }>`
 
     &:focus {
       outline: none;
-      border: ${(props) =>
-        props.$hasError ? "2px solid var(--color-red-600)" : "2px solid var(--color-green-200)"};
+      border: ${(props) => (props.$hasError ? "2px solid var(--color-red-600)" : "2px solid var(--color-green-200)")};
     }
   }
 `;
@@ -103,8 +103,7 @@ const DropdownButton = styled.div<{ $hasError?: boolean }>`
 
   &:focus-within {
     outline: none;
-    border: ${(props) =>
-      props.$hasError ? "2px solid var(--color-red-600)" : "2px solid var(--color-green-200)"};
+    border: ${(props) => (props.$hasError ? "2px solid var(--color-red-600)" : "2px solid var(--color-green-200)")};
   }
 `;
 
@@ -291,14 +290,14 @@ export const EditableField = forwardRef(function EditableField<T extends string 
           <InputWrapper $hasError={!!errorMessage}>
             <input
               type="text"
-              value={localValue as string}
+              value={localValue}
               onChange={(e) => {
                 const v = e.target.value as T;
                 setLocalValue(v);
                 setValue(v);
               }}
             />
-            {(localValue as string).length > 0 && (
+            {isDefined(localValue) && (
               <ClearButton
                 type="button"
                 onClick={() => {
