@@ -5,11 +5,10 @@ import { Tags } from "@/components/core/common/Tags";
 import { EditableField } from "@/components/EditableField/EditableField";
 import { AvailabilityGrid } from "@/components/forms/AvailabilityGrid/AvailabilityGrid";
 import { LanguageFields } from "@/components/forms/LanguageFields";
-import { Availability, ListsOfOptions } from "@/components/forms/types";
+import { Availability } from "@/components/forms/types";
 import { getScheduleState } from "@/components/forms/utils";
 import { Heading2 } from "@/components/styled/text";
 import { apiPathOption } from "@/config/constants";
-import useList from "@/hooks/useLists";
 import { useUpdateVolunteerProfile } from "@/hooks/useUpdateVolunteerProfile";
 import { LanguageLevel, LanguageObject } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -20,13 +19,12 @@ import {
   Availability as ApiAvailability,
   ApiVolunteerGet,
   ByDay,
-  Hour,
   Lang,
   LangProficiency,
   VolunteerStateTypeType,
 } from "need4deed-sdk";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Control, Controller, ControllerRenderProps, FieldErrors, useForm } from "react-hook-form";
+import { Control, Controller, ControllerRenderProps, FieldErrors, useForm, UseFormTrigger } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
@@ -184,32 +182,59 @@ function useApiLanguages(currentLanguage: Lang) {
   });
 }
 
-const hourMap: Record<number, Hour> = {
-  0: Hour.H00,
-  1: Hour.H01,
-  2: Hour.H02,
-  3: Hour.H03,
-  4: Hour.H04,
-  5: Hour.H05,
-  6: Hour.H06,
-  7: Hour.H07,
-  8: Hour.H08,
-  9: Hour.H09,
-  10: Hour.H10,
-  11: Hour.H11,
-  12: Hour.H12,
-  13: Hour.H13,
-  14: Hour.H14,
-  15: Hour.H15,
-  16: Hour.H16,
-  17: Hour.H17,
-  18: Hour.H18,
-  19: Hour.H19,
-  20: Hour.H20,
-  21: Hour.H21,
-  22: Hour.H22,
-  23: Hour.H23,
-  24: Hour.H24,
+// Hook to fetch activities from API
+function useApiActivities(currentLanguage: Lang) {
+  return useQuery<ApiLanguageOption[]>({
+    queryKey: ["activities", currentLanguage],
+    queryFn: async () => {
+      const response = await fetch(`${apiPathOption}/activity?language=${currentLanguage}`, {
+        credentials: "include",
+      });
+      if (!response.ok) throw new Error("Failed to fetch activities");
+      const data = await response.json();
+      return data.data.activity || [];
+    },
+    staleTime: Infinity,
+  });
+}
+
+// Hook to fetch skills from API
+function useApiSkills(currentLanguage: Lang) {
+  return useQuery<ApiLanguageOption[]>({
+    queryKey: ["skills", currentLanguage],
+    queryFn: async () => {
+      const response = await fetch(`${apiPathOption}/skill?language=${currentLanguage}`, {
+        credentials: "include",
+      });
+      if (!response.ok) throw new Error("Failed to fetch skills");
+      const data = await response.json();
+      return data.data.skill || [];
+    },
+    staleTime: Infinity,
+  });
+}
+
+// Hook to fetch districts from API
+function useApiDistricts(currentLanguage: Lang) {
+  return useQuery<ApiLanguageOption[]>({
+    queryKey: ["districts", currentLanguage],
+    queryFn: async () => {
+      const response = await fetch(`${apiPathOption}/district?language=${currentLanguage}`, {
+        credentials: "include",
+      });
+      if (!response.ok) throw new Error("Failed to fetch districts");
+      const data = await response.json();
+      return data.data.district || [];
+    },
+    staleTime: Infinity,
+  });
+}
+
+// Backend expects this format for availability (differs from SDK types)
+type BackendAvailability = {
+  id: number;
+  day: ByDay;
+  daytime: [string, string];
 };
 
 // Convert API Availability[] to form Availability
@@ -240,9 +265,9 @@ function apiToFormAvailability(apiAvailability: ApiAvailability[]): Availability
   return formAvailability;
 }
 
-// Convert form Availability to API Availability[]
-function formToApiAvailability(formAvailability: Availability): ApiAvailability[] {
-  const result: ApiAvailability[] = [];
+// Convert form Availability to backend format
+function formToApiAvailability(formAvailability: Availability): BackendAvailability[] {
+  const result: BackendAvailability[] = [];
   let idCounter = 0;
 
   formAvailability.forEach((day) => {
@@ -254,28 +279,13 @@ function formToApiAvailability(formAvailability: Availability): ApiAvailability[
         const startHourNum = parseInt(startHourStr, 10);
         const endHourNum = parseInt(endHourStr, 10);
 
-        const startHour = hourMap[startHourNum];
-        const endHour = hourMap[endHourNum];
-
-        if (!startHour || !endHour) {
-          console.warn(`Invalid hour mapping for slot ${slotId}`);
-          return;
-        }
-
-        const now = new Date();
-        const startDate = new Date(now);
-        startDate.setHours(startHourNum, 0, 0, 0);
-        const endDate = new Date(now);
-        endDate.setHours(endHourNum, 0, 0, 0);
+        const startTime = `${startHourNum}:00`;
+        const endTime = `${endHourNum}:00`;
 
         result.push({
-          id: idCounter.toString(),
-          timeslotId: idCounter,
-          description: "",
-          start: startDate,
-          end: endDate,
+          id: idCounter,
           day: dayName,
-          daytime: [startHour, endHour],
+          daytime: [startTime, endTime],
         });
         idCounter++;
       }
@@ -375,6 +385,7 @@ type FormFieldsProps = {
   skillIdToLabel: Record<string | number, string>;
   skillLabelToId: Record<string, string | number>;
   languagesForForm: Array<{ id: number | string; title: Record<Lang, string> }>;
+  trigger: UseFormTrigger<VolunteerProfileFormData>;
 };
 
 function FormFields({
@@ -392,6 +403,7 @@ function FormFields({
   skillIdToLabel,
   skillLabelToId,
   languagesForForm,
+  trigger,
 }: FormFieldsProps) {
   return (
     <>
@@ -447,6 +459,7 @@ function FormFields({
             setValue={(value) => {
               const labels = Array.isArray(value) ? value : [value];
               field.onChange(labels.map((label) => labelToId[label]));
+              trigger("districts");
             }}
             options={locationOptions}
             errorMessage={errors.districts?.message}
@@ -488,6 +501,7 @@ function FormFields({
             setValue={(value) => {
               const labels = Array.isArray(value) ? value : [value];
               field.onChange(labels.map((label) => activityLabelToId[label]));
+              trigger("activities");
             }}
             options={activitiesOptions}
             errorMessage={errors.activities?.message}
@@ -507,6 +521,7 @@ function FormFields({
             setValue={(value) => {
               const labels = Array.isArray(value) ? value : [value];
               field.onChange(labels.map((label) => skillLabelToId[label]));
+              trigger("skills");
             }}
             options={skillsOptions}
             errorMessage={errors.skills?.message}
@@ -521,14 +536,12 @@ export function VolunteerProfileSection({ volunteer }: Props) {
   const { t, i18n } = useTranslation();
   const { mutate: updateProfile, isPending } = useUpdateVolunteerProfile(volunteer.id);
   const [isEditing, setIsEditing] = useState(false);
-  const locationsList = useList(ListsOfOptions.LOCATIONS);
-  const activitiesList = useList(ListsOfOptions.ACTIVITIES);
-  const activitiesAccompanyingList = useList(ListsOfOptions.ACTIVITIES_ACCOMPANYING);
-  const allActivitiesList = [...activitiesList, ...activitiesAccompanyingList];
-  const skillsList = useList(ListsOfOptions.SKILLS);
 
-  // Fetch languages from API
+  // Fetch options from API
   const { data: apiLanguages = [] } = useApiLanguages(i18n.language as Lang);
+  const { data: apiActivities = [] } = useApiActivities(i18n.language as Lang);
+  const { data: apiSkills = [] } = useApiSkills(i18n.language as Lang);
+  const { data: apiDistricts = [] } = useApiDistricts(i18n.language as Lang);
 
   // Create a lookup map from volunteer's language titles to database IDs
   const languageTitleToDbId = useMemo(() => {
@@ -539,6 +552,57 @@ export function VolunteerProfileSection({ volunteer }: Props) {
     return map;
   }, [apiLanguages]);
 
+  // Create activity title to ID and ID to title mappings
+  const activityTitleToDbId = useMemo(() => {
+    const map: Record<string, number> = {};
+    apiActivities.forEach((act) => {
+      map[act.title.toLowerCase()] = act.id;
+    });
+    return map;
+  }, [apiActivities]);
+
+  const activityIdToTitle = useMemo(() => {
+    const map: Record<number, string> = {};
+    apiActivities.forEach((act) => {
+      map[act.id] = act.title;
+    });
+    return map;
+  }, [apiActivities]);
+
+  // Create skill title to ID and ID to title mappings
+  const skillTitleToDbId = useMemo(() => {
+    const map: Record<string, number> = {};
+    apiSkills.forEach((skill) => {
+      map[skill.title.toLowerCase()] = skill.id;
+    });
+    return map;
+  }, [apiSkills]);
+
+  const skillIdToTitle = useMemo(() => {
+    const map: Record<number, string> = {};
+    apiSkills.forEach((skill) => {
+      map[skill.id] = skill.title;
+    });
+    return map;
+  }, [apiSkills]);
+
+  // Create district title to ID and ID to title mappings
+  const districtTitleToDbId = useMemo(() => {
+    const map: Record<string, number> = {};
+    apiDistricts.forEach((district) => {
+      map[district.title.toLowerCase()] = district.id;
+    });
+    return map;
+  }, [apiDistricts]);
+
+  const districtIdToTitle = useMemo(() => {
+    const map: Record<number, string> = {};
+    apiDistricts.forEach((district) => {
+      map[district.id] = district.title;
+    });
+    return map;
+  }, [apiDistricts]);
+
   // Convert API languages to the format expected by LanguageFieldRow
   const languagesForForm = useMemo(() => {
     return apiLanguages.map((lang) => ({
@@ -547,46 +611,31 @@ export function VolunteerProfileSection({ volunteer }: Props) {
     }));
   }, [apiLanguages, i18n.language]);
 
-  const locationOptions = locationsList.map((loc) =>
-    typeof loc.title === "string"
-      ? loc.title
-      : loc.title[i18n.language as Lang] || loc.title.en || loc.title.de || String(loc.id),
-  );
+  const locationOptions = apiDistricts.map((district) => district.title);
 
   const idToLabel: Record<string | number, string> = {};
   const labelToId: Record<string, string | number> = {};
-  locationsList.forEach((loc, index) => {
-    const label = locationOptions[index];
-    idToLabel[loc.id] = label;
-    labelToId[label] = loc.id;
+  apiDistricts.forEach((district) => {
+    idToLabel[district.id] = district.title;
+    labelToId[district.title] = district.id;
   });
 
-  const activitiesOptions = allActivitiesList.map((activity) =>
-    typeof activity.title === "string"
-      ? activity.title
-      : activity.title[i18n.language as Lang] || activity.title.en || activity.title.de || String(activity.id),
-  );
+  const activitiesOptions = apiActivities.map((activity) => activity.title);
 
   const activityIdToLabel: Record<string | number, string> = {};
   const activityLabelToId: Record<string, string | number> = {};
-  allActivitiesList.forEach((activity, index) => {
-    const label = activitiesOptions[index];
-    activityIdToLabel[activity.id] = label;
-    activityLabelToId[label] = activity.id;
+  apiActivities.forEach((activity) => {
+    activityIdToLabel[activity.id] = activity.title;
+    activityLabelToId[activity.title] = activity.id;
   });
 
-  const skillsOptions = skillsList.map((skill) =>
-    typeof skill.title === "string"
-      ? skill.title
-      : skill.title[i18n.language as Lang] || skill.title.en || skill.title.de || String(skill.id),
-  );
+  const skillsOptions = apiSkills.map((skill) => skill.title);
 
   const skillIdToLabel: Record<string | number, string> = {};
   const skillLabelToId: Record<string, string | number> = {};
-  skillsList.forEach((skill, index) => {
-    const label = skillsOptions[index];
-    skillIdToLabel[skill.id] = label;
-    skillLabelToId[label] = skill.id;
+  apiSkills.forEach((skill) => {
+    skillIdToLabel[skill.id] = skill.title;
+    skillLabelToId[skill.title] = skill.id;
   });
 
   // Create ID to title mapping for display
@@ -626,6 +675,51 @@ export function VolunteerProfileSection({ volunteer }: Props) {
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [languageTitleToDbId],
+  );
+
+  // Format activities for form - convert from API response to form IDs
+  const formatActivities = useCallback(
+    (activities: typeof volunteer.activities): string[] => {
+      if (!activities || activities.length === 0) return [];
+      return activities
+        .map((act) => {
+          // Try to match by title first, fallback to direct ID
+          const dbId = activityTitleToDbId[act.title.toLowerCase()] || act.id;
+          return String(dbId);
+        })
+        .filter((id) => id && id !== "0");
+    },
+    [activityTitleToDbId, volunteer],
+  );
+
+  // Format skills for form - convert from API response to form IDs
+  const formatSkills = useCallback(
+    (skills: typeof volunteer.skills): string[] => {
+      if (!skills || skills.length === 0) return [];
+      return skills
+        .map((skill) => {
+          // Try to match by title first, fallback to direct ID
+          const dbId = skillTitleToDbId[skill.title.toLowerCase()] || skill.id;
+          return String(dbId);
+        })
+        .filter((id) => id && id !== "0");
+    },
+    [skillTitleToDbId, volunteer],
+  );
+
+  // Format districts for form - convert from API response to form IDs
+  const formatDistricts = useCallback(
+    (locations: typeof volunteer.locations): string[] => {
+      if (!locations || locations.length === 0) return [];
+      return locations
+        .map((loc) => {
+          // Try to match by title first, fallback to direct ID
+          const dbId = districtTitleToDbId[loc.title.toLowerCase()] || loc.id;
+          return String(dbId);
+        })
+        .filter((id) => id && id !== "0");
+    },
+    [districtTitleToDbId, volunteer],
   );
 
   // Format languages for display
@@ -677,13 +771,10 @@ export function VolunteerProfileSection({ volunteer }: Props) {
     [volunteer],
   );
 
-  const extractTitles = useCallback(
-    (items: typeof volunteer.activities): string[] => {
-      if (!items || items.length === 0) return [];
-      return items.map((item) => item.title);
-    },
-    [volunteer],
-  );
+  const extractTitles = useCallback((items: { title: string }[]): string[] => {
+    if (!items || items.length === 0) return [];
+    return items.map((item) => item.title);
+  }, []);
 
   const getVolunteerTypeLabel = useCallback(
     (statusType: VolunteerStateTypeType | undefined): string => {
@@ -707,40 +798,58 @@ export function VolunteerProfileSection({ volunteer }: Props) {
     control,
     handleSubmit,
     reset,
-    formState: { errors, isValid },
+    trigger,
+    formState: { errors, isValid, isDirty },
   } = useForm<VolunteerProfileFormData>({
     resolver: zodResolver(schema),
     mode: "onChange",
     defaultValues: {
       languages: formatLanguages(volunteer.languages),
       availability: apiToFormAvailability(volunteer.availability),
-      districts:
-        volunteer.locations && volunteer.locations.length > 0 ? volunteer.locations.map((loc) => String(loc.id)) : [],
+      districts: formatDistricts(volunteer.locations),
       volunteerType: getVolunteerTypeLabel(volunteer.statusType),
-      activities:
-        volunteer.activities && volunteer.activities.length > 0
-          ? volunteer.activities.map((act) => String(act.id))
-          : [],
-      skills: volunteer.skills && volunteer.skills.length > 0 ? volunteer.skills.map((skill) => String(skill.id)) : [],
+      activities: formatActivities(volunteer.activities),
+      skills: formatSkills(volunteer.skills),
     },
   });
 
-  // Sync form when volunteer data changes (after refetch)
+  // Sync form when volunteer data changes (after refetch) OR when API data loads
   useEffect(() => {
+    // Wait for API data to load before resetting form
+    if (
+      apiLanguages.length === 0 ||
+      apiActivities.length === 0 ||
+      apiSkills.length === 0 ||
+      apiDistricts.length === 0
+    ) {
+      return;
+    }
+
     reset({
       languages: formatLanguages(volunteer.languages),
       availability: apiToFormAvailability(volunteer.availability),
-      districts:
-        volunteer.locations && volunteer.locations.length > 0 ? volunteer.locations.map((loc) => String(loc.id)) : [],
+      districts: formatDistricts(volunteer.locations),
       volunteerType: getVolunteerTypeLabel(volunteer.statusType),
-      activities:
-        volunteer.activities && volunteer.activities.length > 0
-          ? volunteer.activities.map((act) => String(act.id))
-          : [],
-      skills: volunteer.skills && volunteer.skills.length > 0 ? volunteer.skills.map((skill) => String(skill.id)) : [],
+      activities: formatActivities(volunteer.activities),
+      skills: formatSkills(volunteer.skills),
     });
+    // Trigger validation after reset to update isValid state
+    trigger();
     setIsEditing(false);
-  }, [volunteer, reset, formatLanguages, extractTitles, getVolunteerTypeLabel]);
+  }, [
+    volunteer,
+    reset,
+    trigger,
+    formatLanguages,
+    formatActivities,
+    formatSkills,
+    formatDistricts,
+    getVolunteerTypeLabel,
+    apiLanguages,
+    apiActivities,
+    apiSkills,
+    apiDistricts,
+  ]);
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -752,6 +861,8 @@ export function VolunteerProfileSection({ volunteer }: Props) {
   };
 
   const onSubmit = (data: VolunteerProfileFormData) => {
+    console.log("onSubmit", data);
+    console.log(schema.parse(data));
     const levelToProficiency: Record<LanguageLevel, LangProficiency> = {
       [LanguageLevel.NATIVE]: LangProficiency.NATIVE,
       [LanguageLevel.FLUENT]: LangProficiency.FLUENT,
@@ -760,7 +871,8 @@ export function VolunteerProfileSection({ volunteer }: Props) {
 
     updateProfile(
       {
-        availability: formToApiAvailability(data.availability),
+        // Cast to any - SDK types expect Hour enums but backend actually expects time strings
+        availability: formToApiAvailability(data.availability) as any,
         languages: data.languages
           .filter(
             (lang): lang is LanguageObject & { level: LanguageLevel } => lang.language !== "" && lang.level !== "",
@@ -777,52 +889,37 @@ export function VolunteerProfileSection({ volunteer }: Props) {
           }),
         locations: data.districts
           .map((districtId) => {
-            const location = locationsList.find((loc) => String(loc.id) === districtId);
-            if (!location) return null;
-            const title =
-              typeof location.title === "string"
-                ? location.title
-                : location.title[i18n.language as Lang] ||
-                  location.title.en ||
-                  location.title.de ||
-                  String(location.id);
+            const dbId = parseInt(districtId, 10);
+            const districtTitle = districtIdToTitle[dbId] || "";
+
             return {
-              id: typeof location.id === "number" ? location.id : parseInt(String(location.id), 10),
-              title,
+              id: dbId,
+              title: districtTitle,
             };
           })
-          .filter((loc): loc is { id: number; title: string } => loc !== null),
+          .filter((loc) => !isNaN(loc.id) && loc.id > 0),
         activities: data.activities
           .map((activityId) => {
-            const activity = allActivitiesList.find((act) => String(act.id) === activityId);
-            if (!activity) return null;
-            const title =
-              typeof activity.title === "string"
-                ? activity.title
-                : activity.title[i18n.language as Lang] ||
-                  activity.title.en ||
-                  activity.title.de ||
-                  String(activity.id);
+            const dbId = parseInt(activityId, 10);
+            const activityTitle = activityIdToTitle[dbId] || "";
+
             return {
-              id: typeof activity.id === "number" ? activity.id : parseInt(String(activity.id), 10),
-              title,
+              id: dbId,
+              title: activityTitle,
             };
           })
-          .filter((act): act is { id: number; title: string } => act !== null),
+          .filter((act) => !isNaN(act.id) && act.id > 0),
         skills: data.skills
           .map((skillId) => {
-            const skill = skillsList.find((s) => String(s.id) === skillId);
-            if (!skill) return null;
-            const title =
-              typeof skill.title === "string"
-                ? skill.title
-                : skill.title[i18n.language as Lang] || skill.title.en || skill.title.de || String(skill.id);
+            const dbId = parseInt(skillId, 10);
+            const skillTitle = skillIdToTitle[dbId] || "";
+
             return {
-              id: typeof skill.id === "number" ? skill.id : parseInt(String(skill.id), 10),
-              title,
+              id: dbId,
+              title: skillTitle,
             };
           })
-          .filter((s): s is { id: number; title: string } => s !== null),
+          .filter((s) => !isNaN(s.id) && s.id > 0),
       },
       {
         onSuccess: () => {
@@ -832,6 +929,9 @@ export function VolunteerProfileSection({ volunteer }: Props) {
       },
     );
   };
+
+  const isApiDataLoading =
+    apiLanguages.length === 0 || apiActivities.length === 0 || apiSkills.length === 0 || apiDistricts.length === 0;
 
   return (
     <Container data-testid="volunteer-profile-section-container" $isEditing={isEditing}>
@@ -848,6 +948,7 @@ export function VolunteerProfileSection({ volunteer }: Props) {
             onClick={handleEditClick}
             width="auto"
             padding="16px 24px"
+            disabled={isApiDataLoading}
           />
         )}
       </Header>
@@ -869,6 +970,7 @@ export function VolunteerProfileSection({ volunteer }: Props) {
             skillIdToLabel={skillIdToLabel}
             skillLabelToId={skillLabelToId}
             languagesForForm={languagesForForm}
+            trigger={trigger}
           />
         ) : (
           <DisplayFields
@@ -899,7 +1001,7 @@ export function VolunteerProfileSection({ volunteer }: Props) {
             onClick={handleSubmit(onSubmit)}
             width="auto"
             padding="16px 24px"
-            disabled={!isValid || isPending}
+            disabled={!isDirty || !isValid || isPending}
           />
         </ButtonRow>
       )}
