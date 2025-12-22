@@ -3,10 +3,10 @@ import { Lang } from "need4deed-sdk";
 import { useTranslation } from "react-i18next";
 
 import { Button } from "@/components/core/button";
-import { LanguageLevel, LanguageObject } from "@/types";
 import useList from "@/hooks/useLists";
-import { ListsOfOptions } from "../types";
+import { LanguageLevel, LanguageObject } from "@/types";
 import style from "../index.module.css";
+import { ListsOfOptions } from "../types";
 
 type Props = {
   language: LanguageObject;
@@ -53,8 +53,8 @@ export function LanguageFieldRow({
           {availableLanguages.map((item) => (
             <option
               key={item.id}
-              value={item.id}
-              disabled={disabledLanguages.includes(item.id) && language.language !== item.id}
+              value={String(item.id)}
+              disabled={disabledLanguages.includes(String(item.id)) && language.language !== String(item.id)}
             >
               {item.title[i18n.language as Lang]}
             </option>
