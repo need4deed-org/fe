@@ -132,6 +132,8 @@
           "chooseLanguage": "Choose a language",
           "chooseLevel": "Choose a level",
           "removeLanguage": "Remove",
+          "language": "Language",
+          "level": "Level",
           "languagesNative": {
             "header": "Native"
           },

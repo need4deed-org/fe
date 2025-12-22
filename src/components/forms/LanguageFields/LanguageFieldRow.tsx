@@ -41,7 +41,7 @@ export function LanguageFieldRow({
   return (
     <div className={style["form-languages-grid"]} data-testid={`language-row-${language.id}`}>
       <label className={style["form-form-field"]}>
-        <span>Language</span>
+        <span>{t("form.becomeVolunteer.fields.languages.language")}</span>
         <select
           name={`language-${language.id}`}
           value={language.language}
@@ -62,7 +62,7 @@ export function LanguageFieldRow({
         </select>
       </label>
       <label className={style["form-form-field"]}>
-        <span>Level</span>
+        <span>{t("form.becomeVolunteer.fields.languages.level")}</span>
         <select
           name={`level-${language.id}`}
           value={language.level}

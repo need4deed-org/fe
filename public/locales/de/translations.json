@@ -129,6 +129,8 @@
           "chooseLanguage": "Sprache auswählen",
           "chooseLevel": "Niveau auswählen",
           "removeLanguage": "Entfernen",
+          "language": "Sprache",
+          "level": "Niveau",
           "languagesNative": {
             "header": "Muttersprache",
             "error": ""
