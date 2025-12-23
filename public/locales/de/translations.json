@@ -502,9 +502,19 @@
         }
       }
     },
-    "message": {
-      "successful": "Erfolgreich",
-      "errorGeneric": "Etwas ist schief gelaufen!"
+
+    "opportunities": {
+      "accompanyingTranslation": {
+        "en": "Deutsch, Englisch",
+        "de": "Deutsch",
+        "no": "Sprachmittlung ist nicht nötig"
+      },
+      "defaultMainCommunication": "Englisch, Deutsch",
+      "otherCategory": "Allgemeines Engagement"
     }
+  },
+  "message": {
+    "successful": "Erfolgreich",
+    "errorGeneric": "Etwas ist schief gelaufen!"
   }
 }

@@ -501,6 +501,15 @@
           "past": "Past"
         }
       }
+    },
+    "opportunities": {
+      "accompanyingTranslation": {
+        "en": "German, English",
+        "de": "German",
+        "no": "No Translation needed"
+      },
+      "defaultMainCommunication": "English, German",
+      "otherCategory": "General Volunteering"
     }
   },
   "message": {
