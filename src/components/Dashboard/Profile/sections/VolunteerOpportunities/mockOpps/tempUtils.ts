@@ -132,5 +132,3 @@ export const formatAccompanyingDate = (date: Date, lang: Lang): string => {
 
   return `${formattedDatePart}, ${formattedTimePart}`;
 };
-
-export default {};
