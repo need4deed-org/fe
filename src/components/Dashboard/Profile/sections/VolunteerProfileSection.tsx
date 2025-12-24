@@ -19,10 +19,10 @@ import {
   Availability as ApiAvailability,
   ApiVolunteerGet,
   ByDay,
+  Hour,
   Lang,
   LangProficiency,
   VolunteerStateTypeType,
-  Hour,
 } from "need4deed-sdk";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Control, Controller, ControllerRenderProps, FieldErrors, useForm, UseFormTrigger } from "react-hook-form";
@@ -793,17 +793,7 @@ export function VolunteerProfileSection({ volunteer }: Props) {
     (statusType: VolunteerStateTypeType | undefined): string => {
       if (!statusType) return "";
 
-      // Migrate old enum values to new ones
-      const legacyMapping: Record<string, VolunteerStateTypeType> = {
-        regular: VolunteerStateTypeType.GENERAL,
-        events: VolunteerStateTypeType.EVENT,
-      };
-      const migratedType = legacyMapping[statusType] || statusType;
-
-      const validTypes = Object.values(VolunteerStateTypeType);
-      if (!validTypes.includes(migratedType)) return "";
-
-      return t(`dashboard.volunteerProfile.volunteerHeader.volunteerType_options.${migratedType}`);
+      return t(`dashboard.volunteerProfile.volunteerHeader.volunteerType_options.${statusType}`);
     },
     [t],
   );
@@ -887,13 +877,10 @@ export function VolunteerProfileSection({ volunteer }: Props) {
       [LanguageLevel.INTERMEDIATE]: LangProficiency.INTERMEDIATE,
     };
 
-    const labelToVolunteerType = Object.values(VolunteerStateTypeType).reduce(
-      (acc, type) => {
-        acc[t(`dashboard.volunteerProfile.volunteerHeader.volunteerType_options.${type}`)] = type;
-        return acc;
-      },
-      {} as Record<string, VolunteerStateTypeType>,
-    );
+    const labelToVolunteerType = Object.values(VolunteerStateTypeType).reduce((acc, type) => {
+      acc[t(`dashboard.volunteerProfile.volunteerHeader.volunteerType_options.${type}`)] = type;
+      return acc;
+    }, {} as Record<string, VolunteerStateTypeType>);
 
     const statusType = labelToVolunteerType[data.volunteerType];
 
