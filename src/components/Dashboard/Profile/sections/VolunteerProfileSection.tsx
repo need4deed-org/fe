@@ -729,12 +729,19 @@ export function VolunteerProfileSection({ volunteer }: Props) {
       if (!langs || langs.length === 0) return "–";
       return langs
         .map((lang) => {
-          const proficiency = lang.proficiency ? ` – ${lang.proficiency}` : "";
-          return `${lang.title}${proficiency}`;
+          // Use localized language title from API
+          const localizedTitle = languageIdToTitle[lang.id] || lang.title;
+          // Use localized proficiency level from translations
+          const proficiencyKey = lang.proficiency?.toLowerCase();
+          const localizedProficiency = proficiencyKey
+            ? t(`dashboard.volunteers.langProficiency.${proficiencyKey}`)
+            : "";
+          const proficiency = localizedProficiency ? ` – ${localizedProficiency}` : "";
+          return `${localizedTitle}${proficiency}`;
         })
         .join(", ");
     },
-    [volunteer],
+    [languageIdToTitle, t, volunteer],
   );
 
   const formatAvailability = useCallback(
@@ -795,14 +802,7 @@ export function VolunteerProfileSection({ volunteer }: Props) {
 
   const schema = createVolunteerProfileSchema(t);
 
-  const {
-    control,
-    handleSubmit,
-    reset,
-    trigger,
-    watch,
-    formState,
-  } = useForm<VolunteerProfileFormData>({
+  const { control, handleSubmit, reset, trigger, watch, formState } = useForm<VolunteerProfileFormData>({
     resolver: zodResolver(schema),
     mode: "onChange",
     defaultValues: {
@@ -816,7 +816,6 @@ export function VolunteerProfileSection({ volunteer }: Props) {
   });
 
   const { errors, isValid, isDirty } = formState;
-
 
   // Sync form when volunteer data changes (after refetch) OR when API data loads
   useEffect(() => {
