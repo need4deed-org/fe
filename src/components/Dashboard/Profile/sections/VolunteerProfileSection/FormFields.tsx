@@ -1,0 +1,200 @@
+import { ErrorMessage } from "@/components/core/common";
+import { EditableField } from "@/components/EditableField/EditableField";
+import { AvailabilityGrid } from "@/components/forms/AvailabilityGrid/AvailabilityGrid";
+import { LanguageFields } from "@/components/forms/LanguageFields";
+import { TFunction } from "i18next";
+import { Lang, VolunteerStateTypeType } from "need4deed-sdk";
+import { Control, Controller, ControllerRenderProps, FieldErrors, UseFormTrigger } from "react-hook-form";
+import styled from "styled-components";
+import { VolunteerProfileFormData } from "./volunteerProfileSchema";
+
+const FieldRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  width: 100%;
+  gap: 32px;
+  padding: 16px 0;
+  border-bottom: none;
+
+  &:last-child {
+    border-bottom: none;
+  }
+`;
+
+const FieldLabel = styled.div`
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--color-midnight);
+  width: 220px;
+  flex-shrink: 0;
+`;
+
+const FieldValue = styled.div`
+  font-size: 20px;
+  color: var(--color-midnight);
+  flex: 1;
+  line-height: 1.5;
+`;
+
+const LanguageFieldsWrapper = styled.div`
+  margin-bottom: 8px;
+`;
+
+type Props = {
+  control: Control<VolunteerProfileFormData>;
+  errors: FieldErrors<VolunteerProfileFormData>;
+  t: TFunction<"translation", undefined>;
+  i18n: { language: string };
+  locationOptions: string[];
+  idToLabel: Record<string | number, string>;
+  labelToId: Record<string, string | number>;
+  activitiesOptions: string[];
+  activityIdToLabel: Record<string | number, string>;
+  activityLabelToId: Record<string, string | number>;
+  skillsOptions: string[];
+  skillIdToLabel: Record<string | number, string>;
+  skillLabelToId: Record<string, string | number>;
+  languagesForForm: Array<{ id: number | string; title: Record<Lang, string> }>;
+  trigger: UseFormTrigger<VolunteerProfileFormData>;
+};
+
+export function FormFields({
+  control,
+  errors,
+  t,
+  i18n,
+  locationOptions,
+  idToLabel,
+  labelToId,
+  activitiesOptions,
+  activityIdToLabel,
+  activityLabelToId,
+  skillsOptions,
+  skillIdToLabel,
+  skillLabelToId,
+  languagesForForm,
+  trigger,
+}: Props) {
+  return (
+    <>
+      <Controller
+        name="languages"
+        control={control}
+        render={({ field }: { field: ControllerRenderProps<VolunteerProfileFormData, "languages"> }) => (
+          <FieldRow>
+            <FieldLabel>{t("dashboard.volunteerProfile.profileSection.languages")}:</FieldLabel>
+            <FieldValue>
+              <LanguageFieldsWrapper>
+                <LanguageFields
+                  languages={field.value}
+                  onChange={field.onChange}
+                  t={t}
+                  availableLanguages={languagesForForm}
+                />
+              </LanguageFieldsWrapper>
+              {errors.languages?.message && <ErrorMessage message={errors.languages.message} />}
+            </FieldValue>
+          </FieldRow>
+        )}
+      />
+
+      <Controller
+        name="availability"
+        control={control}
+        render={({ field }: { field: ControllerRenderProps<VolunteerProfileFormData, "availability"> }) => (
+          <FieldRow>
+            <FieldLabel>{t("dashboard.volunteerProfile.profileSection.availability")}:</FieldLabel>
+            <FieldValue>
+              <AvailabilityGrid
+                availability={field.value}
+                onChange={field.onChange}
+                t={t}
+                currentLanguage={i18n.language as Lang}
+              />
+              {errors.availability?.message && <ErrorMessage message={errors.availability.message} />}
+            </FieldValue>
+          </FieldRow>
+        )}
+      />
+
+      <Controller
+        name="districts"
+        control={control}
+        render={({ field }: { field: ControllerRenderProps<VolunteerProfileFormData, "districts"> }) => (
+          <EditableField
+            mode="edit"
+            type="checkbox-list"
+            label={t("dashboard.volunteerProfile.profileSection.districts")}
+            value={field.value.map((id) => idToLabel[id] || String(id))}
+            setValue={(value) => {
+              const labels = Array.isArray(value) ? value : [value];
+              field.onChange(labels.map((label) => String(labelToId[label])));
+              trigger("districts");
+            }}
+            options={locationOptions}
+            errorMessage={errors.districts?.message}
+          />
+        )}
+      />
+
+      <Controller
+        name="volunteerType"
+        control={control}
+        render={({ field }: { field: ControllerRenderProps<VolunteerProfileFormData, "volunteerType"> }) => (
+          <EditableField
+            mode="edit"
+            type="radio-list"
+            label={t("dashboard.volunteerProfile.profileSection.volunteerType")}
+            value={field.value}
+            setValue={field.onChange}
+            options={Object.values(VolunteerStateTypeType)
+              .filter((type): type is VolunteerStateTypeType => type !== undefined)
+              .map((type) => t(`dashboard.volunteerProfile.volunteerHeader.volunteerType_options.${type}`))}
+            errorMessage={errors.volunteerType?.message}
+          />
+        )}
+      />
+
+      <Controller
+        name="activities"
+        control={control}
+        render={({ field }: { field: ControllerRenderProps<VolunteerProfileFormData, "activities"> }) => (
+          <EditableField
+            mode="edit"
+            type="checkbox-list"
+            label={t("dashboard.volunteerProfile.profileSection.activities")}
+            value={field.value.map((id) => activityIdToLabel[id] || String(id))}
+            setValue={(value) => {
+              const labels = Array.isArray(value) ? value : [value];
+              field.onChange(labels.map((label) => String(activityLabelToId[label])));
+              trigger("activities");
+            }}
+            options={activitiesOptions}
+            errorMessage={errors.activities?.message}
+          />
+        )}
+      />
+
+      <Controller
+        name="skills"
+        control={control}
+        render={({ field }: { field: ControllerRenderProps<VolunteerProfileFormData, "skills"> }) => (
+          <EditableField
+            mode="edit"
+            type="checkbox-list"
+            label={t("dashboard.volunteerProfile.profileSection.skills")}
+            value={field.value.map((id) => skillIdToLabel[id] || String(id))}
+            setValue={(value) => {
+              const labels = Array.isArray(value) ? value : [value];
+              field.onChange(labels.map((label) => String(skillLabelToId[label])));
+              trigger("skills");
+            }}
+            options={skillsOptions}
+            errorMessage={errors.skills?.message}
+          />
+        )}
+      />
+    </>
+  );
+}
