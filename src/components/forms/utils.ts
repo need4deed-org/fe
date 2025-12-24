@@ -118,17 +118,18 @@ export function getDate(datetime: string) {
 }
 
 export function getScheduleState(): Availability {
-  const timeSlots: Selected[] = Object.values(TimeSlot)
-    .filter((timeSlot) => timeSlot !== TimeSlot.WEEKDAYS && timeSlot !== TimeSlot.WEEKENDS)
-    .map((timeSlot) => ({
-      id: timeSlot,
-      title: { en: timeSlot, de: timeSlot },
-      selected: false,
-    }));
+  const createTimeSlots = (): Selected[] =>
+    Object.values(TimeSlot)
+      .filter((timeSlot) => timeSlot !== TimeSlot.WEEKDAYS && timeSlot !== TimeSlot.WEEKENDS)
+      .map((timeSlot) => ({
+        id: timeSlot,
+        title: { en: timeSlot, de: timeSlot },
+        selected: false,
+      }));
   const schedule: Availability = [];
-   
+
   for (const weekday of range(1, 8)) {
-    schedule.push({ weekday, timeSlots });
+    schedule.push({ weekday, timeSlots: createTimeSlots() });
   }
 
   schedule.push({
