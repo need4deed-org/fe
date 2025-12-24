@@ -22,6 +22,7 @@ import {
   Lang,
   LangProficiency,
   VolunteerStateTypeType,
+  Hour,
 } from "need4deed-sdk";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Control, Controller, ControllerRenderProps, FieldErrors, useForm, UseFormTrigger } from "react-hook-form";
@@ -259,8 +260,8 @@ function apiToFormAvailability(apiAvailability: ApiAvailability[]): Availability
 }
 
 // Convert form Availability to backend format
-function formToApiAvailability(formAvailability: Availability): Array<{ day: string; daytime: [string, string] }> {
-  const result: Array<{ day: string; daytime: [string, string] }> = [];
+function formToApiAvailability(formAvailability: Availability): Array<ApiAvailability> {
+  const result: Array<ApiAvailability> = [];
 
   const dayEnumToString: Record<ByDay, string> = {
     [ByDay.MO]: "Monday",
@@ -286,8 +287,12 @@ function formToApiAvailability(formAvailability: Availability): Array<{ day: str
         const endTime = `${endHourNum}:00`;
 
         result.push({
-          day: dayString,
-          daytime: [startTime, endTime],
+          day: dayString as ByDay,
+          daytime: [startTime as Hour, endTime as Hour],
+          timeslotId: 0,
+          id: `${dayString}-${slotId}`,
+          description: "Volunteer Availability",
+          start: new Date(),
         });
       }
     });
@@ -898,7 +903,7 @@ export function VolunteerProfileSection({ volunteer }: Props) {
     updateProfile(
       {
         // Cast to any - SDK types expect Hour enums but backend actually expects time strings
-        availability: formToApiAvailability(data.availability) as any,
+        availability: formToApiAvailability(data.availability),
         ...(isValidStatusType ? { statusType } : {}),
         languages: data.languages
           .filter(
