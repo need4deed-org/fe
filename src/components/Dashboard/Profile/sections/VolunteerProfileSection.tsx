@@ -230,13 +230,6 @@ function useApiDistricts(currentLanguage: Lang) {
   });
 }
 
-// Backend expects this format for availability (differs from SDK types)
-type BackendAvailability = {
-  id: number;
-  day: ByDay;
-  daytime: [string, string];
-};
-
 // Convert API Availability[] to form Availability
 function apiToFormAvailability(apiAvailability: ApiAvailability[]): Availability {
   const formAvailability = getScheduleState();
@@ -266,14 +259,24 @@ function apiToFormAvailability(apiAvailability: ApiAvailability[]): Availability
 }
 
 // Convert form Availability to backend format
-function formToApiAvailability(formAvailability: Availability): BackendAvailability[] {
-  const result: BackendAvailability[] = [];
-  let idCounter = 0;
+function formToApiAvailability(formAvailability: Availability): Array<{ day: string; daytime: [string, string] }> {
+  const result: Array<{ day: string; daytime: [string, string] }> = [];
+
+  const dayEnumToString: Record<ByDay, string> = {
+    [ByDay.MO]: "Monday",
+    [ByDay.TU]: "Tuesday",
+    [ByDay.WE]: "Wednesday",
+    [ByDay.TH]: "Thursday",
+    [ByDay.FR]: "Friday",
+    [ByDay.SA]: "Saturday",
+    [ByDay.SU]: "Sunday",
+  };
 
   formAvailability.forEach((day) => {
     day.timeSlots.forEach((slot) => {
       if (slot.selected && day.weekday >= 1 && day.weekday <= 7) {
-        const dayName = dayMap[day.weekday];
+        const dayEnum = dayMap[day.weekday];
+        const dayString = dayEnumToString[dayEnum];
         const slotId = String(slot.id);
         const [startHourStr, endHourStr] = slotId.split("-");
         const startHourNum = parseInt(startHourStr, 10);
@@ -283,11 +286,9 @@ function formToApiAvailability(formAvailability: Availability): BackendAvailabil
         const endTime = `${endHourNum}:00`;
 
         result.push({
-          id: idCounter,
-          day: dayName,
+          day: dayString,
           daytime: [startTime, endTime],
         });
-        idCounter++;
       }
     });
   });
@@ -458,7 +459,7 @@ function FormFields({
             value={field.value.map((id) => idToLabel[id] || String(id))}
             setValue={(value) => {
               const labels = Array.isArray(value) ? value : [value];
-              field.onChange(labels.map((label) => labelToId[label]));
+              field.onChange(labels.map((label) => String(labelToId[label])));
               trigger("districts");
             }}
             options={locationOptions}
@@ -500,7 +501,7 @@ function FormFields({
             value={field.value.map((id) => activityIdToLabel[id] || String(id))}
             setValue={(value) => {
               const labels = Array.isArray(value) ? value : [value];
-              field.onChange(labels.map((label) => activityLabelToId[label]));
+              field.onChange(labels.map((label) => String(activityLabelToId[label])));
               trigger("activities");
             }}
             options={activitiesOptions}
@@ -520,7 +521,7 @@ function FormFields({
             value={field.value.map((id) => skillIdToLabel[id] || String(id))}
             setValue={(value) => {
               const labels = Array.isArray(value) ? value : [value];
-              field.onChange(labels.map((label) => skillLabelToId[label]));
+              field.onChange(labels.map((label) => String(skillLabelToId[label])));
               trigger("skills");
             }}
             options={skillsOptions}
@@ -799,7 +800,8 @@ export function VolunteerProfileSection({ volunteer }: Props) {
     handleSubmit,
     reset,
     trigger,
-    formState: { errors, isValid, isDirty },
+    watch,
+    formState,
   } = useForm<VolunteerProfileFormData>({
     resolver: zodResolver(schema),
     mode: "onChange",
@@ -812,6 +814,9 @@ export function VolunteerProfileSection({ volunteer }: Props) {
       skills: formatSkills(volunteer.skills),
     },
   });
+
+  const { errors, isValid, isDirty } = formState;
+
 
   // Sync form when volunteer data changes (after refetch) OR when API data loads
   useEffect(() => {
@@ -861,8 +866,6 @@ export function VolunteerProfileSection({ volunteer }: Props) {
   };
 
   const onSubmit = (data: VolunteerProfileFormData) => {
-    console.log("onSubmit", data);
-    console.log(schema.parse(data));
     const levelToProficiency: Record<LanguageLevel, LangProficiency> = {
       [LanguageLevel.NATIVE]: LangProficiency.NATIVE,
       [LanguageLevel.FLUENT]: LangProficiency.FLUENT,
@@ -923,7 +926,6 @@ export function VolunteerProfileSection({ volunteer }: Props) {
       },
       {
         onSuccess: () => {
-          reset(data);
           setIsEditing(false);
         },
       },

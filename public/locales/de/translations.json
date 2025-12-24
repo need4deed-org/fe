@@ -526,6 +526,7 @@
         "skills": "Fähigkeiten & Erfahrungen",
         "cancel": "Abbrechen",
         "saveChanges": "Änderungen speichern",
+        "saveSuccess": "Profil erfolgreich aktualisiert",
         "validation": {
           "languageRequired": "Wähle eine Sprache aus",
           "levelRequired": "Wähle ein Niveau aus",

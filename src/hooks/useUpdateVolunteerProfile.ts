@@ -8,10 +8,10 @@ type VolunteerProfileUpdateData = DeepPartial<
 >;
 
 export const useUpdateVolunteerProfile = (volunteerId: number) => {
-  return useMutationQuery<VolunteerProfileUpdateData, ApiVolunteerGet>({
+  return useMutationQuery<VolunteerProfileUpdateData, { message: string; data: ApiVolunteerGet }>({
     apiPath: `${apiPathVolunteer}${volunteerId}`,
     method: "patch",
     successMessage: "dashboard.volunteerProfile.profileSection.saveSuccess",
-    queryKeyToInvalidate: ["volunteer", volunteerId],
+    queryKeyToInvalidate: ["volunteer", String(volunteerId)],
   });
 };
