@@ -1,4 +1,5 @@
-import { ByDay } from "need4deed-sdk";
+import { LanguageLevel } from "@/types";
+import { ByDay, LangProficiency } from "need4deed-sdk";
 
 export const DAY_MAP: Record<number, ByDay> = {
   1: ByDay.MO,
@@ -28,4 +29,10 @@ export const DAY_ENUM_TO_STRING: Record<ByDay, string> = {
   [ByDay.FR]: "Friday",
   [ByDay.SA]: "Saturday",
   [ByDay.SU]: "Sunday",
+};
+
+export const LEVEL_TO_PROFICIENCY: Record<LanguageLevel, LangProficiency> = {
+  [LanguageLevel.NATIVE]: LangProficiency.NATIVE,
+  [LanguageLevel.FLUENT]: LangProficiency.FLUENT,
+  [LanguageLevel.INTERMEDIATE]: LangProficiency.INTERMEDIATE,
 };

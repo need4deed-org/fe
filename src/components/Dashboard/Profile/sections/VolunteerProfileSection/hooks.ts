@@ -8,62 +8,24 @@ export type ApiLanguageOption = {
   isoCode?: string;
 };
 
-export function useApiLanguages(currentLanguage: Lang) {
+type ResourceType = "language" | "activity" | "skill" | "district";
+
+function useApiResource(resource: ResourceType, currentLanguage: Lang) {
   return useQuery<ApiLanguageOption[]>({
-    queryKey: ["languages", currentLanguage],
+    queryKey: [resource, currentLanguage],
     queryFn: async () => {
-      const response = await fetch(`${apiPathOption}/language?language=${currentLanguage}`, {
+      const response = await fetch(`${apiPathOption}/${resource}?language=${currentLanguage}`, {
         credentials: "include",
       });
-      if (!response.ok) throw new Error("Failed to fetch languages");
+      if (!response.ok) throw new Error(`Failed to fetch ${resource}`);
       const data = await response.json();
-      return data.data.language || [];
+      return data.data[resource] || [];
     },
     staleTime: Infinity,
   });
 }
 
-export function useApiActivities(currentLanguage: Lang) {
-  return useQuery<ApiLanguageOption[]>({
-    queryKey: ["activities", currentLanguage],
-    queryFn: async () => {
-      const response = await fetch(`${apiPathOption}/activity?language=${currentLanguage}`, {
-        credentials: "include",
-      });
-      if (!response.ok) throw new Error("Failed to fetch activities");
-      const data = await response.json();
-      return data.data.activity || [];
-    },
-    staleTime: Infinity,
-  });
-}
-
-export function useApiSkills(currentLanguage: Lang) {
-  return useQuery<ApiLanguageOption[]>({
-    queryKey: ["skills", currentLanguage],
-    queryFn: async () => {
-      const response = await fetch(`${apiPathOption}/skill?language=${currentLanguage}`, {
-        credentials: "include",
-      });
-      if (!response.ok) throw new Error("Failed to fetch skills");
-      const data = await response.json();
-      return data.data.skill || [];
-    },
-    staleTime: Infinity,
-  });
-}
-
-export function useApiDistricts(currentLanguage: Lang) {
-  return useQuery<ApiLanguageOption[]>({
-    queryKey: ["districts", currentLanguage],
-    queryFn: async () => {
-      const response = await fetch(`${apiPathOption}/district?language=${currentLanguage}`, {
-        credentials: "include",
-      });
-      if (!response.ok) throw new Error("Failed to fetch districts");
-      const data = await response.json();
-      return data.data.district || [];
-    },
-    staleTime: Infinity,
-  });
-}
+export const useApiLanguages = (lang: Lang) => useApiResource("language", lang);
+export const useApiActivities = (lang: Lang) => useApiResource("activity", lang);
+export const useApiSkills = (lang: Lang) => useApiResource("skill", lang);
+export const useApiDistricts = (lang: Lang) => useApiResource("district", lang);

@@ -36,38 +36,22 @@ export function formatLanguages(
   });
 }
 
-export function formatActivities(
-  activities: VolunteerActivities,
-  activityTitleToDbId: Record<string, number>,
+function formatItemsToIds(
+  items: { id: number; title: string }[] | undefined,
+  titleToIdLower: Record<string, number>,
 ): string[] {
-  if (!activities || activities.length === 0) return [];
-  return activities
-    .map((act) => {
-      const dbId = activityTitleToDbId[act.title.toLowerCase()] || act.id;
+  if (!items || items.length === 0) return [];
+  return items
+    .map((item) => {
+      const dbId = titleToIdLower[item.title.toLowerCase()] || item.id;
       return String(dbId);
     })
     .filter((id) => id && id !== "0");
 }
 
-export function formatSkills(skills: VolunteerSkills, skillTitleToDbId: Record<string, number>): string[] {
-  if (!skills || skills.length === 0) return [];
-  return skills
-    .map((skill) => {
-      const dbId = skillTitleToDbId[skill.title.toLowerCase()] || skill.id;
-      return String(dbId);
-    })
-    .filter((id) => id && id !== "0");
-}
-
-export function formatDistricts(locations: VolunteerLocations, districtTitleToDbId: Record<string, number>): string[] {
-  if (!locations || locations.length === 0) return [];
-  return locations
-    .map((loc) => {
-      const dbId = districtTitleToDbId[loc.title.toLowerCase()] || loc.id;
-      return String(dbId);
-    })
-    .filter((id) => id && id !== "0");
-}
+export const formatActivities = formatItemsToIds;
+export const formatSkills = formatItemsToIds;
+export const formatDistricts = formatItemsToIds;
 
 export function formatLanguagesForDisplay(
   langs: VolunteerLanguages,

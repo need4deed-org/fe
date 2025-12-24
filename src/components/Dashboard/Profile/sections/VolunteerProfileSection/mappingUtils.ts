@@ -1,34 +1,21 @@
 import { ApiLanguageOption } from "./hooks";
 
-export type BiDirectionalMapping = {
-  idToLabel: Record<string | number, string>;
-  labelToId: Record<string, string | number>;
+export type Mapping = {
+  idToTitle: Record<number, string>;
+  titleToId: Record<string, number>;
+  titleToIdLower: Record<string, number>;
 };
 
-export function createBiDirectionalMapping(items: ApiLanguageOption[]): BiDirectionalMapping {
-  const idToLabel: Record<string | number, string> = {};
-  const labelToId: Record<string, string | number> = {};
+export function createMapping(items: ApiLanguageOption[]): Mapping {
+  const idToTitle: Record<number, string> = {};
+  const titleToId: Record<string, number> = {};
+  const titleToIdLower: Record<string, number> = {};
 
   items.forEach((item) => {
-    idToLabel[item.id] = item.title;
-    labelToId[item.title] = item.id;
+    idToTitle[item.id] = item.title;
+    titleToId[item.title] = item.id;
+    titleToIdLower[item.title.toLowerCase()] = item.id;
   });
 
-  return { idToLabel, labelToId };
-}
-
-export function createTitleToIdMap(items: ApiLanguageOption[]): Record<string, number> {
-  const map: Record<string, number> = {};
-  items.forEach((item) => {
-    map[item.title.toLowerCase()] = item.id;
-  });
-  return map;
-}
-
-export function createIdToTitleMap(items: ApiLanguageOption[]): Record<number, string> {
-  const map: Record<number, string> = {};
-  items.forEach((item) => {
-    map[item.id] = item.title;
-  });
-  return map;
+  return { idToTitle, titleToId, titleToIdLower };
 }

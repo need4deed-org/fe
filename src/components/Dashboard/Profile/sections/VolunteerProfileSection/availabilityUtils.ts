@@ -1,7 +1,7 @@
 import { Availability } from "@/components/forms/types";
 import { getScheduleState } from "@/components/forms/utils";
-import { Availability as ApiAvailability, ByDay } from "need4deed-sdk";
-import { DAY_MAP, REVERSE_DAY_MAP } from "./constants";
+import { Availability as ApiAvailability } from "need4deed-sdk";
+import { DAY_MAP, DAY_ENUM_TO_STRING, REVERSE_DAY_MAP } from "./constants";
 
 export function apiToFormAvailability(apiAvailability: ApiAvailability[]): Availability {
   const formAvailability = getScheduleState();
@@ -29,35 +29,25 @@ export function apiToFormAvailability(apiAvailability: ApiAvailability[]): Avail
   return formAvailability;
 }
 
-export // Convert form Availability to backend format
-function formToApiAvailability(formAvailability: Availability): Array<{ day: string; daytime: [string, string] }> {
+export function formToApiAvailability(formAvailability: Availability): Array<{ day: string; daytime: [string, string] }> {
   const result: Array<{ day: string; daytime: [string, string] }> = [];
-  const dayEnumToString: Record<ByDay, string> = {
-    [ByDay.MO]: "Monday",
-    [ByDay.TU]: "Tuesday",
-    [ByDay.WE]: "Wednesday",
-    [ByDay.TH]: "Thursday",
-    [ByDay.FR]: "Friday",
-    [ByDay.SA]: "Saturday",
-    [ByDay.SU]: "Sunday",
-  };
+
   formAvailability.forEach((day) => {
     day.timeSlots.forEach((slot) => {
       if (slot.selected && day.weekday >= 1 && day.weekday <= 7) {
         const dayEnum = DAY_MAP[day.weekday];
-        const dayString = dayEnumToString[dayEnum];
         const slotId = String(slot.id);
         const [startHourStr, endHourStr] = slotId.split("-");
-        const startHourNum = parseInt(startHourStr, 10);
-        const endHourNum = parseInt(endHourStr, 10);
-        const startTime = `${startHourNum}:00`;
-        const endTime = `${endHourNum}:00`;
+        const startTime = `${parseInt(startHourStr, 10)}:00`;
+        const endTime = `${parseInt(endHourStr, 10)}:00`;
+
         result.push({
-          day: dayString,
+          day: DAY_ENUM_TO_STRING[dayEnum],
           daytime: [startTime, endTime],
         });
       }
     });
   });
+
   return result;
 }
