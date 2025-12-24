@@ -4,7 +4,7 @@ import { ApiVolunteerGet } from "need4deed-sdk";
 import { DeepPartial } from "ts-type-safe";
 
 type VolunteerProfileUpdateData = DeepPartial<
-  Pick<ApiVolunteerGet, "languages" | "availability" | "activities" | "skills" | "locations">
+  Pick<ApiVolunteerGet, "languages" | "availability" | "activities" | "skills" | "locations" | "statusType">
 >;
 
 export const useUpdateVolunteerProfile = (volunteerId: number) => {

@@ -335,10 +335,14 @@ function DisplayFields({
       <FieldRow>
         <FieldLabel>{t("dashboard.volunteerProfile.profileSection.volunteerType")}</FieldLabel>
         <FieldValue>
-          <VolunteerTypeBadge>
-            <UsersFour size={20} weight="fill" />
-            {volunteerType}
-          </VolunteerTypeBadge>
+          {volunteerType ? (
+            <VolunteerTypeBadge>
+              <UsersFour size={20} weight="fill" />
+              {volunteerType}
+            </VolunteerTypeBadge>
+          ) : (
+            "–"
+          )}
         </FieldValue>
       </FieldRow>
 
@@ -478,13 +482,9 @@ function FormFields({
             label={t("dashboard.volunteerProfile.profileSection.volunteerType")}
             value={field.value}
             setValue={field.onChange}
-            options={[
-              t(
-                `dashboard.volunteerProfile.volunteerHeader.volunteerType_options.${VolunteerStateTypeType.ACCOMPANYING}`,
-              ),
-              t(`dashboard.volunteerProfile.volunteerHeader.volunteerType_options.${VolunteerStateTypeType.REGULAR}`),
-              t(`dashboard.volunteerProfile.volunteerHeader.volunteerType_options.${VolunteerStateTypeType.EVENTS}`),
-            ]}
+            options={Object.values(VolunteerStateTypeType)
+              .filter((type): type is VolunteerStateTypeType => type !== undefined)
+              .map((type) => t(`dashboard.volunteerProfile.volunteerHeader.volunteerType_options.${type}`))}
             errorMessage={errors.volunteerType?.message}
           />
         )}
@@ -749,7 +749,7 @@ export function VolunteerProfileSection({ volunteer }: Props) {
       if (!avails || avails.length === 0) {
         const defaultSchedule = getScheduleState();
         const hasSelectedSlots = defaultSchedule.some((day) => day.timeSlots.some((slot) => slot.selected));
-        if (!hasSelectedSlots) return "No availability set";
+        if (!hasSelectedSlots) return "–";
       }
 
       // Group by time slots
@@ -786,8 +786,19 @@ export function VolunteerProfileSection({ volunteer }: Props) {
 
   const getVolunteerTypeLabel = useCallback(
     (statusType: VolunteerStateTypeType | undefined): string => {
-      if (!statusType) return t("dashboard.volunteerProfile.volunteerHeader.volunteerType_options.regular");
-      return t(`dashboard.volunteerProfile.volunteerHeader.volunteerType_options.${statusType}`);
+      if (!statusType) return "";
+
+      // Migrate old enum values to new ones
+      const legacyMapping: Record<string, VolunteerStateTypeType> = {
+        regular: VolunteerStateTypeType.GENERAL,
+        events: VolunteerStateTypeType.EVENT,
+      };
+      const migratedType = legacyMapping[statusType] || statusType;
+
+      const validTypes = Object.values(VolunteerStateTypeType);
+      if (!validTypes.includes(migratedType)) return "";
+
+      return t(`dashboard.volunteerProfile.volunteerHeader.volunteerType_options.${migratedType}`);
     },
     [t],
   );
@@ -802,7 +813,7 @@ export function VolunteerProfileSection({ volunteer }: Props) {
 
   const schema = createVolunteerProfileSchema(t);
 
-  const { control, handleSubmit, reset, trigger, watch, formState } = useForm<VolunteerProfileFormData>({
+  const { control, handleSubmit, reset, trigger, formState } = useForm<VolunteerProfileFormData>({
     resolver: zodResolver(schema),
     mode: "onChange",
     defaultValues: {
@@ -871,10 +882,24 @@ export function VolunteerProfileSection({ volunteer }: Props) {
       [LanguageLevel.INTERMEDIATE]: LangProficiency.INTERMEDIATE,
     };
 
+    const labelToVolunteerType = Object.values(VolunteerStateTypeType).reduce(
+      (acc, type) => {
+        acc[t(`dashboard.volunteerProfile.volunteerHeader.volunteerType_options.${type}`)] = type;
+        return acc;
+      },
+      {} as Record<string, VolunteerStateTypeType>,
+    );
+
+    const statusType = labelToVolunteerType[data.volunteerType];
+
+    const validStatusTypes = Object.values(VolunteerStateTypeType);
+    const isValidStatusType = statusType && validStatusTypes.includes(statusType);
+
     updateProfile(
       {
         // Cast to any - SDK types expect Hour enums but backend actually expects time strings
         availability: formToApiAvailability(data.availability) as any,
+        ...(isValidStatusType ? { statusType } : {}),
         languages: data.languages
           .filter(
             (lang): lang is LanguageObject & { level: LanguageLevel } => lang.language !== "" && lang.level !== "",

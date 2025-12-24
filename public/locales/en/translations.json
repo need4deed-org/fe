@@ -461,7 +461,11 @@
         "volunteerType_options": {
           "accompanying": "Accompanying",
           "regular": "Regular",
-          "events": "Events"
+          "events": "Events",
+          "general": "General",
+          "event": "Event",
+          "festival": "Festival",
+          "weekend-only": "Weekend Only"
         },
         "matchStatus_title": "Match status",
         "matchStatus_options": {

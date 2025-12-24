@@ -461,7 +461,11 @@
         "volunteerType_options": {
           "accompanying": "Begleitend",
           "regular": "Regelmäßig",
-          "events": "Veranstaltungen"
+          "events": "Veranstaltungen",
+          "general": "Allgemein",
+          "event": "Veranstaltung",
+          "festival": "Festival",
+          "weekend-only": "Nur Wochenende"
         },
         "matchStatus_title": "Zuweisungs-Status",
         "matchStatus_options": {
