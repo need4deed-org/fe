@@ -10,8 +10,8 @@ import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { apiToFormAvailability, formToApiAvailability } from "./VolunteerProfileSection/availabilityUtils";
-import { DisplayFields } from "./VolunteerProfileSection/DisplayFields";
+import { apiToFormAvailability, formToApiAvailability } from "./availabilityUtils";
+import { DisplayFields } from "./DisplayFields";
 import {
   extractTitles,
   formatActivities,
@@ -22,18 +22,11 @@ import {
   formatLocationsForDisplay,
   formatSkills,
   getVolunteerTypeLabel,
-} from "./VolunteerProfileSection/formatters";
-import { FormFields } from "./VolunteerProfileSection/FormFields";
-import { useApiActivities, useApiDistricts, useApiLanguages, useApiSkills } from "./VolunteerProfileSection/hooks";
-import {
-  createBiDirectionalMapping,
-  createIdToTitleMap,
-  createTitleToIdMap,
-} from "./VolunteerProfileSection/mappingUtils";
-import {
-  createVolunteerProfileSchema,
-  VolunteerProfileFormData,
-} from "./VolunteerProfileSection/volunteerProfileSchema";
+} from "./formatters";
+import { FormFields } from "./FormFields";
+import { useApiActivities, useApiDistricts, useApiLanguages, useApiSkills } from "./hooks";
+import { createBiDirectionalMapping, createIdToTitleMap, createTitleToIdMap } from "./mappingUtils";
+import { createVolunteerProfileSchema, VolunteerProfileFormData } from "./volunteerProfileSchema";
 
 const Container = styled.div<{ $isEditing: boolean }>`
   display: flex;
@@ -192,19 +185,17 @@ export function VolunteerProfileSection({ volunteer }: Props) {
       [LanguageLevel.INTERMEDIATE]: LangProficiency.INTERMEDIATE,
     };
 
-    const labelToVolunteerType = Object.values(VolunteerStateTypeType).reduce(
-      (acc, type) => {
-        acc[t(`dashboard.volunteerProfile.volunteerHeader.volunteerType_options.${type}`)] = type;
-        return acc;
-      },
-      {} as Record<string, VolunteerStateTypeType>,
-    );
+    const labelToVolunteerType = Object.values(VolunteerStateTypeType).reduce((acc, type) => {
+      acc[t(`dashboard.volunteerProfile.volunteerHeader.volunteerType_options.${type}`)] = type;
+      return acc;
+    }, {} as Record<string, VolunteerStateTypeType>);
 
     const statusType = labelToVolunteerType[data.volunteerType];
     const isValidStatusType = statusType && Object.values(VolunteerStateTypeType).includes(statusType);
 
     updateProfile(
       {
+        // @ts-expect-error -- Need4Deed SDK types incorrect, 'id' should be number
         availability: formToApiAvailability(data.availability),
         ...(isValidStatusType ? { statusType } : {}),
         languages: data.languages
