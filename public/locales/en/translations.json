@@ -508,7 +508,7 @@
         "saveSuccess": "Contact details updated successfully",
         "validation": {
           "phoneRequired": "Phone number is required",
-          "phoneInvalid": "Phone number must start with + and contain only digits (no spaces)",
+          "phoneInvalid": "Phone number must start with + and contain only digits and spaces",
           "emailRequired": "Email is required",
           "emailInvalid": "Please enter a valid email address",
           "addressRequired": "Address is required",
