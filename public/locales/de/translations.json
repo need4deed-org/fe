@@ -540,6 +540,15 @@
           "activitiesRequired": "Bitte wähle mindestens eine Aktivität aus",
           "skillsRequired": "Fähigkeiten sind erforderlich"
         }
+      },
+      "documentSection": {
+        "title": "Dokumente",
+        "typeOfDocument": "Dokumenttyp",
+        "status": "Status",
+        "uploadedOn": "Hochgeladen am",
+        "actions": "Aktionen",
+        "uploaded": "Hochgeladen",
+        "missing": "Fehlend"
       }
     },
     "message": {

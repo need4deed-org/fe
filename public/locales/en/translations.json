@@ -540,6 +540,15 @@
           "activitiesRequired": "Please select at least one activity",
           "skillsRequired": "Please select at least one skill"
         }
+      },
+      "documentSection": {
+        "title": "Documents",
+        "typeOfDocument": "Type of document",
+        "status": "Status",
+        "uploadedOn": "Uploaded on",
+        "actions": "Actions",
+        "uploaded": "Uploaded",
+        "missing": "Missing"
       }
     }
   },
