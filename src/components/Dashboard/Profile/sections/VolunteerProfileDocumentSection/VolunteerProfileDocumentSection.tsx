@@ -5,7 +5,7 @@ import { ApiVolunteerGet } from "need4deed-sdk";
 import { useTranslation } from "react-i18next";
 import {
   ActionButton,
-  ActionsCell,
+  ActionCell,
   Cell,
   Container,
   Header,
@@ -78,8 +78,10 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
         <TableHeader>
           <HeaderCell>{t("dashboard.volunteerProfile.documentSection.typeOfDocument")}</HeaderCell>
           <HeaderCell $width="145px">{t("dashboard.volunteerProfile.documentSection.status")}</HeaderCell>
-          <HeaderCell $width="152px">{t("dashboard.volunteerProfile.documentSection.uploadedOn")}</HeaderCell>
-          <HeaderCell $width="168px">{t("dashboard.volunteerProfile.documentSection.actions")}</HeaderCell>
+          <HeaderCell $width="180px">{t("dashboard.volunteerProfile.documentSection.uploadedOn")}</HeaderCell>
+          <HeaderCell $width="56px"></HeaderCell>
+          <HeaderCell $width="56px"></HeaderCell>
+          <HeaderCell $width="56px"></HeaderCell>
         </TableHeader>
 
         {MOCK_DOCUMENTS.map((doc, index) => (
@@ -92,8 +94,10 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
                   : t("dashboard.volunteerProfile.documentSection.missing")}
               </StatusBadge>
             </Cell>
-            <Cell $width="152px">{doc.uploadedOn || "–"}</Cell>
-            <ActionsCell $width="168px" $align="center">
+            <Cell $width="180px" $noWrap>
+              {doc.uploadedOn || "–"}
+            </Cell>
+            <ActionCell $width="56px" $align="center">
               <ActionButton
                 onClick={() => handleView(doc.id)}
                 $disabled={doc.status === "missing"}
@@ -102,6 +106,8 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
               >
                 <Eye size={24} weight="regular" />
               </ActionButton>
+            </ActionCell>
+            <ActionCell $width="56px" $align="center">
               <ActionButton
                 onClick={() => handleDownload(doc.id)}
                 $disabled={doc.status === "missing"}
@@ -110,6 +116,8 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
               >
                 <DownloadSimple size={24} weight="regular" />
               </ActionButton>
+            </ActionCell>
+            <ActionCell $width="56px" $align="center">
               <ActionButton
                 onClick={() => handleDelete(doc.id)}
                 $disabled={doc.status === "missing"}
@@ -118,7 +126,7 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
               >
                 <Trash size={24} weight="regular" />
               </ActionButton>
-            </ActionsCell>
+            </ActionCell>
           </TableRow>
         ))}
       </Table>

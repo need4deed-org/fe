@@ -88,7 +88,7 @@ export const TableRow = styled.div<{ $isLast?: boolean }>`
   }
 `;
 
-export const Cell = styled.div<{ $width?: string; $align?: string }>`
+export const Cell = styled.div<{ $width?: string; $align?: string; $noWrap?: boolean }>`
   display: flex;
   align-items: center;
   padding: 16px;
@@ -100,6 +100,7 @@ export const Cell = styled.div<{ $width?: string; $align?: string }>`
   border-right: 1px solid var(--color-blue-50);
   ${(props) => props.$width && `width: ${props.$width};`}
   ${(props) => props.$align && `justify-content: ${props.$align};`}
+  ${(props) => props.$noWrap && `white-space: nowrap;`}
   flex: ${(props) => (props.$width ? "none" : "1")};
 
   &:last-child {
@@ -139,6 +140,6 @@ export const ActionButton = styled.button<{ $disabled?: boolean }>`
   }
 `;
 
-export const ActionsCell = styled(Cell)`
-  gap: 0;
+export const ActionCell = styled(Cell)`
+  padding: 16px 8px;
 `;
