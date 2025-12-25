@@ -77,8 +77,10 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
       <Table>
         <TableHeader>
           <HeaderCell>{t("dashboard.volunteerProfile.documentSection.typeOfDocument")}</HeaderCell>
-          <HeaderCell $width="145px">{t("dashboard.volunteerProfile.documentSection.status")}</HeaderCell>
-          <HeaderCell $width="180px">{t("dashboard.volunteerProfile.documentSection.uploadedOn")}</HeaderCell>
+          <HeaderCell $width="180px">{t("dashboard.volunteerProfile.documentSection.status")}</HeaderCell>
+          <HeaderCell $width="152px" $noWrap>
+            {t("dashboard.volunteerProfile.documentSection.uploadedOn")}
+          </HeaderCell>
           <HeaderCell $width="56px"></HeaderCell>
           <HeaderCell $width="56px"></HeaderCell>
           <HeaderCell $width="56px"></HeaderCell>
@@ -87,14 +89,14 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
         {MOCK_DOCUMENTS.map((doc, index) => (
           <TableRow key={doc.id} $isLast={index === MOCK_DOCUMENTS.length - 1}>
             <Cell>{doc.name}</Cell>
-            <Cell $width="145px" $align="center">
+            <Cell $width="180px" $align="center">
               <StatusBadge $status={doc.status}>
                 {doc.status === "uploaded"
                   ? t("dashboard.volunteerProfile.documentSection.uploaded")
                   : t("dashboard.volunteerProfile.documentSection.missing")}
               </StatusBadge>
             </Cell>
-            <Cell $width="180px" $noWrap>
+            <Cell $width="152px" $noWrap>
               {doc.uploadedOn || "–"}
             </Cell>
             <ActionCell $width="56px" $align="center">

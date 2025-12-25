@@ -51,7 +51,7 @@ export const TableHeader = styled.div`
   background: var(--color-pink-50);
 `;
 
-export const HeaderCell = styled.div<{ $width?: string }>`
+export const HeaderCell = styled.div<{ $width?: string; $noWrap?: boolean }>`
   display: flex;
   align-items: center;
   padding: 16px;
@@ -62,6 +62,7 @@ export const HeaderCell = styled.div<{ $width?: string }>`
   letter-spacing: 0.005em;
   color: var(--color-midnight);
   ${(props) => props.$width && `width: ${props.$width};`}
+  ${(props) => props.$noWrap && `white-space: nowrap;`}
   flex: ${(props) => (props.$width ? "none" : "1")};
 
   &:first-child {
