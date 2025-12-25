@@ -41,20 +41,24 @@ const LanguageFieldsWrapper = styled.div`
   margin-bottom: 8px;
 `;
 
+type Mapping = {
+  idToTitle: Record<number, string>;
+  titleToId: Record<string, number>;
+};
+
+type ApiItem = { id: number; title: string };
+
 type Props = {
   control: Control<VolunteerProfileFormData>;
   errors: FieldErrors<VolunteerProfileFormData>;
   t: TFunction<"translation", undefined>;
   i18n: { language: string };
-  locationOptions: string[];
-  idToLabel: Record<number, string>;
-  labelToId: Record<string, number>;
-  activitiesOptions: string[];
-  activityIdToLabel: Record<number, string>;
-  activityLabelToId: Record<string, number>;
-  skillsOptions: string[];
-  skillIdToLabel: Record<number, string>;
-  skillLabelToId: Record<string, number>;
+  districts: ApiItem[];
+  districtMapping: Mapping;
+  activities: ApiItem[];
+  activityMapping: Mapping;
+  skills: ApiItem[];
+  skillMapping: Mapping;
   languagesForForm: Array<{ id: number | string; title: Record<Lang, string> }>;
   trigger: UseFormTrigger<VolunteerProfileFormData>;
 };
@@ -64,15 +68,12 @@ export function FormFields({
   errors,
   t,
   i18n,
-  locationOptions,
-  idToLabel,
-  labelToId,
-  activitiesOptions,
-  activityIdToLabel,
-  activityLabelToId,
-  skillsOptions,
-  skillIdToLabel,
-  skillLabelToId,
+  districts,
+  districtMapping,
+  activities,
+  activityMapping,
+  skills,
+  skillMapping,
   languagesForForm,
   trigger,
 }: Props) {
@@ -126,13 +127,13 @@ export function FormFields({
             mode="edit"
             type="checkbox-list"
             label={t("dashboard.volunteerProfile.profileSection.districts")}
-            value={field.value.map((id) => idToLabel[id] || String(id))}
+            value={field.value.map((id) => districtMapping.idToTitle[Number(id)] || String(id))}
             setValue={(value) => {
               const labels = Array.isArray(value) ? value : [value];
-              field.onChange(labels.map((label) => String(labelToId[label])));
+              field.onChange(labels.map((label) => String(districtMapping.titleToId[label])));
               trigger("districts");
             }}
-            options={locationOptions}
+            options={districts.map((d) => d.title)}
             errorMessage={errors.districts?.message}
           />
         )}
@@ -164,13 +165,13 @@ export function FormFields({
             mode="edit"
             type="checkbox-list"
             label={t("dashboard.volunteerProfile.profileSection.activities")}
-            value={field.value.map((id) => activityIdToLabel[id] || String(id))}
+            value={field.value.map((id) => activityMapping.idToTitle[Number(id)] || String(id))}
             setValue={(value) => {
               const labels = Array.isArray(value) ? value : [value];
-              field.onChange(labels.map((label) => String(activityLabelToId[label])));
+              field.onChange(labels.map((label) => String(activityMapping.titleToId[label])));
               trigger("activities");
             }}
-            options={activitiesOptions}
+            options={activities.map((a) => a.title)}
             errorMessage={errors.activities?.message}
           />
         )}
@@ -184,13 +185,13 @@ export function FormFields({
             mode="edit"
             type="checkbox-list"
             label={t("dashboard.volunteerProfile.profileSection.skills")}
-            value={field.value.map((id) => skillIdToLabel[id] || String(id))}
+            value={field.value.map((id) => skillMapping.idToTitle[Number(id)] || String(id))}
             setValue={(value) => {
               const labels = Array.isArray(value) ? value : [value];
-              field.onChange(labels.map((label) => String(skillLabelToId[label])));
+              field.onChange(labels.map((label) => String(skillMapping.titleToId[label])));
               trigger("skills");
             }}
-            options={skillsOptions}
+            options={skills.map((s) => s.title)}
             errorMessage={errors.skills?.message}
           />
         )}

@@ -2,83 +2,32 @@
 import Button from "@/components/core/button/Button/Button";
 import { Heading2 } from "@/components/styled/text";
 import { useUpdateVolunteerProfile } from "@/hooks/useUpdateVolunteerProfile";
-import { LanguageLevel } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UserCircle } from "@phosphor-icons/react";
 import { ApiVolunteerGet, Lang, VolunteerStateTypeType } from "need4deed-sdk";
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import styled from "styled-components";
-import { apiToFormAvailability, formToApiAvailability } from "./availabilityUtils";
-import { LEVEL_TO_PROFICIENCY } from "./constants";
+import { formToApiAvailability } from "./availabilityUtils";
 import { DisplayFields } from "./DisplayFields";
 import {
   extractTitles,
-  formatActivities,
   formatAvailability,
-  formatDistricts,
-  formatLanguages,
   formatLanguagesForDisplay,
   formatLocationsForDisplay,
-  formatSkills,
   getVolunteerTypeLabel,
 } from "./formatters";
 import { FormFields } from "./FormFields";
 import { useApiActivities, useApiDistricts, useApiLanguages, useApiSkills } from "./hooks";
 import { createMapping } from "./mappingUtils";
+import { ButtonRow, Container, Details, Header, IconContainer, TitleRow } from "./styles";
+import {
+  createFormDefaultValues,
+  createLabelToVolunteerTypeMap,
+  mapToApiItems,
+  transformLanguagesToApi,
+} from "./transformers";
 import { createVolunteerProfileSchema, VolunteerProfileFormData } from "./volunteerProfileSchema";
-
-const Container = styled.div<{ $isEditing: boolean }>`
-  display: flex;
-  flex-direction: column;
-  padding: 24px;
-  gap: ${(props) => (props.$isEditing ? "16px" : "8px")};
-  background: var(--color-white);
-  border-radius: 24px;
-  margin-bottom: 24px;
-`;
-
-const Header = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-`;
-
-const TitleRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 16px;
-`;
-
-const IconContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 40px;
-  height: 40px;
-  color: var(--color-papaya);
-`;
-
-const Details = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 100%;
-  gap: 8px;
-`;
-
-const ButtonRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 24px;
-  width: 100%;
-`;
 
 type Props = {
   volunteer: ApiVolunteerGet;
@@ -109,14 +58,7 @@ export function VolunteerProfileSection({ volunteer }: Props) {
   const { control, handleSubmit, reset, trigger, formState } = useForm<VolunteerProfileFormData>({
     resolver: zodResolver(schema),
     mode: "onChange",
-    defaultValues: {
-      languages: formatLanguages(volunteer.languages, languageMapping.titleToIdLower),
-      availability: apiToFormAvailability(volunteer.availability),
-      districts: formatDistricts(volunteer.locations, districtMapping.titleToIdLower),
-      volunteerType: getVolunteerTypeLabel(volunteer.statusType, t),
-      activities: formatActivities(volunteer.activities, activityMapping.titleToIdLower),
-      skills: formatSkills(volunteer.skills, skillMapping.titleToIdLower),
-    },
+    defaultValues: createFormDefaultValues(volunteer, languageMapping, districtMapping, activityMapping, skillMapping, t),
   });
 
   const { errors, isValid, isDirty } = formState;
@@ -124,17 +66,23 @@ export function VolunteerProfileSection({ volunteer }: Props) {
   useEffect(() => {
     if (!apiLanguages.length || !apiActivities.length || !apiSkills.length || !apiDistricts.length) return;
 
-    reset({
-      languages: formatLanguages(volunteer.languages, languageMapping.titleToIdLower),
-      availability: apiToFormAvailability(volunteer.availability),
-      districts: formatDistricts(volunteer.locations, districtMapping.titleToIdLower),
-      volunteerType: getVolunteerTypeLabel(volunteer.statusType, t),
-      activities: formatActivities(volunteer.activities, activityMapping.titleToIdLower),
-      skills: formatSkills(volunteer.skills, skillMapping.titleToIdLower),
-    });
+    reset(createFormDefaultValues(volunteer, languageMapping, districtMapping, activityMapping, skillMapping, t));
     trigger();
     setIsEditing(false);
-  }, [volunteer, reset, trigger, t, languageMapping, activityMapping, skillMapping, districtMapping]);
+  }, [
+    volunteer,
+    reset,
+    trigger,
+    t,
+    languageMapping,
+    activityMapping,
+    skillMapping,
+    districtMapping,
+    apiLanguages.length,
+    apiActivities.length,
+    apiSkills.length,
+    apiDistricts.length,
+  ]);
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -146,36 +94,14 @@ export function VolunteerProfileSection({ volunteer }: Props) {
   };
 
   const onSubmit = (data: VolunteerProfileFormData) => {
-    const labelToVolunteerType = Object.values(VolunteerStateTypeType).reduce(
-      (acc, type) => {
-        acc[t(`dashboard.volunteerProfile.volunteerHeader.volunteerType_options.${type}`)] = type;
-        return acc;
-      },
-      {} as Record<string, VolunteerStateTypeType>,
-    );
-
-    const statusType = labelToVolunteerType[data.volunteerType];
-
-    const mapToApiItems = (ids: string[], mapping: { idToTitle: Record<number, string> }) =>
-      ids
-        .map((id) => {
-          const numId = parseInt(id, 10);
-          return { id: numId, title: mapping.idToTitle[numId] || "" };
-        })
-        .filter((item) => !isNaN(item.id) && item.id > 0);
+    const statusType = createLabelToVolunteerTypeMap(t)[data.volunteerType];
 
     updateProfile(
       {
         // @ts-expect-error -- Need4Deed SDK types incorrect, 'id' should be number
         availability: formToApiAvailability(data.availability),
         ...(statusType && Object.values(VolunteerStateTypeType).includes(statusType) && { statusType }),
-        languages: data.languages
-          .filter((lang) => lang.language && lang.level)
-          .map((lang) => ({
-            id: parseInt(lang.language, 10),
-            title: languageMapping.idToTitle[parseInt(lang.language, 10)] || "",
-            proficiency: LEVEL_TO_PROFICIENCY[lang.level as LanguageLevel],
-          })),
+        languages: transformLanguagesToApi(data.languages, languageMapping),
         locations: mapToApiItems(data.districts, districtMapping),
         activities: mapToApiItems(data.activities, activityMapping),
         skills: mapToApiItems(data.skills, skillMapping),
@@ -213,15 +139,12 @@ export function VolunteerProfileSection({ volunteer }: Props) {
             errors={errors}
             t={t}
             i18n={i18n}
-            locationOptions={apiDistricts.map((d) => d.title)}
-            idToLabel={districtMapping.idToTitle}
-            labelToId={districtMapping.titleToId}
-            activitiesOptions={apiActivities.map((a) => a.title)}
-            activityIdToLabel={activityMapping.idToTitle}
-            activityLabelToId={activityMapping.titleToId}
-            skillsOptions={apiSkills.map((s) => s.title)}
-            skillIdToLabel={skillMapping.idToTitle}
-            skillLabelToId={skillMapping.titleToId}
+            districts={apiDistricts}
+            districtMapping={districtMapping}
+            activities={apiActivities}
+            activityMapping={activityMapping}
+            skills={apiSkills}
+            skillMapping={skillMapping}
             languagesForForm={languagesForForm}
             trigger={trigger}
           />
