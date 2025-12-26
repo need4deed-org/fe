@@ -17,6 +17,7 @@ import {
   TableRow,
   TitleRow,
 } from "./styles";
+import { Tooltip } from "./Tooltip";
 import { Document } from "./types";
 
 type Props = {
@@ -105,42 +106,68 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
               {doc.uploadedOn || "–"}
             </Cell>
             <ActionCell $width="56px" $align="center">
-              <ActionButton
-                onClick={() => handleUpload(doc.id)}
-                aria-label="Upload document"
-              >
-                <UploadSimple size={24} weight="regular" />
-              </ActionButton>
+              <Tooltip text={t("dashboard.volunteerProfile.documentSection.tooltips.upload")}>
+                <ActionButton
+                  onClick={() => handleUpload(doc.id)}
+                  aria-label="Upload document"
+                >
+                  <UploadSimple size={24} weight="regular" />
+                </ActionButton>
+              </Tooltip>
             </ActionCell>
             <ActionCell $width="56px" $align="center">
-              <ActionButton
-                onClick={() => handleView(doc.id)}
-                $disabled={doc.status === "missing"}
-                disabled={doc.status === "missing"}
-                aria-label="View document"
+              <Tooltip
+                text={
+                  doc.status === "missing"
+                    ? t("dashboard.volunteerProfile.documentSection.tooltips.previewUnavailable")
+                    : t("dashboard.volunteerProfile.documentSection.tooltips.preview")
+                }
               >
-                <Eye size={24} weight="regular" />
-              </ActionButton>
+                <ActionButton
+                  onClick={() => handleView(doc.id)}
+                  $disabled={doc.status === "missing"}
+                  disabled={doc.status === "missing"}
+                  aria-label="View document"
+                >
+                  <Eye size={24} weight="regular" />
+                </ActionButton>
+              </Tooltip>
             </ActionCell>
             <ActionCell $width="56px" $align="center">
-              <ActionButton
-                onClick={() => handleDownload(doc.id)}
-                $disabled={doc.status === "missing"}
-                disabled={doc.status === "missing"}
-                aria-label="Download document"
+              <Tooltip
+                text={
+                  doc.status === "missing"
+                    ? t("dashboard.volunteerProfile.documentSection.tooltips.downloadUnavailable")
+                    : t("dashboard.volunteerProfile.documentSection.tooltips.download")
+                }
               >
-                <DownloadSimple size={24} weight="regular" />
-              </ActionButton>
+                <ActionButton
+                  onClick={() => handleDownload(doc.id)}
+                  $disabled={doc.status === "missing"}
+                  disabled={doc.status === "missing"}
+                  aria-label="Download document"
+                >
+                  <DownloadSimple size={24} weight="regular" />
+                </ActionButton>
+              </Tooltip>
             </ActionCell>
             <ActionCell $width="56px" $align="center">
-              <ActionButton
-                onClick={() => handleDelete(doc.id)}
-                $disabled={doc.status === "missing"}
-                disabled={doc.status === "missing"}
-                aria-label="Delete document"
+              <Tooltip
+                text={
+                  doc.status === "missing"
+                    ? t("dashboard.volunteerProfile.documentSection.tooltips.deleteUnavailable")
+                    : t("dashboard.volunteerProfile.documentSection.tooltips.delete")
+                }
               >
-                <Trash size={24} weight="regular" />
-              </ActionButton>
+                <ActionButton
+                  onClick={() => handleDelete(doc.id)}
+                  $disabled={doc.status === "missing"}
+                  disabled={doc.status === "missing"}
+                  aria-label="Delete document"
+                >
+                  <Trash size={24} weight="regular" />
+                </ActionButton>
+              </Tooltip>
             </ActionCell>
           </TableRow>
         ))}

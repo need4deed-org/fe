@@ -548,7 +548,16 @@
         "uploadedOn": "Uploaded on",
         "actions": "Actions",
         "uploaded": "Uploaded",
-        "missing": "Missing"
+        "missing": "Missing",
+        "tooltips": {
+          "upload": "Upload",
+          "preview": "Preview",
+          "download": "Download",
+          "delete": "Delete",
+          "previewUnavailable": "Preview unavailable",
+          "downloadUnavailable": "Download unavailable",
+          "deleteUnavailable": "Delete unavailable"
+        }
       }
     }
   },

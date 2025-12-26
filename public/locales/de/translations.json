@@ -548,7 +548,16 @@
         "uploadedOn": "Hochgeladen am",
         "actions": "Aktionen",
         "uploaded": "Hochgeladen",
-        "missing": "Fehlend"
+        "missing": "Fehlend",
+        "tooltips": {
+          "upload": "Hochladen",
+          "preview": "Vorschau",
+          "download": "Herunterladen",
+          "delete": "Löschen",
+          "previewUnavailable": "Vorschau nicht verfügbar",
+          "downloadUnavailable": "Download nicht verfügbar",
+          "deleteUnavailable": "Löschen nicht verfügbar"
+        }
       }
     },
     "message": {
