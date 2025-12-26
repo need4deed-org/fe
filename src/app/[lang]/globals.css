@@ -1112,8 +1112,28 @@ html {
     --volunteer-profile-back-link-transition: color 0.2s;
     --volunteer-profile-section-card-border-radius: 16px;
     --volunteer-profile-section-card-padding: 24px;
-    --volunteer-profile-section-card-header-gap: 24px;
+    --volunteer-profile-section-card-gap: 8px;
     --volunteer-profile-section-card-icon-size: 40px;
+    --volunteer-profile-section-card-header-info-gap: 24px;
+    --volunteer-profile-section-card-header-button-height: 56px;
+    --volunteer-profile-section-card-header-button-textFontSize: 20px;
+    --volunteer-profile-section-card-header-button-padding: 16px 24px;
+
+    --volunteer-profile-opportunities-container-gap: 8px;
+    --volunteer-profile-opportunities-tabs-margin-top: 16px;
+    --volunteer-profile-opportunities-tabs-gap: 24px;
+    --volunteer-profile-opportunities-tabs-border-bottom: 1px solid var(--color-blue-50);
+    --volunteer-profile-opportunities-tab-heading-margin: 0;
+    --volunteer-profile-opportunities-tab-heading-padding: 16px;
+    --volunteer-profile-opportunities-tab-heading-border-bottom: 2px solid currentColor;
+    --volunteer-profile-opportunities-accordion-container-padding: 24px;
+    --volunteer-profile-opportunities-accordion-container-border-radius: 24px;
+    --volunteer-profile-opportunities-accordion-container-border: 1px solid var(--color-blue-50);
+    --volunteer-profile-opportunities-accordion-container-gap: 24px;
+    --volunteer-profile-opportunities-accordion-header-info-gap: 8px;
+    --volunteer-profile-opportunities-accordion-header-avatar-name-gap: 16px;
+    --volunteer-profile-opportunities-accordion-header-buttons-gap: 24px;
+    --volunteer-profile-opportunities-accordion-header-buttons-gap: 24px;
   }
 }
 

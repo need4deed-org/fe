@@ -14,11 +14,11 @@ export default function VolunteerOpportunities() {
   const tabs = tabsKeys.map((key) => t(`dashboard.volunteerProfile.opportunitiesSec.tabs.${key}`));
 
   const opportunities = getMappedOpportunities(mockRawOpportunities, t);
-  console.log("opportunities", opportunities.slice(0, 4));
 
   return (
     <VolunteerOpportunitiesContainer>
       <Tabs tabs={tabs} selectedTabIndex={selectedTabIndex} setSelectedTabIndex={setSelectedTabIndex} />
+      {/* opportunities will be grouped and render beneath each tab after fetching opps from API */}
       <AccordionOpportunity opportunity={opportunities[0]} />
       <AccordionOpportunity opportunity={opportunities[1]} />
       <AccordionOpportunity opportunity={opportunities[2]} />
@@ -31,5 +31,5 @@ export default function VolunteerOpportunities() {
 const VolunteerOpportunitiesContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--volunteer-profile-opportunities-container-gap);
 `;

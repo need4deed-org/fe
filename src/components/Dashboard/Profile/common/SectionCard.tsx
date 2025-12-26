@@ -10,7 +10,7 @@ export const Card = styled.div`
   background-color: var(--color-white);
   border-radius: var(--volunteer-profile-section-card-border-radius);
   padding: var(--volunteer-profile-section-card-padding);
-  gap: 8px;
+  gap: var(--volunteer-profile-section-card-gap);
   display: flex;
   flex-direction: column;
 `;
@@ -23,7 +23,7 @@ const CardHeader = styled.div`
 const CardHeaderInfo = styled.div`
   display: flex;
   align-items: center;
-  gap: var(--volunteer-profile-section-card-header-gap);
+  gap: var(--volunteer-profile-section-card-header-info-gap);
 `;
 
 export interface SectionCardProps extends PropsWithChildren {
@@ -43,7 +43,13 @@ export const SectionCard = ({ iconName, title, headerButtonName, subComponent }:
         </CardHeaderInfo>
 
         {headerButtonName && (
-          <Button onClick={() => {}} text={headerButtonName} height="56px" textFontSize="20px" padding="16px 24px" />
+          <Button
+            onClick={() => {}}
+            text={headerButtonName}
+            height="var(--volunteer-profile-section-card-header-button-height)"
+            textFontSize="var(--volunteer-profile-section-card-header-button-textFontSize)"
+            padding="var(--volunteer-profile-section-card-header-button-padding)"
+          />
         )}
       </CardHeader>
 

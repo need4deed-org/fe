@@ -23,9 +23,9 @@ export const Tabs = ({ selectedTabIndex, setSelectedTabIndex, tabs }: Props) => 
 
 const TabsContainer = styled.div`
   display: flex;
-  margin-top: 16px;
-  gap: 24px;
-  border-bottom: 1px solid var(--color-blue-50);
+  margin-top: var(--volunteer-profile-opportunities-tabs-margin-top);
+  gap: var(--volunteer-profile-opportunities-tabs-gap);
+  border-bottom: var(--volunteer-profile-opportunities-tabs-border-bottom);
 `;
 
 interface TabHeadingProps {
@@ -34,8 +34,9 @@ interface TabHeadingProps {
 
 const TabHeading = styled(Heading4)<TabHeadingProps>`
   cursor: pointer;
-  border-bottom: ${(props) => (props.$isSelected ? "2px solid currentColor" : "none")};
+  border-bottom: ${(props) =>
+    props.$isSelected ? "var(--volunteer-profile-opportunities-tab-heading-border-bottom)" : "none"};
   color: ${(props) => (props.$isSelected ? "var(--color-violet-500)" : "none")};
-  padding: 16px;
-  margin: 0;
+  padding: var(--volunteer-profile-opportunities-tab-heading-padding);
+  margin: var(--volunteer-profile-opportunities-tab-heading-margin);
 `;

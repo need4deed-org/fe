@@ -63,13 +63,11 @@ const AccordionContainer = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-
-  padding: 24px;
-  border-radius: 24px;
-  border: 1px solid var(--color-blue-50);
   background: var(--color-white);
-
-  gap: 24px;
+  padding: var(--volunteer-profile-opportunities-accordion-container-padding);
+  border-radius: var(--volunteer-profile-opportunities-accordion-container-border-radius);
+  border: var(--volunteer-profile-opportunities-accordion-container-border);
+  gap: var(--volunteer-profile-opportunities-accordion-container-gap);
 `;
 
 const HeaderContainer = styled.div`
@@ -82,13 +80,13 @@ const HeaderInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 8px;
+  gap: var(--volunteer-profile-opportunities-accordion-header-info-gap);
 `;
 
 const HeaderInfoAvatarNameContainer = styled.div`
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: var(--volunteer-profile-opportunities-accordion-header-avatar-name-gap);
   align-self: stretch;
 `;
 
@@ -96,7 +94,7 @@ const HeaderButtonsContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: 24px;
+  gap: var(--volunteer-profile-opportunities-accordion-header-buttons-gap);
 `;
 
 const DetailContainer = styled.div`
