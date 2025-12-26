@@ -2,6 +2,7 @@
 import { Heading2 } from "@/components/styled/text";
 import { ClipboardText, DownloadSimple, Eye, Trash, UploadSimple } from "@phosphor-icons/react";
 import { ApiVolunteerGet } from "need4deed-sdk";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   ActionButton,
@@ -17,6 +18,7 @@ import {
   TableRow,
   TitleRow,
 } from "./styles";
+import { DeleteConfirmationDialog } from "./DeleteConfirmationDialog";
 import { Tooltip } from "./Tooltip";
 import { Document } from "./types";
 
@@ -51,6 +53,8 @@ const MOCK_DOCUMENTS: Document[] = [
 
 export function VolunteerProfileDocumentSection({ volunteer }: Props) {
   const { t } = useTranslation();
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [documentToDelete, setDocumentToDelete] = useState<Document | null>(null);
 
   const handleUpload = (documentId: string) => {
     console.log("Upload document:", documentId);
@@ -65,19 +69,38 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
   };
 
   const handleDelete = (documentId: string) => {
-    console.log("Delete document:", documentId);
+    const doc = MOCK_DOCUMENTS.find((d) => d.id === documentId);
+    if (doc) {
+      setDocumentToDelete(doc);
+      setDeleteDialogOpen(true);
+    }
+  };
+
+  const handleConfirmDelete = () => {
+    if (documentToDelete) {
+      console.log("Delete confirmed:", documentToDelete.id);
+      // TODO: Implement actual delete logic
+      setDeleteDialogOpen(false);
+      setDocumentToDelete(null);
+    }
+  };
+
+  const handleCancelDelete = () => {
+    setDeleteDialogOpen(false);
+    setDocumentToDelete(null);
   };
 
   return (
-    <Container data-testid="volunteer-profile-document-section-container">
-      <Header>
-        <TitleRow>
-          <IconContainer>
-            <ClipboardText size={40} weight="fill" />
-          </IconContainer>
-          <Heading2>{t("dashboard.volunteerProfile.documentSection.title")}</Heading2>
-        </TitleRow>
-      </Header>
+    <>
+      <Container data-testid="volunteer-profile-document-section-container">
+        <Header>
+          <TitleRow>
+            <IconContainer>
+              <ClipboardText size={40} weight="fill" />
+            </IconContainer>
+            <Heading2>{t("dashboard.volunteerProfile.documentSection.title")}</Heading2>
+          </TitleRow>
+        </Header>
 
       <Table>
         <TableHeader>
@@ -172,6 +195,14 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
           </TableRow>
         ))}
       </Table>
-    </Container>
+      </Container>
+
+      <DeleteConfirmationDialog
+        isOpen={deleteDialogOpen}
+        documentName={documentToDelete?.name || ""}
+        onCancel={handleCancelDelete}
+        onConfirm={handleConfirmDelete}
+      />
+    </>
   );
 }

@@ -557,6 +557,12 @@
           "previewUnavailable": "Vorschau nicht verfügbar",
           "downloadUnavailable": "Download nicht verfügbar",
           "deleteUnavailable": "Löschen nicht verfügbar"
+        },
+        "deleteDialog": {
+          "title": "Dokument löschen?",
+          "message": "\"{{documentName}}\" wird gelöscht.",
+          "cancel": "Abbrechen",
+          "delete": "Löschen"
         }
       }
     },

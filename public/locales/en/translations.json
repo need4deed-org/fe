@@ -557,6 +557,12 @@
           "previewUnavailable": "Preview unavailable",
           "downloadUnavailable": "Download unavailable",
           "deleteUnavailable": "Delete unavailable"
+        },
+        "deleteDialog": {
+          "title": "Delete document?",
+          "message": "\"{{documentName}}\" document will be deleted.",
+          "cancel": "Cancel",
+          "delete": "Delete"
         }
       }
     }
