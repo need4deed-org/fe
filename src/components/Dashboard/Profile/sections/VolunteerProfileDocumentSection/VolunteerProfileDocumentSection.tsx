@@ -1,6 +1,6 @@
 "use client";
 import { Heading2 } from "@/components/styled/text";
-import { ClipboardText, DownloadSimple, Eye, Trash } from "@phosphor-icons/react";
+import { ClipboardText, DownloadSimple, Eye, Trash, UploadSimple } from "@phosphor-icons/react";
 import { ApiVolunteerGet } from "need4deed-sdk";
 import { useTranslation } from "react-i18next";
 import {
@@ -51,6 +51,10 @@ const MOCK_DOCUMENTS: Document[] = [
 export function VolunteerProfileDocumentSection({ volunteer }: Props) {
   const { t } = useTranslation();
 
+  const handleUpload = (documentId: string) => {
+    console.log("Upload document:", documentId);
+  };
+
   const handleView = (documentId: string) => {
     console.log("View document:", documentId);
   };
@@ -84,6 +88,7 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
           <HeaderCell $width="56px"></HeaderCell>
           <HeaderCell $width="56px"></HeaderCell>
           <HeaderCell $width="56px"></HeaderCell>
+          <HeaderCell $width="56px"></HeaderCell>
         </TableHeader>
 
         {MOCK_DOCUMENTS.map((doc, index) => (
@@ -99,6 +104,14 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
             <Cell $width="152px" $noWrap>
               {doc.uploadedOn || "–"}
             </Cell>
+            <ActionCell $width="56px" $align="center">
+              <ActionButton
+                onClick={() => handleUpload(doc.id)}
+                aria-label="Upload document"
+              >
+                <UploadSimple size={24} weight="regular" />
+              </ActionButton>
+            </ActionCell>
             <ActionCell $width="56px" $align="center">
               <ActionButton
                 onClick={() => handleView(doc.id)}
