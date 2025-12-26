@@ -20,6 +20,8 @@ export default function VolunteerOpportunities() {
     <VolunteerOpportunitiesContainer>
       <Tabs tabs={tabs} selectedTabIndex={selectedTabIndex} setSelectedTabIndex={setSelectedTabIndex} />
       <AccordionOpportunity opportunity={opportunities[0]} />
+      <AccordionOpportunity opportunity={opportunities[1]} />
+      <AccordionOpportunity opportunity={opportunities[2]} />
     </VolunteerOpportunitiesContainer>
   );
 }

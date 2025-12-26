@@ -1,8 +1,14 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { Heading4, Paragraph } from "@/components/styled/text";
-import CircleArrow from "@/components/svg/CircleArrow";
 import { Opportunity } from "./mockOpps/tempTypes";
+import { IconDiv } from "@/components/styled/container";
+import { iconNameMap } from "../../common/icon";
+import { CategoryTitle, getIconName } from "./mockOpps/tempUtils";
+import StatusBadge from "../../common/StatusBadge";
+import { VolunteerStateType } from "need4deed-sdk";
+import { useTranslation } from "react-i18next";
+import { CaretDownIcon, CaretUpIcon } from "@phosphor-icons/react";
 
 interface Props {
   opportunity: Opportunity;
@@ -10,27 +16,41 @@ interface Props {
 
 export default function AccordionOpportunity({ opportunity }: Props) {
   const [isOpen, setIsOpen] = useState(false);
-
-  console.log("* inside AccordionOpp:", opportunity);
+  const { t } = useTranslation();
+  const { categoryId, title } = opportunity;
+  const iconName = getIconName(categoryId as CategoryTitle);
+  const CaretIcon = isOpen ? CaretUpIcon : CaretDownIcon;
 
   return (
     <AccordionContainer>
       <HeaderContainer>
         <HeaderInfoContainer>
           <HeaderInfoAvatarNameContainer>
-            <Paragraph>ICON</Paragraph>
-            <Heading4 color="var(--color-midnight)">Name of the opportunity</Heading4>
-            <Paragraph>Matched</Paragraph>
+            <IconDiv size="var(--volunteer-profile-section-card-icon-size)">{iconNameMap[iconName]}</IconDiv>
+            <Heading4 margin={0} color="var(--color-midnight)">
+              {title}
+            </Heading4>
+            {/* Todo: this will be updated later when opps fetched from API */}
+            <StatusBadge status={VolunteerStateType.MATCHED} />
           </HeaderInfoAvatarNameContainer>
+          {/* Todo: this will be updated later when opps fetched from API */}
           <Paragraph>Matched on 12.02.2025</Paragraph>
         </HeaderInfoContainer>
 
         <HeaderButtonsContainer>
-          <Paragraph>Go to Profile</Paragraph>
-          <CircleArrow direction={isOpen ? "up" : "down"} color="orchid" isFilled onClick={() => setIsOpen(!isOpen)} />
+          <Heading4 margin={0} color="var(--color-midnight-light)">
+            {t("dashboard.opportunities.goToProfile")}
+          </Heading4>
+          <CaretIcon
+            size={24}
+            onClick={() => setIsOpen((prev) => !prev)}
+            cursor="pointer"
+            color="var(--color-midnight)"
+          />
         </HeaderButtonsContainer>
       </HeaderContainer>
 
+      {/* Todo: will be implemented in other Task */}
       {isOpen && <DetailContainer>Opportinity Detail Container</DetailContainer>}
     </AccordionContainer>
   );

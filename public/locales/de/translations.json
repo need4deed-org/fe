@@ -510,7 +510,8 @@
         "no": "Sprachmittlung ist nicht nötig"
       },
       "defaultMainCommunication": "Englisch, Deutsch",
-      "otherCategory": "Allgemeines Engagement"
+      "otherCategory": "Allgemeines Engagement",
+      "goToProfile": "Zum Profil"
     }
   },
   "message": {

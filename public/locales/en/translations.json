@@ -509,7 +509,8 @@
         "no": "No Translation needed"
       },
       "defaultMainCommunication": "English, German",
-      "otherCategory": "General Volunteering"
+      "otherCategory": "General Volunteering",
+      "goToProfile": "Go to Profile"
     }
   },
   "message": {
