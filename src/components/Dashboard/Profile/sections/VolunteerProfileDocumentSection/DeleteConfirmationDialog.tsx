@@ -1,5 +1,7 @@
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
+import { DialogOverlay } from "./shared/DialogOverlay";
+import { DialogButtonGroup, CancelButton, PrimaryButton } from "./shared/DialogButtonGroup";
 
 type Props = {
   isOpen: boolean;
@@ -7,19 +9,6 @@ type Props = {
   onCancel: () => void;
   onConfirm: () => void;
 };
-
-const Overlay = styled.div<{ $isOpen: boolean }>`
-  display: ${(props) => (props.$isOpen ? "flex" : "none")};
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  justify-content: center;
-  align-items: center;
-  z-index: 10003;
-`;
 
 const Dialog = styled.div`
   background: var(--color-white);
@@ -48,68 +37,23 @@ const Message = styled.p`
   margin: 0 0 32px 0;
 `;
 
-const ButtonGroup = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  gap: 16px;
-`;
-
-const CancelButton = styled.button`
-  font-family: "Figtree", sans-serif;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 24px;
-  color: var(--color-aubergine);
-  background: transparent;
-  border: 2px solid var(--color-aubergine);
-  border-radius: 125px;
-  padding: 12px 32px;
-  cursor: pointer;
-  transition: all 0.2s;
-
-  &:hover {
-    background: var(--color-aubergine-subtle);
-  }
-`;
-
-const DeleteButton = styled.button`
-  font-family: "Figtree", sans-serif;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 24px;
-  color: var(--color-white);
-  background: var(--color-aubergine);
-  border: 2px solid var(--color-aubergine);
-  border-radius: 125px;
-  padding: 12px 32px;
-  cursor: pointer;
-  transition: all 0.2s;
-
-  &:hover {
-    background: var(--color-aubergine-light);
-    border-color: var(--color-aubergine-light);
-  }
-`;
-
 export function DeleteConfirmationDialog({ isOpen, documentName, onCancel, onConfirm }: Props) {
   const { t } = useTranslation();
 
-  if (!isOpen) return null;
-
   return (
-    <Overlay $isOpen={isOpen} onClick={onCancel}>
+    <DialogOverlay isOpen={isOpen} onClose={onCancel} zIndex={10003}>
       <Dialog onClick={(e) => e.stopPropagation()}>
         <Title>{t("dashboard.volunteerProfile.documentSection.deleteDialog.title")}</Title>
         <Message>{t("dashboard.volunteerProfile.documentSection.deleteDialog.message", { documentName })}</Message>
-        <ButtonGroup>
+        <DialogButtonGroup>
           <CancelButton onClick={onCancel}>
             {t("dashboard.volunteerProfile.documentSection.deleteDialog.cancel")}
           </CancelButton>
-          <DeleteButton onClick={onConfirm}>
+          <PrimaryButton onClick={onConfirm}>
             {t("dashboard.volunteerProfile.documentSection.deleteDialog.delete")}
-          </DeleteButton>
-        </ButtonGroup>
+          </PrimaryButton>
+        </DialogButtonGroup>
       </Dialog>
-    </Overlay>
+    </DialogOverlay>
   );
 }

@@ -2,6 +2,8 @@ import { useTranslation } from "react-i18next";
 import { useState, useRef, DragEvent, ChangeEvent } from "react";
 import styled from "styled-components";
 import { UploadSimple, FilePlus } from "@phosphor-icons/react";
+import { DialogOverlay } from "./shared/DialogOverlay";
+import { DialogButtonGroup, PrimaryCancelButton, LargePrimaryButton } from "./shared/DialogButtonGroup";
 
 type Props = {
   isOpen: boolean;
@@ -9,19 +11,6 @@ type Props = {
   onCancel: () => void;
   onUpload: (file: File) => void;
 };
-
-const Overlay = styled.div<{ $isOpen: boolean }>`
-  display: ${(props) => (props.$isOpen ? "flex" : "none")};
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  justify-content: center;
-  align-items: center;
-  z-index: 10001;
-`;
 
 const Dialog = styled.div`
   background: var(--color-white);
@@ -133,56 +122,11 @@ const HiddenInput = styled.input`
   display: none;
 `;
 
-const ButtonGroup = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  gap: 16px;
-`;
-
-const CancelButton = styled.button`
-  font-family: "Figtree", sans-serif;
-  font-weight: 600;
-  font-size: 24px;
-  line-height: 32px;
-  color: var(--color-aubergine);
-  background: transparent;
-  border: 2px solid var(--color-aubergine);
-  border-radius: 125px;
-  padding: 16px 48px;
-  cursor: pointer;
-  transition: all 0.2s;
-
-  &:hover {
-    background: var(--color-aubergine-subtle);
-  }
-`;
-
-const UploadButton = styled.button<{ $disabled: boolean }>`
-  font-family: "Figtree", sans-serif;
-  font-weight: 600;
-  font-size: 24px;
-  line-height: 32px;
-  color: var(--color-white);
-  background: ${(props) => (props.$disabled ? "#D1D5DB" : "var(--color-aubergine)")};
-  border: 2px solid ${(props) => (props.$disabled ? "#D1D5DB" : "var(--color-aubergine)")};
-  border-radius: 125px;
-  padding: 16px 48px;
-  cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
-  transition: all 0.2s;
-
-  &:hover {
-    background: ${(props) => (props.$disabled ? "#D1D5DB" : "var(--color-aubergine-light)")};
-    border-color: ${(props) => (props.$disabled ? "#D1D5DB" : "var(--color-aubergine-light)")};
-  }
-`;
-
 export function UploadDocumentDialog({ isOpen, documentName, onCancel, onUpload }: Props) {
   const { t } = useTranslation();
   const [isDragging, setIsDragging] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-
-  if (!isOpen) return null;
 
   const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -228,7 +172,7 @@ export function UploadDocumentDialog({ isOpen, documentName, onCancel, onUpload 
   };
 
   return (
-    <Overlay $isOpen={isOpen} onClick={handleClose}>
+    <DialogOverlay isOpen={isOpen} onClose={handleClose}>
       <Dialog onClick={(e) => e.stopPropagation()}>
         <Title>{t("dashboard.volunteerProfile.documentSection.uploadDialog.title")}</Title>
         <Subtitle>{t("dashboard.volunteerProfile.documentSection.uploadDialog.documentType", { documentName })}</Subtitle>
@@ -269,15 +213,15 @@ export function UploadDocumentDialog({ isOpen, documentName, onCancel, onUpload 
           </SelectedFile>
         )}
 
-        <ButtonGroup>
-          <CancelButton onClick={handleClose}>
+        <DialogButtonGroup>
+          <PrimaryCancelButton onClick={handleClose}>
             {t("dashboard.volunteerProfile.documentSection.uploadDialog.cancel")}
-          </CancelButton>
-          <UploadButton onClick={handleUpload} $disabled={!selectedFile} disabled={!selectedFile}>
+          </PrimaryCancelButton>
+          <LargePrimaryButton onClick={handleUpload} $disabled={!selectedFile} disabled={!selectedFile}>
             {t("dashboard.volunteerProfile.documentSection.uploadDialog.upload")}
-          </UploadButton>
-        </ButtonGroup>
+          </LargePrimaryButton>
+        </DialogButtonGroup>
       </Dialog>
-    </Overlay>
+    </DialogOverlay>
   );
 }

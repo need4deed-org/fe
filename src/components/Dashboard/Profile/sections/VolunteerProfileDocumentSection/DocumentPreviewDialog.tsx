@@ -1,6 +1,7 @@
 import { ArrowLeft, DownloadSimple, Minus, Plus, Trash } from "@phosphor-icons/react";
 import { useState } from "react";
 import styled from "styled-components";
+import { DialogOverlay } from "./shared/DialogOverlay";
 
 type Props = {
   isOpen: boolean;
@@ -10,19 +11,6 @@ type Props = {
   onDownload: () => void;
   onDelete: () => void;
 };
-
-const Overlay = styled.div<{ $isOpen: boolean }>`
-  display: ${(props) => (props.$isOpen ? "flex" : "none")};
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  justify-content: center;
-  align-items: center;
-  z-index: 10002;
-`;
 
 const ContentArea = styled.div`
   position: relative;
@@ -158,19 +146,6 @@ const ZoomControls = styled.div`
   z-index: 3;
 `;
 
-const PageInfo = styled.div`
-  font-family: "Figtree", sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 20px;
-  display: flex;
-  align-items: center;
-  text-align: center;
-  letter-spacing: 0.005em;
-  color: #ffffff;
-`;
-
 const ZoomOptions = styled.div`
   display: flex;
   flex-direction: row;
@@ -203,10 +178,6 @@ const ZoomButton = styled.button`
 
 export function DocumentPreviewDialog({ isOpen, documentName, documentUrl, onClose, onDownload, onDelete }: Props) {
   const [scale, setScale] = useState(1);
-  const [currentPage] = useState(1);
-  const [totalPages] = useState(2);
-
-  if (!isOpen) return null;
 
   const handleZoomIn = () => {
     setScale((prev) => Math.min(prev + 0.2, 2));
@@ -217,7 +188,7 @@ export function DocumentPreviewDialog({ isOpen, documentName, documentUrl, onClo
   };
 
   return (
-    <Overlay $isOpen={isOpen} onClick={onClose}>
+    <DialogOverlay isOpen={isOpen} onClose={onClose} zIndex={10002}>
       <ContentArea onClick={(e) => e.stopPropagation()}>
         <PreviewBar>
           <DocumentNameSection>
@@ -247,9 +218,6 @@ export function DocumentPreviewDialog({ isOpen, documentName, documentUrl, onClo
         </DocumentContainer>
 
         <ZoomControls>
-          <PageInfo>
-            Page {currentPage}/{totalPages}
-          </PageInfo>
           <ZoomOptions>
             <ZoomButton onClick={handleZoomOut} disabled={scale <= 0.5} aria-label="Zoom out">
               <Minus size={24} weight="regular" />
@@ -260,6 +228,6 @@ export function DocumentPreviewDialog({ isOpen, documentName, documentUrl, onClo
           </ZoomOptions>
         </ZoomControls>
       </ContentArea>
-    </Overlay>
+    </DialogOverlay>
   );
 }

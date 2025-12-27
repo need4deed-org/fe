@@ -2,10 +2,8 @@
 import { Heading2 } from "@/components/styled/text";
 import { ClipboardText, DownloadSimple, Eye, Trash, UploadSimple } from "@phosphor-icons/react";
 import { ApiVolunteerGet } from "need4deed-sdk";
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
-  ActionButton,
   ActionCell,
   Cell,
   Container,
@@ -21,7 +19,8 @@ import {
 import { DeleteConfirmationDialog } from "./DeleteConfirmationDialog";
 import { UploadDocumentDialog } from "./UploadDocumentDialog";
 import { DocumentPreviewDialog } from "./DocumentPreviewDialog";
-import { Tooltip } from "./Tooltip";
+import { ActionButtonWithTooltip } from "./ActionButtonWithTooltip";
+import { useDialogState } from "./useDialogState";
 import { Document } from "./types";
 
 type Props = {
@@ -55,89 +54,37 @@ const MOCK_DOCUMENTS: Document[] = [
 
 export function VolunteerProfileDocumentSection({ volunteer }: Props) {
   const { t } = useTranslation();
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [documentToDelete, setDocumentToDelete] = useState<Document | null>(null);
-  const [uploadDialogOpen, setUploadDialogOpen] = useState(false);
-  const [documentToUpload, setDocumentToUpload] = useState<Document | null>(null);
-  const [previewDialogOpen, setPreviewDialogOpen] = useState(false);
-  const [documentToPreview, setDocumentToPreview] = useState<Document | null>(null);
-
-  const handleUpload = (documentId: string) => {
-    const doc = MOCK_DOCUMENTS.find((d) => d.id === documentId);
-    if (doc) {
-      setDocumentToUpload(doc);
-      setUploadDialogOpen(true);
-    }
-  };
-
-  const handleView = (documentId: string) => {
-    const doc = MOCK_DOCUMENTS.find((d) => d.id === documentId);
-    if (doc && doc.status === "uploaded") {
-      setDocumentToPreview(doc);
-      setPreviewDialogOpen(true);
-    }
-  };
-
-  const handleDownload = (documentId: string) => {
-    console.log("Download document:", documentId);
-  };
-
-  const handleDelete = (documentId: string) => {
-    const doc = MOCK_DOCUMENTS.find((d) => d.id === documentId);
-    if (doc) {
-      setDocumentToDelete(doc);
-      setDeleteDialogOpen(true);
-    }
-  };
+  const {
+    deleteDocument,
+    uploadDocument,
+    previewDocument,
+    openDialog,
+    closeDialog,
+    isDeleteOpen,
+    isUploadOpen,
+    isPreviewOpen,
+  } = useDialogState();
 
   const handleConfirmDelete = () => {
-    if (documentToDelete) {
-      console.log("Delete confirmed:", documentToDelete.id);
+    if (deleteDocument) {
+      console.log("Delete confirmed:", deleteDocument.id);
       // TODO: Implement actual delete logic
-      setDeleteDialogOpen(false);
-      setDocumentToDelete(null);
-      // Close preview dialog if it's open
-      setPreviewDialogOpen(false);
-      setDocumentToPreview(null);
     }
-  };
-
-  const handleCancelDelete = () => {
-    setDeleteDialogOpen(false);
-    setDocumentToDelete(null);
+    closeDialog("delete");
+    closeDialog("preview");
   };
 
   const handleConfirmUpload = (file: File) => {
-    if (documentToUpload) {
-      console.log("Upload confirmed:", documentToUpload.id, file.name);
+    if (uploadDocument) {
+      console.log("Upload confirmed:", uploadDocument.id, file.name);
       // TODO: Implement actual upload logic
-      setUploadDialogOpen(false);
-      setDocumentToUpload(null);
     }
+    closeDialog("upload");
   };
 
-  const handleCancelUpload = () => {
-    setUploadDialogOpen(false);
-    setDocumentToUpload(null);
-  };
-
-  const handleClosePreview = () => {
-    setPreviewDialogOpen(false);
-    setDocumentToPreview(null);
-  };
-
-  const handleDownloadFromPreview = () => {
-    if (documentToPreview) {
-      console.log("Download from preview:", documentToPreview.id);
-      // TODO: Implement actual download logic
-    }
-  };
-
-  const handleDeleteFromPreview = () => {
-    if (documentToPreview) {
-      setDocumentToDelete(documentToPreview);
-      setDeleteDialogOpen(true);
-    }
+  const handleDownload = (doc: Document) => {
+    console.log("Download document:", doc.id);
+    // TODO: Implement actual download logic
   };
 
   return (
@@ -165,109 +112,100 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
           <HeaderCell $width="56px"></HeaderCell>
         </TableHeader>
 
-        {MOCK_DOCUMENTS.map((doc, index) => (
-          <TableRow key={doc.id} $isLast={index === MOCK_DOCUMENTS.length - 1}>
-            <Cell>{t(doc.nameKey)}</Cell>
-            <Cell $width="180px" $align="center">
-              <StatusBadge $status={doc.status}>
-                {doc.status === "uploaded"
-                  ? t("dashboard.volunteerProfile.documentSection.uploaded")
-                  : t("dashboard.volunteerProfile.documentSection.missing")}
-              </StatusBadge>
-            </Cell>
-            <Cell $width="152px" $noWrap>
-              {doc.uploadedOn || "–"}
-            </Cell>
-            <ActionCell $width="56px" $align="center">
-              <Tooltip text={t("dashboard.volunteerProfile.documentSection.tooltips.upload")}>
-                <ActionButton
-                  onClick={() => handleUpload(doc.id)}
-                  aria-label="Upload document"
+        {MOCK_DOCUMENTS.map((doc, index) => {
+          const isMissing = doc.status === "missing";
+
+          return (
+            <TableRow key={doc.id} $isLast={index === MOCK_DOCUMENTS.length - 1}>
+              <Cell>{t(doc.nameKey)}</Cell>
+              <Cell $width="180px" $align="center">
+                <StatusBadge $status={doc.status}>
+                  {doc.status === "uploaded"
+                    ? t("dashboard.volunteerProfile.documentSection.uploaded")
+                    : t("dashboard.volunteerProfile.documentSection.missing")}
+                </StatusBadge>
+              </Cell>
+              <Cell $width="152px" $noWrap>
+                {doc.uploadedOn || "–"}
+              </Cell>
+              <ActionCell $width="56px" $align="center">
+                <ActionButtonWithTooltip
+                  tooltipText={t("dashboard.volunteerProfile.documentSection.tooltips.upload")}
+                  onClick={() => openDialog("upload", doc)}
+                  ariaLabel="Upload document"
                 >
                   <UploadSimple size={24} weight="regular" />
-                </ActionButton>
-              </Tooltip>
-            </ActionCell>
-            <ActionCell $width="56px" $align="center">
-              <Tooltip
-                text={
-                  doc.status === "missing"
-                    ? t("dashboard.volunteerProfile.documentSection.tooltips.previewUnavailable")
-                    : t("dashboard.volunteerProfile.documentSection.tooltips.preview")
-                }
-              >
-                <ActionButton
-                  onClick={() => handleView(doc.id)}
-                  $disabled={doc.status === "missing"}
-                  disabled={doc.status === "missing"}
-                  aria-label="View document"
+                </ActionButtonWithTooltip>
+              </ActionCell>
+              <ActionCell $width="56px" $align="center">
+                <ActionButtonWithTooltip
+                  tooltipText={
+                    isMissing
+                      ? t("dashboard.volunteerProfile.documentSection.tooltips.previewUnavailable")
+                      : t("dashboard.volunteerProfile.documentSection.tooltips.preview")
+                  }
+                  disabled={isMissing}
+                  onClick={() => openDialog("preview", doc)}
+                  ariaLabel="View document"
                 >
                   <Eye size={24} weight="regular" />
-                </ActionButton>
-              </Tooltip>
-            </ActionCell>
-            <ActionCell $width="56px" $align="center">
-              <Tooltip
-                text={
-                  doc.status === "missing"
-                    ? t("dashboard.volunteerProfile.documentSection.tooltips.downloadUnavailable")
-                    : t("dashboard.volunteerProfile.documentSection.tooltips.download")
-                }
-              >
-                <ActionButton
-                  onClick={() => handleDownload(doc.id)}
-                  $disabled={doc.status === "missing"}
-                  disabled={doc.status === "missing"}
-                  aria-label="Download document"
+                </ActionButtonWithTooltip>
+              </ActionCell>
+              <ActionCell $width="56px" $align="center">
+                <ActionButtonWithTooltip
+                  tooltipText={
+                    isMissing
+                      ? t("dashboard.volunteerProfile.documentSection.tooltips.downloadUnavailable")
+                      : t("dashboard.volunteerProfile.documentSection.tooltips.download")
+                  }
+                  disabled={isMissing}
+                  onClick={() => handleDownload(doc)}
+                  ariaLabel="Download document"
                 >
                   <DownloadSimple size={24} weight="regular" />
-                </ActionButton>
-              </Tooltip>
-            </ActionCell>
-            <ActionCell $width="56px" $align="center">
-              <Tooltip
-                text={
-                  doc.status === "missing"
-                    ? t("dashboard.volunteerProfile.documentSection.tooltips.deleteUnavailable")
-                    : t("dashboard.volunteerProfile.documentSection.tooltips.delete")
-                }
-              >
-                <ActionButton
-                  onClick={() => handleDelete(doc.id)}
-                  $disabled={doc.status === "missing"}
-                  disabled={doc.status === "missing"}
-                  aria-label="Delete document"
+                </ActionButtonWithTooltip>
+              </ActionCell>
+              <ActionCell $width="56px" $align="center">
+                <ActionButtonWithTooltip
+                  tooltipText={
+                    isMissing
+                      ? t("dashboard.volunteerProfile.documentSection.tooltips.deleteUnavailable")
+                      : t("dashboard.volunteerProfile.documentSection.tooltips.delete")
+                  }
+                  disabled={isMissing}
+                  onClick={() => openDialog("delete", doc)}
+                  ariaLabel="Delete document"
                 >
                   <Trash size={24} weight="regular" />
-                </ActionButton>
-              </Tooltip>
-            </ActionCell>
-          </TableRow>
-        ))}
+                </ActionButtonWithTooltip>
+              </ActionCell>
+            </TableRow>
+          );
+        })}
       </Table>
       </Container>
 
       <DeleteConfirmationDialog
-        isOpen={deleteDialogOpen}
-        documentName={documentToDelete?.nameKey ? t(documentToDelete.nameKey) : ""}
-        onCancel={handleCancelDelete}
+        isOpen={isDeleteOpen}
+        documentName={deleteDocument?.nameKey ? t(deleteDocument.nameKey) : ""}
+        onCancel={() => closeDialog("delete")}
         onConfirm={handleConfirmDelete}
       />
 
       <UploadDocumentDialog
-        isOpen={uploadDialogOpen}
-        documentName={documentToUpload?.nameKey ? t(documentToUpload.nameKey) : ""}
-        onCancel={handleCancelUpload}
+        isOpen={isUploadOpen}
+        documentName={uploadDocument?.nameKey ? t(uploadDocument.nameKey) : ""}
+        onCancel={() => closeDialog("upload")}
         onUpload={handleConfirmUpload}
       />
 
       <DocumentPreviewDialog
-        isOpen={previewDialogOpen}
-        documentName={documentToPreview?.nameKey ? t(documentToPreview.nameKey) : ""}
+        isOpen={isPreviewOpen}
+        documentName={previewDocument?.nameKey ? t(previewDocument.nameKey) : ""}
         documentUrl="/pdf-sample_0.pdf"
-        onClose={handleClosePreview}
-        onDownload={handleDownloadFromPreview}
-        onDelete={handleDeleteFromPreview}
+        onClose={() => closeDialog("preview")}
+        onDownload={() => previewDocument && handleDownload(previewDocument)}
+        onDelete={() => previewDocument && openDialog("delete", previewDocument)}
       />
     </>
   );
