@@ -1,4 +1,4 @@
-import { ArrowLeft, DownloadSimple, Minus, Plus, Trash } from "@phosphor-icons/react";
+import { ArrowLeft, DownloadSimple, MagnifyingGlassPlus, Minus, Plus, Trash } from "@phosphor-icons/react";
 import { useState } from "react";
 import styled from "styled-components";
 import { DialogOverlay } from "./shared/DialogOverlay";
@@ -133,9 +133,9 @@ const PDFEmbed = styled.object`
 const ZoomControls = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   padding: 16px;
-  gap: 32px;
+  gap: 16px;
   position: absolute;
   bottom: 74px;
   left: 50%;
@@ -144,14 +144,6 @@ const ZoomControls = styled.div`
   opacity: 0.8;
   border-radius: 16px;
   z-index: 3;
-`;
-
-const ZoomOptions = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 0px;
-  gap: 16px;
 `;
 
 const ZoomButton = styled.button`
@@ -187,6 +179,10 @@ export function DocumentPreviewDialog({ isOpen, documentName, documentUrl, onClo
     setScale((prev) => Math.max(prev - 0.2, 0.5));
   };
 
+  const handleZoomReset = () => {
+    setScale(1);
+  };
+
   return (
     <DialogOverlay isOpen={isOpen} onClose={onClose} zIndex={10002}>
       <ContentArea onClick={(e) => e.stopPropagation()}>
@@ -217,15 +213,16 @@ export function DocumentPreviewDialog({ isOpen, documentName, documentUrl, onClo
           </DocumentFrame>
         </DocumentContainer>
 
-        <ZoomControls>
-          <ZoomOptions>
-            <ZoomButton onClick={handleZoomOut} disabled={scale <= 0.5} aria-label="Zoom out">
-              <Minus size={24} weight="regular" />
-            </ZoomButton>
-            <ZoomButton onClick={handleZoomIn} disabled={scale >= 2} aria-label="Zoom in">
-              <Plus size={24} weight="regular" />
-            </ZoomButton>
-          </ZoomOptions>
+        <ZoomControls data-testid="document-preview-zoom-controls">
+          <ZoomButton onClick={handleZoomOut} disabled={scale <= 0.5} aria-label="Zoom out">
+            <Minus size={24} weight="regular" />
+          </ZoomButton>
+          <ZoomButton onClick={handleZoomReset} aria-label="Reset zoom">
+            <MagnifyingGlassPlus size={24} weight="regular" />
+          </ZoomButton>
+          <ZoomButton onClick={handleZoomIn} disabled={scale >= 2} aria-label="Zoom in">
+            <Plus size={24} weight="regular" />
+          </ZoomButton>
         </ZoomControls>
       </ContentArea>
     </DialogOverlay>
