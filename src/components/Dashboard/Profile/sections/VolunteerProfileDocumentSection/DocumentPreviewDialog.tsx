@@ -1,6 +1,6 @@
+import { ArrowLeft, DownloadSimple, Minus, Plus, Trash } from "@phosphor-icons/react";
 import { useState } from "react";
 import styled from "styled-components";
-import { ArrowLeft, DownloadSimple, Trash, Plus, Minus } from "@phosphor-icons/react";
 
 type Props = {
   isOpen: boolean;
@@ -18,7 +18,7 @@ const Overlay = styled.div<{ $isOpen: boolean }>`
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(26, 38, 132, 0.25);
+  background: rgba(0, 0, 0, 0.5);
   justify-content: center;
   align-items: center;
   z-index: 10002;
@@ -28,8 +28,10 @@ const ContentArea = styled.div`
   position: relative;
   width: 1340px;
   height: 944px;
-  max-width: 95vw;
+  max-width: 75vw;
   max-height: 95vh;
+  background: linear-gradient(135deg, #c5b8e0 0%, #a594c8 100%);
+  box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.24), 0px 16px 64px rgba(0, 0, 0, 0.16);
 `;
 
 const PreviewBar = styled.div`
@@ -44,7 +46,7 @@ const PreviewBar = styled.div`
   height: 56px;
   left: 0px;
   top: 0px;
-  background: #2F2F30;
+  background: #2f2f30;
   z-index: 2;
 `;
 
@@ -74,7 +76,7 @@ const BackButton = styled.button`
 `;
 
 const DocumentName = styled.div`
-  font-family: 'Figtree', sans-serif;
+  font-family: "Figtree", sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 20px;
@@ -82,7 +84,7 @@ const DocumentName = styled.div`
   display: flex;
   align-items: center;
   letter-spacing: 0.005em;
-  color: #FFFFFF;
+  color: #ffffff;
 `;
 
 const ActionButtons = styled.div`
@@ -103,7 +105,7 @@ const IconButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #FFFFFF;
+  color: #ffffff;
   padding: 0;
 
   &:hover {
@@ -119,15 +121,15 @@ const DocumentContainer = styled.div`
   left: 0;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   overflow: auto;
-  background: rgba(0, 0, 0, 0.1);
+  padding: 32px 0;
 `;
 
 const DocumentFrame = styled.div<{ $scale: number }>`
   width: 595px;
   height: 842px;
-  background: #FFFFFF;
+  background: #ffffff;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
   transform: scale(${(props) => props.$scale});
   transform-origin: center center;
@@ -150,14 +152,14 @@ const ZoomControls = styled.div`
   bottom: 74px;
   left: 50%;
   transform: translateX(-50%);
-  background: #2F2F30;
+  background: #2f2f30;
   opacity: 0.8;
   border-radius: 16px;
   z-index: 3;
 `;
 
 const PageInfo = styled.div`
-  font-family: 'Figtree', sans-serif;
+  font-family: "Figtree", sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -166,7 +168,7 @@ const PageInfo = styled.div`
   align-items: center;
   text-align: center;
   letter-spacing: 0.005em;
-  color: #FFFFFF;
+  color: #ffffff;
 `;
 
 const ZoomOptions = styled.div`
@@ -186,7 +188,7 @@ const ZoomButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #FFFFFF;
+  color: #ffffff;
   padding: 0;
 
   &:hover {
@@ -199,14 +201,7 @@ const ZoomButton = styled.button`
   }
 `;
 
-export function DocumentPreviewDialog({
-  isOpen,
-  documentName,
-  documentUrl,
-  onClose,
-  onDownload,
-  onDelete,
-}: Props) {
+export function DocumentPreviewDialog({ isOpen, documentName, documentUrl, onClose, onDownload, onDelete }: Props) {
   const [scale, setScale] = useState(1);
   const [currentPage] = useState(1);
   const [totalPages] = useState(2);
@@ -243,8 +238,10 @@ export function DocumentPreviewDialog({
 
         <DocumentContainer>
           <DocumentFrame $scale={scale}>
-            <PDFEmbed data={documentUrl} type="application/pdf" aria-label={documentName}>
-              <p>Your browser does not support PDFs. <a href={documentUrl}>Download the PDF</a>.</p>
+            <PDFEmbed data={`${documentUrl}#toolbar=0&navpanes=0`} type="application/pdf" aria-label={documentName}>
+              <p>
+                Your browser does not support PDFs. <a href={documentUrl}>Download the PDF</a>.
+              </p>
             </PDFEmbed>
           </DocumentFrame>
         </DocumentContainer>

@@ -96,6 +96,9 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
       // TODO: Implement actual delete logic
       setDeleteDialogOpen(false);
       setDocumentToDelete(null);
+      // Close preview dialog if it's open
+      setPreviewDialogOpen(false);
+      setDocumentToPreview(null);
     }
   };
 
@@ -132,10 +135,8 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
 
   const handleDeleteFromPreview = () => {
     if (documentToPreview) {
-      setPreviewDialogOpen(false);
       setDocumentToDelete(documentToPreview);
       setDeleteDialogOpen(true);
-      setDocumentToPreview(null);
     }
   };
 
