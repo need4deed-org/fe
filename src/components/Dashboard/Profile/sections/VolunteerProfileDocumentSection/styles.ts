@@ -113,11 +113,11 @@ export const StatusBadge = styled.div<{ $status: "uploaded" | "missing" }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 12px;
+  padding: 10px 20px;
   gap: 4px;
-  border-radius: 4px;
-  font-weight: 600;
-  font-size: 20px;
+  border-radius: 24px;
+  font-weight: 500;
+  font-size: 16px;
   line-height: 24px;
   letter-spacing: 0.005em;
   color: var(--color-midnight);
