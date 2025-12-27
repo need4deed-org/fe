@@ -549,6 +549,12 @@
         "actions": "Aktionen",
         "uploaded": "Hochgeladen",
         "missing": "Fehlend",
+        "documentNames": {
+          "measlesVaccination": "Masernimpfung",
+          "applicationCertificateGoodConduct": "Antrag auf Führungszeugnis",
+          "certificateGoodConduct": "Führungszeugnis",
+          "passport": "Reisepass"
+        },
         "tooltips": {
           "upload": "Hochladen",
           "preview": "Vorschau",
@@ -563,6 +569,15 @@
           "message": "\"{{documentName}}\" wird gelöscht.",
           "cancel": "Abbrechen",
           "delete": "Löschen"
+        },
+        "uploadDialog": {
+          "title": "Dokument hochladen",
+          "documentType": "{{documentName}}",
+          "dragDropText": "Datei hier ablegen oder klicken zum Durchsuchen",
+          "dragDropHint": "Unterstützte Formate: PDF, JPG, PNG (max. 10 MB)",
+          "selectedFile": "Ausgewählte Datei:",
+          "cancel": "Abbrechen",
+          "upload": "Hochladen"
         }
       }
     },

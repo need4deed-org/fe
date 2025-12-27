@@ -67,5 +67,6 @@ export const config = {
   //
   // This effectively runs the middleware on all pages/routes except Next.js internals,
   // static assets, and API routes.
-  matcher: ["/((?!_next|static|favicon.ico|api|.well-known).*)"],
+  // Also excludes common file extensions like .pdf, .png, .jpg, etc.
+  matcher: ["/((?!_next|static|favicon.ico|api|.well-known|.*\\.pdf|.*\\.png|.*\\.jpg|.*\\.jpeg|.*\\.svg|.*\\.ico).*)"],
 };

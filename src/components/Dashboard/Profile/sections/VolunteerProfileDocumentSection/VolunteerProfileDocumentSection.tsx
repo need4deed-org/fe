@@ -19,6 +19,8 @@ import {
   TitleRow,
 } from "./styles";
 import { DeleteConfirmationDialog } from "./DeleteConfirmationDialog";
+import { UploadDocumentDialog } from "./UploadDocumentDialog";
+import { DocumentPreviewDialog } from "./DocumentPreviewDialog";
 import { Tooltip } from "./Tooltip";
 import { Document } from "./types";
 
@@ -29,24 +31,24 @@ type Props = {
 const MOCK_DOCUMENTS: Document[] = [
   {
     id: "1",
-    name: "Measles vaccination",
+    nameKey: "dashboard.volunteerProfile.documentSection.documentNames.measlesVaccination",
     status: "uploaded",
     uploadedOn: "21.03.2025",
   },
   {
     id: "2",
-    name: "Application for certificate of good conduct",
+    nameKey: "dashboard.volunteerProfile.documentSection.documentNames.applicationCertificateGoodConduct",
     status: "uploaded",
     uploadedOn: "22.03.2025",
   },
   {
     id: "3",
-    name: "Certificate of good conduct",
+    nameKey: "dashboard.volunteerProfile.documentSection.documentNames.certificateGoodConduct",
     status: "missing",
   },
   {
     id: "4",
-    name: "Passport",
+    nameKey: "dashboard.volunteerProfile.documentSection.documentNames.passport",
     status: "missing",
   },
 ];
@@ -55,13 +57,25 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
   const { t } = useTranslation();
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [documentToDelete, setDocumentToDelete] = useState<Document | null>(null);
+  const [uploadDialogOpen, setUploadDialogOpen] = useState(false);
+  const [documentToUpload, setDocumentToUpload] = useState<Document | null>(null);
+  const [previewDialogOpen, setPreviewDialogOpen] = useState(false);
+  const [documentToPreview, setDocumentToPreview] = useState<Document | null>(null);
 
   const handleUpload = (documentId: string) => {
-    console.log("Upload document:", documentId);
+    const doc = MOCK_DOCUMENTS.find((d) => d.id === documentId);
+    if (doc) {
+      setDocumentToUpload(doc);
+      setUploadDialogOpen(true);
+    }
   };
 
   const handleView = (documentId: string) => {
-    console.log("View document:", documentId);
+    const doc = MOCK_DOCUMENTS.find((d) => d.id === documentId);
+    if (doc && doc.status === "uploaded") {
+      setDocumentToPreview(doc);
+      setPreviewDialogOpen(true);
+    }
   };
 
   const handleDownload = (documentId: string) => {
@@ -88,6 +102,41 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
   const handleCancelDelete = () => {
     setDeleteDialogOpen(false);
     setDocumentToDelete(null);
+  };
+
+  const handleConfirmUpload = (file: File) => {
+    if (documentToUpload) {
+      console.log("Upload confirmed:", documentToUpload.id, file.name);
+      // TODO: Implement actual upload logic
+      setUploadDialogOpen(false);
+      setDocumentToUpload(null);
+    }
+  };
+
+  const handleCancelUpload = () => {
+    setUploadDialogOpen(false);
+    setDocumentToUpload(null);
+  };
+
+  const handleClosePreview = () => {
+    setPreviewDialogOpen(false);
+    setDocumentToPreview(null);
+  };
+
+  const handleDownloadFromPreview = () => {
+    if (documentToPreview) {
+      console.log("Download from preview:", documentToPreview.id);
+      // TODO: Implement actual download logic
+    }
+  };
+
+  const handleDeleteFromPreview = () => {
+    if (documentToPreview) {
+      setPreviewDialogOpen(false);
+      setDocumentToDelete(documentToPreview);
+      setDeleteDialogOpen(true);
+      setDocumentToPreview(null);
+    }
   };
 
   return (
@@ -117,7 +166,7 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
 
         {MOCK_DOCUMENTS.map((doc, index) => (
           <TableRow key={doc.id} $isLast={index === MOCK_DOCUMENTS.length - 1}>
-            <Cell>{doc.name}</Cell>
+            <Cell>{t(doc.nameKey)}</Cell>
             <Cell $width="180px" $align="center">
               <StatusBadge $status={doc.status}>
                 {doc.status === "uploaded"
@@ -199,9 +248,25 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
 
       <DeleteConfirmationDialog
         isOpen={deleteDialogOpen}
-        documentName={documentToDelete?.name || ""}
+        documentName={documentToDelete?.nameKey ? t(documentToDelete.nameKey) : ""}
         onCancel={handleCancelDelete}
         onConfirm={handleConfirmDelete}
+      />
+
+      <UploadDocumentDialog
+        isOpen={uploadDialogOpen}
+        documentName={documentToUpload?.nameKey ? t(documentToUpload.nameKey) : ""}
+        onCancel={handleCancelUpload}
+        onUpload={handleConfirmUpload}
+      />
+
+      <DocumentPreviewDialog
+        isOpen={previewDialogOpen}
+        documentName={documentToPreview?.nameKey ? t(documentToPreview.nameKey) : ""}
+        documentUrl="/pdf-sample_0.pdf"
+        onClose={handleClosePreview}
+        onDownload={handleDownloadFromPreview}
+        onDelete={handleDeleteFromPreview}
       />
     </>
   );

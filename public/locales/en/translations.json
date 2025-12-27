@@ -549,6 +549,12 @@
         "actions": "Actions",
         "uploaded": "Uploaded",
         "missing": "Missing",
+        "documentNames": {
+          "measlesVaccination": "Measles vaccination",
+          "applicationCertificateGoodConduct": "Application for certificate of good conduct",
+          "certificateGoodConduct": "Certificate of good conduct",
+          "passport": "Passport"
+        },
         "tooltips": {
           "upload": "Upload",
           "preview": "Preview",
@@ -563,6 +569,15 @@
           "message": "\"{{documentName}}\" document will be deleted.",
           "cancel": "Cancel",
           "delete": "Delete"
+        },
+        "uploadDialog": {
+          "title": "Upload document",
+          "documentType": "{{documentName}}",
+          "dragDropText": "Drop file here or click to browse",
+          "dragDropHint": "Supported formats: PDF, JPG, PNG (max 10 MB)",
+          "selectedFile": "Selected file:",
+          "cancel": "Cancel",
+          "upload": "Upload"
         }
       }
     }
