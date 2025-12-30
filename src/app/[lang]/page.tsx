@@ -1,7 +1,21 @@
 import Link from "next/link";
 import styles from "./page.module.css";
+import { getAuthUser } from "@/utils/auth";
+import { UserRole } from "need4deed-sdk";
+import { redirect } from "next/navigation";
 
-export default function Home() {
+interface Props {
+  params: Promise<{ lang: string }>;
+}
+
+export default async function Home({ params }: Props) {
+  const { lang } = await params;
+  const user = await getAuthUser();
+
+  if (user && user.role !== UserRole.USER) {
+    redirect(`/${lang}/dashboard?role=${user.role}&userId=${user.id}`);
+  }
+
   return (
     <div className={styles.page}>
       <header>HEADER</header>
