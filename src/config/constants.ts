@@ -12,6 +12,7 @@ export const apiPathAuthEmailDomain = `${apiPrefix}/auth-email-domain/`;
 export const apiPathOpportunity = `${apiPrefix}/opportunity`;
 export const apiPathOption = `/${apiPrefix}/option`;
 export const apiProfilePath = `/volunteer/9`;
+export const apiPathMe = `${apiURL}/user/me`;
 
 export const cacheTTL = 1000 * 60 * 5; // 5 minutes
 
