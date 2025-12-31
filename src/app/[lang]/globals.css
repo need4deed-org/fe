@@ -155,6 +155,23 @@ html {
 
   --text-p-font-weight: 300;
 
+
+  /* Font Weights */
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* font Size */
+  --font-size-xs: 14px;
+  --font-size-sm: 16px;
+  --font-size-md: 18px;
+  --font-size-lg: 20px;
+  --font-size-xl: 24px;
+  --font-size-2xl: 32px;
+  --font-size-3xl: 48px;
+
   /* icon */
   --icon-color: var(--color-papaya);
 
@@ -1138,7 +1155,7 @@ html {
   --editableField-dropdownList-position: absolute;
   --editableField-dropdownList-top: 110%;
   --editableField-dropdownList-left: 0;
-  --editableField-dropdownList-width:100%;
+  --editableField-dropdownList-width: 100%;
   --editableField-dropdownList-background: white;
   --editableField-dropdownList-border: 1px solid var(--color-grey-200);
   --editableField-dropdownList-borderRadius: 8px;
