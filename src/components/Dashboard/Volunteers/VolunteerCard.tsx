@@ -28,7 +28,9 @@ export function VolunteerCard({ volunteer }: Props) {
 
   const groupedLanguages = groupLanguagesByProficiency(languages);
 
-  const availabilities = availability.map((a) => capitalizeFirstLetter(a.day) + ", " + a.daytime.join("-"));
+  const availabilities = availability
+    .filter((a) => a.day && a.daytime)
+    .map((a) => capitalizeFirstLetter(a.day!) + ", " + a.daytime);
 
   const handleCardClick = () => {
     if (!id) return;

@@ -4,8 +4,6 @@ import { TFunction } from "i18next";
 import { ApiVolunteerGet, VolunteerStateTypeType } from "need4deed-sdk";
 
 type VolunteerLanguages = ApiVolunteerGet["languages"];
-type VolunteerActivities = ApiVolunteerGet["activities"];
-type VolunteerSkills = ApiVolunteerGet["skills"];
 type VolunteerLocations = ApiVolunteerGet["locations"];
 type VolunteerAvailability = ApiVolunteerGet["availability"];
 
@@ -80,11 +78,10 @@ export function formatAvailability(avails: VolunteerAvailability): string {
   const timeSlotGroups = new Map<string, string[]>();
 
   avails.forEach((avail) => {
+    if (!avail.day) return;
+
     const dayName = avail.day === "occasionally" ? "Occasionally" : avail.day;
-    const timeKey =
-      Array.isArray(avail.daytime) && avail.daytime.length === 2
-        ? `${avail.daytime[0]}-${avail.daytime[1]}`
-        : avail.daytime[0] || "";
+    const timeKey = avail.daytime || "";
 
     if (!timeSlotGroups.has(timeKey)) {
       timeSlotGroups.set(timeKey, []);
