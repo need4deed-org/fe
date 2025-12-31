@@ -3,11 +3,11 @@ import styled from "styled-components";
 export const Container = styled.div<{ $isEditing: boolean }>`
   display: flex;
   flex-direction: column;
-  padding: 24px;
-  gap: ${(props) => (props.$isEditing ? "16px" : "8px")};
+  padding: var(--profile-section-padding);
+  gap: ${(props) => (props.$isEditing ? "var(--profile-section-gap-editing)" : "var(--profile-section-gap)")};
   background: var(--color-white);
-  border-radius: 24px;
-  margin-bottom: 24px;
+  border-radius: var(--card-border-radius);
+  margin-bottom: var(--profile-section-margin-bottom);
 `;
 
 export const Header = styled.div`
@@ -22,7 +22,7 @@ export const TitleRow = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 16px;
+  gap: var(--profile-section-title-gap);
 `;
 
 export const IconContainer = styled.div`
@@ -39,7 +39,7 @@ export const Details = styled.div`
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
-  gap: 8px;
+  gap: var(--profile-section-gap);
 `;
 
 export const ButtonRow = styled.div`
@@ -47,6 +47,6 @@ export const ButtonRow = styled.div`
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-  gap: 24px;
+  gap: var(--profile-section-button-row-gap);
   width: 100%;
 `;
