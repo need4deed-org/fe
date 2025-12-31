@@ -1,6 +1,5 @@
 import { apiPathOption } from "@/config/constants";
-import { useQuery } from "@tanstack/react-query";
-import { Lang } from "need4deed-sdk";
+import { useGetQuery } from "@/hooks/useGetQuery";
 
 export type ApiLanguageOption = {
   id: number;
@@ -10,22 +9,21 @@ export type ApiLanguageOption = {
 
 type ResourceType = "language" | "activity" | "skill" | "district";
 
-function useApiResource(resource: ResourceType, currentLanguage: Lang) {
-  return useQuery<ApiLanguageOption[]>({
-    queryKey: [resource, currentLanguage],
-    queryFn: async () => {
-      const response = await fetch(`${apiPathOption}/${resource}?language=${currentLanguage}`, {
-        credentials: "include",
-      });
-      if (!response.ok) throw new Error(`Failed to fetch ${resource}`);
-      const data = await response.json();
-      return data.data[resource] || [];
-    },
+function useApiResource(resource: ResourceType) {
+  const { data, isLoading, isError } = useGetQuery<Record<ResourceType, ApiLanguageOption[]>>({
+    queryKey: [resource],
+    apiPath: `${apiPathOption}/${resource}`,
     staleTime: Infinity,
   });
+
+  return {
+    data: data?.[resource] || [],
+    isLoading,
+    isError,
+  };
 }
 
-export const useApiLanguages = (lang: Lang) => useApiResource("language", lang);
-export const useApiActivities = (lang: Lang) => useApiResource("activity", lang);
-export const useApiSkills = (lang: Lang) => useApiResource("skill", lang);
-export const useApiDistricts = (lang: Lang) => useApiResource("district", lang);
+export const useApiLanguages = () => useApiResource("language");
+export const useApiActivities = () => useApiResource("activity");
+export const useApiSkills = () => useApiResource("skill");
+export const useApiDistricts = () => useApiResource("district");
