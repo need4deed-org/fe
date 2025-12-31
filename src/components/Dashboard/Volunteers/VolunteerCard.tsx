@@ -30,7 +30,7 @@ export function VolunteerCard({ volunteer }: Props) {
 
   const availabilities = availability
     .filter((a) => a.day && a.daytime)
-    .map((a) => capitalizeFirstLetter(a.day!) + ", " + a.daytime);
+    .map((a) => `${capitalizeFirstLetter(String(a.day))}, ${a.daytime}`);
 
   const handleCardClick = () => {
     if (!id) return;
