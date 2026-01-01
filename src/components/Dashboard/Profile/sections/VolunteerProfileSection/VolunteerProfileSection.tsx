@@ -151,7 +151,7 @@ export function VolunteerProfileSection({ volunteer }: Props) {
         ) : (
           <DisplayFields
             languages={formatLanguagesForDisplay(volunteer.languages, languageMapping.idToTitle, t)}
-            availability={formatAvailability(volunteer.availability)}
+            availability={formatAvailability(volunteer.availability, t)}
             districts={formatLocationsForDisplay(volunteer.locations)}
             volunteerType={getVolunteerTypeLabel(volunteer.statusType, t)}
             activities={extractTitles(volunteer.activities)}

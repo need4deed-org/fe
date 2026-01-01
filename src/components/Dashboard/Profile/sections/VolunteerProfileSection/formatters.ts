@@ -68,7 +68,24 @@ export function formatLanguagesForDisplay(
     .join(", ");
 }
 
-export function formatAvailability(avails: VolunteerAvailability): string {
+/**
+ * Formats a single availability item with proper translations
+ */
+export function formatAvailabilityItem(day: string, daytime: string, t: TFunction): string {
+  // For "weekdays" and "weekends", the translation already includes "Gelegentlich"
+  if (daytime === "weekdays" || daytime === "weekends") {
+    return t(`form.schedule.${daytime}`);
+  }
+
+  const dayName =
+    day === "occasionally"
+      ? t("dashboard.volunteers.filters.preferredAv.occasional.header")
+      : t(`dashboard.volunteers.filters.preferredAv.days.${day}`);
+
+  return `${dayName}, ${daytime}`;
+}
+
+export function formatAvailability(avails: VolunteerAvailability, t: TFunction): string {
   if (!avails || avails.length === 0) {
     const defaultSchedule = getScheduleState();
     const hasSelectedSlots = defaultSchedule.some((day) => day.timeSlots.some((slot) => slot.selected));
@@ -80,7 +97,11 @@ export function formatAvailability(avails: VolunteerAvailability): string {
   avails.forEach((avail) => {
     if (!avail.day) return;
 
-    const dayName = avail.day === "occasionally" ? "Occasionally" : avail.day;
+    const dayName =
+      avail.day === "occasionally"
+        ? t("dashboard.volunteers.filters.preferredAv.occasional.header")
+        : t(`dashboard.volunteers.filters.preferredAv.days.${avail.day}`);
+
     const timeKey = avail.daytime || "";
 
     if (!timeSlotGroups.has(timeKey)) {
@@ -90,6 +111,10 @@ export function formatAvailability(avails: VolunteerAvailability): string {
   });
 
   const formatted = Array.from(timeSlotGroups.entries()).map(([time, days]) => {
+    if (time === "weekdays" || time === "weekends") {
+      return t(`form.schedule.${time}`);
+    }
+
     const daysStr = days.join(" & ");
     return time ? `${daysStr}, ${time}` : daysStr;
   });
