@@ -15,17 +15,18 @@ const Overlay = styled.div<{ $isOpen: boolean; $zIndex: number }>`
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--document-dialog-overlay-background);
   justify-content: center;
   align-items: center;
   z-index: ${(props) => props.$zIndex};
 `;
 
-export function DialogOverlay({ isOpen, onClose, children, zIndex = 10001 }: Props) {
+export function DialogOverlay({ isOpen, onClose, children, zIndex }: Props) {
+  const defaultZIndex = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--document-dialog-overlay-z-index') || '10001');
   if (!isOpen) return null;
 
   return (
-    <Overlay $isOpen={isOpen} $zIndex={zIndex} onClick={onClose}>
+    <Overlay $isOpen={isOpen} $zIndex={zIndex ?? defaultZIndex} onClick={onClose}>
       {children}
     </Overlay>
   );

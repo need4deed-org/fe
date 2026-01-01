@@ -12,29 +12,27 @@ type Props = {
 
 const Dialog = styled.div`
   background: var(--color-white);
-  border-radius: 24px;
-  padding: 48px;
-  max-width: 600px;
-  width: 90%;
-  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15);
+  border-radius: var(--document-dialog-border-radius);
+  padding: var(--document-dialog-padding);
+  max-width: var(--document-dialog-max-width);
+  width: var(--document-dialog-width);
+  box-shadow: var(--document-dialog-shadow);
 `;
 
 const Title = styled.h2`
-  font-family: "Figtree", sans-serif;
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 32px;
+  font-weight: var(--document-dialog-title-font-weight);
+  font-size: var(--document-dialog-title-font-size);
+  line-height: var(--document-dialog-title-line-height);
   color: var(--color-midnight);
-  margin: 0 0 16px 0;
+  margin: 0 0 var(--document-dialog-title-margin-bottom) 0;
 `;
 
 const Message = styled.p`
-  font-family: "Figtree", sans-serif;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
+  font-weight: var(--document-dialog-message-font-weight);
+  font-size: var(--document-dialog-message-font-size);
+  line-height: var(--document-dialog-message-line-height);
   color: var(--color-midnight);
-  margin: 0 0 32px 0;
+  margin: 0 0 var(--document-dialog-message-margin-bottom) 0;
 `;
 
 export function DeleteConfirmationDialog({ isOpen, documentName, onCancel, onConfirm }: Props) {

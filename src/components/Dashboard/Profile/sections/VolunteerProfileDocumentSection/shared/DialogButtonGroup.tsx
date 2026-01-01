@@ -8,7 +8,7 @@ type Props = {
 const Container = styled.div`
   display: flex;
   justify-content: flex-end;
-  gap: 16px;
+  gap: var(--document-dialog-button-gap);
 `;
 
 export function DialogButtonGroup({ children }: Props) {
@@ -16,15 +16,14 @@ export function DialogButtonGroup({ children }: Props) {
 }
 
 export const CancelButton = styled.button`
-  font-family: "Figtree", sans-serif;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 24px;
+  font-weight: var(--document-dialog-button-font-weight);
+  font-size: var(--document-dialog-button-font-size);
+  line-height: var(--document-dialog-button-line-height);
   color: var(--color-aubergine);
   background: transparent;
-  border: 2px solid var(--color-aubergine);
-  border-radius: 125px;
-  padding: 12px 32px;
+  border: var(--document-dialog-button-border-width) solid var(--color-aubergine);
+  border-radius: var(--document-dialog-button-border-radius);
+  padding: var(--document-dialog-button-padding);
   cursor: pointer;
   transition: all 0.2s;
 
@@ -34,32 +33,31 @@ export const CancelButton = styled.button`
 `;
 
 export const PrimaryCancelButton = styled(CancelButton)`
-  font-size: 24px;
-  line-height: 32px;
-  padding: 16px 48px;
+  font-size: var(--document-dialog-button-large-font-size);
+  line-height: var(--document-dialog-button-large-line-height);
+  padding: var(--document-dialog-button-large-padding);
 `;
 
 export const PrimaryButton = styled.button<{ $disabled?: boolean }>`
-  font-family: "Figtree", sans-serif;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 24px;
+  font-weight: var(--document-dialog-button-font-weight);
+  font-size: var(--document-dialog-button-font-size);
+  line-height: var(--document-dialog-button-line-height);
   color: var(--color-white);
-  background: ${(props) => (props.$disabled ? "#D1D5DB" : "var(--color-aubergine)")};
-  border: 2px solid ${(props) => (props.$disabled ? "#D1D5DB" : "var(--color-aubergine)")};
-  border-radius: 125px;
-  padding: 12px 32px;
+  background: ${(props) => (props.$disabled ? "var(--document-dialog-button-disabled-color)" : "var(--color-aubergine)")};
+  border: var(--document-dialog-button-border-width) solid ${(props) => (props.$disabled ? "var(--document-dialog-button-disabled-color)" : "var(--color-aubergine)")};
+  border-radius: var(--document-dialog-button-border-radius);
+  padding: var(--document-dialog-button-padding);
   cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
   transition: all 0.2s;
 
   &:hover {
-    background: ${(props) => (props.$disabled ? "#D1D5DB" : "var(--color-aubergine-light)")};
-    border-color: ${(props) => (props.$disabled ? "#D1D5DB" : "var(--color-aubergine-light)")};
+    background: ${(props) => (props.$disabled ? "var(--document-dialog-button-disabled-color)" : "var(--color-aubergine-light)")};
+    border-color: ${(props) => (props.$disabled ? "var(--document-dialog-button-disabled-color)" : "var(--color-aubergine-light)")};
   }
 `;
 
 export const LargePrimaryButton = styled(PrimaryButton)`
-  font-size: 24px;
-  line-height: 32px;
-  padding: 16px 48px;
+  font-size: var(--document-dialog-button-large-font-size);
+  line-height: var(--document-dialog-button-large-line-height);
+  padding: var(--document-dialog-button-large-padding);
 `;

@@ -14,12 +14,12 @@ type Props = {
 
 const ContentArea = styled.div`
   position: relative;
-  width: 1340px;
-  height: 944px;
-  max-width: 75vw;
-  max-height: 95vh;
-  background: linear-gradient(135deg, #c5b8e0 0%, #a594c8 100%);
-  box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.24), 0px 16px 64px rgba(0, 0, 0, 0.16);
+  width: var(--document-preview-width);
+  height: var(--document-preview-height);
+  max-width: var(--document-preview-max-width);
+  max-height: var(--document-preview-max-height);
+  background: var(--document-preview-background);
+  box-shadow: var(--document-preview-shadow);
 `;
 
 const PreviewBar = styled.div`
@@ -27,15 +27,15 @@ const PreviewBar = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 16px;
-  gap: 32px;
+  padding: var(--document-preview-bar-padding);
+  gap: var(--document-preview-bar-gap);
   position: absolute;
   width: 100%;
-  height: 56px;
+  height: var(--document-preview-bar-height);
   left: 0px;
   top: 0px;
-  background: #2f2f30;
-  z-index: 2;
+  background: var(--document-preview-bar-background);
+  z-index: var(--document-preview-bar-z-index);
 `;
 
 const DocumentNameSection = styled.div`
@@ -43,12 +43,12 @@ const DocumentNameSection = styled.div`
   flex-direction: row;
   align-items: center;
   padding: 0px;
-  gap: 13px;
+  gap: var(--document-preview-name-section-gap);
 `;
 
 const BackButton = styled.button`
-  width: 24px;
-  height: 24px;
+  width: var(--document-preview-button-size);
+  height: var(--document-preview-button-size);
   background: transparent;
   border: none;
   cursor: pointer;
@@ -59,20 +59,19 @@ const BackButton = styled.button`
   padding: 0;
 
   &:hover {
-    opacity: 0.8;
+    opacity: var(--document-preview-button-hover-opacity);
   }
 `;
 
 const DocumentName = styled.div`
-  font-family: "Figtree", sans-serif;
   font-style: normal;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 24px;
+  font-weight: var(--document-preview-name-font-weight);
+  font-size: var(--document-preview-name-font-size);
+  line-height: var(--document-preview-name-line-height);
   display: flex;
   align-items: center;
-  letter-spacing: 0.005em;
-  color: #ffffff;
+  letter-spacing: var(--document-preview-name-letter-spacing);
+  color: var(--document-preview-name-color);
 `;
 
 const ActionButtons = styled.div`
@@ -81,44 +80,44 @@ const ActionButtons = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0px;
-  gap: 21px;
+  gap: var(--document-preview-actions-gap);
 `;
 
 const IconButton = styled.button`
-  width: 24px;
-  height: 24px;
+  width: var(--document-preview-button-size);
+  height: var(--document-preview-button-size);
   background: transparent;
   border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #ffffff;
+  color: var(--document-preview-name-color);
   padding: 0;
 
   &:hover {
-    opacity: 0.8;
+    opacity: var(--document-preview-button-hover-opacity);
   }
 `;
 
 const DocumentContainer = styled.div`
   position: absolute;
   width: 100%;
-  height: calc(100% - 56px);
-  top: 56px;
+  height: calc(100% - var(--document-preview-bar-height));
+  top: var(--document-preview-bar-height);
   left: 0;
   display: flex;
   justify-content: center;
   align-items: flex-start;
   overflow: auto;
-  padding: 32px 0;
+  padding: var(--document-preview-container-padding);
 `;
 
 const DocumentFrame = styled.div<{ $scale: number }>`
-  width: 595px;
-  height: 842px;
-  background: #ffffff;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+  width: var(--document-preview-frame-width);
+  height: var(--document-preview-frame-height);
+  background: var(--document-preview-frame-background);
+  box-shadow: var(--document-preview-frame-shadow);
   transform: scale(${(props) => props.$scale});
   transform-origin: center center;
   transition: transform 0.2s ease;
@@ -134,36 +133,36 @@ const ZoomControls = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 16px;
-  gap: 16px;
+  padding: var(--document-preview-zoom-controls-padding);
+  gap: var(--document-preview-zoom-controls-gap);
   position: absolute;
-  bottom: 74px;
+  bottom: var(--document-preview-zoom-controls-bottom);
   left: 50%;
   transform: translateX(-50%);
-  background: #2f2f30;
-  opacity: 0.8;
-  border-radius: 16px;
-  z-index: 3;
+  background: var(--document-preview-zoom-controls-background);
+  opacity: var(--document-preview-zoom-controls-opacity);
+  border-radius: var(--document-preview-zoom-controls-border-radius);
+  z-index: var(--document-preview-zoom-controls-z-index);
 `;
 
 const ZoomButton = styled.button`
-  width: 24px;
-  height: 24px;
+  width: var(--document-preview-button-size);
+  height: var(--document-preview-button-size);
   background: transparent;
   border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #ffffff;
+  color: var(--document-preview-name-color);
   padding: 0;
 
   &:hover {
-    opacity: 0.8;
+    opacity: var(--document-preview-button-hover-opacity);
   }
 
   &:disabled {
-    opacity: 0.3;
+    opacity: var(--document-preview-zoom-button-disabled-opacity);
     cursor: not-allowed;
   }
 `;

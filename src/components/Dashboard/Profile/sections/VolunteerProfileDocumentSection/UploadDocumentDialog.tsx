@@ -14,40 +14,38 @@ type Props = {
 
 const Dialog = styled.div`
   background: var(--color-white);
-  border-radius: 24px;
-  padding: 48px;
-  max-width: 600px;
-  width: 90%;
-  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15);
+  border-radius: var(--document-dialog-border-radius);
+  padding: var(--document-dialog-padding);
+  max-width: var(--document-dialog-max-width);
+  width: var(--document-dialog-width);
+  box-shadow: var(--document-dialog-shadow);
 `;
 
 const Title = styled.h2`
-  font-family: "Figtree", sans-serif;
-  font-weight: 700;
-  font-size: 48px;
-  line-height: 56px;
+  font-weight: var(--document-upload-title-font-weight);
+  font-size: var(--document-upload-title-font-size);
+  line-height: var(--document-upload-title-line-height);
   color: var(--color-midnight);
-  margin: 0 0 8px 0;
+  margin: 0 0 var(--document-upload-title-margin-bottom) 0;
 `;
 
 const Subtitle = styled.p`
-  font-family: "Figtree", sans-serif;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 28px;
+  font-weight: var(--document-upload-subtitle-font-weight);
+  font-size: var(--document-upload-subtitle-font-size);
+  line-height: var(--document-upload-subtitle-line-height);
   color: var(--color-midnight);
-  margin: 0 0 32px 0;
+  margin: 0 0 var(--document-upload-subtitle-margin-bottom) 0;
 `;
 
 const DropZone = styled.div<{ $isDragging: boolean; $hasFile: boolean }>`
-  border: 2px dashed ${(props) => (props.$isDragging ? "var(--color-aubergine)" : "#D1D5DB")};
-  border-radius: 16px;
-  padding: 48px 24px;
+  border: var(--document-upload-dropzone-border-width) dashed ${(props) => (props.$isDragging ? "var(--color-aubergine)" : "var(--document-upload-dropzone-border-color)")};
+  border-radius: var(--document-upload-dropzone-border-radius);
+  padding: var(--document-upload-dropzone-padding);
   text-align: center;
-  background: ${(props) => (props.$isDragging ? "var(--color-aubergine-subtle)" : "#F9FAFB")};
+  background: ${(props) => (props.$isDragging ? "var(--color-aubergine-subtle)" : "var(--document-upload-dropzone-background)")};
   cursor: pointer;
   transition: all 0.2s;
-  margin-bottom: 24px;
+  margin-bottom: var(--document-upload-dropzone-margin-bottom);
 
   &:hover {
     border-color: var(--color-aubergine);
@@ -58,36 +56,34 @@ const DropZone = styled.div<{ $isDragging: boolean; $hasFile: boolean }>`
 const IconContainer = styled.div`
   display: flex;
   justify-content: center;
-  margin-bottom: 16px;
+  margin-bottom: var(--document-upload-dropzone-icon-margin-bottom);
   color: var(--color-aubergine);
 `;
 
 const DropZoneText = styled.p`
-  font-family: "Figtree", sans-serif;
-  font-weight: 600;
-  font-size: 18px;
-  line-height: 24px;
+  font-weight: var(--document-upload-dropzone-text-font-weight);
+  font-size: var(--document-upload-dropzone-text-font-size);
+  line-height: var(--document-upload-dropzone-text-line-height);
   color: var(--color-midnight);
-  margin: 0 0 8px 0;
+  margin: 0 0 var(--document-upload-dropzone-text-margin-bottom) 0;
 `;
 
 const DropZoneHint = styled.p`
-  font-family: "Figtree", sans-serif;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 20px;
-  color: #6B7280;
+  font-weight: var(--document-upload-dropzone-hint-font-weight);
+  font-size: var(--document-upload-dropzone-hint-font-size);
+  line-height: var(--document-upload-dropzone-hint-line-height);
+  color: var(--document-upload-dropzone-hint-color);
   margin: 0;
 `;
 
 const SelectedFile = styled.div`
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 16px;
+  gap: var(--document-upload-selected-file-gap);
+  padding: var(--document-upload-selected-file-padding);
   background: var(--color-aubergine-subtle);
-  border-radius: 12px;
-  margin-bottom: 32px;
+  border-radius: var(--document-upload-selected-file-border-radius);
+  margin-bottom: var(--document-upload-selected-file-margin-bottom);
 `;
 
 const SelectedFileIcon = styled.div`
@@ -101,20 +97,18 @@ const SelectedFileText = styled.div`
 `;
 
 const SelectedFileLabel = styled.p`
-  font-family: "Figtree", sans-serif;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 20px;
+  font-weight: var(--document-upload-selected-file-label-font-weight);
+  font-size: var(--document-upload-selected-file-label-font-size);
+  line-height: var(--document-upload-selected-file-label-line-height);
   color: var(--color-midnight);
-  margin: 0 0 4px 0;
+  margin: 0 0 var(--document-upload-selected-file-label-margin-bottom) 0;
 `;
 
 const SelectedFileName = styled.p`
-  font-family: "Figtree", sans-serif;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 20px;
-  color: #6B7280;
+  font-weight: var(--document-upload-selected-file-name-font-weight);
+  font-size: var(--document-upload-selected-file-name-font-size);
+  line-height: var(--document-upload-selected-file-name-line-height);
+  color: var(--document-upload-selected-file-name-color);
   margin: 0;
 `;
 

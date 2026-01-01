@@ -14,32 +14,31 @@ const TooltipContainer = styled.div`
 const TooltipText = styled.div<{ $visible: boolean }>`
   visibility: ${(props) => (props.$visible ? "visible" : "hidden")};
   opacity: ${(props) => (props.$visible ? 1 : 0)};
-  background: #0b1560;
-  color: #ffffff;
-  font-family: "Figtree", sans-serif;
+  background: var(--document-tooltip-background);
+  color: var(--document-tooltip-color);
   font-style: normal;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 16px;
-  letter-spacing: 0.005em;
-  padding: 8px;
-  border-radius: 8px;
+  font-weight: var(--document-tooltip-font-weight);
+  font-size: var(--document-tooltip-font-size);
+  line-height: var(--document-tooltip-line-height);
+  letter-spacing: var(--document-tooltip-letter-spacing);
+  padding: var(--document-tooltip-padding);
+  border-radius: var(--document-tooltip-border-radius);
   position: fixed;
   white-space: nowrap;
   transition: opacity 0.2s, visibility 0.2s;
-  z-index: 10000;
+  z-index: var(--document-tooltip-z-index);
   pointer-events: none;
-  transform: translate(-50%, -100%) translateY(-8px);
+  transform: var(--document-tooltip-transform);
 
   &::after {
     content: "";
     position: absolute;
     top: 100%;
     left: 50%;
-    margin-left: -4px;
-    border-width: 4px;
+    margin-left: calc(var(--document-tooltip-arrow-size) * -1);
+    border-width: var(--document-tooltip-arrow-size);
     border-style: solid;
-    border-color: #0b1560 transparent transparent transparent;
+    border-color: var(--document-tooltip-background) transparent transparent transparent;
   }
 `;
 
