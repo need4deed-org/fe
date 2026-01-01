@@ -11,7 +11,7 @@ const EditModeWrapper = styled.div`
 const FieldWrapper = styled.div<{ $hasError?: boolean }>`
   display: var(--editableField-fieldWrapper-display);
   border-bottom: var(--editableField-fieldWrapper-borderBottom);
-  padding: ${(props) => (props.$hasError ? "16px 0 0 0" : "var(--editableField-fieldWrapper-padding)")};
+  padding: ${(props) => (props.$hasError ? "var(--editableField-fieldWrapper-padding-error)" : "var(--editableField-fieldWrapper-padding)")};
   color: var(--color-midnight);
   width: var(--editableField-fieldWrapper-width);
   align-items: var(--editableField-fieldWrapper-alignItems);
@@ -49,7 +49,7 @@ const InputWrapper = styled.div<{ $hasError?: boolean }>`
   input {
     border-radius: var(--editableField-fieldWrapper-input-borderRadius);
     padding: var(--editableField-fieldWrapper-input-padding);
-    padding-right: 48px;
+    padding-right: var(--editableField-fieldWrapper-input-paddingRight);
     color: var(--color-midnight);
     border: ${(props) =>
       props.$hasError ? "2px solid var(--color-red-600)" : "var(--editableField-fieldWrapper-input-border)"};
@@ -70,7 +70,7 @@ const ClearButton = styled.button`
   background: none;
   border: none;
   cursor: pointer;
-  padding: 4px;
+  padding: var(--editableField-clearButton-padding);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -130,7 +130,7 @@ const DropdownList = styled.div`
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 4px;
+  gap: var(--editableField-dropdownList-gap);
   max-height: 240px;
   overflow-y: auto;
 `;
@@ -139,13 +139,13 @@ const OptionRow = styled.div<{ $isSelected?: boolean }>`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  padding: 8px 12px;
+  padding: var(--editableField-optionRow-padding);
   cursor: pointer;
   user-select: none;
   width: 100%;
-  border-radius: 6px;
+  border-radius: var(--editableField-optionRow-borderRadius);
   transition: background-color 0.2s ease;
-  gap: 12px;
+  gap: var(--editableField-optionRow-gap);
   background-color: ${(props) => (props.$isSelected ? "var(--color-orchid-subtle)" : "transparent")};
 
   &:hover {
@@ -383,7 +383,7 @@ export const EditableField = forwardRef(function EditableField<T extends string 
         )}
       </FieldWrapper>
       {error && <p style={{ color: "red", paddingLeft: "1rem" }}>{error}</p>}
-      {errorMessage && <ErrorMessage message={errorMessage} paddingLeft="252px" />}
+      {errorMessage && <ErrorMessage message={errorMessage} paddingLeft="var(--editableField-errorMessage-paddingLeft)" />}
     </EditModeWrapper>
   );
 });

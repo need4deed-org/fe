@@ -13,8 +13,8 @@ const FieldRow = styled.div`
   flex-direction: row;
   align-items: flex-start;
   width: 100%;
-  gap: 32px;
-  padding: 16px 0;
+  gap: var(--profile-section-field-row-gap);
+  padding: var(--profile-section-field-row-padding);
   border-bottom: none;
 
   &:last-child {
@@ -38,7 +38,7 @@ const FieldValue = styled.div`
 `;
 
 const LanguageFieldsWrapper = styled.div`
-  margin-bottom: 8px;
+  margin-bottom: var(--profile-section-gap);
 `;
 
 type Mapping = {

@@ -38,10 +38,10 @@ export function VolunteerProfileSection({ volunteer }: Props) {
   const { mutate: updateProfile, isPending } = useUpdateVolunteerProfile(volunteer.id);
   const [isEditing, setIsEditing] = useState(false);
 
-  const { data: apiLanguages = [] } = useApiLanguages(i18n.language as Lang);
-  const { data: apiActivities = [] } = useApiActivities(i18n.language as Lang);
-  const { data: apiSkills = [] } = useApiSkills(i18n.language as Lang);
-  const { data: apiDistricts = [] } = useApiDistricts(i18n.language as Lang);
+  const { data: apiLanguages = [] } = useApiLanguages();
+  const { data: apiActivities = [] } = useApiActivities();
+  const { data: apiSkills = [] } = useApiSkills();
+  const { data: apiDistricts = [] } = useApiDistricts();
 
   const languageMapping = useMemo(() => createMapping(apiLanguages), [apiLanguages]);
   const activityMapping = useMemo(() => createMapping(apiActivities), [apiActivities]);
@@ -151,7 +151,7 @@ export function VolunteerProfileSection({ volunteer }: Props) {
         ) : (
           <DisplayFields
             languages={formatLanguagesForDisplay(volunteer.languages, languageMapping.idToTitle, t)}
-            availability={formatAvailability(volunteer.availability)}
+            availability={formatAvailability(volunteer.availability, t)}
             districts={formatLocationsForDisplay(volunteer.locations)}
             volunteerType={getVolunteerTypeLabel(volunteer.statusType, t)}
             activities={extractTitles(volunteer.activities)}
