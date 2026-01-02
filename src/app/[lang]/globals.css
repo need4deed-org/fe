@@ -172,6 +172,15 @@ html {
   --font-size-2xl: 32px;
   --font-size-3xl: 48px;
 
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-xxl: 40px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+
   /* icon */
   --icon-color: var(--color-papaya);
 
