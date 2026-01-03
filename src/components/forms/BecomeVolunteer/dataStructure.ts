@@ -1,5 +1,6 @@
 import { Lang, VolunteerFormData } from "need4deed-sdk";
 
+import { LanguageObject } from "@/types";
 import { Availability, Selected } from "../types";
 
 export interface VolunteerData {
@@ -10,9 +11,7 @@ export interface VolunteerData {
   postcode: string;
   locations: Selected[];
   availability: Availability;
-  languagesNative: Selected[];
-  languagesFluent: Selected[];
-  languagesIntermediate: Selected[];
+  languages: LanguageObject[];
   activities: Selected[];
   skills: Selected[];
   certOfGoodConduct: boolean | undefined;
@@ -25,9 +24,7 @@ export interface VolunteerData {
 
 export enum VolunteerArrayDataKeys {
   LOCATIONS = "locations",
-  LANGUAGESNATIVE = "languagesNative",
-  LANGUAGESFLUENT = "languagesFluent",
-  LANGUAGESINTERMEDIATE = "languagesIntermediate",
+  LANGUAGES = "languages",
   ACTIVITIES = "activities",
   SKILLS = "skills",
   LEADFROM = "leadFrom",
