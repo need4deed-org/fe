@@ -2,21 +2,36 @@ import { Paragraph } from "@/components/styled/text";
 import React from "react";
 import styled from "styled-components";
 import { Opportunity } from "./mockOpps/tempTypes";
-import { PencilSimpleIcon, TranslateIcon } from "@phosphor-icons/react";
+import { MapPinIcon, PencilSimpleIcon, ShootingStarIcon, TranslateIcon } from "@phosphor-icons/react";
 import { IconDiv } from "@/components/styled/container";
-import { OpportunityType } from "need4deed-sdk";
+import { Lang, OpportunityType } from "need4deed-sdk";
 import { useTranslation } from "react-i18next";
+import { Tags } from "@/components/core/common";
+import { formatAccompanyingDate } from "./mockOpps/tempUtils";
 
 interface Props {
   opportunity: Opportunity;
 }
 
 export default function OpportunityDetail({ opportunity }: Props) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const language = i18n.language as Lang;
 
-  const { voInformation, opportunityType, defaultMainCommunication, accompanyingTranslation, languages } = opportunity;
+  const {
+    voInformation,
+    opportunityType,
+    defaultMainCommunication,
+    accompanyingTranslation,
+    languages,
+    locations,
+    activities,
+    accompanyingDate,
+    schedule,
+  } = opportunity;
 
   const languagesText = languages.join(", ");
+  const district = locations.join(", ");
+  const scheduleAsStr = (accompanyingDate && formatAccompanyingDate(accompanyingDate, language)) || schedule || "";
 
   return (
     <OpportunityDetailContainer>
@@ -30,33 +45,73 @@ export default function OpportunityDetail({ opportunity }: Props) {
         {voInformation}
       </DetailSection>
 
-      <DetailSection>
-        <DetailHeader>
-          <IconDiv size="20px">
-            <TranslateIcon />
-          </IconDiv>
-          <Paragraph fontWeight={550}>Languages</Paragraph>
-        </DetailHeader>
+      <SplitContainer>
+        <DetailSection>
+          <DetailHeader>
+            <IconDiv size="20px">
+              <TranslateIcon />
+            </IconDiv>
+            <Paragraph fontWeight={550}>{t(`dashboard.opportunities.languages`)}</Paragraph>
+          </DetailHeader>
+          <LanguagesContainer>
+            {opportunityType === OpportunityType.GENERAL ? (
+              <LanguageDetailContainer>
+                <Paragraph fontWeight={550}>{t("dashboard.opportunities.mainCommunication")}:</Paragraph>
+                <Paragraph>{defaultMainCommunication}</Paragraph>
+              </LanguageDetailContainer>
+            ) : (
+              <LanguageDetailContainer>
+                <Paragraph fontWeight={550}>{t("dashboard.opportunities.translationTo")}:</Paragraph>
+                <Paragraph>{accompanyingTranslation}</Paragraph>
+              </LanguageDetailContainer>
+            )}
 
-        <LanguagesContainer>
-          {opportunityType === OpportunityType.GENERAL ? (
             <LanguageDetailContainer>
-              <Paragraph fontWeight={400}>{t("homepage.volunteeringOpportunities.mainCommunication")}:</Paragraph>
-              <Paragraph>{defaultMainCommunication}</Paragraph>
+              <Paragraph $textWrap="nowrap" fontWeight={550}>
+                {t("dashboard.opportunities.residentsSpeak")}:
+              </Paragraph>
+              <Paragraph>{languagesText}</Paragraph>
             </LanguageDetailContainer>
-          ) : (
-            <LanguageDetailContainer>
-              <Paragraph fontWeight={400}>{t("homepage.volunteeringOpportunities.translationTo")}:</Paragraph>
-              <Paragraph>{accompanyingTranslation}</Paragraph>
-            </LanguageDetailContainer>
-          )}
+          </LanguagesContainer>
+        </DetailSection>
 
-          <LanguageDetailContainer>
-            <Paragraph fontWeight={400}>{t("homepage.volunteeringOpportunities.residentsSpeak")}:</Paragraph>
-            <Paragraph>{languagesText}</Paragraph>
-          </LanguageDetailContainer>
-        </LanguagesContainer>
-      </DetailSection>
+        <DetailSection>
+          <DetailHeader>
+            <IconDiv size="20px">
+              <ShootingStarIcon />
+            </IconDiv>
+            <Paragraph fontWeight={550}>{t(`dashboard.volunteerProfile.activities`)}</Paragraph>
+          </DetailHeader>
+
+          <Tags tags={activities} />
+        </DetailSection>
+      </SplitContainer>
+
+      <SplitContainer>
+        <DetailSection>
+          <DetailHeader>
+            <IconDiv size="20px">
+              <MapPinIcon weight="fill" />
+            </IconDiv>
+            <Paragraph fontWeight={550}>{t(`dashboard.opportunities.district`)}</Paragraph>
+          </DetailHeader>
+          <Paragraph>{district}</Paragraph>
+        </DetailSection>
+
+        <DetailSection>
+          <DetailHeader>
+            <IconDiv size="20px">
+              <MapPinIcon weight="fill" />
+            </IconDiv>
+            <Paragraph fontWeight={550}>
+              {accompanyingDate
+                ? t(`dashboard.opportunities.dateOfAppointment`)
+                : t(`dashboard.opportunities.schedule`)}
+            </Paragraph>
+          </DetailHeader>
+          <Paragraph>{scheduleAsStr}</Paragraph>
+        </DetailSection>
+      </SplitContainer>
     </OpportunityDetailContainer>
   );
 }
@@ -67,14 +122,19 @@ const OpportunityDetailContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  /* justify-content: left; */
   gap: var(--volunteer-profile-opportunities-accordion-container-gap);
-
-  /* max-height: var(--opportunities-filters-content-accordion-options-max-height); */
-  /* overflow-y: auto; */
 `;
 
-const DetailSection = styled.div`
+const SplitContainer = styled.div`
+  display: flex;
+  gap: 24px;
+`;
+
+const Pane = styled.div`
+  flex: 1;
+`;
+
+const DetailSection = styled(Pane)`
   display: flex;
   flex-direction: column;
   justify-content: left;
@@ -97,6 +157,5 @@ const LanguagesContainer = styled.div`
 
 const LanguageDetailContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: var(--homepage-volunteering-opportunity-details-languages-gap);
+  gap: 4px;
 `;

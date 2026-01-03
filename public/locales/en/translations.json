@@ -440,6 +440,7 @@
       "activityLog": "Activity Log",
       "editButtonName": "Edit",
       "findOppButtonName": "Find Opportunity",
+      "activities": "Activities",
       "volunteerHeader": {
         "modalData": {
           "title": "Change engagement status",
@@ -571,7 +572,11 @@
       "goToProfile": "Go to Profile",
       "mainCommunication": "Main communication",
       "translationTo": "Translation to",
-      "residentsSpeak": "Residents speak"
+      "residentsSpeak": "Residents speak",
+      "languages": "Languages",
+      "schedule": "Schedule",
+      "district": "District",
+      "dateOfAppointment": "Date Of Appointment"
     }
   },
   "message": {
