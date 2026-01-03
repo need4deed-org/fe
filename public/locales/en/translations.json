@@ -557,5 +557,36 @@
     "training_answer": "Every few months training are offered, especially for those supporting with translations.",
     "group_volunteering_question": "Can I volunteer with a group or organisation?",
     "group_volunteering_answer": "Yes, group volunteering is encouraged, especially for those supporting refugee accommodation centers."
+  },
+  "legal": {
+    "notice": {
+      "header": "Legal Notice",
+      "contacts": {
+        "tel": "Telephone",
+        "fax": "Fax",
+        "email": "Email",
+        "responsible": "Responsible: Managing Director"
+      },
+      "registration": "Registration Court",
+      "court": "District Court Charlottenburg",
+      "disclaimer": "Disclaimer",
+      "liability": {
+        "header": "Liability for Content and Links",
+        "body": "The contents of this website were created with the greatest care. However, we cannot guarantee the accuracy, completeness, and timeliness of the content. As a provider, we are responsible for our own content on this page in accordance with Section 7 (1) TMG under general laws. According to Sections 8 to 10 TMG, VIA as a provider is not obligated to monitor transmitted or stored third-party information or to investigate circumstances that indicate illegal activity. Obligations to remove or block the use of information under general laws remain unaffected. However, liability in this regard is only possible from the moment of knowledge of a specific legal violation. Upon notification of such violations, we will remove this content immediately. Should links lead to nowhere or no longer provide current information, we ask for notification. Likewise, we ask for your notice regarding pages to which a link should be placed. We assume no responsibility for the content and timeliness of third-party links."
+      },
+      "photoCredit": {
+        "header": "Photo Credits",
+        "owner": "Logo Owner",
+        "clubDialog": "For all other images and logos used, Club Dialog e.V. is the author and thus the holder of the exclusive usage rights."
+      },
+      "dataProtectionLink": "Click here for our Privacy Policy",
+      "dataProtectionOfficer": "Data Protection Officer"
+    },
+    "legalHeading": "Legal",
+    "impressum": "Imprint",
+    "dataPrivacy": "Privacy Policy",
+    "agreement": "Volunteer Participation Agreement",
+    "guidelines": "Need4Deed Guidelines",
+    "cookies": "Cookies"
   }
 }

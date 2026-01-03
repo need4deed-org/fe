@@ -557,5 +557,36 @@
     "training_answer": "Alle paar Monate werden Schulungen angeboten, insbesondere für diejenigen, die Übersetzungsunterstützung leisten.",
     "group_volunteering_question": "Kann ich mit einer Gruppe oder Organisation freiwillig arbeiten?",
     "group_volunteering_answer": "Ja, Gruppenfreiwilligenarbeit wird gefördert, insbesondere für diejenigen, die Unterkünfte für Geflüchtete unterstützen."
+  },
+  "legal": {
+    "notice": {
+      "header": "Impressum",
+      "contacts": {
+        "tel": "Telefon",
+        "fax": "Telefax",
+        "email": "E-mail",
+        "responsible": "Verantwortlich: Geschäftsführerin"
+      },
+      "registration": "Registergericht",
+      "court": "Amtsgericht Charlottenburg",
+      "disclaimer": "Haftungsausschluss",
+      "liability": {
+        "header": "Haftung für Inhalte und Links",
+        "body": "Die Inhalte dieser Website wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen. Als Anbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf dieser Seite nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG ist VIA als Anbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend entfernen. Sollten Verweise ins Leere führen oder keine aktuellen Informationen mehr bieten, bitten wir um Mitteilung. Gleichfalls bitten wir um Ihren Hinweis zu Seiten, auf die ein Verweis gelegt werden sollte. Wir übernehmen keine Verantwortung für den Inhalt und die Aktualität fremder Links."
+      },
+      "photoCredit": {
+        "header": "Bildnachweis",
+        "owner": "Inhaber der Logos",
+        "clubDialog": "Bei allen anderen verwendeten Bildern und Logos ist Club Dialog e.V. Urheber und damit Inhaber der ausschließlichen Nutzungsrechte."
+      },
+      "dataProtectionLink": "Hier geht es zu unserer Datenschutzerklärung",
+      "dataProtectionOfficer": "Datenschutzbeauftragter"
+    },
+    "legalHeading": "Legal",
+    "impressum": "Impressum",
+    "dataPrivacy": "Datenschutzerklärung",
+    "agreement": "Vereinbarung zur Ehrenamtlichen Teilnahme",
+    "guidelines": "Need4Deed Leitlinien",
+    "cookies": "Cookies"
   }
 }
