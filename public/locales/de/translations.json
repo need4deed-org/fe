@@ -432,6 +432,14 @@
     "volunteerProfile": {
       "backToDashboard": "Zurück zum Dashboard",
       "volunteersProfile": "Profil des Freiwilligen",
+      "contactDetailsTitle": "Kontaktdaten",
+      "volunteerProfile": "Freiwilligenprofil",
+      "opportunities": "Möglichkeiten",
+      "coordinatorComments": "Kommentare der Koordination",
+      "documents": "Dokumente",
+      "activityLog": "Aktivitätsprotokoll",
+      "editButtonName": "Bearbeiten",
+      "findOppButtonName": "Möglichkeit finden",
       "volunteerHeader": {
         "modalData": {
           "title": "Engagement-Status ändern",
@@ -494,6 +502,14 @@
           "missing": "Fehlend"
         }
       },
+      "opportunitiesSec": {
+        "tabs": {
+          "pending": "Ausstehend",
+          "matched": "Zugeordnet",
+          "active": "Aktiv",
+          "past": "Vergangen"
+        }
+      },
       "contactDetails": {
         "title": "Kontaktdaten",
         "edit": "Bearbeiten",
@@ -543,9 +559,20 @@
         }
       }
     },
-    "message": {
-      "successful": "Erfolgreich",
-      "errorGeneric": "Etwas ist schief gelaufen!"
+
+    "opportunities": {
+      "accompanyingTranslation": {
+        "en": "Deutsch, Englisch",
+        "de": "Deutsch",
+        "no": "Sprachmittlung ist nicht nötig"
+      },
+      "defaultMainCommunication": "Englisch, Deutsch",
+      "otherCategory": "Allgemeines Engagement",
+      "goToProfile": "Zum Profil"
     }
+  },
+  "message": {
+    "successful": "Erfolgreich",
+    "errorGeneric": "Etwas ist schief gelaufen!"
   }
 }

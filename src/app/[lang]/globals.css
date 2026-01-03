@@ -186,9 +186,11 @@ html {
   --homepage-testimonials-profile-gap: 16px;
 
   /* layout-static-page */
-  --layout-static-page-background-default: linear-gradient(180deg,
-      var(--color-magnolia)-5.53%,
-      var(--color-orchid-dark) 100%);
+  --layout-static-page-background-default: linear-gradient(
+    180deg,
+    var(--color-magnolia)-5.53%,
+    var(--color-orchid-dark) 100%
+  );
   /* percentages */
   --percent-10: 10%;
   --percent-20: 20%;
@@ -1118,6 +1120,34 @@ html {
     --cards-header-filter-item-icon-div-size: 28px;
     --cards-header-filter-item-icon-div-border-radius: 14px;
 
+    --volunteer-profile-container-width: 1260px;
+    --volunteer-profile-container-gap: 24px;
+    --volunteer-profile-back-link-gap: 0.5rem;
+    --volunteer-profile-back-link-font-size: 20px;
+    --volunteer-profile-back-link-transition: color 0.2s;
+    --volunteer-profile-section-card-border-radius: 16px;
+    --volunteer-profile-section-card-padding: 24px;
+    --volunteer-profile-section-card-gap: 8px;
+    --volunteer-profile-section-card-icon-size: 40px;
+    --volunteer-profile-section-card-header-info-gap: 24px;
+    --volunteer-profile-section-card-header-button-height: 56px;
+    --volunteer-profile-section-card-header-button-textFontSize: 20px;
+    --volunteer-profile-section-card-header-button-padding: 16px 24px;
+
+    --volunteer-profile-opportunities-container-gap: 8px;
+    --volunteer-profile-opportunities-tabs-margin-top: 16px;
+    --volunteer-profile-opportunities-tabs-gap: 24px;
+    --volunteer-profile-opportunities-tabs-border-bottom: 1px solid var(--color-blue-50);
+    --volunteer-profile-opportunities-tab-heading-margin: 0;
+    --volunteer-profile-opportunities-tab-heading-padding: 16px;
+    --volunteer-profile-opportunities-tab-heading-border-bottom: 2px solid currentColor;
+    --volunteer-profile-opportunities-accordion-container-padding: 24px;
+    --volunteer-profile-opportunities-accordion-container-border-radius: 24px;
+    --volunteer-profile-opportunities-accordion-container-border: 1px solid var(--color-blue-50);
+    --volunteer-profile-opportunities-accordion-container-gap: 24px;
+    --volunteer-profile-opportunities-accordion-header-info-gap: 8px;
+    --volunteer-profile-opportunities-accordion-header-avatar-name-gap: 16px;
+    --volunteer-profile-opportunities-accordion-header-buttons-gap: 24px;
   }
 }
 
@@ -1156,7 +1186,7 @@ html {
   --editableField-dropdownList-position: absolute;
   --editableField-dropdownList-top: 110%;
   --editableField-dropdownList-left: 0;
-  --editableField-dropdownList-width:100%;
+  --editableField-dropdownList-width: 100%;
   --editableField-dropdownList-background: white;
   --editableField-dropdownList-border: 1px solid var(--color-grey-200);
   --editableField-dropdownList-borderRadius: 8px;
@@ -1179,6 +1209,4 @@ html {
   --editableField-text-overflow: break-word;
   --editableField-text-wordBreak: break-word;
   --editableField-errorMessage-paddingLeft: 252px;
-
-
 }
