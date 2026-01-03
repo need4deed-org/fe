@@ -537,7 +537,10 @@
       },
       "defaultMainCommunication": "English, German",
       "otherCategory": "General Volunteering",
-      "goToProfile": "Go to Profile"
+      "goToProfile": "Go to Profile",
+      "mainCommunication": "Main communication",
+      "translationTo": "Translation to",
+      "residentsSpeak": "Residents speak"
     }
   },
   "message": {

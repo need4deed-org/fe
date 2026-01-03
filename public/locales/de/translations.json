@@ -538,7 +538,10 @@
       },
       "defaultMainCommunication": "Englisch, Deutsch",
       "otherCategory": "Allgemeines Engagement",
-      "goToProfile": "Zum Profil"
+      "goToProfile": "Zum Profil",
+      "mainCommunication": "Hauptkommunikation",
+      "translationTo": "Übersetzung nach",
+      "residentsSpeak": "Bewohnende sprechen"
     }
   },
   "message": {
