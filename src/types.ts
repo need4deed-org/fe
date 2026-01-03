@@ -41,15 +41,15 @@ export enum Language {
 }
 
 export enum LanguageLevel {
-  NATIVE = "languagesNative",
-  FLUENT = "languagesFluent",
-  INTERMEDIATE = "languagesIntermediate",
+  NATIVE = "native",
+  FLUENT = "fluent",
+  INTERMEDIATE = "intermediate",
 }
 
 export type LanguageObject = {
   id: number;
   language: string;
-  level: LanguageLevel;
+  level: LanguageLevel | "";
 };
 
 export type FooterLink = [string, string];

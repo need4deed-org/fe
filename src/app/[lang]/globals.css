@@ -211,6 +211,21 @@ html {
   --checkbox-label-font-weight-selected: 400;
   --checkbox-label-font-weight-not-selected: 300;
 
+  /* profile section */
+  --profile-section-padding: 24px;
+  --profile-section-gap: 8px;
+  --profile-section-gap-editing: 16px;
+  --profile-section-margin-bottom: 24px;
+  --profile-section-title-gap: 16px;
+  --profile-section-button-row-gap: 24px;
+  --profile-section-field-row-gap: 32px;
+  --profile-section-field-row-padding: 16px 0;
+  --profile-section-badge-gap: 8px;
+  --profile-section-badge-padding: 10px 20px;
+  --profile-section-tags-gap: 8px;
+  --profile-section-error-gap: 6px;
+  --profile-section-error-margin-top: 8px;
+
   /* paginated cards*/
   --indicators-container-gap: 8px;
   --arrows-button-container-gap: 8px;
@@ -1110,6 +1125,7 @@ html {
   --editableField-fieldWrapper-display: flex;
   --editableField-fieldWrapper-borderBottom: none;
   --editableField-fieldWrapper-padding: 1rem 0;
+  --editableField-fieldWrapper-padding-error: 16px 0 0 0;
   --editableField-fieldWrapper-fontSize: 20px;
   --editableField-fieldWrapper-width: 100%;
   --editableField-fieldWrapper-alignItems: center;
@@ -1121,7 +1137,9 @@ html {
   --editableField-fieldWrapper-input-borderRadius: 8px;
   --editableField-fieldWrapper-input-width: 100%;
   --editableField-fieldWrapper-input-padding: 16px;
+  --editableField-fieldWrapper-input-paddingRight: 48px;
   --editableField-fieldWrapper-input-border: 1px solid var(--color-grey-200);
+  --editableField-clearButton-padding: 4px;
   --editableField-dropdownWrapper-position: relative;
   --editableField-dropdownWrapper-width: 100%;
   --editableField-dropdownButton-border: 1px solid var(--color-grey-200);
@@ -1143,11 +1161,14 @@ html {
   --editableField-dropdownList-border: 1px solid var(--color-grey-200);
   --editableField-dropdownList-borderRadius: 8px;
   --editableField-dropdownList-padding: 16px;
+  --editableField-dropdownList-gap: 4px;
   --editableField-dropdownList-zIndex: 20;
   --editableField-optionRow-display: flex;
   --editableField-optionRow-alignItems: center;
   --editableField-optionRow-justifyContent: space-between;
-  --editableField-optionRow-padding: 0.4rem 0.2rem;
+  --editableField-optionRow-padding: 8px 12px;
+  --editableField-optionRow-borderRadius: 6px;
+  --editableField-optionRow-gap: 12px;
   --editableField-optionRow-cursor: pointer;
   --editableField-optionRow-userSelect: none;
   --editableField-optionRow-width: 100%;
@@ -1157,6 +1178,7 @@ html {
   --editableField-text-whiteSpace: normal;
   --editableField-text-overflow: break-word;
   --editableField-text-wordBreak: break-word;
+  --editableField-errorMessage-paddingLeft: 252px;
 
 
 }
