@@ -40,7 +40,7 @@ const links1: FooterLink[] = [
 const links2: FooterLink[] = [
   ["homepage.footer.legalNotice", Subpage.LEGAL_NOTICE],
   ["homepage.footer.privacy", Subpage.DATA_PRIVACY],
-  ["homepage.footer.vpa", Subpage.VPA],
+  ["homepage.footer.vpa", Subpage.AGREEMENT],
 ];
 
 const desktopFooter = (

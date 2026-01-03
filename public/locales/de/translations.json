@@ -561,7 +561,6 @@
   "legal": {
     "legalHeading": "Legal",
     "impressum": "Impressum",
-    "agreement": "Vereinbarung zur Ehrenamtlichen Teilnahme",
     "guidelines": "Need4Deed Leitlinien",
     "cookies": "Cookies",
     "notice": {
@@ -929,6 +928,32 @@
           }
         }
       }
+    },
+    "agreement": {
+      "header": "Vereinbarung zur Ehrenamtlichen Teilnahme",
+      "para1": "Diese Vereinbarung tritt erst in Kraft, wenn Sie mit der ehrenamtlichen Arbeit mit Geflüchteten beginnen.",
+      "para2": "Durch Bestätigung Ihrer Teilnahme stimmen Sie den folgenden Bedingungen für das Projekt Need4Deed (nachfolgend „Projektvermittler“ genannt) zu:",
+      "numbered1": "Umfang der Ehrenamtlichen Tätigkeit:",
+      "bullet11": "Als Ehrenamtliche/r werden Sie unter Anleitung des Projektvermittlers an verschiedenen Aktivitäten teilnehmen, einschließlich:",
+      "subBullet111": "Direkte Kommunikation mit Geflüchteten oder über Sozialarbeiter und Ehrenamtskoordinatoren.",
+      "subBullet112": "Unterstützung bei niedrigschwelligen Dolmetschaufgaben für Geflüchtete bei Arztterminen und Behördengängen.",
+      "subBullet113": "Unterstützung in Gemeinschaftsunterkünften bei Aktivitäten wie Kinderbetreuung, Sport, Übersetzungen, Gartenarbeit und anderen Freizeitaktivitäten, die durch den Ehrenamtskoordinator der Unterkunft organisiert werden.",
+      "numbered2": "Art der Vereinbarung:",
+      "bullet21": "Ihre Teilnahme erfolgt vollständig freiwillig und unentgeltlich. Diese Vereinbarung begründet kein Arbeitsverhältnis und schafft keinen Anspruch auf eine zukünftige Anstellung.",
+      "numbered3": "Art der Vereinbarung:",
+      "bullet31": "Ihre Teilnahme erfolgt vollständig freiwillig und unentgeltlich. Diese Vereinbarung begründet kein Arbeitsverhältnis und schafft keinen Anspruch auf eine zukünftige Anstellung.",
+      "bullet32": "Die Einsatzzeiten werden in gegenseitigem Einvernehmen festgelegt. Bei Verhinderung informieren Sie bitte den Projektvermittler rechtzeitig.",
+      "numbered4": "Haftung und Versicherung:",
+      "bullet41": "Sie haften nur für Schäden, die durch vorsätzliches oder grob fahrlässiges Verhalten entstehen.",
+      "bullet42": "Der Projektvermittler übernimmt keine Haftung für Ihre ehrenamtliche Tätigkeit. Die Versicherungs- und sonstigen rechtlichen Verantwortlichkeiten richten sich nach den vertraglichen Regelungen oder dem gesetzlichen Schutz der Gemeinschaftsunterkunft, in der die von Ihnen unterstützten Geflüchteten leben.",
+      "numbered5": "Verschwiegenheit und Datenschutz:",
+      "bullet51": "Sie verpflichten sich, über alle vertraulichen Informationen, die Sie im Rahmen Ihrer Tätigkeit erfahren, Stillschweigen zu bewahren.",
+      "numbered6": "Beendigung:",
+      "bullet61": "Beide Parteien können diese Vereinbarung mit einer Frist von vier Wochen kündigen. Im beiderseitigen Einvernehmen kann diese Frist verkürzt werden.",
+      "numbered7": "Aufwandsentschädigung:",
+      "bullet71": "Sie haben Anspruch auf Erstattung von notwendigen Auslagen, die im Rahmen Ihrer Tätigkeit entstehen, sofern dies vorher mit dem Projektvermittler vereinbart wurde.",
+      "numbered8": "Sonstiges:",
+      "bullet81": "Sollte eine Bestimmung dieser Vereinbarung unwirksam sein, bleibt die Wirksamkeit der übrigen Bestimmungen unberührt."
     }
   }
 }

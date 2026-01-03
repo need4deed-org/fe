@@ -27,7 +27,7 @@ function DataPrivacy() {
   `;
 
   return (
-    <PageLayout background="var(--color-white)">
+    <PageLayout background="var(--color-orchid)">
       <DataContainer>
         <h2>{t("legal.dataPrivacy.header")}</h2>
         <p>{t("legal.dataPrivacy.intro1")}</p>

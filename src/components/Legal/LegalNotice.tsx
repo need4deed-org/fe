@@ -47,7 +47,7 @@ function LegalNotice() {
     }
   `;
   return (
-    <PageLayout background="var(--color-white)">
+    <PageLayout background="var(--color-orchid)">
       <LegalContainer>
         <LegalTitle>{t("legal.notice.header")}</LegalTitle>
         <LegalSection>
