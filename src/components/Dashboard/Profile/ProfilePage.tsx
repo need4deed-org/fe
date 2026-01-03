@@ -10,6 +10,7 @@ import { ContactDetails } from "./sections/ContactDetails";
 import { Card, SectionCard, SectionCardProps } from "./common/SectionCard";
 import { Heading2 } from "@/components/styled/text";
 import VolunteerOpportunities from "./sections/VolunteerOpportunities/VolunteerOpportunities";
+import { VolunteerProfileSection } from "./sections/VolunteerProfileSection";
 
 const PageContainer = styled.div`
   display: flex;
@@ -40,7 +41,7 @@ const ProfilePage = ({ volunteer }: ProfilePageProps) => {
   const sections: SectionCardProps[] = [
     {
       iconName: IconName.ChatsCircle,
-      title: t("dashboard.volunteerProfile.contactDetails"),
+      title: t("dashboard.volunteerProfile.contactDetailsTitle"),
       headerButtonName: t("dashboard.volunteerProfile.editButtonName"),
       subComponent: <div>Contact Details sub-component. to be replaced...</div>,
     },
@@ -91,6 +92,8 @@ const ProfilePage = ({ volunteer }: ProfilePageProps) => {
       ))}
 
       <ContactDetails volunteer={volunteer} />
+
+      <VolunteerProfileSection volunteer={volunteer} />
     </PageContainer>
   );
 };

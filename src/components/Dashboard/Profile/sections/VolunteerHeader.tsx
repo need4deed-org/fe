@@ -1,18 +1,13 @@
 "use client";
-import Image from "next/image";
-import styled from "styled-components";
+import { Heading4 } from "@/components/styled/text";
+import { defaultAvatarVolunteerProfile } from "@/config/constants";
 import { formatDateTime, getImageUrl } from "@/utils";
-import {
-  ApiVolunteerGet,
-  VolunteerStateEngagementType,
-  VolunteerStateMatchType,
-  VolunteerStateTypeType,
-} from "need4deed-sdk";
+import { ApiVolunteerGet, VolunteerStateEngagementType, VolunteerStateMatchType } from "need4deed-sdk";
+import Image from "next/image";
 import { useTranslation } from "react-i18next";
+import styled from "styled-components";
 import Divider from "../common/Divider";
 import StatusBadge from "../common/StatusBadge";
-import { defaultAvatarVolunteerProfile } from "@/config/constants";
-import { Heading4 } from "@/components/styled/text";
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -119,7 +114,7 @@ export function VolunteerHeader({ volunteer }: Props) {
 
   const statusEngagement = volunteer.statusEngagement || VolunteerStateEngagementType.NEW;
   const statusMatch = volunteer.statusMatch || VolunteerStateMatchType.NO_MATCHES;
-  const statusType = volunteer.statusType || VolunteerStateTypeType.REGULAR;
+  const statusType = volunteer.statusType;
 
   return (
     <HeaderContainer>

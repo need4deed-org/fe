@@ -1,4 +1,5 @@
-import { WarningCircle, XCircle } from "@phosphor-icons/react";
+import { ErrorMessage } from "@/components/core/common";
+import { XCircle } from "@phosphor-icons/react";
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import styled from "styled-components";
@@ -7,10 +8,10 @@ const EditModeWrapper = styled.div`
   width: 100%;
 `;
 
-const FieldWrapper = styled.div`
+const FieldWrapper = styled.div<{ $hasError?: boolean }>`
   display: var(--editableField-fieldWrapper-display);
   border-bottom: var(--editableField-fieldWrapper-borderBottom);
-  padding: var(--editableField-fieldWrapper-padding);
+  padding: ${(props) => (props.$hasError ? "var(--editableField-fieldWrapper-padding-error)" : "var(--editableField-fieldWrapper-padding)")};
   color: var(--color-midnight);
   width: var(--editableField-fieldWrapper-width);
   align-items: var(--editableField-fieldWrapper-alignItems);
@@ -48,7 +49,7 @@ const InputWrapper = styled.div<{ $hasError?: boolean }>`
   input {
     border-radius: var(--editableField-fieldWrapper-input-borderRadius);
     padding: var(--editableField-fieldWrapper-input-padding);
-    padding-right: 48px;
+    padding-right: var(--editableField-fieldWrapper-input-paddingRight);
     color: var(--color-midnight);
     border: ${(props) =>
       props.$hasError ? "2px solid var(--color-red-600)" : "var(--editableField-fieldWrapper-input-border)"};
@@ -69,7 +70,7 @@ const ClearButton = styled.button`
   background: none;
   border: none;
   cursor: pointer;
-  padding: 4px;
+  padding: var(--editableField-clearButton-padding);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -129,20 +130,22 @@ const DropdownList = styled.div`
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 4px;
+  gap: var(--editableField-dropdownList-gap);
+  max-height: 240px;
+  overflow-y: auto;
 `;
 
 const OptionRow = styled.div<{ $isSelected?: boolean }>`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  padding: 8px 12px;
+  padding: var(--editableField-optionRow-padding);
   cursor: pointer;
   user-select: none;
   width: 100%;
-  border-radius: 6px;
+  border-radius: var(--editableField-optionRow-borderRadius);
   transition: background-color 0.2s ease;
-  gap: 12px;
+  gap: var(--editableField-optionRow-gap);
   background-color: ${(props) => (props.$isSelected ? "var(--color-orchid-subtle)" : "transparent")};
 
   &:hover {
@@ -168,19 +171,6 @@ const Text = styled.span`
   cursor: pointer;
   font-size: 16px;
   color: var(--color-midnight);
-`;
-
-const ErrorMessage = styled.div`
-  color: var(--color-red-600);
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 20px;
-  margin: 0;
-  padding-left: 252px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: 4px;
 `;
 
 type EditableFieldType = "text" | "number" | "checkbox-list" | "radio-list";
@@ -282,7 +272,7 @@ export const EditableField = forwardRef(function EditableField<T extends string 
   // edit mode
   return (
     <EditModeWrapper>
-      <FieldWrapper>
+      <FieldWrapper $hasError={!!errorMessage}>
         {label && <label>{label}: </label>}
 
         {type === "text" && (
@@ -393,12 +383,7 @@ export const EditableField = forwardRef(function EditableField<T extends string 
         )}
       </FieldWrapper>
       {error && <p style={{ color: "red", paddingLeft: "1rem" }}>{error}</p>}
-      {errorMessage && (
-        <ErrorMessage>
-          <WarningCircle size={20} weight="fill" />
-          {errorMessage}
-        </ErrorMessage>
-      )}
+      {errorMessage && <ErrorMessage message={errorMessage} paddingLeft="var(--editableField-errorMessage-paddingLeft)" />}
     </EditModeWrapper>
   );
 });
