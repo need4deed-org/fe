@@ -585,7 +585,8 @@
         "title": "Coordinator Comments",
         "placeholder": "Comment",
         "addComment": "Add comment",
-        "menuAction": "Comment options"
+        "menuAction": "Comment options",
+        "commentAdded": "Comment added successfully"
       }
     }
   },

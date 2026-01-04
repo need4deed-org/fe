@@ -1,9 +1,9 @@
 "use client";
 import { Heading2 } from "@/components/styled/text";
-import { useUpdateVolunteerProfile } from "@/hooks/useUpdateVolunteerProfile";
+import { useCreateComment } from "@/hooks/useCreateComment";
 import { formatDateTime } from "@/utils";
 import { ChatCircleDots, DotsThreeOutline } from "@phosphor-icons/react";
-import { ApiVolunteerGet, TimedText } from "need4deed-sdk";
+import { ApiVolunteerGet, EntityTableName } from "need4deed-sdk";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
@@ -29,7 +29,7 @@ type Props = {
 
 export function CommentsSection({ volunteer }: Props) {
   const { t } = useTranslation();
-  const { mutate: updateProfile, isPending } = useUpdateVolunteerProfile(volunteer.id);
+  const { mutate: createComment, isPending } = useCreateComment(volunteer.id);
   const [newCommentText, setNewCommentText] = useState("");
 
   const comments = volunteer.comments ?? [];
@@ -37,16 +37,11 @@ export function CommentsSection({ volunteer }: Props) {
   const handleAddComment = () => {
     if (!newCommentText.trim()) return;
 
-    const newComment: TimedText = {
-      id: Date.now(),
-      timestamp: new Date(),
-      content: newCommentText.trim(),
-      authorName: "Current User",
-    };
-
-    updateProfile(
+    createComment(
       {
-        comments: [...comments, newComment],
+        text: newCommentText.trim(),
+        entityType: EntityTableName.VOLUNTEER,
+        entityId: volunteer.id,
       },
       {
         onSuccess: () => {
