@@ -3,46 +3,27 @@ import { Heading2 } from "@/components/styled/text";
 import { useCreateComment } from "@/hooks/useCreateComment";
 import { useDeleteComment } from "@/hooks/useDeleteComment";
 import { useUpdateComment } from "@/hooks/useUpdateComment";
-import { formatDateTime } from "@/utils";
-import { ChatCircleDots, DotsThreeOutline } from "@phosphor-icons/react";
+import { ChatCircleDots } from "@phosphor-icons/react";
 import { ApiVolunteerGet, EntityTableName } from "need4deed-sdk";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { CommentActionMenu } from "./CommentActionMenu";
+import { Comment } from "./Comment";
 import { DeleteCommentDialog } from "./DeleteCommentDialog";
+import { useCommentDelete } from "./hooks/useCommentDelete";
+import { useCommentEdit } from "./hooks/useCommentEdit";
+import { useCommentMenu } from "./hooks/useCommentMenu";
 import {
   AddCommentButton,
-  AuthorName,
-  CommentContent,
-  CommentEditButtons,
-  CommentItem,
-  CommentText,
   Container,
-  EditCancelButton,
-  EditSaveButton,
-  EditTextArea,
   Header,
   IconContainer,
-  MenuAction,
   NewCommentSection,
   TextArea,
-  Timestamp,
   TitleRow,
-  TopInfo,
 } from "./styles";
 
 type Props = {
   volunteer: ApiVolunteerGet;
-};
-
-type CommentState = {
-  editingCommentId: number | null;
-  editText: string;
-  originalEditText: string;
-  openMenuCommentId: number | null;
-  deleteDialogOpen: boolean;
-  deleteCommentId: number | null;
-  deleteAuthorName: string;
 };
 
 export function CommentsSection({ volunteer }: Props) {
@@ -50,19 +31,18 @@ export function CommentsSection({ volunteer }: Props) {
   const { mutate: createComment, isPending: isCreating } = useCreateComment(volunteer.id);
   const [newCommentText, setNewCommentText] = useState("");
 
-  const [state, setState] = useState<CommentState>({
-    editingCommentId: null,
-    editText: "",
-    originalEditText: "",
-    openMenuCommentId: null,
-    deleteDialogOpen: false,
-    deleteCommentId: null,
-    deleteAuthorName: "",
-  });
+  const edit = useCommentEdit();
+  const deleteState = useCommentDelete();
+  const menu = useCommentMenu();
 
-  const menuButtonRefs = useRef<{ [key: number]: HTMLButtonElement | null }>({});
+  const { mutate: updateComment, isPending: isUpdating } = useUpdateComment(
+    volunteer.id,
+    edit.editingCommentId ?? 0,
+  );
 
-  const comments = [...(volunteer.comments ?? [])].reverse();
+  const { mutate: deleteComment } = useDeleteComment(volunteer.id, deleteState.deleteCommentId ?? 0);
+
+  const comments = volunteer.comments?.slice().reverse() ?? [];
 
   const handleAddComment = () => {
     if (!newCommentText.trim()) return;
@@ -74,9 +54,7 @@ export function CommentsSection({ volunteer }: Props) {
         entityId: volunteer.id,
       },
       {
-        onSuccess: () => {
-          setNewCommentText("");
-        },
+        onSuccess: () => setNewCommentText(""),
       },
     );
   };
@@ -88,104 +66,33 @@ export function CommentsSection({ volunteer }: Props) {
     }
   };
 
-  const handleEditKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      handleSaveEdit();
-    }
-  };
-
-  const handleMenuClick = (commentId: number, event: React.MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation();
-    setState((prev) => ({
-      ...prev,
-      openMenuCommentId: prev.openMenuCommentId === commentId ? null : commentId,
-    }));
-  };
-
-  const handleMenuClose = () => {
-    setState((prev) => ({
-      ...prev,
-      openMenuCommentId: null,
-    }));
-  };
-
-  const handleEditClick = (commentId: number, currentText: string) => {
-    setState((prev) => ({
-      ...prev,
-      editingCommentId: commentId,
-      editText: currentText,
-      originalEditText: currentText,
-      openMenuCommentId: null,
-    }));
-  };
-
-  const handleCancelEdit = () => {
-    setState((prev) => ({
-      ...prev,
-      editingCommentId: null,
-      editText: "",
-      originalEditText: "",
-    }));
-  };
-
-  const { mutate: updateComment, isPending: isUpdating } = useUpdateComment(
-    volunteer.id,
-    state.editingCommentId ?? 0,
-  );
-
   const handleSaveEdit = () => {
-    if (!state.editText.trim() || !state.editingCommentId) return;
+    if (!edit.editText.trim() || !edit.editingCommentId) return;
 
     updateComment(
-      { text: state.editText.trim() },
+      { text: edit.editText.trim() },
       {
-        onSuccess: () => {
-          setState((prev) => ({
-            ...prev,
-            editingCommentId: null,
-            editText: "",
-            originalEditText: "",
-          }));
-        },
+        onSuccess: () => edit.cancelEdit(),
       },
     );
   };
 
-  const handleDeleteClick = (commentId: number, authorName: string) => {
-    setState((prev) => ({
-      ...prev,
-      deleteDialogOpen: true,
-      deleteCommentId: commentId,
-      deleteAuthorName: authorName,
-      openMenuCommentId: null,
-    }));
-  };
-
-  const handleCancelDelete = () => {
-    setState((prev) => ({
-      ...prev,
-      deleteDialogOpen: false,
-      deleteCommentId: null,
-      deleteAuthorName: "",
-    }));
-  };
-
-  const { mutate: deleteComment } = useDeleteComment(volunteer.id, state.deleteCommentId ?? 0);
-
   const handleConfirmDelete = () => {
-    if (!state.deleteCommentId) return;
+    if (!deleteState.deleteCommentId) return;
 
     deleteComment(undefined, {
-      onSuccess: () => {
-        setState((prev) => ({
-          ...prev,
-          deleteDialogOpen: false,
-          deleteCommentId: null,
-          deleteAuthorName: "",
-        }));
-      },
+      onSuccess: () => deleteState.closeDeleteDialog(),
     });
+  };
+
+  const handleEditClick = (commentId: number, currentText: string) => {
+    edit.startEdit(commentId, currentText);
+    menu.closeMenu();
+  };
+
+  const handleDeleteClick = (commentId: number, authorName: string) => {
+    deleteState.openDeleteDialog(commentId, authorName);
+    menu.closeMenu();
   };
 
   return (
@@ -201,66 +108,37 @@ export function CommentsSection({ volunteer }: Props) {
         </TitleRow>
       </Header>
 
-      {comments.map((comment) => {
-        const isEditing = state.editingCommentId === comment.id;
-        const isMenuOpen = state.openMenuCommentId === comment.id;
-
-        return (
-          <CommentItem key={comment.id}>
-            <CommentContent>
-              <TopInfo>
-                <AuthorName>{comment.authorName}</AuthorName>
-                <Timestamp>{formatDateTime(comment.timestamp)}</Timestamp>
-              </TopInfo>
-              {isEditing ? (
-                <>
-                  <EditTextArea
-                    value={state.editText}
-                    onChange={(e) => setState((prev) => ({ ...prev, editText: e.target.value }))}
-                    onKeyPress={handleEditKeyPress}
-                    data-testid={`edit-comment-textarea-${comment.id}`}
-                  />
-                  <CommentEditButtons>
-                    <EditCancelButton onClick={handleCancelEdit} data-testid={`cancel-edit-${comment.id}`}>
-                      {t("dashboard.volunteerProfile.commentsSection.cancelEdit")}
-                    </EditCancelButton>
-                    <EditSaveButton
-                      onClick={handleSaveEdit}
-                      disabled={!state.editText.trim() || isUpdating || state.editText === state.originalEditText}
-                      data-testid={`save-edit-${comment.id}`}
-                    >
-                      {t("dashboard.volunteerProfile.commentsSection.saveEdit")}
-                    </EditSaveButton>
-                  </CommentEditButtons>
-                </>
-              ) : (
-                <CommentText>{comment.content}</CommentText>
-              )}
-            </CommentContent>
-            {!isEditing && (
-              <>
-                <MenuAction
-                  ref={(el) => {
-                    menuButtonRefs.current[comment.id] = el;
-                  }}
-                  onClick={(e) => handleMenuClick(comment.id, e)}
-                  aria-label={t("dashboard.volunteerProfile.commentsSection.menuAction")}
-                  data-testid={`comment-menu-${comment.id}`}
-                >
-                  <DotsThreeOutline size={24} weight="fill" />
-                </MenuAction>
-                <CommentActionMenu
-                  isOpen={isMenuOpen}
-                  onClose={handleMenuClose}
-                  onEdit={() => handleEditClick(comment.id, comment.content)}
-                  onDelete={() => handleDeleteClick(comment.id, comment.authorName)}
-                  anchorElement={menuButtonRefs.current[comment.id]}
-                />
-              </>
-            )}
-          </CommentItem>
-        );
-      })}
+      {comments.map((comment) => (
+        <Comment
+          key={comment.id}
+          comment={comment}
+          isEditing={edit.editingCommentId === comment.id}
+          editText={edit.editText}
+          isMenuOpen={menu.openMenuCommentId === comment.id}
+          anchorElement={menu.menuButtonRefs.current[comment.id] ?? null}
+          menuButtonRef={(el) => {
+            menu.menuButtonRefs.current[comment.id] = el;
+          }}
+          onEditTextChange={edit.updateEditText}
+          onEditKeyPress={(e) => {
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault();
+              handleSaveEdit();
+            }
+          }}
+          onMenuClick={(e) => {
+            e.stopPropagation();
+            menu.toggleMenu(comment.id);
+          }}
+          onMenuClose={menu.closeMenu}
+          onEditClick={() => handleEditClick(comment.id, comment.content)}
+          onDeleteClick={() => handleDeleteClick(comment.id, comment.authorName)}
+          onCancelEdit={edit.cancelEdit}
+          onSaveEdit={handleSaveEdit}
+          canSave={edit.canSave}
+          isUpdating={isUpdating}
+        />
+      ))}
 
       <NewCommentSection>
         <TextArea
@@ -280,9 +158,9 @@ export function CommentsSection({ volunteer }: Props) {
       </NewCommentSection>
 
       <DeleteCommentDialog
-        isOpen={state.deleteDialogOpen}
-        authorName={state.deleteAuthorName}
-        onCancel={handleCancelDelete}
+        isOpen={deleteState.deleteDialogOpen}
+        authorName={deleteState.deleteAuthorName}
+        onCancel={deleteState.closeDeleteDialog}
         onConfirm={handleConfirmDelete}
       />
     </Container>

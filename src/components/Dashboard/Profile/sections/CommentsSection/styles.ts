@@ -195,38 +195,6 @@ export const AddCommentButton = styled.button`
   }
 `;
 
-export const EditTextArea = styled.textarea`
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  padding: var(--spacing-16);
-  gap: var(--spacing-8);
-  width: 100%;
-  min-height: 112px;
-  background: var(--color-white);
-  border: 1px solid var(--color-grey-200);
-  border-radius: var(--border-radius-small);
-  font-family: "Figtree";
-  font-style: normal;
-  font-weight: 400;
-  font-size: var(--text-p-font-size);
-  line-height: var(--text-p-line-height);
-  letter-spacing: 0.005em;
-  color: var(--color-midnight);
-  resize: vertical;
-  align-self: stretch;
-
-  &::placeholder {
-    color: var(--color-grey-500);
-  }
-
-  &:focus {
-    outline: none;
-    border-color: var(--color-midnight);
-  }
-`;
-
 export const CommentEditButtons = styled.div`
   display: flex;
   flex-direction: row;
