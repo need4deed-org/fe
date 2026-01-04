@@ -112,31 +112,30 @@ export function CommentsSection({ volunteer }: Props) {
         <Comment
           key={comment.id}
           comment={comment}
-          isEditing={edit.editingCommentId === comment.id}
-          editText={edit.editText}
-          isMenuOpen={menu.openMenuCommentId === comment.id}
-          anchorElement={menu.menuButtonRefs.current[comment.id] ?? null}
-          menuButtonRef={(el) => {
-            menu.menuButtonRefs.current[comment.id] = el;
+          edit={{
+            isActive: edit.editingCommentId === comment.id,
+            text: edit.editText,
+            canSave: edit.canSave,
+            isUpdating,
+            onTextChange: edit.updateEditText,
+            onKeyPress: (e) => edit.handleKeyPress(e, handleSaveEdit),
+            onSave: handleSaveEdit,
+            onCancel: edit.cancelEdit,
           }}
-          onEditTextChange={edit.updateEditText}
-          onEditKeyPress={(e) => {
-            if (e.key === "Enter" && !e.shiftKey) {
-              e.preventDefault();
-              handleSaveEdit();
-            }
+          menu={{
+            isOpen: menu.openMenuCommentId === comment.id,
+            anchorElement: menu.menuButtonRefs.current[comment.id] ?? null,
+            buttonRef: (el) => {
+              menu.menuButtonRefs.current[comment.id] = el;
+            },
+            onToggle: (e) => {
+              e.stopPropagation();
+              menu.toggleMenu(comment.id);
+            },
+            onClose: menu.closeMenu,
+            onEdit: () => handleEditClick(comment.id, comment.content),
+            onDelete: () => handleDeleteClick(comment.id, comment.authorName),
           }}
-          onMenuClick={(e) => {
-            e.stopPropagation();
-            menu.toggleMenu(comment.id);
-          }}
-          onMenuClose={menu.closeMenu}
-          onEditClick={() => handleEditClick(comment.id, comment.content)}
-          onDeleteClick={() => handleDeleteClick(comment.id, comment.authorName)}
-          onCancelEdit={edit.cancelEdit}
-          onSaveEdit={handleSaveEdit}
-          canSave={edit.canSave}
-          isUpdating={isUpdating}
         />
       ))}
 

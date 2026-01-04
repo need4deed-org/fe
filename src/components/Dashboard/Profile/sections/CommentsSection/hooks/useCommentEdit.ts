@@ -7,6 +7,7 @@ type UseCommentEditReturn = {
   startEdit: (commentId: number, currentText: string) => void;
   cancelEdit: () => void;
   updateEditText: (text: string) => void;
+  handleKeyPress: (e: React.KeyboardEvent<HTMLTextAreaElement>, onSave: () => void) => void;
   canSave: boolean;
 };
 
@@ -31,6 +32,13 @@ export function useCommentEdit(): UseCommentEditReturn {
     setEditText(text);
   };
 
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>, onSave: () => void) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      onSave();
+    }
+  };
+
   const canSave = editText.trim() !== "" && editText !== originalEditText;
 
   return {
@@ -40,6 +48,7 @@ export function useCommentEdit(): UseCommentEditReturn {
     startEdit,
     cancelEdit,
     updateEditText,
+    handleKeyPress,
     canSave,
   };
 }
