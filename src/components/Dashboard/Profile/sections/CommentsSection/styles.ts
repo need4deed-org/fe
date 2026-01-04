@@ -187,3 +187,98 @@ export const AddCommentButton = styled.button<{ $disabled: boolean }>`
     background: var(--color-aubergine-light);
   }
 `;
+
+export const EditTextArea = styled.textarea`
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: var(--spacing-16);
+  gap: var(--spacing-8);
+  width: 100%;
+  min-height: 112px;
+  background: var(--color-white);
+  border: 1px solid var(--color-grey-200);
+  border-radius: var(--border-radius-small);
+  font-family: "Figtree";
+  font-style: normal;
+  font-weight: 400;
+  font-size: var(--text-p-font-size);
+  line-height: var(--text-p-line-height);
+  letter-spacing: 0.005em;
+  color: var(--color-midnight);
+  resize: vertical;
+  align-self: stretch;
+
+  &::placeholder {
+    color: var(--color-grey-500);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--color-midnight);
+  }
+`;
+
+export const CommentEditButtons = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: var(--spacing-16);
+  width: 100%;
+`;
+
+export const EditCancelButton = styled.button`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: var(--spacing-16) var(--spacing-24);
+  gap: var(--spacing-8);
+  height: 56px;
+  background: transparent;
+  border: 2px solid var(--color-aubergine);
+  border-radius: var(--button-border-radius);
+  cursor: pointer;
+  font-family: "Figtree";
+  font-style: normal;
+  font-weight: 600;
+  font-size: var(--text-p-font-size);
+  line-height: var(--text-p-line-height);
+  text-align: center;
+  letter-spacing: 0.005em;
+  color: var(--color-aubergine);
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background: var(--color-aubergine-subtle);
+  }
+`;
+
+export const EditSaveButton = styled.button<{ $disabled: boolean }>`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: var(--spacing-16) var(--spacing-24);
+  gap: var(--spacing-8);
+  height: 56px;
+  background: ${(props) => (props.$disabled ? "var(--color-grey-200)" : "var(--color-aubergine)")};
+  border-radius: var(--button-border-radius);
+  border: none;
+  cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
+  font-family: "Figtree";
+  font-style: normal;
+  font-weight: 600;
+  font-size: var(--text-p-font-size);
+  line-height: var(--text-p-line-height);
+  text-align: center;
+  letter-spacing: 0.005em;
+  color: ${(props) => (props.$disabled ? "var(--color-grey-500)" : "var(--color-white)")};
+  opacity: ${(props) => (props.$disabled ? "0.6" : "1")};
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background: var(--color-aubergine-light);
+  }
+`;
