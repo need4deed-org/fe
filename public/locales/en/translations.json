@@ -580,6 +580,12 @@
           "cancel": "Cancel",
           "upload": "Upload"
         }
+      },
+      "commentsSection": {
+        "title": "Coordinator Comments",
+        "placeholder": "Comment",
+        "addComment": "Add comment",
+        "menuAction": "Comment options"
       }
     }
   },

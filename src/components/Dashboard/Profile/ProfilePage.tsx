@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import { VolunteerHeader } from "./sections/VolunteerHeader";
 import { ContactDetails } from "./sections/ContactDetails";
 import { VolunteerProfileSection } from "./sections/VolunteerProfileSection";
+import { CommentsSection } from "./sections/CommentsSection";
 import { VolunteerProfileDocumentSection } from "./sections/VolunteerProfileDocumentSection";
 
 const PageContainer = styled.div`
@@ -85,6 +86,8 @@ const ProfilePage = ({ volunteer }: ProfilePageProps) => {
       <ContactDetails volunteer={volunteer} />
 
       <VolunteerProfileSection volunteer={volunteer} />
+
+      <CommentsSection volunteer={volunteer} />
 
       <VolunteerProfileDocumentSection volunteer={volunteer} />
     </PageContainer>
