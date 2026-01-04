@@ -5,7 +5,7 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: flex-start;
   padding: var(--profile-section-padding);
-  gap: var(--spacing-16);
+  gap: var(--spacing-24);
   background: var(--color-white);
   border-radius: var(--card-border-radius);
   margin-bottom: var(--profile-section-margin-bottom);
