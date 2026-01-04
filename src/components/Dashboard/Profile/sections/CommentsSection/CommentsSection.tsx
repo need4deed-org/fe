@@ -32,7 +32,7 @@ export function CommentsSection({ volunteer }: Props) {
   const { mutate: createComment, isPending } = useCreateComment(volunteer.id);
   const [newCommentText, setNewCommentText] = useState("");
 
-  const comments = volunteer.comments ?? [];
+  const comments = [...(volunteer.comments ?? [])].reverse();
 
   const handleAddComment = () => {
     if (!newCommentText.trim()) return;
