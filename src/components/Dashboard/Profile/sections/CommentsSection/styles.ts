@@ -160,7 +160,7 @@ export const TextArea = styled.textarea`
   }
 `;
 
-export const AddCommentButton = styled.button<{ $disabled: boolean }>`
+export const AddCommentButton = styled.button`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -168,10 +168,10 @@ export const AddCommentButton = styled.button<{ $disabled: boolean }>`
   padding: var(--spacing-16) var(--spacing-24);
   gap: var(--spacing-8);
   height: 56px;
-  background: ${(props) => (props.$disabled ? "var(--color-grey-200)" : "var(--color-aubergine)")};
+  background: var(--color-aubergine);
   border-radius: var(--button-border-radius);
   border: none;
-  cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
+  cursor: pointer;
   font-family: "Figtree";
   font-style: normal;
   font-weight: 600;
@@ -179,9 +179,16 @@ export const AddCommentButton = styled.button<{ $disabled: boolean }>`
   line-height: var(--text-p-line-height);
   text-align: center;
   letter-spacing: 0.005em;
-  color: ${(props) => (props.$disabled ? "var(--color-grey-500)" : "var(--color-white)")};
-  opacity: ${(props) => (props.$disabled ? "0.6" : "1")};
+  color: var(--color-white);
+  opacity: 1;
   transition: background-color 0.2s ease, opacity 0.2s ease;
+
+  &:disabled {
+    background: var(--color-grey-200);
+    cursor: not-allowed;
+    color: var(--color-grey-500);
+    opacity: 0.6;
+  }
 
   &:hover:not(:disabled) {
     background: var(--color-aubergine-light);
@@ -255,7 +262,7 @@ export const EditCancelButton = styled.button`
   }
 `;
 
-export const EditSaveButton = styled.button<{ $disabled: boolean }>`
+export const EditSaveButton = styled.button`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -263,10 +270,10 @@ export const EditSaveButton = styled.button<{ $disabled: boolean }>`
   padding: var(--spacing-16) var(--spacing-24);
   gap: var(--spacing-8);
   height: 56px;
-  background: ${(props) => (props.$disabled ? "var(--color-grey-200)" : "var(--color-aubergine)")};
+  background: var(--color-aubergine);
   border-radius: var(--button-border-radius);
   border: none;
-  cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
+  cursor: pointer;
   font-family: "Figtree";
   font-style: normal;
   font-weight: 600;
@@ -274,9 +281,16 @@ export const EditSaveButton = styled.button<{ $disabled: boolean }>`
   line-height: var(--text-p-line-height);
   text-align: center;
   letter-spacing: 0.005em;
-  color: ${(props) => (props.$disabled ? "var(--color-grey-500)" : "var(--color-white)")};
-  opacity: ${(props) => (props.$disabled ? "0.6" : "1")};
+  color: var(--color-white);
+  opacity: 1;
   transition: background-color 0.2s ease, opacity 0.2s ease;
+
+  &:disabled {
+    background: var(--color-grey-200);
+    cursor: not-allowed;
+    color: var(--color-grey-500);
+    opacity: 0.6;
+  }
 
   &:hover:not(:disabled) {
     background: var(--color-aubergine-light);

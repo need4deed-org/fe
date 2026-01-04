@@ -38,6 +38,7 @@ type Props = {
 type CommentState = {
   editingCommentId: number | null;
   editText: string;
+  originalEditText: string;
   openMenuCommentId: number | null;
   deleteDialogOpen: boolean;
   deleteCommentId: number | null;
@@ -52,6 +53,7 @@ export function CommentsSection({ volunteer }: Props) {
   const [state, setState] = useState<CommentState>({
     editingCommentId: null,
     editText: "",
+    originalEditText: "",
     openMenuCommentId: null,
     deleteDialogOpen: false,
     deleteCommentId: null,
@@ -86,6 +88,13 @@ export function CommentsSection({ volunteer }: Props) {
     }
   };
 
+  const handleEditKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSaveEdit();
+    }
+  };
+
   const handleMenuClick = (commentId: number, event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
     setState((prev) => ({
@@ -106,6 +115,7 @@ export function CommentsSection({ volunteer }: Props) {
       ...prev,
       editingCommentId: commentId,
       editText: currentText,
+      originalEditText: currentText,
       openMenuCommentId: null,
     }));
   };
@@ -115,6 +125,7 @@ export function CommentsSection({ volunteer }: Props) {
       ...prev,
       editingCommentId: null,
       editText: "",
+      originalEditText: "",
     }));
   };
 
@@ -134,6 +145,7 @@ export function CommentsSection({ volunteer }: Props) {
             ...prev,
             editingCommentId: null,
             editText: "",
+            originalEditText: "",
           }));
         },
       },
@@ -205,6 +217,7 @@ export function CommentsSection({ volunteer }: Props) {
                   <EditTextArea
                     value={state.editText}
                     onChange={(e) => setState((prev) => ({ ...prev, editText: e.target.value }))}
+                    onKeyPress={handleEditKeyPress}
                     data-testid={`edit-comment-textarea-${comment.id}`}
                   />
                   <CommentEditButtons>
@@ -213,8 +226,7 @@ export function CommentsSection({ volunteer }: Props) {
                     </EditCancelButton>
                     <EditSaveButton
                       onClick={handleSaveEdit}
-                      disabled={!state.editText.trim() || isUpdating}
-                      $disabled={!state.editText.trim() || isUpdating}
+                      disabled={!state.editText.trim() || isUpdating || state.editText === state.originalEditText}
                       data-testid={`save-edit-${comment.id}`}
                     >
                       {t("dashboard.volunteerProfile.commentsSection.saveEdit")}
@@ -259,7 +271,6 @@ export function CommentsSection({ volunteer }: Props) {
           data-testid="comment-textarea"
         />
         <AddCommentButton
-          $disabled={!newCommentText.trim() || isCreating}
           onClick={handleAddComment}
           disabled={!newCommentText.trim() || isCreating}
           data-testid="add-comment-button"
