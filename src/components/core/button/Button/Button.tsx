@@ -14,6 +14,7 @@ const hoverBGColorMap = {
   "var(--color-orchid-light)": "var(--color-orchid)",
   "var(--color-grey-50)": "var(--color-aubergine)",
   "var(--color-violet-500)": "var(--color-violet-400)",
+  transparent: "transparent",
 };
 
 type BackgroundColorKeys = keyof typeof hoverBGColorMap;
@@ -40,12 +41,27 @@ const StyledButton = styled.button<StyledButtonProps>`
   gap: ${(props) => props.gap};
   padding: ${(props) => props.padding};
   flex-direction: ${(props) => (props.$iconPosition === "right" ? "row-reverse" : "row")};
+  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
+  transition: background-color 0.2s ease, opacity 0.2s ease;
 
   &:hover {
     background-color: ${(props) => hoverBGColorMap[props.backgroundcolor || defaultBGColor]};
 
     ${ButtonSpan} {
       color: ${(props) => props.$textHoverColor};
+    }
+  }
+
+  &:disabled {
+    background-color: var(--color-grey-200);
+    opacity: 0.6;
+
+    &:hover {
+      background-color: var(--color-grey-200);
+    }
+
+    ${ButtonSpan} {
+      color: var(--color-grey-500);
     }
   }
 `;

@@ -12,6 +12,8 @@ export const apiPathOpportunity = `${apiPrefix}/opportunity`;
 export const apiPathOption = `/${apiPrefix}/option`;
 export const apiProfilePath = `/volunteer/9`;
 
+export const cacheTTL = 1000 * 60 * 5; // 5 minutes
+
 export enum ScreenTypes {
   MOBILE = "mobile",
   TABLET = "tablet",

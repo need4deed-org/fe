@@ -127,7 +127,10 @@
           "para": "*Wenn Du Deine Sprache nicht findest, wähle bitte \"Andere\" und gib Deine bevorzugte Sprache im Kommentarfeld unten an",
           "addLanguage": "Sprache hinzufügen",
           "chooseLanguage": "Sprache auswählen",
+          "chooseLevel": "Niveau auswählen",
           "removeLanguage": "Entfernen",
+          "language": "Sprache",
+          "level": "Niveau",
           "languagesNative": {
             "header": "Muttersprache",
             "error": ""
@@ -429,6 +432,14 @@
     "volunteerProfile": {
       "backToDashboard": "Zurück zum Dashboard",
       "volunteersProfile": "Profil des Freiwilligen",
+      "contactDetailsTitle": "Kontaktdaten",
+      "volunteerProfile": "Freiwilligenprofil",
+      "opportunities": "Möglichkeiten",
+      "coordinatorComments": "Kommentare der Koordination",
+      "documents": "Dokumente",
+      "activityLog": "Aktivitätsprotokoll",
+      "editButtonName": "Bearbeiten",
+      "findOppButtonName": "Möglichkeit finden",
       "volunteerHeader": {
         "modalData": {
           "title": "Engagement-Status ändern",
@@ -457,7 +468,13 @@
         "volunteerType_title": "Freiwilligen-Typ",
         "volunteerType_options": {
           "accompanying": "Begleitend",
-          "other": "Andere"
+          "regular": "Regelmäßig",
+          "events": "Veranstaltungen",
+          "regular-accompanying": "Regelmäßig + Begleitend",
+          "general": "Allgemein",
+          "event": "Veranstaltung",
+          "festival": "Festival",
+          "weekend-only": "Nur Wochenende"
         },
         "matchStatus_title": "Zuweisungs-Status",
         "matchStatus_options": {
@@ -484,11 +501,78 @@
           "uploaded": "Hochgeladen",
           "missing": "Fehlend"
         }
+      },
+      "opportunitiesSec": {
+        "tabs": {
+          "pending": "Ausstehend",
+          "matched": "Zugeordnet",
+          "active": "Aktiv",
+          "past": "Vergangen"
+        }
+      },
+      "contactDetails": {
+        "title": "Kontaktdaten",
+        "edit": "Bearbeiten",
+        "phone": "Telefonnummer",
+        "email": "E-Mail",
+        "address": "Adresse",
+        "preferredCommunicationType": {
+          "label": "Kontaktmöglichkeiten",
+          "whatsapp": "WhatsApp",
+          "telegram": "Telegram",
+          "mobilePhone": "Mobiltelefon",
+          "email": "E-Mail"
+        },
+        "notProvided": "Nicht angegeben",
+        "cancel": "Abbrechen",
+        "saveChanges": "Änderungen speichern",
+        "saveSuccess": "Kontaktdaten erfolgreich aktualisiert",
+        "validation": {
+          "phoneRequired": "Telefonnummer ist erforderlich",
+          "phoneInvalid": "Telefonnummer muss mit + beginnen und nur Ziffern und Leerzeichen enthalten",
+          "emailRequired": "E-Mail ist erforderlich",
+          "emailInvalid": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+          "addressRequired": "Adresse ist erforderlich",
+          "preferredCommunicationTypeRequired": "Bitte wählen Sie mindestens eine Kontaktmöglichkeit aus"
+        }
+      },
+      "profileSection": {
+        "title": "Freiwilligenprofil",
+        "edit": "Bearbeiten",
+        "languages": "Sprachen",
+        "availability": "Verfügbarkeit",
+        "districts": "Bezirke",
+        "volunteerType": "Freiwilligen-Typ",
+        "activities": "Aktivitäten",
+        "skills": "Fähigkeiten & Erfahrungen",
+        "cancel": "Abbrechen",
+        "saveChanges": "Änderungen speichern",
+        "saveSuccess": "Profil erfolgreich aktualisiert",
+        "validation": {
+          "languageRequired": "Wähle eine Sprache aus",
+          "levelRequired": "Wähle ein Niveau aus",
+          "availabilityRequired": "Bitte wähle mindestens eine Verfügbarkeit aus",
+          "districtsRequired": "Bitte wähle mindestens einen Bezirk aus",
+          "volunteerTypeRequired": "Freiwilligen-Typ ist erforderlich",
+          "activitiesRequired": "Bitte wähle mindestens eine Aktivität aus",
+          "skillsRequired": "Fähigkeiten sind erforderlich"
+        }
       }
     },
-    "message": {
-      "successful": "Erfolgreich",
-      "errorGeneric": "Etwas ist schief gelaufen!"
+
+    "opportunities": {
+      "accompanyingTranslation": {
+        "en": "Deutsch, Englisch",
+        "de": "Deutsch",
+        "no": "Sprachmittlung ist nicht nötig"
+      },
+      "defaultMainCommunication": "Englisch, Deutsch",
+      "otherCategory": "Allgemeines Engagement",
+      "goToProfile": "Zum Profil"
     }
+  },
+  "message": {
+    "successful": "Erfolgreich",
+    "errorGeneric": "Etwas ist schief gelaufen!"
   }
 }

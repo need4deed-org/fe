@@ -130,7 +130,10 @@
           "para": "*if you can't find your language, please select \"Other\" and indicate your preferable language in comments section bellow",
           "addLanguage": "Add language",
           "chooseLanguage": "Choose a language",
+          "chooseLevel": "Choose a level",
           "removeLanguage": "Remove",
+          "language": "Language",
+          "level": "Level",
           "languagesNative": {
             "header": "Native"
           },
@@ -429,6 +432,14 @@
     "volunteerProfile": {
       "backToDashboard": "Back to Dashboard",
       "volunteersProfile": "Volunteer’s profile",
+      "contactDetailsTitle": "Contact Details",
+      "volunteerProfile": "Volunteer Profile",
+      "opportunities": "Opportunities",
+      "coordinatorComments": "Coordinator Comments",
+      "documents": "Documents",
+      "activityLog": "Activity Log",
+      "editButtonName": "Edit",
+      "findOppButtonName": "Find Opportunity",
       "volunteerHeader": {
         "modalData": {
           "title": "Change engagement status",
@@ -457,7 +468,13 @@
         "volunteerType_title": "Volunteer type",
         "volunteerType_options": {
           "accompanying": "Accompanying",
-          "other": "Other"
+          "regular": "Regular",
+          "events": "Events",
+          "regular-accompanying": "Regular + Accompanying",
+          "general": "General",
+          "event": "Event",
+          "festival": "Festival",
+          "weekend-only": "Weekend Only"
         },
         "matchStatus_title": "Match status",
         "matchStatus_options": {
@@ -484,7 +501,73 @@
           "uploaded": "Uploaded",
           "missing": "Missing"
         }
+      },
+      "opportunitiesSec": {
+        "tabs": {
+          "pending": "Pending",
+          "matched": "Matched",
+          "active": "Active",
+          "past": "Past"
+        }
+      },
+      "contactDetails": {
+        "title": "Contact details",
+        "edit": "Edit",
+        "phone": "Phone number",
+        "email": "Email",
+        "address": "Address",
+        "preferredCommunicationType": {
+          "label": "Ways to contact",
+          "whatsapp": "WhatsApp",
+          "telegram": "Telegram",
+          "mobilePhone": "Mobile Phone",
+          "email": "Email"
+        },
+        "notProvided": "Not provided",
+        "cancel": "Cancel",
+        "saveChanges": "Save changes",
+        "saveSuccess": "Contact details updated successfully",
+        "validation": {
+          "phoneRequired": "Phone number is required",
+          "phoneInvalid": "Phone number must start with + and contain only digits and spaces",
+          "emailRequired": "Email is required",
+          "emailInvalid": "Please enter a valid email address",
+          "addressRequired": "Address is required",
+          "preferredCommunicationTypeRequired": "Please select at least one way to contact"
+        }
+      },
+      "profileSection": {
+        "title": "Volunteer profile",
+        "edit": "Edit",
+        "languages": "Languages",
+        "availability": "Availability",
+        "districts": "Districts",
+        "volunteerType": "Volunteer type",
+        "activities": "Activities",
+        "skills": "Skills & experience",
+        "cancel": "Cancel",
+        "saveChanges": "Save changes",
+        "saveSuccess": "Profile updated successfully",
+        "validation": {
+          "languageRequired": "Choose a language",
+          "levelRequired": "Choose a level",
+          "availabilityRequired": "Please select your availability",
+          "districtsRequired": "Please select at least one district",
+          "volunteerTypeRequired": "Please select a volunteer type",
+          "activitiesRequired": "Please select at least one activity",
+          "skillsRequired": "Please select at least one skill"
+        }
       }
+    },
+    "opportunities": {
+      "accompanyingTranslation": {
+        "en": "German, English",
+        "de": "German",
+        "no": "No Translation needed"
+      },
+      "defaultMainCommunication": "English, German",
+      "otherCategory": "General Volunteering",
+      "goToProfile": "Go to Profile"
     }
   },
   "message": {
