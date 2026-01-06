@@ -117,14 +117,19 @@ export default function OpportunityDetail({ opportunity }: Props) {
       <CTAsContainer>
         <Button
           onClick={() => {}}
-          text="Not a match"
+          text={t(`dashboard.volunteerProfile.opportunitiesSec.notAMatch`)}
           height="56px"
           textFontSize="24px"
           textColor="var(--color-aubergine)"
           backgroundcolor="var(--color-white)"
           border="2px solid var(--color-aubergine)"
         />
-        <Button onClick={() => {}} text="Match" height="56px" textFontSize="24px" />
+        <Button
+          onClick={() => {}}
+          text={t(`dashboard.volunteerProfile.opportunitiesSec.match`)}
+          height="56px"
+          textFontSize="24px"
+        />
       </CTAsContainer>
     </OpportunityDetailContainer>
   );

@@ -509,7 +509,9 @@
           "matched": "Matched",
           "active": "Active",
           "past": "Past"
-        }
+        },
+        "match": "Match",
+        "notAMatch": "Not a match"
       },
       "contactDetails": {
         "title": "Contact details",
