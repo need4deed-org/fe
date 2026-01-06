@@ -407,12 +407,10 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
   const handleDateSelect = (date: Date | undefined) => {
     if (date) {
       setSelectedDate(date);
-      setIsDatePickerOpen(false);
     }
+    setIsDatePickerOpen(false);
   };
 
-  const showAdditionalFields =
-    selectedOption === "called" || selectedOption === "triedToCall" || selectedOption === "textedOrEmailed";
   const locale = i18n.language === "de" ? de : undefined;
 
   const getContactMethodOptions = () => {
