@@ -52,6 +52,7 @@ const MOCK_DOCUMENTS: Document[] = [
   },
 ];
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function VolunteerProfileDocumentSection({ volunteer }: Props) {
   const { t } = useTranslation();
   const {

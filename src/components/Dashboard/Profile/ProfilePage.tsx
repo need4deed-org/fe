@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import { VolunteerHeader } from "./sections/VolunteerHeader";
 import { ContactDetails } from "./sections/ContactDetails";
 import { VolunteerProfileSection } from "./sections/VolunteerProfileSection";
+import { CommunicationTrackerSection } from "./sections/CommunicationTrackerSection";
 import { CommentsSection } from "./sections/CommentsSection";
 import { VolunteerProfileDocumentSection } from "./sections/VolunteerProfileDocumentSection";
 
@@ -86,6 +87,8 @@ const ProfilePage = ({ volunteer }: ProfilePageProps) => {
       <ContactDetails volunteer={volunteer} />
 
       <VolunteerProfileSection volunteer={volunteer} />
+
+      <CommunicationTrackerSection volunteer={volunteer} />
 
       <CommentsSection volunteer={volunteer} />
 
