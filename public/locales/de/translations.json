@@ -599,6 +599,36 @@
           "cancel": "Abbrechen",
           "delete": "Löschen"
         }
+      },
+      "communicationSection": {
+        "title": "Kommunikationsverfolgung",
+        "addNew": "+ Kontakt registrieren",
+        "emptyState": "Noch keine Kommunikation aufgezeichnet",
+        "registerContact": "Kontakt registrieren",
+        "date": "Datum",
+        "type": "Typ",
+        "contactMethod": "Kontaktmethode",
+        "notes": "Notizen",
+        "actions": "Aktionen",
+        "typeOfContact": "Art des Kontakts",
+        "contactTypes": {
+          "called": "Angerufen",
+          "triedToCall": "Versuch anzurufen",
+          "textedOrEmailed": "SMS oder E-Mail gesendet",
+          "other": "Sonstiges"
+        },
+        "dateOfContact": "Datum des Kontakts",
+        "notesPlaceholder": "Fügen Sie Notizen zu dieser Kommunikation hinzu...",
+        "cancel": "Abbrechen",
+        "save": "Speichern",
+        "statusChange": "Statusänderung",
+        "followUp": "Nachverfolgung",
+        "inquiry": "Anfrage",
+        "other": "Sonstiges",
+        "email": "E-Mail",
+        "phone": "Telefon",
+        "inPerson": "Persönlich",
+        "message": "Nachricht"
       }
     },
     "message": {

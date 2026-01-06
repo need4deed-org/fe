@@ -599,6 +599,36 @@
           "cancel": "Cancel",
           "delete": "Delete"
         }
+      },
+      "communicationSection": {
+        "title": "Communication Tracker",
+        "addNew": "+ Register contact",
+        "emptyState": "No communications recorded yet",
+        "registerContact": "Register contact",
+        "date": "Date",
+        "type": "Type",
+        "contactMethod": "Contact method",
+        "notes": "Notes",
+        "actions": "Actions",
+        "typeOfContact": "Type of contact",
+        "contactTypes": {
+          "called": "Called",
+          "triedToCall": "Tried to call",
+          "textedOrEmailed": "Texted or emailed",
+          "other": "Other"
+        },
+        "dateOfContact": "Date of contact",
+        "notesPlaceholder": "Add notes about this communication...",
+        "cancel": "Cancel",
+        "save": "Save",
+        "statusChange": "Status change",
+        "followUp": "Follow-up",
+        "inquiry": "Inquiry",
+        "other": "Other",
+        "email": "Email",
+        "phone": "Phone",
+        "inPerson": "In person",
+        "message": "Message"
       }
     }
   },

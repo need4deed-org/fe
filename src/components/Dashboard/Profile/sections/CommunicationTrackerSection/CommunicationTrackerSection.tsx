@@ -32,22 +32,7 @@ type Props = {
 export function CommunicationTrackerSection({ volunteer }: Props) {
   const { t } = useTranslation();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [communications, setCommunications] = useState<CommunicationEntry[]>([
-    {
-      id: 1,
-      date: "2024-01-15",
-      type: "status-change",
-      contactMethod: "email",
-      notes: "Initial contact - volunteer interested in helping with language teaching",
-    },
-    {
-      id: 2,
-      date: "2024-02-20",
-      type: "follow-up",
-      contactMethod: "phone",
-      notes: "Follow-up call to discuss availability and preferred activities",
-    },
-  ]);
+  const [communications, setCommunications] = useState<CommunicationEntry[]>([]);
   const [editingEntry, setEditingEntry] = useState<CommunicationEntry | undefined>(undefined);
 
   const handleAddNew = () => {
@@ -83,14 +68,20 @@ export function CommunicationTrackerSection({ volunteer }: Props) {
 
   const getTypeLabel = (type: string) => {
     switch (type) {
+      case "called":
+        return t("dashboard.volunteerProfile.communicationSection.contactTypes.called", "Called");
+      case "triedToCall":
+        return t("dashboard.volunteerProfile.communicationSection.contactTypes.triedToCall", "Tried to call");
+      case "textedOrEmailed":
+        return t("dashboard.volunteerProfile.communicationSection.contactTypes.textedOrEmailed", "Texted or emailed");
+      case "other":
+        return t("dashboard.volunteerProfile.communicationSection.contactTypes.other", "Other");
       case "status-change":
         return t("dashboard.volunteerProfile.communicationSection.statusChange", "Status change");
       case "follow-up":
         return t("dashboard.volunteerProfile.communicationSection.followUp", "Follow-up");
       case "inquiry":
         return t("dashboard.volunteerProfile.communicationSection.inquiry", "Inquiry");
-      case "other":
-        return t("dashboard.volunteerProfile.communicationSection.other", "Other");
       default:
         return type;
     }
@@ -132,16 +123,13 @@ export function CommunicationTrackerSection({ volunteer }: Props) {
           <Heading2>{t("dashboard.volunteerProfile.communicationSection.title", "Communication Tracker")}</Heading2>
         </TitleRow>
         <AddButton onClick={handleAddNew} data-testid="add-communication-button">
-          {t("dashboard.volunteerProfile.communicationSection.addNew", "Add new communication")}
+          {t("dashboard.volunteerProfile.communicationSection.addNew", "+ Register contact")}
         </AddButton>
       </Header>
 
       {communications.length === 0 ? (
         <EmptyState data-testid="empty-state">
-          {t(
-            "dashboard.volunteerProfile.communicationSection.emptyState",
-            "No communications recorded yet. Click 'Add new communication' to get started."
-          )}
+          {t("dashboard.volunteerProfile.communicationSection.emptyState", "No communications recorded yet")}
         </EmptyState>
       ) : (
         <TableContainer data-testid="communications-table">

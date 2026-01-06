@@ -63,66 +63,29 @@ const CloseButton = styled.button`
   }
 `;
 
-const FormField = styled.div`
+const RadioGroup = styled.div`
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-8);
+  gap: var(--spacing-24);
 `;
 
-const Label = styled.label`
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 20px;
+const RadioOption = styled.label`
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 24px;
   letter-spacing: 0.005em;
   color: var(--color-midnight);
+  font-weight: 400;
 `;
 
-const Select = styled.select`
-  padding: var(--spacing-16);
-  border: 1px solid var(--color-grey-200);
-  border-radius: var(--border-radius-small);
-  font-size: var(--text-p-font-size);
-  line-height: var(--text-p-line-height);
-  color: var(--color-midnight);
-  font-family: "Figtree";
-  background: var(--color-white);
-
-  &:focus {
-    outline: none;
-    border-color: var(--color-midnight);
-  }
-`;
-
-const Input = styled.input`
-  padding: var(--spacing-16);
-  border: 1px solid var(--color-grey-200);
-  border-radius: var(--border-radius-small);
-  font-size: var(--text-p-font-size);
-  line-height: var(--text-p-line-height);
-  color: var(--color-midnight);
-  font-family: "Figtree";
-
-  &:focus {
-    outline: none;
-    border-color: var(--color-midnight);
-  }
-`;
-
-const TextArea = styled.textarea`
-  padding: var(--spacing-16);
-  border: 1px solid var(--color-grey-200);
-  border-radius: var(--border-radius-small);
-  font-size: var(--text-p-font-size);
-  line-height: var(--text-p-line-height);
-  color: var(--color-midnight);
-  font-family: "Figtree";
-  min-height: 112px;
-  resize: vertical;
-
-  &:focus {
-    outline: none;
-    border-color: var(--color-midnight);
-  }
+const RadioInput = styled.input`
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  accent-color: var(--color-aubergine);
 `;
 
 const ButtonGroup = styled.div`
@@ -170,6 +133,7 @@ const SaveButton = styled.button`
     background: var(--color-grey-200);
     color: var(--color-grey-500);
     cursor: not-allowed;
+    opacity: 0.6;
   }
 `;
 
@@ -190,28 +154,22 @@ export type CommunicationEntry = {
 
 export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Props) {
   const { t } = useTranslation();
-  const [formData, setFormData] = useState<CommunicationEntry>(
-    initialData || {
-      date: new Date().toISOString().split("T")[0],
-      type: "status-change",
-      contactMethod: "email",
-      notes: "",
-    }
-  );
+  const [selectedOption, setSelectedOption] = useState<string>(initialData?.type || "called");
 
   const handleSave = () => {
-    if (!formData.notes.trim()) return;
-    onSave(formData);
-    handleClose();
+    const entry: CommunicationEntry = {
+      id: initialData?.id,
+      date: new Date().toISOString().split("T")[0],
+      type: selectedOption,
+      contactMethod: selectedOption === "called" || selectedOption === "triedToCall" ? "phone" : "email",
+      notes: t(`dashboard.volunteerProfile.communicationSection.contactTypes.${selectedOption}`, selectedOption),
+    };
+    onSave(entry);
+    onClose();
   };
 
   const handleClose = () => {
-    setFormData({
-      date: new Date().toISOString().split("T")[0],
-      type: "status-change",
-      contactMethod: "email",
-      notes: "",
-    });
+    setSelectedOption("called");
     onClose();
   };
 
@@ -225,59 +183,61 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
           </CloseButton>
         </DialogHeader>
 
-        <FormField>
-          <Label>{t("dashboard.volunteerProfile.communicationSection.typeOfContact", "Type of contact")}</Label>
-          <Select
-            value={formData.type}
-            onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-            data-testid="contact-type-select"
-          >
-            <option value="status-change">{t("dashboard.volunteerProfile.communicationSection.statusChange", "Status change")}</option>
-            <option value="follow-up">{t("dashboard.volunteerProfile.communicationSection.followUp", "Follow-up")}</option>
-            <option value="inquiry">{t("dashboard.volunteerProfile.communicationSection.inquiry", "Inquiry")}</option>
-            <option value="other">{t("dashboard.volunteerProfile.communicationSection.other", "Other")}</option>
-          </Select>
-        </FormField>
+        <RadioGroup>
+          <RadioOption>
+            <RadioInput
+              type="radio"
+              name="contactType"
+              value="called"
+              checked={selectedOption === "called"}
+              onChange={(e) => setSelectedOption(e.target.value)}
+              data-testid="radio-called"
+            />
+            {t("dashboard.volunteerProfile.communicationSection.contactTypes.called", "Called")}
+          </RadioOption>
 
-        <FormField>
-          <Label>{t("dashboard.volunteerProfile.communicationSection.contactMethod", "Contact method")}</Label>
-          <Select
-            value={formData.contactMethod}
-            onChange={(e) => setFormData({ ...formData, contactMethod: e.target.value })}
-            data-testid="contact-method-select"
-          >
-            <option value="email">{t("dashboard.volunteerProfile.communicationSection.email", "Email")}</option>
-            <option value="phone">{t("dashboard.volunteerProfile.communicationSection.phone", "Phone")}</option>
-            <option value="in-person">{t("dashboard.volunteerProfile.communicationSection.inPerson", "In person")}</option>
-            <option value="message">{t("dashboard.volunteerProfile.communicationSection.message", "Message")}</option>
-          </Select>
-        </FormField>
+          <RadioOption>
+            <RadioInput
+              type="radio"
+              name="contactType"
+              value="triedToCall"
+              checked={selectedOption === "triedToCall"}
+              onChange={(e) => setSelectedOption(e.target.value)}
+              data-testid="radio-tried-to-call"
+            />
+            {t("dashboard.volunteerProfile.communicationSection.contactTypes.triedToCall", "Tried to call")}
+          </RadioOption>
 
-        <FormField>
-          <Label>{t("dashboard.volunteerProfile.communicationSection.dateOfContact", "Date of contact")}</Label>
-          <Input
-            type="date"
-            value={formData.date}
-            onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-            data-testid="contact-date-input"
-          />
-        </FormField>
+          <RadioOption>
+            <RadioInput
+              type="radio"
+              name="contactType"
+              value="textedOrEmailed"
+              checked={selectedOption === "textedOrEmailed"}
+              onChange={(e) => setSelectedOption(e.target.value)}
+              data-testid="radio-texted-or-emailed"
+            />
+            {t("dashboard.volunteerProfile.communicationSection.contactTypes.textedOrEmailed", "Texted or emailed")}
+          </RadioOption>
 
-        <FormField>
-          <Label>{t("dashboard.volunteerProfile.communicationSection.notes", "Notes")}</Label>
-          <TextArea
-            value={formData.notes}
-            onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-            placeholder={t("dashboard.volunteerProfile.communicationSection.notesPlaceholder", "Add notes about this communication...")}
-            data-testid="contact-notes-textarea"
-          />
-        </FormField>
+          <RadioOption>
+            <RadioInput
+              type="radio"
+              name="contactType"
+              value="other"
+              checked={selectedOption === "other"}
+              onChange={(e) => setSelectedOption(e.target.value)}
+              data-testid="radio-other"
+            />
+            {t("dashboard.volunteerProfile.communicationSection.contactTypes.other", "Other")}
+          </RadioOption>
+        </RadioGroup>
 
         <ButtonGroup>
           <CancelButton onClick={handleClose} data-testid="cancel-button">
             {t("dashboard.volunteerProfile.communicationSection.cancel", "Cancel")}
           </CancelButton>
-          <SaveButton onClick={handleSave} disabled={!formData.notes.trim()} data-testid="save-button">
+          <SaveButton onClick={handleSave} data-testid="save-button">
             {t("dashboard.volunteerProfile.communicationSection.save", "Save")}
           </SaveButton>
         </ButtonGroup>
