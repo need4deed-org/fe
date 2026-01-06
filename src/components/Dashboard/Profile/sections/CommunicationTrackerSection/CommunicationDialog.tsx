@@ -1,11 +1,12 @@
 "use client";
-import { X, CalendarBlank } from "@phosphor-icons/react";
-import { useState } from "react";
+import { X, Calendar } from "@phosphor-icons/react";
+import { useState, useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import { DayPicker } from "react-day-picker";
+import { format } from "date-fns";
 import { de } from "date-fns/locale";
+import "react-day-picker/style.css";
 
 const DialogOverlay = styled.div<{ $isOpen: boolean }>`
   display: ${(props) => (props.$isOpen ? "flex" : "none")};
@@ -24,7 +25,7 @@ const DialogContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: var(--spacing-48);
-  gap: var(--spacing-24);
+  gap: var(--spacing-32);
   background: var(--color-white);
   border-radius: var(--card-border-radius);
   box-shadow: 0px 10px 30px -12px rgba(143, 81, 138, 0.2);
@@ -44,8 +45,8 @@ const DialogHeader = styled.div`
 
 const DialogTitle = styled.h3`
   font-weight: 700;
-  font-size: 28px;
-  line-height: 32px;
+  font-size: 32px;
+  line-height: 40px;
   letter-spacing: 0.005em;
   color: var(--color-midnight);
   margin: 0;
@@ -76,7 +77,7 @@ const RadioOption = styled.label`
   display: flex;
   align-items: flex-start;
   flex-direction: column;
-  gap: var(--spacing-16);
+  gap: var(--spacing-20);
   cursor: pointer;
   font-size: 20px;
   line-height: 24px;
@@ -104,7 +105,6 @@ const FormField = styled.div`
   flex-direction: column;
   gap: var(--spacing-8);
   width: 100%;
-  margin-left: 32px;
 `;
 
 const Label = styled.label`
@@ -118,68 +118,102 @@ const Label = styled.label`
 const DatePickerWrapper = styled.div`
   position: relative;
   width: 100%;
-  display: flex;
-  align-items: center;
 
-  .react-datepicker-wrapper {
-    width: 100%;
-  }
-
-  .react-datepicker__input-container {
-    width: 100%;
-    position: relative;
-    display: flex;
-    align-items: center;
-  }
-
-  .react-datepicker {
+  .rdp {
+    --rdp-accent-color: var(--color-aubergine);
+    --rdp-accent-background-color: var(--color-aubergine);
+    --rdp-background-color: var(--color-aubergine-subtle);
+    margin: 0;
     font-family: "Figtree";
-    border: 1px solid var(--color-grey-200);
-    border-radius: var(--border-radius-small);
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
   }
 
-  .react-datepicker__header {
-    background-color: var(--color-white);
-    border-bottom: 1px solid var(--color-grey-200);
-    padding-top: var(--spacing-16);
+  .rdp-day_button {
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
   }
 
-  .react-datepicker__current-month {
-    font-weight: 600;
-    font-size: 16px;
-    color: var(--color-midnight);
-  }
-
-  .react-datepicker__day-name {
-    font-weight: 600;
-    color: var(--color-midnight);
-  }
-
-  .react-datepicker__day {
-    color: var(--color-midnight);
-    font-weight: 400;
-  }
-
-  .react-datepicker__day--selected,
-  .react-datepicker__day--keyboard-selected {
+  .rdp-selected .rdp-day_button {
     background-color: var(--color-aubergine);
     color: var(--color-white);
     font-weight: 600;
   }
 
-  .react-datepicker__day:hover {
+  .rdp-day_button:hover:not([disabled]) {
     background-color: var(--color-aubergine-subtle);
   }
 
-  .react-datepicker__day--outside-month {
+  .rdp-outside {
     color: var(--color-grey-300);
+  }
+
+  .rdp-nav {
+    display: flex;
+    gap: 8px;
+  }
+
+  .rdp-nav_button {
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    color: var(--color-midnight);
+  }
+
+  .rdp-nav_button:hover {
+    background-color: var(--color-grey-100);
+  }
+
+  .rdp-caption_label {
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--color-midnight);
+  }
+
+  .rdp-weekday {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--color-midnight);
+  }
+
+  .rdp-month_caption {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+  }
+
+  .rdp-dropdowns {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .rdp-dropdown {
+    padding: 4px 8px;
+    border: 1px solid var(--color-grey-200);
+    border-radius: 4px;
+    background: var(--color-white);
+    font-family: "Figtree";
+    cursor: pointer;
   }
 `;
 
-const DateInputIcon = styled(CalendarBlank)`
+const DateInputContainer = styled.div`
+  position: relative;
+  width: 100%;
+`;
+
+const DateInputIcon = styled(Calendar)`
   position: absolute;
   left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
   color: var(--color-aubergine);
   pointer-events: none;
   z-index: 1;
@@ -207,6 +241,19 @@ const DateInput = styled.input`
   &::placeholder {
     color: var(--color-grey-500);
   }
+`;
+
+const DatePickerPopover = styled.div<{ $isOpen: boolean }>`
+  display: ${(props) => (props.$isOpen ? "block" : "none")};
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 1000;
+  background: var(--color-white);
+  border: 1px solid var(--color-grey-200);
+  border-radius: var(--border-radius-small);
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 16px;
 `;
 
 const Select = styled.select`
@@ -309,9 +356,25 @@ export type CommunicationEntry = {
 
 export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Props) {
   const { t, i18n } = useTranslation();
-  const [selectedOption, setSelectedOption] = useState<string>(initialData?.type || "called");
+  const [selectedOption, setSelectedOption] = useState<string>("");
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedPlatform, setSelectedPlatform] = useState<string>("phoneNumber");
+  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
+  const datePickerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (isOpen) {
+      if (initialData) {
+        setSelectedOption(initialData.type);
+        setSelectedDate(new Date(initialData.date));
+        setSelectedPlatform(initialData.contactMethod);
+      } else {
+        setSelectedOption("");
+        setSelectedDate(new Date());
+        setSelectedPlatform("phoneNumber");
+      }
+    }
+  }, [isOpen, initialData]);
 
   const handleSave = () => {
     const entry: CommunicationEntry = {
@@ -326,10 +389,18 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
   };
 
   const handleClose = () => {
-    setSelectedOption("called");
+    setSelectedOption("");
     setSelectedDate(new Date());
     setSelectedPlatform("phoneNumber");
+    setIsDatePickerOpen(false);
     onClose();
+  };
+
+  const handleDateSelect = (date: Date | undefined) => {
+    if (date) {
+      setSelectedDate(date);
+      setIsDatePickerOpen(false);
+    }
   };
 
   const showAdditionalFields = selectedOption === "called" || selectedOption === "triedToCall";
@@ -362,18 +433,28 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
               <>
                 <FormField>
                   <Label>{t("dashboard.volunteerProfile.communicationSection.contactDateRequired", "Contact date*")}</Label>
-                  <DatePickerWrapper>
-                    <DateInputIcon size={24} weight="regular" />
-                    <DatePicker
-                      selected={selectedDate}
-                      onChange={(date: Date | null) => date && setSelectedDate(date)}
-                      dateFormat="dd.MM.yyyy"
-                      locale={locale}
-                      customInput={<DateInput data-testid="date-picker-input" />}
-                      showMonthDropdown
-                      showYearDropdown
-                      dropdownMode="select"
-                    />
+                  <DatePickerWrapper ref={datePickerRef}>
+                    <DateInputContainer>
+                      <DateInputIcon size={24} weight="regular" />
+                      <DateInput
+                        value={format(selectedDate, "dd.MM.yyyy")}
+                        onClick={() => setIsDatePickerOpen(!isDatePickerOpen)}
+                        readOnly
+                        data-testid="date-picker-input"
+                      />
+                    </DateInputContainer>
+                    <DatePickerPopover $isOpen={isDatePickerOpen}>
+                      <DayPicker
+                        mode="single"
+                        selected={selectedDate}
+                        onSelect={handleDateSelect}
+                        locale={locale}
+                        captionLayout="dropdown"
+                        fromYear={1900}
+                        toYear={new Date().getFullYear() + 10}
+                        disabled={{ after: new Date() }}
+                      />
+                    </DatePickerPopover>
                   </DatePickerWrapper>
                 </FormField>
                 <FormField>
@@ -418,18 +499,28 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
               <>
                 <FormField>
                   <Label>{t("dashboard.volunteerProfile.communicationSection.contactDateRequired", "Contact date*")}</Label>
-                  <DatePickerWrapper>
-                    <DateInputIcon size={24} weight="regular" />
-                    <DatePicker
-                      selected={selectedDate}
-                      onChange={(date: Date | null) => date && setSelectedDate(date)}
-                      dateFormat="dd.MM.yyyy"
-                      locale={locale}
-                      customInput={<DateInput data-testid="date-picker-input" />}
-                      showMonthDropdown
-                      showYearDropdown
-                      dropdownMode="select"
-                    />
+                  <DatePickerWrapper ref={datePickerRef}>
+                    <DateInputContainer>
+                      <DateInputIcon size={24} weight="regular" />
+                      <DateInput
+                        value={format(selectedDate, "dd.MM.yyyy")}
+                        onClick={() => setIsDatePickerOpen(!isDatePickerOpen)}
+                        readOnly
+                        data-testid="date-picker-input"
+                      />
+                    </DateInputContainer>
+                    <DatePickerPopover $isOpen={isDatePickerOpen}>
+                      <DayPicker
+                        mode="single"
+                        selected={selectedDate}
+                        onSelect={handleDateSelect}
+                        locale={locale}
+                        captionLayout="dropdown"
+                        fromYear={1900}
+                        toYear={new Date().getFullYear() + 10}
+                        disabled={{ after: new Date() }}
+                      />
+                    </DatePickerPopover>
                   </DatePickerWrapper>
                 </FormField>
                 <FormField>

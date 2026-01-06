@@ -10,6 +10,13 @@ import {
   ActionCell,
   AddButton,
   Container,
+  DeleteCancelButton,
+  DeleteConfirmButton,
+  DeleteConfirmButtons,
+  DeleteConfirmDialog,
+  DeleteConfirmOverlay,
+  DeleteConfirmText,
+  DeleteConfirmTitle,
   EmptyState,
   Header,
   IconContainer,
@@ -35,6 +42,7 @@ export function CommunicationTrackerSection({ volunteer }: Props) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [communications, setCommunications] = useState<CommunicationEntry[]>([]);
   const [editingEntry, setEditingEntry] = useState<CommunicationEntry | undefined>(undefined);
+  const [deleteConfirmId, setDeleteConfirmId] = useState<number | null>(null);
 
   const handleAddNew = () => {
     setEditingEntry(undefined);
@@ -47,7 +55,18 @@ export function CommunicationTrackerSection({ volunteer }: Props) {
   };
 
   const handleDelete = (id: number) => {
-    setCommunications(communications.filter((c) => c.id !== id));
+    setDeleteConfirmId(id);
+  };
+
+  const confirmDelete = () => {
+    if (deleteConfirmId !== null) {
+      setCommunications(communications.filter((c) => c.id !== deleteConfirmId));
+      setDeleteConfirmId(null);
+    }
+  };
+
+  const cancelDelete = () => {
+    setDeleteConfirmId(null);
   };
 
   const handleSave = (entry: CommunicationEntry) => {
@@ -131,7 +150,6 @@ export function CommunicationTrackerSection({ volunteer }: Props) {
                 <TableHeaderCell>
                   {t("dashboard.volunteerProfile.communicationSection.contactMethod", "Contact method")}
                 </TableHeaderCell>
-                <TableHeaderCell>{t("dashboard.volunteerProfile.communicationSection.notes", "Notes")}</TableHeaderCell>
                 <TableHeaderCell>{t("dashboard.volunteerProfile.communicationSection.actions", "Actions")}</TableHeaderCell>
               </TableHeaderRow>
             </TableHeader>
@@ -143,7 +161,6 @@ export function CommunicationTrackerSection({ volunteer }: Props) {
                     <StatusBadge $type="first-time">{getTypeLabel(entry.type)}</StatusBadge>
                   </TableCell>
                   <TableCell>{getContactMethodLabel(entry.contactMethod)}</TableCell>
-                  <TableCell>{entry.notes}</TableCell>
                   <ActionCell>
                     <ActionButton onClick={() => handleEdit(entry)} data-testid={`edit-button-${entry.id}`}>
                       <PencilSimple size={20} weight="regular" />
@@ -165,6 +182,28 @@ export function CommunicationTrackerSection({ volunteer }: Props) {
         onSave={handleSave}
         initialData={editingEntry}
       />
+
+      <DeleteConfirmOverlay $isOpen={deleteConfirmId !== null} onClick={cancelDelete} data-testid="delete-confirm-overlay">
+        <DeleteConfirmDialog onClick={(e) => e.stopPropagation()} data-testid="delete-confirm-dialog">
+          <DeleteConfirmTitle>
+            {t("dashboard.volunteerProfile.communicationSection.deleteConfirmTitle", "Delete communication?")}
+          </DeleteConfirmTitle>
+          <DeleteConfirmText>
+            {t(
+              "dashboard.volunteerProfile.communicationSection.deleteConfirmText",
+              "Are you sure you want to delete this communication entry? This action cannot be undone."
+            )}
+          </DeleteConfirmText>
+          <DeleteConfirmButtons>
+            <DeleteCancelButton onClick={cancelDelete} data-testid="delete-cancel-button">
+              {t("dashboard.volunteerProfile.communicationSection.cancel", "Cancel")}
+            </DeleteCancelButton>
+            <DeleteConfirmButton onClick={confirmDelete} data-testid="delete-confirm-button">
+              {t("dashboard.volunteerProfile.communicationSection.delete", "Delete")}
+            </DeleteConfirmButton>
+          </DeleteConfirmButtons>
+        </DeleteConfirmDialog>
+      </DeleteConfirmOverlay>
     </Container>
   );
 }

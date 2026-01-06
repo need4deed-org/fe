@@ -23,7 +23,7 @@
     "need4deed-sdk": "^0.0.28",
     "next": "15.3.8",
     "react": "^19.0.0",
-    "react-datepicker": "^9.1.0",
+    "react-day-picker": "^9.13.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.68.0",
     "react-i18next": "^15.6.1",

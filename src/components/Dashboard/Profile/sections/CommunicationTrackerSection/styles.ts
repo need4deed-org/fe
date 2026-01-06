@@ -182,3 +182,88 @@ export const StatusBadge = styled.div<{ $type: string }>`
     }
   }}
 `;
+
+export const DeleteConfirmOverlay = styled.div<{ $isOpen: boolean }>`
+  display: ${(props) => (props.$isOpen ? "flex" : "none")};
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--color-dimmed-background);
+  z-index: 10001;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const DeleteConfirmDialog = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-32);
+  gap: var(--spacing-24);
+  background: var(--color-white);
+  border-radius: var(--card-border-radius);
+  box-shadow: 0px 10px 30px -12px rgba(143, 81, 138, 0.2);
+  max-width: 500px;
+  width: 90%;
+`;
+
+export const DeleteConfirmTitle = styled.h3`
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 32px;
+  letter-spacing: 0.005em;
+  color: var(--color-midnight);
+  margin: 0;
+`;
+
+export const DeleteConfirmText = styled.p`
+  font-weight: 400;
+  font-size: var(--text-p-font-size);
+  line-height: var(--text-p-line-height);
+  letter-spacing: 0.005em;
+  color: var(--color-midnight);
+  margin: 0;
+`;
+
+export const DeleteConfirmButtons = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: var(--spacing-16);
+  margin-top: var(--spacing-8);
+`;
+
+export const DeleteCancelButton = styled.button`
+  padding: var(--spacing-16) var(--spacing-24);
+  background: transparent;
+  border: 2px solid var(--color-aubergine);
+  border-radius: var(--button-border-radius);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: var(--text-p-font-size);
+  line-height: var(--text-p-line-height);
+  color: var(--color-aubergine);
+  font-family: "Figtree";
+
+  &:hover {
+    background: var(--color-aubergine-subtle);
+  }
+`;
+
+export const DeleteConfirmButton = styled.button`
+  padding: var(--spacing-16) var(--spacing-24);
+  background: var(--color-red-600);
+  border: none;
+  border-radius: var(--button-border-radius);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: var(--text-p-font-size);
+  line-height: var(--text-p-line-height);
+  color: var(--color-white);
+  font-family: "Figtree";
+
+  &:hover {
+    background: var(--color-red-700);
+  }
+`;
