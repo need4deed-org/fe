@@ -8,6 +8,7 @@ import { Lang, OpportunityType } from "need4deed-sdk";
 import { useTranslation } from "react-i18next";
 import { Tags } from "@/components/core/common";
 import { formatAccompanyingDate } from "./mockOpps/tempUtils";
+import { Button } from "@/components/core/button";
 
 interface Props {
   opportunity: Opportunity;
@@ -112,6 +113,19 @@ export default function OpportunityDetail({ opportunity }: Props) {
           <Paragraph>{scheduleAsStr}</Paragraph>
         </DetailSection>
       </SplitContainer>
+
+      <CTAsContainer>
+        <Button
+          onClick={() => {}}
+          text="Not a match"
+          height="56px"
+          textFontSize="24px"
+          textColor="var(--color-aubergine)"
+          backgroundcolor="var(--color-white)"
+          border="2px solid var(--color-aubergine)"
+        />
+        <Button onClick={() => {}} text="Match" height="56px" textFontSize="24px" />
+      </CTAsContainer>
     </OpportunityDetailContainer>
   );
 }
@@ -158,4 +172,10 @@ const LanguagesContainer = styled.div`
 const LanguageDetailContainer = styled.div`
   display: flex;
   gap: 4px;
+`;
+
+const CTAsContainer = styled.div`
+  display: flex;
+  gap: 16px;
+  justify-content: center;
 `;
