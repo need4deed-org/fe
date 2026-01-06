@@ -618,6 +618,17 @@
           "other": "Sonstiges"
         },
         "dateOfContact": "Datum des Kontakts",
+        "contactDate": "Kontaktdatum",
+        "contactDateRequired": "Kontaktdatum*",
+        "whatPlatform": "Welche Plattform haben Sie verwendet?",
+        "contactMethodLabel": "Kontaktmethode",
+        "contactMethodRequired": "Kontaktmethode*",
+        "platformOptions": {
+          "phoneNumber": "Telefonnummer",
+          "telegram": "Telegram",
+          "whatsapp": "Whatsapp",
+          "signal": "Signal"
+        },
         "notesPlaceholder": "Fügen Sie Notizen zu dieser Kommunikation hinzu...",
         "cancel": "Abbrechen",
         "save": "Speichern",

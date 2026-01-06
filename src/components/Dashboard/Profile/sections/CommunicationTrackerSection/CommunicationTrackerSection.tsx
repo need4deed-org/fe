@@ -29,6 +29,7 @@ type Props = {
   volunteer: ApiVolunteerGet;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function CommunicationTrackerSection({ volunteer }: Props) {
   const { t } = useTranslation();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -89,28 +90,17 @@ export function CommunicationTrackerSection({ volunteer }: Props) {
 
   const getContactMethodLabel = (method: string) => {
     switch (method) {
-      case "email":
-        return t("dashboard.volunteerProfile.communicationSection.email", "Email");
-      case "phone":
-        return t("dashboard.volunteerProfile.communicationSection.phone", "Phone");
-      case "in-person":
-        return t("dashboard.volunteerProfile.communicationSection.inPerson", "In person");
-      case "message":
-        return t("dashboard.volunteerProfile.communicationSection.message", "Message");
+      case "phoneNumber":
+        return t("dashboard.volunteerProfile.communicationSection.platformOptions.phoneNumber", "Phone number");
+      case "telegram":
+        return t("dashboard.volunteerProfile.communicationSection.platformOptions.telegram", "Telegram");
+      case "whatsapp":
+        return t("dashboard.volunteerProfile.communicationSection.platformOptions.whatsapp", "Whatsapp");
+      case "signal":
+        return t("dashboard.volunteerProfile.communicationSection.platformOptions.signal", "Signal");
       default:
         return method;
     }
-  };
-
-  const getStatusType = (statusType?: string): string => {
-    if (!statusType) return "inactive";
-    const typeMap: Record<string, string> = {
-      FIRST_TIME_VOLUNTEER: "first-time",
-      ACTIVE_VOLUNTEER: "active",
-      PAUSED_VOLUNTEER: "paused",
-      INACTIVE_VOLUNTEER: "inactive",
-    };
-    return typeMap[statusType] || "inactive";
   };
 
   return (
@@ -150,7 +140,7 @@ export function CommunicationTrackerSection({ volunteer }: Props) {
                 <TableRow key={entry.id} data-testid={`communication-row-${entry.id}`}>
                   <TableCell>{formatDate(entry.date)}</TableCell>
                   <TableCell>
-                    <StatusBadge $type={getStatusType(volunteer.statusType)}>{getTypeLabel(entry.type)}</StatusBadge>
+                    <StatusBadge $type="first-time">{getTypeLabel(entry.type)}</StatusBadge>
                   </TableCell>
                   <TableCell>{getContactMethodLabel(entry.contactMethod)}</TableCell>
                   <TableCell>{entry.notes}</TableCell>
