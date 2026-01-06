@@ -117,6 +117,12 @@ export function CommunicationTrackerSection({ volunteer }: Props) {
         return t("dashboard.volunteerProfile.communicationSection.platformOptions.whatsapp", "Whatsapp");
       case "signal":
         return t("dashboard.volunteerProfile.communicationSection.platformOptions.signal", "Signal");
+      case "email":
+        return t("dashboard.volunteerProfile.communicationSection.platformOptions.email", "E-mail");
+      case "sms":
+        return t("dashboard.volunteerProfile.communicationSection.platformOptions.sms", "SMS");
+      case "voicenote":
+        return t("dashboard.volunteerProfile.communicationSection.platformOptions.voicenote", "Voicenote");
       default:
         return method;
     }

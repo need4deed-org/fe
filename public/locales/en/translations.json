@@ -621,13 +621,17 @@
         "contactDate": "Contact date",
         "contactDateRequired": "Contact date*",
         "whatPlatform": "What platform did you use?",
+        "howDidYouSend": "How did you send your message?",
         "contactMethodLabel": "Contact method",
         "contactMethodRequired": "Contact method*",
         "platformOptions": {
           "phoneNumber": "Phone number",
           "telegram": "Telegram",
           "whatsapp": "Whatsapp",
-          "signal": "Signal"
+          "signal": "Signal",
+          "email": "E-mail",
+          "sms": "SMS",
+          "voicenote": "Voicenote"
         },
         "notesPlaceholder": "Add notes about this communication...",
         "cancel": "Cancel",

@@ -371,10 +371,18 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
       } else {
         setSelectedOption("");
         setSelectedDate(new Date());
-        setSelectedPlatform("phoneNumber");
+        setSelectedPlatform("");
       }
     }
   }, [isOpen, initialData]);
+
+  useEffect(() => {
+    if (selectedOption === "textedOrEmailed" && !selectedPlatform) {
+      setSelectedPlatform("email");
+    } else if ((selectedOption === "called" || selectedOption === "triedToCall") && !selectedPlatform) {
+      setSelectedPlatform("phoneNumber");
+    }
+  }, [selectedOption, selectedPlatform]);
 
   const handleSave = () => {
     const entry: CommunicationEntry = {
@@ -391,7 +399,7 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
   const handleClose = () => {
     setSelectedOption("");
     setSelectedDate(new Date());
-    setSelectedPlatform("phoneNumber");
+    setSelectedPlatform("");
     setIsDatePickerOpen(false);
     onClose();
   };
@@ -403,8 +411,76 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
     }
   };
 
-  const showAdditionalFields = selectedOption === "called" || selectedOption === "triedToCall";
+  const showAdditionalFields =
+    selectedOption === "called" || selectedOption === "triedToCall" || selectedOption === "textedOrEmailed";
   const locale = i18n.language === "de" ? de : undefined;
+
+  const getContactMethodOptions = () => {
+    if (selectedOption === "textedOrEmailed") {
+      return [
+        { value: "email", label: t("dashboard.volunteerProfile.communicationSection.platformOptions.email", "E-mail") },
+        { value: "telegram", label: t("dashboard.volunteerProfile.communicationSection.platformOptions.telegram", "Telegram") },
+        { value: "whatsapp", label: t("dashboard.volunteerProfile.communicationSection.platformOptions.whatsapp", "Whatsapp") },
+        { value: "sms", label: t("dashboard.volunteerProfile.communicationSection.platformOptions.sms", "SMS") },
+        { value: "voicenote", label: t("dashboard.volunteerProfile.communicationSection.platformOptions.voicenote", "Voicenote") },
+      ];
+    }
+    return [
+      { value: "phoneNumber", label: t("dashboard.volunteerProfile.communicationSection.platformOptions.phoneNumber", "Phone number") },
+      { value: "telegram", label: t("dashboard.volunteerProfile.communicationSection.platformOptions.telegram", "Telegram") },
+      { value: "whatsapp", label: t("dashboard.volunteerProfile.communicationSection.platformOptions.whatsapp", "Whatsapp") },
+      { value: "signal", label: t("dashboard.volunteerProfile.communicationSection.platformOptions.signal", "Signal") },
+    ];
+  };
+
+  const getQuestionText = () => {
+    if (selectedOption === "textedOrEmailed") {
+      return t("dashboard.volunteerProfile.communicationSection.howDidYouSend", "How did you send your message?");
+    }
+    return t("dashboard.volunteerProfile.communicationSection.whatPlatform", "What platform did you use?");
+  };
+
+  const AdditionalFields = () => (
+    <>
+      <FormField>
+        <Label>{t("dashboard.volunteerProfile.communicationSection.contactDateRequired", "Contact date*")}</Label>
+        <DatePickerWrapper ref={datePickerRef}>
+          <DateInputContainer>
+            <DateInputIcon size={24} weight="regular" />
+            <DateInput
+              value={format(selectedDate, "dd.MM.yyyy")}
+              onClick={() => setIsDatePickerOpen(!isDatePickerOpen)}
+              readOnly
+              data-testid="date-picker-input"
+            />
+          </DateInputContainer>
+          <DatePickerPopover $isOpen={isDatePickerOpen}>
+            <DayPicker
+              mode="single"
+              selected={selectedDate}
+              onSelect={handleDateSelect}
+              locale={locale}
+              captionLayout="dropdown"
+              fromYear={1900}
+              toYear={new Date().getFullYear() + 10}
+              disabled={{ after: new Date() }}
+            />
+          </DatePickerPopover>
+        </DatePickerWrapper>
+      </FormField>
+      <FormField>
+        <QuestionText>{getQuestionText()}</QuestionText>
+        <Label>{t("dashboard.volunteerProfile.communicationSection.contactMethodRequired", "Contact method*")}</Label>
+        <Select value={selectedPlatform} onChange={(e) => setSelectedPlatform(e.target.value)} data-testid="platform-select">
+          {getContactMethodOptions().map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </Select>
+      </FormField>
+    </>
+  );
 
   return (
     <DialogOverlay $isOpen={isOpen} onClick={handleClose} data-testid="communication-dialog-overlay">
@@ -429,58 +505,7 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
               />
               {t("dashboard.volunteerProfile.communicationSection.contactTypes.called", "Called")}
             </RadioRow>
-            {selectedOption === "called" && showAdditionalFields && (
-              <>
-                <FormField>
-                  <Label>{t("dashboard.volunteerProfile.communicationSection.contactDateRequired", "Contact date*")}</Label>
-                  <DatePickerWrapper ref={datePickerRef}>
-                    <DateInputContainer>
-                      <DateInputIcon size={24} weight="regular" />
-                      <DateInput
-                        value={format(selectedDate, "dd.MM.yyyy")}
-                        onClick={() => setIsDatePickerOpen(!isDatePickerOpen)}
-                        readOnly
-                        data-testid="date-picker-input"
-                      />
-                    </DateInputContainer>
-                    <DatePickerPopover $isOpen={isDatePickerOpen}>
-                      <DayPicker
-                        mode="single"
-                        selected={selectedDate}
-                        onSelect={handleDateSelect}
-                        locale={locale}
-                        captionLayout="dropdown"
-                        fromYear={1900}
-                        toYear={new Date().getFullYear() + 10}
-                        disabled={{ after: new Date() }}
-                      />
-                    </DatePickerPopover>
-                  </DatePickerWrapper>
-                </FormField>
-                <FormField>
-                  <QuestionText>{t("dashboard.volunteerProfile.communicationSection.whatPlatform", "What platform did you use?")}</QuestionText>
-                  <Label>{t("dashboard.volunteerProfile.communicationSection.contactMethodRequired", "Contact method*")}</Label>
-                  <Select
-                    value={selectedPlatform}
-                    onChange={(e) => setSelectedPlatform(e.target.value)}
-                    data-testid="platform-select"
-                  >
-                    <option value="phoneNumber">
-                      {t("dashboard.volunteerProfile.communicationSection.platformOptions.phoneNumber", "Phone number")}
-                    </option>
-                    <option value="telegram">
-                      {t("dashboard.volunteerProfile.communicationSection.platformOptions.telegram", "Telegram")}
-                    </option>
-                    <option value="whatsapp">
-                      {t("dashboard.volunteerProfile.communicationSection.platformOptions.whatsapp", "Whatsapp")}
-                    </option>
-                    <option value="signal">
-                      {t("dashboard.volunteerProfile.communicationSection.platformOptions.signal", "Signal")}
-                    </option>
-                  </Select>
-                </FormField>
-              </>
-            )}
+            {selectedOption === "called" && <AdditionalFields />}
           </RadioOption>
 
           <RadioOption>
@@ -495,58 +520,7 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
               />
               {t("dashboard.volunteerProfile.communicationSection.contactTypes.triedToCall", "Tried to call")}
             </RadioRow>
-            {selectedOption === "triedToCall" && showAdditionalFields && (
-              <>
-                <FormField>
-                  <Label>{t("dashboard.volunteerProfile.communicationSection.contactDateRequired", "Contact date*")}</Label>
-                  <DatePickerWrapper ref={datePickerRef}>
-                    <DateInputContainer>
-                      <DateInputIcon size={24} weight="regular" />
-                      <DateInput
-                        value={format(selectedDate, "dd.MM.yyyy")}
-                        onClick={() => setIsDatePickerOpen(!isDatePickerOpen)}
-                        readOnly
-                        data-testid="date-picker-input"
-                      />
-                    </DateInputContainer>
-                    <DatePickerPopover $isOpen={isDatePickerOpen}>
-                      <DayPicker
-                        mode="single"
-                        selected={selectedDate}
-                        onSelect={handleDateSelect}
-                        locale={locale}
-                        captionLayout="dropdown"
-                        fromYear={1900}
-                        toYear={new Date().getFullYear() + 10}
-                        disabled={{ after: new Date() }}
-                      />
-                    </DatePickerPopover>
-                  </DatePickerWrapper>
-                </FormField>
-                <FormField>
-                  <QuestionText>{t("dashboard.volunteerProfile.communicationSection.whatPlatform", "What platform did you use?")}</QuestionText>
-                  <Label>{t("dashboard.volunteerProfile.communicationSection.contactMethodRequired", "Contact method*")}</Label>
-                  <Select
-                    value={selectedPlatform}
-                    onChange={(e) => setSelectedPlatform(e.target.value)}
-                    data-testid="platform-select"
-                  >
-                    <option value="phoneNumber">
-                      {t("dashboard.volunteerProfile.communicationSection.platformOptions.phoneNumber", "Phone number")}
-                    </option>
-                    <option value="telegram">
-                      {t("dashboard.volunteerProfile.communicationSection.platformOptions.telegram", "Telegram")}
-                    </option>
-                    <option value="whatsapp">
-                      {t("dashboard.volunteerProfile.communicationSection.platformOptions.whatsapp", "Whatsapp")}
-                    </option>
-                    <option value="signal">
-                      {t("dashboard.volunteerProfile.communicationSection.platformOptions.signal", "Signal")}
-                    </option>
-                  </Select>
-                </FormField>
-              </>
-            )}
+            {selectedOption === "triedToCall" && <AdditionalFields />}
           </RadioOption>
 
           <RadioOption>
@@ -561,6 +535,7 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
               />
               {t("dashboard.volunteerProfile.communicationSection.contactTypes.textedOrEmailed", "Texted or emailed")}
             </RadioRow>
+            {selectedOption === "textedOrEmailed" && <AdditionalFields />}
           </RadioOption>
 
           <RadioOption>
