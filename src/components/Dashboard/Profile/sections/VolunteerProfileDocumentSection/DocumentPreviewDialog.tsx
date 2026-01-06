@@ -119,7 +119,7 @@ const DocumentFrame = styled.div<{ $scale: number }>`
   background: var(--document-preview-frame-background);
   box-shadow: var(--document-preview-frame-shadow);
   transform: scale(${(props) => props.$scale});
-  transform-origin: center center;
+  transform-origin: top center;
   transition: transform 0.2s ease;
 `;
 
