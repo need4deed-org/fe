@@ -8,6 +8,9 @@ import { Button, Checkbox } from "../core/button";
 import { Paragraph } from "../styled/text";
 import { useMutationQuery } from "@/hooks";
 import { apiPathLogin } from "@/config/constants";
+import { getAuthUser } from "@/utils/auth";
+import { UserRole } from "need4deed-sdk";
+import i18next from "i18next";
 
 interface LoginData {
   email: string;
@@ -21,12 +24,18 @@ interface LoginResponse {
 
 const useLoginMutation = () => {
   const router = useRouter();
+  const { language } = i18next;
 
   return useMutationQuery<LoginData, LoginResponse>({
     apiPath: apiPathLogin,
     successMessage: "dashboard.login.successMessage",
-    onSuccessCallback: () => {
-      router.push("/");
+    onSuccessCallback: async () => {
+      const user = await getAuthUser();
+      if (user && user.role !== UserRole.USER) {
+        router.push(`/${language}/dashboard?role=${user.role}&userId=${user.id}`);
+      } else {
+        router.push(`/${language}`);
+      }
     },
   });
 };
