@@ -1,5 +1,5 @@
 "use client";
-import { X } from "@phosphor-icons/react";
+import { X, CalendarBlank } from "@phosphor-icons/react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
@@ -118,6 +118,8 @@ const Label = styled.label`
 const DatePickerWrapper = styled.div`
   position: relative;
   width: 100%;
+  display: flex;
+  align-items: center;
 
   .react-datepicker-wrapper {
     width: 100%;
@@ -125,37 +127,74 @@ const DatePickerWrapper = styled.div`
 
   .react-datepicker__input-container {
     width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
   }
 
   .react-datepicker {
     font-family: "Figtree";
     border: 1px solid var(--color-grey-200);
     border-radius: var(--border-radius-small);
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
   }
 
   .react-datepicker__header {
     background-color: var(--color-white);
     border-bottom: 1px solid var(--color-grey-200);
+    padding-top: var(--spacing-16);
+  }
+
+  .react-datepicker__current-month {
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--color-midnight);
+  }
+
+  .react-datepicker__day-name {
+    font-weight: 600;
+    color: var(--color-midnight);
+  }
+
+  .react-datepicker__day {
+    color: var(--color-midnight);
+    font-weight: 400;
   }
 
   .react-datepicker__day--selected,
   .react-datepicker__day--keyboard-selected {
     background-color: var(--color-aubergine);
+    color: var(--color-white);
+    font-weight: 600;
   }
 
   .react-datepicker__day:hover {
     background-color: var(--color-aubergine-subtle);
   }
+
+  .react-datepicker__day--outside-month {
+    color: var(--color-grey-300);
+  }
+`;
+
+const DateInputIcon = styled(CalendarBlank)`
+  position: absolute;
+  left: 16px;
+  color: var(--color-aubergine);
+  pointer-events: none;
+  z-index: 1;
 `;
 
 const DateInput = styled.input`
   width: 100%;
   padding: var(--spacing-16);
+  padding-left: 48px;
   border: 1px solid var(--color-grey-200);
   border-radius: var(--border-radius-small);
-  font-size: var(--text-p-font-size);
-  line-height: var(--text-p-line-height);
-  color: var(--color-midnight);
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 400;
+  color: var(--color-aubergine);
   font-family: "Figtree";
   cursor: pointer;
   background: var(--color-white);
@@ -173,14 +212,21 @@ const DateInput = styled.input`
 const Select = styled.select`
   width: 100%;
   padding: var(--spacing-16);
+  padding-right: 48px;
   border: 1px solid var(--color-grey-200);
   border-radius: var(--border-radius-small);
-  font-size: var(--text-p-font-size);
-  line-height: var(--text-p-line-height);
-  color: var(--color-midnight);
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 400;
+  color: var(--color-aubergine);
   font-family: "Figtree";
   background: var(--color-white);
   cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg width='14' height='8' viewBox='0 0 14 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M1 1L7 7L13 1' stroke='%23403168' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 14px 8px;
 
   &:focus {
     outline: none;
@@ -317,6 +363,7 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
                 <FormField>
                   <Label>{t("dashboard.volunteerProfile.communicationSection.contactDateRequired", "Contact date*")}</Label>
                   <DatePickerWrapper>
+                    <DateInputIcon size={24} weight="regular" />
                     <DatePicker
                       selected={selectedDate}
                       onChange={(date: Date | null) => date && setSelectedDate(date)}
@@ -372,6 +419,7 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
                 <FormField>
                   <Label>{t("dashboard.volunteerProfile.communicationSection.contactDateRequired", "Contact date*")}</Label>
                   <DatePickerWrapper>
+                    <DateInputIcon size={24} weight="regular" />
                     <DatePicker
                       selected={selectedDate}
                       onChange={(date: Date | null) => date && setSelectedDate(date)}
