@@ -246,7 +246,7 @@ const DateInput = styled.input`
 const DatePickerPopover = styled.div<{ $isOpen: boolean }>`
   display: ${(props) => (props.$isOpen ? "block" : "none")};
   position: absolute;
-  top: calc(100% + 8px);
+  bottom: calc(100% + 8px);
   left: 0;
   z-index: 1000;
   background: var(--color-white);
@@ -279,15 +279,6 @@ const Select = styled.select`
     outline: none;
     border-color: var(--color-midnight);
   }
-`;
-
-const QuestionText = styled.div`
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 20px;
-  letter-spacing: 0.005em;
-  color: var(--color-midnight);
-  margin-bottom: var(--spacing-8);
 `;
 
 const ButtonGroup = styled.div`
@@ -359,6 +350,7 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
   const [selectedOption, setSelectedOption] = useState<string>("");
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedPlatform, setSelectedPlatform] = useState<string>("phoneNumber");
+  const [selectedCommunicationType, setSelectedCommunicationType] = useState<string>("");
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
   const datePickerRef = useRef<HTMLDivElement>(null);
 
@@ -368,10 +360,12 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
         setSelectedOption(initialData.type);
         setSelectedDate(new Date(initialData.date));
         setSelectedPlatform(initialData.contactMethod);
+        setSelectedCommunicationType(initialData.notes || "");
       } else {
         setSelectedOption("");
         setSelectedDate(new Date());
         setSelectedPlatform("");
+        setSelectedCommunicationType("");
       }
     }
   }, [isOpen, initialData]);
@@ -381,8 +375,15 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
       setSelectedPlatform("email");
     } else if ((selectedOption === "called" || selectedOption === "triedToCall") && !selectedPlatform) {
       setSelectedPlatform("phoneNumber");
+    } else if (selectedOption === "other") {
+      if (!selectedCommunicationType) {
+        setSelectedCommunicationType("briefedVolunteer");
+      }
+      if (!selectedPlatform) {
+        setSelectedPlatform("email");
+      }
     }
-  }, [selectedOption, selectedPlatform]);
+  }, [selectedOption, selectedPlatform, selectedCommunicationType]);
 
   const handleSave = () => {
     const entry: CommunicationEntry = {
@@ -390,7 +391,10 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
       date: selectedDate.toISOString().split("T")[0],
       type: selectedOption,
       contactMethod: selectedPlatform,
-      notes: t(`dashboard.volunteerProfile.communicationSection.contactTypes.${selectedOption}`, selectedOption),
+      notes:
+        selectedOption === "other"
+          ? selectedCommunicationType
+          : t(`dashboard.volunteerProfile.communicationSection.contactTypes.${selectedOption}`, selectedOption),
     };
     onSave(entry);
     handleClose();
@@ -400,6 +404,7 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
     setSelectedOption("");
     setSelectedDate(new Date());
     setSelectedPlatform("");
+    setSelectedCommunicationType("");
     setIsDatePickerOpen(false);
     onClose();
   };
@@ -413,8 +418,31 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
 
   const locale = i18n.language === "de" ? de : undefined;
 
+  const getCommunicationTypeOptions = () => [
+    {
+      value: "briefedVolunteer",
+      label: t("dashboard.volunteerProfile.communicationSection.communicationTypes.briefedVolunteer", "Briefed (accompanying volunteer)"),
+    },
+    {
+      value: "firstInquiry",
+      label: t("dashboard.volunteerProfile.communicationSection.communicationTypes.firstInquiry", "First inquiry sent"),
+    },
+    {
+      value: "opportunityList",
+      label: t("dashboard.volunteerProfile.communicationSection.communicationTypes.opportunityList", "Opportunity list sent"),
+    },
+    {
+      value: "statusUpdate",
+      label: t("dashboard.volunteerProfile.communicationSection.communicationTypes.statusUpdate", "Status update"),
+    },
+    {
+      value: "postMatchFollowUp",
+      label: t("dashboard.volunteerProfile.communicationSection.communicationTypes.postMatchFollowUp", "Post-match follow-up"),
+    },
+  ];
+
   const getContactMethodOptions = () => {
-    if (selectedOption === "textedOrEmailed") {
+    if (selectedOption === "textedOrEmailed" || selectedOption === "other") {
       return [
         { value: "email", label: t("dashboard.volunteerProfile.communicationSection.platformOptions.email", "E-mail") },
         { value: "telegram", label: t("dashboard.volunteerProfile.communicationSection.platformOptions.telegram", "Telegram") },
@@ -431,15 +459,34 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
     ];
   };
 
-  const getQuestionText = () => {
-    if (selectedOption === "textedOrEmailed") {
-      return t("dashboard.volunteerProfile.communicationSection.howDidYouSend", "How did you send your message?");
-    }
-    return t("dashboard.volunteerProfile.communicationSection.whatPlatform", "What platform did you use?");
-  };
-
   const AdditionalFields = () => (
     <>
+      {selectedOption === "other" && (
+        <FormField>
+          <Label>{t("dashboard.volunteerProfile.communicationSection.communicationTypeRequired", "Communication type*")}</Label>
+          <Select
+            value={selectedCommunicationType}
+            onChange={(e) => setSelectedCommunicationType(e.target.value)}
+            data-testid="communication-type-select"
+          >
+            {getCommunicationTypeOptions().map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </Select>
+        </FormField>
+      )}
+      <FormField>
+        <Label>{t("dashboard.volunteerProfile.communicationSection.contactMethodRequired", "Contact method*")}</Label>
+        <Select value={selectedPlatform} onChange={(e) => setSelectedPlatform(e.target.value)} data-testid="platform-select">
+          {getContactMethodOptions().map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </Select>
+      </FormField>
       <FormField>
         <Label>{t("dashboard.volunteerProfile.communicationSection.contactDateRequired", "Contact date*")}</Label>
         <DatePickerWrapper ref={datePickerRef}>
@@ -465,17 +512,6 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
             />
           </DatePickerPopover>
         </DatePickerWrapper>
-      </FormField>
-      <FormField>
-        <QuestionText>{getQuestionText()}</QuestionText>
-        <Label>{t("dashboard.volunteerProfile.communicationSection.contactMethodRequired", "Contact method*")}</Label>
-        <Select value={selectedPlatform} onChange={(e) => setSelectedPlatform(e.target.value)} data-testid="platform-select">
-          {getContactMethodOptions().map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </Select>
       </FormField>
     </>
   );
@@ -548,6 +584,7 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
               />
               {t("dashboard.volunteerProfile.communicationSection.contactTypes.other", "Other")}
             </RadioRow>
+            {selectedOption === "other" && <AdditionalFields />}
           </RadioOption>
         </RadioGroup>
 

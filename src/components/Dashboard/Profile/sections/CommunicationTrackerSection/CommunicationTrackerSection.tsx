@@ -86,7 +86,24 @@ export function CommunicationTrackerSection({ volunteer }: Props) {
     }).format(date);
   };
 
-  const getTypeLabel = (type: string) => {
+  const getTypeLabel = (type: string, notes?: string) => {
+    if (type === "other" && notes) {
+      // For "other" type, return the communication type from notes
+      switch (notes) {
+        case "briefedVolunteer":
+          return t("dashboard.volunteerProfile.communicationSection.communicationTypes.briefedVolunteer", "Briefed (accompanying volunteer)");
+        case "firstInquiry":
+          return t("dashboard.volunteerProfile.communicationSection.communicationTypes.firstInquiry", "First inquiry sent");
+        case "opportunityList":
+          return t("dashboard.volunteerProfile.communicationSection.communicationTypes.opportunityList", "Opportunity list sent");
+        case "statusUpdate":
+          return t("dashboard.volunteerProfile.communicationSection.communicationTypes.statusUpdate", "Status update");
+        case "postMatchFollowUp":
+          return t("dashboard.volunteerProfile.communicationSection.communicationTypes.postMatchFollowUp", "Post-match follow-up");
+        default:
+          return notes;
+      }
+    }
     switch (type) {
       case "called":
         return t("dashboard.volunteerProfile.communicationSection.contactTypes.called", "Called");
@@ -96,12 +113,6 @@ export function CommunicationTrackerSection({ volunteer }: Props) {
         return t("dashboard.volunteerProfile.communicationSection.contactTypes.textedOrEmailed", "Texted or emailed");
       case "other":
         return t("dashboard.volunteerProfile.communicationSection.contactTypes.other", "Other");
-      case "status-change":
-        return t("dashboard.volunteerProfile.communicationSection.statusChange", "Status change");
-      case "follow-up":
-        return t("dashboard.volunteerProfile.communicationSection.followUp", "Follow-up");
-      case "inquiry":
-        return t("dashboard.volunteerProfile.communicationSection.inquiry", "Inquiry");
       default:
         return type;
     }
@@ -164,7 +175,7 @@ export function CommunicationTrackerSection({ volunteer }: Props) {
                 <TableRow key={entry.id} data-testid={`communication-row-${entry.id}`}>
                   <TableCell>{formatDate(entry.date)}</TableCell>
                   <TableCell>
-                    <StatusBadge $type="first-time">{getTypeLabel(entry.type)}</StatusBadge>
+                    <StatusBadge $type="first-time">{getTypeLabel(entry.type, entry.notes)}</StatusBadge>
                   </TableCell>
                   <TableCell>{getContactMethodLabel(entry.contactMethod)}</TableCell>
                   <ActionCell>

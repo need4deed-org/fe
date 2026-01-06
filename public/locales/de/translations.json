@@ -624,6 +624,14 @@
         "howDidYouSend": "Wie haben Sie Ihre Nachricht gesendet?",
         "contactMethodLabel": "Kontaktmethode",
         "contactMethodRequired": "Kontaktmethode*",
+        "communicationTypeRequired": "Kommunikationstyp*",
+        "communicationTypes": {
+          "briefedVolunteer": "Briefing erfolgt (begleitende*r Freiwillige*r)",
+          "firstInquiry": "Erste Anfrage gesendet",
+          "opportunityList": "Angebotsliste gesendet",
+          "statusUpdate": "Statusaktualisierung",
+          "postMatchFollowUp": "Nachverfolgung nach Vermittlung"
+        },
         "platformOptions": {
           "phoneNumber": "Telefonnummer",
           "telegram": "Telegram",
