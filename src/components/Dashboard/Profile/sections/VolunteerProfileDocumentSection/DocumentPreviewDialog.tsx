@@ -55,7 +55,7 @@ const BackButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--color-aubergine);
+  color: var(--document-preview-name-color);
   padding: 0;
 
   &:hover {
