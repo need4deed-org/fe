@@ -82,6 +82,10 @@ export const TableCell = styled.td`
 
 export const ActionCell = styled(TableCell)`
   width: 100px;
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacing-8);
+  align-items: center;
 `;
 
 export const ActionButton = styled.button`
