@@ -1,3 +1,5 @@
+import { DocumentType } from "need4deed-sdk";
+
 export type DocumentStatus = "uploaded" | "missing";
 
 export type Document = {
@@ -5,4 +7,6 @@ export type Document = {
   nameKey: string;
   status: DocumentStatus;
   uploadedOn?: string;
+  type: DocumentType;
+  url?: string;
 };

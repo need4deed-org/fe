@@ -3,13 +3,18 @@ import { useState, useRef, DragEvent, ChangeEvent } from "react";
 import styled from "styled-components";
 import { UploadSimple, FilePlus } from "@phosphor-icons/react";
 import { DialogOverlay } from "./shared/DialogOverlay";
-import { DialogButtonGroup, PrimaryCancelButton, LargePrimaryButton } from "./shared/DialogButtonGroup";
+import {
+  DialogButtonGroup,
+  PrimaryCancelButton,
+  LargePrimaryButton,
+} from "./shared/DialogButtonGroup";
 
 type Props = {
   isOpen: boolean;
   documentName: string;
   onCancel: () => void;
   onUpload: (file: File) => void;
+  isUploading: boolean;
 };
 
 const Dialog = styled.div`
@@ -38,11 +43,18 @@ const Subtitle = styled.p`
 `;
 
 const DropZone = styled.div<{ $isDragging: boolean; $hasFile: boolean }>`
-  border: var(--document-upload-dropzone-border-width) dashed ${(props) => (props.$isDragging ? "var(--color-aubergine)" : "var(--document-upload-dropzone-border-color)")};
+  border: var(--document-upload-dropzone-border-width) dashed
+    ${(props) =>
+      props.$isDragging
+        ? "var(--color-aubergine)"
+        : "var(--document-upload-dropzone-border-color)"};
   border-radius: var(--document-upload-dropzone-border-radius);
   padding: var(--document-upload-dropzone-padding);
   text-align: center;
-  background: ${(props) => (props.$isDragging ? "var(--color-aubergine-subtle)" : "var(--document-upload-dropzone-background)")};
+  background: ${(props) =>
+    props.$isDragging
+      ? "var(--color-aubergine-subtle)"
+      : "var(--document-upload-dropzone-background)"};
   cursor: pointer;
   transition: all 0.2s;
   margin-bottom: var(--document-upload-dropzone-margin-bottom);
@@ -116,7 +128,13 @@ const HiddenInput = styled.input`
   display: none;
 `;
 
-export function UploadDocumentDialog({ isOpen, documentName, onCancel, onUpload }: Props) {
+export function UploadDocumentDialog({
+  isOpen,
+  documentName,
+  onCancel,
+  onUpload,
+  isUploading,
+}: Props) {
   const { t } = useTranslation();
   const [isDragging, setIsDragging] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -156,11 +174,11 @@ export function UploadDocumentDialog({ isOpen, documentName, onCancel, onUpload 
   const handleUpload = () => {
     if (selectedFile) {
       onUpload(selectedFile);
-      setSelectedFile(null);
     }
   };
 
   const handleClose = () => {
+    if (isUploading) return;
     setSelectedFile(null);
     onCancel();
   };
@@ -168,8 +186,15 @@ export function UploadDocumentDialog({ isOpen, documentName, onCancel, onUpload 
   return (
     <DialogOverlay isOpen={isOpen} onClose={handleClose}>
       <Dialog onClick={(e) => e.stopPropagation()}>
-        <Title>{t("dashboard.volunteerProfile.documentSection.uploadDialog.title")}</Title>
-        <Subtitle>{t("dashboard.volunteerProfile.documentSection.uploadDialog.documentType", { documentName })}</Subtitle>
+        <Title>
+          {t("dashboard.volunteerProfile.documentSection.uploadDialog.title")}
+        </Title>
+        <Subtitle>
+          {t(
+            "dashboard.volunteerProfile.documentSection.uploadDialog.documentType",
+            { documentName }
+          )}
+        </Subtitle>
 
         <DropZone
           $isDragging={isDragging}
@@ -182,8 +207,16 @@ export function UploadDocumentDialog({ isOpen, documentName, onCancel, onUpload 
           <IconContainer>
             <UploadSimple size={48} weight="regular" />
           </IconContainer>
-          <DropZoneText>{t("dashboard.volunteerProfile.documentSection.uploadDialog.dragDropText")}</DropZoneText>
-          <DropZoneHint>{t("dashboard.volunteerProfile.documentSection.uploadDialog.dragDropHint")}</DropZoneHint>
+          <DropZoneText>
+            {t(
+              "dashboard.volunteerProfile.documentSection.uploadDialog.dragDropText"
+            )}
+          </DropZoneText>
+          <DropZoneHint>
+            {t(
+              "dashboard.volunteerProfile.documentSection.uploadDialog.dragDropHint"
+            )}
+          </DropZoneHint>
         </DropZone>
 
         <HiddenInput
@@ -200,7 +233,9 @@ export function UploadDocumentDialog({ isOpen, documentName, onCancel, onUpload 
             </SelectedFileIcon>
             <SelectedFileText>
               <SelectedFileLabel>
-                {t("dashboard.volunteerProfile.documentSection.uploadDialog.selectedFile")}
+                {t(
+                  "dashboard.volunteerProfile.documentSection.uploadDialog.selectedFile"
+                )}
               </SelectedFileLabel>
               <SelectedFileName>{selectedFile.name}</SelectedFileName>
             </SelectedFileText>
@@ -208,11 +243,21 @@ export function UploadDocumentDialog({ isOpen, documentName, onCancel, onUpload 
         )}
 
         <DialogButtonGroup>
-          <PrimaryCancelButton onClick={handleClose}>
+          <PrimaryCancelButton onClick={handleClose} disabled={isUploading}>
             {t("dashboard.volunteerProfile.documentSection.uploadDialog.cancel")}
           </PrimaryCancelButton>
-          <LargePrimaryButton onClick={handleUpload} $disabled={!selectedFile} disabled={!selectedFile}>
-            {t("dashboard.volunteerProfile.documentSection.uploadDialog.upload")}
+          <LargePrimaryButton
+            onClick={handleUpload}
+            $disabled={!selectedFile || isUploading}
+            disabled={!selectedFile || isUploading}
+          >
+            {isUploading
+              ? t(
+                  "dashboard.volunteerProfile.documentSection.uploadDialog.uploading"
+                )
+              : t(
+                  "dashboard.volunteerProfile.documentSection.uploadDialog.upload"
+                )}
           </LargePrimaryButton>
         </DialogButtonGroup>
       </Dialog>

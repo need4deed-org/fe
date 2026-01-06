@@ -558,6 +558,7 @@
         },
         "tooltips": {
           "upload": "Upload",
+          "reUpload": "Re-upload",
           "preview": "Preview",
           "download": "Download",
           "delete": "Delete",
@@ -578,13 +579,18 @@
           "dragDropHint": "Supported formats: PDF, JPG, PNG (max 10 MB)",
           "selectedFile": "Selected file:",
           "cancel": "Cancel",
-          "upload": "Upload"
+          "upload": "Upload",
+          "uploading": "Uploading..."
         }
       }
     }
   },
   "message": {
     "successful": "Successful",
-    "errorGeneric": "Something went wrong!"
+    "errorGeneric": "Something went wrong!",
+    "uploadSuccess": "Document uploaded successfully!",
+    "deleteSuccess": "Document deleted successfully!",
+    "uploadError": "Upload failed. Please try again.",
+    "deleteError": "Delete failed. Please try again."
   }
 }

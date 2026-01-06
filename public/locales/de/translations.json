@@ -558,6 +558,7 @@
         },
         "tooltips": {
           "upload": "Hochladen",
+          "reUpload": "Erneut hochladen",
           "preview": "Vorschau",
           "download": "Herunterladen",
           "delete": "Löschen",
@@ -578,13 +579,18 @@
           "dragDropHint": "Unterstützte Formate: PDF, JPG, PNG (max. 10 MB)",
           "selectedFile": "Ausgewählte Datei:",
           "cancel": "Abbrechen",
-          "upload": "Hochladen"
+          "upload": "Hochladen",
+          "uploading": "Wird hochgeladen..."
         }
       }
     },
     "message": {
       "successful": "Erfolgreich",
-      "errorGeneric": "Etwas ist schief gelaufen!"
+      "errorGeneric": "Etwas ist schief gelaufen!",
+      "uploadSuccess": "Dokument erfolgreich hochgeladen!",
+      "deleteSuccess": "Dokument erfolgreich gelöscht!",
+      "uploadError": "Hochladen fehlgeschlagen. Bitte versuchen Sie es erneut.",
+      "deleteError": "Löschen fehlgeschlagen. Bitte versuchen Sie es erneut."
     }
   }
 }
