@@ -1,59 +1,35 @@
 import React from "react";
 import styled from "styled-components";
-import { ProfileCardTypes } from "./types/types";
+import { IconName, ProfileCardTypes } from "./types/types";
 import { ArrowLeftIcon } from "@phosphor-icons/react";
 import Link from "next/link";
 import { ApiVolunteerGet } from "need4deed-sdk";
-// import { PROFILE_CARD_CONFIG } from "./config/ProfileSectionConfig";
 import { useTranslation } from "react-i18next";
 import { VolunteerHeader } from "./sections/VolunteerHeader";
+import { Card, SectionCard, SectionCardProps } from "./common/SectionCard";
+import { Heading2 } from "@/components/styled/text";
+import VolunteerOpportunities from "./sections/VolunteerOpportunities/VolunteerOpportunities";
 import { ContactDetails } from "./sections/ContactDetails";
 import { VolunteerProfileSection } from "./sections/VolunteerProfileSection";
 import { VolunteerProfileDocumentSection } from "./sections/VolunteerProfileDocumentSection";
 
 const PageContainer = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 22px 20px;
-  color: var(--color-midnight);
-`;
-
-const Card = styled.section`
-  background-color: var(--color-white);
-  border-radius: 16px;
-  padding: 24px;
-  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: var(--volunteer-profile-container-width);
+  gap: var(--volunteer-profile-container-gap);
 `;
 
 const BackLink = styled(Link)`
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 20px;
+  gap: var(--volunteer-profile-back-link-gap);
+  font-size: var(--volunteer-profile-back-link-font-size);
   color: var(--color-midnight);
   text-decoration: none;
-  transition: color 0.2s;
-  margin-bottom: 24px;
+  transition: var(--volunteer-profile-back-link-transition);
 `;
-
-const Heading = styled.h1`
-  font-size: 48px;
-  margin-bottom: 24px;
-  font-weight: 600;
-`;
-
-// const SECTION_COMPONENTS: Partial<
-//   Record<ProfileCardTypes, React.ComponentType<{ volunteer: ApiVolunteerGet | ApiVolunteerGet[] }>>
-// > = {
-//   [ProfileCardTypes.VOLUNTEER_HEADER]: VolunteerHeader,
-// };
-
-// const CardComponent = ({ type, volunteers }: ProfilePageProps) => {
-//   const SectionComponent = type ? SECTION_COMPONENTS[type] : undefined;
-//   if (!SectionComponent) return null;
-//   const Component = SectionComponent;
-//   return <Component volunteer={volunteers} />;
-// };
 
 interface ProfilePageProps {
   type?: ProfileCardTypes;
@@ -62,6 +38,43 @@ interface ProfilePageProps {
 
 const ProfilePage = ({ volunteer }: ProfilePageProps) => {
   const { t } = useTranslation();
+
+  const sections: SectionCardProps[] = [
+    {
+      iconName: IconName.ChatsCircle,
+      title: t("dashboard.volunteerProfile.contactDetailsTitle"),
+      headerButtonName: t("dashboard.volunteerProfile.editButtonName"),
+      subComponent: <div>Contact Details sub-component. to be replaced...</div>,
+    },
+    {
+      iconName: IconName.ChatsCircle,
+      title: t("dashboard.volunteerProfile.volunteerProfile"),
+      headerButtonName: t("dashboard.volunteerProfile.editButtonName"),
+      subComponent: <div>Volunteer Profile sub-component. to be replaced...</div>,
+    },
+    {
+      iconName: IconName.ShootingStar,
+      title: t("dashboard.volunteerProfile.opportunities"),
+      headerButtonName: t("dashboard.volunteerProfile.findOppButtonName"),
+      subComponent: <VolunteerOpportunities />,
+    },
+    {
+      iconName: IconName.ChatCircleDots,
+      title: t("dashboard.volunteerProfile.coordinatorComments"),
+      subComponent: <div>Coordinator Comments sub-component. to be replaced...</div>,
+    },
+    {
+      iconName: IconName.ClipboardText,
+      title: t("dashboard.volunteerProfile.documents"),
+      subComponent: <div>Documents sub-component. to be replaced...</div>,
+    },
+    {
+      iconName: IconName.ChartLine,
+      title: t("dashboard.volunteerProfile.activityLog"),
+      subComponent: <div>Activity Log sub-component. to be replaced...</div>,
+    },
+  ];
+
   return (
     <PageContainer>
       <BackLink href="/dashboard">
@@ -69,18 +82,15 @@ const ProfilePage = ({ volunteer }: ProfilePageProps) => {
         {t("dashboard.volunteerProfile.backToDashboard")}
       </BackLink>
 
-      <Heading>{t("dashboard.volunteerProfile.volunteersProfile")}</Heading>
-
-      {/* TODO:implement similar logic in here for all profile sections except header !!! */}
-      {/* {PROFILE_CARD_CONFIG.map((card) => (
-        <Card key={card.type}>
-          <CardComponent type={card.type} volunteers={volunteers} />
-        </Card>
-      ))} */}
+      <Heading2>{t("dashboard.volunteerProfile.volunteersProfile")}</Heading2>
 
       <Card>
         <VolunteerHeader volunteer={volunteer} />
       </Card>
+
+      {sections.map((s) => (
+        <SectionCard key={s.title} {...s} />
+      ))}
 
       <ContactDetails volunteer={volunteer} />
 
