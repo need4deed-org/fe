@@ -100,6 +100,7 @@ export const ActionButton = styled.button`
 `;
 
 export const EmptyState = styled.div`
+  width: 100%;
   padding: var(--spacing-48) var(--spacing-24);
   text-align: center;
   color: var(--color-grey-500);
