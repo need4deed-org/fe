@@ -43,6 +43,7 @@ export function CommunicationTrackerSection({ volunteer }: Props) {
   const [communications, setCommunications] = useState<CommunicationEntry[]>([]);
   const [editingEntry, setEditingEntry] = useState<CommunicationEntry | undefined>(undefined);
   const [deleteConfirmId, setDeleteConfirmId] = useState<number | null>(null);
+  const [deleteConfirmEntry, setDeleteConfirmEntry] = useState<CommunicationEntry | null>(null);
 
   const handleAddNew = () => {
     setEditingEntry(undefined);
@@ -54,19 +55,22 @@ export function CommunicationTrackerSection({ volunteer }: Props) {
     setIsDialogOpen(true);
   };
 
-  const handleDelete = (id: number) => {
-    setDeleteConfirmId(id);
+  const handleDelete = (entry: CommunicationEntry) => {
+    setDeleteConfirmId(entry.id!);
+    setDeleteConfirmEntry(entry);
   };
 
   const confirmDelete = () => {
     if (deleteConfirmId !== null) {
       setCommunications(communications.filter((c) => c.id !== deleteConfirmId));
       setDeleteConfirmId(null);
+      setDeleteConfirmEntry(null);
     }
   };
 
   const cancelDelete = () => {
     setDeleteConfirmId(null);
+    setDeleteConfirmEntry(null);
   };
 
   const handleSave = (entry: CommunicationEntry) => {
@@ -182,7 +186,7 @@ export function CommunicationTrackerSection({ volunteer }: Props) {
                     <ActionButton onClick={() => handleEdit(entry)} data-testid={`edit-button-${entry.id}`}>
                       <PencilSimple size={20} weight="regular" />
                     </ActionButton>
-                    <ActionButton onClick={() => handleDelete(entry.id!)} data-testid={`delete-button-${entry.id}`}>
+                    <ActionButton onClick={() => handleDelete(entry)} data-testid={`delete-button-${entry.id}`}>
                       <Trash size={20} weight="regular" />
                     </ActionButton>
                   </ActionCell>
@@ -203,13 +207,14 @@ export function CommunicationTrackerSection({ volunteer }: Props) {
       <DeleteConfirmOverlay $isOpen={deleteConfirmId !== null} onClick={cancelDelete} data-testid="delete-confirm-overlay">
         <DeleteConfirmDialog onClick={(e) => e.stopPropagation()} data-testid="delete-confirm-dialog">
           <DeleteConfirmTitle>
-            {t("dashboard.volunteerProfile.communicationSection.deleteConfirmTitle", "Delete communication?")}
+            {t("dashboard.volunteerProfile.communicationSection.deleteConfirmTitle", "Delete entry?")}
           </DeleteConfirmTitle>
           <DeleteConfirmText>
-            {t(
-              "dashboard.volunteerProfile.communicationSection.deleteConfirmText",
-              "Are you sure you want to delete this communication entry? This action cannot be undone."
-            )}
+            {deleteConfirmEntry &&
+              t("dashboard.volunteerProfile.communicationSection.deleteConfirmText", {
+                entryType: getTypeLabel(deleteConfirmEntry.type, deleteConfirmEntry.notes),
+                defaultValue: `"${getTypeLabel(deleteConfirmEntry.type, deleteConfirmEntry.notes)}" communication entry will be permanently deleted.`,
+              })}
           </DeleteConfirmText>
           <DeleteConfirmButtons>
             <DeleteCancelButton onClick={cancelDelete} data-testid="delete-cancel-button">

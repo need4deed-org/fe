@@ -253,7 +253,7 @@ export const DeleteCancelButton = styled.button`
 
 export const DeleteConfirmButton = styled.button`
   padding: var(--spacing-16) var(--spacing-24);
-  background: var(--color-red-600);
+  background: var(--color-aubergine);
   border: none;
   border-radius: var(--button-border-radius);
   cursor: pointer;
@@ -264,6 +264,6 @@ export const DeleteConfirmButton = styled.button`
   font-family: "Figtree";
 
   &:hover {
-    background: var(--color-red-700);
+    background: var(--color-aubergine-light);
   }
 `;
