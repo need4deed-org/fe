@@ -554,7 +554,7 @@
           "measlesVaccination": "Measles vaccination",
           "applicationCertificateGoodConduct": "Application for certificate of good conduct",
           "certificateGoodConduct": "Certificate of good conduct",
-          "passport": "Passport"
+          "passport": "Passport / ID"
         },
         "tooltips": {
           "upload": "Upload",
