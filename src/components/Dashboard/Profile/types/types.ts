@@ -26,5 +26,6 @@ export enum IconName {
   ShootingStar = "shootingStar",
   Sparkle = "sparkle",
   UserCheck = "userCheck",
+  UserCircle = "userCircle",
   Users = "users",
 }

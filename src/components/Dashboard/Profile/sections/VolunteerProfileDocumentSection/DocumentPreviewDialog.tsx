@@ -6,7 +6,7 @@ import { DialogOverlay } from "./shared/DialogOverlay";
 type Props = {
   isOpen: boolean;
   documentName: string;
-  documentUrl: string;
+  documentUrl: string | null;
   onClose: () => void;
   onDownload: () => void;
   onDelete: () => void;
@@ -129,6 +129,12 @@ const PDFEmbed = styled.object`
   border: none;
 `;
 
+const ImagePreview = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+`;
+
 const ZoomControls = styled.div`
   display: flex;
   flex-direction: row;
@@ -182,6 +188,11 @@ export function DocumentPreviewDialog({ isOpen, documentName, documentUrl, onClo
     setScale(1);
   };
 
+  // Detect file type from URL
+  const fileExtension = documentUrl?.split('.').pop()?.toLowerCase();
+  const isImage = ['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(fileExtension || '');
+  const isPdf = fileExtension === 'pdf';
+
   return (
     <DialogOverlay isOpen={isOpen} onClose={onClose} zIndex={10002}>
       <ContentArea onClick={(e) => e.stopPropagation()}>
@@ -204,11 +215,23 @@ export function DocumentPreviewDialog({ isOpen, documentName, documentUrl, onClo
 
         <DocumentContainer>
           <DocumentFrame $scale={scale}>
-            <PDFEmbed data={`${documentUrl}#toolbar=0&navpanes=0`} type="application/pdf" aria-label={documentName}>
-              <p>
-                Your browser does not support PDFs. <a href={documentUrl}>Download the PDF</a>.
-              </p>
-            </PDFEmbed>
+            {documentUrl ? (
+              isImage ? (
+                <ImagePreview src={documentUrl} alt={documentName} />
+              ) : isPdf ? (
+                <PDFEmbed data={`${documentUrl}#toolbar=0&navpanes=0`} type="application/pdf" aria-label={documentName}>
+                  <p>
+                    Your browser does not support PDFs. <a href={documentUrl}>Download the PDF</a>.
+                  </p>
+                </PDFEmbed>
+              ) : (
+                <p>
+                  Unsupported file type. <a href={documentUrl}>Download the file</a>.
+                </p>
+              )
+            ) : (
+              <p>No document URL provided.</p>
+            )}
           </DocumentFrame>
         </DocumentContainer>
 

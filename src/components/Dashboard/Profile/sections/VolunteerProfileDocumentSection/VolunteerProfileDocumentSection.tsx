@@ -1,7 +1,5 @@
 "use client";
-import { Heading2 } from "@/components/styled/text";
 import {
-  ClipboardText,
   DownloadSimple,
   Eye,
   Trash,
@@ -13,14 +11,11 @@ import {
   ActionCell,
   Cell,
   Container,
-  Header,
   HeaderCell,
-  IconContainer,
   StatusBadge,
   Table,
   TableHeader,
   TableRow,
-  TitleRow,
 } from "./styles";
 import { DeleteConfirmationDialog } from "./DeleteConfirmationDialog";
 import { UploadDocumentDialog } from "./UploadDocumentDialog";
@@ -106,11 +101,11 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
         queryKey: ["volunteerDocuments", volunteer.id],
       });
       closeDialog("upload");
-      toast.success("Document uploaded successfully!");
+      toast.success(t("message.uploadSuccess"));
     },
     onError: (error: Error) => {
       console.error("Upload failed:", error);
-      toast.error("Upload failed. Please try again.");
+      toast.error(t("message.uploadError"));
       closeDialog("upload");
     },
   });
@@ -123,11 +118,11 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
         queryKey: ["volunteerDocuments", volunteer.id],
       });
       closeDialog("delete");
-      toast.success("Document deleted successfully!");
+      toast.success(t("message.deleteSuccess"));
     },
     onError: (error: Error) => {
       console.error("Delete failed:", error);
-      toast.error("Delete failed. Please try again.");
+      toast.error(t("message.deleteError"));
       closeDialog("delete");
     },
   });
@@ -168,27 +163,16 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
   return (
     <>
       <Container data-testid="volunteer-profile-document-section-container">
-        <Header>
-          <TitleRow>
-            <IconContainer>
-              <ClipboardText size={40} weight="fill" />
-            </IconContainer>
-            <Heading2>
-              {t("dashboard.volunteerProfile.documentSection.title")}
-            </Heading2>
-          </TitleRow>
-        </Header>
-
         <Table>
           <TableHeader>
             <HeaderCell>
-              {t("dashboard.volunteerProfile.documentSection.typeOfDocument")}
+              {t("dashboard.documentSection.typeOfDocument")}
             </HeaderCell>
             <HeaderCell $width="180px">
-              {t("dashboard.volunteerProfile.documentSection.status")}
+              {t("dashboard.documentSection.status")}
             </HeaderCell>
             <HeaderCell $width="152px" $noWrap>
-              {t("dashboard.volunteerProfile.documentSection.uploadedOn")}
+              {t("dashboard.documentSection.uploadedOn")}
             </HeaderCell>
             <HeaderCell $width="56px"></HeaderCell>
             <HeaderCell $width="56px"></HeaderCell>
@@ -203,15 +187,15 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
               <TableRow key={doc.id} $isLast={index === documents.length - 1}>
                 <Cell>
                   {t(
-                    `dashboard.volunteerProfile.documentSection.documentNames.${doc.nameKey}`
+                    `dashboard.documentSection.documentNames.${doc.nameKey}`
                   )}
                 </Cell>
                 <Cell $width="180px" $align="center">
                   <StatusBadge $status={doc.status}>
                     {doc.status === "uploaded"
-                      ? t("dashboard.volunteerProfile.documentSection.uploaded")
+                      ? t("dashboard.documentSection.uploaded")
                       : t(
-                          "dashboard.volunteerProfile.documentSection.missing"
+                          "dashboard.documentSection.missing"
                         )}
                   </StatusBadge>
                 </Cell>
@@ -223,10 +207,10 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
                     tooltipText={
                       isMissing
                         ? t(
-                            "dashboard.volunteerProfile.documentSection.tooltips.upload"
+                            "dashboard.documentSection.tooltips.upload"
                           )
                         : t(
-                            "dashboard.volunteerProfile.documentSection.tooltips.reUpload"
+                            "dashboard.documentSection.tooltips.reUpload"
                           )
                     }
                     onClick={() => openDialog("upload", doc)}
@@ -240,10 +224,10 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
                     tooltipText={
                       isMissing
                         ? t(
-                            "dashboard.volunteerProfile.documentSection.tooltips.previewUnavailable"
+                            "dashboard.documentSection.tooltips.previewUnavailable"
                           )
                         : t(
-                            "dashboard.volunteerProfile.documentSection.tooltips.preview"
+                            "dashboard.documentSection.tooltips.preview"
                           )
                     }
                     disabled={isMissing}
@@ -258,10 +242,10 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
                     tooltipText={
                       isMissing
                         ? t(
-                            "dashboard.volunteerProfile.documentSection.tooltips.downloadUnavailable"
+                            "dashboard.documentSection.tooltips.downloadUnavailable"
                           )
                         : t(
-                            "dashboard.volunteerProfile.documentSection.tooltips.download"
+                            "dashboard.documentSection.tooltips.download"
                           )
                     }
                     disabled={isMissing}
@@ -276,10 +260,10 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
                     tooltipText={
                       isMissing
                         ? t(
-                            "dashboard.volunteerProfile.documentSection.tooltips.deleteUnavailable"
+                            "dashboard.documentSection.tooltips.deleteUnavailable"
                           )
                         : t(
-                            "dashboard.volunteerProfile.documentSection.tooltips.delete"
+                            "dashboard.documentSection.tooltips.delete"
                           )
                     }
                     disabled={isMissing}
@@ -298,7 +282,9 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
       <DeleteConfirmationDialog
         isOpen={isDeleteOpen}
         documentName={
-          deleteDialogDocument?.nameKey ? t(deleteDialogDocument.nameKey) : ""
+          deleteDialogDocument?.nameKey
+            ? t(`dashboard.documentSection.documentNames.${deleteDialogDocument.nameKey}`)
+            : ""
         }
         onCancel={() => closeDialog("delete")}
         onConfirm={handleConfirmDelete}
@@ -307,7 +293,9 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
       <UploadDocumentDialog
         isOpen={isUploadOpen}
         documentName={
-          uploadDialogDocument?.nameKey ? t(uploadDialogDocument.nameKey) : ""
+          uploadDialogDocument?.nameKey
+            ? t(`dashboard.documentSection.documentNames.${uploadDialogDocument.nameKey}`)
+            : ""
         }
         onCancel={() => closeDialog("upload")}
         onUpload={handleConfirmUpload}
@@ -317,7 +305,9 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
       <DocumentPreviewDialog
         isOpen={isPreviewOpen}
         documentName={
-          previewDocument?.nameKey ? t(previewDocument.nameKey) : ""
+          previewDocument?.nameKey
+            ? t(`dashboard.documentSection.documentNames.${previewDocument.nameKey}`)
+            : ""
         }
         documentUrl={documentUrl}
         onClose={() => closeDialog("preview")}

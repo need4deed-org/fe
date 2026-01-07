@@ -1,11 +1,9 @@
 "use client";
 import Button from "@/components/core/button/Button/Button";
-import { Heading2 } from "@/components/styled/text";
 import { useUpdateVolunteerProfile } from "@/hooks/useUpdateVolunteerProfile";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { UserCircle } from "@phosphor-icons/react";
 import { ApiVolunteerGet, Lang, VolunteerStateTypeType } from "need4deed-sdk";
-import { useEffect, useMemo, useState } from "react";
+import { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { formToApiAvailability } from "./availabilityUtils";
@@ -20,7 +18,7 @@ import {
 import { FormFields } from "./FormFields";
 import { useApiActivities, useApiDistricts, useApiLanguages, useApiSkills } from "./hooks";
 import { createMapping } from "./mappingUtils";
-import { ButtonRow, Container, Details, Header, IconContainer, TitleRow } from "./styles";
+import { ButtonRow, Container, Details } from "./styles";
 import {
   createFormDefaultValues,
   createLabelToVolunteerTypeMap,
@@ -33,7 +31,11 @@ type Props = {
   volunteer: ApiVolunteerGet;
 };
 
-export function VolunteerProfileSection({ volunteer }: Props) {
+export type VolunteerProfileSectionRef = {
+  handleEditClick: () => void;
+};
+
+export const VolunteerProfileSection = forwardRef<VolunteerProfileSectionRef, Props>(function VolunteerProfileSection({ volunteer }, ref) {
   const { t, i18n } = useTranslation();
   const { mutate: updateProfile, isPending } = useUpdateVolunteerProfile(volunteer.id);
   const [isEditing, setIsEditing] = useState(false);
@@ -88,6 +90,10 @@ export function VolunteerProfileSection({ volunteer }: Props) {
     setIsEditing(true);
   };
 
+  useImperativeHandle(ref, () => ({
+    handleEditClick,
+  }));
+
   const handleCancel = () => {
     reset();
     setIsEditing(false);
@@ -110,28 +116,8 @@ export function VolunteerProfileSection({ volunteer }: Props) {
     );
   };
 
-  const isApiDataLoading = !apiLanguages.length || !apiActivities.length || !apiSkills.length || !apiDistricts.length;
-
   return (
     <Container data-testid="volunteer-profile-section-container" $isEditing={isEditing}>
-      <Header>
-        <TitleRow>
-          <IconContainer>
-            <UserCircle size={40} weight="fill" />
-          </IconContainer>
-          <Heading2>{t("dashboard.volunteerProfile.profileSection.title")}</Heading2>
-        </TitleRow>
-        {!isEditing && (
-          <Button
-            text={t("dashboard.volunteerProfile.profileSection.edit")}
-            onClick={handleEditClick}
-            width="auto"
-            padding="16px 24px"
-            disabled={isApiDataLoading}
-          />
-        )}
-      </Header>
-
       <Details>
         {isEditing ? (
           <FormFields
@@ -183,4 +169,4 @@ export function VolunteerProfileSection({ volunteer }: Props) {
       )}
     </Container>
   );
-}
+});

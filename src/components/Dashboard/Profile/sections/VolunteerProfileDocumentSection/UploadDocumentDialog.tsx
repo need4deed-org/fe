@@ -187,11 +187,11 @@ export function UploadDocumentDialog({
     <DialogOverlay isOpen={isOpen} onClose={handleClose}>
       <Dialog onClick={(e) => e.stopPropagation()}>
         <Title>
-          {t("dashboard.volunteerProfile.documentSection.uploadDialog.title")}
+          {t("dashboard.documentSection.uploadDialog.title")}
         </Title>
         <Subtitle>
           {t(
-            "dashboard.volunteerProfile.documentSection.uploadDialog.documentType",
+            "dashboard.documentSection.uploadDialog.documentType",
             { documentName }
           )}
         </Subtitle>
@@ -209,12 +209,12 @@ export function UploadDocumentDialog({
           </IconContainer>
           <DropZoneText>
             {t(
-              "dashboard.volunteerProfile.documentSection.uploadDialog.dragDropText"
+              "dashboard.documentSection.uploadDialog.dragDropText"
             )}
           </DropZoneText>
           <DropZoneHint>
             {t(
-              "dashboard.volunteerProfile.documentSection.uploadDialog.dragDropHint"
+              "dashboard.documentSection.uploadDialog.dragDropHint"
             )}
           </DropZoneHint>
         </DropZone>
@@ -234,7 +234,7 @@ export function UploadDocumentDialog({
             <SelectedFileText>
               <SelectedFileLabel>
                 {t(
-                  "dashboard.volunteerProfile.documentSection.uploadDialog.selectedFile"
+                  "dashboard.documentSection.uploadDialog.selectedFile"
                 )}
               </SelectedFileLabel>
               <SelectedFileName>{selectedFile.name}</SelectedFileName>
@@ -244,7 +244,7 @@ export function UploadDocumentDialog({
 
         <DialogButtonGroup>
           <PrimaryCancelButton onClick={handleClose} disabled={isUploading}>
-            {t("dashboard.volunteerProfile.documentSection.uploadDialog.cancel")}
+            {t("dashboard.documentSection.uploadDialog.cancel")}
           </PrimaryCancelButton>
           <LargePrimaryButton
             onClick={handleUpload}
@@ -253,10 +253,10 @@ export function UploadDocumentDialog({
           >
             {isUploading
               ? t(
-                  "dashboard.volunteerProfile.documentSection.uploadDialog.uploading"
+                  "dashboard.documentSection.uploadDialog.uploading"
                 )
               : t(
-                  "dashboard.volunteerProfile.documentSection.uploadDialog.upload"
+                  "dashboard.documentSection.uploadDialog.upload"
                 )}
           </LargePrimaryButton>
         </DialogButtonGroup>
