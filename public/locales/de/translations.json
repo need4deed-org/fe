@@ -590,6 +590,7 @@
         "preview": "Vorschau",
         "download": "Herunterladen",
         "delete": "Löschen",
+        "uploadUnavailable": "Hochladen nicht verfügbar",
         "previewUnavailable": "Vorschau nicht verfügbar",
         "downloadUnavailable": "Download nicht verfügbar",
         "deleteUnavailable": "Löschen nicht verfügbar"

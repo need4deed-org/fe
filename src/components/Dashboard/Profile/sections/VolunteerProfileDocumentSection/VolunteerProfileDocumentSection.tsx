@@ -197,8 +197,9 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
                     tooltipText={
                       isMissing
                         ? t("dashboard.documentSection.tooltips.upload")
-                        : t("dashboard.documentSection.tooltips.reUpload")
+                        : t("dashboard.documentSection.tooltips.uploadUnavailable")
                     }
+                    disabled={!isMissing}
                     onClick={() => openDialog("upload", doc)}
                     ariaLabel="Upload document"
                   >

@@ -578,6 +578,7 @@
           "preview": "Preview",
           "download": "Download",
           "delete": "Delete",
+          "uploadUnavailable": "Upload unavailable",
           "previewUnavailable": "Preview unavailable",
           "downloadUnavailable": "Download unavailable",
           "deleteUnavailable": "Delete unavailable"
