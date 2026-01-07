@@ -2,6 +2,7 @@ import { DocumentType } from "need4deed-sdk";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
 import { useMutationQuery } from "@/hooks/useMutationQuery";
+import { apiPathVolunteer } from "@/config/constants";
 
 type UploadMetaResponse = {
   url: string;
@@ -23,22 +24,15 @@ const getUploadMeta = async (
   volunteerId: number,
   mimeType: string,
   originalName: string,
-  type: DocumentType
+  type: DocumentType,
 ): Promise<UploadMetaResponse> => {
-  const response = await axios.get(
-    `/api/volunteer/${volunteerId}/doc/upload-meta`,
-    {
-      params: { mimeType, originalName, type },
-    }
-  );
+  const response = await axios.get(`${apiPathVolunteer}${volunteerId}/doc/upload-meta`, {
+    params: { mimeType, originalName, type },
+  });
   return response.data;
 };
 
-const uploadToS3 = async (
-  url: string,
-  fields: Record<string, string>,
-  file: File
-): Promise<void> => {
+const uploadToS3 = async (url: string, fields: Record<string, string>, file: File): Promise<void> => {
   const formData = new FormData();
   Object.entries(fields).forEach(([key, value]) => {
     formData.append(key, value);
@@ -50,23 +44,15 @@ const uploadToS3 = async (
   });
 };
 
-const deleteDocumentApi = async (
-  volunteerId: number,
-  documentType: DocumentType
-): Promise<void> => {
-  await axios.delete(`/api/volunteer/${volunteerId}/doc/${documentType}`);
+const deleteDocumentApi = async (volunteerId: number, documentType: DocumentType): Promise<void> => {
+  await axios.delete(`${apiPathVolunteer}${volunteerId}/doc/${documentType}`);
 };
 
 export const useUploadDocument = (volunteerId: number, onSuccess?: () => void) => {
   const { t } = useTranslation();
 
   const uploadDocumentMutationFn = async ({ file, documentType }: UploadDocumentPayload) => {
-    const meta = await getUploadMeta(
-      volunteerId,
-      file.type,
-      file.name,
-      documentType
-    );
+    const meta = await getUploadMeta(volunteerId, file.type, file.name, documentType);
     await uploadToS3(meta.url, meta.fields, file);
   };
 
