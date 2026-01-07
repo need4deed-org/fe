@@ -4,48 +4,42 @@ import { validate as validateEmail } from "email-validator";
 import { Lang, VolunteerFormData } from "need4deed-sdk";
 import Image from "next/image";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useMemo, useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { apiPathVolunteer } from "../../../config/constants";
 import { getImageUrl } from "../../../utils/index";
 import UploadIcon from "../../svg/Upload";
 
-import { Button } from "@/components/core/button";
 import WithParentRef from "@/components/withParentRef";
 import useList from "@/hooks/useLists";
 import usePostRequest from "@/hooks/usePostRequest";
-import { LanguageLevel, LanguageObject, Subpage } from "@/types";
+import { LanguageLevel, Subpage } from "@/types";
 import ErrorAnnouncement from "../AddOpportunity/ErrorAnnouncement";
+import { AvailabilityGrid } from "../AvailabilityGrid";
 import FieldInfo from "../FieldInfo";
 import HeaderWithHelp from "../HeaderWithHelp";
 import style from "../index.module.css";
 import MultipleCheckBoxInputsWithMore from "../MultipleCheckBoxInputsWithMore";
 import MultipleRadioInputsWithMore from "../MultipleRadioInputsWithMore";
-import SelectInputField from "../SelectInputField";
 import SimpleInputField from "../SimpleInputField";
 import { ListsOfOptions, OpportunityInfo } from "../types";
 import {
-  areLanguagesRepeated,
   getAllSelectedFalse,
   getScheduleState,
   getTickMark,
-  getTimeslotTitle,
   isTimeSlotSelected,
   isValidPLZ,
   parseFormStateDTOVolunteer,
 } from "../utils";
 import { VolunteerData } from "./dataStructure";
+import { LanguageFields } from "../LanguageFields";
 
 const thankYou = "form.becomeVolunteer.thankYou";
 const somethingWrong = "form.becomeVolunteer.somethingWrong";
 
 export default function BecomeVolunteer() {
   const [showErrorAnnouncement, setShowErrorAnnouncement] = useState(false);
-  const [langId, setLangId] = useState(2);
-  const [languageArray, setLanguageArray] = useState<Array<LanguageObject>>([
-    { id: 1, language: "", level: LanguageLevel.NATIVE },
-  ]);
   const navigate = useRouter();
   const { lng } = useParams();
   const { t, i18n } = useTranslation();
@@ -61,8 +55,6 @@ export default function BecomeVolunteer() {
     title: opportunityParams.get("title") || "",
   };
 
-  const languages = getAllSelectedFalse(useList(ListsOfOptions.LANGUAGES));
-
   const formVolunteer = useForm({
     defaultValues: {
       opportunityId: opportunity.id,
@@ -72,9 +64,7 @@ export default function BecomeVolunteer() {
       postcode: "",
       locations: getAllSelectedFalse(useList(ListsOfOptions.LOCATIONS)),
       availability: getScheduleState(),
-      languagesNative: languages,
-      languagesFluent: languages,
-      languagesIntermediate: languages,
+      languages: [{ id: 1, language: "", level: LanguageLevel.NATIVE }],
       activities: getAllSelectedFalse([
         ...useList(ListsOfOptions.ACTIVITIES),
         ...useList(ListsOfOptions.ACTIVITIES_ACCOMPANYING),
@@ -89,7 +79,14 @@ export default function BecomeVolunteer() {
     } as VolunteerData,
     validators: {
       onSubmit: ({ value }) => {
-        if (areLanguagesRepeated(value)) {
+        const hasEmptyLanguage = value.languages.some((lang) => !lang.language);
+        if (hasEmptyLanguage) {
+          return t("form.error.language");
+        }
+
+        const languageIds = value.languages.map((lang) => lang.language);
+        const uniqueLanguages = new Set(languageIds);
+        if (languageIds.length !== uniqueLanguages.size) {
           return t("form.becomeVolunteer.fields.languages.singleLevelError");
         }
 
@@ -107,36 +104,6 @@ export default function BecomeVolunteer() {
       }
     },
   });
-
-  const updateLanguage = useCallback((id: number, newLang: string) => {
-    setLanguageArray((prevArray) => prevArray.map((item) => (item.id === id ? { ...item, language: newLang } : item)));
-  }, []);
-
-  const updateLevel = useCallback((id: number, newLevel: LanguageLevel) => {
-    setLanguageArray((prevArray) => prevArray.map((item) => (item.id === id ? { ...item, level: newLevel } : item)));
-  }, []);
-
-  const removeLanguage = useCallback((id: number) => {
-    setLanguageArray((prevArray) => prevArray.filter((item) => item.id !== id));
-  }, []);
-
-  const handleAddLanguage = useCallback(
-    (e: React.MouseEvent<HTMLButtonElement>) => {
-      e.preventDefault();
-      setLanguageArray((prev) => [
-        ...prev,
-        {
-          id: langId,
-          language: "",
-          level: LanguageLevel.NATIVE,
-        },
-      ]);
-      setLangId((prev) => prev + 1);
-    },
-    [langId],
-  );
-
-  const disabledLanguages = useMemo(() => languageArray.map((item) => item.language), [languageArray]);
 
   if (showErrorAnnouncement) {
     return <ErrorAnnouncement copies={somethingWrong} />;
@@ -238,64 +205,32 @@ export default function BecomeVolunteer() {
           }}
         </formVolunteer.Field>
         <hr />
-        <fieldset>
-          <div className={style["form-table-wrapper"]}>
-            <h3>{t("form.becomeVolunteer.fields.languages.headerWithoutAsterick")}</h3>
-            <div className={style["form-languages-wrapper"]}>
-              {languageArray.map((lang) => (
-                <formVolunteer.Field
-                  name={lang.level as LanguageLevel}
-                  key={`${lang.id}${lang.language}${lang.level}`}
-                  validators={{
-                    onChange: ({ value }) => {
-                      const isSelected = !!value.filter(({ selected }) => selected).length;
-                      return isSelected ? undefined : t("form.error.language");
-                    },
-                  }}
-                >
-                  {(field) => {
-                    return (
-                      <>
-                        <WithParentRef
-                          onFocus={() => {
-                            setTimeout(field.handleBlur, 0);
-                          }}
-                        >
-                          <SelectInputField<VolunteerData, LanguageLevel>
-                            label={t("form.becomeVolunteer.fields.languages.headerWithoutAsterick")}
-                            field={field}
-                            id={lang.id}
-                            form={formVolunteer}
-                            prevLanguage={lang.language}
-                            prevLevel={lang.level as LanguageLevel}
-                            disabledLanguages={disabledLanguages}
-                            languageArray={languageArray}
-                            showRemove={lang.id !== 1}
-                            removeLanguage={removeLanguage}
-                            updateLanguage={updateLanguage}
-                            updateLevel={updateLevel}
-                          />
-                        </WithParentRef>
-                        {field.state.meta.isTouched && field.state.meta.errors.length > 0 && (
-                          <FieldInfo field={field} />
-                        )}
-                      </>
-                    );
-                  }}
-                </formVolunteer.Field>
-              ))}
-              <Button
-                onClick={(e) => handleAddLanguage(e)}
-                text={"+ " + t("form.becomeVolunteer.fields.languages.addLanguage")}
-                textFontSize="1rem"
-                backgroundcolor="var(--color-white)"
-                textColor="#000000"
-                border="2px solid var(--color-neutral-700)"
-                height="3rem"
-              />
-            </div>
-          </div>
-        </fieldset>
+        <formVolunteer.Field
+          name="languages"
+          validators={{
+            onBlur: ({ value }) => {
+              const hasEmptyLanguage = value.some((lang) => !lang.language);
+              return hasEmptyLanguage ? t("form.error.language") : undefined;
+            },
+          }}
+        >
+          {(fieldLanguages) => {
+            return (
+              <fieldset>
+                <div className={style["form-table-wrapper"]}>
+                  <h3>{t("form.becomeVolunteer.fields.languages.headerWithoutAsterick")}</h3>
+                  <LanguageFields
+                    languages={fieldLanguages.state.value}
+                    onChange={fieldLanguages.handleChange}
+                    onFocus={() => setTimeout(fieldLanguages.handleBlur, 0)}
+                    t={t}
+                  />
+                </div>
+                <FieldInfo field={fieldLanguages} />
+              </fieldset>
+            );
+          }}
+        </formVolunteer.Field>
         <formVolunteer.Field
           name="availability"
           validators={{
@@ -307,53 +242,14 @@ export default function BecomeVolunteer() {
           {(fieldAvailability) => {
             return (
               <fieldset>
-                <div className={style["form-table-wrapper"]}>
-                  <h3>{t("form.becomeVolunteer.fields.availability.header")}</h3>
-                  <div
-                    className={style["form-table"]}
-                    onFocus={() => {
-                      setTimeout(fieldAvailability.handleBlur, 0);
-                    }}
-                  >
-                    {fieldAvailability.state.value &&
-                      fieldAvailability.state.value.map((availabilityObj, idx) => {
-                        return (
-                          <div className={style["form-table-row"]} key={`availability-${availabilityObj.weekday}`}>
-                            <span className={style["form-availability-weekday"]}>
-                              {t(`form.schedule.${availabilityObj.weekday}`).toLocaleUpperCase()}
-                            </span>
-                            <formVolunteer.Field name={`availability[${idx}].timeSlots`}>
-                              {(fieldWeekday) => {
-                                return (
-                                  fieldWeekday.state.value &&
-                                  fieldWeekday.state.value.map(({ title, id }, idxTimeframes) => (
-                                    <formVolunteer.Field
-                                      key={`${availabilityObj.weekday}-${id}`}
-                                      name={`availability[${idx}].timeSlots[${idxTimeframes}].selected`}
-                                    >
-                                      {(field) => (
-                                        <span className={style["form-pick"]}>
-                                          <input
-                                            tabIndex={0}
-                                            id={`${availabilityObj.weekday}${id}`}
-                                            type="checkbox"
-                                            onChange={(e) => field.handleChange(e.target.checked)}
-                                          />
-                                          <label htmlFor={`${availabilityObj.weekday}${id}`}>
-                                            {getTimeslotTitle(t, title[i18n.language as Lang] as string)}
-                                          </label>
-                                        </span>
-                                      )}
-                                    </formVolunteer.Field>
-                                  ))
-                                );
-                              }}
-                            </formVolunteer.Field>
-                          </div>
-                        );
-                      })}
-                  </div>
-                </div>
+                <AvailabilityGrid
+                  availability={fieldAvailability.state.value}
+                  onChange={fieldAvailability.handleChange}
+                  onFocus={() => setTimeout(fieldAvailability.handleBlur, 0)}
+                  header={t("form.becomeVolunteer.fields.availability.header")}
+                  t={t}
+                  currentLanguage={i18n.language as Lang}
+                />
                 <FieldInfo field={fieldAvailability} />
               </fieldset>
             );
