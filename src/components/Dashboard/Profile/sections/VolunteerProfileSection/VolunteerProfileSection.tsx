@@ -153,16 +153,16 @@ export const VolunteerProfileSection = forwardRef<VolunteerProfileSectionRef, Pr
             text={t("dashboard.volunteerProfile.profileSection.cancel")}
             onClick={handleCancel}
             width="auto"
-            padding="16px 24px"
+            padding="var(--volunteer-profile-section-card-header-button-padding)"
             backgroundcolor="var(--color-white)"
             textColor="var(--color-aubergine)"
-            border="2px solid var(--color-aubergine)"
+            border="var(--volunteer-profile-section-card-header-button-border)"
           />
           <Button
             text={t("dashboard.volunteerProfile.profileSection.saveChanges")}
             onClick={handleSubmit(onSubmit)}
             width="auto"
-            padding="16px 24px"
+            padding="var(--volunteer-profile-section-card-header-button-padding)"
             disabled={!isDirty || !isValid || isPending}
           />
         </ButtonRow>

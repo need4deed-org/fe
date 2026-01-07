@@ -232,16 +232,16 @@ export const ContactDetails = forwardRef<ContactDetailsRef, Props>(function Cont
             text={t("dashboard.volunteerProfile.contactDetails.cancel")}
             onClick={handleCancel}
             width="auto"
-            padding="16px 24px"
+            padding="var(--volunteer-profile-section-card-header-button-padding)"
             backgroundcolor="var(--color-white)"
             textColor="var(--color-aubergine)"
-            border="2px solid var(--color-aubergine)"
+            border="var(--volunteer-profile-section-card-header-button-border)"
           />
           <Button
             text={t("dashboard.volunteerProfile.contactDetails.saveChanges")}
             onClick={handleSubmit(onSubmit)}
             width="auto"
-            padding="16px 24px"
+            padding="var(--volunteer-profile-section-card-header-button-padding)"
             disabled={!isValid || isPending}
           />
         </ButtonRow>

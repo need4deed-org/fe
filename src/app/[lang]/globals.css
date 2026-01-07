@@ -1299,6 +1299,7 @@ html {
     --volunteer-profile-section-card-header-button-height: 56px;
     --volunteer-profile-section-card-header-button-textFontSize: 20px;
     --volunteer-profile-section-card-header-button-padding: 16px 24px;
+    --volunteer-profile-section-card-header-button-border: 2px solid var(--color-aubergine);
 
     --volunteer-profile-opportunities-container-gap: 8px;
     --volunteer-profile-opportunities-tabs-margin-top: 16px;
