@@ -1,8 +1,7 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { DocumentType } from "need4deed-sdk";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { useTranslation } from "react-i18next";
-import { toast } from "react-toastify";
+import { useMutationQuery } from "@/hooks/useMutationQuery";
 
 type UploadMetaResponse = {
   url: string;
@@ -60,60 +59,32 @@ const deleteDocumentApi = async (
 
 export const useUploadDocument = (volunteerId: number, onSuccess?: () => void) => {
   const { t } = useTranslation();
-  const queryClient = useQueryClient();
 
-  return useMutation<void, AxiosError<{ message?: string }>, UploadDocumentPayload>({
-    mutationFn: async ({ file, documentType }) => {
-      const meta = await getUploadMeta(
-        volunteerId,
-        file.type,
-        file.name,
-        documentType
-      );
-      await uploadToS3(meta.url, meta.fields, file);
-    },
-    onSuccess: () => {
-      toast.success(t("message.uploadSuccess"));
-      queryClient.invalidateQueries({
-        queryKey: ["volunteerDocuments", volunteerId],
-      });
-      onSuccess?.();
-    },
-    onError: (error) => {
-      let errorMessage = t("message.uploadError");
-      if (axios.isAxiosError(error)) {
-        const errorData = error.response?.data as { message?: string } | undefined;
-        if (errorData?.message) {
-          errorMessage = errorData.message;
-        }
-      }
-      toast.error(errorMessage);
-    },
+  const uploadDocumentMutationFn = async ({ file, documentType }: UploadDocumentPayload) => {
+    const meta = await getUploadMeta(
+      volunteerId,
+      file.type,
+      file.name,
+      documentType
+    );
+    await uploadToS3(meta.url, meta.fields, file);
+  };
+
+  return useMutationQuery<UploadDocumentPayload, void>({
+    mutationFn: uploadDocumentMutationFn,
+    successMessage: t("message.uploadSuccess"),
+    queryKeyToInvalidate: ["volunteerDocuments", volunteerId],
+    onSuccessCallback: onSuccess,
   });
 };
 
 export const useDeleteDocument = (volunteerId: number, onSuccess?: () => void) => {
   const { t } = useTranslation();
-  const queryClient = useQueryClient();
 
-  return useMutation<void, AxiosError<{ message?: string }>, DeleteDocumentPayload>({
+  return useMutationQuery<DeleteDocumentPayload, void>({
     mutationFn: ({ documentType }) => deleteDocumentApi(volunteerId, documentType),
-    onSuccess: () => {
-      toast.success(t("message.deleteSuccess"));
-      queryClient.invalidateQueries({
-        queryKey: ["volunteerDocuments", volunteerId],
-      });
-      onSuccess?.();
-    },
-    onError: (error) => {
-      let errorMessage = t("message.deleteError");
-      if (axios.isAxiosError(error)) {
-        const errorData = error.response?.data as { message?: string } | undefined;
-        if (errorData?.message) {
-          errorMessage = errorData.message;
-        }
-      }
-      toast.error(errorMessage);
-    },
+    successMessage: t("message.deleteSuccess"),
+    queryKeyToInvalidate: ["volunteerDocuments", volunteerId],
+    onSuccessCallback: onSuccess,
   });
 };
