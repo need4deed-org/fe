@@ -4,16 +4,23 @@ import { DocumentRow } from "./utils";
 type DialogType = "delete" | "upload" | "preview";
 
 type DialogState = {
-  delete: { isOpen: boolean; document: DocumentRow | null };
-  upload: { isOpen: boolean; document: DocumentRow | null };
-  preview: { isOpen: boolean; document: DocumentRow | null };
+  isOpen: boolean;
+  document: DocumentRow | null;
 };
 
+type State = {
+  delete: DialogState;
+  upload: DialogState;
+  preview: DialogState;
+};
+
+const initialDialogState = { isOpen: false, document: null };
+
 export function useDialogState() {
-  const [state, setState] = useState<DialogState>({
-    delete: { isOpen: false, document: null },
-    upload: { isOpen: false, document: null },
-    preview: { isOpen: false, document: null },
+  const [state, setState] = useState<State>({
+    delete: initialDialogState,
+    upload: initialDialogState,
+    preview: initialDialogState,
   });
 
   const openDialog = (type: DialogType, document: DocumentRow) => {
