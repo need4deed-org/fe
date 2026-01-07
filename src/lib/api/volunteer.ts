@@ -31,7 +31,7 @@ export const getUploadMeta = async (
 
 export const uploadDocument = async (
   url: string,
-  fields: any,
+  fields: Record<string, string>,
   file: File
 ) => {
   const formData = new FormData();

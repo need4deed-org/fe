@@ -68,23 +68,28 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
   } = useVolunteerDocuments(volunteer.id);
 
   useEffect(() => {
-    if (fetchedDocuments) {
+    if (!fetchedDocuments) return;
       const allDocumentTypes = Object.keys(
         DOCUMENT_NAME_KEYS
       ) as DocumentType[];
-      const updatedDocuments = allDocumentTypes.map((type) => {
+      const updatedDocuments: Document[] = allDocumentTypes.map((type) => {
         const existingDoc = fetchedDocuments.find((doc) => doc.type === type);
         return {
           id: existingDoc?.id?.toString() || type,
           type: type,
           nameKey: DOCUMENT_NAME_KEYS[type],
           status: existingDoc ? "uploaded" : "missing",
-          uploadedOn: existingDoc ? "–" : undefined, // Placeholder for date
+          uploadedOn: existingDoc?.createdAt
+            ? new Date(existingDoc.createdAt).toLocaleDateString("de-DE", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+              })
+            : undefined,
           url: existingDoc?.url,
         };
       });
       setDocuments(updatedDocuments);
-    }
   }, [fetchedDocuments]);
 
   const uploadMutation = useMutation({
@@ -141,11 +146,26 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
     }
   };
 
-  const handleDownload = (doc: Document) => {
-    if (doc.url) {
-      window.open(doc.url, "_blank");
-    }
-  };
+  const handleDownload = async (doc: Document) => {
+  if (!doc.url) return;
+
+  const filename = doc.url.split("/").pop() || "document.pdf";
+
+  const response = await fetch(doc.url);
+  const blob = await response.blob();
+
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+
+  document.body.appendChild(a);
+  a.click();
+
+  document.body.removeChild(a);
+  window.URL.revokeObjectURL(url);
+};
+
 
   const handlePreview = (doc: Document) => {
     setDocumentUrl(doc.url || null);
