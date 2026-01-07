@@ -618,6 +618,7 @@
     "uploadSuccess": "Dokument erfolgreich hochgeladen!",
     "deleteSuccess": "Dokument erfolgreich gelöscht!",
     "uploadError": "Hochladen fehlgeschlagen. Bitte versuchen Sie es erneut.",
-    "deleteError": "Löschen fehlgeschlagen. Bitte versuchen Sie es erneut."
+    "deleteError": "Löschen fehlgeschlagen. Bitte versuchen Sie es erneut.",
+    "previewError": "Vorschau fehlgeschlagen. Bitte versuchen Sie es erneut."
   }
 }

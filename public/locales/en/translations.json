@@ -617,6 +617,7 @@
     "uploadSuccess": "Document uploaded successfully!",
     "deleteSuccess": "Document deleted successfully!",
     "uploadError": "Upload failed. Please try again.",
-    "deleteError": "Delete failed. Please try again."
+    "deleteError": "Delete failed. Please try again.",
+    "previewError": "Preview failed. Please try again."
   }
 }

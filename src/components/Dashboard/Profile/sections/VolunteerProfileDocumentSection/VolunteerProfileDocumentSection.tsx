@@ -1,37 +1,19 @@
 "use client";
-import {
-  DownloadSimple,
-  Eye,
-  Trash,
-  UploadSimple,
-} from "@phosphor-icons/react";
-import { ApiVolunteerGet, DocumentType } from "need4deed-sdk";
-import { useTranslation } from "react-i18next";
-import {
-  ActionCell,
-  Cell,
-  Container,
-  HeaderCell,
-  StatusBadge,
-  Table,
-  TableHeader,
-  TableRow,
-} from "./styles";
-import { DeleteConfirmationDialog } from "./DeleteConfirmationDialog";
-import { UploadDocumentDialog } from "./UploadDocumentDialog";
-import { DocumentPreviewDialog } from "./DocumentPreviewDialog";
-import { ActionButtonWithTooltip } from "./ActionButtonWithTooltip";
-import { useDialogState } from "./useDialogState";
-import { Document } from "./types";
 import { useVolunteerDocuments } from "@/hooks/useVolunteerDocuments";
-import { useEffect, useState } from "react";
+import { deleteDocument, getUploadMeta, uploadDocument as uploadDocumentApi } from "@/lib/api/volunteer";
+import { DownloadSimple, Eye, Trash, UploadSimple } from "@phosphor-icons/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import {
-  deleteDocument,
-  getUploadMeta,
-  uploadDocument as uploadDocumentApi,
-} from "@/lib/api/volunteer";
+import { ApiVolunteerGet, DocumentType } from "need4deed-sdk";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
+import { ActionButtonWithTooltip } from "./ActionButtonWithTooltip";
+import { DeleteConfirmationDialog } from "./DeleteConfirmationDialog";
+import { DocumentPreviewDialog } from "./DocumentPreviewDialog";
+import { ActionCell, Cell, Container, HeaderCell, StatusBadge, Table, TableHeader, TableRow } from "./styles";
+import { Document } from "./types";
+import { UploadDocumentDialog } from "./UploadDocumentDialog";
+import { useDialogState } from "./useDialogState";
 
 type Props = {
   volunteer: ApiVolunteerGet;
@@ -61,45 +43,36 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
   const [documents, setDocuments] = useState<Document[]>([]);
   const [documentUrl, setDocumentUrl] = useState<string | null>(null);
 
-  const {
-    data: fetchedDocuments,
-    isLoading,
-    isError,
-  } = useVolunteerDocuments(volunteer.id);
+  const { data: fetchedDocuments, isLoading, isError } = useVolunteerDocuments(volunteer.id);
 
   useEffect(() => {
     if (!fetchedDocuments) return;
-      const allDocumentTypes = Object.keys(
-        DOCUMENT_NAME_KEYS
-      ) as DocumentType[];
-      const updatedDocuments: Document[] = allDocumentTypes.map((type) => {
-        const existingDoc = fetchedDocuments.find((doc) => doc.type === type);
-        return {
-          id: existingDoc?.id?.toString() || type,
-          type: type,
-          nameKey: DOCUMENT_NAME_KEYS[type],
-          status: existingDoc ? "uploaded" : "missing",
-          uploadedOn: existingDoc?.createdAt
-            ? new Date(existingDoc.createdAt).toLocaleDateString("de-DE", {
-                day: "2-digit",
-                month: "2-digit",
-                year: "numeric",
-              })
-            : undefined,
-          url: existingDoc?.url,
-        };
-      });
-      setDocuments(updatedDocuments);
+    const allDocumentTypes = Object.keys(DOCUMENT_NAME_KEYS) as DocumentType[];
+    const updatedDocuments: Document[] = allDocumentTypes.map((type) => {
+      const existingDoc = fetchedDocuments.find((doc) => doc.type === type);
+      return {
+        id: existingDoc?.id?.toString() || type,
+        type: type,
+        nameKey: DOCUMENT_NAME_KEYS[type],
+        status: existingDoc ? "uploaded" : "missing",
+        uploadedOn: existingDoc?.createdAt
+          ? new Date(existingDoc.createdAt).toLocaleDateString("de-DE", {
+              day: "2-digit",
+              month: "2-digit",
+              year: "numeric",
+            })
+          : undefined,
+        url: existingDoc?.url,
+      };
+    });
+    setDocuments(updatedDocuments);
   }, [fetchedDocuments]);
 
   const uploadMutation = useMutation({
     mutationFn: ({ file, document }: { file: File; document: Document }) => {
-      return getUploadMeta(
-        volunteer.id,
-        file.type,
-        file.name,
-        document.type
-      ).then((meta) => uploadDocumentApi(meta.url, meta.fields, file));
+      return getUploadMeta(volunteer.id, file.type, file.name, document.type).then((meta) =>
+        uploadDocumentApi(meta.url, meta.fields, file),
+      );
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -116,8 +89,7 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (document: Document) =>
-      deleteDocument(volunteer.id, document.type),
+    mutationFn: (document: Document) => deleteDocument(volunteer.id, document.type),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["volunteerDocuments", volunteer.id],
@@ -147,28 +119,36 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
   };
 
   const handleDownload = async (doc: Document) => {
-  if (!doc.url) return;
+    if (!doc.url) return;
 
-  const filename = doc.url.split("/").pop() || "document.pdf";
-
-  const response = await fetch(doc.url);
-  const blob = await response.blob();
-
-  const url = window.URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = filename;
-
-  document.body.appendChild(a);
-  a.click();
-
-  document.body.removeChild(a);
-  window.URL.revokeObjectURL(url);
-};
-
+    const link = document.createElement("a");
+    link.href = doc.url;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   const handlePreview = (doc: Document) => {
-    setDocumentUrl(doc.url || null);
+    if (!doc.url) {
+      toast.error(t("message.previewError"));
+      return;
+    }
+
+    try {
+      const urlObj = new URL(doc.url);
+      const actualUrl = urlObj.searchParams.get("url");
+
+      if (!actualUrl) {
+        toast.error(t("message.previewError"));
+        return;
+      }
+
+      setDocumentUrl(actualUrl);
+    } catch {
+      toast.error(t("message.previewError"));
+      return;
+    }
+
     openDialog("preview", doc);
   };
 
@@ -185,12 +165,8 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
       <Container data-testid="volunteer-profile-document-section-container">
         <Table>
           <TableHeader>
-            <HeaderCell>
-              {t("dashboard.documentSection.typeOfDocument")}
-            </HeaderCell>
-            <HeaderCell $width="180px">
-              {t("dashboard.documentSection.status")}
-            </HeaderCell>
+            <HeaderCell>{t("dashboard.documentSection.typeOfDocument")}</HeaderCell>
+            <HeaderCell $width="180px">{t("dashboard.documentSection.status")}</HeaderCell>
             <HeaderCell $width="152px" $noWrap>
               {t("dashboard.documentSection.uploadedOn")}
             </HeaderCell>
@@ -205,18 +181,12 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
 
             return (
               <TableRow key={doc.id} $isLast={index === documents.length - 1}>
-                <Cell>
-                  {t(
-                    `dashboard.documentSection.documentNames.${doc.nameKey}`
-                  )}
-                </Cell>
+                <Cell>{t(`dashboard.documentSection.documentNames.${doc.nameKey}`)}</Cell>
                 <Cell $width="180px" $align="center">
                   <StatusBadge $status={doc.status}>
                     {doc.status === "uploaded"
                       ? t("dashboard.documentSection.uploaded")
-                      : t(
-                          "dashboard.documentSection.missing"
-                        )}
+                      : t("dashboard.documentSection.missing")}
                   </StatusBadge>
                 </Cell>
                 <Cell $width="152px" $noWrap>
@@ -226,12 +196,8 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
                   <ActionButtonWithTooltip
                     tooltipText={
                       isMissing
-                        ? t(
-                            "dashboard.documentSection.tooltips.upload"
-                          )
-                        : t(
-                            "dashboard.documentSection.tooltips.reUpload"
-                          )
+                        ? t("dashboard.documentSection.tooltips.upload")
+                        : t("dashboard.documentSection.tooltips.reUpload")
                     }
                     onClick={() => openDialog("upload", doc)}
                     ariaLabel="Upload document"
@@ -243,12 +209,8 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
                   <ActionButtonWithTooltip
                     tooltipText={
                       isMissing
-                        ? t(
-                            "dashboard.documentSection.tooltips.previewUnavailable"
-                          )
-                        : t(
-                            "dashboard.documentSection.tooltips.preview"
-                          )
+                        ? t("dashboard.documentSection.tooltips.previewUnavailable")
+                        : t("dashboard.documentSection.tooltips.preview")
                     }
                     disabled={isMissing}
                     onClick={() => handlePreview(doc)}
@@ -261,12 +223,8 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
                   <ActionButtonWithTooltip
                     tooltipText={
                       isMissing
-                        ? t(
-                            "dashboard.documentSection.tooltips.downloadUnavailable"
-                          )
-                        : t(
-                            "dashboard.documentSection.tooltips.download"
-                          )
+                        ? t("dashboard.documentSection.tooltips.downloadUnavailable")
+                        : t("dashboard.documentSection.tooltips.download")
                     }
                     disabled={isMissing}
                     onClick={() => handleDownload(doc)}
@@ -279,12 +237,8 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
                   <ActionButtonWithTooltip
                     tooltipText={
                       isMissing
-                        ? t(
-                            "dashboard.documentSection.tooltips.deleteUnavailable"
-                          )
-                        : t(
-                            "dashboard.documentSection.tooltips.delete"
-                          )
+                        ? t("dashboard.documentSection.tooltips.deleteUnavailable")
+                        : t("dashboard.documentSection.tooltips.delete")
                     }
                     disabled={isMissing}
                     onClick={() => openDialog("delete", doc)}
@@ -325,16 +279,12 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
       <DocumentPreviewDialog
         isOpen={isPreviewOpen}
         documentName={
-          previewDocument?.nameKey
-            ? t(`dashboard.documentSection.documentNames.${previewDocument.nameKey}`)
-            : ""
+          previewDocument?.nameKey ? t(`dashboard.documentSection.documentNames.${previewDocument.nameKey}`) : ""
         }
         documentUrl={documentUrl}
         onClose={() => closeDialog("preview")}
         onDownload={() => previewDocument && handleDownload(previewDocument)}
-        onDelete={() =>
-          previewDocument && openDialog("delete", previewDocument)
-        }
+        onDelete={() => previewDocument && openDialog("delete", previewDocument)}
       />
     </>
   );
