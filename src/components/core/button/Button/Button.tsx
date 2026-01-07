@@ -83,6 +83,7 @@ export interface ButtonProps {
   border?: string;
   disabled?: boolean;
   padding?: string;
+  type?: "button" | "submit" | "reset";
 }
 
 export function Button({
@@ -102,9 +103,11 @@ export function Button({
   border,
   disabled,
   padding,
+  type = "button",
 }: ButtonProps) {
   return (
     <StyledButton
+      type={type}
       disabled={disabled}
       onClick={onClick}
       backgroundcolor={backgroundcolor}
