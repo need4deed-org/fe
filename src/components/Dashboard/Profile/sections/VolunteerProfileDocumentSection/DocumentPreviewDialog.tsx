@@ -120,7 +120,7 @@ const DocumentFrame = styled.div<{ $scale: number }>`
   box-shadow: var(--document-preview-frame-shadow);
   transform: scale(${(props) => props.$scale});
   transform-origin: top center;
-  transition: transform 0.2s ease;
+  transition: var(--transition-transform);
 `;
 
 const PDFEmbed = styled.object`

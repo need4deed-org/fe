@@ -220,6 +220,14 @@ html {
   --border-radius-medium: 12px;
   --border-radius-large: 16px;
 
+  /* shared transitions */
+  --transition-transform: transform 0.2s ease;
+  --transition-opacity-visibility: opacity 0.2s, visibility 0.2s;
+  --transition-all: all 0.2s;
+
+  /* shared typography */
+  --letter-spacing-tight: 0.005em;
+
   /* button */
   --button-gap: 12px;
 
@@ -341,7 +349,7 @@ html {
   --document-preview-name-font-weight: 400;
   --document-preview-name-font-size: var(--text-p-font-size);
   --document-preview-name-line-height: var(--text-p-line-height);
-  --document-preview-name-letter-spacing: 0.005em;
+  --document-preview-name-letter-spacing: var(--letter-spacing-tight);
   --document-preview-name-color: var(--color-white);
   --document-preview-actions-gap: 21px;
   --document-preview-container-padding: var(--spacing-32) 0;
@@ -364,7 +372,7 @@ html {
   --document-tooltip-font-weight: 400;
   --document-tooltip-font-size: var(--spacing-12);
   --document-tooltip-line-height: var(--spacing-16);
-  --document-tooltip-letter-spacing: 0.005em;
+  --document-tooltip-letter-spacing: var(--letter-spacing-tight);
   --document-tooltip-padding: var(--spacing-8);
   --document-tooltip-border-radius: var(--border-radius-small);
   --document-tooltip-z-index: 10000;

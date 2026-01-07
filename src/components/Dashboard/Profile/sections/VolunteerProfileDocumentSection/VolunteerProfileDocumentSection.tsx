@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { DeleteConfirmationDialog } from "./DeleteConfirmationDialog";
 import { DocumentPreviewDialog } from "./DocumentPreviewDialog";
 import { DocumentTableRow } from "./DocumentTableRow";
-import { Container, HeaderCell, Table, TableHeader } from "./styles";
+import { ACTION_COLUMN_WIDTH, Container, HeaderCell, Table, TableHeader } from "./styles";
 import { UploadDocumentDialog } from "./UploadDocumentDialog";
 import { useDeleteDocument, useUploadDocument } from "./useDocumentOperations";
 import { useDialogState } from "./useDialogState";
@@ -108,10 +108,10 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
             <HeaderCell $width="152px" $noWrap>
               {t("dashboard.documentSection.uploadedOn")}
             </HeaderCell>
-            <HeaderCell $width="56px"></HeaderCell>
-            <HeaderCell $width="56px"></HeaderCell>
-            <HeaderCell $width="56px"></HeaderCell>
-            <HeaderCell $width="56px"></HeaderCell>
+            <HeaderCell $width={ACTION_COLUMN_WIDTH}></HeaderCell>
+            <HeaderCell $width={ACTION_COLUMN_WIDTH}></HeaderCell>
+            <HeaderCell $width={ACTION_COLUMN_WIDTH}></HeaderCell>
+            <HeaderCell $width={ACTION_COLUMN_WIDTH}></HeaderCell>
           </TableHeader>
 
           {documentRows.map((row, index) => (

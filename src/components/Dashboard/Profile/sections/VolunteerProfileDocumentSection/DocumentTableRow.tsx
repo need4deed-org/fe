@@ -43,7 +43,7 @@ export function DocumentTableRow({
             })
           : "–"}
       </Cell>
-      <ActionCell $width="56px" $align="center">
+      <ActionCell>
         <ActionButtonWithTooltip
           tooltipText={
             !isUploaded
@@ -57,7 +57,7 @@ export function DocumentTableRow({
           <UploadSimple size={24} weight="regular" />
         </ActionButtonWithTooltip>
       </ActionCell>
-      <ActionCell $width="56px" $align="center">
+      <ActionCell>
         <ActionButtonWithTooltip
           tooltipText={
             !isUploaded
@@ -71,7 +71,7 @@ export function DocumentTableRow({
           <Eye size={24} weight="regular" />
         </ActionButtonWithTooltip>
       </ActionCell>
-      <ActionCell $width="56px" $align="center">
+      <ActionCell>
         <ActionButtonWithTooltip
           tooltipText={
             !isUploaded
@@ -85,7 +85,7 @@ export function DocumentTableRow({
           <DownloadSimple size={24} weight="regular" />
         </ActionButtonWithTooltip>
       </ActionCell>
-      <ActionCell $width="56px" $align="center">
+      <ActionCell>
         <ActionButtonWithTooltip
           tooltipText={
             !isUploaded

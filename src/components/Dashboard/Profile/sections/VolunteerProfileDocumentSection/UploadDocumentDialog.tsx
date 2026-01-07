@@ -56,7 +56,7 @@ const DropZone = styled.div<{ $isDragging: boolean; $hasFile: boolean }>`
       ? "var(--color-aubergine-subtle)"
       : "var(--document-upload-dropzone-background)"};
   cursor: pointer;
-  transition: all 0.2s;
+  transition: var(--transition-all);
   margin-bottom: var(--document-upload-dropzone-margin-bottom);
 
   &:hover {
