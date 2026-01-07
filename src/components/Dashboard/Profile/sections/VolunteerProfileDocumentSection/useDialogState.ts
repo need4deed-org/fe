@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { Document } from "./types";
+import { DocumentRow } from "./utils";
 
 type DialogType = "delete" | "upload" | "preview";
 
 type DialogState = {
-  delete: { isOpen: boolean; document: Document | null };
-  upload: { isOpen: boolean; document: Document | null };
-  preview: { isOpen: boolean; document: Document | null };
+  delete: { isOpen: boolean; document: DocumentRow | null };
+  upload: { isOpen: boolean; document: DocumentRow | null };
+  preview: { isOpen: boolean; document: DocumentRow | null };
 };
 
 export function useDialogState() {
@@ -16,7 +16,7 @@ export function useDialogState() {
     preview: { isOpen: false, document: null },
   });
 
-  const openDialog = (type: DialogType, document: Document) => {
+  const openDialog = (type: DialogType, document: DocumentRow) => {
     setState((prev) => ({
       ...prev,
       [type]: { isOpen: true, document },

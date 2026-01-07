@@ -1,34 +1,24 @@
 "use client";
 import { useVolunteerDocuments } from "@/hooks/useVolunteerDocuments";
-import { deleteDocument, getUploadMeta, uploadDocument as uploadDocumentApi } from "@/lib/api/volunteer";
-import { DownloadSimple, Eye, Trash, UploadSimple } from "@phosphor-icons/react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { ApiVolunteerGet, DocumentType } from "need4deed-sdk";
-import { useEffect, useState } from "react";
+import { ApiVolunteerGet } from "need4deed-sdk";
+import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
-import { ActionButtonWithTooltip } from "./ActionButtonWithTooltip";
 import { DeleteConfirmationDialog } from "./DeleteConfirmationDialog";
 import { DocumentPreviewDialog } from "./DocumentPreviewDialog";
-import { ActionCell, Cell, Container, HeaderCell, StatusBadge, Table, TableHeader, TableRow } from "./styles";
-import { Document } from "./types";
+import { DocumentTableRow } from "./DocumentTableRow";
+import { Container, HeaderCell, Table, TableHeader } from "./styles";
 import { UploadDocumentDialog } from "./UploadDocumentDialog";
+import { useDeleteDocument, useUploadDocument } from "./useDocumentOperations";
 import { useDialogState } from "./useDialogState";
+import { DocumentRow, enrichDocuments, extractDocumentUrl } from "./utils";
 
 type Props = {
   volunteer: ApiVolunteerGet;
 };
 
-const DOCUMENT_NAME_KEYS: Record<DocumentType, string> = {
-  "measles-vacc-cert": "measlesVaccination",
-  "CGC-application": "applicationCertificateGoodConduct",
-  "good-conduct-cert": "certificateGoodConduct",
-  "passport-copy": "passport",
-};
-
 export function VolunteerProfileDocumentSection({ volunteer }: Props) {
   const { t } = useTranslation();
-  const queryClient = useQueryClient();
   const {
     deleteDocument: deleteDialogDocument,
     uploadDocument: uploadDialogDocument,
@@ -40,116 +30,64 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
     isPreviewOpen,
   } = useDialogState();
 
-  const [documents, setDocuments] = useState<Document[]>([]);
   const [documentUrl, setDocumentUrl] = useState<string | null>(null);
 
   const { data: fetchedDocuments, isLoading, isError } = useVolunteerDocuments(volunteer.id);
 
-  useEffect(() => {
-    if (!fetchedDocuments) return;
-    const allDocumentTypes = Object.keys(DOCUMENT_NAME_KEYS) as DocumentType[];
-    const updatedDocuments: Document[] = allDocumentTypes.map((type) => {
-      const existingDoc = fetchedDocuments.find((doc) => doc.type === type);
-      return {
-        id: existingDoc?.id?.toString() || type,
-        type: type,
-        nameKey: DOCUMENT_NAME_KEYS[type],
-        status: existingDoc ? "uploaded" : "missing",
-        uploadedOn: existingDoc?.createdAt
-          ? new Date(existingDoc.createdAt).toLocaleDateString("de-DE", {
-              day: "2-digit",
-              month: "2-digit",
-              year: "numeric",
-            })
-          : undefined,
-        url: existingDoc?.url,
-      };
-    });
-    setDocuments(updatedDocuments);
-  }, [fetchedDocuments]);
+  const documentRows = useMemo(
+    () => (fetchedDocuments ? enrichDocuments(fetchedDocuments) : []),
+    [fetchedDocuments]
+  );
 
-  const uploadMutation = useMutation({
-    mutationFn: ({ file, document }: { file: File; document: Document }) => {
-      return getUploadMeta(volunteer.id, file.type, file.name, document.type).then((meta) =>
-        uploadDocumentApi(meta.url, meta.fields, file),
-      );
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["volunteerDocuments", volunteer.id],
-      });
-      closeDialog("upload");
-      toast.success(t("message.uploadSuccess"));
-    },
-    onError: (error: Error) => {
-      console.error("Upload failed:", error);
-      toast.error(t("message.uploadError"));
-      closeDialog("upload");
-    },
-  });
-
-  const deleteMutation = useMutation({
-    mutationFn: (document: Document) => deleteDocument(volunteer.id, document.type),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["volunteerDocuments", volunteer.id],
-      });
-      closeDialog("delete");
-      toast.success(t("message.deleteSuccess"));
-    },
-    onError: (error: Error) => {
-      console.error("Delete failed:", error);
-      toast.error(t("message.deleteError"));
-      closeDialog("delete");
-    },
+  const uploadMutation = useUploadDocument(volunteer.id, () => closeDialog("upload"));
+  const deleteMutation = useDeleteDocument(volunteer.id, () => {
+    closeDialog("delete");
+    closeDialog("preview");
   });
 
   const handleConfirmDelete = () => {
     if (deleteDialogDocument) {
-      deleteMutation.mutate(deleteDialogDocument);
+      deleteMutation.mutate({
+        volunteerId: volunteer.id,
+        documentType: deleteDialogDocument.type,
+      });
     }
-    closeDialog("delete");
-    closeDialog("preview");
   };
 
   const handleConfirmUpload = (file: File) => {
     if (uploadDialogDocument) {
-      uploadMutation.mutate({ file, document: uploadDialogDocument });
+      uploadMutation.mutate({
+        volunteerId: volunteer.id,
+        file,
+        documentType: uploadDialogDocument.type,
+      });
     }
   };
 
-  const handleDownload = async (doc: Document) => {
-    if (!doc.url) return;
+  const handleDownload = (row: DocumentRow) => {
+    if (!row.document?.url) return;
 
     const link = document.createElement("a");
-    link.href = doc.url;
+    link.href = row.document.url;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   };
 
-  const handlePreview = (doc: Document) => {
-    if (!doc.url) {
+  const handlePreview = (row: DocumentRow) => {
+    if (!row.document?.url) {
       toast.error(t("message.previewError"));
       return;
     }
 
-    try {
-      const urlObj = new URL(doc.url);
-      const actualUrl = urlObj.searchParams.get("url");
-
-      if (!actualUrl) {
-        toast.error(t("message.previewError"));
-        return;
-      }
-
-      setDocumentUrl(actualUrl);
-    } catch {
+    const actualUrl = extractDocumentUrl(row.document.url);
+    if (!actualUrl) {
       toast.error(t("message.previewError"));
       return;
     }
 
-    openDialog("preview", doc);
+    setDocumentUrl(actualUrl);
+    openDialog("preview", row);
   };
 
   if (isLoading) {
@@ -176,81 +114,17 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
             <HeaderCell $width="56px"></HeaderCell>
           </TableHeader>
 
-          {documents.map((doc, index) => {
-            const isMissing = doc.status === "missing";
-
-            return (
-              <TableRow key={doc.id} $isLast={index === documents.length - 1}>
-                <Cell>{t(`dashboard.documentSection.documentNames.${doc.nameKey}`)}</Cell>
-                <Cell $width="180px" $align="center">
-                  <StatusBadge $status={doc.status}>
-                    {doc.status === "uploaded"
-                      ? t("dashboard.documentSection.uploaded")
-                      : t("dashboard.documentSection.missing")}
-                  </StatusBadge>
-                </Cell>
-                <Cell $width="152px" $noWrap>
-                  {doc.uploadedOn || "–"}
-                </Cell>
-                <ActionCell $width="56px" $align="center">
-                  <ActionButtonWithTooltip
-                    tooltipText={
-                      isMissing
-                        ? t("dashboard.documentSection.tooltips.upload")
-                        : t("dashboard.documentSection.tooltips.uploadUnavailable")
-                    }
-                    disabled={!isMissing}
-                    onClick={() => openDialog("upload", doc)}
-                    ariaLabel="Upload document"
-                  >
-                    <UploadSimple size={24} weight="regular" />
-                  </ActionButtonWithTooltip>
-                </ActionCell>
-                <ActionCell $width="56px" $align="center">
-                  <ActionButtonWithTooltip
-                    tooltipText={
-                      isMissing
-                        ? t("dashboard.documentSection.tooltips.previewUnavailable")
-                        : t("dashboard.documentSection.tooltips.preview")
-                    }
-                    disabled={isMissing}
-                    onClick={() => handlePreview(doc)}
-                    ariaLabel="View document"
-                  >
-                    <Eye size={24} weight="regular" />
-                  </ActionButtonWithTooltip>
-                </ActionCell>
-                <ActionCell $width="56px" $align="center">
-                  <ActionButtonWithTooltip
-                    tooltipText={
-                      isMissing
-                        ? t("dashboard.documentSection.tooltips.downloadUnavailable")
-                        : t("dashboard.documentSection.tooltips.download")
-                    }
-                    disabled={isMissing}
-                    onClick={() => handleDownload(doc)}
-                    ariaLabel="Download document"
-                  >
-                    <DownloadSimple size={24} weight="regular" />
-                  </ActionButtonWithTooltip>
-                </ActionCell>
-                <ActionCell $width="56px" $align="center">
-                  <ActionButtonWithTooltip
-                    tooltipText={
-                      isMissing
-                        ? t("dashboard.documentSection.tooltips.deleteUnavailable")
-                        : t("dashboard.documentSection.tooltips.delete")
-                    }
-                    disabled={isMissing}
-                    onClick={() => openDialog("delete", doc)}
-                    ariaLabel="Delete document"
-                  >
-                    <Trash size={24} weight="regular" />
-                  </ActionButtonWithTooltip>
-                </ActionCell>
-              </TableRow>
-            );
-          })}
+          {documentRows.map((row, index) => (
+            <DocumentTableRow
+              key={row.type}
+              documentRow={row}
+              isLast={index === documentRows.length - 1}
+              onUpload={() => openDialog("upload", row)}
+              onPreview={() => handlePreview(row)}
+              onDownload={() => handleDownload(row)}
+              onDelete={() => openDialog("delete", row)}
+            />
+          ))}
         </Table>
       </Container>
 

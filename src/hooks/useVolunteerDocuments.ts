@@ -1,10 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
-import { getVolunteerDocuments } from "@/lib/api/volunteer";
+import { useGetQuery } from "@/hooks/useGetQuery";
 import { ApiDocumentGet } from "need4deed-sdk";
 
 export const useVolunteerDocuments = (volunteerId: number) => {
-  return useQuery<ApiDocumentGet[], Error>({
-    queryKey: ["volunteerDocuments", volunteerId],
-    queryFn: () => getVolunteerDocuments(volunteerId),
+  return useGetQuery<ApiDocumentGet[]>({
+    apiPath: `/api/volunteer/${volunteerId}/doc`,
+    queryKey: ["volunteerDocuments", volunteerId.toString()],
   });
 };
