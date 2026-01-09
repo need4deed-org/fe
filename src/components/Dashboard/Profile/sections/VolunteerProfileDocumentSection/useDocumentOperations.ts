@@ -59,7 +59,7 @@ export const useUploadDocument = (volunteerId: number, onSuccess?: () => void) =
   return useMutationQuery<UploadDocumentPayload, void>({
     mutationFn: uploadDocumentMutationFn,
     successMessage: t("message.uploadSuccess"),
-    queryKeyToInvalidate: ["volunteerDocuments", volunteerId],
+    queryKeyToInvalidate: ["volunteerDocuments", volunteerId.toString()],
     onSuccessCallback: onSuccess,
   });
 };
@@ -70,7 +70,7 @@ export const useDeleteDocument = (volunteerId: number, onSuccess?: () => void) =
   return useMutationQuery<DeleteDocumentPayload, void>({
     mutationFn: ({ documentType }) => deleteDocumentApi(volunteerId, documentType),
     successMessage: t("message.deleteSuccess"),
-    queryKeyToInvalidate: ["volunteerDocuments", volunteerId],
+    queryKeyToInvalidate: ["volunteerDocuments", volunteerId.toString()],
     onSuccessCallback: onSuccess,
   });
 };
