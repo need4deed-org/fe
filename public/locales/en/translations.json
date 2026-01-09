@@ -557,48 +557,48 @@
           "activitiesRequired": "Please select at least one activity",
           "skillsRequired": "Please select at least one skill"
         }
+      }
+    },
+    "documentSection": {
+      "title": "Documents",
+      "typeOfDocument": "Type of document",
+      "status": "Status",
+      "uploadedOn": "Uploaded on",
+      "actions": "Actions",
+      "uploaded": "Uploaded",
+      "missing": "Missing",
+      "documentNames": {
+        "measlesVaccination": "Measles vaccination",
+        "applicationCertificateGoodConduct": "Application for certificate of good conduct",
+        "certificateGoodConduct": "Certificate of good conduct",
+        "passport": "Passport / ID"
       },
-      "documentSection": {
-        "title": "Documents",
-        "typeOfDocument": "Type of document",
-        "status": "Status",
-        "uploadedOn": "Uploaded on",
-        "actions": "Actions",
-        "uploaded": "Uploaded",
-        "missing": "Missing",
-        "documentNames": {
-          "measlesVaccination": "Measles vaccination",
-          "applicationCertificateGoodConduct": "Application for certificate of good conduct",
-          "certificateGoodConduct": "Certificate of good conduct",
-          "passport": "Passport / ID"
-        },
-        "tooltips": {
-          "upload": "Upload",
-          "reUpload": "Re-upload",
-          "preview": "Preview",
-          "download": "Download",
-          "delete": "Delete",
-          "uploadUnavailable": "Upload unavailable",
-          "previewUnavailable": "Preview unavailable",
-          "downloadUnavailable": "Download unavailable",
-          "deleteUnavailable": "Delete unavailable"
-        },
-        "deleteDialog": {
-          "title": "Delete document?",
-          "message": "\"{{documentName}}\" document will be deleted.",
-          "cancel": "Cancel",
-          "delete": "Delete"
-        },
-        "uploadDialog": {
-          "title": "Upload document",
-          "documentType": "{{documentName}}",
-          "dragDropText": "Drop file here or click to browse",
-          "dragDropHint": "Supported formats: PDF, JPG, PNG (max 10 MB)",
-          "selectedFile": "Selected file:",
-          "cancel": "Cancel",
-          "upload": "Upload",
-          "uploading": "Uploading..."
-        }
+      "tooltips": {
+        "upload": "Upload",
+        "reUpload": "Re-upload",
+        "preview": "Preview",
+        "download": "Download",
+        "delete": "Delete",
+        "uploadUnavailable": "Upload unavailable",
+        "previewUnavailable": "Preview unavailable",
+        "downloadUnavailable": "Download unavailable",
+        "deleteUnavailable": "Delete unavailable"
+      },
+      "deleteDialog": {
+        "title": "Delete document?",
+        "message": "\"{{documentName}}\" document will be deleted.",
+        "cancel": "Cancel",
+        "delete": "Delete"
+      },
+      "uploadDialog": {
+        "title": "Upload document",
+        "documentType": "{{documentName}}",
+        "dragDropText": "Drop file here or click to browse",
+        "dragDropHint": "Supported formats: PDF, JPG, PNG (max 10 MB)",
+        "selectedFile": "Selected file:",
+        "cancel": "Cancel",
+        "upload": "Upload",
+        "uploading": "Uploading..."
       }
     },
     "opportunities": {
