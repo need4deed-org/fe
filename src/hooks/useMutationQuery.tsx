@@ -24,7 +24,7 @@ type DataMutationOptions<TResponse, TData> = {
 // Generic function to perform the API call
 async function mutateData<TData, TResponse>(apiPath: string, method: HttpMethod, data: TData): Promise<TResponse> {
   if (method === "delete") {
-    const response = await axios.delete(apiPath, { data });
+    const response = await axios.delete(apiPath);
     return response.data;
   }
   const response = await axios[method](apiPath, data);
