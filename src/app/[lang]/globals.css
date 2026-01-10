@@ -203,6 +203,31 @@ html {
   --percent-75: 75%;
   --percent-100: 100%;
 
+  /* shared spacing */
+  --spacing-4: 4px;
+  --spacing-8: 8px;
+  --spacing-12: 12px;
+  --spacing-16: 16px;
+  --spacing-20: 20px;
+  --spacing-24: 24px;
+  --spacing-32: 32px;
+  --spacing-48: 48px;
+
+  /* shared borders */
+  --border-width-thin: 1px;
+  --border-width-medium: 2px;
+  --border-radius-small: 8px;
+  --border-radius-medium: 12px;
+  --border-radius-large: 16px;
+
+  /* shared transitions */
+  --transition-transform: transform 0.2s ease;
+  --transition-opacity-visibility: opacity 0.2s, visibility 0.2s;
+  --transition-all: all 0.2s;
+
+  /* shared typography */
+  --letter-spacing-tight: 0.005em;
+
   /* button */
   --button-gap: 12px;
 
@@ -212,6 +237,147 @@ html {
   --checkbox-label-line-height: 32px;
   --checkbox-label-font-weight-selected: 400;
   --checkbox-label-font-weight-not-selected: 300;
+
+  /* document section - aliases to shared variables */
+  --document-section-container-padding: var(--profile-section-padding);
+  --document-section-container-gap: var(--profile-section-gap);
+  --document-section-container-margin-bottom: var(--profile-section-margin-bottom);
+  --document-section-header-gap: var(--spacing-24);
+  --document-section-title-row-gap: var(--profile-section-title-gap);
+  --document-section-icon-size: var(--icon-size);
+  --document-section-table-border-width: var(--border-width-thin);
+  --document-section-table-border-radius: var(--border-radius-small);
+  --document-section-header-cell-padding: var(--spacing-16);
+  --document-section-header-cell-gap: var(--spacing-8);
+  --document-section-header-cell-font-weight: 600;
+  --document-section-header-cell-font-size: var(--text-p-font-size);
+  --document-section-header-cell-line-height: var(--text-p-line-height);
+  --document-section-cell-padding: var(--spacing-16);
+  --document-section-cell-gap: var(--spacing-8);
+  --document-section-cell-font-size: var(--text-p-font-size);
+  --document-section-cell-line-height: var(--text-p-line-height);
+  --document-section-action-cell-padding: var(--spacing-16) var(--spacing-8);
+  --document-section-status-badge-padding: var(--profile-section-badge-padding);
+  --document-section-status-badge-gap: var(--spacing-4);
+  --document-section-status-badge-border-radius: var(--card-border-radius);
+  --document-section-status-badge-font-weight: 500;
+  --document-section-status-badge-font-size: 16px;
+  --document-section-status-badge-line-height: var(--text-p-line-height);
+  --document-section-action-button-size: var(--text-p-line-height);
+  --document-section-action-button-hover-opacity: 0.7;
+
+  /* document dialogs - aliases to shared variables */
+  --document-dialog-border-radius: var(--card-border-radius);
+  --document-dialog-padding: var(--spacing-48);
+  --document-dialog-max-width: 600px;
+  --document-dialog-width: 90%;
+  --document-dialog-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15);
+  --document-dialog-overlay-background: rgba(0, 0, 0, 0.5);
+  --document-dialog-overlay-z-index: 10001;
+  --document-dialog-title-font-weight: 700;
+  --document-dialog-title-font-size: var(--text-h3-font-size);
+  --document-dialog-title-line-height: 32px;
+  --document-dialog-title-margin-bottom: var(--spacing-16);
+  --document-dialog-message-font-weight: 400;
+  --document-dialog-message-font-size: 16px;
+  --document-dialog-message-line-height: var(--text-p-line-height);
+  --document-dialog-message-margin-bottom: var(--spacing-32);
+  --document-dialog-button-gap: var(--spacing-16);
+  --document-dialog-button-font-weight: 600;
+  --document-dialog-button-font-size: 16px;
+  --document-dialog-button-line-height: var(--text-p-line-height);
+  --document-dialog-button-border-width: var(--border-width-medium);
+  --document-dialog-button-border-radius: var(--button-border-radius);
+  --document-dialog-button-padding: var(--spacing-12) var(--spacing-32);
+  --document-dialog-button-large-font-size: var(--text-h3-font-size);
+  --document-dialog-button-large-line-height: 32px;
+  --document-dialog-button-large-padding: var(--spacing-16) var(--spacing-48);
+  --document-dialog-button-disabled-color: #D1D5DB;
+
+  /* document upload - aliases to shared variables */
+  --document-upload-title-font-weight: 700;
+  --document-upload-title-font-size: 48px;
+  --document-upload-title-line-height: 56px;
+  --document-upload-title-margin-bottom: var(--spacing-8);
+  --document-upload-subtitle-font-weight: 400;
+  --document-upload-subtitle-font-size: var(--text-p-font-size);
+  --document-upload-subtitle-line-height: 28px;
+  --document-upload-subtitle-margin-bottom: var(--spacing-32);
+  --document-upload-dropzone-border-width: var(--border-width-medium);
+  --document-upload-dropzone-border-radius: var(--border-radius-large);
+  --document-upload-dropzone-padding: var(--spacing-48) var(--spacing-24);
+  --document-upload-dropzone-margin-bottom: var(--spacing-24);
+  --document-upload-dropzone-background: #F9FAFB;
+  --document-upload-dropzone-border-color: #D1D5DB;
+  --document-upload-dropzone-icon-margin-bottom: var(--spacing-16);
+  --document-upload-dropzone-text-font-weight: 600;
+  --document-upload-dropzone-text-font-size: 18px;
+  --document-upload-dropzone-text-line-height: var(--text-p-line-height);
+  --document-upload-dropzone-text-margin-bottom: var(--spacing-8);
+  --document-upload-dropzone-hint-font-weight: 400;
+  --document-upload-dropzone-hint-font-size: 14px;
+  --document-upload-dropzone-hint-line-height: var(--spacing-20);
+  --document-upload-dropzone-hint-color: #6B7280;
+  --document-upload-selected-file-gap: var(--spacing-12);
+  --document-upload-selected-file-padding: var(--spacing-16);
+  --document-upload-selected-file-border-radius: var(--border-radius-medium);
+  --document-upload-selected-file-margin-bottom: var(--spacing-32);
+  --document-upload-selected-file-label-font-weight: 600;
+  --document-upload-selected-file-label-font-size: 14px;
+  --document-upload-selected-file-label-line-height: var(--spacing-20);
+  --document-upload-selected-file-label-margin-bottom: var(--spacing-4);
+  --document-upload-selected-file-name-font-weight: 400;
+  --document-upload-selected-file-name-font-size: 14px;
+  --document-upload-selected-file-name-line-height: var(--spacing-20);
+  --document-upload-selected-file-name-color: #6B7280;
+
+  /* document preview - specific values */
+  --document-preview-width: 1340px;
+  --document-preview-height: 944px;
+  --document-preview-max-width: 75vw;
+  --document-preview-max-height: 95vh;
+  --document-preview-background: linear-gradient(135deg, #c5b8e0 0%, #a594c8 100%);
+  --document-preview-shadow: 0px 8px 32px rgba(0, 0, 0, 0.24), 0px 16px 64px rgba(0, 0, 0, 0.16);
+  --document-preview-bar-padding: var(--spacing-16);
+  --document-preview-bar-gap: var(--spacing-32);
+  --document-preview-bar-height: 56px;
+  --document-preview-bar-background: #2f2f30;
+  --document-preview-bar-z-index: 2;
+  --document-preview-name-section-gap: 13px;
+  --document-preview-button-size: var(--text-p-line-height);
+  --document-preview-button-hover-opacity: 0.8;
+  --document-preview-name-font-weight: 400;
+  --document-preview-name-font-size: var(--text-p-font-size);
+  --document-preview-name-line-height: var(--text-p-line-height);
+  --document-preview-name-letter-spacing: var(--letter-spacing-tight);
+  --document-preview-name-color: var(--color-white);
+  --document-preview-actions-gap: 21px;
+  --document-preview-container-padding: var(--spacing-32) 0;
+  --document-preview-frame-width: 595px;
+  --document-preview-frame-height: 842px;
+  --document-preview-frame-background: var(--color-white);
+  --document-preview-frame-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+  --document-preview-zoom-controls-padding: var(--spacing-16);
+  --document-preview-zoom-controls-gap: var(--spacing-16);
+  --document-preview-zoom-controls-bottom: 74px;
+  --document-preview-zoom-controls-background: #2f2f30;
+  --document-preview-zoom-controls-opacity: 0.8;
+  --document-preview-zoom-controls-border-radius: var(--border-radius-large);
+  --document-preview-zoom-controls-z-index: 3;
+  --document-preview-zoom-button-disabled-opacity: 0.3;
+
+  /* document tooltip - aliases to shared variables */
+  --document-tooltip-background: #0b1560;
+  --document-tooltip-color: var(--color-white);
+  --document-tooltip-font-weight: 400;
+  --document-tooltip-font-size: var(--spacing-12);
+  --document-tooltip-line-height: var(--spacing-16);
+  --document-tooltip-letter-spacing: var(--letter-spacing-tight);
+  --document-tooltip-padding: var(--spacing-8);
+  --document-tooltip-border-radius: var(--border-radius-small);
+  --document-tooltip-z-index: 10000;
+  --document-tooltip-transform: translate(-50%, -100%) translateY(calc(var(--spacing-8) * -1));
+  --document-tooltip-arrow-size: var(--spacing-4);
 
   /* profile section */
   --profile-section-padding: 24px;
@@ -1133,6 +1299,7 @@ html {
     --volunteer-profile-section-card-header-button-height: 56px;
     --volunteer-profile-section-card-header-button-textFontSize: 20px;
     --volunteer-profile-section-card-header-button-padding: 16px 24px;
+    --volunteer-profile-section-card-header-button-border: 2px solid var(--color-aubergine);
 
     --volunteer-profile-opportunities-container-gap: 8px;
     --volunteer-profile-opportunities-tabs-margin-top: 16px;

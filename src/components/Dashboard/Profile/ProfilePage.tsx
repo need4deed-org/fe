@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 import { IconName, ProfileCardTypes } from "./types/types";
 import { ArrowLeftIcon } from "@phosphor-icons/react";
@@ -9,8 +9,9 @@ import { VolunteerHeader } from "./sections/VolunteerHeader";
 import { Card, SectionCard, SectionCardProps } from "./common/SectionCard";
 import { Heading2 } from "@/components/styled/text";
 import VolunteerOpportunities from "./sections/VolunteerOpportunities/VolunteerOpportunities";
-import { ContactDetails } from "./sections/ContactDetails";
-import { VolunteerProfileSection } from "./sections/VolunteerProfileSection";
+import { ContactDetails, ContactDetailsRef } from "./sections/ContactDetails";
+import { VolunteerProfileSection, VolunteerProfileSectionRef } from "./sections/VolunteerProfileSection";
+import { VolunteerProfileDocumentSection } from "./sections/VolunteerProfileDocumentSection";
 
 const PageContainer = styled.div`
   display: flex;
@@ -37,19 +38,23 @@ interface ProfilePageProps {
 
 const ProfilePage = ({ volunteer }: ProfilePageProps) => {
   const { t } = useTranslation();
+  const contactDetailsRef = useRef<ContactDetailsRef>(null);
+  const volunteerProfileRef = useRef<VolunteerProfileSectionRef>(null);
 
   const sections: SectionCardProps[] = [
     {
       iconName: IconName.ChatsCircle,
       title: t("dashboard.volunteerProfile.contactDetailsTitle"),
       headerButtonName: t("dashboard.volunteerProfile.editButtonName"),
-      subComponent: <div>Contact Details sub-component. to be replaced...</div>,
+      onHeaderButtonClick: () => contactDetailsRef.current?.handleEditClick(),
+      subComponent: <ContactDetails ref={contactDetailsRef} volunteer={volunteer} />,
     },
     {
-      iconName: IconName.ChatsCircle,
+      iconName: IconName.UserCircle,
       title: t("dashboard.volunteerProfile.volunteerProfile"),
       headerButtonName: t("dashboard.volunteerProfile.editButtonName"),
-      subComponent: <div>Volunteer Profile sub-component. to be replaced...</div>,
+      onHeaderButtonClick: () => volunteerProfileRef.current?.handleEditClick(),
+      subComponent: <VolunteerProfileSection ref={volunteerProfileRef} volunteer={volunteer} />,
     },
     {
       iconName: IconName.ShootingStar,
@@ -65,7 +70,7 @@ const ProfilePage = ({ volunteer }: ProfilePageProps) => {
     {
       iconName: IconName.ClipboardText,
       title: t("dashboard.volunteerProfile.documents"),
-      subComponent: <div>Documents sub-component. to be replaced...</div>,
+      subComponent: <VolunteerProfileDocumentSection volunteer={volunteer} />,
     },
     {
       iconName: IconName.ChartLine,
@@ -90,10 +95,6 @@ const ProfilePage = ({ volunteer }: ProfilePageProps) => {
       {sections.map((s) => (
         <SectionCard key={s.title} {...s} />
       ))}
-
-      <ContactDetails volunteer={volunteer} />
-
-      <VolunteerProfileSection volunteer={volunteer} />
     </PageContainer>
   );
 };
