@@ -140,6 +140,7 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
       />
 
       <UploadDocumentDialog
+        key={uploadDialogDocument?.type}
         isOpen={isUploadOpen}
         documentName={
           uploadDialogDocument?.nameKey
