@@ -578,7 +578,8 @@
       "languages": "Languages",
       "schedule": "Schedule",
       "district": "District",
-      "dateOfAppointment": "Date Of Appointment"
+      "dateOfAppointment": "Date Of Appointment",
+      "description": "Description"
     }
   },
   "message": {

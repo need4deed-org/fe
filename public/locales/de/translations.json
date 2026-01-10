@@ -578,7 +578,8 @@
       "languages": "Sprachen",
       "schedule": "Zeitplan",
       "district": "Bezirk",
-      "dateOfAppointment": "Datum des Termins"
+      "dateOfAppointment": "Datum des Termins",
+      "description": "Beschreibung"
     }
   },
   "message": {

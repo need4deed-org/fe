@@ -1,14 +1,16 @@
-import { Paragraph } from "@/components/styled/text";
-import React from "react";
+import { ReactNode } from "react";
 import styled from "styled-components";
-import { Opportunity } from "./mockOpps/tempTypes";
-import { MapPinIcon, PencilSimpleIcon, ShootingStarIcon, TranslateIcon } from "@phosphor-icons/react";
-import { IconDiv } from "@/components/styled/container";
-import { Lang, OpportunityType } from "need4deed-sdk";
 import { useTranslation } from "react-i18next";
+import { Icon, MapPinIcon, PencilSimpleIcon, ShootingStarIcon, TranslateIcon } from "@phosphor-icons/react";
+import { Lang, OpportunityType } from "need4deed-sdk";
+
+import { Paragraph } from "@/components/styled/text";
+import { IconDiv } from "@/components/styled/container";
 import { Tags } from "@/components/core/common";
-import { formatAccompanyingDate } from "./mockOpps/tempUtils";
 import { Button } from "@/components/core/button";
+
+import { Opportunity } from "./mockOpps/tempTypes";
+import { formatAccompanyingDate } from "./mockOpps/tempUtils";
 
 interface Props {
   opportunity: Opportunity;
@@ -35,89 +37,63 @@ export default function OpportunityDetail({ opportunity }: Props) {
   const scheduleAsStr = (accompanyingDate && formatAccompanyingDate(accompanyingDate, language)) || schedule || "";
 
   return (
-    <OpportunityDetailContainer>
-      <DetailSection>
-        <DetailHeader>
-          <IconDiv size="20px">
-            <PencilSimpleIcon />
-          </IconDiv>
-          <Paragraph fontWeight={550}>Description</Paragraph>
-        </DetailHeader>
-        {voInformation}
-      </DetailSection>
+    <Container>
+      {/* 1. Description */}
+      <InfoSection icon={PencilSimpleIcon} title={t("dashboard.opportunities.description")}>
+        <Paragraph fontWeight={400}>{voInformation}</Paragraph>
+      </InfoSection>
 
+      {/* 2. Languages & Activities */}
       <SplitContainer>
-        <DetailSection>
-          <DetailHeader>
-            <IconDiv size="20px">
-              <TranslateIcon />
-            </IconDiv>
-            <Paragraph fontWeight={550}>{t(`dashboard.opportunities.languages`)}</Paragraph>
-          </DetailHeader>
-          <LanguagesContainer>
-            {opportunityType === OpportunityType.GENERAL ? (
-              <LanguageDetailContainer>
-                <Paragraph fontWeight={550}>{t("dashboard.opportunities.mainCommunication")}:</Paragraph>
-                <Paragraph>{defaultMainCommunication}</Paragraph>
-              </LanguageDetailContainer>
-            ) : (
-              <LanguageDetailContainer>
-                <Paragraph fontWeight={550}>{t("dashboard.opportunities.translationTo")}:</Paragraph>
-                <Paragraph>{accompanyingTranslation}</Paragraph>
-              </LanguageDetailContainer>
-            )}
+        <InfoSection icon={TranslateIcon} title={t("dashboard.opportunities.languages")}>
+          <LanguagesList>
+            <LanguageRow>
+              <Paragraph fontWeight={600}>
+                {opportunityType === OpportunityType.GENERAL
+                  ? t("dashboard.opportunities.mainCommunication")
+                  : t("dashboard.opportunities.translationTo")}
+                :
+              </Paragraph>
+              <Paragraph>
+                {opportunityType === OpportunityType.GENERAL ? defaultMainCommunication : accompanyingTranslation}
+              </Paragraph>
+            </LanguageRow>
 
-            <LanguageDetailContainer>
-              <Paragraph $textWrap="nowrap" fontWeight={550}>
+            <LanguageRow>
+              <Paragraph $textWrap="nowrap" fontWeight={600}>
                 {t("dashboard.opportunities.residentsSpeak")}:
               </Paragraph>
               <Paragraph>{languagesText}</Paragraph>
-            </LanguageDetailContainer>
-          </LanguagesContainer>
-        </DetailSection>
+            </LanguageRow>
+          </LanguagesList>
+        </InfoSection>
 
-        <DetailSection>
-          <DetailHeader>
-            <IconDiv size="20px">
-              <ShootingStarIcon />
-            </IconDiv>
-            <Paragraph fontWeight={550}>{t(`dashboard.volunteerProfile.activities`)}</Paragraph>
-          </DetailHeader>
-
+        <InfoSection icon={ShootingStarIcon} title={t("dashboard.volunteerProfile.activities")}>
           <Tags tags={activities} />
-        </DetailSection>
+        </InfoSection>
       </SplitContainer>
 
+      {/* 3. Location & Schedule */}
       <SplitContainer>
-        <DetailSection>
-          <DetailHeader>
-            <IconDiv size="20px">
-              <MapPinIcon weight="fill" />
-            </IconDiv>
-            <Paragraph fontWeight={550}>{t(`dashboard.opportunities.district`)}</Paragraph>
-          </DetailHeader>
+        <InfoSection icon={MapPinIcon} title={t("dashboard.opportunities.district")}>
           <Paragraph>{district}</Paragraph>
-        </DetailSection>
+        </InfoSection>
 
-        <DetailSection>
-          <DetailHeader>
-            <IconDiv size="20px">
-              <MapPinIcon weight="fill" />
-            </IconDiv>
-            <Paragraph fontWeight={550}>
-              {accompanyingDate
-                ? t(`dashboard.opportunities.dateOfAppointment`)
-                : t(`dashboard.opportunities.schedule`)}
-            </Paragraph>
-          </DetailHeader>
+        <InfoSection
+          icon={MapPinIcon}
+          title={
+            accompanyingDate ? t("dashboard.opportunities.dateOfAppointment") : t("dashboard.opportunities.schedule")
+          }
+        >
           <Paragraph>{scheduleAsStr}</Paragraph>
-        </DetailSection>
+        </InfoSection>
       </SplitContainer>
 
-      <CTAsContainer>
+      {/* 4. Action Buttons */}
+      <Actions>
         <Button
           onClick={() => {}}
-          text={t(`dashboard.volunteerProfile.opportunitiesSec.notAMatch`)}
+          text={t("dashboard.volunteerProfile.opportunitiesSec.notAMatch")}
           height="56px"
           textFontSize="24px"
           textColor="var(--color-aubergine)"
@@ -126,18 +102,38 @@ export default function OpportunityDetail({ opportunity }: Props) {
         />
         <Button
           onClick={() => {}}
-          text={t(`dashboard.volunteerProfile.opportunitiesSec.match`)}
+          text={t("dashboard.volunteerProfile.opportunitiesSec.match")}
           height="56px"
           textFontSize="24px"
         />
-      </CTAsContainer>
-    </OpportunityDetailContainer>
+      </Actions>
+    </Container>
   );
 }
 
-/* Styles */
+/* Helper Components */
 
-const OpportunityDetailContainer = styled.div`
+interface InfoSectionProps {
+  icon: Icon;
+  title: string;
+  children: ReactNode;
+}
+const InfoSection = ({ icon: Icon, title, children }: InfoSectionProps) => (
+  <DetailSection>
+    <DetailHeader>
+      <IconDiv size="20px">
+        <Icon weight={Icon === MapPinIcon ? "fill" : "regular"} />
+      </IconDiv>
+      <Paragraph fontWeight={550}>{title}</Paragraph>
+    </DetailHeader>
+
+    {children}
+  </DetailSection>
+);
+
+/* Styled Components */
+
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -145,41 +141,35 @@ const OpportunityDetailContainer = styled.div`
 `;
 
 const SplitContainer = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 24px;
 `;
 
-const Pane = styled.div`
-  flex: 1;
-`;
-
-const DetailSection = styled(Pane)`
+const DetailSection = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: left;
   gap: 8px;
 `;
 
 const DetailHeader = styled.div`
   display: flex;
-  flex-direction: row;
   align-items: center;
-  justify-content: left;
   gap: 8px;
 `;
 
-const LanguagesContainer = styled.div`
+const LanguagesList = styled.div`
   display: flex;
   flex-direction: column;
   gap: var(--homepage-volunteering-opportunity-details-languages-gap);
 `;
 
-const LanguageDetailContainer = styled.div`
+const LanguageRow = styled.div`
   display: flex;
   gap: 4px;
 `;
 
-const CTAsContainer = styled.div`
+const Actions = styled.div`
   display: flex;
   gap: 16px;
   justify-content: center;
