@@ -8,21 +8,8 @@ type CreateCommentData = {
   entityId: number;
 };
 
-type CreateCommentResponse = {
-  message: string;
-  data: {
-    id: number;
-    text: string;
-    entityType: EntityTableName;
-    entityId: number;
-    userId: number;
-    createdAt: Date;
-    updatedAt: Date;
-  };
-};
-
 export const useCreateComment = (volunteerId: number) => {
-  return useMutationQuery<CreateCommentData, CreateCommentResponse>({
+  return useMutationQuery<CreateCommentData, { message: string }>({
     apiPath: apiPathComment,
     method: "post",
     successMessage: "dashboard.commentsSection.commentAdded",
