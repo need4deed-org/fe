@@ -65,6 +65,11 @@ const ProfilePage = ({ volunteer }: ProfilePageProps) => {
       subComponent: <VolunteerOpportunities />,
     },
     {
+      iconName: IconName.ChatsTeardrop,
+      title: t("dashboard.communicationSection.title"),
+      subComponent: <CommunicationTrackerSection volunteer={volunteer} />,
+    },
+    {
       iconName: IconName.ChatCircleDots,
       title: `${t("dashboard.volunteerProfile.coordinatorComments")} • ${volunteer.comments?.length ?? 0}`,
       subComponent: <CommentsSection volunteer={volunteer} />,
@@ -97,8 +102,6 @@ const ProfilePage = ({ volunteer }: ProfilePageProps) => {
       {sections.map((s) => (
         <SectionCard key={s.title} {...s} />
       ))}
-
-      <CommunicationTrackerSection volunteer={volunteer} />
     </PageContainer>
   );
 };

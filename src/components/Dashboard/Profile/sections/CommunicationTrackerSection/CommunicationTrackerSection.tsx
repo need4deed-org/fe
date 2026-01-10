@@ -1,6 +1,5 @@
 "use client";
-import { Heading2 } from "@/components/styled/text";
-import { ChatTeardropDots, PencilSimple, Trash } from "@phosphor-icons/react";
+import { PencilSimple, Trash } from "@phosphor-icons/react";
 import { ApiVolunteerGet } from "need4deed-sdk";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -9,7 +8,6 @@ import {
   ActionButton,
   ActionCell,
   AddButton,
-  Container,
   DeleteCancelButton,
   DeleteConfirmButton,
   DeleteConfirmButtons,
@@ -19,7 +17,6 @@ import {
   DeleteConfirmTitle,
   EmptyState,
   Header,
-  IconContainer,
   StatusBadge,
   Table,
   TableBody,
@@ -29,7 +26,7 @@ import {
   TableHeaderCell,
   TableHeaderRow,
   TableRow,
-  TitleRow,
+  Wrapper,
 } from "./styles";
 
 type Props = {
@@ -95,28 +92,28 @@ export function CommunicationTrackerSection({ volunteer }: Props) {
       // For "other" type, return the communication type from notes
       switch (notes) {
         case "briefedVolunteer":
-          return t("dashboard.volunteerProfile.communicationSection.communicationTypes.briefedVolunteer", "Briefed (accompanying volunteer)");
+          return t("dashboard.communicationSection.communicationTypes.briefedVolunteer", "Briefed (accompanying volunteer)");
         case "firstInquiry":
-          return t("dashboard.volunteerProfile.communicationSection.communicationTypes.firstInquiry", "First inquiry sent");
+          return t("dashboard.communicationSection.communicationTypes.firstInquiry", "First inquiry sent");
         case "opportunityList":
-          return t("dashboard.volunteerProfile.communicationSection.communicationTypes.opportunityList", "Opportunity list sent");
+          return t("dashboard.communicationSection.communicationTypes.opportunityList", "Opportunity list sent");
         case "statusUpdate":
-          return t("dashboard.volunteerProfile.communicationSection.communicationTypes.statusUpdate", "Status update");
+          return t("dashboard.communicationSection.communicationTypes.statusUpdate", "Status update");
         case "postMatchFollowUp":
-          return t("dashboard.volunteerProfile.communicationSection.communicationTypes.postMatchFollowUp", "Post-match follow-up");
+          return t("dashboard.communicationSection.communicationTypes.postMatchFollowUp", "Post-match follow-up");
         default:
           return notes;
       }
     }
     switch (type) {
       case "called":
-        return t("dashboard.volunteerProfile.communicationSection.contactTypes.called", "Called");
+        return t("dashboard.communicationSection.contactTypes.called", "Called");
       case "triedToCall":
-        return t("dashboard.volunteerProfile.communicationSection.contactTypes.triedToCall", "Tried to call");
+        return t("dashboard.communicationSection.contactTypes.triedToCall", "Tried to call");
       case "textedOrEmailed":
-        return t("dashboard.volunteerProfile.communicationSection.contactTypes.textedOrEmailed", "Texted or emailed");
+        return t("dashboard.communicationSection.contactTypes.textedOrEmailed", "Texted or emailed");
       case "other":
-        return t("dashboard.volunteerProfile.communicationSection.contactTypes.other", "Other");
+        return t("dashboard.communicationSection.contactTypes.other", "Other");
       default:
         return type;
     }
@@ -125,53 +122,47 @@ export function CommunicationTrackerSection({ volunteer }: Props) {
   const getContactMethodLabel = (method: string) => {
     switch (method) {
       case "phoneNumber":
-        return t("dashboard.volunteerProfile.communicationSection.platformOptions.phoneNumber", "Phone number");
+        return t("dashboard.communicationSection.platformOptions.phoneNumber", "Phone number");
       case "telegram":
-        return t("dashboard.volunteerProfile.communicationSection.platformOptions.telegram", "Telegram");
+        return t("dashboard.communicationSection.platformOptions.telegram", "Telegram");
       case "whatsapp":
-        return t("dashboard.volunteerProfile.communicationSection.platformOptions.whatsapp", "Whatsapp");
+        return t("dashboard.communicationSection.platformOptions.whatsapp", "Whatsapp");
       case "signal":
-        return t("dashboard.volunteerProfile.communicationSection.platformOptions.signal", "Signal");
+        return t("dashboard.communicationSection.platformOptions.signal", "Signal");
       case "email":
-        return t("dashboard.volunteerProfile.communicationSection.platformOptions.email", "E-mail");
+        return t("dashboard.communicationSection.platformOptions.email", "E-mail");
       case "sms":
-        return t("dashboard.volunteerProfile.communicationSection.platformOptions.sms", "SMS");
+        return t("dashboard.communicationSection.platformOptions.sms", "SMS");
       case "voicenote":
-        return t("dashboard.volunteerProfile.communicationSection.platformOptions.voicenote", "Voicenote");
+        return t("dashboard.communicationSection.platformOptions.voicenote", "Voicenote");
       default:
         return method;
     }
   };
 
   return (
-    <Container data-testid="communication-tracker-section-container">
+    <Wrapper data-testid="communication-tracker-section-container">
       <Header>
-        <TitleRow>
-          <IconContainer>
-            <ChatTeardropDots size={40} weight="fill" />
-          </IconContainer>
-          <Heading2>{t("dashboard.volunteerProfile.communicationSection.title", "Communication Tracker")}</Heading2>
-        </TitleRow>
         <AddButton onClick={handleAddNew} data-testid="add-communication-button">
-          {t("dashboard.volunteerProfile.communicationSection.addNew", "+ Register contact")}
+          {t("dashboard.communicationSection.addNew", "+ Register contact")}
         </AddButton>
       </Header>
 
       {communications.length === 0 ? (
         <EmptyState data-testid="empty-state">
-          {t("dashboard.volunteerProfile.communicationSection.emptyState", "No communications recorded yet")}
+          {t("dashboard.communicationSection.emptyState", "No communications recorded yet")}
         </EmptyState>
       ) : (
         <TableContainer data-testid="communications-table">
           <Table>
             <TableHeader>
               <TableHeaderRow>
-                <TableHeaderCell>{t("dashboard.volunteerProfile.communicationSection.date", "Date")}</TableHeaderCell>
-                <TableHeaderCell>{t("dashboard.volunteerProfile.communicationSection.type", "Type")}</TableHeaderCell>
+                <TableHeaderCell>{t("dashboard.communicationSection.date", "Date")}</TableHeaderCell>
+                <TableHeaderCell>{t("dashboard.communicationSection.type", "Type")}</TableHeaderCell>
                 <TableHeaderCell>
-                  {t("dashboard.volunteerProfile.communicationSection.contactMethod", "Contact method")}
+                  {t("dashboard.communicationSection.contactMethod", "Contact method")}
                 </TableHeaderCell>
-                <TableHeaderCell>{t("dashboard.volunteerProfile.communicationSection.actions", "Actions")}</TableHeaderCell>
+                <TableHeaderCell>{t("dashboard.communicationSection.actions", "Actions")}</TableHeaderCell>
               </TableHeaderRow>
             </TableHeader>
             <TableBody>
@@ -207,25 +198,25 @@ export function CommunicationTrackerSection({ volunteer }: Props) {
       <DeleteConfirmOverlay $isOpen={deleteConfirmId !== null} onClick={cancelDelete} data-testid="delete-confirm-overlay">
         <DeleteConfirmDialog onClick={(e) => e.stopPropagation()} data-testid="delete-confirm-dialog">
           <DeleteConfirmTitle>
-            {t("dashboard.volunteerProfile.communicationSection.deleteConfirmTitle", "Delete entry?")}
+            {t("dashboard.communicationSection.deleteConfirmTitle", "Delete entry?")}
           </DeleteConfirmTitle>
           <DeleteConfirmText>
             {deleteConfirmEntry &&
-              t("dashboard.volunteerProfile.communicationSection.deleteConfirmText", {
+              t("dashboard.communicationSection.deleteConfirmText", {
                 entryType: getTypeLabel(deleteConfirmEntry.type, deleteConfirmEntry.notes),
                 defaultValue: `"${getTypeLabel(deleteConfirmEntry.type, deleteConfirmEntry.notes)}" communication entry will be permanently deleted.`,
               })}
           </DeleteConfirmText>
           <DeleteConfirmButtons>
             <DeleteCancelButton onClick={cancelDelete} data-testid="delete-cancel-button">
-              {t("dashboard.volunteerProfile.communicationSection.cancel", "Cancel")}
+              {t("dashboard.communicationSection.cancel", "Cancel")}
             </DeleteCancelButton>
             <DeleteConfirmButton onClick={confirmDelete} data-testid="delete-confirm-button">
-              {t("dashboard.volunteerProfile.communicationSection.delete", "Delete")}
+              {t("dashboard.communicationSection.delete", "Delete")}
             </DeleteConfirmButton>
           </DeleteConfirmButtons>
         </DeleteConfirmDialog>
       </DeleteConfirmOverlay>
-    </Container>
+    </Wrapper>
   );
 }

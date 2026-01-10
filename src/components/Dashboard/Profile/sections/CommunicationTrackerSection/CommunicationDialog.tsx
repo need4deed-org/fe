@@ -394,7 +394,7 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
       notes:
         selectedOption === "other"
           ? selectedCommunicationType
-          : t(`dashboard.volunteerProfile.communicationSection.contactTypes.${selectedOption}`, selectedOption),
+          : t(`dashboard.communicationSection.contactTypes.${selectedOption}`, selectedOption),
     };
     onSave(entry);
     handleClose();
@@ -421,41 +421,41 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
   const getCommunicationTypeOptions = () => [
     {
       value: "briefedVolunteer",
-      label: t("dashboard.volunteerProfile.communicationSection.communicationTypes.briefedVolunteer", "Briefed (accompanying volunteer)"),
+      label: t("dashboard.communicationSection.communicationTypes.briefedVolunteer", "Briefed (accompanying volunteer)"),
     },
     {
       value: "firstInquiry",
-      label: t("dashboard.volunteerProfile.communicationSection.communicationTypes.firstInquiry", "First inquiry sent"),
+      label: t("dashboard.communicationSection.communicationTypes.firstInquiry", "First inquiry sent"),
     },
     {
       value: "opportunityList",
-      label: t("dashboard.volunteerProfile.communicationSection.communicationTypes.opportunityList", "Opportunity list sent"),
+      label: t("dashboard.communicationSection.communicationTypes.opportunityList", "Opportunity list sent"),
     },
     {
       value: "statusUpdate",
-      label: t("dashboard.volunteerProfile.communicationSection.communicationTypes.statusUpdate", "Status update"),
+      label: t("dashboard.communicationSection.communicationTypes.statusUpdate", "Status update"),
     },
     {
       value: "postMatchFollowUp",
-      label: t("dashboard.volunteerProfile.communicationSection.communicationTypes.postMatchFollowUp", "Post-match follow-up"),
+      label: t("dashboard.communicationSection.communicationTypes.postMatchFollowUp", "Post-match follow-up"),
     },
   ];
 
   const getContactMethodOptions = () => {
     if (selectedOption === "textedOrEmailed" || selectedOption === "other") {
       return [
-        { value: "email", label: t("dashboard.volunteerProfile.communicationSection.platformOptions.email", "E-mail") },
-        { value: "telegram", label: t("dashboard.volunteerProfile.communicationSection.platformOptions.telegram", "Telegram") },
-        { value: "whatsapp", label: t("dashboard.volunteerProfile.communicationSection.platformOptions.whatsapp", "Whatsapp") },
-        { value: "sms", label: t("dashboard.volunteerProfile.communicationSection.platformOptions.sms", "SMS") },
-        { value: "voicenote", label: t("dashboard.volunteerProfile.communicationSection.platformOptions.voicenote", "Voicenote") },
+        { value: "email", label: t("dashboard.communicationSection.platformOptions.email", "E-mail") },
+        { value: "telegram", label: t("dashboard.communicationSection.platformOptions.telegram", "Telegram") },
+        { value: "whatsapp", label: t("dashboard.communicationSection.platformOptions.whatsapp", "Whatsapp") },
+        { value: "sms", label: t("dashboard.communicationSection.platformOptions.sms", "SMS") },
+        { value: "voicenote", label: t("dashboard.communicationSection.platformOptions.voicenote", "Voicenote") },
       ];
     }
     return [
-      { value: "phoneNumber", label: t("dashboard.volunteerProfile.communicationSection.platformOptions.phoneNumber", "Phone number") },
-      { value: "telegram", label: t("dashboard.volunteerProfile.communicationSection.platformOptions.telegram", "Telegram") },
-      { value: "whatsapp", label: t("dashboard.volunteerProfile.communicationSection.platformOptions.whatsapp", "Whatsapp") },
-      { value: "signal", label: t("dashboard.volunteerProfile.communicationSection.platformOptions.signal", "Signal") },
+      { value: "phoneNumber", label: t("dashboard.communicationSection.platformOptions.phoneNumber", "Phone number") },
+      { value: "telegram", label: t("dashboard.communicationSection.platformOptions.telegram", "Telegram") },
+      { value: "whatsapp", label: t("dashboard.communicationSection.platformOptions.whatsapp", "Whatsapp") },
+      { value: "signal", label: t("dashboard.communicationSection.platformOptions.signal", "Signal") },
     ];
   };
 
@@ -463,7 +463,7 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
     <>
       {selectedOption === "other" && (
         <FormField>
-          <Label>{t("dashboard.volunteerProfile.communicationSection.communicationTypeRequired", "Communication type*")}</Label>
+          <Label>{t("dashboard.communicationSection.communicationTypeRequired", "Communication type*")}</Label>
           <Select
             value={selectedCommunicationType}
             onChange={(e) => setSelectedCommunicationType(e.target.value)}
@@ -478,7 +478,7 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
         </FormField>
       )}
       <FormField>
-        <Label>{t("dashboard.volunteerProfile.communicationSection.contactMethodRequired", "Contact method*")}</Label>
+        <Label>{t("dashboard.communicationSection.contactMethodRequired", "Contact method*")}</Label>
         <Select value={selectedPlatform} onChange={(e) => setSelectedPlatform(e.target.value)} data-testid="platform-select">
           {getContactMethodOptions().map((option) => (
             <option key={option.value} value={option.value}>
@@ -488,7 +488,7 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
         </Select>
       </FormField>
       <FormField>
-        <Label>{t("dashboard.volunteerProfile.communicationSection.contactDateRequired", "Contact date*")}</Label>
+        <Label>{t("dashboard.communicationSection.contactDateRequired", "Contact date*")}</Label>
         <DatePickerWrapper ref={datePickerRef}>
           <DateInputContainer>
             <DateInputIcon size={24} weight="regular" />
@@ -520,7 +520,7 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
     <DialogOverlay $isOpen={isOpen} onClick={handleClose} data-testid="communication-dialog-overlay">
       <DialogContainer onClick={(e) => e.stopPropagation()} data-testid="communication-dialog-container">
         <DialogHeader>
-          <DialogTitle>{t("dashboard.volunteerProfile.communicationSection.registerContact", "Register contact")}</DialogTitle>
+          <DialogTitle>{t("dashboard.communicationSection.registerContact", "Register contact")}</DialogTitle>
           <CloseButton onClick={handleClose} data-testid="close-dialog-button">
             <X size={24} weight="bold" />
           </CloseButton>
@@ -537,7 +537,7 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
                 onChange={(e) => setSelectedOption(e.target.value)}
                 data-testid="radio-called"
               />
-              {t("dashboard.volunteerProfile.communicationSection.contactTypes.called", "Called")}
+              {t("dashboard.communicationSection.contactTypes.called", "Called")}
             </RadioRow>
             {selectedOption === "called" && <AdditionalFields />}
           </RadioOption>
@@ -552,7 +552,7 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
                 onChange={(e) => setSelectedOption(e.target.value)}
                 data-testid="radio-tried-to-call"
               />
-              {t("dashboard.volunteerProfile.communicationSection.contactTypes.triedToCall", "Tried to call")}
+              {t("dashboard.communicationSection.contactTypes.triedToCall", "Tried to call")}
             </RadioRow>
             {selectedOption === "triedToCall" && <AdditionalFields />}
           </RadioOption>
@@ -567,7 +567,7 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
                 onChange={(e) => setSelectedOption(e.target.value)}
                 data-testid="radio-texted-or-emailed"
               />
-              {t("dashboard.volunteerProfile.communicationSection.contactTypes.textedOrEmailed", "Texted or emailed")}
+              {t("dashboard.communicationSection.contactTypes.textedOrEmailed", "Texted or emailed")}
             </RadioRow>
             {selectedOption === "textedOrEmailed" && <AdditionalFields />}
           </RadioOption>
@@ -582,7 +582,7 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
                 onChange={(e) => setSelectedOption(e.target.value)}
                 data-testid="radio-other"
               />
-              {t("dashboard.volunteerProfile.communicationSection.contactTypes.other", "Other")}
+              {t("dashboard.communicationSection.contactTypes.other", "Other")}
             </RadioRow>
             {selectedOption === "other" && <AdditionalFields />}
           </RadioOption>
@@ -590,10 +590,10 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
 
         <ButtonGroup>
           <CancelButton onClick={handleClose} data-testid="cancel-button">
-            {t("dashboard.volunteerProfile.communicationSection.cancel", "Cancel")}
+            {t("dashboard.communicationSection.cancel", "Cancel")}
           </CancelButton>
           <SaveButton onClick={handleSave} data-testid="save-button">
-            {t("dashboard.volunteerProfile.communicationSection.save", "Save")}
+            {t("dashboard.communicationSection.save", "Save")}
           </SaveButton>
         </ButtonGroup>
       </DialogContainer>

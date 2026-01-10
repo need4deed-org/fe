@@ -1,20 +1,17 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
+export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: var(--profile-section-padding);
   gap: var(--spacing-24);
-  background: var(--color-white);
-  border-radius: var(--card-border-radius);
-  margin-bottom: var(--profile-section-margin-bottom);
+  width: 100%;
 `;
 
 export const Header = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   width: 100%;
 `;
