@@ -35,15 +35,15 @@ const MenuItem = styled.button<{ $danger?: boolean }>`
   background: var(--color-white);
   border: none;
   cursor: pointer;
-  font-family: "Figtree";
   font-style: normal;
-  font-weight: ${(props) => (props.$danger ? 600 : 400)};
-  font-size: 20px;
-  line-height: 24px;
-  letter-spacing: 0.005em;
+  font-weight: ${(props) =>
+    props.$danger ? "var(--comments-menu-item-danger-font-weight)" : "var(--comments-menu-item-font-weight)"};
+  font-size: var(--text-p-font-size);
+  line-height: var(--text-p-line-height);
+  letter-spacing: var(--letter-spacing-tight);
   color: ${(props) => (props.$danger ? "var(--color-red-600)" : "var(--color-midnight)")};
   text-align: left;
-  transition: background 0.2s;
+  transition: var(--transition-all);
 
   &:hover {
     background: ${(props) => (props.$danger ? "var(--color-white)" : "var(--color-pink-50)")};
@@ -94,9 +94,9 @@ export function CommentActionMenu({ isOpen, onClose, onEdit, onDelete, anchorEle
 
   return (
     <MenuContainer ref={menuRef} $isOpen={isOpen} $top={position.top} $right={position.right}>
-      <MenuItem onClick={onEdit}>{t("dashboard.volunteerProfile.commentsSection.editComment")}</MenuItem>
+      <MenuItem onClick={onEdit}>{t("dashboard.commentsSection.editComment")}</MenuItem>
       <MenuItem $danger onClick={onDelete}>
-        {t("dashboard.volunteerProfile.commentsSection.deleteComment")}
+        {t("dashboard.commentsSection.deleteComment")}
       </MenuItem>
     </MenuContainer>
   );

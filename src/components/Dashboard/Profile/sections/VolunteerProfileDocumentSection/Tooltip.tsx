@@ -25,7 +25,7 @@ const TooltipText = styled.div<{ $visible: boolean }>`
   border-radius: var(--document-tooltip-border-radius);
   position: fixed;
   white-space: nowrap;
-  transition: opacity 0.2s, visibility 0.2s;
+  transition: var(--transition-opacity-visibility);
   z-index: var(--document-tooltip-z-index);
   pointer-events: none;
   transform: var(--document-tooltip-transform);

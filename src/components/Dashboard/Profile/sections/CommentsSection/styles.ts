@@ -3,42 +3,9 @@ import styled from "styled-components";
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  padding: var(--profile-section-padding);
   gap: var(--spacing-24);
-  background: var(--color-white);
-  border-radius: var(--card-border-radius);
-  margin-bottom: var(--profile-section-margin-bottom);
-`;
-
-export const Header = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 0;
-  gap: var(--spacing-16);
   width: 100%;
-  align-self: stretch;
-`;
-
-export const IconContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 0;
-  gap: var(--spacing-8);
-  width: var(--icon-size);
-  height: var(--icon-size);
-  color: var(--color-papaya);
-`;
-
-export const TitleRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 0;
-  gap: var(--profile-section-title-gap);
-  flex-grow: 1;
+  margin-top: var(--spacing-24);
 `;
 
 export const CommentItem = styled.div`
@@ -70,33 +37,30 @@ export const TopInfo = styled.div`
 `;
 
 export const AuthorName = styled.div`
-  font-family: "Figtree";
   font-style: normal;
-  font-weight: 600;
-  font-size: 20px;
-  line-height: 24px;
-  letter-spacing: 0.005em;
+  font-weight: var(--comments-author-font-weight);
+  font-size: var(--comments-author-font-size);
+  line-height: var(--comments-author-line-height);
+  letter-spacing: var(--letter-spacing-tight);
   color: var(--color-midnight);
 `;
 
 export const Timestamp = styled.div`
-  font-family: "Figtree";
   font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 20px;
-  letter-spacing: 0.005em;
+  font-weight: var(--comments-timestamp-font-weight);
+  font-size: var(--comments-timestamp-font-size);
+  line-height: var(--comments-timestamp-line-height);
+  letter-spacing: var(--letter-spacing-tight);
   color: var(--color-grey-500);
 `;
 
 export const CommentText = styled.div`
   width: 100%;
-  font-family: "Figtree";
   font-style: normal;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 24px;
-  letter-spacing: 0.005em;
+  font-weight: var(--comments-text-font-weight);
+  font-size: var(--comments-text-font-size);
+  line-height: var(--comments-text-line-height);
+  letter-spacing: var(--letter-spacing-tight);
   color: var(--color-midnight);
   align-self: stretch;
 `;
@@ -138,14 +102,13 @@ export const TextArea = styled.textarea`
   width: 100%;
   min-height: 112px;
   background: var(--color-white);
-  border: 1px solid var(--color-grey-200);
+  border: var(--border-width-thin) solid var(--color-grey-200);
   border-radius: var(--border-radius-small);
-  font-family: "Figtree";
   font-style: normal;
-  font-weight: 400;
+  font-weight: var(--font-weight-regular);
   font-size: var(--text-p-font-size);
   line-height: var(--text-p-line-height);
-  letter-spacing: 0.005em;
+  letter-spacing: var(--letter-spacing-tight);
   color: var(--color-midnight);
   resize: vertical;
   align-self: stretch;
@@ -172,16 +135,15 @@ export const AddCommentButton = styled.button`
   border-radius: var(--button-border-radius);
   border: none;
   cursor: pointer;
-  font-family: "Figtree";
   font-style: normal;
-  font-weight: 600;
+  font-weight: var(--comments-button-font-weight);
   font-size: var(--text-p-font-size);
   line-height: var(--text-p-line-height);
   text-align: center;
-  letter-spacing: 0.005em;
+  letter-spacing: var(--letter-spacing-tight);
   color: var(--color-white);
   opacity: 1;
-  transition: background-color 0.2s ease, opacity 0.2s ease;
+  transition: var(--transition-all);
 
   &:disabled {
     background: var(--color-grey-200);
@@ -212,18 +174,17 @@ export const EditCancelButton = styled.button`
   gap: var(--spacing-8);
   height: 56px;
   background: transparent;
-  border: 2px solid var(--color-aubergine);
+  border: var(--border-width-medium) solid var(--color-aubergine);
   border-radius: var(--button-border-radius);
   cursor: pointer;
-  font-family: "Figtree";
   font-style: normal;
-  font-weight: 600;
+  font-weight: var(--comments-button-font-weight);
   font-size: var(--text-p-font-size);
   line-height: var(--text-p-line-height);
   text-align: center;
-  letter-spacing: 0.005em;
+  letter-spacing: var(--letter-spacing-tight);
   color: var(--color-aubergine);
-  transition: background-color 0.2s ease;
+  transition: var(--transition-all);
 
   &:hover {
     background: var(--color-aubergine-subtle);
@@ -242,16 +203,15 @@ export const EditSaveButton = styled.button`
   border-radius: var(--button-border-radius);
   border: none;
   cursor: pointer;
-  font-family: "Figtree";
   font-style: normal;
-  font-weight: 600;
+  font-weight: var(--comments-button-font-weight);
   font-size: var(--text-p-font-size);
   line-height: var(--text-p-line-height);
   text-align: center;
-  letter-spacing: 0.005em;
+  letter-spacing: var(--letter-spacing-tight);
   color: var(--color-white);
   opacity: 1;
-  transition: background-color 0.2s ease, opacity 0.2s ease;
+  transition: var(--transition-all);
 
   &:disabled {
     background: var(--color-grey-200);

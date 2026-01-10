@@ -1,63 +1,27 @@
 "use client";
-import { Heading2 } from "@/components/styled/text";
-import { ClipboardText, DownloadSimple, Eye, Trash, UploadSimple } from "@phosphor-icons/react";
+import { useVolunteerDocuments } from "@/hooks/useVolunteerDocuments";
 import { ApiVolunteerGet } from "need4deed-sdk";
+import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import {
-  ActionCell,
-  Cell,
-  Container,
-  Header,
-  HeaderCell,
-  IconContainer,
-  StatusBadge,
-  Table,
-  TableHeader,
-  TableRow,
-  TitleRow,
-} from "./styles";
+import { toast } from "react-toastify";
 import { DeleteConfirmationDialog } from "./DeleteConfirmationDialog";
-import { UploadDocumentDialog } from "./UploadDocumentDialog";
 import { DocumentPreviewDialog } from "./DocumentPreviewDialog";
-import { ActionButtonWithTooltip } from "./ActionButtonWithTooltip";
+import { DocumentTableRow } from "./DocumentTableRow";
+import { ACTION_COLUMN_WIDTH, Container, HeaderCell, Table, TableHeader } from "./styles";
+import { UploadDocumentDialog } from "./UploadDocumentDialog";
 import { useDialogState } from "./useDialogState";
-import { Document } from "./types";
+import { useDeleteDocument, useUploadDocument } from "./useDocumentOperations";
+import { DocumentRow, enrichDocuments, extractDocumentUrl } from "./utils";
 
 type Props = {
   volunteer: ApiVolunteerGet;
 };
 
-const MOCK_DOCUMENTS: Document[] = [
-  {
-    id: "1",
-    nameKey: "dashboard.volunteerProfile.documentSection.documentNames.measlesVaccination",
-    status: "uploaded",
-    uploadedOn: "21.03.2025",
-  },
-  {
-    id: "2",
-    nameKey: "dashboard.volunteerProfile.documentSection.documentNames.applicationCertificateGoodConduct",
-    status: "uploaded",
-    uploadedOn: "22.03.2025",
-  },
-  {
-    id: "3",
-    nameKey: "dashboard.volunteerProfile.documentSection.documentNames.certificateGoodConduct",
-    status: "missing",
-  },
-  {
-    id: "4",
-    nameKey: "dashboard.volunteerProfile.documentSection.documentNames.passport",
-    status: "missing",
-  },
-];
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function VolunteerProfileDocumentSection({ volunteer }: Props) {
   const { t } = useTranslation();
   const {
-    deleteDocument,
-    uploadDocument,
+    deleteDocument: deleteDialogDocument,
+    uploadDocument: uploadDialogDocument,
     previewDocument,
     openDialog,
     closeDialog,
@@ -66,144 +30,131 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
     isPreviewOpen,
   } = useDialogState();
 
-  const handleConfirmDelete = () => {
-    if (deleteDocument) {
-      console.log("Delete confirmed:", deleteDocument.id);
-      // TODO: Implement actual delete logic
-    }
+  const [documentUrl, setDocumentUrl] = useState<string | null>(null);
+
+  const { data: fetchedDocuments, isLoading, isError } = useVolunteerDocuments(volunteer.id);
+
+  const documentRows = useMemo(() => (fetchedDocuments ? enrichDocuments(fetchedDocuments) : []), [fetchedDocuments]);
+
+  const uploadMutation = useUploadDocument(volunteer.id, () => closeDialog("upload"));
+  const deleteMutation = useDeleteDocument(volunteer.id, () => {
     closeDialog("delete");
     closeDialog("preview");
+  });
+
+  const handleConfirmDelete = () => {
+    if (deleteDialogDocument) {
+      deleteMutation.mutate({
+        volunteerId: volunteer.id,
+        documentType: deleteDialogDocument.type,
+      });
+    }
   };
 
   const handleConfirmUpload = (file: File) => {
-    if (uploadDocument) {
-      console.log("Upload confirmed:", uploadDocument.id, file.name);
-      // TODO: Implement actual upload logic
+    if (uploadDialogDocument) {
+      uploadMutation.mutate({
+        volunteerId: volunteer.id,
+        file,
+        documentType: uploadDialogDocument.type,
+      });
     }
-    closeDialog("upload");
   };
 
-  const handleDownload = (doc: Document) => {
-    console.log("Download document:", doc.id);
-    // TODO: Implement actual download logic
+  const handleDownload = (row: DocumentRow) => {
+    if (!row.document?.url) return;
+
+    const link = document.createElement("a");
+    link.href = row.document.url;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
+
+  const handlePreview = (row: DocumentRow) => {
+    if (!row.document?.url) {
+      toast.error(t("message.previewError"));
+      return;
+    }
+
+    const actualUrl = extractDocumentUrl(row.document.url);
+    if (!actualUrl) {
+      toast.error(t("message.previewError"));
+      return;
+    }
+
+    setDocumentUrl(actualUrl);
+    openDialog("preview", row);
+  };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error loading documents.</div>;
+  }
 
   return (
     <>
       <Container data-testid="volunteer-profile-document-section-container">
-        <Header>
-          <TitleRow>
-            <IconContainer>
-              <ClipboardText size={40} weight="fill" />
-            </IconContainer>
-            <Heading2>{t("dashboard.volunteerProfile.documentSection.title")}</Heading2>
-          </TitleRow>
-        </Header>
+        <Table>
+          <TableHeader>
+            <HeaderCell>{t("dashboard.documentSection.typeOfDocument")}</HeaderCell>
+            <HeaderCell $width="180px">{t("dashboard.documentSection.status")}</HeaderCell>
+            <HeaderCell $width="152px" $noWrap>
+              {t("dashboard.documentSection.uploadedOn")}
+            </HeaderCell>
+            <HeaderCell $width={ACTION_COLUMN_WIDTH}></HeaderCell>
+            <HeaderCell $width={ACTION_COLUMN_WIDTH}></HeaderCell>
+            <HeaderCell $width={ACTION_COLUMN_WIDTH}></HeaderCell>
+            <HeaderCell $width={ACTION_COLUMN_WIDTH}></HeaderCell>
+          </TableHeader>
 
-      <Table>
-        <TableHeader>
-          <HeaderCell>{t("dashboard.volunteerProfile.documentSection.typeOfDocument")}</HeaderCell>
-          <HeaderCell $width="180px">{t("dashboard.volunteerProfile.documentSection.status")}</HeaderCell>
-          <HeaderCell $width="152px" $noWrap>
-            {t("dashboard.volunteerProfile.documentSection.uploadedOn")}
-          </HeaderCell>
-          <HeaderCell $width="56px"></HeaderCell>
-          <HeaderCell $width="56px"></HeaderCell>
-          <HeaderCell $width="56px"></HeaderCell>
-          <HeaderCell $width="56px"></HeaderCell>
-        </TableHeader>
-
-        {MOCK_DOCUMENTS.map((doc, index) => {
-          const isMissing = doc.status === "missing";
-
-          return (
-            <TableRow key={doc.id} $isLast={index === MOCK_DOCUMENTS.length - 1}>
-              <Cell>{t(doc.nameKey)}</Cell>
-              <Cell $width="180px" $align="center">
-                <StatusBadge $status={doc.status}>
-                  {doc.status === "uploaded"
-                    ? t("dashboard.volunteerProfile.documentSection.uploaded")
-                    : t("dashboard.volunteerProfile.documentSection.missing")}
-                </StatusBadge>
-              </Cell>
-              <Cell $width="152px" $noWrap>
-                {doc.uploadedOn || "–"}
-              </Cell>
-              <ActionCell $width="56px" $align="center">
-                <ActionButtonWithTooltip
-                  tooltipText={t("dashboard.volunteerProfile.documentSection.tooltips.upload")}
-                  onClick={() => openDialog("upload", doc)}
-                  ariaLabel="Upload document"
-                >
-                  <UploadSimple size={24} weight="regular" />
-                </ActionButtonWithTooltip>
-              </ActionCell>
-              <ActionCell $width="56px" $align="center">
-                <ActionButtonWithTooltip
-                  tooltipText={
-                    isMissing
-                      ? t("dashboard.volunteerProfile.documentSection.tooltips.previewUnavailable")
-                      : t("dashboard.volunteerProfile.documentSection.tooltips.preview")
-                  }
-                  disabled={isMissing}
-                  onClick={() => openDialog("preview", doc)}
-                  ariaLabel="View document"
-                >
-                  <Eye size={24} weight="regular" />
-                </ActionButtonWithTooltip>
-              </ActionCell>
-              <ActionCell $width="56px" $align="center">
-                <ActionButtonWithTooltip
-                  tooltipText={
-                    isMissing
-                      ? t("dashboard.volunteerProfile.documentSection.tooltips.downloadUnavailable")
-                      : t("dashboard.volunteerProfile.documentSection.tooltips.download")
-                  }
-                  disabled={isMissing}
-                  onClick={() => handleDownload(doc)}
-                  ariaLabel="Download document"
-                >
-                  <DownloadSimple size={24} weight="regular" />
-                </ActionButtonWithTooltip>
-              </ActionCell>
-              <ActionCell $width="56px" $align="center">
-                <ActionButtonWithTooltip
-                  tooltipText={
-                    isMissing
-                      ? t("dashboard.volunteerProfile.documentSection.tooltips.deleteUnavailable")
-                      : t("dashboard.volunteerProfile.documentSection.tooltips.delete")
-                  }
-                  disabled={isMissing}
-                  onClick={() => openDialog("delete", doc)}
-                  ariaLabel="Delete document"
-                >
-                  <Trash size={24} weight="regular" />
-                </ActionButtonWithTooltip>
-              </ActionCell>
-            </TableRow>
-          );
-        })}
-      </Table>
+          {documentRows.map((row, index) => (
+            <DocumentTableRow
+              key={row.type}
+              documentRow={row}
+              isLast={index === documentRows.length - 1}
+              onUpload={() => openDialog("upload", row)}
+              onPreview={() => handlePreview(row)}
+              onDownload={() => handleDownload(row)}
+              onDelete={() => openDialog("delete", row)}
+            />
+          ))}
+        </Table>
       </Container>
 
       <DeleteConfirmationDialog
         isOpen={isDeleteOpen}
-        documentName={deleteDocument?.nameKey ? t(deleteDocument.nameKey) : ""}
+        documentName={
+          deleteDialogDocument?.nameKey
+            ? t(`dashboard.documentSection.documentNames.${deleteDialogDocument.nameKey}`)
+            : ""
+        }
         onCancel={() => closeDialog("delete")}
         onConfirm={handleConfirmDelete}
       />
 
       <UploadDocumentDialog
+        key={uploadDialogDocument?.type}
         isOpen={isUploadOpen}
-        documentName={uploadDocument?.nameKey ? t(uploadDocument.nameKey) : ""}
+        documentName={
+          uploadDialogDocument?.nameKey
+            ? t(`dashboard.documentSection.documentNames.${uploadDialogDocument.nameKey}`)
+            : ""
+        }
         onCancel={() => closeDialog("upload")}
         onUpload={handleConfirmUpload}
+        isUploading={uploadMutation.isPending}
       />
 
       <DocumentPreviewDialog
         isOpen={isPreviewOpen}
-        documentName={previewDocument?.nameKey ? t(previewDocument.nameKey) : ""}
-        documentUrl="/pdf-sample_0.pdf"
+        documentName={
+          previewDocument?.nameKey ? t(`dashboard.documentSection.documentNames.${previewDocument.nameKey}`) : ""
+        }
+        documentUrl={documentUrl}
         onClose={() => closeDialog("preview")}
         onDownload={() => previewDocument && handleDownload(previewDocument)}
         onDelete={() => previewDocument && openDialog("delete", previewDocument)}

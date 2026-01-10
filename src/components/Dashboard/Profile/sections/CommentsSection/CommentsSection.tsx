@@ -1,9 +1,7 @@
 "use client";
-import { Heading2 } from "@/components/styled/text";
 import { useCreateComment } from "@/hooks/useCreateComment";
 import { useDeleteComment } from "@/hooks/useDeleteComment";
 import { useUpdateComment } from "@/hooks/useUpdateComment";
-import { ChatCircleDots } from "@phosphor-icons/react";
 import { ApiVolunteerGet, EntityTableName } from "need4deed-sdk";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -12,15 +10,7 @@ import { DeleteCommentDialog } from "./DeleteCommentDialog";
 import { useCommentDelete } from "./hooks/useCommentDelete";
 import { useCommentEdit } from "./hooks/useCommentEdit";
 import { useCommentMenu } from "./hooks/useCommentMenu";
-import {
-  AddCommentButton,
-  Container,
-  Header,
-  IconContainer,
-  NewCommentSection,
-  TextArea,
-  TitleRow,
-} from "./styles";
+import { AddCommentButton, Container, NewCommentSection, TextArea } from "./styles";
 
 type Props = {
   volunteer: ApiVolunteerGet;
@@ -97,17 +87,6 @@ export function CommentsSection({ volunteer }: Props) {
 
   return (
     <Container data-testid="comments-section-container">
-      <Header>
-        <TitleRow>
-          <IconContainer>
-            <ChatCircleDots size={40} weight="fill" />
-          </IconContainer>
-          <Heading2>
-            {t("dashboard.volunteerProfile.commentsSection.title")} • {comments.length}
-          </Heading2>
-        </TitleRow>
-      </Header>
-
       {comments.map((comment) => (
         <Comment
           key={comment.id}
@@ -141,7 +120,7 @@ export function CommentsSection({ volunteer }: Props) {
 
       <NewCommentSection>
         <TextArea
-          placeholder={t("dashboard.volunteerProfile.commentsSection.placeholder")}
+          placeholder={t("dashboard.commentsSection.placeholder")}
           value={newCommentText}
           onChange={(e) => setNewCommentText(e.target.value)}
           onKeyPress={handleKeyPress}
@@ -152,7 +131,7 @@ export function CommentsSection({ volunteer }: Props) {
           disabled={!newCommentText.trim() || isCreating}
           data-testid="add-comment-button"
         >
-          {t("dashboard.volunteerProfile.commentsSection.addComment")}
+          {t("dashboard.commentsSection.addComment")}
         </AddCommentButton>
       </NewCommentSection>
 

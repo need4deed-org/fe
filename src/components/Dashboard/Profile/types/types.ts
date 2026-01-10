@@ -12,3 +12,20 @@ export interface ProfileCardProps {
   type: ProfileCardTypes;
   title: string;
 }
+
+export enum IconName {
+  Baby = "baby",
+  Bicycle = "bicycle",
+  CalendarStar = "calendarStar",
+  ChartLine = "chartLine",
+  ChatCircleDots = "chatCircleDots",
+  ChatsCircle = "chatsCircle",
+  ChatsTeardrop = "chatsTeardrop",
+  ClipboardText = "clipboardText",
+  PingPong = "pingPong",
+  ShootingStar = "shootingStar",
+  Sparkle = "sparkle",
+  UserCheck = "userCheck",
+  UserCircle = "userCircle",
+  Users = "users",
+}

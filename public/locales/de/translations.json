@@ -432,6 +432,14 @@
     "volunteerProfile": {
       "backToDashboard": "Zurück zum Dashboard",
       "volunteersProfile": "Profil des Freiwilligen",
+      "contactDetailsTitle": "Kontaktdaten",
+      "volunteerProfile": "Freiwilligenprofil",
+      "opportunities": "Möglichkeiten",
+      "coordinatorComments": "Kommentare der Koordination",
+      "documents": "Dokumente",
+      "activityLog": "Aktivitätsprotokoll",
+      "editButtonName": "Bearbeiten",
+      "findOppButtonName": "Möglichkeit finden",
       "volunteerHeader": {
         "modalData": {
           "title": "Engagement-Status ändern",
@@ -494,6 +502,14 @@
           "missing": "Fehlend"
         }
       },
+      "opportunitiesSec": {
+        "tabs": {
+          "pending": "Ausstehend",
+          "matched": "Zugeordnet",
+          "active": "Aktiv",
+          "past": "Vergangen"
+        }
+      },
       "contactDetails": {
         "title": "Kontaktdaten",
         "edit": "Bearbeiten",
@@ -541,125 +557,142 @@
           "activitiesRequired": "Bitte wähle mindestens eine Aktivität aus",
           "skillsRequired": "Fähigkeiten sind erforderlich"
         }
-      },
-      "documentSection": {
-        "title": "Dokumente",
-        "typeOfDocument": "Dokumenttyp",
-        "status": "Status",
-        "uploadedOn": "Hochgeladen am",
-        "actions": "Aktionen",
-        "uploaded": "Hochgeladen",
-        "missing": "Fehlend",
-        "documentNames": {
-          "measlesVaccination": "Masernimpfung",
-          "applicationCertificateGoodConduct": "Antrag auf Führungszeugnis",
-          "certificateGoodConduct": "Führungszeugnis",
-          "passport": "Reisepass"
-        },
-        "tooltips": {
-          "upload": "Hochladen",
-          "preview": "Vorschau",
-          "download": "Herunterladen",
-          "delete": "Löschen",
-          "previewUnavailable": "Vorschau nicht verfügbar",
-          "downloadUnavailable": "Download nicht verfügbar",
-          "deleteUnavailable": "Löschen nicht verfügbar"
-        },
-        "deleteDialog": {
-          "title": "Dokument löschen?",
-          "message": "\"{{documentName}}\" wird gelöscht.",
-          "cancel": "Abbrechen",
-          "delete": "Löschen"
-        },
-        "uploadDialog": {
-          "title": "Dokument hochladen",
-          "documentType": "{{documentName}}",
-          "dragDropText": "Datei hier ablegen oder klicken zum Durchsuchen",
-          "dragDropHint": "Unterstützte Formate: PDF, JPG, PNG (max. 10 MB)",
-          "selectedFile": "Ausgewählte Datei:",
-          "cancel": "Abbrechen",
-          "upload": "Hochladen"
-        }
-      },
-      "commentsSection": {
-        "title": "Koordinator-Kommentare",
-        "placeholder": "Kommentar",
-        "addComment": "Kommentar hinzufügen",
-        "menuAction": "Kommentaroptionen",
-        "commentAdded": "Kommentar erfolgreich hinzugefügt",
-        "editComment": "Kommentar bearbeiten",
-        "deleteComment": "Kommentar löschen",
-        "commentDeleted": "Kommentar erfolgreich gelöscht",
-        "commentUpdated": "Kommentar erfolgreich aktualisiert",
-        "saveEdit": "Speichern",
-        "cancelEdit": "Abbrechen",
-        "deleteDialog": {
-          "title": "Kommentar löschen?",
-          "message": "{{authorName}}s Kommentar wird unwiderruflich gelöscht.",
-          "cancel": "Abbrechen",
-          "delete": "Löschen"
-        }
-      },
-      "communicationSection": {
-        "title": "Kommunikationsverfolgung",
-        "addNew": "+ Kontakt registrieren",
-        "emptyState": "Noch keine Kommunikation aufgezeichnet",
-        "registerContact": "Kontakt registrieren",
-        "date": "Datum",
-        "type": "Typ",
-        "contactMethod": "Kontaktmethode",
-        "notes": "Notizen",
-        "actions": "Aktionen",
-        "typeOfContact": "Art des Kontakts",
-        "contactTypes": {
-          "called": "Angerufen",
-          "triedToCall": "Versuch anzurufen",
-          "textedOrEmailed": "SMS oder E-Mail gesendet",
-          "other": "Sonstiges"
-        },
-        "dateOfContact": "Datum des Kontakts",
-        "contactDate": "Kontaktdatum",
-        "contactDateRequired": "Kontaktdatum*",
-        "whatPlatform": "Welche Plattform haben Sie verwendet?",
-        "howDidYouSend": "Wie haben Sie Ihre Nachricht gesendet?",
-        "contactMethodLabel": "Kontaktmethode",
-        "contactMethodRequired": "Kontaktmethode*",
-        "communicationTypeRequired": "Kommunikationstyp*",
-        "communicationTypes": {
-          "briefedVolunteer": "Briefing erfolgt (begleitende*r Freiwillige*r)",
-          "firstInquiry": "Erste Anfrage gesendet",
-          "opportunityList": "Angebotsliste gesendet",
-          "statusUpdate": "Statusaktualisierung",
-          "postMatchFollowUp": "Nachverfolgung nach Vermittlung"
-        },
-        "platformOptions": {
-          "phoneNumber": "Telefonnummer",
-          "telegram": "Telegram",
-          "whatsapp": "Whatsapp",
-          "signal": "Signal",
-          "email": "E-Mail",
-          "sms": "SMS",
-          "voicenote": "Sprachnachricht"
-        },
-        "notesPlaceholder": "Fügen Sie Notizen zu dieser Kommunikation hinzu...",
-        "cancel": "Abbrechen",
-        "save": "Speichern",
-        "delete": "Löschen",
-        "deleteConfirmTitle": "Eintrag löschen?",
-        "deleteConfirmText": "\"{{entryType}}\" Kommunikationseintrag wird dauerhaft gelöscht.",
-        "statusChange": "Statusänderung",
-        "followUp": "Nachverfolgung",
-        "inquiry": "Anfrage",
-        "other": "Sonstiges",
-        "email": "E-Mail",
-        "phone": "Telefon",
-        "inPerson": "Persönlich",
-        "message": "Nachricht"
       }
     },
-    "message": {
-      "successful": "Erfolgreich",
-      "errorGeneric": "Etwas ist schief gelaufen!"
+    "opportunities": {
+      "accompanyingTranslation": {
+        "en": "Deutsch, Englisch",
+        "de": "Deutsch",
+        "no": "Sprachmittlung ist nicht nötig"
+      },
+      "defaultMainCommunication": "Englisch, Deutsch",
+      "otherCategory": "Allgemeines Engagement",
+      "goToProfile": "Zum Profil"
+    },
+    "documentSection": {
+      "title": "Dokumente",
+      "typeOfDocument": "Dokumenttyp",
+      "status": "Status",
+      "uploadedOn": "Hochgeladen am",
+      "actions": "Aktionen",
+      "uploaded": "Hochgeladen",
+      "missing": "Fehlend",
+      "documentNames": {
+        "measlesVaccination": "Masernimpfung",
+        "applicationCertificateGoodConduct": "Antrag auf Führungszeugnis",
+        "certificateGoodConduct": "Führungszeugnis",
+        "passport": "Reisepass / Ausweis"
+      },
+      "tooltips": {
+        "upload": "Hochladen",
+        "reUpload": "Erneut hochladen",
+        "preview": "Vorschau",
+        "download": "Herunterladen",
+        "delete": "Löschen",
+        "uploadUnavailable": "Hochladen nicht verfügbar",
+        "previewUnavailable": "Vorschau nicht verfügbar",
+        "downloadUnavailable": "Download nicht verfügbar",
+        "deleteUnavailable": "Löschen nicht verfügbar"
+      },
+      "deleteDialog": {
+        "title": "Dokument löschen?",
+        "message": "\"{{documentName}}\" wird gelöscht.",
+        "cancel": "Abbrechen",
+        "delete": "Löschen"
+      },
+      "uploadDialog": {
+        "title": "Dokument hochladen",
+        "documentType": "{{documentName}}",
+        "dragDropText": "Datei hier ablegen oder klicken zum Durchsuchen",
+        "dragDropHint": "Unterstützte Formate: PDF, JPG, PNG (max. 10 MB)",
+        "selectedFile": "Ausgewählte Datei:",
+        "cancel": "Abbrechen",
+        "upload": "Hochladen",
+        "uploading": "Wird hochgeladen..."
+      }
+    },
+    "commentsSection": {
+      "placeholder": "Kommentar",
+      "addComment": "Kommentar hinzufügen",
+      "menuAction": "Kommentaroptionen",
+      "commentAdded": "Kommentar erfolgreich hinzugefügt",
+      "editComment": "Kommentar bearbeiten",
+      "deleteComment": "Kommentar löschen",
+      "commentDeleted": "Kommentar erfolgreich gelöscht",
+      "commentUpdated": "Kommentar erfolgreich aktualisiert",
+      "saveEdit": "Speichern",
+      "cancelEdit": "Abbrechen",
+      "deleteDialog": {
+        "title": "Kommentar löschen?",
+        "message": "{{authorName}}s Kommentar wird unwiderruflich gelöscht.",
+        "cancel": "Abbrechen",
+        "delete": "Löschen"
+      }
+    },
+    "communicationSection": {
+      "title": "Kommunikationsverfolgung",
+      "addNew": "+ Kontakt registrieren",
+      "emptyState": "Noch keine Kommunikation aufgezeichnet",
+      "registerContact": "Kontakt registrieren",
+      "date": "Datum",
+      "type": "Typ",
+      "contactMethod": "Kontaktmethode",
+      "notes": "Notizen",
+      "actions": "Aktionen",
+      "typeOfContact": "Art des Kontakts",
+      "contactTypes": {
+        "called": "Angerufen",
+        "triedToCall": "Versuch anzurufen",
+        "textedOrEmailed": "SMS oder E-Mail gesendet",
+        "other": "Sonstiges"
+      },
+      "dateOfContact": "Datum des Kontakts",
+      "contactDate": "Kontaktdatum",
+      "contactDateRequired": "Kontaktdatum*",
+      "whatPlatform": "Welche Plattform haben Sie verwendet?",
+      "howDidYouSend": "Wie haben Sie Ihre Nachricht gesendet?",
+      "contactMethodLabel": "Kontaktmethode",
+      "contactMethodRequired": "Kontaktmethode*",
+      "communicationTypeRequired": "Kommunikationstyp*",
+      "communicationTypes": {
+        "briefedVolunteer": "Briefing erfolgt (begleitende*r Freiwillige*r)",
+        "firstInquiry": "Erste Anfrage gesendet",
+        "opportunityList": "Angebotsliste gesendet",
+        "statusUpdate": "Statusaktualisierung",
+        "postMatchFollowUp": "Nachverfolgung nach Vermittlung"
+      },
+      "platformOptions": {
+        "phoneNumber": "Telefonnummer",
+        "telegram": "Telegram",
+        "whatsapp": "Whatsapp",
+        "signal": "Signal",
+        "email": "E-Mail",
+        "sms": "SMS",
+        "voicenote": "Sprachnachricht"
+      },
+      "notesPlaceholder": "Fügen Sie Notizen zu dieser Kommunikation hinzu...",
+      "cancel": "Abbrechen",
+      "save": "Speichern",
+      "delete": "Löschen",
+      "deleteConfirmTitle": "Eintrag löschen?",
+      "deleteConfirmText": "\"{{entryType}}\" Kommunikationseintrag wird dauerhaft gelöscht.",
+      "statusChange": "Statusänderung",
+      "followUp": "Nachverfolgung",
+      "inquiry": "Anfrage",
+      "other": "Sonstiges",
+      "email": "E-Mail",
+      "phone": "Telefon",
+      "inPerson": "Persönlich",
+      "message": "Nachricht"
     }
+  },
+  "message": {
+    "successful": "Erfolgreich",
+    "errorGeneric": "Etwas ist schief gelaufen!",
+    "uploadSuccess": "Dokument erfolgreich hochgeladen!",
+    "deleteSuccess": "Dokument erfolgreich gelöscht!",
+    "uploadError": "Hochladen fehlgeschlagen. Bitte versuchen Sie es erneut.",
+    "deleteError": "Löschen fehlgeschlagen. Bitte versuchen Sie es erneut.",
+    "previewError": "Vorschau fehlgeschlagen. Bitte versuchen Sie es erneut."
   }
 }
