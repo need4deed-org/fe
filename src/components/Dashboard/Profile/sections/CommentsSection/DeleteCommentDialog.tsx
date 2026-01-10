@@ -95,14 +95,14 @@ export function DeleteCommentDialog({ isOpen, authorName, onCancel, onConfirm }:
   return (
     <Overlay $isOpen={isOpen} onClick={onCancel}>
       <Dialog onClick={(e) => e.stopPropagation()}>
-        <Title>{t("dashboard.volunteerProfile.commentsSection.deleteDialog.title")}</Title>
-        <Message>{t("dashboard.volunteerProfile.commentsSection.deleteDialog.message", { authorName })}</Message>
+        <Title>{t("dashboard.commentsSection.deleteDialog.title")}</Title>
+        <Message>{t("dashboard.commentsSection.deleteDialog.message", { authorName })}</Message>
         <ButtonGroup>
           <CancelButton onClick={onCancel}>
-            {t("dashboard.volunteerProfile.commentsSection.deleteDialog.cancel")}
+            {t("dashboard.commentsSection.deleteDialog.cancel")}
           </CancelButton>
           <DeleteButton onClick={onConfirm}>
-            {t("dashboard.volunteerProfile.commentsSection.deleteDialog.delete")}
+            {t("dashboard.commentsSection.deleteDialog.delete")}
           </DeleteButton>
         </ButtonGroup>
       </Dialog>

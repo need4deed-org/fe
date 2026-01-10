@@ -25,7 +25,7 @@ export const useCreateComment = (volunteerId: number) => {
   return useMutationQuery<CreateCommentData, CreateCommentResponse>({
     apiPath: apiPathComment,
     method: "post",
-    successMessage: "dashboard.volunteerProfile.commentsSection.commentAdded",
+    successMessage: "dashboard.commentsSection.commentAdded",
     queryKeyToInvalidate: ["volunteer", String(volunteerId)],
   });
 };

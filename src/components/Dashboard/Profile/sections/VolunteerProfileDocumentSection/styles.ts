@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+export const ACTION_COLUMN_WIDTH = "56px";
+
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -59,7 +61,7 @@ export const HeaderCell = styled.div<{ $width?: string; $noWrap?: boolean }>`
   font-weight: var(--document-section-header-cell-font-weight);
   font-size: var(--document-section-header-cell-font-size);
   line-height: var(--document-section-header-cell-line-height);
-  letter-spacing: 0.005em;
+  letter-spacing: var(--letter-spacing-tight);
   color: var(--color-midnight);
   ${(props) => props.$width && `width: ${props.$width};`}
   ${(props) => props.$noWrap && `white-space: nowrap;`}
@@ -96,7 +98,7 @@ export const Cell = styled.div<{ $width?: string; $align?: string; $noWrap?: boo
   gap: var(--document-section-cell-gap);
   font-size: var(--document-section-cell-font-size);
   line-height: var(--document-section-cell-line-height);
-  letter-spacing: 0.005em;
+  letter-spacing: var(--letter-spacing-tight);
   color: var(--color-midnight);
   border-right: var(--document-section-table-border-width) solid var(--color-blue-50);
   ${(props) => props.$width && `width: ${props.$width};`}
@@ -119,7 +121,7 @@ export const StatusBadge = styled.div<{ $status: "uploaded" | "missing" }>`
   font-weight: var(--document-section-status-badge-font-weight);
   font-size: var(--document-section-status-badge-font-size);
   line-height: var(--document-section-status-badge-line-height);
-  letter-spacing: 0.005em;
+  letter-spacing: var(--letter-spacing-tight);
   color: var(--color-midnight);
   background: ${(props) => (props.$status === "uploaded" ? "var(--color-green-100)" : "var(--color-red-50)")};
 `;
@@ -141,6 +143,9 @@ export const ActionButton = styled.button<{ $disabled?: boolean }>`
   }
 `;
 
-export const ActionCell = styled(Cell)`
+export const ActionCell = styled(Cell).attrs<{ $width?: string; $align?: string }>((props) => ({
+  $width: props.$width ?? ACTION_COLUMN_WIDTH,
+  $align: props.$align ?? "center",
+}))`
   padding: var(--document-section-action-cell-padding);
 `;

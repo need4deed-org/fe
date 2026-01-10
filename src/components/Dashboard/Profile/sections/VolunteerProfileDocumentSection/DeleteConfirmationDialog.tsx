@@ -41,14 +41,14 @@ export function DeleteConfirmationDialog({ isOpen, documentName, onCancel, onCon
   return (
     <DialogOverlay isOpen={isOpen} onClose={onCancel} zIndex={10003}>
       <Dialog onClick={(e) => e.stopPropagation()}>
-        <Title>{t("dashboard.volunteerProfile.documentSection.deleteDialog.title")}</Title>
-        <Message>{t("dashboard.volunteerProfile.documentSection.deleteDialog.message", { documentName })}</Message>
+        <Title>{t("dashboard.documentSection.deleteDialog.title")}</Title>
+        <Message>{t("dashboard.documentSection.deleteDialog.message", { documentName })}</Message>
         <DialogButtonGroup>
           <CancelButton onClick={onCancel}>
-            {t("dashboard.volunteerProfile.documentSection.deleteDialog.cancel")}
+            {t("dashboard.documentSection.deleteDialog.cancel")}
           </CancelButton>
           <PrimaryButton onClick={onConfirm}>
-            {t("dashboard.volunteerProfile.documentSection.deleteDialog.delete")}
+            {t("dashboard.documentSection.deleteDialog.delete")}
           </PrimaryButton>
         </DialogButtonGroup>
       </Dialog>

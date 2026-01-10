@@ -25,7 +25,7 @@ export const CancelButton = styled.button`
   border-radius: var(--document-dialog-button-border-radius);
   padding: var(--document-dialog-button-padding);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: var(--transition-all);
 
   &:hover {
     background: var(--color-aubergine-subtle);
@@ -48,7 +48,7 @@ export const PrimaryButton = styled.button<{ $disabled?: boolean }>`
   border-radius: var(--document-dialog-button-border-radius);
   padding: var(--document-dialog-button-padding);
   cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
-  transition: all 0.2s;
+  transition: var(--transition-all);
 
   &:hover {
     background: ${(props) => (props.$disabled ? "var(--document-dialog-button-disabled-color)" : "var(--color-aubergine-light)")};

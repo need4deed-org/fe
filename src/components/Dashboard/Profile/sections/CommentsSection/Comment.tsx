@@ -64,14 +64,14 @@ export function Comment({ comment, edit, menu }: Props) {
             />
             <CommentEditButtons>
               <EditCancelButton onClick={edit.onCancel} data-testid={`cancel-edit-${comment.id}`}>
-                {t("dashboard.volunteerProfile.commentsSection.cancelEdit")}
+                {t("dashboard.commentsSection.cancelEdit")}
               </EditCancelButton>
               <EditSaveButton
                 onClick={edit.onSave}
                 disabled={!edit.canSave || edit.isUpdating}
                 data-testid={`save-edit-${comment.id}`}
               >
-                {t("dashboard.volunteerProfile.commentsSection.saveEdit")}
+                {t("dashboard.commentsSection.saveEdit")}
               </EditSaveButton>
             </CommentEditButtons>
           </>
@@ -84,7 +84,7 @@ export function Comment({ comment, edit, menu }: Props) {
           <MenuAction
             ref={menu.buttonRef}
             onClick={menu.onToggle}
-            aria-label={t("dashboard.volunteerProfile.commentsSection.menuAction")}
+            aria-label={t("dashboard.commentsSection.menuAction")}
             data-testid={`comment-menu-${comment.id}`}
           >
             <DotsThreeOutline size={24} weight="fill" />

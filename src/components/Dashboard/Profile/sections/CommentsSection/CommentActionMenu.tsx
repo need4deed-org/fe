@@ -94,9 +94,9 @@ export function CommentActionMenu({ isOpen, onClose, onEdit, onDelete, anchorEle
 
   return (
     <MenuContainer ref={menuRef} $isOpen={isOpen} $top={position.top} $right={position.right}>
-      <MenuItem onClick={onEdit}>{t("dashboard.volunteerProfile.commentsSection.editComment")}</MenuItem>
+      <MenuItem onClick={onEdit}>{t("dashboard.commentsSection.editComment")}</MenuItem>
       <MenuItem $danger onClick={onDelete}>
-        {t("dashboard.volunteerProfile.commentsSection.deleteComment")}
+        {t("dashboard.commentsSection.deleteComment")}
       </MenuItem>
     </MenuContainer>
   );

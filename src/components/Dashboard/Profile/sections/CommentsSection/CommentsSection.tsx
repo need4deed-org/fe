@@ -103,7 +103,7 @@ export function CommentsSection({ volunteer }: Props) {
             <ChatCircleDots size={40} weight="fill" />
           </IconContainer>
           <Heading2>
-            {t("dashboard.volunteerProfile.commentsSection.title")} • {comments.length}
+            {t("dashboard.commentsSection.title")} • {comments.length}
           </Heading2>
         </TitleRow>
       </Header>
@@ -141,7 +141,7 @@ export function CommentsSection({ volunteer }: Props) {
 
       <NewCommentSection>
         <TextArea
-          placeholder={t("dashboard.volunteerProfile.commentsSection.placeholder")}
+          placeholder={t("dashboard.commentsSection.placeholder")}
           value={newCommentText}
           onChange={(e) => setNewCommentText(e.target.value)}
           onKeyPress={handleKeyPress}
@@ -152,7 +152,7 @@ export function CommentsSection({ volunteer }: Props) {
           disabled={!newCommentText.trim() || isCreating}
           data-testid="add-comment-button"
         >
-          {t("dashboard.volunteerProfile.commentsSection.addComment")}
+          {t("dashboard.commentsSection.addComment")}
         </AddCommentButton>
       </NewCommentSection>
 
