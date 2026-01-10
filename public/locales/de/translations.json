@@ -612,7 +612,6 @@
       }
     },
     "commentsSection": {
-      "title": "Koordinator-Kommentare",
       "placeholder": "Kommentar",
       "addComment": "Kommentar hinzufügen",
       "menuAction": "Kommentaroptionen",

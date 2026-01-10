@@ -65,8 +65,8 @@ const ProfilePage = ({ volunteer }: ProfilePageProps) => {
     },
     {
       iconName: IconName.ChatCircleDots,
-      title: t("dashboard.volunteerProfile.coordinatorComments"),
-      subComponent: <div>Coordinator Comments sub-component. to be replaced...</div>,
+      title: `${t("dashboard.volunteerProfile.coordinatorComments")} • ${volunteer.comments?.length ?? 0}`,
+      subComponent: <CommentsSection volunteer={volunteer} />,
     },
     {
       iconName: IconName.ClipboardText,
@@ -96,7 +96,6 @@ const ProfilePage = ({ volunteer }: ProfilePageProps) => {
       {sections.map((s) => (
         <SectionCard key={s.title} {...s} />
       ))}
-      <CommentsSection volunteer={volunteer} />
     </PageContainer>
   );
 };

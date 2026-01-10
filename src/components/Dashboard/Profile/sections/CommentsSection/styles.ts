@@ -3,42 +3,9 @@ import styled from "styled-components";
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  padding: var(--profile-section-padding);
   gap: var(--spacing-24);
-  background: var(--color-white);
-  border-radius: var(--card-border-radius);
-  margin-bottom: var(--profile-section-margin-bottom);
-`;
-
-export const Header = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 0;
-  gap: var(--spacing-16);
   width: 100%;
-  align-self: stretch;
-`;
-
-export const IconContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 0;
-  gap: var(--spacing-8);
-  width: var(--icon-size);
-  height: var(--icon-size);
-  color: var(--color-papaya);
-`;
-
-export const TitleRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 0;
-  gap: var(--profile-section-title-gap);
-  flex-grow: 1;
+  margin-top: var(--spacing-24);
 `;
 
 export const CommentItem = styled.div`
