@@ -38,18 +38,18 @@ export const TopInfo = styled.div`
 
 export const AuthorName = styled.div`
   font-style: normal;
-  font-weight: 600;
-  font-size: 20px;
-  line-height: 24px;
+  font-weight: var(--comments-author-font-weight);
+  font-size: var(--comments-author-font-size);
+  line-height: var(--comments-author-line-height);
   letter-spacing: var(--letter-spacing-tight);
   color: var(--color-midnight);
 `;
 
 export const Timestamp = styled.div`
   font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 20px;
+  font-weight: var(--comments-timestamp-font-weight);
+  font-size: var(--comments-timestamp-font-size);
+  line-height: var(--comments-timestamp-line-height);
   letter-spacing: var(--letter-spacing-tight);
   color: var(--color-grey-500);
 `;
@@ -57,9 +57,9 @@ export const Timestamp = styled.div`
 export const CommentText = styled.div`
   width: 100%;
   font-style: normal;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 24px;
+  font-weight: var(--comments-text-font-weight);
+  font-size: var(--comments-text-font-size);
+  line-height: var(--comments-text-line-height);
   letter-spacing: var(--letter-spacing-tight);
   color: var(--color-midnight);
   align-self: stretch;
@@ -105,7 +105,7 @@ export const TextArea = styled.textarea`
   border: var(--border-width-thin) solid var(--color-grey-200);
   border-radius: var(--border-radius-small);
   font-style: normal;
-  font-weight: 400;
+  font-weight: var(--font-weight-regular);
   font-size: var(--text-p-font-size);
   line-height: var(--text-p-line-height);
   letter-spacing: var(--letter-spacing-tight);
@@ -136,7 +136,7 @@ export const AddCommentButton = styled.button`
   border: none;
   cursor: pointer;
   font-style: normal;
-  font-weight: 600;
+  font-weight: var(--comments-button-font-weight);
   font-size: var(--text-p-font-size);
   line-height: var(--text-p-line-height);
   text-align: center;
@@ -178,7 +178,7 @@ export const EditCancelButton = styled.button`
   border-radius: var(--button-border-radius);
   cursor: pointer;
   font-style: normal;
-  font-weight: 600;
+  font-weight: var(--comments-button-font-weight);
   font-size: var(--text-p-font-size);
   line-height: var(--text-p-line-height);
   text-align: center;
@@ -204,7 +204,7 @@ export const EditSaveButton = styled.button`
   border: none;
   cursor: pointer;
   font-style: normal;
-  font-weight: 600;
+  font-weight: var(--comments-button-font-weight);
   font-size: var(--text-p-font-size);
   line-height: var(--text-p-line-height);
   text-align: center;

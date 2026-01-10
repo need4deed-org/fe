@@ -36,7 +36,8 @@ const MenuItem = styled.button<{ $danger?: boolean }>`
   border: none;
   cursor: pointer;
   font-style: normal;
-  font-weight: ${(props) => (props.$danger ? 600 : 400)};
+  font-weight: ${(props) =>
+    props.$danger ? "var(--comments-menu-item-danger-font-weight)" : "var(--comments-menu-item-font-weight)"};
   font-size: var(--text-p-font-size);
   line-height: var(--text-p-line-height);
   letter-spacing: var(--letter-spacing-tight);

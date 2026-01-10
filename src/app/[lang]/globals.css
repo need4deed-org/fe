@@ -155,6 +155,24 @@ html {
 
   --text-p-font-weight: 300;
 
+  /* font weights */
+  --font-weight-regular: 400;
+  --font-weight-semi-bold: 600;
+
+  /* comments section */
+  --comments-author-font-weight: var(--font-weight-semi-bold);
+  --comments-author-font-size: 20px;
+  --comments-author-line-height: 24px;
+  --comments-timestamp-font-weight: var(--font-weight-regular);
+  --comments-timestamp-font-size: 16px;
+  --comments-timestamp-line-height: 20px;
+  --comments-text-font-weight: var(--font-weight-regular);
+  --comments-text-font-size: 20px;
+  --comments-text-line-height: 24px;
+  --comments-button-font-weight: var(--font-weight-semi-bold);
+  --comments-menu-item-font-weight: var(--font-weight-regular);
+  --comments-menu-item-danger-font-weight: var(--font-weight-semi-bold);
+
   /* icon */
   --icon-color: var(--color-papaya);
 
