@@ -35,15 +35,14 @@ const MenuItem = styled.button<{ $danger?: boolean }>`
   background: var(--color-white);
   border: none;
   cursor: pointer;
-  font-family: "Figtree";
   font-style: normal;
   font-weight: ${(props) => (props.$danger ? 600 : 400)};
-  font-size: 20px;
-  line-height: 24px;
-  letter-spacing: 0.005em;
+  font-size: var(--text-p-font-size);
+  line-height: var(--text-p-line-height);
+  letter-spacing: var(--letter-spacing-tight);
   color: ${(props) => (props.$danger ? "var(--color-red-600)" : "var(--color-midnight)")};
   text-align: left;
-  transition: background 0.2s;
+  transition: var(--transition-all);
 
   &:hover {
     background: ${(props) => (props.$danger ? "var(--color-white)" : "var(--color-pink-50)")};
