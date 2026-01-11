@@ -1,8 +1,9 @@
 "use client";
 import { Button } from "@/components/core/button";
 import { Modal } from "@/components/core/modal";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Calendar, X } from "@phosphor-icons/react";
-import { format } from "date-fns";
+import { format, isValid, parse } from "date-fns";
 import { de, type Locale } from "date-fns/locale";
 import { ApiCommunicationGet, CommunicationType, ContactMethodType, ContactType } from "need4deed-sdk";
 import { useEffect, useRef, useState } from "react";
@@ -11,6 +12,7 @@ import "react-day-picker/style.css";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
+import { z } from "zod";
 import { getCommunicationTypeOptions, getContactMethodOptions, getDefaultContactMethod } from "./utils/options";
 import { getContactTypeLabel } from "./utils/translations";
 
@@ -135,7 +137,7 @@ const DateInputIcon = styled(Calendar)`
   top: 50%;
   transform: translateY(-50%);
   color: var(--color-aubergine);
-  pointer-events: none;
+  cursor: pointer;
   z-index: 1;
 `;
 
@@ -150,7 +152,7 @@ const DateInput = styled.input`
   font-weight: var(--font-weight-regular);
   color: var(--color-aubergine);
   font-family: var(--bs-body-font-family);
-  cursor: pointer;
+  cursor: text;
   background: var(--color-white);
 
   &:focus {
@@ -211,7 +213,7 @@ type FormData = {
   contactType: ContactType;
   contactMethod: ContactMethodType;
   communicationType: CommunicationType;
-  date: Date;
+  date: Date | undefined;
 };
 
 type Props = {
@@ -221,11 +223,37 @@ type Props = {
   initialData?: ApiCommunicationGet;
 };
 
+const createValidationSchema = (t: (key: string) => string) =>
+  z.object({
+    contactType: z.nativeEnum(ContactType, {
+      errorMap: () => ({ message: t("dashboard.communicationSection.contactTypeRequired") }),
+    }),
+    contactMethod: z.nativeEnum(ContactMethodType),
+    communicationType: z.nativeEnum(CommunicationType).optional(),
+    date: z
+      .date({
+        required_error: t("dashboard.communicationSection.contactDateRequired"),
+        invalid_type_error: t("dashboard.communicationSection.contactDateRequired"),
+      })
+      .max(new Date(), t("dashboard.communicationSection.futureDateError")),
+  });
+
 export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Props) {
   const { t, i18n } = useTranslation();
   const locale = i18n.language === "de" ? de : undefined;
 
-  const { control, handleSubmit, watch, reset, setValue } = useForm<FormData>({
+  const schema = createValidationSchema(t);
+
+  const {
+    control,
+    handleSubmit,
+    watch,
+    reset,
+    setValue,
+    formState: { isValid },
+  } = useForm<FormData>({
+    resolver: zodResolver(schema),
+    mode: "onChange",
     defaultValues: {
       contactType: undefined, // Will be set by reset
       contactMethod: ContactMethodType.PHONE,
@@ -265,6 +293,8 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
   }, [contactType, initialData, setValue]);
 
   const onSubmit = (data: FormData) => {
+    if (!data.date) return;
+
     const payload: Partial<ApiCommunicationGet> = {
       id: initialData?.id,
       contactType: data.contactType,
@@ -376,7 +406,7 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
             onClick={handleSubmit(onSubmit)}
             backgroundcolor="var(--color-aubergine)"
             textColor="var(--color-white)"
-            disabled={!contactType}
+            disabled={!isValid || !contactType}
           />
         </ButtonGroup>
       </Form>
@@ -390,12 +420,32 @@ function DatePickerWithPopover({
   onSelect,
   locale,
 }: {
-  date: Date;
+  date: Date | undefined;
   onSelect: (d: Date | undefined) => void;
   locale?: Locale;
 }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [inputValue, setInputValue] = useState("");
+  const [month, setMonth] = useState<Date>(date || new Date());
   const containerRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    // Do not update input value while user is typing (input is focused)
+    if (document.activeElement === inputRef.current) return;
+
+    if (date) {
+      setInputValue(format(date, "dd.MM.yyyy"));
+    } else {
+      setInputValue("");
+    }
+  }, [date]);
+
+  useEffect(() => {
+    if (isOpen && date && isValid(date)) {
+      setMonth(date);
+    }
+  }, [isOpen, date]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -410,14 +460,42 @@ function DatePickerWithPopover({
     };
   }, []);
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setInputValue(value);
+
+    // Strict regex for d.m.yyyy or dd.mm.yyyy
+    const dateRegex = /^\d{1,2}\.\d{1,2}\.\d{4}$/;
+
+    if (!dateRegex.test(value)) {
+      onSelect(undefined);
+      return;
+    }
+
+    const parsedDate = parse(value, "dd.MM.yyyy", new Date());
+
+    if (isValid(parsedDate) && parsedDate.getFullYear() >= 2025) {
+      onSelect(parsedDate);
+    } else {
+      onSelect(undefined);
+    }
+  };
+
+  const handleInputBlur = () => {
+    if (date) {
+      setInputValue(format(date, "dd.MM.yyyy"));
+    }
+  };
+
   return (
     <DatePickerWrapper ref={containerRef}>
       <DateInputContainer>
-        <DateInputIcon size={24} weight="regular" />
+        <DateInputIcon size={24} weight="regular" onClick={() => setIsOpen(!isOpen)} />
         <DateInput
-          value={format(date, "dd.MM.yyyy")}
-          onClick={() => setIsOpen(!isOpen)}
-          readOnly
+          ref={inputRef}
+          value={inputValue}
+          onChange={handleInputChange}
+          onBlur={handleInputBlur}
           data-testid="date-picker-input"
         />
       </DateInputContainer>
@@ -429,10 +507,12 @@ function DatePickerWithPopover({
             onSelect(d);
             setIsOpen(false);
           }}
+          month={month}
+          onMonthChange={setMonth}
           locale={locale}
           captionLayout="dropdown"
-          fromYear={1900}
-          toYear={new Date().getFullYear() + 10}
+          startMonth={new Date(2025, 0)}
+          endMonth={new Date(new Date().getFullYear() + 10, 11)}
           disabled={{ after: new Date() }}
         />
       </DatePickerPopover>
