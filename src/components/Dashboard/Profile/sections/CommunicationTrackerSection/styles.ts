@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+export const ACTION_COLUMN_WIDTH = "56px";
+
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -33,56 +35,95 @@ export const IconContainer = styled.div`
 `;
 
 export const TableContainer = styled.div`
-  width: 100%;
-  border: var(--border-width-thin) solid var(--color-grey-200);
+  display: flex;
+  flex-direction: column;
+  border: var(--border-width-thin) solid var(--color-blue-50);
   border-radius: var(--border-radius-small);
+  width: 100%;
   overflow: hidden;
 `;
 
-export const Table = styled.table`
+export const Table = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  border-collapse: collapse;
 `;
 
-export const TableHeader = styled.thead`
-  background: var(--color-grey-50);
+export const TableHeader = styled.div`
+  display: flex;
+  flex-direction: row;
+  background: var(--color-pink-50);
 `;
 
-export const TableHeaderRow = styled.tr``;
+export const TableHeaderRow = styled.div``;
 
-export const TableHeaderCell = styled.th`
+export const TableHeaderCell = styled.div<{ $width?: string; $maxWidth?: string; $noWrap?: boolean }>`
+  display: flex;
+  align-items: center;
   padding: var(--spacing-16);
-  text-align: left;
+  gap: var(--spacing-8);
   font-weight: 600;
   font-size: var(--text-p-font-size);
   line-height: var(--text-p-line-height);
-  letter-spacing: 0.005em;
+  letter-spacing: var(--letter-spacing-tight);
   color: var(--color-midnight);
-  border-bottom: var(--border-width-thin) solid var(--color-grey-200);
-`;
+  ${(props) => props.$width && `width: ${props.$width};`}
+  ${(props) => props.$maxWidth && `max-width: ${props.$maxWidth};`}
+  ${(props) => props.$noWrap && `white-space: nowrap;`}
+  flex: ${(props) => (props.$width ? "none" : props.$maxWidth ? "1 1 auto" : "1")};
 
-export const TableBody = styled.tbody``;
+  &:first-child {
+    border-radius: var(--border-radius-small) 0 0 0;
+  }
 
-export const TableRow = styled.tr`
-  &:not(:last-child) {
-    border-bottom: var(--border-width-thin) solid var(--color-grey-200);
+  &:last-child {
+    border-radius: 0 var(--border-radius-small) 0 0;
+    justify-content: center;
   }
 `;
 
-export const TableCell = styled.td`
-  padding: var(--spacing-16);
-  font-size: var(--text-p-font-size);
-  line-height: var(--text-p-line-height);
-  letter-spacing: 0.005em;
-  color: var(--color-midnight);
-`;
+export const TableBody = styled.div``;
 
-export const ActionCell = styled(TableCell)`
-  width: 100px;
+export const TableRow = styled.div<{ $isLast?: boolean }>`
   display: flex;
   flex-direction: row;
-  gap: var(--spacing-8);
+  ${(props) => !props.$isLast && `border-bottom: var(--border-width-thin) solid var(--color-blue-50);`}
+
+  &:last-child > div:first-child {
+    border-radius: 0 0 0 var(--border-radius-small);
+  }
+
+  &:last-child > div:last-child {
+    border-radius: 0 0 var(--border-radius-small) 0;
+  }
+`;
+
+export const TableCell = styled.div<{ $width?: string; $maxWidth?: string; $align?: string; $noWrap?: boolean }>`
+  display: flex;
   align-items: center;
+  padding: var(--spacing-16);
+  gap: var(--spacing-8);
+  font-size: var(--text-p-font-size);
+  line-height: var(--text-p-line-height);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--color-midnight);
+  border-right: var(--border-width-thin) solid var(--color-blue-50);
+  ${(props) => props.$width && `width: ${props.$width};`}
+  ${(props) => props.$maxWidth && `max-width: ${props.$maxWidth};`}
+  ${(props) => props.$align && `justify-content: ${props.$align};`}
+  ${(props) => props.$noWrap && `white-space: nowrap;`}
+  flex: ${(props) => (props.$width ? "none" : props.$maxWidth ? "1 1 auto" : "1")};
+
+  &:last-child {
+    border-right: none;
+  }
+`;
+
+export const ActionCell = styled(TableCell).attrs<{ $width?: string; $align?: string }>((props) => ({
+  $width: props.$width ?? ACTION_COLUMN_WIDTH,
+  $align: props.$align ?? "center",
+}))`
+  padding: var(--spacing-8);
 `;
 
 export const ActionButton = styled.button`

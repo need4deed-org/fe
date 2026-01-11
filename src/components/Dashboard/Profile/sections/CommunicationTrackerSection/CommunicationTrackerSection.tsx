@@ -9,6 +9,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CommunicationDialog, CommunicationEntry } from "./CommunicationDialog";
 import {
+  ACTION_COLUMN_WIDTH,
   ActionButton,
   ActionCell,
   AddButton,
@@ -28,7 +29,6 @@ import {
   TableContainer,
   TableHeader,
   TableHeaderCell,
-  TableHeaderRow,
   TableRow,
   Wrapper,
 } from "./styles";
@@ -266,27 +266,26 @@ export function CommunicationTrackerSection({ volunteer }: Props) {
         <TableContainer data-testid="communications-table">
           <Table>
             <TableHeader>
-              <TableHeaderRow>
-                <TableHeaderCell>{t("dashboard.communicationSection.date", "Date")}</TableHeaderCell>
-                <TableHeaderCell>{t("dashboard.communicationSection.type", "Type")}</TableHeaderCell>
-                <TableHeaderCell>
-                  {t("dashboard.communicationSection.contactMethod", "Contact method")}
-                </TableHeaderCell>
-                <TableHeaderCell>{t("dashboard.communicationSection.actions", "Actions")}</TableHeaderCell>
-              </TableHeaderRow>
+              <TableHeaderCell>{t("dashboard.communicationSection.typeOfContact")}</TableHeaderCell>
+              <TableHeaderCell $maxWidth="310px">{t("dashboard.communicationSection.contactMethodLabel")}</TableHeaderCell>
+              <TableHeaderCell $width="152px">{t("dashboard.communicationSection.date")}</TableHeaderCell>
+              <TableHeaderCell $width={ACTION_COLUMN_WIDTH}></TableHeaderCell>
+              <TableHeaderCell $width={ACTION_COLUMN_WIDTH}></TableHeaderCell>
             </TableHeader>
             <TableBody>
-              {communications.map((entry) => (
-                <TableRow key={entry.id} data-testid={`communication-row-${entry.id}`}>
-                  <TableCell>{formatDate(entry.date)}</TableCell>
+              {communications.map((entry, index) => (
+                <TableRow key={entry.id} $isLast={index === communications.length - 1} data-testid={`communication-row-${entry.id}`}>
                   <TableCell>
                     <StatusBadge $type="first-time">{getTypeLabel(entry.type, entry.notes)}</StatusBadge>
                   </TableCell>
-                  <TableCell>{getContactMethodLabel(entry.contactMethod)}</TableCell>
+                  <TableCell $maxWidth="310px">{getContactMethodLabel(entry.contactMethod)}</TableCell>
+                  <TableCell $width="152px" $noWrap>{formatDate(entry.date)}</TableCell>
                   <ActionCell>
                     <ActionButton onClick={() => handleEdit(entry)} data-testid={`edit-button-${entry.id}`}>
                       <PencilSimple size={20} weight="regular" />
                     </ActionButton>
+                  </ActionCell>
+                  <ActionCell>
                     <ActionButton onClick={() => handleDelete(entry)} data-testid={`delete-button-${entry.id}`}>
                       <Trash size={20} weight="regular" />
                     </ActionButton>
