@@ -1,6 +1,10 @@
 "use client";
+import { useCommunications } from "@/hooks/useCommunications";
+import { useCreateCommunication } from "@/hooks/useCreateCommunication";
+import { useDeleteCommunication } from "@/hooks/useDeleteCommunication";
+import { useUpdateCommunication } from "@/hooks/useUpdateCommunication";
 import { PencilSimple, Trash } from "@phosphor-icons/react";
-import { ApiVolunteerGet } from "need4deed-sdk";
+import { ApiVolunteerGet, ContactType, ContactMethodType, CommunicationType } from "need4deed-sdk";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CommunicationDialog, CommunicationEntry } from "./CommunicationDialog";
@@ -33,14 +37,63 @@ type Props = {
   volunteer: ApiVolunteerGet;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function CommunicationTrackerSection({ volunteer }: Props) {
   const { t } = useTranslation();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [communications, setCommunications] = useState<CommunicationEntry[]>([]);
   const [editingEntry, setEditingEntry] = useState<CommunicationEntry | undefined>(undefined);
   const [deleteConfirmId, setDeleteConfirmId] = useState<number | null>(null);
   const [deleteConfirmEntry, setDeleteConfirmEntry] = useState<CommunicationEntry | null>(null);
+
+  const { data: apiCommunications } = useCommunications(volunteer.id);
+  const { mutate: createCommunication } = useCreateCommunication(volunteer.id);
+  const { mutate: updateCommunication } = useUpdateCommunication(
+    volunteer.id,
+    editingEntry?.id ?? 0,
+  );
+  const { mutate: deleteCommunication } = useDeleteCommunication(volunteer.id, deleteConfirmId ?? 0);
+
+  const mapApiToCommunicationEntry = (apiData: typeof apiCommunications): CommunicationEntry[] => {
+    if (!apiData) return [];
+
+    return apiData.map((comm) => {
+      const contactTypeMap: Record<ContactType, string> = {
+        [ContactType.CALL]: "called",
+        [ContactType.TRIED_CALL]: "triedToCall",
+        [ContactType.TEXT_EMAIL]: "textedOrEmailed",
+        [ContactType.OTHER]: "other",
+      };
+
+      const contactMethodMap: Record<ContactMethodType, string> = {
+        [ContactMethodType.PHONE]: "phoneNumber",
+        [ContactMethodType.TELEGRAM]: "telegram",
+        [ContactMethodType.WHATSAPP]: "whatsapp",
+        [ContactMethodType.SIGNAL]: "signal",
+        [ContactMethodType.EMAIL]: "email",
+        [ContactMethodType.SMS]: "sms",
+        [ContactMethodType.VOICENOTE]: "voicenote",
+      };
+
+      const communicationTypeMap: Record<CommunicationType, string> = {
+        [CommunicationType.BRIEF]: "briefedVolunteer",
+        [CommunicationType.FIRST_INQUIRY]: "firstInquiry",
+        [CommunicationType.OPPORTUNITY_LIST]: "opportunityList",
+        [CommunicationType.STATUS_UPDATE]: "statusUpdate",
+        [CommunicationType.POST_FOLLOWUP]: "postMatchFollowUp",
+      };
+
+      return {
+        id: comm.id,
+        date: comm.date,
+        type: contactTypeMap[comm.contactType] || comm.contactType,
+        contactMethod: contactMethodMap[comm.contactMethod] || comm.contactMethod,
+        notes: comm.communicationType ? communicationTypeMap[comm.communicationType] : "",
+      };
+    });
+  };
+
+  const communications = mapApiToCommunicationEntry(apiCommunications).sort((a, b) => {
+    return new Date(b.date).getTime() - new Date(a.date).getTime();
+  });
 
   const handleAddNew = () => {
     setEditingEntry(undefined);
@@ -59,9 +112,12 @@ export function CommunicationTrackerSection({ volunteer }: Props) {
 
   const confirmDelete = () => {
     if (deleteConfirmId !== null) {
-      setCommunications(communications.filter((c) => c.id !== deleteConfirmId));
-      setDeleteConfirmId(null);
-      setDeleteConfirmEntry(null);
+      deleteCommunication(undefined, {
+        onSuccess: () => {
+          setDeleteConfirmId(null);
+          setDeleteConfirmEntry(null);
+        },
+      });
     }
   };
 
@@ -71,16 +127,70 @@ export function CommunicationTrackerSection({ volunteer }: Props) {
   };
 
   const handleSave = (entry: CommunicationEntry) => {
+    const mapContactType = (type: string): ContactType => {
+      const mapping: Record<string, ContactType> = {
+        called: ContactType.CALL,
+        triedToCall: ContactType.TRIED_CALL,
+        textedOrEmailed: ContactType.TEXT_EMAIL,
+        other: ContactType.OTHER,
+      };
+      return mapping[type] || ContactType.OTHER;
+    };
+
+    const mapContactMethod = (method: string): ContactMethodType => {
+      const mapping: Record<string, ContactMethodType> = {
+        phoneNumber: ContactMethodType.PHONE,
+        telegram: ContactMethodType.TELEGRAM,
+        whatsapp: ContactMethodType.WHATSAPP,
+        signal: ContactMethodType.SIGNAL,
+        email: ContactMethodType.EMAIL,
+        sms: ContactMethodType.SMS,
+        voicenote: ContactMethodType.VOICENOTE,
+      };
+      return mapping[method] || ContactMethodType.EMAIL;
+    };
+
+    const mapCommunicationType = (notes: string): CommunicationType | undefined => {
+      const mapping: Record<string, CommunicationType> = {
+        briefedVolunteer: CommunicationType.BRIEF,
+        firstInquiry: CommunicationType.FIRST_INQUIRY,
+        opportunityList: CommunicationType.OPPORTUNITY_LIST,
+        statusUpdate: CommunicationType.STATUS_UPDATE,
+        postMatchFollowUp: CommunicationType.POST_FOLLOWUP,
+      };
+      return mapping[notes];
+    };
+
     if (entry.id) {
-      setCommunications(communications.map((c) => (c.id === entry.id ? entry : c)));
+      updateCommunication(
+        {
+          contactType: mapContactType(entry.type),
+          contactMethod: mapContactMethod(entry.contactMethod),
+          communicationType: entry.type === "other" ? mapCommunicationType(entry.notes) : undefined,
+          date: new Date(entry.date),
+        },
+        {
+          onSuccess: () => setIsDialogOpen(false),
+        },
+      );
     } else {
-      setCommunications([...communications, { ...entry, id: Date.now() }]);
+      createCommunication(
+        {
+          contactType: mapContactType(entry.type),
+          contactMethod: mapContactMethod(entry.contactMethod),
+          communicationType: entry.type === "other" ? mapCommunicationType(entry.notes) : undefined,
+          date: new Date(entry.date),
+        },
+        {
+          onSuccess: () => setIsDialogOpen(false),
+        },
+      );
     }
   };
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return new Intl.DateTimeFormat("en-GB", {
+    return new Intl.DateTimeFormat("de-DE", {
       day: "2-digit",
       month: "2-digit",
       year: "numeric",

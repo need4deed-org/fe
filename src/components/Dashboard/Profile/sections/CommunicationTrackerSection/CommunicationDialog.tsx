@@ -388,7 +388,7 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
   const handleSave = () => {
     const entry: CommunicationEntry = {
       id: initialData?.id,
-      date: selectedDate.toISOString().split("T")[0],
+      date: selectedDate.toISOString(),
       type: selectedOption,
       contactMethod: selectedPlatform,
       notes:
