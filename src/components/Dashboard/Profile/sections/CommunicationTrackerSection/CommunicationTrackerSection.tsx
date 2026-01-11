@@ -9,7 +9,6 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CommunicationDialog, CommunicationEntry } from "./CommunicationDialog";
 import {
-  ACTION_COLUMN_WIDTH,
   ActionButton,
   ActionCell,
   AddButton,
@@ -269,8 +268,8 @@ export function CommunicationTrackerSection({ volunteer }: Props) {
               <TableHeaderCell>{t("dashboard.communicationSection.typeOfContact")}</TableHeaderCell>
               <TableHeaderCell $maxWidth="310px">{t("dashboard.communicationSection.contactMethodLabel")}</TableHeaderCell>
               <TableHeaderCell $width="152px">{t("dashboard.communicationSection.date")}</TableHeaderCell>
-              <TableHeaderCell $width={ACTION_COLUMN_WIDTH}></TableHeaderCell>
-              <TableHeaderCell $width={ACTION_COLUMN_WIDTH}></TableHeaderCell>
+              <TableHeaderCell $width="var(--communication-tracker-action-column-width)"></TableHeaderCell>
+              <TableHeaderCell $width="var(--communication-tracker-action-column-width)"></TableHeaderCell>
             </TableHeader>
             <TableBody>
               {communications.map((entry, index) => (

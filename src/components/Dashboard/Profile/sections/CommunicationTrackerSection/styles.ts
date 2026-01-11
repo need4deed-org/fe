@@ -1,7 +1,5 @@
 import styled from "styled-components";
 
-export const ACTION_COLUMN_WIDTH = "56px";
-
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -29,8 +27,8 @@ export const IconContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 40px;
-  height: 40px;
+  width: var(--icon-size-40);
+  height: var(--icon-size-40);
   color: var(--color-papaya);
 `;
 
@@ -62,7 +60,7 @@ export const TableHeaderCell = styled.div<{ $width?: string; $maxWidth?: string;
   align-items: center;
   padding: var(--spacing-16);
   gap: var(--spacing-8);
-  font-weight: 600;
+  font-weight: var(--font-weight-semi-bold);
   font-size: var(--text-p-font-size);
   line-height: var(--text-p-line-height);
   letter-spacing: var(--letter-spacing-tight);
@@ -120,7 +118,7 @@ export const TableCell = styled.div<{ $width?: string; $maxWidth?: string; $alig
 `;
 
 export const ActionCell = styled(TableCell).attrs<{ $width?: string; $align?: string }>((props) => ({
-  $width: props.$width ?? ACTION_COLUMN_WIDTH,
+  $width: props.$width ?? "var(--communication-tracker-action-column-width)",
   $align: props.$align ?? "center",
 }))`
   padding: var(--spacing-8);
@@ -137,7 +135,7 @@ export const ActionButton = styled.button`
   color: var(--color-midnight);
 
   &:hover {
-    opacity: 0.7;
+    opacity: var(--opacity-hover);
   }
 `;
 
@@ -157,20 +155,20 @@ export const AddButton = styled.button`
   align-items: center;
   padding: var(--spacing-16) var(--spacing-24);
   gap: var(--spacing-8);
-  height: 56px;
+  height: var(--communication-tracker-button-height);
   background: var(--color-aubergine);
   border-radius: var(--button-border-radius);
   border: none;
   cursor: pointer;
-  font-family: "Figtree";
+  font-family: var(--bs-body-font-family);
   font-style: normal;
-  font-weight: 600;
+  font-weight: var(--font-weight-semi-bold);
   font-size: var(--text-p-font-size);
   line-height: var(--text-p-line-height);
   text-align: center;
-  letter-spacing: 0.005em;
+  letter-spacing: var(--letter-spacing-tight);
   color: var(--color-white);
-  transition: background-color 0.2s ease;
+  transition: var(--transition-background);
 
   &:hover {
     background: var(--color-aubergine-light);
@@ -186,13 +184,13 @@ export const AddButton = styled.button`
 export const StatusBadge = styled.div<{ $type: string }>`
   display: inline-flex;
   align-items: center;
-  padding: 6px 12px;
+  padding: var(--communication-tracker-status-badge-padding);
   gap: var(--spacing-4);
-  border-radius: 16px;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 20px;
-  letter-spacing: 0.005em;
+  border-radius: var(--border-radius-large);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-14);
+  line-height: var(--line-height-20);
+  letter-spacing: var(--letter-spacing-tight);
 
   ${(props) => {
     switch (props.$type) {
@@ -245,25 +243,25 @@ export const DeleteConfirmDialog = styled.div`
   gap: var(--spacing-24);
   background: var(--color-white);
   border-radius: var(--card-border-radius);
-  box-shadow: 0px 10px 30px -12px rgba(143, 81, 138, 0.2);
-  max-width: 500px;
+  box-shadow: var(--communication-tracker-dialog-box-shadow);
+  max-width: var(--communication-tracker-delete-dialog-max-width);
   width: 90%;
 `;
 
 export const DeleteConfirmTitle = styled.h3`
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 32px;
-  letter-spacing: 0.005em;
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-24);
+  line-height: var(--line-height-32);
+  letter-spacing: var(--letter-spacing-tight);
   color: var(--color-midnight);
   margin: 0;
 `;
 
 export const DeleteConfirmText = styled.p`
-  font-weight: 400;
+  font-weight: var(--font-weight-regular);
   font-size: var(--text-p-font-size);
   line-height: var(--text-p-line-height);
-  letter-spacing: 0.005em;
+  letter-spacing: var(--letter-spacing-tight);
   color: var(--color-midnight);
   margin: 0;
 `;
@@ -279,14 +277,14 @@ export const DeleteConfirmButtons = styled.div`
 export const DeleteCancelButton = styled.button`
   padding: var(--spacing-16) var(--spacing-24);
   background: transparent;
-  border: 2px solid var(--color-aubergine);
+  border: var(--border-width-medium) solid var(--color-aubergine);
   border-radius: var(--button-border-radius);
   cursor: pointer;
-  font-weight: 600;
+  font-weight: var(--font-weight-semi-bold);
   font-size: var(--text-p-font-size);
   line-height: var(--text-p-line-height);
   color: var(--color-aubergine);
-  font-family: "Figtree";
+  font-family: var(--bs-body-font-family);
 
   &:hover {
     background: var(--color-aubergine-subtle);
@@ -299,11 +297,11 @@ export const DeleteConfirmButton = styled.button`
   border: none;
   border-radius: var(--button-border-radius);
   cursor: pointer;
-  font-weight: 600;
+  font-weight: var(--font-weight-semi-bold);
   font-size: var(--text-p-font-size);
   line-height: var(--text-p-line-height);
   color: var(--color-white);
-  font-family: "Figtree";
+  font-family: var(--bs-body-font-family);
 
   &:hover {
     background: var(--color-aubergine-light);

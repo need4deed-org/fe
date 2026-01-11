@@ -28,8 +28,8 @@ const DialogContainer = styled.div`
   gap: var(--spacing-32);
   background: var(--color-white);
   border-radius: var(--card-border-radius);
-  box-shadow: 0px 10px 30px -12px rgba(143, 81, 138, 0.2);
-  max-width: 620px;
+  box-shadow: var(--communication-tracker-dialog-box-shadow);
+  max-width: var(--communication-tracker-dialog-max-width);
   width: 90%;
   max-height: 90vh;
   overflow-y: auto;
@@ -44,10 +44,10 @@ const DialogHeader = styled.div`
 `;
 
 const DialogTitle = styled.h3`
-  font-weight: 700;
-  font-size: 32px;
-  line-height: 40px;
-  letter-spacing: 0.005em;
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-32);
+  line-height: var(--line-height-40);
+  letter-spacing: var(--letter-spacing-tight);
   color: var(--color-midnight);
   margin: 0;
 `;
@@ -63,7 +63,7 @@ const CloseButton = styled.button`
   color: var(--color-midnight);
 
   &:hover {
-    opacity: 0.7;
+    opacity: var(--opacity-hover);
   }
 `;
 
@@ -79,11 +79,11 @@ const RadioOption = styled.label`
   flex-direction: column;
   gap: var(--spacing-20);
   cursor: pointer;
-  font-size: 20px;
-  line-height: 24px;
-  letter-spacing: 0.005em;
+  font-size: var(--text-p-font-size);
+  line-height: var(--text-p-line-height);
+  letter-spacing: var(--letter-spacing-tight);
   color: var(--color-midnight);
-  font-weight: 400;
+  font-weight: var(--font-weight-regular);
 `;
 
 const RadioRow = styled.div`
@@ -93,8 +93,8 @@ const RadioRow = styled.div`
 `;
 
 const RadioInput = styled.input`
-  width: 24px;
-  height: 24px;
+  width: var(--communication-tracker-radio-size);
+  height: var(--communication-tracker-radio-size);
   cursor: pointer;
   accent-color: var(--color-aubergine);
   flex-shrink: 0;
@@ -108,10 +108,10 @@ const FormField = styled.div`
 `;
 
 const Label = styled.label`
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 20px;
-  letter-spacing: 0.005em;
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-16);
+  line-height: var(--line-height-20);
+  letter-spacing: var(--letter-spacing-tight);
   color: var(--color-midnight);
 `;
 
@@ -124,19 +124,19 @@ const DatePickerWrapper = styled.div`
     --rdp-accent-background-color: var(--color-aubergine);
     --rdp-background-color: var(--color-aubergine-subtle);
     margin: 0;
-    font-family: "Figtree";
+    font-family: var(--bs-body-font-family);
   }
 
   .rdp-day_button {
-    width: 40px;
-    height: 40px;
-    border-radius: 4px;
+    width: var(--communication-tracker-date-picker-day-size);
+    height: var(--communication-tracker-date-picker-day-size);
+    border-radius: var(--border-radius-xs);
   }
 
   .rdp-selected .rdp-day_button {
     background-color: var(--color-aubergine);
     color: var(--color-white);
-    font-weight: 600;
+    font-weight: var(--font-weight-semi-bold);
   }
 
   .rdp-day_button:hover:not([disabled]) {
@@ -149,13 +149,13 @@ const DatePickerWrapper = styled.div`
 
   .rdp-nav {
     display: flex;
-    gap: 8px;
+    gap: var(--spacing-8);
   }
 
   .rdp-nav_button {
-    width: 32px;
-    height: 32px;
-    border-radius: 4px;
+    width: var(--communication-tracker-date-picker-nav-button-size);
+    height: var(--communication-tracker-date-picker-nav-button-size);
+    border-radius: var(--border-radius-xs);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -170,14 +170,14 @@ const DatePickerWrapper = styled.div`
   }
 
   .rdp-caption_label {
-    font-weight: 600;
-    font-size: 16px;
+    font-weight: var(--font-weight-semi-bold);
+    font-size: var(--font-size-16);
     color: var(--color-midnight);
   }
 
   .rdp-weekday {
-    font-weight: 600;
-    font-size: 14px;
+    font-weight: var(--font-weight-semi-bold);
+    font-size: var(--font-size-14);
     color: var(--color-midnight);
   }
 
@@ -185,21 +185,21 @@ const DatePickerWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 8px;
+    padding: var(--spacing-8);
   }
 
   .rdp-dropdowns {
     display: flex;
-    gap: 8px;
+    gap: var(--spacing-8);
     align-items: center;
   }
 
   .rdp-dropdown {
-    padding: 4px 8px;
-    border: 1px solid var(--color-grey-200);
-    border-radius: 4px;
+    padding: var(--communication-tracker-dropdown-item-padding);
+    border: var(--border-width-thin) solid var(--color-grey-200);
+    border-radius: var(--border-radius-xs);
     background: var(--color-white);
-    font-family: "Figtree";
+    font-family: var(--bs-body-font-family);
     cursor: pointer;
   }
 `;
@@ -211,7 +211,7 @@ const DateInputContainer = styled.div`
 
 const DateInputIcon = styled(Calendar)`
   position: absolute;
-  left: 16px;
+  left: var(--communication-tracker-input-icon-offset);
   top: 50%;
   transform: translateY(-50%);
   color: var(--color-aubergine);
@@ -222,14 +222,14 @@ const DateInputIcon = styled(Calendar)`
 const DateInput = styled.input`
   width: 100%;
   padding: var(--spacing-16);
-  padding-left: 48px;
-  border: 1px solid var(--color-grey-200);
+  padding-left: var(--communication-tracker-input-padding-left);
+  border: var(--border-width-thin) solid var(--color-grey-200);
   border-radius: var(--border-radius-small);
-  font-size: 20px;
-  line-height: 24px;
-  font-weight: 400;
+  font-size: var(--text-p-font-size);
+  line-height: var(--text-p-line-height);
+  font-weight: var(--font-weight-regular);
   color: var(--color-aubergine);
-  font-family: "Figtree";
+  font-family: var(--bs-body-font-family);
   cursor: pointer;
   background: var(--color-white);
 
@@ -246,34 +246,34 @@ const DateInput = styled.input`
 const DatePickerPopover = styled.div<{ $isOpen: boolean }>`
   display: ${(props) => (props.$isOpen ? "block" : "none")};
   position: absolute;
-  bottom: calc(100% + 8px);
+  bottom: calc(100% + var(--spacing-8));
   left: 0;
   z-index: 1000;
   background: var(--color-white);
-  border: 1px solid var(--color-grey-200);
+  border: var(--border-width-thin) solid var(--color-grey-200);
   border-radius: var(--border-radius-small);
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-  padding: 16px;
+  box-shadow: var(--communication-tracker-popover-box-shadow);
+  padding: var(--spacing-16);
 `;
 
 const Select = styled.select`
   width: 100%;
   padding: var(--spacing-16);
-  padding-right: 48px;
-  border: 1px solid var(--color-grey-200);
+  padding-right: var(--communication-tracker-input-padding-left);
+  border: var(--border-width-thin) solid var(--color-grey-200);
   border-radius: var(--border-radius-small);
-  font-size: 20px;
-  line-height: 24px;
-  font-weight: 400;
+  font-size: var(--text-p-font-size);
+  line-height: var(--text-p-line-height);
+  font-weight: var(--font-weight-regular);
   color: var(--color-aubergine);
-  font-family: "Figtree";
+  font-family: var(--bs-body-font-family);
   background: var(--color-white);
   cursor: pointer;
   appearance: none;
   background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg width='14' height='8' viewBox='0 0 14 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M1 1L7 7L13 1' stroke='%23403168' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3e%3c/svg%3e");
   background-repeat: no-repeat;
-  background-position: right 16px center;
-  background-size: 14px 8px;
+  background-position: right var(--communication-tracker-input-icon-offset) center;
+  background-size: var(--communication-tracker-dropdown-arrow-size);
 
   &:focus {
     outline: none;
@@ -292,14 +292,14 @@ const ButtonGroup = styled.div`
 const CancelButton = styled.button`
   padding: var(--spacing-16) var(--spacing-24);
   background: transparent;
-  border: 2px solid var(--color-aubergine);
+  border: var(--border-width-medium) solid var(--color-aubergine);
   border-radius: var(--button-border-radius);
   cursor: pointer;
-  font-weight: 600;
+  font-weight: var(--font-weight-semi-bold);
   font-size: var(--text-p-font-size);
   line-height: var(--text-p-line-height);
   color: var(--color-aubergine);
-  font-family: "Figtree";
+  font-family: var(--bs-body-font-family);
 
   &:hover {
     background: var(--color-aubergine-subtle);
@@ -312,11 +312,11 @@ const SaveButton = styled.button`
   border: none;
   border-radius: var(--button-border-radius);
   cursor: pointer;
-  font-weight: 600;
+  font-weight: var(--font-weight-semi-bold);
   font-size: var(--text-p-font-size);
   line-height: var(--text-p-line-height);
   color: var(--color-white);
-  font-family: "Figtree";
+  font-family: var(--bs-body-font-family);
 
   &:hover {
     background: var(--color-aubergine-light);
@@ -326,7 +326,7 @@ const SaveButton = styled.button`
     background: var(--color-grey-200);
     color: var(--color-grey-500);
     cursor: not-allowed;
-    opacity: 0.6;
+    opacity: var(--opacity-disabled);
   }
 `;
 
