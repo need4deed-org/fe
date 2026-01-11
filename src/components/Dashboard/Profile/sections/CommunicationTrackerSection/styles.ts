@@ -16,22 +16,6 @@ export const Header = styled.div`
   width: 100%;
 `;
 
-export const TitleRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: var(--profile-section-title-gap);
-`;
-
-export const IconContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: var(--icon-size-40);
-  height: var(--icon-size-40);
-  color: var(--color-papaya);
-`;
-
 export const TableContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -52,8 +36,6 @@ export const TableHeader = styled.div`
   flex-direction: row;
   background: var(--color-pink-50);
 `;
-
-export const TableHeaderRow = styled.div``;
 
 export const TableHeaderCell = styled.div<{ $width?: string; $maxWidth?: string; $noWrap?: boolean }>`
   display: flex;
@@ -223,87 +205,3 @@ export const StatusBadge = styled.div<{ $type: string }>`
   }}
 `;
 
-export const DeleteConfirmOverlay = styled.div<{ $isOpen: boolean }>`
-  display: ${(props) => (props.$isOpen ? "flex" : "none")};
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: var(--color-dimmed-background);
-  z-index: 10001;
-  justify-content: center;
-  align-items: center;
-`;
-
-export const DeleteConfirmDialog = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: var(--spacing-32);
-  gap: var(--spacing-24);
-  background: var(--color-white);
-  border-radius: var(--card-border-radius);
-  box-shadow: var(--communication-tracker-dialog-box-shadow);
-  max-width: var(--communication-tracker-delete-dialog-max-width);
-  width: 90%;
-`;
-
-export const DeleteConfirmTitle = styled.h3`
-  font-weight: var(--font-weight-bold);
-  font-size: var(--font-size-24);
-  line-height: var(--line-height-32);
-  letter-spacing: var(--letter-spacing-tight);
-  color: var(--color-midnight);
-  margin: 0;
-`;
-
-export const DeleteConfirmText = styled.p`
-  font-weight: var(--font-weight-regular);
-  font-size: var(--text-p-font-size);
-  line-height: var(--text-p-line-height);
-  letter-spacing: var(--letter-spacing-tight);
-  color: var(--color-midnight);
-  margin: 0;
-`;
-
-export const DeleteConfirmButtons = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  gap: var(--spacing-16);
-  margin-top: var(--spacing-8);
-`;
-
-export const DeleteCancelButton = styled.button`
-  padding: var(--spacing-16) var(--spacing-24);
-  background: transparent;
-  border: var(--border-width-medium) solid var(--color-aubergine);
-  border-radius: var(--button-border-radius);
-  cursor: pointer;
-  font-weight: var(--font-weight-semi-bold);
-  font-size: var(--text-p-font-size);
-  line-height: var(--text-p-line-height);
-  color: var(--color-aubergine);
-  font-family: var(--bs-body-font-family);
-
-  &:hover {
-    background: var(--color-aubergine-subtle);
-  }
-`;
-
-export const DeleteConfirmButton = styled.button`
-  padding: var(--spacing-16) var(--spacing-24);
-  background: var(--color-aubergine);
-  border: none;
-  border-radius: var(--button-border-radius);
-  cursor: pointer;
-  font-weight: var(--font-weight-semi-bold);
-  font-size: var(--text-p-font-size);
-  line-height: var(--text-p-line-height);
-  color: var(--color-white);
-  font-family: var(--bs-body-font-family);
-
-  &:hover {
-    background: var(--color-aubergine-light);
-  }
-`;

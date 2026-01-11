@@ -5,8 +5,11 @@ import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { DayPicker } from "react-day-picker";
 import { format } from "date-fns";
-import { de } from "date-fns/locale";
+import { de, type Locale } from "date-fns/locale";
+import { ContactType, ContactMethodType, CommunicationType, ApiCommunicationGet } from "need4deed-sdk";
 import "react-day-picker/style.css";
+import { getContactTypeLabel } from "./utils/translations";
+import { getCommunicationTypeOptions, getContactMethodOptions, getDefaultContactMethod } from "./utils/options";
 
 const DialogOverlay = styled.div<{ $isOpen: boolean }>`
   display: ${(props) => (props.$isOpen ? "flex" : "none")};
@@ -333,79 +336,66 @@ const SaveButton = styled.button`
 type Props = {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (data: CommunicationEntry) => void;
-  initialData?: CommunicationEntry;
-};
-
-export type CommunicationEntry = {
-  id?: number;
-  date: string;
-  type: string;
-  contactMethod: string;
-  notes: string;
+  onSave: (data: Partial<ApiCommunicationGet>) => void;
+  initialData?: ApiCommunicationGet;
 };
 
 export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Props) {
   const { t, i18n } = useTranslation();
-  const [selectedOption, setSelectedOption] = useState<string>("");
+  const [contactType, setContactType] = useState<ContactType | "">("");
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-  const [selectedPlatform, setSelectedPlatform] = useState<string>("phoneNumber");
-  const [selectedCommunicationType, setSelectedCommunicationType] = useState<string>("");
+  const [contactMethod, setContactMethod] = useState<ContactMethodType>(ContactMethodType.PHONE);
+  const [communicationType, setCommunicationType] = useState<CommunicationType>(CommunicationType.BRIEF);
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
   const datePickerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (isOpen) {
       if (initialData) {
-        setSelectedOption(initialData.type);
+        setContactType(initialData.contactType);
         setSelectedDate(new Date(initialData.date));
-        setSelectedPlatform(initialData.contactMethod);
-        setSelectedCommunicationType(initialData.notes || "");
+        setContactMethod(initialData.contactMethod);
+        setCommunicationType(initialData.communicationType || CommunicationType.BRIEF);
       } else {
-        setSelectedOption("");
-        setSelectedDate(new Date());
-        setSelectedPlatform("");
-        setSelectedCommunicationType("");
+        resetForm();
       }
     }
   }, [isOpen, initialData]);
 
   useEffect(() => {
-    if (selectedOption === "textedOrEmailed" && !selectedPlatform) {
-      setSelectedPlatform("email");
-    } else if ((selectedOption === "called" || selectedOption === "triedToCall") && !selectedPlatform) {
-      setSelectedPlatform("phoneNumber");
-    } else if (selectedOption === "other") {
-      if (!selectedCommunicationType) {
-        setSelectedCommunicationType("briefedVolunteer");
-      }
-      if (!selectedPlatform) {
-        setSelectedPlatform("email");
+    if (contactType !== "") {
+      const defaultMethod = getDefaultContactMethod(contactType);
+      if (!initialData) {
+        setContactMethod(defaultMethod);
       }
     }
-  }, [selectedOption, selectedPlatform, selectedCommunicationType]);
+  }, [contactType, initialData]);
+
+  const resetForm = () => {
+    setContactType("");
+    setSelectedDate(new Date());
+    setContactMethod(ContactMethodType.PHONE);
+    setCommunicationType(CommunicationType.BRIEF);
+    setIsDatePickerOpen(false);
+  };
 
   const handleSave = () => {
-    const entry: CommunicationEntry = {
+    if (!contactType) return;
+
+    const data: Partial<ApiCommunicationGet> = {
       id: initialData?.id,
-      date: selectedDate.toISOString(),
-      type: selectedOption,
-      contactMethod: selectedPlatform,
-      notes:
-        selectedOption === "other"
-          ? selectedCommunicationType
-          : t(`dashboard.communicationSection.contactTypes.${selectedOption}`, selectedOption),
+      contactType,
+      contactMethod,
+      communicationType: contactType === ContactType.OTHER ? communicationType : undefined,
+      date: selectedDate,
     };
-    onSave(entry);
+
+    onSave(data);
     handleClose();
   };
 
   const handleClose = () => {
-    setSelectedOption("");
-    setSelectedDate(new Date());
-    setSelectedPlatform("");
-    setSelectedCommunicationType("");
-    setIsDatePickerOpen(false);
+    resetForm();
     onClose();
   };
 
@@ -418,104 +408,6 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
 
   const locale = i18n.language === "de" ? de : undefined;
 
-  const getCommunicationTypeOptions = () => [
-    {
-      value: "briefedVolunteer",
-      label: t("dashboard.communicationSection.communicationTypes.briefedVolunteer", "Briefed (accompanying volunteer)"),
-    },
-    {
-      value: "firstInquiry",
-      label: t("dashboard.communicationSection.communicationTypes.firstInquiry", "First inquiry sent"),
-    },
-    {
-      value: "opportunityList",
-      label: t("dashboard.communicationSection.communicationTypes.opportunityList", "Opportunity list sent"),
-    },
-    {
-      value: "statusUpdate",
-      label: t("dashboard.communicationSection.communicationTypes.statusUpdate", "Status update"),
-    },
-    {
-      value: "postMatchFollowUp",
-      label: t("dashboard.communicationSection.communicationTypes.postMatchFollowUp", "Post-match follow-up"),
-    },
-  ];
-
-  const getContactMethodOptions = () => {
-    if (selectedOption === "textedOrEmailed" || selectedOption === "other") {
-      return [
-        { value: "email", label: t("dashboard.communicationSection.platformOptions.email", "E-mail") },
-        { value: "telegram", label: t("dashboard.communicationSection.platformOptions.telegram", "Telegram") },
-        { value: "whatsapp", label: t("dashboard.communicationSection.platformOptions.whatsapp", "Whatsapp") },
-        { value: "sms", label: t("dashboard.communicationSection.platformOptions.sms", "SMS") },
-        { value: "voicenote", label: t("dashboard.communicationSection.platformOptions.voicenote", "Voicenote") },
-      ];
-    }
-    return [
-      { value: "phoneNumber", label: t("dashboard.communicationSection.platformOptions.phoneNumber", "Phone number") },
-      { value: "telegram", label: t("dashboard.communicationSection.platformOptions.telegram", "Telegram") },
-      { value: "whatsapp", label: t("dashboard.communicationSection.platformOptions.whatsapp", "Whatsapp") },
-      { value: "signal", label: t("dashboard.communicationSection.platformOptions.signal", "Signal") },
-    ];
-  };
-
-  const AdditionalFields = () => (
-    <>
-      {selectedOption === "other" && (
-        <FormField>
-          <Label>{t("dashboard.communicationSection.communicationTypeRequired", "Communication type*")}</Label>
-          <Select
-            value={selectedCommunicationType}
-            onChange={(e) => setSelectedCommunicationType(e.target.value)}
-            data-testid="communication-type-select"
-          >
-            {getCommunicationTypeOptions().map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </Select>
-        </FormField>
-      )}
-      <FormField>
-        <Label>{t("dashboard.communicationSection.contactMethodRequired", "Contact method*")}</Label>
-        <Select value={selectedPlatform} onChange={(e) => setSelectedPlatform(e.target.value)} data-testid="platform-select">
-          {getContactMethodOptions().map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </Select>
-      </FormField>
-      <FormField>
-        <Label>{t("dashboard.communicationSection.contactDateRequired", "Contact date*")}</Label>
-        <DatePickerWrapper ref={datePickerRef}>
-          <DateInputContainer>
-            <DateInputIcon size={24} weight="regular" />
-            <DateInput
-              value={format(selectedDate, "dd.MM.yyyy")}
-              onClick={() => setIsDatePickerOpen(!isDatePickerOpen)}
-              readOnly
-              data-testid="date-picker-input"
-            />
-          </DateInputContainer>
-          <DatePickerPopover $isOpen={isDatePickerOpen}>
-            <DayPicker
-              mode="single"
-              selected={selectedDate}
-              onSelect={handleDateSelect}
-              locale={locale}
-              captionLayout="dropdown"
-              fromYear={1900}
-              toYear={new Date().getFullYear() + 10}
-              disabled={{ after: new Date() }}
-            />
-          </DatePickerPopover>
-        </DatePickerWrapper>
-      </FormField>
-    </>
-  );
-
   return (
     <DialogOverlay $isOpen={isOpen} onClick={handleClose} data-testid="communication-dialog-overlay">
       <DialogContainer onClick={(e) => e.stopPropagation()} data-testid="communication-dialog-container">
@@ -527,76 +419,146 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
         </DialogHeader>
 
         <RadioGroup>
-          <RadioOption>
-            <RadioRow>
-              <RadioInput
-                type="radio"
-                name="contactType"
-                value="called"
-                checked={selectedOption === "called"}
-                onChange={(e) => setSelectedOption(e.target.value)}
-                data-testid="radio-called"
-              />
-              {t("dashboard.communicationSection.contactTypes.called", "Called")}
-            </RadioRow>
-            {selectedOption === "called" && <AdditionalFields />}
-          </RadioOption>
-
-          <RadioOption>
-            <RadioRow>
-              <RadioInput
-                type="radio"
-                name="contactType"
-                value="triedToCall"
-                checked={selectedOption === "triedToCall"}
-                onChange={(e) => setSelectedOption(e.target.value)}
-                data-testid="radio-tried-to-call"
-              />
-              {t("dashboard.communicationSection.contactTypes.triedToCall", "Tried to call")}
-            </RadioRow>
-            {selectedOption === "triedToCall" && <AdditionalFields />}
-          </RadioOption>
-
-          <RadioOption>
-            <RadioRow>
-              <RadioInput
-                type="radio"
-                name="contactType"
-                value="textedOrEmailed"
-                checked={selectedOption === "textedOrEmailed"}
-                onChange={(e) => setSelectedOption(e.target.value)}
-                data-testid="radio-texted-or-emailed"
-              />
-              {t("dashboard.communicationSection.contactTypes.textedOrEmailed", "Texted or emailed")}
-            </RadioRow>
-            {selectedOption === "textedOrEmailed" && <AdditionalFields />}
-          </RadioOption>
-
-          <RadioOption>
-            <RadioRow>
-              <RadioInput
-                type="radio"
-                name="contactType"
-                value="other"
-                checked={selectedOption === "other"}
-                onChange={(e) => setSelectedOption(e.target.value)}
-                data-testid="radio-other"
-              />
-              {t("dashboard.communicationSection.contactTypes.other", "Other")}
-            </RadioRow>
-            {selectedOption === "other" && <AdditionalFields />}
-          </RadioOption>
+          {Object.values(ContactType).map((type) => (
+            <ContactTypeOption
+              key={type}
+              type={type}
+              isSelected={contactType === type}
+              onSelect={setContactType}
+              contactMethod={contactMethod}
+              onContactMethodChange={setContactMethod}
+              communicationType={communicationType}
+              onCommunicationTypeChange={setCommunicationType}
+              selectedDate={selectedDate}
+              isDatePickerOpen={isDatePickerOpen}
+              onDatePickerToggle={() => setIsDatePickerOpen(!isDatePickerOpen)}
+              onDateSelect={handleDateSelect}
+              datePickerRef={datePickerRef}
+              locale={locale}
+            />
+          ))}
         </RadioGroup>
 
         <ButtonGroup>
           <CancelButton onClick={handleClose} data-testid="cancel-button">
             {t("dashboard.communicationSection.cancel", "Cancel")}
           </CancelButton>
-          <SaveButton onClick={handleSave} data-testid="save-button">
+          <SaveButton onClick={handleSave} data-testid="save-button" disabled={!contactType}>
             {t("dashboard.communicationSection.save", "Save")}
           </SaveButton>
         </ButtonGroup>
       </DialogContainer>
     </DialogOverlay>
+  );
+}
+
+type ContactTypeOptionProps = {
+  type: ContactType;
+  isSelected: boolean;
+  onSelect: (type: ContactType) => void;
+  contactMethod: ContactMethodType;
+  onContactMethodChange: (method: ContactMethodType) => void;
+  communicationType: CommunicationType;
+  onCommunicationTypeChange: (type: CommunicationType) => void;
+  selectedDate: Date;
+  isDatePickerOpen: boolean;
+  onDatePickerToggle: () => void;
+  onDateSelect: (date: Date | undefined) => void;
+  datePickerRef: React.RefObject<HTMLDivElement | null>;
+  locale: Locale | undefined;
+};
+
+function ContactTypeOption({
+  type,
+  isSelected,
+  onSelect,
+  contactMethod,
+  onContactMethodChange,
+  communicationType,
+  onCommunicationTypeChange,
+  selectedDate,
+  isDatePickerOpen,
+  onDatePickerToggle,
+  onDateSelect,
+  datePickerRef,
+  locale,
+}: ContactTypeOptionProps) {
+  const { t } = useTranslation();
+  const testId = `radio-${type.toLowerCase().replace(/_/g, "-")}`;
+
+  return (
+    <RadioOption>
+      <RadioRow>
+        <RadioInput
+          type="radio"
+          name="contactType"
+          value={type}
+          checked={isSelected}
+          onChange={() => onSelect(type)}
+          data-testid={testId}
+        />
+        {getContactTypeLabel(t, type)}
+      </RadioRow>
+      {isSelected && (
+        <>
+          {type === ContactType.OTHER && (
+            <FormField>
+              <Label>{t("dashboard.communicationSection.communicationTypeRequired", "Communication type*")}</Label>
+              <Select
+                value={communicationType}
+                onChange={(e) => onCommunicationTypeChange(e.target.value as CommunicationType)}
+                data-testid="communication-type-select"
+              >
+                {getCommunicationTypeOptions(t).map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </Select>
+            </FormField>
+          )}
+          <FormField>
+            <Label>{t("dashboard.communicationSection.contactMethodRequired", "Contact method*")}</Label>
+            <Select
+              value={contactMethod}
+              onChange={(e) => onContactMethodChange(e.target.value as ContactMethodType)}
+              data-testid="platform-select"
+            >
+              {getContactMethodOptions(t, type).map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </Select>
+          </FormField>
+          <FormField>
+            <Label>{t("dashboard.communicationSection.contactDateRequired", "Contact date*")}</Label>
+            <DatePickerWrapper ref={datePickerRef}>
+              <DateInputContainer>
+                <DateInputIcon size={24} weight="regular" />
+                <DateInput
+                  value={format(selectedDate, "dd.MM.yyyy")}
+                  onClick={onDatePickerToggle}
+                  readOnly
+                  data-testid="date-picker-input"
+                />
+              </DateInputContainer>
+              <DatePickerPopover $isOpen={isDatePickerOpen}>
+                <DayPicker
+                  mode="single"
+                  selected={selectedDate}
+                  onSelect={onDateSelect}
+                  locale={locale}
+                  captionLayout="dropdown"
+                  fromYear={1900}
+                  toYear={new Date().getFullYear() + 10}
+                  disabled={{ after: new Date() }}
+                />
+              </DatePickerPopover>
+            </DatePickerWrapper>
+          </FormField>
+        </>
+      )}
+    </RadioOption>
   );
 }
