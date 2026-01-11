@@ -2,40 +2,37 @@ import { TFunction } from "i18next";
 import { ContactType, ContactMethodType, CommunicationType } from "need4deed-sdk";
 
 export function getContactTypeLabel(t: TFunction, contactType: ContactType): string {
-  const key = `dashboard.communicationSection.contactTypes.${contactType.toLowerCase()}`;
-  const defaults: Record<ContactType, string> = {
-    [ContactType.CALL]: "Called",
-    [ContactType.TRIED_CALL]: "Tried to call",
-    [ContactType.TEXT_EMAIL]: "Texted or emailed",
-    [ContactType.OTHER]: "Other",
+  const map: Record<string, string> = {
+    [ContactType.CALL]: "dashboard.communicationSection.contactTypes.called",
+    [ContactType.TRIED_CALL]: "dashboard.communicationSection.contactTypes.triedToCall",
+    [ContactType.TEXT_EMAIL]: "dashboard.communicationSection.contactTypes.textedOrEmailed",
+    [ContactType.OTHER]: "dashboard.communicationSection.contactTypes.other",
   };
-  return t(key, defaults[contactType]);
+  return t(map[contactType] || `dashboard.communicationSection.contactTypes.${contactType.toLowerCase()}`, { defaultValue: contactType });
 }
 
 export function getContactMethodLabel(t: TFunction, contactMethod: ContactMethodType): string {
-  const key = `dashboard.communicationSection.platformOptions.${contactMethod.toLowerCase()}`;
-  const defaults: Record<ContactMethodType, string> = {
-    [ContactMethodType.PHONE]: "Phone number",
-    [ContactMethodType.TELEGRAM]: "Telegram",
-    [ContactMethodType.WHATSAPP]: "Whatsapp",
-    [ContactMethodType.SIGNAL]: "Signal",
-    [ContactMethodType.EMAIL]: "E-mail",
-    [ContactMethodType.SMS]: "SMS",
-    [ContactMethodType.VOICENOTE]: "Voicenote",
+   const map: Record<string, string> = {
+    [ContactMethodType.PHONE]: "dashboard.communicationSection.platformOptions.phoneNumber",
+    [ContactMethodType.TELEGRAM]: "dashboard.communicationSection.platformOptions.telegram",
+    [ContactMethodType.WHATSAPP]: "dashboard.communicationSection.platformOptions.whatsapp",
+    [ContactMethodType.SIGNAL]: "dashboard.communicationSection.platformOptions.signal",
+    [ContactMethodType.EMAIL]: "dashboard.communicationSection.platformOptions.email",
+    [ContactMethodType.SMS]: "dashboard.communicationSection.platformOptions.sms",
+    [ContactMethodType.VOICENOTE]: "dashboard.communicationSection.platformOptions.voicenote",
   };
-  return t(key, defaults[contactMethod]);
+  return t(map[contactMethod] || `dashboard.communicationSection.platformOptions.${contactMethod.toLowerCase()}`, { defaultValue: contactMethod });
 }
 
 export function getCommunicationTypeLabel(t: TFunction, communicationType: CommunicationType): string {
-  const key = `dashboard.communicationSection.communicationTypes.${communicationType.toLowerCase()}`;
-  const defaults: Record<CommunicationType, string> = {
-    [CommunicationType.BRIEF]: "Briefed (accompanying volunteer)",
-    [CommunicationType.FIRST_INQUIRY]: "First inquiry sent",
-    [CommunicationType.OPPORTUNITY_LIST]: "Opportunity list sent",
-    [CommunicationType.STATUS_UPDATE]: "Status update",
-    [CommunicationType.POST_FOLLOWUP]: "Post-match follow-up",
+    const map: Record<string, string> = {
+    [CommunicationType.BRIEF]: "dashboard.communicationSection.communicationTypes.briefedVolunteer",
+    [CommunicationType.FIRST_INQUIRY]: "dashboard.communicationSection.communicationTypes.firstInquiry",
+    [CommunicationType.OPPORTUNITY_LIST]: "dashboard.communicationSection.communicationTypes.opportunityList",
+    [CommunicationType.STATUS_UPDATE]: "dashboard.communicationSection.communicationTypes.statusUpdate",
+    [CommunicationType.POST_FOLLOWUP]: "dashboard.communicationSection.communicationTypes.postMatchFollowUp",
   };
-  return t(key, defaults[communicationType]);
+  return t(map[communicationType] || `dashboard.communicationSection.communicationTypes.${communicationType.toLowerCase()}`, { defaultValue: communicationType });
 }
 
 export function getDisplayLabel(

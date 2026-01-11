@@ -1,42 +1,18 @@
 "use client";
 import { X, Calendar } from "@phosphor-icons/react";
-import { useState, useRef, useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { DayPicker } from "react-day-picker";
 import { format } from "date-fns";
 import { de, type Locale } from "date-fns/locale";
 import { ContactType, ContactMethodType, CommunicationType, ApiCommunicationGet } from "need4deed-sdk";
+import { useForm, Controller } from "react-hook-form";
 import "react-day-picker/style.css";
+import { Modal } from "@/components/core/modal";
+import { Button } from "@/components/core/button";
 import { getContactTypeLabel } from "./utils/translations";
 import { getCommunicationTypeOptions, getContactMethodOptions, getDefaultContactMethod } from "./utils/options";
-
-const DialogOverlay = styled.div<{ $isOpen: boolean }>`
-  display: ${(props) => (props.$isOpen ? "flex" : "none")};
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: var(--color-dimmed-background);
-  z-index: 10001;
-  justify-content: center;
-  align-items: center;
-`;
-
-const DialogContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: var(--spacing-48);
-  gap: var(--spacing-32);
-  background: var(--color-white);
-  border-radius: var(--card-border-radius);
-  box-shadow: var(--communication-tracker-dialog-box-shadow);
-  max-width: var(--communication-tracker-dialog-max-width);
-  width: 90%;
-  max-height: 90vh;
-  overflow-y: auto;
-`;
 
 const DialogHeader = styled.div`
   display: flex;
@@ -44,6 +20,7 @@ const DialogHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   gap: var(--spacing-32);
+  margin-bottom: var(--spacing-32);
 `;
 
 const DialogTitle = styled.h3`
@@ -70,7 +47,7 @@ const CloseButton = styled.button`
   }
 `;
 
-const RadioGroup = styled.div`
+const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: var(--spacing-24);
@@ -145,66 +122,6 @@ const DatePickerWrapper = styled.div`
   .rdp-day_button:hover:not([disabled]) {
     background-color: var(--color-aubergine-subtle);
   }
-
-  .rdp-outside {
-    color: var(--color-grey-300);
-  }
-
-  .rdp-nav {
-    display: flex;
-    gap: var(--spacing-8);
-  }
-
-  .rdp-nav_button {
-    width: var(--communication-tracker-date-picker-nav-button-size);
-    height: var(--communication-tracker-date-picker-nav-button-size);
-    border-radius: var(--border-radius-xs);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    background: transparent;
-    border: none;
-    color: var(--color-midnight);
-  }
-
-  .rdp-nav_button:hover {
-    background-color: var(--color-grey-100);
-  }
-
-  .rdp-caption_label {
-    font-weight: var(--font-weight-semi-bold);
-    font-size: var(--font-size-16);
-    color: var(--color-midnight);
-  }
-
-  .rdp-weekday {
-    font-weight: var(--font-weight-semi-bold);
-    font-size: var(--font-size-14);
-    color: var(--color-midnight);
-  }
-
-  .rdp-month_caption {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--spacing-8);
-  }
-
-  .rdp-dropdowns {
-    display: flex;
-    gap: var(--spacing-8);
-    align-items: center;
-  }
-
-  .rdp-dropdown {
-    padding: var(--communication-tracker-dropdown-item-padding);
-    border: var(--border-width-thin) solid var(--color-grey-200);
-    border-radius: var(--border-radius-xs);
-    background: var(--color-white);
-    font-family: var(--bs-body-font-family);
-    cursor: pointer;
-  }
 `;
 
 const DateInputContainer = styled.div`
@@ -239,10 +156,6 @@ const DateInput = styled.input`
   &:focus {
     outline: none;
     border-color: var(--color-midnight);
-  }
-
-  &::placeholder {
-    color: var(--color-grey-500);
   }
 `;
 
@@ -292,46 +205,12 @@ const ButtonGroup = styled.div`
   margin-top: var(--spacing-16);
 `;
 
-const CancelButton = styled.button`
-  padding: var(--spacing-16) var(--spacing-24);
-  background: transparent;
-  border: var(--border-width-medium) solid var(--color-aubergine);
-  border-radius: var(--button-border-radius);
-  cursor: pointer;
-  font-weight: var(--font-weight-semi-bold);
-  font-size: var(--text-p-font-size);
-  line-height: var(--text-p-line-height);
-  color: var(--color-aubergine);
-  font-family: var(--bs-body-font-family);
-
-  &:hover {
-    background: var(--color-aubergine-subtle);
-  }
-`;
-
-const SaveButton = styled.button`
-  padding: var(--spacing-16) var(--spacing-24);
-  background: var(--color-aubergine);
-  border: none;
-  border-radius: var(--button-border-radius);
-  cursor: pointer;
-  font-weight: var(--font-weight-semi-bold);
-  font-size: var(--text-p-font-size);
-  line-height: var(--text-p-line-height);
-  color: var(--color-white);
-  font-family: var(--bs-body-font-family);
-
-  &:hover {
-    background: var(--color-aubergine-light);
-  }
-
-  &:disabled {
-    background: var(--color-grey-200);
-    color: var(--color-grey-500);
-    cursor: not-allowed;
-    opacity: var(--opacity-disabled);
-  }
-`;
+type FormData = {
+  contactType: ContactType;
+  contactMethod: ContactMethodType;
+  communicationType: CommunicationType;
+  date: Date;
+};
 
 type Props = {
   isOpen: boolean;
@@ -342,212 +221,206 @@ type Props = {
 
 export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Props) {
   const { t, i18n } = useTranslation();
-  const [contactType, setContactType] = useState<ContactType | "">("");
-  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-  const [contactMethod, setContactMethod] = useState<ContactMethodType>(ContactMethodType.PHONE);
-  const [communicationType, setCommunicationType] = useState<CommunicationType>(CommunicationType.BRIEF);
-  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
-  const datePickerRef = useRef<HTMLDivElement>(null);
+  const locale = i18n.language === "de" ? de : undefined;
+  
+  const { control, handleSubmit, watch, reset, setValue } = useForm<FormData>({
+    defaultValues: {
+      contactType: undefined, // Will be set by reset
+      contactMethod: ContactMethodType.PHONE,
+      communicationType: CommunicationType.BRIEF,
+      date: new Date(),
+    }
+  });
+
+  const contactType = watch("contactType");
 
   useEffect(() => {
     if (isOpen) {
       if (initialData) {
-        setContactType(initialData.contactType);
-        setSelectedDate(new Date(initialData.date));
-        setContactMethod(initialData.contactMethod);
-        setCommunicationType(initialData.communicationType || CommunicationType.BRIEF);
+        reset({
+          contactType: initialData.contactType,
+          contactMethod: initialData.contactMethod,
+          communicationType: initialData.communicationType || CommunicationType.BRIEF,
+          date: new Date(initialData.date),
+        });
       } else {
-        resetForm();
+        reset({
+            contactType: undefined, // Force user to select
+            contactMethod: ContactMethodType.PHONE,
+            communicationType: CommunicationType.BRIEF,
+            date: new Date(),
+        });
       }
     }
-  }, [isOpen, initialData]);
+  }, [isOpen, initialData, reset]);
 
+  // Update default contact method when contact type changes (if adding new)
   useEffect(() => {
-    if (contactType !== "") {
-      const defaultMethod = getDefaultContactMethod(contactType);
-      if (!initialData) {
-        setContactMethod(defaultMethod);
-      }
+    if (contactType && !initialData) {
+        const defaultMethod = getDefaultContactMethod(contactType);
+        setValue("contactMethod", defaultMethod);
     }
-  }, [contactType, initialData]);
+  }, [contactType, initialData, setValue]);
 
-  const resetForm = () => {
-    setContactType("");
-    setSelectedDate(new Date());
-    setContactMethod(ContactMethodType.PHONE);
-    setCommunicationType(CommunicationType.BRIEF);
-    setIsDatePickerOpen(false);
-  };
-
-  const handleSave = () => {
-    if (!contactType) return;
-
-    const data: Partial<ApiCommunicationGet> = {
+  const onSubmit = (data: FormData) => {
+    const payload: Partial<ApiCommunicationGet> = {
       id: initialData?.id,
-      contactType,
-      contactMethod,
-      communicationType: contactType === ContactType.OTHER ? communicationType : undefined,
-      date: selectedDate,
+      contactType: data.contactType,
+      contactMethod: data.contactMethod,
+      communicationType: data.contactType === ContactType.OTHER ? data.communicationType : undefined,
+      date: data.date,
     };
-
-    onSave(data);
-    handleClose();
+    onSave(payload);
   };
-
-  const handleClose = () => {
-    resetForm();
-    onClose();
-  };
-
-  const handleDateSelect = (date: Date | undefined) => {
-    if (date) {
-      setSelectedDate(date);
-    }
-    setIsDatePickerOpen(false);
-  };
-
-  const locale = i18n.language === "de" ? de : undefined;
 
   return (
-    <DialogOverlay $isOpen={isOpen} onClick={handleClose} data-testid="communication-dialog-overlay">
-      <DialogContainer onClick={(e) => e.stopPropagation()} data-testid="communication-dialog-container">
+    <Modal isOpen={isOpen} onClose={onClose}>
         <DialogHeader>
           <DialogTitle>{t("dashboard.communicationSection.registerContact", "Register contact")}</DialogTitle>
-          <CloseButton onClick={handleClose} data-testid="close-dialog-button">
+          <CloseButton onClick={onClose} data-testid="close-dialog-button">
             <X size={24} weight="bold" />
           </CloseButton>
         </DialogHeader>
 
-        <RadioGroup>
-          {Object.values(ContactType).map((type) => (
-            <ContactTypeOption
-              key={type}
-              type={type}
-              isSelected={contactType === type}
-              onSelect={setContactType}
-              contactMethod={contactMethod}
-              onContactMethodChange={setContactMethod}
-              communicationType={communicationType}
-              onCommunicationTypeChange={setCommunicationType}
-              selectedDate={selectedDate}
-              isDatePickerOpen={isDatePickerOpen}
-              onDatePickerToggle={() => setIsDatePickerOpen(!isDatePickerOpen)}
-              onDateSelect={handleDateSelect}
-              datePickerRef={datePickerRef}
-              locale={locale}
-            />
-          ))}
-        </RadioGroup>
+        <Form onSubmit={handleSubmit(onSubmit)}>
+            {Object.values(ContactType).map((type) => (
+                <RadioOption key={type}>
+                    <RadioRow>
+                        <Controller
+                            name="contactType"
+                            control={control}
+                            rules={{ required: true }}
+                            render={({ field }) => (
+                                <RadioInput
+                                    {...field}
+                                    type="radio"
+                                    value={type}
+                                    checked={field.value === type}
+                                    // React Hook Form's onChange expects the value
+                                    onChange={() => field.onChange(type)} 
+                                    data-testid={`radio-${type.toLowerCase().replace(/_/g, "-")}`}
+                                />
+                            )}
+                        />
+                        {getContactTypeLabel(t, type)}
+                    </RadioRow>
+                    
+                    {contactType === type && (
+                         <>
+                         {type === ContactType.OTHER && (
+                           <FormField>
+                             <Label>{t("dashboard.communicationSection.communicationTypeRequired", "Communication type*")}</Label>
+                             <Controller
+                                name="communicationType"
+                                control={control}
+                                render={({ field }) => (
+                                    <Select {...field} data-testid="communication-type-select">
+                                        {getCommunicationTypeOptions(t).map((option) => (
+                                        <option key={option.value} value={option.value}>
+                                            {option.label}
+                                        </option>
+                                        ))}
+                                    </Select>
+                                )}
+                             />
+                           </FormField>
+                         )}
+                         <FormField>
+                           <Label>{t("dashboard.communicationSection.contactMethodRequired", "Contact method*")}</Label>
+                           <Controller
+                                name="contactMethod"
+                                control={control}
+                                render={({ field }) => (
+                                    <Select {...field} data-testid="platform-select">
+                                        {getContactMethodOptions(t, type).map((option) => (
+                                            <option key={option.value} value={option.value}>
+                                            {option.label}
+                                            </option>
+                                        ))}
+                                    </Select>
+                                )}
+                            />
+                         </FormField>
+                         <FormField>
+                           <Label>{t("dashboard.communicationSection.contactDateRequired", "Contact date*")}</Label>
+                           <Controller
+                                name="date"
+                                control={control}
+                                render={({ field }) => (
+                                    <DatePickerWithPopover 
+                                        date={field.value} 
+                                        onSelect={field.onChange} 
+                                        locale={locale} 
+                                    />
+                                )}
+                           />
+                         </FormField>
+                       </>
+                    )}
+                </RadioOption>
+            ))}
 
-        <ButtonGroup>
-          <CancelButton onClick={handleClose} data-testid="cancel-button">
-            {t("dashboard.communicationSection.cancel", "Cancel")}
-          </CancelButton>
-          <SaveButton onClick={handleSave} data-testid="save-button" disabled={!contactType}>
-            {t("dashboard.communicationSection.save", "Save")}
-          </SaveButton>
-        </ButtonGroup>
-      </DialogContainer>
-    </DialogOverlay>
+            <ButtonGroup>
+                <Button
+                    text={t("dashboard.communicationSection.cancel", "Cancel")}
+                    onClick={(e) => {
+                        e.preventDefault();
+                        onClose();
+                    }}
+                    backgroundcolor="transparent"
+                    textColor="var(--color-aubergine)"
+                    border="var(--border-width-medium) solid var(--color-aubergine)"
+                />
+                <Button
+                    text={t("dashboard.communicationSection.save", "Save")}
+                    onClick={handleSubmit(onSubmit)}
+                    backgroundcolor="var(--color-aubergine)"
+                    textColor="var(--color-white)"
+                    disabled={!contactType}
+                />
+            </ButtonGroup>
+        </Form>
+    </Modal>
   );
 }
 
-type ContactTypeOptionProps = {
-  type: ContactType;
-  isSelected: boolean;
-  onSelect: (type: ContactType) => void;
-  contactMethod: ContactMethodType;
-  onContactMethodChange: (method: ContactMethodType) => void;
-  communicationType: CommunicationType;
-  onCommunicationTypeChange: (type: CommunicationType) => void;
-  selectedDate: Date;
-  isDatePickerOpen: boolean;
-  onDatePickerToggle: () => void;
-  onDateSelect: (date: Date | undefined) => void;
-  datePickerRef: React.RefObject<HTMLDivElement | null>;
-  locale: Locale | undefined;
-};
+// Extract DatePicker to separate component to handle open state
+function DatePickerWithPopover({ date, onSelect, locale }: { date: Date, onSelect: (d: Date | undefined) => void, locale?: Locale }) {
+    const [isOpen, setIsOpen] = useState(false);
+    const containerRef = useRef<HTMLDivElement>(null);
 
-function ContactTypeOption({
-  type,
-  isSelected,
-  onSelect,
-  contactMethod,
-  onContactMethodChange,
-  communicationType,
-  onCommunicationTypeChange,
-  selectedDate,
-  isDatePickerOpen,
-  onDatePickerToggle,
-  onDateSelect,
-  datePickerRef,
-  locale,
-}: ContactTypeOptionProps) {
-  const { t } = useTranslation();
-  const testId = `radio-${type.toLowerCase().replace(/_/g, "-")}`;
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+                setIsOpen(false);
+            }
+        };
 
-  return (
-    <RadioOption>
-      <RadioRow>
-        <RadioInput
-          type="radio"
-          name="contactType"
-          value={type}
-          checked={isSelected}
-          onChange={() => onSelect(type)}
-          data-testid={testId}
-        />
-        {getContactTypeLabel(t, type)}
-      </RadioRow>
-      {isSelected && (
-        <>
-          {type === ContactType.OTHER && (
-            <FormField>
-              <Label>{t("dashboard.communicationSection.communicationTypeRequired", "Communication type*")}</Label>
-              <Select
-                value={communicationType}
-                onChange={(e) => onCommunicationTypeChange(e.target.value as CommunicationType)}
-                data-testid="communication-type-select"
-              >
-                {getCommunicationTypeOptions(t).map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </Select>
-            </FormField>
-          )}
-          <FormField>
-            <Label>{t("dashboard.communicationSection.contactMethodRequired", "Contact method*")}</Label>
-            <Select
-              value={contactMethod}
-              onChange={(e) => onContactMethodChange(e.target.value as ContactMethodType)}
-              data-testid="platform-select"
-            >
-              {getContactMethodOptions(t, type).map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </Select>
-          </FormField>
-          <FormField>
-            <Label>{t("dashboard.communicationSection.contactDateRequired", "Contact date*")}</Label>
-            <DatePickerWrapper ref={datePickerRef}>
-              <DateInputContainer>
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
+    return (
+        <DatePickerWrapper ref={containerRef}>
+             <DateInputContainer>
                 <DateInputIcon size={24} weight="regular" />
                 <DateInput
-                  value={format(selectedDate, "dd.MM.yyyy")}
-                  onClick={onDatePickerToggle}
+                  value={format(date, "dd.MM.yyyy")}
+                  onClick={() => setIsOpen(!isOpen)}
                   readOnly
                   data-testid="date-picker-input"
                 />
               </DateInputContainer>
-              <DatePickerPopover $isOpen={isDatePickerOpen}>
+              <DatePickerPopover $isOpen={isOpen}>
                 <DayPicker
                   mode="single"
-                  selected={selectedDate}
-                  onSelect={onDateSelect}
+                  selected={date}
+                  onSelect={(d) => {
+                      onSelect(d);
+                      setIsOpen(false);
+                  }}
                   locale={locale}
                   captionLayout="dropdown"
                   fromYear={1900}
@@ -555,10 +428,6 @@ function ContactTypeOption({
                   disabled={{ after: new Date() }}
                 />
               </DatePickerPopover>
-            </DatePickerWrapper>
-          </FormField>
-        </>
-      )}
-    </RadioOption>
-  );
+        </DatePickerWrapper>
+    )
 }

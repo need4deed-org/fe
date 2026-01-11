@@ -1,30 +1,28 @@
 "use client";
-import { useCommunications } from "@/hooks/useCommunications";
-import { useCreateCommunication } from "@/hooks/useCreateCommunication";
-import { useDeleteCommunication } from "@/hooks/useDeleteCommunication";
-import { useUpdateCommunication } from "@/hooks/useUpdateCommunication";
+import { useCommunicationTracker } from "@/hooks/useCommunicationTracker";
 import { PencilSimple, Trash } from "@phosphor-icons/react";
-import { ApiVolunteerGet, ApiCommunicationGet, ApiVolunteerCommunicationPost } from "need4deed-sdk";
+import { ApiVolunteerGet, ApiCommunicationGet, ApiVolunteerCommunicationPost, ApiVolunteerCommunicationPatch } from "need4deed-sdk";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CommunicationDialog } from "./CommunicationDialog";
 import { DeleteConfirmationDialog } from "./DeleteConfirmationDialog";
 import {
-  ActionButton,
-  ActionCell,
-  AddButton,
   EmptyState,
   Header,
-  StatusBadge,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHeader,
-  TableHeaderCell,
-  TableRow,
   Wrapper,
 } from "./styles";
+import {
+  TableContainer,
+  Table,
+  TableHeader,
+  TableHeaderCell,
+  TableBody,
+  TableRow,
+  TableCell,
+  ActionCell,
+  ActionButton,
+} from "@/components/core/common/Table";
+import { Button } from "@/components/core/button";
 import { formatDate, getDisplayLabel, getContactMethodLabel } from "./utils/translations";
 
 type Props = {
@@ -37,17 +35,12 @@ export function CommunicationTrackerSection({ volunteer }: Props) {
   const [editingEntry, setEditingEntry] = useState<ApiCommunicationGet | undefined>(undefined);
   const [deleteConfirmEntry, setDeleteConfirmEntry] = useState<ApiCommunicationGet | null>(null);
 
-  const { data: communications } = useCommunications(volunteer.id);
-  const { mutate: createCommunication } = useCreateCommunication(volunteer.id);
-  const { mutate: updateCommunication } = useUpdateCommunication(
-    volunteer.id,
-    editingEntry?.id ?? 0,
-  );
-  const { mutate: deleteCommunication } = useDeleteCommunication(volunteer.id, deleteConfirmEntry?.id ?? 0);
-
-  const sortedCommunications = (communications || []).sort((a, b) => {
-    return new Date(b.date).getTime() - new Date(a.date).getTime();
-  });
+  const {
+    communications,
+    createCommunication,
+    updateCommunication,
+    deleteCommunication,
+  } = useCommunicationTracker(volunteer.id);
 
   const handleAddNew = () => {
     setEditingEntry(undefined);
@@ -65,7 +58,7 @@ export function CommunicationTrackerSection({ volunteer }: Props) {
 
   const confirmDelete = () => {
     if (deleteConfirmEntry) {
-      deleteCommunication(undefined, {
+      deleteCommunication(deleteConfirmEntry.id, {
         onSuccess: () => {
           setDeleteConfirmEntry(null);
         },
@@ -78,18 +71,27 @@ export function CommunicationTrackerSection({ volunteer }: Props) {
   };
 
   const handleSave = (data: Partial<ApiCommunicationGet>) => {
-    const payload: ApiVolunteerCommunicationPost = {
-      contactType: data.contactType!,
-      contactMethod: data.contactMethod!,
-      communicationType: data.communicationType!,
-      date: data.date!,
-    };
+    if (!data.contactType || !data.contactMethod || !data.date) {
+        return;
+    }
 
     if (data.id) {
-      updateCommunication(payload, {
+        const payload: ApiVolunteerCommunicationPatch = {
+            contactType: data.contactType,
+            contactMethod: data.contactMethod,
+            communicationType: data.communicationType!,
+            date: data.date,
+        };
+      updateCommunication({ id: data.id, data: payload }, {
         onSuccess: () => setIsDialogOpen(false),
       });
     } else {
+        const payload: ApiVolunteerCommunicationPost = {
+            contactType: data.contactType,
+            contactMethod: data.contactMethod,
+            communicationType: data.communicationType!,
+            date: data.date,
+          };
       createCommunication(payload, {
         onSuccess: () => setIsDialogOpen(false),
       });
@@ -99,12 +101,16 @@ export function CommunicationTrackerSection({ volunteer }: Props) {
   return (
     <Wrapper data-testid="communication-tracker-section-container">
       <Header>
-        <AddButton onClick={handleAddNew} data-testid="add-communication-button">
-          {t("dashboard.communicationSection.addNew", "+ Register contact")}
-        </AddButton>
+        <Button
+            onClick={handleAddNew}
+            text={t("dashboard.communicationSection.addNew", "+ Register contact")}
+            backgroundcolor="var(--color-aubergine)"
+            textColor="var(--color-white)"
+            width="auto"
+        />
       </Header>
 
-      {sortedCommunications.length === 0 ? (
+      {communications.length === 0 ? (
         <EmptyState data-testid="empty-state">
           {t("dashboard.communicationSection.emptyState", "No communications recorded yet")}
         </EmptyState>
@@ -119,12 +125,10 @@ export function CommunicationTrackerSection({ volunteer }: Props) {
               <TableHeaderCell $width="var(--communication-tracker-action-column-width)"></TableHeaderCell>
             </TableHeader>
             <TableBody>
-              {sortedCommunications.map((entry, index) => (
-                <TableRow key={entry.id} $isLast={index === sortedCommunications.length - 1} data-testid={`communication-row-${entry.id}`}>
+              {communications.map((entry, index) => (
+                <TableRow key={entry.id} $isLast={index === communications.length - 1} data-testid={`communication-row-${entry.id}`}>
                   <TableCell>
-                    <StatusBadge $type="first-time">
-                      {getDisplayLabel(t, entry.contactType, entry.communicationType)}
-                    </StatusBadge>
+                    {getDisplayLabel(t, entry.contactType, entry.communicationType)}
                   </TableCell>
                   <TableCell $maxWidth="310px">{getContactMethodLabel(t, entry.contactMethod)}</TableCell>
                   <TableCell $width="152px" $noWrap>{formatDate(entry.date)}</TableCell>

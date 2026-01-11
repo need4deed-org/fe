@@ -1,8 +1,8 @@
-import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { ApiCommunicationGet } from "need4deed-sdk";
-import { DialogOverlay } from "../VolunteerProfileDocumentSection/shared/DialogOverlay";
-import { DialogButtonGroup, CancelButton, PrimaryButton } from "../VolunteerProfileDocumentSection/shared/DialogButtonGroup";
+import { useTranslation } from "react-i18next";
+import { Modal } from "@/components/core/modal";
+import { Button } from "@/components/core/button";
 import { getDisplayLabel } from "./utils/translations";
 
 type Props = {
@@ -11,18 +11,6 @@ type Props = {
   onCancel: () => void;
   onConfirm: () => void;
 };
-
-const Dialog = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: var(--spacing-32);
-  gap: var(--spacing-24);
-  background: var(--color-white);
-  border-radius: var(--card-border-radius);
-  box-shadow: var(--communication-tracker-dialog-box-shadow);
-  max-width: var(--communication-tracker-delete-dialog-max-width);
-  width: 90%;
-`;
 
 const Title = styled.h3`
   font-weight: var(--font-weight-bold);
@@ -42,6 +30,13 @@ const Message = styled.p`
   margin: 0;
 `;
 
+const ButtonGroup = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-16);
+  margin-top: var(--spacing-24);
+`;
+
 export function DeleteConfirmationDialog({ isOpen, communication, onCancel, onConfirm }: Props) {
   const { t } = useTranslation();
 
@@ -50,8 +45,8 @@ export function DeleteConfirmationDialog({ isOpen, communication, onCancel, onCo
   const entryLabel = getDisplayLabel(t, communication.contactType, communication.communicationType);
 
   return (
-    <DialogOverlay isOpen={isOpen} onClose={onCancel} zIndex={10001}>
-      <Dialog onClick={(e) => e.stopPropagation()} data-testid="delete-confirm-dialog">
+    <Modal isOpen={isOpen} onClose={onCancel}>
+      <div data-testid="delete-confirm-dialog" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-24)' }}>
         <Title>{t("dashboard.communicationSection.deleteConfirmTitle", "Delete entry?")}</Title>
         <Message>
           {t("dashboard.communicationSection.deleteConfirmText", {
@@ -59,15 +54,22 @@ export function DeleteConfirmationDialog({ isOpen, communication, onCancel, onCo
             defaultValue: `"${entryLabel}" communication entry will be permanently deleted.`,
           })}
         </Message>
-        <DialogButtonGroup>
-          <CancelButton onClick={onCancel} data-testid="delete-cancel-button">
-            {t("dashboard.communicationSection.cancel", "Cancel")}
-          </CancelButton>
-          <PrimaryButton onClick={onConfirm} data-testid="delete-confirm-button">
-            {t("dashboard.communicationSection.delete", "Delete")}
-          </PrimaryButton>
-        </DialogButtonGroup>
-      </Dialog>
-    </DialogOverlay>
+        <ButtonGroup>
+          <Button
+            text={t("dashboard.communicationSection.cancel", "Cancel")}
+            onClick={onCancel}
+            backgroundcolor="transparent"
+            textColor="var(--color-aubergine)"
+            border="var(--border-width-medium) solid var(--color-aubergine)"
+          />
+          <Button
+            text={t("dashboard.communicationSection.delete", "Delete")}
+            onClick={onConfirm}
+            backgroundcolor="var(--color-aubergine)"
+            textColor="var(--color-white)"
+          />
+        </ButtonGroup>
+      </div>
+    </Modal>
   );
 }
