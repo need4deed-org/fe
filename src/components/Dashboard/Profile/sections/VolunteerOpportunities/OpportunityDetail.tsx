@@ -40,7 +40,9 @@ export default function OpportunityDetail({ opportunity }: Props) {
     <Container>
       {/* 1. Description */}
       <InfoSection icon={PencilSimpleIcon} title={t("dashboard.opportunities.description")}>
-        <Paragraph fontWeight={400}>{voInformation}</Paragraph>
+        <Paragraph fontWeight="var(--volunteer-profile-opportunities-accordion-opp-detail-light-font)">
+          {voInformation}
+        </Paragraph>
       </InfoSection>
 
       {/* 2. Languages & Activities */}
@@ -48,22 +50,27 @@ export default function OpportunityDetail({ opportunity }: Props) {
         <InfoSection icon={TranslateIcon} title={t("dashboard.opportunities.languages")}>
           <LanguagesList>
             <LanguageRow>
-              <Paragraph fontWeight={600}>
+              <Paragraph fontWeight="var(--volunteer-profile-opportunities-accordion-opp-detail-bold-font)">
                 {opportunityType === OpportunityType.GENERAL
                   ? t("dashboard.opportunities.mainCommunication")
                   : t("dashboard.opportunities.translationTo")}
                 :
               </Paragraph>
-              <Paragraph>
+              <Paragraph fontWeight="var(--volunteer-profile-opportunities-accordion-opp-detail-light-font)">
                 {opportunityType === OpportunityType.GENERAL ? defaultMainCommunication : accompanyingTranslation}
               </Paragraph>
             </LanguageRow>
 
             <LanguageRow>
-              <Paragraph $textWrap="nowrap" fontWeight={600}>
+              <Paragraph
+                $textWrap="nowrap"
+                fontWeight="var(--volunteer-profile-opportunities-accordion-opp-detail-bold-font)"
+              >
                 {t("dashboard.opportunities.residentsSpeak")}:
               </Paragraph>
-              <Paragraph>{languagesText}</Paragraph>
+              <Paragraph fontWeight="var(--volunteer-profile-opportunities-accordion-opp-detail-light-font)">
+                {languagesText}
+              </Paragraph>
             </LanguageRow>
           </LanguagesList>
         </InfoSection>
@@ -76,7 +83,9 @@ export default function OpportunityDetail({ opportunity }: Props) {
       {/* 3. Location & Schedule */}
       <SplitContainer>
         <InfoSection icon={MapPinIcon} title={t("dashboard.opportunities.district")}>
-          <Paragraph>{district}</Paragraph>
+          <Paragraph fontWeight="var(--volunteer-profile-opportunities-accordion-opp-detail-light-font)">
+            {district}
+          </Paragraph>
         </InfoSection>
 
         <InfoSection
@@ -85,7 +94,9 @@ export default function OpportunityDetail({ opportunity }: Props) {
             accompanyingDate ? t("dashboard.opportunities.dateOfAppointment") : t("dashboard.opportunities.schedule")
           }
         >
-          <Paragraph>{scheduleAsStr}</Paragraph>
+          <Paragraph fontWeight="var(--volunteer-profile-opportunities-accordion-opp-detail-light-font)">
+            {scheduleAsStr}
+          </Paragraph>
         </InfoSection>
       </SplitContainer>
 
@@ -94,17 +105,17 @@ export default function OpportunityDetail({ opportunity }: Props) {
         <Button
           onClick={() => {}}
           text={t("dashboard.volunteerProfile.opportunitiesSec.notAMatch")}
-          height="56px"
-          textFontSize="24px"
+          height="var(--volunteer-profile-opportunities-accordion-actions-button-height)"
+          textFontSize="var(--volunteer-profile-opportunities-accordion-actions-button-textFontSize)"
           textColor="var(--color-aubergine)"
           backgroundcolor="var(--color-white)"
-          border="2px solid var(--color-aubergine)"
+          border="var(--volunteer-profile-opportunities-accordion-actions-button-border)"
         />
         <Button
           onClick={() => {}}
           text={t("dashboard.volunteerProfile.opportunitiesSec.match")}
-          height="56px"
-          textFontSize="24px"
+          height="var(--volunteer-profile-opportunities-accordion-actions-button-height)"
+          textFontSize="var(--volunteer-profile-opportunities-accordion-actions-button-textFontSize)"
         />
       </Actions>
     </Container>
@@ -121,10 +132,10 @@ interface InfoSectionProps {
 const InfoSection = ({ icon: Icon, title, children }: InfoSectionProps) => (
   <DetailSection>
     <DetailHeader>
-      <IconDiv size="20px">
+      <IconDiv size="var(--volunteer-profile-opportunities-accordion-info-section-icon-size)">
         <Icon weight={Icon === MapPinIcon ? "fill" : "regular"} />
       </IconDiv>
-      <Paragraph fontWeight={550}>{title}</Paragraph>
+      <Paragraph fontWeight="var(--volunteer-profile-opportunities-accordion-opp-detail-mid-font)">{title}</Paragraph>
     </DetailHeader>
 
     {children}
@@ -143,19 +154,19 @@ const Container = styled.div`
 const SplitContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
+  gap: var(--volunteer-profile-opportunities-accordion-split-container-gap);
 `;
 
 const DetailSection = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--volunteer-profile-opportunities-accordion-detail-section-gap);
 `;
 
 const DetailHeader = styled.div`
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--volunteer-profile-opportunities-accordion-detail-header-gap);
 `;
 
 const LanguagesList = styled.div`
@@ -166,11 +177,11 @@ const LanguagesList = styled.div`
 
 const LanguageRow = styled.div`
   display: flex;
-  gap: 4px;
+  gap: var(--volunteer-profile-opportunities-accordion-language-row-gap);
 `;
 
 const Actions = styled.div`
   display: flex;
-  gap: 16px;
+  gap: var(--volunteer-profile-opportunities-accordion-actions-container-gap);
   justify-content: center;
 `;
