@@ -5,7 +5,7 @@ import { ApiVolunteerGet, ApiCommunicationGet, ApiVolunteerCommunicationPost, Ap
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CommunicationDialog } from "./CommunicationDialog";
-import { DeleteConfirmationDialog } from "./DeleteConfirmationDialog";
+import { ConfirmationDialog } from "../shared/ConfirmationDialog";
 import {
   EmptyState,
   Header,
@@ -156,12 +156,16 @@ export function CommunicationTrackerSection({ volunteer }: Props) {
         initialData={editingEntry}
       />
 
-      <DeleteConfirmationDialog
-        isOpen={deleteConfirmEntry !== null}
-        communication={deleteConfirmEntry}
-        onCancel={cancelDelete}
-        onConfirm={confirmDelete}
-      />
+      {deleteConfirmEntry && (
+        <ConfirmationDialog
+          title={t("dashboard.communicationSection.deleteConfirmTitle")}
+          message={t("dashboard.communicationSection.deleteConfirmText", {
+            entryType: getDisplayLabel(t, deleteConfirmEntry.contactType, deleteConfirmEntry.communicationType),
+          })}
+          onCancel={cancelDelete}
+          onConfirm={confirmDelete}
+        />
+      )}
     </Wrapper>
   );
 }
