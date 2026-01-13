@@ -1,17 +1,18 @@
-import React, { useRef } from "react";
-import styled from "styled-components";
-import { IconName, ProfileCardTypes } from "./types/types";
-import { ArrowLeftIcon } from "@phosphor-icons/react";
-import Link from "next/link";
-import { ApiVolunteerGet } from "need4deed-sdk";
-import { useTranslation } from "react-i18next";
-import { VolunteerHeader } from "./sections/VolunteerHeader";
-import { Card, SectionCard, SectionCardProps } from "./common/SectionCard";
 import { Heading2 } from "@/components/styled/text";
-import VolunteerOpportunities from "./sections/VolunteerOpportunities/VolunteerOpportunities";
+import { ArrowLeftIcon } from "@phosphor-icons/react";
+import { ApiVolunteerGet } from "need4deed-sdk";
+import Link from "next/link";
+import { useRef } from "react";
+import { useTranslation } from "react-i18next";
+import styled from "styled-components";
+import { Card, SectionCard, SectionCardProps } from "./common/SectionCard";
+import { CommentsSection } from "./sections/CommentsSection";
 import { ContactDetails, ContactDetailsRef } from "./sections/ContactDetails";
-import { VolunteerProfileSection, VolunteerProfileSectionRef } from "./sections/VolunteerProfileSection";
+import { VolunteerHeader } from "./sections/VolunteerHeader";
+import VolunteerOpportunities from "./sections/VolunteerOpportunities/VolunteerOpportunities";
 import { VolunteerProfileDocumentSection } from "./sections/VolunteerProfileDocumentSection";
+import { VolunteerProfileSection, VolunteerProfileSectionRef } from "./sections/VolunteerProfileSection";
+import { IconName, ProfileCardTypes } from "./types/types";
 
 const PageContainer = styled.div`
   display: flex;
@@ -64,8 +65,8 @@ const ProfilePage = ({ volunteer }: ProfilePageProps) => {
     },
     {
       iconName: IconName.ChatCircleDots,
-      title: t("dashboard.volunteerProfile.coordinatorComments"),
-      subComponent: <div>Coordinator Comments sub-component. to be replaced...</div>,
+      title: `${t("dashboard.volunteerProfile.coordinatorComments")} • ${volunteer.comments?.length ?? 0}`,
+      subComponent: <CommentsSection volunteer={volunteer} />,
     },
     {
       iconName: IconName.ClipboardText,

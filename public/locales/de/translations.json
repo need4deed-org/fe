@@ -559,7 +559,6 @@
         }
       }
     },
-
     "opportunities": {
       "accompanyingTranslation": {
         "en": "Deutsch, Englisch",
@@ -610,6 +609,24 @@
         "cancel": "Abbrechen",
         "upload": "Hochladen",
         "uploading": "Wird hochgeladen..."
+      }
+    },
+    "commentsSection": {
+      "placeholder": "Kommentar",
+      "addComment": "Kommentar hinzufügen",
+      "menuAction": "Kommentaroptionen",
+      "commentAdded": "Kommentar erfolgreich hinzugefügt",
+      "editComment": "Kommentar bearbeiten",
+      "deleteComment": "Kommentar löschen",
+      "commentDeleted": "Kommentar erfolgreich gelöscht",
+      "commentUpdated": "Kommentar erfolgreich aktualisiert",
+      "saveEdit": "Speichern",
+      "cancelEdit": "Abbrechen",
+      "deleteDialog": {
+        "title": "Kommentar löschen?",
+        "message": "{{authorName}}s Kommentar wird unwiderruflich gelöscht.",
+        "cancel": "Abbrechen",
+        "delete": "Löschen"
       }
     }
   },

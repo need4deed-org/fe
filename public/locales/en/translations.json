@@ -610,6 +610,24 @@
       "defaultMainCommunication": "English, German",
       "otherCategory": "General Volunteering",
       "goToProfile": "Go to Profile"
+    },
+    "commentsSection": {
+      "placeholder": "Comment",
+      "addComment": "Add comment",
+      "menuAction": "Comment options",
+      "commentAdded": "Comment added successfully",
+      "editComment": "Edit comment",
+      "deleteComment": "Delete comment",
+      "commentDeleted": "Comment deleted successfully",
+      "commentUpdated": "Comment updated successfully",
+      "saveEdit": "Save",
+      "cancelEdit": "Cancel",
+      "deleteDialog": {
+        "title": "Delete comment?",
+        "message": "{{authorName}}'s comment will be permanently deleted.",
+        "cancel": "Cancel",
+        "delete": "Delete"
+      }
     }
   },
   "message": {
