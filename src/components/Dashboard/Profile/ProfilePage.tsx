@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { Card, SectionCard, SectionCardProps } from "./common/SectionCard";
 import { CommentsSection } from "./sections/CommentsSection";
+import { CommunicationTrackerSection } from "./sections/CommunicationTrackerSection";
 import { ContactDetails, ContactDetailsRef } from "./sections/ContactDetails";
 import { VolunteerHeader } from "./sections/VolunteerHeader";
 import VolunteerOpportunities from "./sections/VolunteerOpportunities/VolunteerOpportunities";
@@ -62,6 +63,11 @@ const ProfilePage = ({ volunteer }: ProfilePageProps) => {
       title: t("dashboard.volunteerProfile.opportunities"),
       headerButtonName: t("dashboard.volunteerProfile.findOppButtonName"),
       subComponent: <VolunteerOpportunities />,
+    },
+    {
+      iconName: IconName.ChatsTeardrop,
+      title: t("dashboard.communicationSection.title"),
+      subComponent: <CommunicationTrackerSection volunteer={volunteer} />,
     },
     {
       iconName: IconName.ChatCircleDots,

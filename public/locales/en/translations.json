@@ -628,6 +628,65 @@
         "cancel": "Cancel",
         "delete": "Delete"
       }
+    },
+    "communicationSection": {
+      "title": "Communication Tracker",
+      "addNew": "+ Register contact",
+      "emptyState": "No communications recorded yet",
+      "registerContact": "Register contact",
+      "date": "Date",
+      "type": "Type",
+      "contactMethod": "Contact method",
+      "notes": "Notes",
+      "actions": "Actions",
+      "typeOfContact": "Type of contact",
+      "contactTypes": {
+        "called": "Called",
+        "triedToCall": "Tried to call",
+        "textedOrEmailed": "Texted or emailed",
+        "other": "Other"
+      },
+      "dateOfContact": "Date of contact",
+      "contactDate": "Contact date",
+      "contactDateRequired": "Contact date*",
+      "whatPlatform": "What platform did you use?",
+      "howDidYouSend": "How did you send your message?",
+      "contactMethodLabel": "Contact method",
+      "contactMethodRequired": "Contact method*",
+      "communicationTypeRequired": "Communication type*",
+      "communicationTypes": {
+        "briefedVolunteer": "Briefed (accompanying volunteer)",
+        "firstInquiry": "First inquiry sent",
+        "opportunityList": "Opportunity list sent",
+        "statusUpdate": "Status update",
+        "postMatchFollowUp": "Post-match follow-up"
+      },
+      "platformOptions": {
+        "phoneNumber": "Phone number",
+        "telegram": "Telegram",
+        "whatsapp": "Whatsapp",
+        "signal": "Signal",
+        "email": "E-mail",
+        "sms": "SMS",
+        "voicenote": "Voicenote"
+      },
+      "notesPlaceholder": "Add notes about this communication...",
+      "cancel": "Cancel",
+      "save": "Save",
+      "delete": "Delete",
+      "communicationAdded": "Communication added successfully",
+      "communicationUpdated": "Communication updated successfully",
+      "communicationDeleted": "Communication deleted successfully",
+      "deleteConfirmTitle": "Delete entry?",
+      "deleteConfirmText": "\"{{entryType}}\" communication entry will be permanently deleted.",
+      "statusChange": "Status change",
+      "followUp": "Follow-up",
+      "inquiry": "Inquiry",
+      "other": "Other",
+      "email": "Email",
+      "phone": "Phone",
+      "inPerson": "In person",
+      "message": "Message"
     }
   },
   "message": {

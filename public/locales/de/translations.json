@@ -628,6 +628,65 @@
         "cancel": "Abbrechen",
         "delete": "Löschen"
       }
+    },
+    "communicationSection": {
+      "title": "Kommunikationsverfolgung",
+      "addNew": "+ Kontakt registrieren",
+      "emptyState": "Noch keine Kommunikation aufgezeichnet",
+      "registerContact": "Kontakt registrieren",
+      "date": "Datum",
+      "type": "Typ",
+      "contactMethod": "Kontaktmethode",
+      "notes": "Notizen",
+      "actions": "Aktionen",
+      "typeOfContact": "Art des Kontakts",
+      "contactTypes": {
+        "called": "Angerufen",
+        "triedToCall": "Versuch anzurufen",
+        "textedOrEmailed": "SMS oder E-Mail gesendet",
+        "other": "Sonstiges"
+      },
+      "dateOfContact": "Datum des Kontakts",
+      "contactDate": "Kontaktdatum",
+      "contactDateRequired": "Kontaktdatum*",
+      "whatPlatform": "Welche Plattform haben Sie verwendet?",
+      "howDidYouSend": "Wie haben Sie Ihre Nachricht gesendet?",
+      "contactMethodLabel": "Kontaktmethode",
+      "contactMethodRequired": "Kontaktmethode*",
+      "communicationTypeRequired": "Kommunikationstyp*",
+      "communicationTypes": {
+        "briefedVolunteer": "Briefing erfolgt (begleitende*r Freiwillige*r)",
+        "firstInquiry": "Erste Anfrage gesendet",
+        "opportunityList": "Angebotsliste gesendet",
+        "statusUpdate": "Statusaktualisierung",
+        "postMatchFollowUp": "Nachverfolgung nach Vermittlung"
+      },
+      "platformOptions": {
+        "phoneNumber": "Telefonnummer",
+        "telegram": "Telegram",
+        "whatsapp": "Whatsapp",
+        "signal": "Signal",
+        "email": "E-Mail",
+        "sms": "SMS",
+        "voicenote": "Sprachnachricht"
+      },
+      "notesPlaceholder": "Fügen Sie Notizen zu dieser Kommunikation hinzu...",
+      "cancel": "Abbrechen",
+      "save": "Speichern",
+      "delete": "Löschen",
+      "communicationAdded": "Kommunikation erfolgreich hinzugefügt",
+      "communicationUpdated": "Kommunikation erfolgreich aktualisiert",
+      "communicationDeleted": "Kommunikation erfolgreich gelöscht",
+      "deleteConfirmTitle": "Eintrag löschen?",
+      "deleteConfirmText": "\"{{entryType}}\" Kommunikationseintrag wird dauerhaft gelöscht.",
+      "statusChange": "Statusänderung",
+      "followUp": "Nachverfolgung",
+      "inquiry": "Anfrage",
+      "other": "Sonstiges",
+      "email": "E-Mail",
+      "phone": "Telefon",
+      "inPerson": "Persönlich",
+      "message": "Nachricht"
     }
   },
   "message": {

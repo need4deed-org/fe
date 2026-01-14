@@ -4,13 +4,13 @@ import { ApiVolunteerGet } from "need4deed-sdk";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
-import { DeleteConfirmationDialog } from "./DeleteConfirmationDialog";
+import { ConfirmationDialog } from "../shared/ConfirmationDialog";
 import { DocumentPreviewDialog } from "./DocumentPreviewDialog";
 import { DocumentTableRow } from "./DocumentTableRow";
 import { ACTION_COLUMN_WIDTH, Container, HeaderCell, Table, TableHeader } from "./styles";
 import { UploadDocumentDialog } from "./UploadDocumentDialog";
-import { useDeleteDocument, useUploadDocument } from "./useDocumentOperations";
 import { useDialogState } from "./useDialogState";
+import { useDeleteDocument, useUploadDocument } from "./useDocumentOperations";
 import { DocumentRow, enrichDocuments, extractDocumentUrl } from "./utils";
 
 type Props = {
@@ -34,10 +34,7 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
 
   const { data: fetchedDocuments, isLoading, isError } = useVolunteerDocuments(volunteer.id);
 
-  const documentRows = useMemo(
-    () => (fetchedDocuments ? enrichDocuments(fetchedDocuments) : []),
-    [fetchedDocuments]
-  );
+  const documentRows = useMemo(() => (fetchedDocuments ? enrichDocuments(fetchedDocuments) : []), [fetchedDocuments]);
 
   const uploadMutation = useUploadDocument(volunteer.id, () => closeDialog("upload"));
   const deleteMutation = useDeleteDocument(volunteer.id, () => {
@@ -128,16 +125,18 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
         </Table>
       </Container>
 
-      <DeleteConfirmationDialog
-        isOpen={isDeleteOpen}
-        documentName={
-          deleteDialogDocument?.nameKey
-            ? t(`dashboard.documentSection.documentNames.${deleteDialogDocument.nameKey}`)
-            : ""
-        }
-        onCancel={() => closeDialog("delete")}
-        onConfirm={handleConfirmDelete}
-      />
+      {isDeleteOpen && (
+        <ConfirmationDialog
+          title={t("dashboard.documentSection.deleteDialog.title")}
+          message={t("dashboard.documentSection.deleteDialog.message", {
+            documentName: t(`dashboard.documentSection.documentNames.${deleteDialogDocument?.nameKey}`),
+          })}
+          confirmText={t("dashboard.documentSection.deleteDialog.delete")}
+          cancelText={t("dashboard.documentSection.deleteDialog.cancel")}
+          onCancel={() => closeDialog("delete")}
+          onConfirm={handleConfirmDelete}
+        />
+      )}
 
       <UploadDocumentDialog
         key={uploadDialogDocument?.type}

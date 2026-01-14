@@ -157,7 +157,9 @@ html {
 
   /* font weights */
   --font-weight-regular: 400;
+  --font-weight-medium: 500;
   --font-weight-semi-bold: 600;
+  --font-weight-bold: 700;
 
   /* comments section */
   --comments-author-font-weight: var(--font-weight-semi-bold);
@@ -175,6 +177,9 @@ html {
 
   /* icon */
   --icon-color: var(--color-papaya);
+  --icon-size-24: 24px;
+  --icon-size-32: 32px;
+  --icon-size-40: 40px;
 
   /* card */
   --card-border-radius: 24px;
@@ -234,6 +239,7 @@ html {
   /* shared borders */
   --border-width-thin: 1px;
   --border-width-medium: 2px;
+  --border-radius-xs: 4px;
   --border-radius-small: 8px;
   --border-radius-medium: 12px;
   --border-radius-large: 16px;
@@ -242,9 +248,21 @@ html {
   --transition-transform: transform 0.2s ease;
   --transition-opacity-visibility: opacity 0.2s, visibility 0.2s;
   --transition-all: all 0.2s;
+  --transition-background: background-color 0.2s ease;
+
+  /* shared opacity */
+  --opacity-hover: 0.7;
+  --opacity-disabled: 0.6;
 
   /* shared typography */
   --letter-spacing-tight: 0.005em;
+  --font-size-14: 14px;
+  --font-size-16: 16px;
+  --font-size-24: 24px;
+  --font-size-32: 32px;
+  --line-height-20: 20px;
+  --line-height-32: 32px;
+  --line-height-40: 40px;
 
   /* button */
   --button-gap: 12px;
@@ -255,6 +273,22 @@ html {
   --checkbox-label-line-height: 32px;
   --checkbox-label-font-weight-selected: 400;
   --checkbox-label-font-weight-not-selected: 300;
+
+  /* communication tracker */
+  --communication-tracker-action-column-width: 56px;
+  --communication-tracker-dialog-max-width: 620px;
+  --communication-tracker-delete-dialog-max-width: 500px;
+  --communication-tracker-status-badge-padding: 6px 12px;
+  --communication-tracker-radio-size: 24px;
+  --communication-tracker-date-picker-day-size: 40px;
+  --communication-tracker-date-picker-nav-button-size: 32px;
+  --communication-tracker-dropdown-item-padding: 4px 8px;
+  --communication-tracker-input-icon-offset: 16px;
+  --communication-tracker-input-padding-left: 48px;
+  --communication-tracker-dropdown-arrow-size: 14px 8px;
+  --communication-tracker-button-height: 56px;
+  --communication-tracker-dialog-box-shadow: 0px 10px 30px -12px rgba(143, 81, 138, 0.2);
+  --communication-tracker-popover-box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
 
   /* document section - aliases to shared variables */
   --document-section-container-padding: var(--profile-section-padding);
