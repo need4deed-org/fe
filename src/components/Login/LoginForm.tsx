@@ -8,6 +8,9 @@ import { Button, Checkbox } from "../core/button";
 import { Paragraph } from "../styled/text";
 import { useMutationQuery } from "@/hooks";
 import { apiPathLogin } from "@/config/constants";
+import { getAuthUser } from "@/utils/auth";
+import { UserRole } from "need4deed-sdk";
+import i18next from "i18next";
 
 interface LoginData {
   email: string;
@@ -21,6 +24,7 @@ interface LoginResponse {
 
 const useLoginMutation = (lang: string) => {
   const router = useRouter();
+  const { language } = i18next;
 
   return useMutationQuery<LoginData, LoginResponse>({
     apiPath: apiPathLogin,
