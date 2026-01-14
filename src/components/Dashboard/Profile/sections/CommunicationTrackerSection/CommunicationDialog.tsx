@@ -79,14 +79,6 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
     }
   }, [isOpen, initialData, reset]);
 
-  // Update default contact method when contact type changes (if adding new)
-  useEffect(() => {
-    if (contactType && !initialData) {
-      const defaultMethod = getDefaultContactMethod(contactType);
-      setValue("contactMethod", defaultMethod);
-    }
-  }, [contactType, initialData, setValue]);
-
   const onSubmit = (data: CommunicationFormData) => {
     if (!data.contactType || !data.date) return;
 
@@ -124,7 +116,11 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
                     value={type}
                     checked={field.value === type}
                     // React Hook Form's onChange expects the value
-                    onChange={() => field.onChange(type)}
+                    onChange={() => {
+                      field.onChange(type);
+                      const defaultMethod = getDefaultContactMethod(type);
+                      setValue("contactMethod", defaultMethod);
+                    }}
                     data-testid={`radio-${type.toLowerCase().replace(/_/g, "-")}`}
                   />
                 )}
