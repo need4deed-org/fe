@@ -54,4 +54,4 @@ export type LanguageObject = {
 
 export type FooterLink = [string, string];
 
-export type HttpMethod = "post" | "patch" | "put";
+export type HttpMethod = "post" | "patch" | "put" | "delete";
