@@ -440,6 +440,7 @@
       "activityLog": "Aktivitätsprotokoll",
       "editButtonName": "Bearbeiten",
       "findOppButtonName": "Möglichkeit finden",
+      "activities": "Aktivitäten",
       "volunteerHeader": {
         "modalData": {
           "title": "Engagement-Status ändern",
@@ -508,7 +509,9 @@
           "matched": "Zugeordnet",
           "active": "Aktiv",
           "past": "Vergangen"
-        }
+        },
+        "match": "Match",
+        "notAMatch": "Kein Match"
       },
       "contactDetails": {
         "title": "Kontaktdaten",
@@ -567,7 +570,15 @@
       },
       "defaultMainCommunication": "Englisch, Deutsch",
       "otherCategory": "Allgemeines Engagement",
-      "goToProfile": "Zum Profil"
+      "goToProfile": "Zum Profil",
+      "mainCommunication": "Hauptkommunikation",
+      "translationTo": "Übersetzung nach",
+      "residentsSpeak": "Bewohnende sprechen",
+      "languages": "Sprachen",
+      "schedule": "Zeitplan",
+      "district": "Bezirk",
+      "dateOfAppointment": "Datum des Termins",
+      "description": "Beschreibung"
     },
     "documentSection": {
       "title": "Dokumente",

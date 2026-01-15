@@ -1367,6 +1367,18 @@ html {
     --volunteer-profile-opportunities-accordion-header-info-gap: 8px;
     --volunteer-profile-opportunities-accordion-header-avatar-name-gap: 16px;
     --volunteer-profile-opportunities-accordion-header-buttons-gap: 24px;
+    --volunteer-profile-opportunities-accordion-opp-detail-bold-font: 600;
+    --volunteer-profile-opportunities-accordion-opp-detail-mid-font: 550;
+    --volunteer-profile-opportunities-accordion-opp-detail-light-font: 400;
+    --volunteer-profile-opportunities-accordion-actions-container-gap: 16px;
+    --volunteer-profile-opportunities-accordion-actions-button-height: 56px;
+    --volunteer-profile-opportunities-accordion-actions-button-textFontSize: 24px;
+    --volunteer-profile-opportunities-accordion-actions-button-border: 2px solid var(--color-aubergine);
+    --volunteer-profile-opportunities-accordion-info-section-icon-size: 20px;
+    --volunteer-profile-opportunities-accordion-split-container-gap: 24px;
+    --volunteer-profile-opportunities-accordion-detail-section-gap: 8px;
+    --volunteer-profile-opportunities-accordion-detail-header-gap: 8px;
+    --volunteer-profile-opportunities-accordion-language-row-gap: 8px;
   }
 }
 

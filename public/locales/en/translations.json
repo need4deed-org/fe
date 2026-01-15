@@ -440,6 +440,7 @@
       "activityLog": "Activity Log",
       "editButtonName": "Edit",
       "findOppButtonName": "Find Opportunity",
+      "activities": "Activities",
       "volunteerHeader": {
         "modalData": {
           "title": "Change engagement status",
@@ -508,7 +509,9 @@
           "matched": "Matched",
           "active": "Active",
           "past": "Past"
-        }
+        },
+        "match": "Match",
+        "notAMatch": "Not a match"
       },
       "contactDetails": {
         "title": "Contact details",
@@ -559,6 +562,7 @@
         }
       }
     },
+
     "documentSection": {
       "title": "Documents",
       "typeOfDocument": "Type of document",
@@ -609,7 +613,15 @@
       },
       "defaultMainCommunication": "English, German",
       "otherCategory": "General Volunteering",
-      "goToProfile": "Go to Profile"
+      "goToProfile": "Go to Profile",
+      "mainCommunication": "Main communication",
+      "translationTo": "Translation to",
+      "residentsSpeak": "Residents speak",
+      "languages": "Languages",
+      "schedule": "Schedule",
+      "district": "District",
+      "dateOfAppointment": "Date Of Appointment",
+      "description": "Description"
     },
     "commentsSection": {
       "placeholder": "Comment",
