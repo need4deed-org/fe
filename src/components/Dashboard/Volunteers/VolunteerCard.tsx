@@ -21,7 +21,7 @@ interface Props {
 }
 
 export function VolunteerCard({ volunteer }: Props) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const router = useRouter();
 
   const { id, name, languages, activities, skills, locations, availability, avatarUrl, statusEngagement, statusType } =
@@ -36,7 +36,7 @@ export function VolunteerCard({ volunteer }: Props) {
   const handleCardClick = () => {
     if (!id) return;
 
-    router.push(`/dashboard/volunteers/${id}`);
+    router.push(`/${i18n.language}/dashboard/volunteers/${id}`);
   };
 
   return (

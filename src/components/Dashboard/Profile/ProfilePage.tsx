@@ -8,6 +8,8 @@ import { useTranslation } from "react-i18next";
 import { VolunteerHeader } from "./sections/VolunteerHeader";
 import { CommentsList } from "@/components/core/comment";
 import { Comment } from "@/types";
+import { Heading2 } from "@/components/styled/text";
+import { Card } from "./common/SectionCard";
 
 const PageContainer = styled.div`
   display: flex;
@@ -33,7 +35,7 @@ interface ProfilePageProps {
 }
 
 const ProfilePage = ({ volunteer }: ProfilePageProps) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   // Mock comments data - replace with real API call
   const mockComments: Comment[] = [
@@ -74,7 +76,7 @@ const ProfilePage = ({ volunteer }: ProfilePageProps) => {
 
   return (
     <PageContainer>
-      <BackLink href="/dashboard">
+      <BackLink href={`/${i18n.language}/dashboard`}>
         <ArrowLeftIcon size={24} />
         {t("dashboard.volunteerProfile.backToDashboard")}
       </BackLink>
