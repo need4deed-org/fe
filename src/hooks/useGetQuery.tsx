@@ -50,10 +50,11 @@ interface UseGetQuery {
   queryKey: string[];
   params?: Params;
   staleTime?: number;
+  enabled?: boolean;
 }
 
 // The generic custom hook with pagination-sort-language params
-export const useGetQuery = <T,>({ queryKey, apiPath, params = {}, staleTime }: UseGetQuery) => {
+export const useGetQuery = <T,>({ queryKey, apiPath, params = {}, staleTime, enabled }: UseGetQuery) => {
   const { t } = useTranslation();
   const { lang } = useParams<{ lang: Lang }>();
   params.language = lang;
@@ -63,6 +64,7 @@ export const useGetQuery = <T,>({ queryKey, apiPath, params = {}, staleTime }: U
     queryKey: [...queryKey, params],
     queryFn: () => fetchData<T>(apiPath, params),
     staleTime,
+    enabled,
   });
 
   // Display a toast message when an error occurs
@@ -83,7 +85,7 @@ export const useGetQuery = <T,>({ queryKey, apiPath, params = {}, staleTime }: U
   }, [isError, error, t]);
 
   return {
-    data: data?.data,
+    data: (data && Object.prototype.hasOwnProperty.call(data, "data") ? data.data : data) as T,
     message: data?.message || "",
     count: data?.count || 0,
     isLoading,

@@ -1,16 +1,12 @@
 import { useForm } from "@tanstack/react-form";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useRouter, usePathname } from "next/navigation";
 import { FormInput } from "../core/common";
 import styled from "styled-components";
 import { Button, Checkbox } from "../core/button";
 import { Paragraph } from "../styled/text";
 import { useMutationQuery } from "@/hooks";
 import { apiPathLogin } from "@/config/constants";
-import { getAuthUser } from "@/utils/auth";
-import { UserRole } from "need4deed-sdk";
-import i18next from "i18next";
 
 interface LoginData {
   email: string;
@@ -22,18 +18,12 @@ interface LoginResponse {
   data: { token: string };
 }
 
-const useLoginMutation = (lang: string) => {
-  const router = useRouter();
-  const { language } = i18next;
-
+const useLoginMutation = (onLoginSuccess: () => void) => {
   return useMutationQuery<LoginData, LoginResponse>({
     apiPath: apiPathLogin,
     successMessage: "dashboard.login.successMessage",
-    onSuccessCallback: () => {
-      // Add a small delay to ensure toast is visible before redirect
-      setTimeout(() => {
-        router.push(`/${lang}/`);
-      }, 500);
+    onSuccessCallback: async () => {
+      onLoginSuccess?.();
     },
   });
 };
@@ -56,12 +46,13 @@ const LoginButtonDiv = styled.div`
   justify-content: center;
 `;
 
-export const LoginForm = () => {
-  const { t, i18n } = useTranslation();
-  const pathname = usePathname();
-  // Extract language from pathname or use i18n language, default to 'de'
-  const lang = pathname?.split("/")[1] || i18n.language || "de";
-  const { mutate: login, isPending } = useLoginMutation(lang);
+interface LoginFormProps {
+  onLoginSuccess: () => void;
+}
+
+export const LoginForm = ({ onLoginSuccess }: LoginFormProps) => {
+  const { t } = useTranslation();
+  const { mutate: login, isPending } = useLoginMutation(onLoginSuccess);
   const [rememberMeChecked, setRememberMeChecked] = useState(false);
 
   const form = useForm({
