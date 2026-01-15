@@ -11,6 +11,7 @@ import {
   ShootingStarIcon,
   SparkleIcon,
   UserCheckIcon,
+  UserCircleIcon,
   UsersIcon,
 } from "@phosphor-icons/react";
 import { JSX } from "react";
@@ -33,5 +34,6 @@ export const iconNameMap: IconMap = {
   [IconName.ShootingStar]: <ShootingStarIcon />,
   [IconName.Sparkle]: <SparkleIcon />,
   [IconName.UserCheck]: <UserCheckIcon />,
+  [IconName.UserCircle]: <UserCircleIcon />,
   [IconName.Users]: <UsersIcon />,
 };

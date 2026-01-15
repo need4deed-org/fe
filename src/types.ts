@@ -54,12 +54,4 @@ export type LanguageObject = {
 
 export type FooterLink = [string, string];
 
-export type HttpMethod = "post" | "patch" | "put";
-
-export interface Comment {
-  id: string;
-  userId: string;
-  userName: string;
-  text: string;
-  timestamp: string;
-}
+export type HttpMethod = "post" | "patch" | "put" | "delete";

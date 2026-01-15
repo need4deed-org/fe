@@ -1,15 +1,19 @@
-import React from "react";
-import styled from "styled-components";
-import { IconName, ProfileCardTypes } from "./types/types";
-import { ArrowLeftIcon } from "@phosphor-icons/react";
-import Link from "next/link";
-import { ApiVolunteerGet } from "need4deed-sdk";
-import { useTranslation } from "react-i18next";
-import { VolunteerHeader } from "./sections/VolunteerHeader";
-import { CommentsList } from "@/components/core/comment";
-import { Comment } from "@/types";
 import { Heading2 } from "@/components/styled/text";
-import { Card } from "./common/SectionCard";
+import { ArrowLeftIcon } from "@phosphor-icons/react";
+import { ApiVolunteerGet } from "need4deed-sdk";
+import Link from "next/link";
+import { useRef } from "react";
+import { useTranslation } from "react-i18next";
+import styled from "styled-components";
+import { Card, SectionCard, SectionCardProps } from "./common/SectionCard";
+import { CommentsSection } from "./sections/CommentsSection";
+import { CommunicationTrackerSection } from "./sections/CommunicationTrackerSection";
+import { ContactDetails, ContactDetailsRef } from "./sections/ContactDetails";
+import { VolunteerHeader } from "./sections/VolunteerHeader";
+import VolunteerOpportunities from "./sections/VolunteerOpportunities/VolunteerOpportunities";
+import { VolunteerProfileDocumentSection } from "./sections/VolunteerProfileDocumentSection";
+import { VolunteerProfileSection, VolunteerProfileSectionRef } from "./sections/VolunteerProfileSection";
+import { IconName, ProfileCardTypes } from "./types/types";
 
 const PageContainer = styled.div`
   display: flex;
@@ -36,43 +40,51 @@ interface ProfilePageProps {
 
 const ProfilePage = ({ volunteer }: ProfilePageProps) => {
   const { t, i18n } = useTranslation();
+  const contactDetailsRef = useRef<ContactDetailsRef>(null);
+  const volunteerProfileRef = useRef<VolunteerProfileSectionRef>(null);
 
-  // Mock comments data - replace with real API call
-  const mockComments: Comment[] = [
+  const sections: SectionCardProps[] = [
     {
-      id: "1",
-      userId: "user1",
-      userName: "Kalima",
-      text: "Leni works as a social worker with special-needs children, supporting learning development",
-      timestamp: new Date("2024-08-04T13:14:00").toISOString(),
+      iconName: IconName.ChatsCircle,
+      title: t("dashboard.volunteerProfile.contactDetailsTitle"),
+      headerButtonName: t("dashboard.volunteerProfile.editButtonName"),
+      onHeaderButtonClick: () => contactDetailsRef.current?.handleEditClick(),
+      subComponent: <ContactDetails ref={contactDetailsRef} volunteer={volunteer} />,
     },
     {
-      id: "2",
-      userId: "user2",
-      userName: "Kalima",
-      text: "Comment example here. An emergency with the appointment.",
-      timestamp: new Date("2024-09-01T12:12:00").toISOString(),
+      iconName: IconName.UserCircle,
+      title: t("dashboard.volunteerProfile.volunteerProfile"),
+      headerButtonName: t("dashboard.volunteerProfile.editButtonName"),
+      onHeaderButtonClick: () => volunteerProfileRef.current?.handleEditClick(),
+      subComponent: <VolunteerProfileSection ref={volunteerProfileRef} volunteer={volunteer} />,
+    },
+    {
+      iconName: IconName.ShootingStar,
+      title: t("dashboard.volunteerProfile.opportunities"),
+      headerButtonName: t("dashboard.volunteerProfile.findOppButtonName"),
+      subComponent: <VolunteerOpportunities />,
+    },
+    {
+      iconName: IconName.ChatsTeardrop,
+      title: t("dashboard.communicationSection.title"),
+      subComponent: <CommunicationTrackerSection volunteer={volunteer} />,
+    },
+    {
+      iconName: IconName.ChatCircleDots,
+      title: `${t("dashboard.volunteerProfile.coordinatorComments")} • ${volunteer.comments?.length ?? 0}`,
+      subComponent: <CommentsSection volunteer={volunteer} />,
+    },
+    {
+      iconName: IconName.ClipboardText,
+      title: t("dashboard.volunteerProfile.documents"),
+      subComponent: <VolunteerProfileDocumentSection volunteer={volunteer} />,
+    },
+    {
+      iconName: IconName.ChartLine,
+      title: t("dashboard.volunteerProfile.activityLog"),
+      subComponent: <div>Activity Log sub-component. to be replaced...</div>,
     },
   ];
-
-  // Mock functions - replace with real API calls
-  const handlePatch = async (commentId: string, updatedText: string) => {
-    console.log("PATCH:", commentId, updatedText);
-    // TODO: Implement real API call
-    await new Promise((resolve) => setTimeout(resolve, 500));
-  };
-
-  const handleDelete = async (commentId: string) => {
-    console.log("DELETE:", commentId);
-    // TODO: Implement real API call
-    await new Promise((resolve) => setTimeout(resolve, 500));
-  };
-
-  const handleAdd = async (text: string) => {
-    console.log("ADD:", text);
-    // TODO: Implement real API call
-    await new Promise((resolve) => setTimeout(resolve, 500));
-  };
 
   return (
     <PageContainer>
@@ -87,14 +99,9 @@ const ProfilePage = ({ volunteer }: ProfilePageProps) => {
         <VolunteerHeader volunteer={volunteer} />
       </Card>
 
-      <Card>
-        <CommentsList
-          comments={mockComments}
-          onPatch={handlePatch}
-          onDelete={handleDelete}
-          onAdd={handleAdd}
-        />
-      </Card>
+      {sections.map((s) => (
+        <SectionCard key={s.title} {...s} />
+      ))}
     </PageContainer>
   );
 };
