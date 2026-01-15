@@ -12,7 +12,9 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 ENV PORT=3000
+ENV HOSTNAME=0.0.0.0
 ENV NEXT_TELEMETRY_DISABLED=1
+RUN apk add --no-cache curl
 
 # Copy files (node user already has proper permissions)
 COPY --from=builder /app/.next/standalone ./

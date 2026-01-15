@@ -30,10 +30,11 @@ export interface SectionCardProps extends PropsWithChildren {
   iconName: IconName;
   title: string;
   headerButtonName?: string;
+  onHeaderButtonClick?: () => void;
   subComponent: ReactNode;
 }
 
-export const SectionCard = ({ iconName, title, headerButtonName, subComponent }: SectionCardProps) => {
+export const SectionCard = ({ iconName, title, headerButtonName, onHeaderButtonClick, subComponent }: SectionCardProps) => {
   return (
     <Card>
       <CardHeader>
@@ -44,7 +45,7 @@ export const SectionCard = ({ iconName, title, headerButtonName, subComponent }:
 
         {headerButtonName && (
           <Button
-            onClick={() => {}}
+            onClick={onHeaderButtonClick || (() => {})}
             text={headerButtonName}
             height="var(--volunteer-profile-section-card-header-button-height)"
             textFontSize="var(--volunteer-profile-section-card-header-button-textFontSize)"

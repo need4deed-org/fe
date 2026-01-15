@@ -9,6 +9,7 @@ import StatusBadge from "../../common/StatusBadge";
 import { VolunteerStateType } from "need4deed-sdk";
 import { useTranslation } from "react-i18next";
 import { CaretDownIcon, CaretUpIcon } from "@phosphor-icons/react";
+import OpportunityDetail from "./OpportunityDetail";
 
 interface Props {
   opportunity: Opportunity;
@@ -50,8 +51,7 @@ export default function AccordionOpportunity({ opportunity }: Props) {
         </HeaderButtonsContainer>
       </HeaderContainer>
 
-      {/* Todo: will be implemented in other Task */}
-      {isOpen && <DetailContainer>Opportinity Detail Container</DetailContainer>}
+      {isOpen && <OpportunityDetail opportunity={opportunity} />}
     </AccordionContainer>
   );
 }
@@ -95,13 +95,4 @@ const HeaderButtonsContainer = styled.div`
   justify-content: flex-end;
   align-items: center;
   gap: var(--volunteer-profile-opportunities-accordion-header-buttons-gap);
-`;
-
-const DetailContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: left;
-  gap: var(--opportunities-filters-content-accordion-options-gap);
-  max-height: var(--opportunities-filters-content-accordion-options-max-height);
-  overflow-y: auto;
 `;

@@ -4,20 +4,30 @@ import axios, { AxiosError } from "axios";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 
-
 // Define the options for the hook
-interface DataMutationOptions<TResponse> {
-  apiPath: string;
+type DataMutationOptions<TResponse, TData> = {
   method?: HttpMethod;
   successMessage?: string;
   onSuccessCallback?: (data: TResponse) => void;
-  queryKeyToInvalidate?: (string | number)[]; // Optional key to refetch data on success
-}
+  queryKeyToInvalidate?: (string | number)[];
+} & (
+  | {
+      apiPath: string;
+      mutationFn?: never;
+    }
+  | {
+      mutationFn: (data: TData) => Promise<TResponse>;
+      apiPath?: never;
+    }
+);
 
 // Generic function to perform the API call
 async function mutateData<TData, TResponse>(apiPath: string, method: HttpMethod, data: TData): Promise<TResponse> {
-  // Dynamically call the appropriate axios method
-  const response = await axios[method.toLowerCase() as HttpMethod](apiPath, data);
+  if (method === "delete") {
+    const response = await axios.delete(apiPath);
+    return response.data;
+  }
+  const response = await axios[method](apiPath, data);
   return response.data;
 }
 
@@ -33,12 +43,18 @@ export const useMutationQuery = <TData, TResponse, TError = AxiosError<{ message
   successMessage,
   onSuccessCallback,
   queryKeyToInvalidate,
-}: DataMutationOptions<TResponse>) => {
+  mutationFn,
+}: DataMutationOptions<TResponse, TData>) => {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
 
   return useMutation<TResponse, TError, TData>({
-    mutationFn: (data: TData) => mutateData(apiPath, method, data),
+    mutationFn: (data: TData) => {
+      if (mutationFn) {
+        return mutationFn(data);
+      }
+      return mutateData(apiPath, method, data);
+    },
 
     onSuccess: (responseData) => {
       toast.success(t(successMessage || "message.successful") + " 🎉");
