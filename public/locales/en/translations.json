@@ -641,6 +641,33 @@
         "delete": "Delete"
       }
     },
+    "appreciationSection": {
+      "title": "Appreciation",
+      "addNew": "+ Add appreciation",
+      "emptyState": "This volunteer hasn't received any appreciation yet",
+      "typeOfAppreciation": "Type of appreciation",
+      "typeOfAppreciationRequired": "Type of appreciation*",
+      "status": "Status",
+      "receivedOn": "Received on",
+      "statusReceived": "Received",
+      "statusDueTo": "Due on",
+      "typeOptions": {
+        "tshirt": "T-shirt",
+        "toteBag": "Tote bag",
+        "benefitCard": "Benefit card"
+      },
+      "addAppreciation": "Add appreciation",
+      "editAppreciation": "Edit appreciation",
+      "dueDateRequired": "Due date*",
+      "deliveryDate": "Delivery date (optional)",
+      "cancel": "Cancel",
+      "save": "Save",
+      "appreciationAdded": "Appreciation added successfully",
+      "appreciationUpdated": "Appreciation updated successfully",
+      "appreciationDeleted": "Appreciation deleted successfully",
+      "deleteConfirmTitle": "Delete appreciation?",
+      "deleteConfirmText": "\"{{entryType}}\" appreciation entry will be permanently deleted."
+    },
     "communicationSection": {
       "title": "Communication Tracker",
       "addNew": "+ Register contact",

@@ -6,6 +6,7 @@ import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { Card, SectionCard, SectionCardProps } from "./common/SectionCard";
+import { AppreciationSection } from "./sections/AppreciationSection";
 import { CommentsSection } from "./sections/CommentsSection";
 import { CommunicationTrackerSection } from "./sections/CommunicationTrackerSection";
 import { ContactDetails, ContactDetailsRef } from "./sections/ContactDetails";
@@ -73,6 +74,11 @@ const ProfilePage = ({ volunteer }: ProfilePageProps) => {
       iconName: IconName.ChatCircleDots,
       title: `${t("dashboard.volunteerProfile.coordinatorComments")} • ${volunteer.comments?.length ?? 0}`,
       subComponent: <CommentsSection volunteer={volunteer} />,
+    },
+    {
+      iconName: IconName.Gift,
+      title: t("dashboard.appreciationSection.title"),
+      subComponent: <AppreciationSection volunteer={volunteer} />,
     },
     {
       iconName: IconName.ClipboardText,

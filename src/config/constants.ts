@@ -7,6 +7,7 @@ export const apiPrefix = "api";
 export const apiPathVolunteer = `/${apiPrefix}/volunteer/`;
 export const apiPathComment = `/${apiPrefix}/comment`;
 export const apiPathCommunication = `/${apiPrefix}/communication`;
+export const apiPathAppreciation = `/${apiPrefix}/appreciation`;
 export const apiPathLogin = `/${apiPrefix}/auth/login`;
 export const apiPathAuthRefresh = `/${apiPrefix}/auth/refresh`;
 export const apiPathAuthEmailDomain = `${apiPrefix}/auth-email-domain/`;

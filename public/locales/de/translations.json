@@ -640,6 +640,33 @@
         "delete": "Löschen"
       }
     },
+    "appreciationSection": {
+      "title": "Anerkennung",
+      "addNew": "+ Anerkennung hinzufügen",
+      "emptyState": "Dieser Freiwillige hat noch keine Anerkennung erhalten",
+      "typeOfAppreciation": "Art der Anerkennung",
+      "typeOfAppreciationRequired": "Art der Anerkennung*",
+      "status": "Status",
+      "receivedOn": "Erhalten am",
+      "statusReceived": "Erhalten",
+      "statusDueTo": "Fällig am",
+      "typeOptions": {
+        "tshirt": "T-Shirt",
+        "toteBag": "Stofftasche",
+        "benefitCard": "Vorteilskarte"
+      },
+      "addAppreciation": "Anerkennung hinzufügen",
+      "editAppreciation": "Anerkennung bearbeiten",
+      "dueDateRequired": "Fälligkeitsdatum*",
+      "deliveryDate": "Lieferdatum (optional)",
+      "cancel": "Abbrechen",
+      "save": "Speichern",
+      "appreciationAdded": "Anerkennung erfolgreich hinzugefügt",
+      "appreciationUpdated": "Anerkennung erfolgreich aktualisiert",
+      "appreciationDeleted": "Anerkennung erfolgreich gelöscht",
+      "deleteConfirmTitle": "Anerkennung löschen?",
+      "deleteConfirmText": "\"{{entryType}}\" Anerkennungseintrag wird dauerhaft gelöscht."
+    },
     "communicationSection": {
       "title": "Kommunikationsverfolgung",
       "addNew": "+ Kontakt registrieren",
