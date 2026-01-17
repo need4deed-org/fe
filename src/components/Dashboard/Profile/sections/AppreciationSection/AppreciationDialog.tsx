@@ -1,22 +1,19 @@
 "use client";
 import { Button } from "@/components/core/button";
 import { Modal } from "@/components/core/modal";
-import { X } from "@phosphor-icons/react";
-import { de } from "date-fns/locale";
+import { TShirt, Tote, IdentificationCard } from "@phosphor-icons/react";
 import { VolunteerStateAppreciationType } from "need4deed-sdk";
 import { ApiAppreciationGet } from "./types";
-import { useEffect, useState } from "react";
+import { JSX, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { DatePickerWithPopover } from "./DatePickerWithPopover";
 import {
   ButtonGroup,
-  CloseButton,
-  DialogHeader,
   DialogTitle,
   Form,
-  FormField,
-  Label,
-  Select,
+  RadioOption,
+  RadioInput,
+  RadioLabel,
+  RadioOptionsContainer,
 } from "./styles";
 
 type Props = {
@@ -26,108 +23,88 @@ type Props = {
   initialData?: ApiAppreciationGet;
 };
 
-type FormData = {
-  title: VolunteerStateAppreciationType;
-  dateDue: Date | undefined;
-  dateDelivery: Date | undefined;
+type AppreciationOption = {
+  value: VolunteerStateAppreciationType;
+  labelKey: string;
+  icon: JSX.Element;
 };
 
 export function AppreciationDialog({ isOpen, onClose, onSave, initialData }: Props) {
-  const { t, i18n } = useTranslation();
-  const locale = i18n.language === "de" ? de : undefined;
+  const { t } = useTranslation();
 
-  const [formData, setFormData] = useState<FormData>({
-    title: VolunteerStateAppreciationType.T_SHIRT,
-    dateDue: undefined,
-    dateDelivery: undefined,
-  });
+  const [selectedType, setSelectedType] = useState<VolunteerStateAppreciationType | undefined>(undefined);
+
+  const appreciationOptions: AppreciationOption[] = [
+    {
+      value: VolunteerStateAppreciationType.TOTE_BAG,
+      labelKey: "dashboard.appreciationSection.typeOptions.toteBag",
+      icon: <Tote size={20} weight="regular" color="var(--color-coral)" />,
+    },
+    {
+      value: VolunteerStateAppreciationType.T_SHIRT,
+      labelKey: "dashboard.appreciationSection.typeOptions.tshirt",
+      icon: <TShirt size={20} weight="regular" color="var(--color-coral)" />,
+    },
+    {
+      value: VolunteerStateAppreciationType.BENEFIT_CARD,
+      labelKey: "dashboard.appreciationSection.typeOptions.benefitCard",
+      icon: <IdentificationCard size={20} weight="regular" color="var(--color-coral)" />,
+    },
+  ];
 
   useEffect(() => {
     if (isOpen) {
       if (initialData) {
-        setFormData({
-          title: initialData.title,
-          dateDue: initialData.dateDue ? new Date(initialData.dateDue) : undefined,
-          dateDelivery: initialData.dateDelivery ? new Date(initialData.dateDelivery) : undefined,
-        });
+        setSelectedType(initialData.title);
       } else {
-        setFormData({
-          title: VolunteerStateAppreciationType.T_SHIRT,
-          dateDue: undefined,
-          dateDelivery: undefined,
-        });
+        setSelectedType(undefined);
       }
     }
   }, [isOpen, initialData]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.title || !formData.dateDue) return;
+    if (!selectedType) return;
 
     const payload: Partial<ApiAppreciationGet> = {
       id: initialData?.id,
-      title: formData.title,
-      dateDue: formData.dateDue,
-      dateDelivery: formData.dateDelivery,
+      title: selectedType,
     };
     onSave(payload);
   };
 
-  const isFormValid = formData.title && formData.dateDue;
-
-  const appreciationTypeOptions = [
-    { value: VolunteerStateAppreciationType.T_SHIRT, label: t("dashboard.appreciationSection.typeOptions.tshirt") },
-    { value: VolunteerStateAppreciationType.TOTE_BAG, label: t("dashboard.appreciationSection.typeOptions.toteBag") },
-    { value: VolunteerStateAppreciationType.BENEFIT_CARD, label: t("dashboard.appreciationSection.typeOptions.benefitCard") },
-  ];
+  const isFormValid = !!selectedType;
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <DialogHeader>
-        <DialogTitle>
-          {initialData
-            ? t("dashboard.appreciationSection.editAppreciation")
-            : t("dashboard.appreciationSection.addAppreciation")}
-        </DialogTitle>
-        <CloseButton onClick={onClose} data-testid="close-dialog-button">
-          <X size={24} weight="bold" />
-        </CloseButton>
-      </DialogHeader>
+      <DialogTitle data-testid="appreciation-dialog-title">
+        {initialData
+          ? t("dashboard.appreciationSection.editAppreciation")
+          : t("dashboard.appreciationSection.addAppreciation")}
+      </DialogTitle>
 
       <Form onSubmit={handleSubmit} data-testid="appreciation-form">
-        <FormField>
-          <Label>{t("dashboard.appreciationSection.typeOfAppreciationRequired")}</Label>
-          <Select
-            value={formData.title}
-            onChange={(e) => setFormData({ ...formData, title: e.target.value as VolunteerStateAppreciationType })}
-            data-testid="appreciation-type-select"
-          >
-            {appreciationTypeOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </Select>
-        </FormField>
-
-        <FormField>
-          <Label>{t("dashboard.appreciationSection.dueDateRequired")}</Label>
-          <DatePickerWithPopover
-            date={formData.dateDue}
-            onSelect={(d) => setFormData({ ...formData, dateDue: d })}
-            locale={locale}
-            allowFuture
-          />
-        </FormField>
-
-        <FormField>
-          <Label>{t("dashboard.appreciationSection.deliveryDate")}</Label>
-          <DatePickerWithPopover
-            date={formData.dateDelivery}
-            onSelect={(d) => setFormData({ ...formData, dateDelivery: d })}
-            locale={locale}
-          />
-        </FormField>
+        <RadioOptionsContainer data-testid="appreciation-options">
+          {appreciationOptions.map((option) => (
+            <RadioOption
+              key={option.value}
+              $isSelected={selectedType === option.value}
+              onClick={() => setSelectedType(option.value)}
+              data-testid={`radio-option-${option.value}`}
+            >
+              <RadioInput
+                type="radio"
+                name="appreciationType"
+                value={option.value}
+                checked={selectedType === option.value}
+                onChange={() => setSelectedType(option.value)}
+                data-testid={`radio-input-${option.value}`}
+              />
+              {option.icon}
+              <RadioLabel>{t(option.labelKey)}</RadioLabel>
+            </RadioOption>
+          ))}
+        </RadioOptionsContainer>
 
         <ButtonGroup>
           <Button
@@ -143,8 +120,8 @@ export function AppreciationDialog({ isOpen, onClose, onSave, initialData }: Pro
           <Button
             text={t("dashboard.appreciationSection.save")}
             onClick={handleSubmit}
-            backgroundcolor="var(--color-aubergine)"
-            textColor="var(--color-white)"
+            backgroundcolor={isFormValid ? "var(--color-aubergine)" : "var(--color-grey-50)"}
+            textColor={isFormValid ? "var(--color-white)" : "var(--color-grey-400)"}
             disabled={!isFormValid}
           />
         </ButtonGroup>

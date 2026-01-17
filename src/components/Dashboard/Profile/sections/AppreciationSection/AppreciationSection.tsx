@@ -88,15 +88,13 @@ export function AppreciationSection({ volunteer }: Props) {
   };
 
   const handleSave = (data: Partial<ApiAppreciationGet>) => {
-    if (!data.title || !data.dateDue) {
+    if (!data.title) {
       return;
     }
 
     if (data.id) {
       const payload: ApiAppreciationPatch = {
         title: data.title,
-        dateDue: data.dateDue,
-        dateDelivery: data.dateDelivery,
       };
       updateAppreciation({ id: data.id, data: payload }, {
         onSuccess: () => setIsDialogOpen(false),
@@ -104,8 +102,7 @@ export function AppreciationSection({ volunteer }: Props) {
     } else {
       const payload: ApiAppreciationPost = {
         title: data.title,
-        dateDue: data.dateDue,
-        dateDelivery: data.dateDelivery,
+        dateDue: new Date(),
       };
       createAppreciation(payload, {
         onSuccess: () => setIsDialogOpen(false),

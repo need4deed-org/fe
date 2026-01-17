@@ -50,11 +50,11 @@ export const DialogHeader = styled.div`
 
 export const DialogTitle = styled.h3`
   font-weight: var(--font-weight-bold);
-  font-size: var(--font-size-32);
-  line-height: var(--line-height-40);
-  letter-spacing: var(--letter-spacing-tight);
+  font-size: 28px;
+  line-height: 32px;
+  letter-spacing: 0.14px;
   color: var(--color-midnight);
-  margin: 0;
+  margin: 0 0 var(--spacing-24) 0;
 `;
 
 export const CloseButton = styled.button`
@@ -203,4 +203,37 @@ export const ButtonGroup = styled.div`
   gap: var(--spacing-16);
   margin-top: auto;
   padding-top: var(--spacing-16);
+`;
+
+export const RadioOptionsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-24);
+  width: 100%;
+`;
+
+export const RadioOption = styled.div<{ $isSelected?: boolean }>`
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  cursor: pointer;
+  width: 100%;
+`;
+
+export const RadioInput = styled.input`
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  accent-color: var(--color-midnight);
+  flex-shrink: 0;
+  margin: 0;
+`;
+
+export const RadioLabel = styled.span`
+  font-family: var(--bs-body-font-family);
+  font-weight: var(--font-weight-regular);
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: 0.1px;
+  color: var(--color-midnight);
 `;
