@@ -85,7 +85,7 @@ export const useGetQuery = <T,>({ queryKey, apiPath, params = {}, staleTime, ena
   }, [isError, error, t]);
 
   return {
-    data: (data && Object.prototype.hasOwnProperty.call(data, "data") ? data.data : data) as T,
+    data: data?.data,
     message: data?.message || "",
     count: data?.count || 0,
     isLoading,

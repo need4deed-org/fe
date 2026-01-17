@@ -23,7 +23,7 @@ const useLoginMutation = (onLoginSuccess: () => void) => {
     apiPath: apiPathLogin,
     successMessage: "dashboard.login.successMessage",
     onSuccessCallback: async () => {
-      onLoginSuccess?.();
+      onLoginSuccess();
     },
   });
 };
