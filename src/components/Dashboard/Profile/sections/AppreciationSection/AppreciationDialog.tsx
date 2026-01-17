@@ -1,19 +1,34 @@
 "use client";
 import { Button } from "@/components/core/button";
 import { Modal } from "@/components/core/modal";
-import { TShirt, Tote, IdentificationCard } from "@phosphor-icons/react";
+import { CalendarBlank, CaretDown, Check } from "@phosphor-icons/react";
 import { VolunteerStateAppreciationType } from "need4deed-sdk";
 import { ApiAppreciationGet } from "./types";
-import { JSX, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { format } from "date-fns";
+import { de } from "date-fns/locale";
+import { DatePickerWithPopover } from "./DatePickerWithPopover";
 import {
   ButtonGroup,
   DialogTitle,
   Form,
-  RadioOption,
-  RadioInput,
-  RadioLabel,
   RadioOptionsContainer,
+  TypeOption,
+  TypeOptionContent,
+  CheckCircle,
+  TypeLabel,
+  ExpandedSection,
+  SubQuestion,
+  SubOptionContainer,
+  SubOption,
+  SubRadioCircle,
+  SubOptionLabel,
+  DateFieldWrapper,
+  DateFieldLabel,
+  DateFieldInput,
+  DateFieldValue,
+  Separator,
 } from "./styles";
 
 type Props = {
@@ -23,57 +38,79 @@ type Props = {
   initialData?: ApiAppreciationGet;
 };
 
-type AppreciationOption = {
-  value: VolunteerStateAppreciationType;
-  labelKey: string;
-  icon: JSX.Element;
-};
+type DeliveryStatus = "received" | "pending";
 
 export function AppreciationDialog({ isOpen, onClose, onSave, initialData }: Props) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const locale = i18n.language === "de" ? de : undefined;
 
   const [selectedType, setSelectedType] = useState<VolunteerStateAppreciationType | undefined>(undefined);
+  const [deliveryStatus, setDeliveryStatus] = useState<DeliveryStatus | undefined>(undefined);
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
+  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
 
-  const appreciationOptions: AppreciationOption[] = [
-    {
-      value: VolunteerStateAppreciationType.TOTE_BAG,
-      labelKey: "dashboard.appreciationSection.typeOptions.toteBag",
-      icon: <Tote size={20} weight="regular" color="var(--color-coral)" />,
-    },
-    {
-      value: VolunteerStateAppreciationType.T_SHIRT,
-      labelKey: "dashboard.appreciationSection.typeOptions.tshirt",
-      icon: <TShirt size={20} weight="regular" color="var(--color-coral)" />,
-    },
-    {
-      value: VolunteerStateAppreciationType.BENEFIT_CARD,
-      labelKey: "dashboard.appreciationSection.typeOptions.benefitCard",
-      icon: <IdentificationCard size={20} weight="regular" color="var(--color-coral)" />,
-    },
+  const appreciationTypes = [
+    { value: VolunteerStateAppreciationType.TOTE_BAG, labelKey: "dashboard.appreciationSection.typeOptions.toteBag" },
+    { value: VolunteerStateAppreciationType.T_SHIRT, labelKey: "dashboard.appreciationSection.typeOptions.tshirt" },
+    { value: VolunteerStateAppreciationType.BENEFIT_CARD, labelKey: "dashboard.appreciationSection.typeOptions.benefitCard" },
   ];
 
   useEffect(() => {
     if (isOpen) {
       if (initialData) {
         setSelectedType(initialData.title);
+        if (initialData.dateDelivery) {
+          setDeliveryStatus("received");
+          setSelectedDate(new Date(initialData.dateDelivery));
+        } else if (initialData.dateDue) {
+          setDeliveryStatus("pending");
+          setSelectedDate(new Date(initialData.dateDue));
+        }
       } else {
         setSelectedType(undefined);
+        setDeliveryStatus(undefined);
+        setSelectedDate(undefined);
       }
     }
   }, [isOpen, initialData]);
 
+  const handleTypeSelect = (type: VolunteerStateAppreciationType) => {
+    setSelectedType(type);
+    if (selectedType !== type) {
+      setDeliveryStatus(undefined);
+      setSelectedDate(undefined);
+    }
+  };
+
+  const handleDeliveryStatusSelect = (status: DeliveryStatus) => {
+    setDeliveryStatus(status);
+    if (!selectedDate) {
+      setSelectedDate(new Date());
+    }
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!selectedType) return;
+    if (!selectedType || !deliveryStatus || !selectedDate) return;
 
     const payload: Partial<ApiAppreciationGet> = {
       id: initialData?.id,
       title: selectedType,
+      dateDue: deliveryStatus === "pending" ? selectedDate : undefined,
+      dateDelivery: deliveryStatus === "received" ? selectedDate : undefined,
     };
     onSave(payload);
   };
 
-  const isFormValid = !!selectedType;
+  const isFormValid = !!selectedType && !!deliveryStatus && !!selectedDate;
+
+  const formatDateDisplay = (date: Date | undefined): string => {
+    if (!date) return "";
+    const today = new Date();
+    const isToday = date.toDateString() === today.toDateString();
+    const formatted = format(date, "dd.MM.yyyy", { locale });
+    return isToday ? `${formatted} (${t("dashboard.appreciationSection.today")})` : formatted;
+  };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -85,24 +122,99 @@ export function AppreciationDialog({ isOpen, onClose, onSave, initialData }: Pro
 
       <Form onSubmit={handleSubmit} data-testid="appreciation-form">
         <RadioOptionsContainer data-testid="appreciation-options">
-          {appreciationOptions.map((option) => (
-            <RadioOption
-              key={option.value}
-              $isSelected={selectedType === option.value}
-              onClick={() => setSelectedType(option.value)}
-              data-testid={`radio-option-${option.value}`}
-            >
-              <RadioInput
-                type="radio"
-                name="appreciationType"
-                value={option.value}
-                checked={selectedType === option.value}
-                onChange={() => setSelectedType(option.value)}
-                data-testid={`radio-input-${option.value}`}
-              />
-              {option.icon}
-              <RadioLabel>{t(option.labelKey)}</RadioLabel>
-            </RadioOption>
+          {appreciationTypes.map((option, index) => (
+            <div key={option.value}>
+              <TypeOption
+                $isSelected={selectedType === option.value}
+                onClick={() => handleTypeSelect(option.value)}
+                data-testid={`type-option-${option.value}`}
+              >
+                <TypeOptionContent>
+                  <CheckCircle $isSelected={selectedType === option.value}>
+                    {selectedType === option.value && <Check size={14} weight="bold" color="var(--color-midnight)" />}
+                  </CheckCircle>
+                  <TypeLabel $isSelected={selectedType === option.value}>{t(option.labelKey)}</TypeLabel>
+                </TypeOptionContent>
+              </TypeOption>
+
+              {selectedType === option.value && (
+                <ExpandedSection data-testid="expanded-section">
+                  <SubQuestion>{t("dashboard.appreciationSection.didVolunteerReceive")}</SubQuestion>
+                  <SubOptionContainer>
+                    <SubOption
+                      $isSelected={deliveryStatus === "received"}
+                      onClick={() => handleDeliveryStatusSelect("received")}
+                      data-testid="sub-option-received"
+                    >
+                      <SubRadioCircle $isSelected={deliveryStatus === "received"}>
+                        {deliveryStatus === "received" && <Check size={12} weight="bold" color="var(--color-midnight)" />}
+                      </SubRadioCircle>
+                      <SubOptionLabel $isSelected={deliveryStatus === "received"}>
+                        {t("dashboard.appreciationSection.volunteerReceivedIt")}
+                      </SubOptionLabel>
+                    </SubOption>
+
+                    {deliveryStatus === "received" && (
+                      <DateFieldWrapper data-testid="received-date-field">
+                        <DateFieldLabel>{t("dashboard.appreciationSection.receivedOnRequired")}</DateFieldLabel>
+                        <DateFieldInput onClick={() => setIsDatePickerOpen(!isDatePickerOpen)}>
+                          <CalendarBlank size={24} weight="regular" color="var(--color-midnight)" />
+                          <DateFieldValue>{formatDateDisplay(selectedDate)}</DateFieldValue>
+                          <CaretDown size={20} weight="regular" color="var(--color-midnight)" />
+                        </DateFieldInput>
+                        {isDatePickerOpen && (
+                          <DatePickerWithPopover
+                            date={selectedDate}
+                            onSelect={(d) => {
+                              setSelectedDate(d);
+                              setIsDatePickerOpen(false);
+                            }}
+                            locale={locale}
+                          />
+                        )}
+                      </DateFieldWrapper>
+                    )}
+
+                    <SubOption
+                      $isSelected={deliveryStatus === "pending"}
+                      onClick={() => handleDeliveryStatusSelect("pending")}
+                      data-testid="sub-option-pending"
+                    >
+                      <SubRadioCircle $isSelected={deliveryStatus === "pending"}>
+                        {deliveryStatus === "pending" && <Check size={12} weight="bold" color="var(--color-midnight)" />}
+                      </SubRadioCircle>
+                      <SubOptionLabel $isSelected={deliveryStatus === "pending"}>
+                        {t("dashboard.appreciationSection.needToGiveIt")}
+                      </SubOptionLabel>
+                    </SubOption>
+
+                    {deliveryStatus === "pending" && (
+                      <DateFieldWrapper data-testid="due-date-field">
+                        <DateFieldLabel>{t("dashboard.appreciationSection.dueDateRequired")}</DateFieldLabel>
+                        <DateFieldInput onClick={() => setIsDatePickerOpen(!isDatePickerOpen)}>
+                          <CalendarBlank size={24} weight="regular" color="var(--color-midnight)" />
+                          <DateFieldValue>{formatDateDisplay(selectedDate)}</DateFieldValue>
+                          <CaretDown size={20} weight="regular" color="var(--color-midnight)" />
+                        </DateFieldInput>
+                        {isDatePickerOpen && (
+                          <DatePickerWithPopover
+                            date={selectedDate}
+                            onSelect={(d) => {
+                              setSelectedDate(d);
+                              setIsDatePickerOpen(false);
+                            }}
+                            locale={locale}
+                            allowFuture
+                          />
+                        )}
+                      </DateFieldWrapper>
+                    )}
+                  </SubOptionContainer>
+                </ExpandedSection>
+              )}
+
+              {selectedType === option.value && index < appreciationTypes.length - 1 && <Separator />}
+            </div>
           ))}
         </RadioOptionsContainer>
 
