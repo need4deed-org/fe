@@ -8,7 +8,7 @@ import { ApiCommunicationGet, CommunicationType, ContactMethodType, ContactType 
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { DatePickerWithPopover } from "./DatePickerWithPopover";
+import { DatePickerWithLabel } from "@/components/core/common/DatePicker";
 import {
   ButtonGroup,
   CloseButton,
@@ -172,7 +172,14 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
                     name="date"
                     control={control}
                     render={({ field }) => (
-                      <DatePickerWithPopover date={field.value} onSelect={field.onChange} locale={locale} />
+                      <DatePickerWithLabel
+                        date={field.value}
+                        onSelect={field.onChange}
+                        locale={locale}
+                        showTodayIndicator
+                        todayText={t("dashboard.communicationSection.today")}
+                        showDropdownIcon={false}
+                      />
                     )}
                   />
                 </FormField>

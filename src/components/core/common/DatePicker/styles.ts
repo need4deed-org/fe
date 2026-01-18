@@ -61,11 +61,11 @@ export const DateInputIcon = styled(Calendar)`
   z-index: 1;
 `;
 
-export const DateInput = styled.input`
+export const DateInput = styled.input<{ $hasDropdownIcon?: boolean }>`
   width: 100%;
   padding: var(--spacing-16);
   padding-left: 52px;
-  padding-right: 44px;
+  padding-right: ${(props) => (props.$hasDropdownIcon !== false ? "44px" : "var(--spacing-16)")};
   border: 1px solid var(--color-grey-200);
   border-radius: var(--border-radius-small);
   font-size: 20px;
@@ -101,9 +101,10 @@ export const DropdownIcon = styled.div`
 
 export const DatePickerPopover = styled.div<{ $isOpen: boolean }>`
   display: ${(props) => (props.$isOpen ? "block" : "none")};
-  position: absolute;
-  top: calc(100% + 8px);
-  left: 0;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 1100;
   background: var(--color-white);
   border: 1px solid var(--color-grey-200);

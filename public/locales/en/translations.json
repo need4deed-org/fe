@@ -730,7 +730,8 @@
       "email": "Email",
       "phone": "Phone",
       "inPerson": "In person",
-      "message": "Message"
+      "message": "Message",
+      "today": "today"
     }
   },
   "message": {

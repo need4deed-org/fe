@@ -1,4 +1,3 @@
-import { Calendar } from "@phosphor-icons/react";
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
@@ -105,84 +104,6 @@ export const Label = styled.label`
   line-height: var(--line-height-20);
   letter-spacing: var(--letter-spacing-tight);
   color: var(--color-midnight);
-`;
-
-export const DatePickerWrapper = styled.div`
-  position: relative;
-  width: 100%;
-
-  .rdp {
-    --rdp-accent-color: var(--color-aubergine);
-    --rdp-accent-background-color: var(--color-aubergine);
-    --rdp-background-color: var(--color-aubergine-subtle);
-    margin: 0;
-    font-family: var(--bs-body-font-family);
-  }
-
-  .rdp-day_button {
-    width: var(--communication-tracker-date-picker-day-size);
-    height: var(--communication-tracker-date-picker-day-size);
-    border-radius: var(--border-radius-xs);
-  }
-
-  .rdp-selected .rdp-day_button {
-    background-color: var(--color-aubergine);
-    color: var(--color-white);
-    font-weight: var(--font-weight-semi-bold);
-  }
-
-  .rdp-day_button:hover:not([disabled]) {
-    background-color: var(--color-aubergine-subtle);
-  }
-`;
-
-export const DateInputContainer = styled.div`
-  position: relative;
-  width: 100%;
-`;
-
-export const DateInputIcon = styled(Calendar)`
-  position: absolute;
-  left: var(--communication-tracker-input-icon-offset);
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--color-aubergine);
-  cursor: pointer;
-  z-index: 1;
-`;
-
-export const DateInput = styled.input`
-  width: 100%;
-  padding: var(--spacing-16);
-  padding-left: var(--communication-tracker-input-padding-left);
-  border: var(--border-width-thin) solid var(--color-grey-200);
-  border-radius: var(--border-radius-small);
-  font-size: var(--text-p-font-size);
-  line-height: var(--text-p-line-height);
-  font-weight: var(--font-weight-regular);
-  color: var(--color-aubergine);
-  font-family: var(--bs-body-font-family);
-  cursor: text;
-  background: var(--color-white);
-
-  &:focus {
-    outline: none;
-    border-color: var(--color-midnight);
-  }
-`;
-
-export const DatePickerPopover = styled.div<{ $isOpen: boolean }>`
-  display: ${(props) => (props.$isOpen ? "block" : "none")};
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1100;
-  background: var(--color-white);
-  border: var(--border-width-thin) solid var(--color-grey-200);
-  border-radius: var(--border-radius-small);
-  box-shadow: var(--communication-tracker-popover-box-shadow);
-  padding: var(--spacing-16);
 `;
 
 export const Select = styled.select`

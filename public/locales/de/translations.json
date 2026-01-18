@@ -729,7 +729,8 @@
       "email": "E-Mail",
       "phone": "Telefon",
       "inPerson": "Persönlich",
-      "message": "Nachricht"
+      "message": "Nachricht",
+      "today": "heute"
     }
   },
   "message": {
