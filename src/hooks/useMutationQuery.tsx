@@ -86,6 +86,11 @@ export const useMutationQuery = <TData, TResponse, TError = AxiosError<{ message
         if (errorMessage === "Validation failed") {
           errorMessage = t("message.validationFailed");
         }
+
+        const commDeleteMatch = errorMessage.match(/^You do not have permission to delete communication with id:(\d+)\.$/);
+        if (commDeleteMatch) {
+          errorMessage = t("dashboard.communicationSection.deletePermissionError", { id: commDeleteMatch[1] });
+        }
       }
 
       toast.error(errorMessage);

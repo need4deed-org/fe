@@ -732,7 +732,8 @@
       "message": "Nachricht",
       "today": "heute",
       "futureDateError": "Datum darf nicht in der Zukunft liegen",
-      "contactTypeRequired": "Kontaktart ist erforderlich"
+      "contactTypeRequired": "Kontaktart ist erforderlich",
+      "deletePermissionError": "Sie haben keine Berechtigung, die Kommunikation mit der ID: {{id}} zu löschen."
     }
   },
   "message": {
