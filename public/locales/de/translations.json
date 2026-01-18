@@ -730,7 +730,9 @@
       "phone": "Telefon",
       "inPerson": "Persönlich",
       "message": "Nachricht",
-      "today": "heute"
+      "today": "heute",
+      "futureDateError": "Datum darf nicht in der Zukunft liegen",
+      "contactTypeRequired": "Kontaktart ist erforderlich"
     }
   },
   "message": {

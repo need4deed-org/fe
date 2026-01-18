@@ -731,7 +731,9 @@
       "phone": "Phone",
       "inPerson": "In person",
       "message": "Message",
-      "today": "today"
+      "today": "today",
+      "futureDateError": "Date cannot be in the future",
+      "contactTypeRequired": "Contact type is required"
     }
   },
   "message": {
