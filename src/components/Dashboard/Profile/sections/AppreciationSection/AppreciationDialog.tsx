@@ -1,25 +1,18 @@
 import { Button } from "@/components/core/button";
 import { Modal } from "@/components/core/modal";
 import { DatePickerWithLabel } from "@/components/core/common/DatePicker";
-import { Check } from "@phosphor-icons/react";
 import { ApiAppreciationGet, VolunteerStateAppreciationType } from "need4deed-sdk";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { de } from "date-fns/locale";
 import { DialogButtonGroup, DialogForm } from "../shared/styles";
+import { SelectableOption } from "../shared/SelectableOption";
 import {
   DialogTitle,
   RadioOptionsContainer,
-  TypeOption,
-  TypeOptionContent,
-  CheckCircle,
-  TypeLabel,
   ExpandedSection,
   SubQuestion,
   SubOptionContainer,
-  SubOption,
-  SubRadioCircle,
-  SubOptionLabel,
   DateFieldWrapper,
   Separator,
 } from "./styles";
@@ -38,19 +31,37 @@ type Props = {
 
 type DeliveryStatus = "received" | "pending";
 
-export function AppreciationDialog({ isOpen, onClose, onSave, initialData }: Props) {
+const APPRECIATION_TYPES = [
+  {
+    value: VolunteerStateAppreciationType.TOTE_BAG,
+    labelKey: "dashboard.appreciationSection.typeOptions.toteBag",
+  },
+  {
+    value: VolunteerStateAppreciationType.T_SHIRT,
+    labelKey: "dashboard.appreciationSection.typeOptions.tshirt",
+  },
+  {
+    value: VolunteerStateAppreciationType.BENEFIT_CARD,
+    labelKey: "dashboard.appreciationSection.typeOptions.benefitCard",
+  },
+];
+
+export function AppreciationDialog({
+  isOpen,
+  onClose,
+  onSave,
+  initialData,
+}: Props) {
   const { t, i18n } = useTranslation();
   const locale = i18n.language === "de" ? de : undefined;
 
-  const [selectedType, setSelectedType] = useState<VolunteerStateAppreciationType | undefined>(undefined);
-  const [deliveryStatus, setDeliveryStatus] = useState<DeliveryStatus | undefined>(undefined);
+  const [selectedType, setSelectedType] = useState<
+    VolunteerStateAppreciationType | undefined
+  >(undefined);
+  const [deliveryStatus, setDeliveryStatus] = useState<
+    DeliveryStatus | undefined
+  >(undefined);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
-
-  const appreciationTypes = [
-    { value: VolunteerStateAppreciationType.TOTE_BAG, labelKey: "dashboard.appreciationSection.typeOptions.toteBag" },
-    { value: VolunteerStateAppreciationType.T_SHIRT, labelKey: "dashboard.appreciationSection.typeOptions.tshirt" },
-    { value: VolunteerStateAppreciationType.BENEFIT_CARD, labelKey: "dashboard.appreciationSection.typeOptions.benefitCard" },
-  ];
 
   useEffect(() => {
     if (isOpen) {
@@ -90,13 +101,12 @@ export function AppreciationDialog({ isOpen, onClose, onSave, initialData }: Pro
     e.preventDefault();
     if (!selectedType || !deliveryStatus || !selectedDate) return;
 
-    const payload = {
+    onSave({
       id: initialData?.id,
       title: selectedType,
       dateDue: deliveryStatus === "pending" ? selectedDate : null,
       dateDelivery: deliveryStatus === "received" ? selectedDate : null,
-    };
-    onSave(payload);
+    });
   };
 
   const isFormValid = !!selectedType && !!deliveryStatus && !!selectedDate;
@@ -111,37 +121,29 @@ export function AppreciationDialog({ isOpen, onClose, onSave, initialData }: Pro
 
       <DialogForm onSubmit={handleSubmit} data-testid="appreciation-form">
         <RadioOptionsContainer data-testid="appreciation-options">
-          {appreciationTypes.map((option, index) => (
+          {APPRECIATION_TYPES.map((option, index) => (
             <div key={option.value}>
-              <TypeOption
-                $isSelected={selectedType === option.value}
+              <SelectableOption
+                isSelected={selectedType === option.value}
+                label={t(option.labelKey)}
                 onClick={() => handleTypeSelect(option.value)}
                 data-testid={`type-option-${option.value}`}
-              >
-                <TypeOptionContent>
-                  <CheckCircle $isSelected={selectedType === option.value}>
-                    {selectedType === option.value && <Check size={14} weight="bold" color="var(--color-midnight)" />}
-                  </CheckCircle>
-                  <TypeLabel $isSelected={selectedType === option.value}>{t(option.labelKey)}</TypeLabel>
-                </TypeOptionContent>
-              </TypeOption>
+              />
 
               {selectedType === option.value && (
                 <ExpandedSection data-testid="expanded-section">
-                  <SubQuestion>{t("dashboard.appreciationSection.didVolunteerReceive")}</SubQuestion>
+                  <SubQuestion>
+                    {t("dashboard.appreciationSection.didVolunteerReceive")}
+                  </SubQuestion>
                   <SubOptionContainer>
-                    <SubOption
-                      $isSelected={deliveryStatus === "received"}
+                    <SelectableOption
+                      isSelected={deliveryStatus === "received"}
+                      label={t(
+                        "dashboard.appreciationSection.volunteerReceivedIt",
+                      )}
                       onClick={() => handleDeliveryStatusSelect("received")}
                       data-testid="sub-option-received"
-                    >
-                      <SubRadioCircle $isSelected={deliveryStatus === "received"}>
-                        {deliveryStatus === "received" && <Check size={12} weight="bold" color="var(--color-midnight)" />}
-                      </SubRadioCircle>
-                      <SubOptionLabel $isSelected={deliveryStatus === "received"}>
-                        {t("dashboard.appreciationSection.volunteerReceivedIt")}
-                      </SubOptionLabel>
-                    </SubOption>
+                    />
 
                     {deliveryStatus === "received" && (
                       <DateFieldWrapper data-testid="received-date-field">
@@ -149,25 +151,21 @@ export function AppreciationDialog({ isOpen, onClose, onSave, initialData }: Pro
                           date={selectedDate}
                           onSelect={setSelectedDate}
                           locale={locale}
-                          label={t("dashboard.appreciationSection.receivedOnRequired")}
+                          label={t(
+                            "dashboard.appreciationSection.receivedOnRequired",
+                          )}
                           showTodayIndicator
                           todayText={t("dashboard.appreciationSection.today")}
                         />
                       </DateFieldWrapper>
                     )}
 
-                    <SubOption
-                      $isSelected={deliveryStatus === "pending"}
+                    <SelectableOption
+                      isSelected={deliveryStatus === "pending"}
+                      label={t("dashboard.appreciationSection.needToGiveIt")}
                       onClick={() => handleDeliveryStatusSelect("pending")}
                       data-testid="sub-option-pending"
-                    >
-                      <SubRadioCircle $isSelected={deliveryStatus === "pending"}>
-                        {deliveryStatus === "pending" && <Check size={12} weight="bold" color="var(--color-midnight)" />}
-                      </SubRadioCircle>
-                      <SubOptionLabel $isSelected={deliveryStatus === "pending"}>
-                        {t("dashboard.appreciationSection.needToGiveIt")}
-                      </SubOptionLabel>
-                    </SubOption>
+                    />
 
                     {deliveryStatus === "pending" && (
                       <DateFieldWrapper data-testid="due-date-field">
@@ -176,7 +174,9 @@ export function AppreciationDialog({ isOpen, onClose, onSave, initialData }: Pro
                           onSelect={setSelectedDate}
                           locale={locale}
                           allowFuture
-                          label={t("dashboard.appreciationSection.dueDateRequired")}
+                          label={t(
+                            "dashboard.appreciationSection.dueDateRequired",
+                          )}
                           showTodayIndicator
                           todayText={t("dashboard.appreciationSection.today")}
                         />
@@ -186,7 +186,8 @@ export function AppreciationDialog({ isOpen, onClose, onSave, initialData }: Pro
                 </ExpandedSection>
               )}
 
-              {selectedType === option.value && index < appreciationTypes.length - 1 && <Separator />}
+              {selectedType === option.value &&
+                index < APPRECIATION_TYPES.length - 1 && <Separator />}
             </div>
           ))}
         </RadioOptionsContainer>
@@ -205,8 +206,12 @@ export function AppreciationDialog({ isOpen, onClose, onSave, initialData }: Pro
           <Button
             text={t("dashboard.appreciationSection.save")}
             onClick={handleSubmit}
-            backgroundcolor={isFormValid ? "var(--color-aubergine)" : "var(--color-grey-50)"}
-            textColor={isFormValid ? "var(--color-white)" : "var(--color-grey-400)"}
+            backgroundcolor={
+              isFormValid ? "var(--color-aubergine)" : "var(--color-grey-50)"
+            }
+            textColor={
+              isFormValid ? "var(--color-white)" : "var(--color-grey-400)"
+            }
             disabled={!isFormValid}
           />
         </DialogButtonGroup>
