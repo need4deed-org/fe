@@ -18,6 +18,6 @@ export type ApiAppreciationPost = {
 
 export type ApiAppreciationPatch = {
   title?: VolunteerStateAppreciationType;
-  dateDue?: Date;
-  dateDelivery?: Date;
+  dateDue?: Date | null;
+  dateDelivery?: Date | null;
 };

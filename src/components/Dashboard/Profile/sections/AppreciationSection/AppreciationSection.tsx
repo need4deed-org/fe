@@ -79,6 +79,9 @@ export function AppreciationSection({ volunteer }: Props) {
         onSuccess: () => {
           setDeleteConfirmEntry(null);
         },
+        onError: () => {
+          setDeleteConfirmEntry(null);
+        },
       });
     }
   };
@@ -87,13 +90,12 @@ export function AppreciationSection({ volunteer }: Props) {
     setDeleteConfirmEntry(null);
   };
 
-  const handleSave = (data: Partial<ApiAppreciationGet>) => {
-    if (!data.title) {
-      return;
-    }
-
-    const dateDue = data.dateDue || new Date();
-
+  const handleSave = (data: {
+    id?: number;
+    title: VolunteerStateAppreciationType;
+    dateDue: Date | null;
+    dateDelivery: Date | null;
+  }) => {
     if (data.id) {
       const payload: ApiAppreciationPatch = {
         title: data.title,
@@ -106,8 +108,8 @@ export function AppreciationSection({ volunteer }: Props) {
     } else {
       const payload: ApiAppreciationPost = {
         title: data.title,
-        dateDue,
-        dateDelivery: data.dateDelivery,
+        dateDue: data.dateDue || new Date(),
+        dateDelivery: data.dateDelivery || undefined,
       };
       createAppreciation(payload, {
         onSuccess: () => setIsDialogOpen(false),

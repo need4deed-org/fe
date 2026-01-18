@@ -306,47 +306,6 @@ export const DateFieldWrapper = styled.div`
   margin-top: var(--spacing-8);
 `;
 
-export const DateFieldLabel = styled.span`
-  position: absolute;
-  top: -10px;
-  left: 12px;
-  background: var(--color-white);
-  padding: 0 4px;
-  font-family: var(--bs-body-font-family);
-  font-weight: var(--font-weight-regular);
-  font-size: 16px;
-  line-height: 20px;
-  letter-spacing: 0.08px;
-  color: var(--color-midnight);
-  z-index: 1;
-`;
-
-export const DateFieldInput = styled.div`
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-8);
-  padding: var(--spacing-16);
-  border: 1px solid var(--color-grey-200);
-  border-radius: var(--border-radius-small);
-  background: var(--color-white);
-  cursor: pointer;
-  width: 100%;
-
-  &:hover {
-    border-color: var(--color-grey-400);
-  }
-`;
-
-export const DateFieldValue = styled.span`
-  flex: 1;
-  font-family: var(--bs-body-font-family);
-  font-weight: var(--font-weight-regular);
-  font-size: 20px;
-  line-height: 24px;
-  letter-spacing: 0.1px;
-  color: var(--color-midnight);
-`;
-
 export const Separator = styled.div`
   width: 100%;
   height: 1px;

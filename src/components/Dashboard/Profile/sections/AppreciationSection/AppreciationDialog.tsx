@@ -1,14 +1,13 @@
 "use client";
 import { Button } from "@/components/core/button";
 import { Modal } from "@/components/core/modal";
-import { CalendarBlank, CaretDown, Check } from "@phosphor-icons/react";
+import { DatePickerWithLabel } from "@/components/core/common/DatePicker";
+import { Check } from "@phosphor-icons/react";
 import { VolunteerStateAppreciationType } from "need4deed-sdk";
 import { ApiAppreciationGet } from "./types";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { format } from "date-fns";
 import { de } from "date-fns/locale";
-import { DatePickerWithPopover } from "./DatePickerWithPopover";
 import {
   ButtonGroup,
   DialogTitle,
@@ -25,16 +24,18 @@ import {
   SubRadioCircle,
   SubOptionLabel,
   DateFieldWrapper,
-  DateFieldLabel,
-  DateFieldInput,
-  DateFieldValue,
   Separator,
 } from "./styles";
 
 type Props = {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (data: Partial<ApiAppreciationGet>) => void;
+  onSave: (data: {
+    id?: number;
+    title: VolunteerStateAppreciationType;
+    dateDue: Date | null;
+    dateDelivery: Date | null;
+  }) => void;
   initialData?: ApiAppreciationGet;
 };
 
@@ -47,7 +48,6 @@ export function AppreciationDialog({ isOpen, onClose, onSave, initialData }: Pro
   const [selectedType, setSelectedType] = useState<VolunteerStateAppreciationType | undefined>(undefined);
   const [deliveryStatus, setDeliveryStatus] = useState<DeliveryStatus | undefined>(undefined);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
-  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
 
   const appreciationTypes = [
     { value: VolunteerStateAppreciationType.TOTE_BAG, labelKey: "dashboard.appreciationSection.typeOptions.toteBag" },
@@ -93,24 +93,16 @@ export function AppreciationDialog({ isOpen, onClose, onSave, initialData }: Pro
     e.preventDefault();
     if (!selectedType || !deliveryStatus || !selectedDate) return;
 
-    const payload: Partial<ApiAppreciationGet> = {
+    const payload = {
       id: initialData?.id,
       title: selectedType,
-      dateDue: deliveryStatus === "pending" ? selectedDate : undefined,
-      dateDelivery: deliveryStatus === "received" ? selectedDate : undefined,
+      dateDue: deliveryStatus === "pending" ? selectedDate : null,
+      dateDelivery: deliveryStatus === "received" ? selectedDate : null,
     };
     onSave(payload);
   };
 
   const isFormValid = !!selectedType && !!deliveryStatus && !!selectedDate;
-
-  const formatDateDisplay = (date: Date | undefined): string => {
-    if (!date) return "";
-    const today = new Date();
-    const isToday = date.toDateString() === today.toDateString();
-    const formatted = format(date, "dd.MM.yyyy", { locale });
-    return isToday ? `${formatted} (${t("dashboard.appreciationSection.today")})` : formatted;
-  };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -156,22 +148,14 @@ export function AppreciationDialog({ isOpen, onClose, onSave, initialData }: Pro
 
                     {deliveryStatus === "received" && (
                       <DateFieldWrapper data-testid="received-date-field">
-                        <DateFieldLabel>{t("dashboard.appreciationSection.receivedOnRequired")}</DateFieldLabel>
-                        <DateFieldInput onClick={() => setIsDatePickerOpen(!isDatePickerOpen)}>
-                          <CalendarBlank size={24} weight="regular" color="var(--color-midnight)" />
-                          <DateFieldValue>{formatDateDisplay(selectedDate)}</DateFieldValue>
-                          <CaretDown size={20} weight="regular" color="var(--color-midnight)" />
-                        </DateFieldInput>
-                        {isDatePickerOpen && (
-                          <DatePickerWithPopover
-                            date={selectedDate}
-                            onSelect={(d) => {
-                              setSelectedDate(d);
-                              setIsDatePickerOpen(false);
-                            }}
-                            locale={locale}
-                          />
-                        )}
+                        <DatePickerWithLabel
+                          date={selectedDate}
+                          onSelect={setSelectedDate}
+                          locale={locale}
+                          label={t("dashboard.appreciationSection.receivedOnRequired")}
+                          showTodayIndicator
+                          todayText={t("dashboard.appreciationSection.today")}
+                        />
                       </DateFieldWrapper>
                     )}
 
@@ -190,23 +174,15 @@ export function AppreciationDialog({ isOpen, onClose, onSave, initialData }: Pro
 
                     {deliveryStatus === "pending" && (
                       <DateFieldWrapper data-testid="due-date-field">
-                        <DateFieldLabel>{t("dashboard.appreciationSection.dueDateRequired")}</DateFieldLabel>
-                        <DateFieldInput onClick={() => setIsDatePickerOpen(!isDatePickerOpen)}>
-                          <CalendarBlank size={24} weight="regular" color="var(--color-midnight)" />
-                          <DateFieldValue>{formatDateDisplay(selectedDate)}</DateFieldValue>
-                          <CaretDown size={20} weight="regular" color="var(--color-midnight)" />
-                        </DateFieldInput>
-                        {isDatePickerOpen && (
-                          <DatePickerWithPopover
-                            date={selectedDate}
-                            onSelect={(d) => {
-                              setSelectedDate(d);
-                              setIsDatePickerOpen(false);
-                            }}
-                            locale={locale}
-                            allowFuture
-                          />
-                        )}
+                        <DatePickerWithLabel
+                          date={selectedDate}
+                          onSelect={setSelectedDate}
+                          locale={locale}
+                          allowFuture
+                          label={t("dashboard.appreciationSection.dueDateRequired")}
+                          showTodayIndicator
+                          todayText={t("dashboard.appreciationSection.today")}
+                        />
                       </DateFieldWrapper>
                     )}
                   </SubOptionContainer>
