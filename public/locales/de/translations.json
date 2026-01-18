@@ -735,6 +735,7 @@
   "message": {
     "successful": "Erfolgreich",
     "errorGeneric": "Etwas ist schief gelaufen!",
+    "validationFailed": "Validierung fehlgeschlagen",
     "uploadSuccess": "Dokument erfolgreich hochgeladen!",
     "deleteSuccess": "Dokument erfolgreich gelöscht!",
     "uploadError": "Hochladen fehlgeschlagen. Bitte versuchen Sie es erneut.",

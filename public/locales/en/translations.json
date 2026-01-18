@@ -736,6 +736,7 @@
   "message": {
     "successful": "Successful",
     "errorGeneric": "Something went wrong!",
+    "validationFailed": "Validation failed",
     "uploadSuccess": "Document uploaded successfully!",
     "deleteSuccess": "Document deleted successfully!",
     "uploadError": "Upload failed. Please try again.",

@@ -81,6 +81,11 @@ export const useMutationQuery = <TData, TResponse, TError = AxiosError<{ message
         } else if (errorData?.message) {
           errorMessage = errorData.message;
         }
+
+        // Translate known API error messages
+        if (errorMessage === "Validation failed") {
+          errorMessage = t("message.validationFailed");
+        }
       }
 
       toast.error(errorMessage);
