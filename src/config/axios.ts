@@ -24,14 +24,18 @@ axios.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    // If error response is not 401 or 403, or if it's a refresh request itself, reject
+    // Only retry on 401 (unauthorized), not 403 (forbidden - permission issue)
+    // Also skip if it's a refresh request itself or if already retried
     if (
-      (error.response?.status !== 401 && error.response?.status !== 403) ||
+      error.response?.status !== 401 ||
       originalRequest.url.includes(apiPathAuthRefresh) ||
-      !originalRequest.url // Skip if URL is not set
+      originalRequest._retry ||
+      !originalRequest.url
     ) {
       return Promise.reject(error);
     }
+
+    originalRequest._retry = true;
 
     // If already refreshing, add to queue
     if (isRefreshing) {
