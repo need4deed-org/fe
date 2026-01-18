@@ -1,17 +1,14 @@
-"use client";
 import { Button } from "@/components/core/button";
 import { Modal } from "@/components/core/modal";
 import { DatePickerWithLabel } from "@/components/core/common/DatePicker";
 import { Check } from "@phosphor-icons/react";
-import { VolunteerStateAppreciationType } from "need4deed-sdk";
-import { ApiAppreciationGet } from "./types";
+import { ApiAppreciationGet, VolunteerStateAppreciationType } from "need4deed-sdk";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { de } from "date-fns/locale";
+import { DialogButtonGroup, DialogForm } from "../shared/styles";
 import {
-  ButtonGroup,
   DialogTitle,
-  Form,
   RadioOptionsContainer,
   TypeOption,
   TypeOptionContent,
@@ -112,7 +109,7 @@ export function AppreciationDialog({ isOpen, onClose, onSave, initialData }: Pro
           : t("dashboard.appreciationSection.addAppreciation")}
       </DialogTitle>
 
-      <Form onSubmit={handleSubmit} data-testid="appreciation-form">
+      <DialogForm onSubmit={handleSubmit} data-testid="appreciation-form">
         <RadioOptionsContainer data-testid="appreciation-options">
           {appreciationTypes.map((option, index) => (
             <div key={option.value}>
@@ -194,7 +191,7 @@ export function AppreciationDialog({ isOpen, onClose, onSave, initialData }: Pro
           ))}
         </RadioOptionsContainer>
 
-        <ButtonGroup>
+        <DialogButtonGroup>
           <Button
             text={t("dashboard.appreciationSection.cancel")}
             onClick={(e) => {
@@ -212,8 +209,8 @@ export function AppreciationDialog({ isOpen, onClose, onSave, initialData }: Pro
             textColor={isFormValid ? "var(--color-white)" : "var(--color-grey-400)"}
             disabled={!isFormValid}
           />
-        </ButtonGroup>
-      </Form>
+        </DialogButtonGroup>
+      </DialogForm>
     </Modal>
   );
 }

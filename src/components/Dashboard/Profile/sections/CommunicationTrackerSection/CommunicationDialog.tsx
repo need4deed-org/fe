@@ -1,20 +1,23 @@
-"use client";
 import { Button } from "@/components/core/button";
 import { Modal } from "@/components/core/modal";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { X } from "@phosphor-icons/react";
 import { de } from "date-fns/locale";
-import { ApiCommunicationGet, CommunicationType, ContactMethodType, ContactType } from "need4deed-sdk";
+import {
+  ApiCommunicationGet,
+  CommunicationType,
+  ContactMethodType,
+  ContactType,
+} from "need4deed-sdk";
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { DatePickerWithLabel } from "@/components/core/common/DatePicker";
+import { DialogButtonGroup, DialogForm } from "../shared/styles";
 import {
-  ButtonGroup,
   CloseButton,
   DialogHeader,
   DialogTitle,
-  Form,
   FormField,
   Label,
   RadioInput,
@@ -101,7 +104,7 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
         </CloseButton>
       </DialogHeader>
 
-      <Form onSubmit={handleSubmit(onSubmit)}>
+      <DialogForm onSubmit={handleSubmit(onSubmit)}>
         {Object.values(ContactType).map((type) => (
           <RadioOption key={type}>
             <RadioRow>
@@ -188,7 +191,7 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
           </RadioOption>
         ))}
 
-        <ButtonGroup>
+        <DialogButtonGroup>
           <Button
             text={t("dashboard.communicationSection.cancel", "Cancel")}
             onClick={(e) => {
@@ -206,8 +209,8 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
             textColor="var(--color-white)"
             disabled={!isFormValid || !contactType}
           />
-        </ButtonGroup>
-      </Form>
+        </DialogButtonGroup>
+      </DialogForm>
     </Modal>
   );
 }

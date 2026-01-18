@@ -1,30 +1,5 @@
 import styled from "styled-components";
 
-export const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--spacing-24);
-  width: 100%;
-`;
-
-export const Header = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
-  width: 100%;
-`;
-
-export const EmptyState = styled.div`
-  width: 100%;
-  padding: var(--spacing-48) var(--spacing-24);
-  text-align: center;
-  color: var(--color-grey-500);
-  font-size: var(--text-p-font-size);
-  line-height: var(--text-p-line-height);
-`;
-
 export const DialogHeader = styled.div`
   display: flex;
   flex-direction: row;
@@ -56,12 +31,6 @@ export const CloseButton = styled.button`
   &:hover {
     opacity: var(--opacity-hover);
   }
-`;
-
-export const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-24);
 `;
 
 export const RadioOption = styled.label`
@@ -129,13 +98,4 @@ export const Select = styled.select`
     outline: none;
     border-color: var(--color-midnight);
   }
-`;
-
-export const ButtonGroup = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  gap: var(--spacing-16);
-  margin-top: auto;
-  padding-top: var(--spacing-16);
 `;

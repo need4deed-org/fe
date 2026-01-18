@@ -1,16 +1,20 @@
-"use client";
 import { useCommunicationTracker } from "@/hooks/useCommunicationTracker";
 import { PencilSimple, Trash } from "@phosphor-icons/react";
-import { ApiVolunteerGet, ApiCommunicationGet, ApiVolunteerCommunicationPost, ApiVolunteerCommunicationPatch } from "need4deed-sdk";
+import {
+  ApiVolunteerGet,
+  ApiCommunicationGet,
+  ApiVolunteerCommunicationPost,
+  ApiVolunteerCommunicationPatch,
+} from "need4deed-sdk";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CommunicationDialog } from "./CommunicationDialog";
 import { ConfirmationDialog } from "../shared/ConfirmationDialog";
 import {
-  EmptyState,
-  Header,
-  Wrapper,
-} from "./styles";
+  SectionWrapper,
+  SectionHeader,
+  SectionEmptyState,
+} from "../shared/styles";
 import {
   TableContainer,
   Table,
@@ -99,21 +103,21 @@ export function CommunicationTrackerSection({ volunteer }: Props) {
   };
 
   return (
-    <Wrapper data-testid="communication-tracker-section-container">
-      <Header>
+    <SectionWrapper data-testid="communication-tracker-section-container">
+      <SectionHeader>
         <Button
-            onClick={handleAddNew}
-            text={t("dashboard.communicationSection.addNew", "+ Register contact")}
-            backgroundcolor="var(--color-aubergine)"
-            textColor="var(--color-white)"
-            width="auto"
+          onClick={handleAddNew}
+          text={t("dashboard.communicationSection.addNew", "+ Register contact")}
+          backgroundcolor="var(--color-aubergine)"
+          textColor="var(--color-white)"
+          width="auto"
         />
-      </Header>
+      </SectionHeader>
 
       {communications.length === 0 ? (
-        <EmptyState data-testid="empty-state">
+        <SectionEmptyState data-testid="empty-state">
           {t("dashboard.communicationSection.emptyState", "No communications recorded yet")}
-        </EmptyState>
+        </SectionEmptyState>
       ) : (
         <TableContainer data-testid="communications-table">
           <Table>
@@ -166,6 +170,6 @@ export function CommunicationTrackerSection({ volunteer }: Props) {
           onConfirm={confirmDelete}
         />
       )}
-    </Wrapper>
+    </SectionWrapper>
   );
 }

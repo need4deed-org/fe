@@ -46,11 +46,4 @@ export function getDisplayLabel(
   return getContactTypeLabel(t, contactType);
 }
 
-export function formatDate(dateString: string | Date): string {
-  const date = typeof dateString === "string" ? new Date(dateString) : dateString;
-  return new Intl.DateTimeFormat("de-DE", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  }).format(date);
-}
+export { formatDate } from "../../shared/utils/formatDate";
