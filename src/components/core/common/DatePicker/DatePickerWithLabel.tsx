@@ -1,4 +1,3 @@
-import { CaretDown } from "@phosphor-icons/react";
 import { format, isValid, parse } from "date-fns";
 import { type Locale } from "date-fns/locale";
 import { useEffect, useRef, useState } from "react";
@@ -13,7 +12,6 @@ import {
   DateInputIcon,
   DatePickerPopover,
   DatePickerWrapper,
-  DropdownIcon,
   FloatingLabel,
 } from "./styles";
 
@@ -25,7 +23,6 @@ type Props = {
   label?: string;
   showTodayIndicator?: boolean;
   todayText?: string;
-  showDropdownIcon?: boolean;
 };
 
 export function DatePickerWithLabel({
@@ -36,7 +33,6 @@ export function DatePickerWithLabel({
   label,
   showTodayIndicator = false,
   todayText = "today",
-  showDropdownIcon = true,
 }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
@@ -126,13 +122,7 @@ export function DatePickerWithLabel({
           onBlur={handleInputBlur}
           data-testid="date-picker-input"
           placeholder="dd.mm.yyyy"
-          $hasDropdownIcon={showDropdownIcon}
         />
-        {showDropdownIcon && (
-          <DropdownIcon>
-            <CaretDown size={20} weight="regular" />
-          </DropdownIcon>
-        )}
       </DateInputContainer>
       <DatePickerPopover $isOpen={isOpen}>
         <DayPicker

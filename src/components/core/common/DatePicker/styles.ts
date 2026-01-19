@@ -61,11 +61,10 @@ export const DateInputIcon = styled(Calendar)`
   z-index: 1;
 `;
 
-export const DateInput = styled.input<{ $hasDropdownIcon?: boolean }>`
+export const DateInput = styled.input`
   width: 100%;
   padding: var(--spacing-16);
   padding-left: var(--date-picker-input-padding-left);
-  padding-right: ${(props) => (props.$hasDropdownIcon !== false ? "var(--date-picker-input-padding-right)" : "var(--spacing-16)")};
   border: var(--border-width-thin) solid var(--color-grey-200);
   border-radius: var(--border-radius-small);
   font-size: var(--date-picker-input-font-size);
@@ -85,18 +84,6 @@ export const DateInput = styled.input<{ $hasDropdownIcon?: boolean }>`
   &:hover {
     border-color: var(--color-grey-400);
   }
-`;
-
-export const DropdownIcon = styled.div`
-  position: absolute;
-  right: var(--spacing-16);
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--color-midnight);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
 `;
 
 export const DatePickerPopover = styled.div<{ $isOpen: boolean }>`
