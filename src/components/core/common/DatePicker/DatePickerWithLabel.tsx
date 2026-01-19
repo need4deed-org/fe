@@ -4,6 +4,9 @@ import { type Locale } from "date-fns/locale";
 import { useEffect, useRef, useState } from "react";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/style.css";
+
+const MIN_YEAR = 2025;
+
 import {
   DateInput,
   DateInputContainer,
@@ -89,7 +92,7 @@ export function DatePickerWithLabel({
 
     const parsedDate = parse(value, "dd.MM.yyyy", new Date());
 
-    if (isValid(parsedDate) && parsedDate.getFullYear() >= 2020) {
+    if (isValid(parsedDate) && parsedDate.getFullYear() >= MIN_YEAR) {
       onSelect(parsedDate);
     }
   };
@@ -143,7 +146,7 @@ export function DatePickerWithLabel({
           onMonthChange={setMonth}
           locale={locale}
           captionLayout="dropdown"
-          startMonth={new Date(2020, 0)}
+          startMonth={new Date(MIN_YEAR, 0)}
           endMonth={new Date(new Date().getFullYear() + 10, 11)}
           disabled={allowFuture ? undefined : { after: new Date() }}
         />

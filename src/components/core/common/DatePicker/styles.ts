@@ -33,20 +33,20 @@ export const DatePickerWrapper = styled.div`
 export const DateInputContainer = styled.div<{ $hasLabel?: boolean }>`
   position: relative;
   width: 100%;
-  ${(props) => props.$hasLabel && `margin-top: 10px;`}
+  ${(props) => props.$hasLabel && `margin-top: var(--date-picker-input-margin-top);`}
 `;
 
 export const FloatingLabel = styled.span`
   position: absolute;
-  top: -10px;
-  left: 12px;
+  top: var(--date-picker-floating-label-top);
+  left: var(--date-picker-floating-label-left);
   background: var(--color-white);
-  padding: 0 4px;
+  padding: var(--date-picker-floating-label-padding);
   font-family: var(--bs-body-font-family);
   font-weight: var(--font-weight-regular);
-  font-size: 16px;
-  line-height: 20px;
-  letter-spacing: 0.08px;
+  font-size: var(--date-picker-floating-label-font-size);
+  line-height: var(--date-picker-floating-label-line-height);
+  letter-spacing: var(--date-picker-floating-label-letter-spacing);
   color: var(--color-midnight);
   z-index: 1;
 `;
@@ -64,13 +64,13 @@ export const DateInputIcon = styled(Calendar)`
 export const DateInput = styled.input<{ $hasDropdownIcon?: boolean }>`
   width: 100%;
   padding: var(--spacing-16);
-  padding-left: 52px;
-  padding-right: ${(props) => (props.$hasDropdownIcon !== false ? "44px" : "var(--spacing-16)")};
-  border: 1px solid var(--color-grey-200);
+  padding-left: var(--date-picker-input-padding-left);
+  padding-right: ${(props) => (props.$hasDropdownIcon !== false ? "var(--date-picker-input-padding-right)" : "var(--spacing-16)")};
+  border: var(--border-width-thin) solid var(--color-grey-200);
   border-radius: var(--border-radius-small);
-  font-size: 20px;
-  line-height: 24px;
-  letter-spacing: 0.1px;
+  font-size: var(--date-picker-input-font-size);
+  line-height: var(--date-picker-input-line-height);
+  letter-spacing: var(--date-picker-input-letter-spacing);
   font-weight: var(--font-weight-regular);
   color: var(--color-midnight);
   font-family: var(--bs-body-font-family);
@@ -105,10 +105,10 @@ export const DatePickerPopover = styled.div<{ $isOpen: boolean }>`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 1100;
+  z-index: var(--date-picker-popover-z-index);
   background: var(--color-white);
-  border: 1px solid var(--color-grey-200);
+  border: var(--border-width-thin) solid var(--color-grey-200);
   border-radius: var(--border-radius-small);
-  box-shadow: 0px 10px 30px -12px rgba(143, 81, 138, 0.2);
+  box-shadow: var(--communication-tracker-dialog-box-shadow);
   padding: var(--spacing-16);
 `;

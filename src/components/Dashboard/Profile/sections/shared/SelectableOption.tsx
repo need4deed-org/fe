@@ -16,8 +16,8 @@ const Container = styled.div<{ $isSelected?: boolean }>`
 `;
 
 const Circle = styled.div<{ $isSelected?: boolean }>`
-  width: 24px;
-  height: 24px;
+  width: var(--selectable-option-circle-size);
+  height: var(--selectable-option-circle-size);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -26,7 +26,7 @@ const Circle = styled.div<{ $isSelected?: boolean }>`
   background: ${(props) =>
     props.$isSelected ? "var(--color-green-100)" : "transparent"};
   border: ${(props) =>
-    props.$isSelected ? "none" : "2px solid var(--color-grey-400)"};
+    props.$isSelected ? "none" : "var(--border-width-medium) solid var(--color-grey-400)"};
 `;
 
 const Label = styled.span<{ $isSelected?: boolean }>`
@@ -35,9 +35,9 @@ const Label = styled.span<{ $isSelected?: boolean }>`
     props.$isSelected
       ? "var(--font-weight-semi-bold)"
       : "var(--font-weight-regular)"};
-  font-size: 20px;
-  line-height: 24px;
-  letter-spacing: 0.1px;
+  font-size: var(--selectable-option-font-size);
+  line-height: var(--selectable-option-line-height);
+  letter-spacing: var(--selectable-option-letter-spacing);
   color: var(--color-midnight);
 `;
 

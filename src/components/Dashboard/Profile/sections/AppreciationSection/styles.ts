@@ -15,9 +15,9 @@ export const StatusBadge = styled.div<{ $status: "received" | "pending" }>`
 
 export const DialogTitle = styled.h3`
   font-weight: var(--font-weight-bold);
-  font-size: 28px;
-  line-height: 32px;
-  letter-spacing: 0.14px;
+  font-size: var(--dialog-title-font-size);
+  line-height: var(--dialog-title-line-height);
+  letter-spacing: var(--dialog-title-letter-spacing);
   color: var(--color-midnight);
   margin: 0 0 var(--spacing-24) 0;
 `;
@@ -33,17 +33,17 @@ export const ExpandedSection = styled.div`
   display: flex;
   flex-direction: column;
   gap: var(--spacing-16);
-  padding-left: 32px;
-  border-left: 4px solid rgba(123, 132, 203, 0.15);
+  padding-left: var(--expanded-section-padding-left);
+  border-left: var(--expanded-section-border-width) solid var(--expanded-section-border-color);
   margin-top: var(--spacing-8);
 `;
 
 export const SubQuestion = styled.p`
   font-family: var(--bs-body-font-family);
   font-weight: var(--font-weight-regular);
-  font-size: 20px;
-  line-height: 24px;
-  letter-spacing: 0.1px;
+  font-size: var(--sub-question-font-size);
+  line-height: var(--sub-question-line-height);
+  letter-spacing: var(--sub-question-letter-spacing);
   color: var(--color-grey-700);
   margin: 0;
 `;

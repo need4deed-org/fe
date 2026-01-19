@@ -2,7 +2,7 @@ import { Button } from "@/components/core/button";
 import { Modal } from "@/components/core/modal";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { X } from "@phosphor-icons/react";
-import { de } from "date-fns/locale";
+import { de, enUS } from "date-fns/locale";
 import {
   ApiCommunicationGet,
   CommunicationType,
@@ -38,7 +38,7 @@ type Props = {
 
 export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Props) {
   const { t, i18n } = useTranslation();
-  const locale = i18n.language === "de" ? de : undefined;
+  const locale = i18n.language === "de" ? de : enUS;
 
   const schema = createValidationSchema(t);
 
