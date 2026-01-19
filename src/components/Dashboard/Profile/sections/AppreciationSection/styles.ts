@@ -1,4 +1,9 @@
 import styled from "styled-components";
+import { TableContainer } from "@/components/core/common/Table";
+
+export const AppreciationTableContainer = styled(TableContainer)`
+  margin-top: var(--spacing-24);
+`;
 
 export const StatusBadge = styled.div<{ $status: "received" | "pending" }>`
   background: ${(props) =>

@@ -7,18 +7,16 @@ import {
   ApiAppreciationPatch,
   VolunteerStateAppreciationType,
 } from "need4deed-sdk";
-import { useState } from "react";
+import { forwardRef, useImperativeHandle, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { AppreciationDialog } from "./AppreciationDialog";
 import { ConfirmationDialog } from "../shared/ConfirmationDialog";
 import {
   SectionWrapper,
-  SectionHeader,
   SectionEmptyState,
 } from "../shared/styles";
-import { StatusBadge } from "./styles";
+import { AppreciationTableContainer, StatusBadge } from "./styles";
 import {
-  TableContainer,
   Table,
   TableHeader,
   TableHeaderCell,
@@ -28,7 +26,6 @@ import {
   ActionCell,
   ActionButton,
 } from "@/components/core/common/Table";
-import { Button } from "@/components/core/button";
 import { formatDate } from "../shared/utils/formatDate";
 import { getAppreciationTypeLabel } from "./utils/translations";
 
@@ -36,7 +33,11 @@ type Props = {
   volunteer: ApiVolunteerGet;
 };
 
-export function AppreciationSection({ volunteer }: Props) {
+export type AppreciationSectionRef = {
+  handleAddNew: () => void;
+};
+
+export const AppreciationSection = forwardRef<AppreciationSectionRef, Props>(function AppreciationSection({ volunteer }, ref) {
   const { t } = useTranslation();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingEntry, setEditingEntry] = useState<ApiAppreciationGet | undefined>(undefined);
@@ -53,6 +54,10 @@ export function AppreciationSection({ volunteer }: Props) {
     setEditingEntry(undefined);
     setIsDialogOpen(true);
   };
+
+  useImperativeHandle(ref, () => ({
+    handleAddNew,
+  }));
 
   const handleEdit = (entry: ApiAppreciationGet) => {
     setEditingEntry(entry);
@@ -113,22 +118,12 @@ export function AppreciationSection({ volunteer }: Props) {
 
   return (
     <SectionWrapper data-testid="appreciation-section-container">
-      <SectionHeader>
-        <Button
-          onClick={handleAddNew}
-          text={t("dashboard.appreciationSection.addNew")}
-          backgroundcolor="var(--color-aubergine)"
-          textColor="var(--color-white)"
-          width="auto"
-        />
-      </SectionHeader>
-
       {appreciations.length === 0 ? (
         <SectionEmptyState data-testid="empty-state">
           {t("dashboard.appreciationSection.emptyState")}
         </SectionEmptyState>
       ) : (
-        <TableContainer data-testid="appreciations-table">
+        <AppreciationTableContainer data-testid="appreciations-table">
           <Table>
             <TableHeader>
               <TableHeaderCell>
@@ -179,7 +174,7 @@ export function AppreciationSection({ volunteer }: Props) {
               ))}
             </TableBody>
           </Table>
-        </TableContainer>
+        </AppreciationTableContainer>
       )}
 
       <AppreciationDialog
@@ -201,4 +196,4 @@ export function AppreciationSection({ volunteer }: Props) {
       )}
     </SectionWrapper>
   );
-}
+});

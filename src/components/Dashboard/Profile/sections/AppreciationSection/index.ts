@@ -1,1 +1,1 @@
-export { AppreciationSection } from "./AppreciationSection";
+export { AppreciationSection, type AppreciationSectionRef } from "./AppreciationSection";

@@ -6,7 +6,7 @@ import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { Card, SectionCard, SectionCardProps } from "./common/SectionCard";
-import { AppreciationSection } from "./sections/AppreciationSection";
+import { AppreciationSection, AppreciationSectionRef } from "./sections/AppreciationSection";
 import { CommentsSection } from "./sections/CommentsSection";
 import { CommunicationTrackerSection } from "./sections/CommunicationTrackerSection";
 import { ContactDetails, ContactDetailsRef } from "./sections/ContactDetails";
@@ -43,6 +43,7 @@ const ProfilePage = ({ volunteer }: ProfilePageProps) => {
   const { t } = useTranslation();
   const contactDetailsRef = useRef<ContactDetailsRef>(null);
   const volunteerProfileRef = useRef<VolunteerProfileSectionRef>(null);
+  const appreciationSectionRef = useRef<AppreciationSectionRef>(null);
 
   const sections: SectionCardProps[] = [
     {
@@ -78,7 +79,9 @@ const ProfilePage = ({ volunteer }: ProfilePageProps) => {
     {
       iconName: IconName.Gift,
       title: t("dashboard.appreciationSection.title"),
-      subComponent: <AppreciationSection volunteer={volunteer} />,
+      headerButtonName: t("dashboard.appreciationSection.addNew"),
+      onHeaderButtonClick: () => appreciationSectionRef.current?.handleAddNew(),
+      subComponent: <AppreciationSection ref={appreciationSectionRef} volunteer={volunteer} />,
     },
     {
       iconName: IconName.ClipboardText,
