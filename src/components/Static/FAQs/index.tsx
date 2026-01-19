@@ -1,7 +1,7 @@
 "use client";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
-import { PageLayout } from "../Layout";
+import { PageLayout } from "@/components/Layout";
 
 function FAQs() {
   const FAQsTitle = styled.h1`

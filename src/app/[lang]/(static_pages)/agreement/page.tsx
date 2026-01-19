@@ -1,4 +1,4 @@
-import Agreement from "@/components/Legal/Agreement";
+import Agreement from "@/components/Static/Legal/Agreement";
 import React from "react";
 
 export default function AgreementPage() {

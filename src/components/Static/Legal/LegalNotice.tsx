@@ -1,6 +1,6 @@
 "use client";
 import { useTranslation } from "react-i18next";
-import { PageLayout } from "../Layout";
+import { PageLayout } from "@/components/Layout";
 import styled from "styled-components";
 import Link from "next/link";
 

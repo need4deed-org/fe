@@ -1,7 +1,7 @@
 "use client";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { PageLayout } from "../Layout";
+import { PageLayout } from "@/components/Layout";
 
 function DataPrivacy() {
   const { t } = useTranslation();

@@ -1,7 +1,7 @@
 "use client";
 import styled from "styled-components";
-import { PageLayout } from "../Layout";
 import { useTranslation } from "react-i18next";
+import { PageLayout } from "@/components/Layout";
 
 function AboutUs() {
   const { t } = useTranslation();

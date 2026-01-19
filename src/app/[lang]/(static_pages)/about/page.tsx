@@ -1,4 +1,5 @@
-import AboutUs from "@/components/About";
+
+import AboutUs from "@/components/Static/About";
 import React from "react";
 
 export default function AboutUsPage() {
