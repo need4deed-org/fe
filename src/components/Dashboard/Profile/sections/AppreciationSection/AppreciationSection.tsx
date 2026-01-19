@@ -4,7 +4,6 @@ import {
   ApiVolunteerGet,
   ApiAppreciationGet,
   ApiAppreciationPost,
-  ApiAppreciationPatch,
   VolunteerStateAppreciationType,
 } from "need4deed-sdk";
 import { forwardRef, useImperativeHandle, useState } from "react";
@@ -84,10 +83,10 @@ export const AppreciationSection = forwardRef<AppreciationSectionRef, Props>(fun
     dateDelivery: Date | null;
   }) => {
     if (data.id) {
-      const payload: ApiAppreciationPatch = {
+      const payload = {
         title: data.title,
-        dateDue: data.dateDue ?? undefined,
-        dateDelivery: data.dateDelivery ?? undefined,
+        dateDue: data.dateDue,
+        dateDelivery: data.dateDelivery,
       };
       updateAppreciation(
         { id: data.id, data: payload },
