@@ -8,7 +8,7 @@ import styled from "styled-components";
 import { Card, SectionCard, SectionCardProps } from "./common/SectionCard";
 import { AppreciationSection, AppreciationSectionRef } from "./sections/AppreciationSection";
 import { CommentsSection } from "./sections/CommentsSection";
-import { CommunicationTrackerSection } from "./sections/CommunicationTrackerSection";
+import { CommunicationTrackerSection, CommunicationTrackerSectionRef } from "./sections/CommunicationTrackerSection";
 import { ContactDetails, ContactDetailsRef } from "./sections/ContactDetails";
 import { VolunteerHeader } from "./sections/VolunteerHeader";
 import VolunteerOpportunities from "./sections/VolunteerOpportunities/VolunteerOpportunities";
@@ -43,6 +43,7 @@ const ProfilePage = ({ volunteer }: ProfilePageProps) => {
   const { t } = useTranslation();
   const contactDetailsRef = useRef<ContactDetailsRef>(null);
   const volunteerProfileRef = useRef<VolunteerProfileSectionRef>(null);
+  const communicationTrackerRef = useRef<CommunicationTrackerSectionRef>(null);
   const appreciationSectionRef = useRef<AppreciationSectionRef>(null);
 
   const sections: SectionCardProps[] = [
@@ -69,7 +70,9 @@ const ProfilePage = ({ volunteer }: ProfilePageProps) => {
     {
       iconName: IconName.ChatsTeardrop,
       title: t("dashboard.communicationSection.title"),
-      subComponent: <CommunicationTrackerSection volunteer={volunteer} />,
+      headerButtonName: t("dashboard.communicationSection.addNew"),
+      onHeaderButtonClick: () => communicationTrackerRef.current?.handleAddNew(),
+      subComponent: <CommunicationTrackerSection ref={communicationTrackerRef} volunteer={volunteer} />,
     },
     {
       iconName: IconName.ChatCircleDots,

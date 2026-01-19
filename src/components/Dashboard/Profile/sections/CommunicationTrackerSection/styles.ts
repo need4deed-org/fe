@@ -1,4 +1,9 @@
 import styled from "styled-components";
+import { TableContainer } from "@/components/core/common/Table";
+
+export const CommunicationTableContainer = styled(TableContainer)`
+  margin-top: var(--spacing-24);
+`;
 
 export const DialogHeader = styled.div`
   display: flex;

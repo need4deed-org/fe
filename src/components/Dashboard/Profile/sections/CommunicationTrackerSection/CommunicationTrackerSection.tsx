@@ -6,17 +6,15 @@ import {
   ApiVolunteerCommunicationPost,
   ApiVolunteerCommunicationPatch,
 } from "need4deed-sdk";
-import { useState } from "react";
+import { forwardRef, useImperativeHandle, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CommunicationDialog } from "./CommunicationDialog";
 import { ConfirmationDialog } from "../shared/ConfirmationDialog";
 import {
   SectionWrapper,
-  SectionHeader,
   SectionEmptyState,
 } from "../shared/styles";
 import {
-  TableContainer,
   Table,
   TableHeader,
   TableHeaderCell,
@@ -26,14 +24,18 @@ import {
   ActionCell,
   ActionButton,
 } from "@/components/core/common/Table";
-import { Button } from "@/components/core/button";
+import { CommunicationTableContainer } from "./styles";
 import { formatDate, getDisplayLabel, getContactMethodLabel } from "./utils/translations";
 
 type Props = {
   volunteer: ApiVolunteerGet;
 };
 
-export function CommunicationTrackerSection({ volunteer }: Props) {
+export type CommunicationTrackerSectionRef = {
+  handleAddNew: () => void;
+};
+
+export const CommunicationTrackerSection = forwardRef<CommunicationTrackerSectionRef, Props>(function CommunicationTrackerSection({ volunteer }, ref) {
   const { t } = useTranslation();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingEntry, setEditingEntry] = useState<ApiCommunicationGet | undefined>(undefined);
@@ -50,6 +52,10 @@ export function CommunicationTrackerSection({ volunteer }: Props) {
     setEditingEntry(undefined);
     setIsDialogOpen(true);
   };
+
+  useImperativeHandle(ref, () => ({
+    handleAddNew,
+  }));
 
   const handleEdit = (entry: ApiCommunicationGet) => {
     setEditingEntry(entry);
@@ -104,22 +110,12 @@ export function CommunicationTrackerSection({ volunteer }: Props) {
 
   return (
     <SectionWrapper data-testid="communication-tracker-section-container">
-      <SectionHeader>
-        <Button
-          onClick={handleAddNew}
-          text={t("dashboard.communicationSection.addNew", "+ Register contact")}
-          backgroundcolor="var(--color-aubergine)"
-          textColor="var(--color-white)"
-          width="auto"
-        />
-      </SectionHeader>
-
       {communications.length === 0 ? (
         <SectionEmptyState data-testid="empty-state">
           {t("dashboard.communicationSection.emptyState", "No communications recorded yet")}
         </SectionEmptyState>
       ) : (
-        <TableContainer data-testid="communications-table">
+        <CommunicationTableContainer data-testid="communications-table">
           <Table>
             <TableHeader>
               <TableHeaderCell>{t("dashboard.communicationSection.typeOfContact")}</TableHeaderCell>
@@ -150,7 +146,7 @@ export function CommunicationTrackerSection({ volunteer }: Props) {
               ))}
             </TableBody>
           </Table>
-        </TableContainer>
+        </CommunicationTableContainer>
       )}
 
       <CommunicationDialog
@@ -172,4 +168,4 @@ export function CommunicationTrackerSection({ volunteer }: Props) {
       )}
     </SectionWrapper>
   );
-}
+});
