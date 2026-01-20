@@ -181,7 +181,6 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
                         locale={locale}
                         showTodayIndicator
                         todayText={t("dashboard.communicationSection.today")}
-                        showDropdownIcon={false}
                       />
                     )}
                   />
