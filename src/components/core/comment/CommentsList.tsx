@@ -5,10 +5,10 @@ import { CommentDisplay, AddComment } from "./index";
 import { Paragraph } from "@/components/styled/text";
 import SpeechBubbleIcon from "@/components/svg/SpeechBubbleIcon";
 import CenteredWrapper from "../common/CenteredWrapper";
-import { Comment } from "@/types";
+import { TimedText } from "need4deed-sdk";
 
 interface CommentsListProps {
-  comments: Comment[];
+  comments: TimedText[];
   onPatch: (commentId: string, updatedText: string) => Promise<void>;
   onDelete: (commentId: string) => Promise<void>;
   onAdd: (text: string) => Promise<void>;

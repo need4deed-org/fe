@@ -6,10 +6,10 @@ import styled from "styled-components";
 import useOutsideClick from "@/hooks/useOutsideClick";
 import { Paragraph } from "@/components/styled/text";
 import { Button } from "../button";
-import { Comment } from "@/types";
+import { TimedText } from "need4deed-sdk";
 
 interface CommentDisplayProps {
-  comment: Comment;
+  comment: TimedText;
   onPatch: (commentId: string, updatedText: string) => Promise<void>;
   onDelete: (commentId: string) => Promise<void>;
 }
@@ -17,7 +17,7 @@ interface CommentDisplayProps {
 export function CommentDisplay({ comment, onPatch, onDelete }: CommentDisplayProps) {
   const [isEditMode, setIsEditMode] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [editedText, setEditedText] = useState(comment.text);
+  const [editedText, setEditedText] = useState(comment.content);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -42,7 +42,7 @@ export function CommentDisplay({ comment, onPatch, onDelete }: CommentDisplayPro
     setShowDeleteDialog(false);
     setIsSubmitting(true);
     try {
-      await onDelete(comment.id);
+      await onDelete(String(comment.id));
     } catch (error) {
       console.error("Error deleting comment:", error);
     } finally {
@@ -55,14 +55,14 @@ export function CommentDisplay({ comment, onPatch, onDelete }: CommentDisplayPro
   };
 
   const handleSave = async () => {
-    if (editedText.trim() === comment.text) {
+    if (editedText.trim() === comment.content) {
       setIsEditMode(false);
       return;
     }
 
     setIsSubmitting(true);
     try {
-      await onPatch(comment.id, editedText.trim());
+      await onPatch(String(comment.id), editedText.trim());
       setIsEditMode(false);
     } catch (error) {
       console.error("Error updating comment:", error);
@@ -72,12 +72,12 @@ export function CommentDisplay({ comment, onPatch, onDelete }: CommentDisplayPro
   };
 
   const handleCancel = () => {
-    setEditedText(comment.text);
+    setEditedText(comment.content);
     setIsEditMode(false);
   };
 
-  const formatTimestamp = (timestamp: string) => {
-    const date = new Date(timestamp);
+  const formatTimestamp = (timestamp: Date | string) => {
+    const date = timestamp instanceof Date ? timestamp : new Date(timestamp);
     const month = date.toLocaleDateString("en-US", { month: "short" });
     const day = date.getDate();
     const hours = date.getHours().toString().padStart(2, "0");
@@ -90,7 +90,7 @@ export function CommentDisplay({ comment, onPatch, onDelete }: CommentDisplayPro
       <CommentHeader>
         <UserInfo>
           <Paragraph fontWeight={600} fontSize="16px" lineheight="20px" color="var(--color-midnight)">
-            {comment.userName}
+            {comment.authorName}
           </Paragraph>
           <Paragraph fontWeight={400} fontSize="14px" lineheight="18px" color="var(--color-grey-400)">
             {formatTimestamp(comment.timestamp)}
@@ -146,7 +146,7 @@ export function CommentDisplay({ comment, onPatch, onDelete }: CommentDisplayPro
       ) : (
         <CommentText>
           <Paragraph fontWeight={400} fontSize="16px" lineheight="24px" color="var(--color-grey-700)">
-            {comment.text}
+            {comment.content}
           </Paragraph>
         </CommentText>
       )}
@@ -156,7 +156,7 @@ export function CommentDisplay({ comment, onPatch, onDelete }: CommentDisplayPro
           <DeleteDialogContent>
             <DeleteDialogTitle>Delete comment?</DeleteDialogTitle>
             <DeleteDialogText>
-              {comment.userName}&apos;s comment will be permanently deleted.
+              {comment.authorName}&apos;s comment will be permanently deleted.
             </DeleteDialogText>
             <DeleteDialogActions>
               <Button
