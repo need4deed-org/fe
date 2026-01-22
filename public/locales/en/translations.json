@@ -562,7 +562,6 @@
         }
       }
     },
-
     "documentSection": {
       "title": "Documents",
       "typeOfDocument": "Type of document",
@@ -737,14 +736,86 @@
       "deletePermissionError": "You do not have permission to delete communication with id: {{id}}."
     }
   },
-  "message": {
-    "successful": "Successful",
-    "errorGeneric": "Something went wrong!",
-    "validationFailed": "Validation failed",
-    "uploadSuccess": "Document uploaded successfully!",
-    "deleteSuccess": "Document deleted successfully!",
-    "uploadError": "Upload failed. Please try again.",
-    "deleteError": "Delete failed. Please try again.",
-    "previewError": "Preview failed. Please try again."
+  "aboutus": {
+    "aboutusHeading": "About the project",
+    "aboutusSubheading": "The number of people fleeing conflict zones, persecution and human rights violations worldwide has never been as high as it is today. Need4Deed is set to promote the inclusion and integration of refugees in Berlin through the actions of civil society by making volunteering more accessible. We aim to build a sustainable and scalable mechanism for this purpose by connecting volunteers with refugees that are living in accommodation centers in Berlin based on their specific needs.",
+    "values": {
+      "valuesHeading": "Our values",
+      "equalOpportunityHeading": "Equal opportunities",
+      "equalOpportunitySubheading": "People living under destitute life conditions should be given equal opportunities. The latter includes underserved individuals and groups affected by forced migration.",
+      "responsibilityHeading": "Responsibility",
+      "responsibilitySubheading": "Both countries (the state) and civil society, have responsibility towards its underserved communities including those affected by forced migration.",
+      "migranToMigranSupportHeading": "Migrant-to-migrant support",
+      "migranToMigranSupportSubheading": "In particular, groups and individuals who have undergone forced migration could be best understood and supported by others with migration background in the course of their integration process, so that they receive equal opportunities and eventually benefit society themselves.",
+      "activeParticipationHeading": "Active participation",
+      "activeParticipationSubheading": "A migrant-to-migrant support alongside non-migrant support, can both play a key social role by facilitating a more rapid integration process and active participation of the supported communities.",
+      "technologyHeading": "Technology",
+      "technologySubheading": "Applying technology in the effort to support underserved communities is a key value to make support giving and receiving more inclusive, accessible and scalable."
+    }
+  },
+  "faqs": {
+    "faqs": "FAQs",
+    "title": "Frequently Asked Questions",
+    "first_steps_question": "What are the first steps to become a volunteer?",
+    "first_steps_answer": "Begin by completing the volunteer application form on the Need4Deed website.",
+    "after_form_question": "What happens after I fill out the form?",
+    "after_form_answer": "After we have your preferences and locations we start searching for a suitable opportunity for you and contact you in the next days.",
+    "find_opportunities_question": "How do I find available volunteer opportunities?",
+    "find_opportunities_answer": "Check the 'Opportunities' page on the Need4Deed website for current volunteer roles.",
+    "volunteer_roles_question": "What types of volunteer roles are offered?",
+    "volunteer_roles_answer": "Roles include child care, language cafés, translation services, and support with official appointments and sports activities.",
+    "special_skills_question": "Do I need any special skills to volunteer?",
+    "special_skills_answer": "Many roles are open to all volunteers, although specific skills may be required for certain positions.",
+    "volunteering_time_question": "How long does volunteering take?",
+    "volunteering_time_answer": "Regular volunteering usually requires a commitment of about 2 hours a week or twice a month. Irregular volunteering can happen whenever you have time, especially for events or tasks like translations at doctors' appointments.",
+    "age_requirements_question": "Are there age requirements for volunteers?",
+    "age_requirements_answer": "Age requirements may vary but most places require the person to be over 18; please check the opportunity listings for specifics.",
+    "voluntea_gatherings_question": "What can I expect during the VolunTea gatherings?",
+    "voluntea_gatherings_answer": "VolunTea orientation covers Need4Deed's mission, volunteer roles, and assisting in finding the suitable refugee accommodation centers.",
+    "training_question": "Is there a special training?",
+    "training_answer": "Every few months training are offered, especially for those supporting with translations.",
+    "group_volunteering_question": "Can I volunteer with a group or organisation?",
+    "group_volunteering_answer": "Yes, group volunteering is encouraged, especially for those supporting refugee accommodation centers."
+  },
+  "legal": {
+    "legalHeading": "Legal",
+    "impressum": "Imprint",
+    "dataPrivacy": "Privacy Policy",
+    "agreement": "Volunteer Participation Agreement",
+    "guidelines": "Need4Deed Guidelines",
+    "cookies": "Cookies",
+    "notice": {
+      "header": "Legal Notice",
+      "contacts": {
+        "tel": "Telephone",
+        "fax": "Fax",
+        "email": "Email",
+        "responsible": "Responsible: Managing Director"
+      },
+      "registration": "Registration Court",
+      "court": "District Court Charlottenburg",
+      "disclaimer": "Disclaimer",
+      "liability": {
+        "header": "Liability for Content and Links",
+        "body": "The contents of this website were created with the greatest care. However, we cannot guarantee the accuracy, completeness, and timeliness of the content. As a provider, we are responsible for our own content on this page in accordance with Section 7 (1) TMG under general laws. According to Sections 8 to 10 TMG, VIA as a provider is not obligated to monitor transmitted or stored third-party information or to investigate circumstances that indicate illegal activity. Obligations to remove or block the use of information under general laws remain unaffected. However, liability in this regard is only possible from the moment of knowledge of a specific legal violation. Upon notification of such violations, we will remove this content immediately. Should links lead to nowhere or no longer provide current information, we ask for notification. Likewise, we ask for your notice regarding pages to which a link should be placed. We assume no responsibility for the content and timeliness of third-party links."
+      },
+      "photoCredit": {
+        "header": "Photo Credits",
+        "owner": "Logo Owner",
+        "clubDialog": "For all other images and logos used, Club Dialog e.V. is the author and thus the holder of the exclusive usage rights."
+      },
+      "dataProtectionLink": "Click here for our Privacy Policy",
+      "dataProtectionOfficer": "Data Protection Officer"
+    },
+    "message": {
+      "successful": "Successful",
+      "errorGeneric": "Something went wrong!",
+      "validationFailed": "Validation failed",
+      "uploadSuccess": "Document uploaded successfully!",
+      "deleteSuccess": "Document deleted successfully!",
+      "uploadError": "Upload failed. Please try again.",
+      "deleteError": "Delete failed. Please try again.",
+      "previewError": "Preview failed. Please try again."
+    }
   }
 }
