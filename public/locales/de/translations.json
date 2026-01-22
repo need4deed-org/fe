@@ -640,6 +640,38 @@
         "delete": "Löschen"
       }
     },
+    "appreciationSection": {
+      "title": "Anerkennung",
+      "addNew": "+ Anerkennung hinzufügen",
+      "emptyState": "Dieser Freiwillige hat noch keine Anerkennung erhalten",
+      "typeOfAppreciation": "Art der Anerkennung",
+      "typeOfAppreciationRequired": "Art der Anerkennung*",
+      "status": "Status",
+      "receivedOn": "Erhalten am",
+      "statusReceived": "Erhalten",
+      "statusDueTo": "Fällig am",
+      "typeOptions": {
+        "tshirt": "T-Shirt",
+        "toteBag": "Stofftasche",
+        "benefitCard": "Vorteilskarte"
+      },
+      "addAppreciation": "Anerkennung hinzufügen",
+      "editAppreciation": "Anerkennung bearbeiten",
+      "dueDateRequired": "Fälligkeitsdatum*",
+      "deliveryDate": "Lieferdatum (optional)",
+      "didVolunteerReceive": "Hat der Freiwillige es erhalten?*",
+      "volunteerReceivedIt": "Der Freiwillige hat es erhalten",
+      "needToGiveIt": "Muss dem Freiwilligen gegeben werden",
+      "receivedOnRequired": "Erhalten am*",
+      "today": "heute",
+      "cancel": "Abbrechen",
+      "save": "Speichern",
+      "appreciationAdded": "Anerkennung erfolgreich hinzugefügt",
+      "appreciationUpdated": "Anerkennung erfolgreich aktualisiert",
+      "appreciationDeleted": "Anerkennung erfolgreich gelöscht",
+      "deleteConfirmTitle": "Anerkennung löschen?",
+      "deleteConfirmText": "\"{{entryType}}\" Anerkennungseintrag wird dauerhaft gelöscht."
+    },
     "communicationSection": {
       "title": "Kommunikationsverfolgung",
       "addNew": "+ Kontakt registrieren",
@@ -697,12 +729,17 @@
       "email": "E-Mail",
       "phone": "Telefon",
       "inPerson": "Persönlich",
-      "message": "Nachricht"
+      "message": "Nachricht",
+      "today": "heute",
+      "futureDateError": "Datum darf nicht in der Zukunft liegen",
+      "contactTypeRequired": "Kontaktart ist erforderlich",
+      "deletePermissionError": "Sie haben keine Berechtigung, die Kommunikation mit der ID: {{id}} zu löschen."
     }
   },
   "message": {
     "successful": "Erfolgreich",
     "errorGeneric": "Etwas ist schief gelaufen!",
+    "validationFailed": "Validierung fehlgeschlagen",
     "uploadSuccess": "Dokument erfolgreich hochgeladen!",
     "deleteSuccess": "Dokument erfolgreich gelöscht!",
     "uploadError": "Hochladen fehlgeschlagen. Bitte versuchen Sie es erneut.",

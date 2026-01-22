@@ -6,8 +6,9 @@ import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { Card, SectionCard, SectionCardProps } from "./common/SectionCard";
+import { AppreciationSection, AppreciationSectionRef } from "./sections/AppreciationSection";
 import { CommentsSection } from "./sections/CommentsSection";
-import { CommunicationTrackerSection } from "./sections/CommunicationTrackerSection";
+import { CommunicationTrackerSection, CommunicationTrackerSectionRef } from "./sections/CommunicationTrackerSection";
 import { ContactDetails, ContactDetailsRef } from "./sections/ContactDetails";
 import { VolunteerHeader } from "./sections/VolunteerHeader";
 import VolunteerOpportunities from "./sections/VolunteerOpportunities/VolunteerOpportunities";
@@ -42,6 +43,8 @@ const ProfilePage = ({ volunteer }: ProfilePageProps) => {
   const { t, i18n } = useTranslation();
   const contactDetailsRef = useRef<ContactDetailsRef>(null);
   const volunteerProfileRef = useRef<VolunteerProfileSectionRef>(null);
+  const communicationTrackerRef = useRef<CommunicationTrackerSectionRef>(null);
+  const appreciationSectionRef = useRef<AppreciationSectionRef>(null);
 
   const sections: SectionCardProps[] = [
     {
@@ -67,12 +70,21 @@ const ProfilePage = ({ volunteer }: ProfilePageProps) => {
     {
       iconName: IconName.ChatsTeardrop,
       title: t("dashboard.communicationSection.title"),
-      subComponent: <CommunicationTrackerSection volunteer={volunteer} />,
+      headerButtonName: t("dashboard.communicationSection.addNew"),
+      onHeaderButtonClick: () => communicationTrackerRef.current?.handleAddNew(),
+      subComponent: <CommunicationTrackerSection ref={communicationTrackerRef} volunteer={volunteer} />,
     },
     {
       iconName: IconName.ChatCircleDots,
       title: `${t("dashboard.volunteerProfile.coordinatorComments")} • ${volunteer.comments?.length ?? 0}`,
       subComponent: <CommentsSection volunteer={volunteer} />,
+    },
+    {
+      iconName: IconName.Gift,
+      title: t("dashboard.appreciationSection.title"),
+      headerButtonName: t("dashboard.appreciationSection.addNew"),
+      onHeaderButtonClick: () => appreciationSectionRef.current?.handleAddNew(),
+      subComponent: <AppreciationSection ref={appreciationSectionRef} volunteer={volunteer} />,
     },
     {
       iconName: IconName.ClipboardText,

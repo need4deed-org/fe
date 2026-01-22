@@ -3,15 +3,37 @@ import { type Locale } from "date-fns/locale";
 import { useEffect, useRef, useState } from "react";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/style.css";
-import { DateInput, DateInputContainer, DateInputIcon, DatePickerPopover, DatePickerWrapper } from "./styles";
+
+const MIN_YEAR = 2025;
+
+import {
+  DateInput,
+  DateInputContainer,
+  DateInputIcon,
+  DatePickerPopover,
+  DatePickerWrapper,
+  FloatingLabel,
+} from "./styles";
 
 type Props = {
   date: Date | undefined;
   onSelect: (d: Date | undefined) => void;
   locale?: Locale;
+  allowFuture?: boolean;
+  label?: string;
+  showTodayIndicator?: boolean;
+  todayText?: string;
 };
 
-export function DatePickerWithPopover({ date, onSelect, locale }: Props) {
+export function DatePickerWithLabel({
+  date,
+  onSelect,
+  locale,
+  allowFuture = false,
+  label,
+  showTodayIndicator = false,
+  todayText = "today",
+}: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [month, setMonth] = useState<Date>(date || new Date());
@@ -19,15 +41,21 @@ export function DatePickerWithPopover({ date, onSelect, locale }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    // Do not update input value while user is typing (input is focused)
     if (document.activeElement === inputRef.current) return;
 
     if (date) {
-      setInputValue(format(date, "dd.MM.yyyy"));
+      const formatted = format(date, "dd.MM.yyyy");
+      if (showTodayIndicator) {
+        const today = new Date();
+        const isToday = date.toDateString() === today.toDateString();
+        setInputValue(isToday ? `${formatted} (${todayText})` : formatted);
+      } else {
+        setInputValue(formatted);
+      }
     } else {
       setInputValue("");
     }
-  }, [date]);
+  }, [date, showTodayIndicator, todayText]);
 
   useEffect(() => {
     if (isOpen && date && isValid(date)) {
@@ -52,39 +80,48 @@ export function DatePickerWithPopover({ date, onSelect, locale }: Props) {
     const value = e.target.value;
     setInputValue(value);
 
-    // Strict regex for d.m.yyyy or dd.mm.yyyy
     const dateRegex = /^\d{1,2}\.\d{1,2}\.\d{4}$/;
 
     if (!dateRegex.test(value)) {
-      onSelect(undefined);
       return;
     }
 
     const parsedDate = parse(value, "dd.MM.yyyy", new Date());
 
-    if (isValid(parsedDate) && parsedDate.getFullYear() >= 2025) {
+    if (isValid(parsedDate) && parsedDate.getFullYear() >= MIN_YEAR) {
       onSelect(parsedDate);
-    } else {
-      onSelect(undefined);
     }
   };
 
   const handleInputBlur = () => {
     if (date) {
-      setInputValue(format(date, "dd.MM.yyyy"));
+      const formatted = format(date, "dd.MM.yyyy");
+      if (showTodayIndicator) {
+        const today = new Date();
+        const isToday = date.toDateString() === today.toDateString();
+        setInputValue(isToday ? `${formatted} (${todayText})` : formatted);
+      } else {
+        setInputValue(formatted);
+      }
     }
   };
 
+  const handleIconClick = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
-    <DatePickerWrapper ref={containerRef}>
-      <DateInputContainer>
-        <DateInputIcon size={24} weight="regular" onClick={() => setIsOpen(!isOpen)} />
+    <DatePickerWrapper ref={containerRef} data-testid="date-picker-wrapper">
+      <DateInputContainer $hasLabel={!!label}>
+        {label && <FloatingLabel>{label}</FloatingLabel>}
+        <DateInputIcon size={24} weight="regular" onClick={handleIconClick} />
         <DateInput
           ref={inputRef}
           value={inputValue}
           onChange={handleInputChange}
           onBlur={handleInputBlur}
           data-testid="date-picker-input"
+          placeholder="dd.mm.yyyy"
         />
       </DateInputContainer>
       <DatePickerPopover $isOpen={isOpen}>
@@ -99,9 +136,9 @@ export function DatePickerWithPopover({ date, onSelect, locale }: Props) {
           onMonthChange={setMonth}
           locale={locale}
           captionLayout="dropdown"
-          startMonth={new Date(2025, 0)}
+          startMonth={new Date(MIN_YEAR, 0)}
           endMonth={new Date(new Date().getFullYear() + 10, 11)}
-          disabled={{ after: new Date() }}
+          disabled={allowFuture ? undefined : { after: new Date() }}
         />
       </DatePickerPopover>
     </DatePickerWrapper>

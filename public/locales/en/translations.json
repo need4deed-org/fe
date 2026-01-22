@@ -641,6 +641,38 @@
         "delete": "Delete"
       }
     },
+    "appreciationSection": {
+      "title": "Appreciation",
+      "addNew": "+ Add appreciation",
+      "emptyState": "This volunteer hasn't received any appreciation yet",
+      "typeOfAppreciation": "Type of appreciation",
+      "typeOfAppreciationRequired": "Type of appreciation*",
+      "status": "Status",
+      "receivedOn": "Received on",
+      "statusReceived": "Received",
+      "statusDueTo": "Due on",
+      "typeOptions": {
+        "tshirt": "T-shirt",
+        "toteBag": "Tote bag",
+        "benefitCard": "Benefit card"
+      },
+      "addAppreciation": "Add appreciation",
+      "editAppreciation": "Edit appreciation",
+      "dueDateRequired": "Due date*",
+      "deliveryDate": "Delivery date (optional)",
+      "didVolunteerReceive": "Did the volunteer receive it?*",
+      "volunteerReceivedIt": "The volunteer received it",
+      "needToGiveIt": "Need to give it to the volunteer",
+      "receivedOnRequired": "Received on*",
+      "today": "today",
+      "cancel": "Cancel",
+      "save": "Save",
+      "appreciationAdded": "Appreciation added successfully",
+      "appreciationUpdated": "Appreciation updated successfully",
+      "appreciationDeleted": "Appreciation deleted successfully",
+      "deleteConfirmTitle": "Delete appreciation?",
+      "deleteConfirmText": "\"{{entryType}}\" appreciation entry will be permanently deleted."
+    },
     "communicationSection": {
       "title": "Communication Tracker",
       "addNew": "+ Register contact",
@@ -698,12 +730,17 @@
       "email": "Email",
       "phone": "Phone",
       "inPerson": "In person",
-      "message": "Message"
+      "message": "Message",
+      "today": "today",
+      "futureDateError": "Date cannot be in the future",
+      "contactTypeRequired": "Contact type is required",
+      "deletePermissionError": "You do not have permission to delete communication with id: {{id}}."
     }
   },
   "message": {
     "successful": "Successful",
     "errorGeneric": "Something went wrong!",
+    "validationFailed": "Validation failed",
     "uploadSuccess": "Document uploaded successfully!",
     "deleteSuccess": "Document deleted successfully!",
     "uploadError": "Upload failed. Please try again.",

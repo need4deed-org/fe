@@ -1,18 +1,20 @@
-"use client";
 import { useCommunicationTracker } from "@/hooks/useCommunicationTracker";
 import { PencilSimple, Trash } from "@phosphor-icons/react";
-import { ApiVolunteerGet, ApiCommunicationGet, ApiVolunteerCommunicationPost, ApiVolunteerCommunicationPatch } from "need4deed-sdk";
-import { useState } from "react";
+import {
+  ApiVolunteerGet,
+  ApiCommunicationGet,
+  ApiVolunteerCommunicationPost,
+  ApiVolunteerCommunicationPatch,
+} from "need4deed-sdk";
+import { forwardRef, useImperativeHandle, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CommunicationDialog } from "./CommunicationDialog";
 import { ConfirmationDialog } from "../shared/ConfirmationDialog";
 import {
-  EmptyState,
-  Header,
-  Wrapper,
-} from "./styles";
+  SectionWrapper,
+  SectionEmptyState,
+} from "../shared/styles";
 import {
-  TableContainer,
   Table,
   TableHeader,
   TableHeaderCell,
@@ -22,14 +24,18 @@ import {
   ActionCell,
   ActionButton,
 } from "@/components/core/common/Table";
-import { Button } from "@/components/core/button";
+import { CommunicationTableContainer } from "./styles";
 import { formatDate, getDisplayLabel, getContactMethodLabel } from "./utils/translations";
 
 type Props = {
   volunteer: ApiVolunteerGet;
 };
 
-export function CommunicationTrackerSection({ volunteer }: Props) {
+export type CommunicationTrackerSectionRef = {
+  handleAddNew: () => void;
+};
+
+export const CommunicationTrackerSection = forwardRef<CommunicationTrackerSectionRef, Props>(function CommunicationTrackerSection({ volunteer }, ref) {
   const { t } = useTranslation();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingEntry, setEditingEntry] = useState<ApiCommunicationGet | undefined>(undefined);
@@ -46,6 +52,10 @@ export function CommunicationTrackerSection({ volunteer }: Props) {
     setEditingEntry(undefined);
     setIsDialogOpen(true);
   };
+
+  useImperativeHandle(ref, () => ({
+    handleAddNew,
+  }));
 
   const handleEdit = (entry: ApiCommunicationGet) => {
     setEditingEntry(entry);
@@ -99,23 +109,13 @@ export function CommunicationTrackerSection({ volunteer }: Props) {
   };
 
   return (
-    <Wrapper data-testid="communication-tracker-section-container">
-      <Header>
-        <Button
-            onClick={handleAddNew}
-            text={t("dashboard.communicationSection.addNew", "+ Register contact")}
-            backgroundcolor="var(--color-aubergine)"
-            textColor="var(--color-white)"
-            width="auto"
-        />
-      </Header>
-
+    <SectionWrapper data-testid="communication-tracker-section-container">
       {communications.length === 0 ? (
-        <EmptyState data-testid="empty-state">
+        <SectionEmptyState data-testid="empty-state">
           {t("dashboard.communicationSection.emptyState", "No communications recorded yet")}
-        </EmptyState>
+        </SectionEmptyState>
       ) : (
-        <TableContainer data-testid="communications-table">
+        <CommunicationTableContainer data-testid="communications-table">
           <Table>
             <TableHeader>
               <TableHeaderCell>{t("dashboard.communicationSection.typeOfContact")}</TableHeaderCell>
@@ -146,7 +146,7 @@ export function CommunicationTrackerSection({ volunteer }: Props) {
               ))}
             </TableBody>
           </Table>
-        </TableContainer>
+        </CommunicationTableContainer>
       )}
 
       <CommunicationDialog
@@ -166,6 +166,6 @@ export function CommunicationTrackerSection({ volunteer }: Props) {
           onConfirm={confirmDelete}
         />
       )}
-    </Wrapper>
+    </SectionWrapper>
   );
-}
+});

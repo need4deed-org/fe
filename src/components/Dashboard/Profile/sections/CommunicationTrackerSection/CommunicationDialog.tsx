@@ -1,20 +1,23 @@
-"use client";
 import { Button } from "@/components/core/button";
 import { Modal } from "@/components/core/modal";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { X } from "@phosphor-icons/react";
-import { de } from "date-fns/locale";
-import { ApiCommunicationGet, CommunicationType, ContactMethodType, ContactType } from "need4deed-sdk";
+import { de, enUS } from "date-fns/locale";
+import {
+  ApiCommunicationGet,
+  CommunicationType,
+  ContactMethodType,
+  ContactType,
+} from "need4deed-sdk";
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { DatePickerWithPopover } from "./DatePickerWithPopover";
+import { DatePickerWithLabel } from "@/components/core/common/DatePicker";
+import { DialogButtonGroup, DialogForm } from "../shared/styles";
 import {
-  ButtonGroup,
   CloseButton,
   DialogHeader,
   DialogTitle,
-  Form,
   FormField,
   Label,
   RadioInput,
@@ -35,7 +38,7 @@ type Props = {
 
 export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Props) {
   const { t, i18n } = useTranslation();
-  const locale = i18n.language === "de" ? de : undefined;
+  const locale = i18n.language === "de" ? de : enUS;
 
   const schema = createValidationSchema(t);
 
@@ -101,7 +104,7 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
         </CloseButton>
       </DialogHeader>
 
-      <Form onSubmit={handleSubmit(onSubmit)}>
+      <DialogForm onSubmit={handleSubmit(onSubmit)}>
         {Object.values(ContactType).map((type) => (
           <RadioOption key={type}>
             <RadioRow>
@@ -172,7 +175,13 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
                     name="date"
                     control={control}
                     render={({ field }) => (
-                      <DatePickerWithPopover date={field.value} onSelect={field.onChange} locale={locale} />
+                      <DatePickerWithLabel
+                        date={field.value}
+                        onSelect={field.onChange}
+                        locale={locale}
+                        showTodayIndicator
+                        todayText={t("dashboard.communicationSection.today")}
+                      />
                     )}
                   />
                 </FormField>
@@ -181,7 +190,7 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
           </RadioOption>
         ))}
 
-        <ButtonGroup>
+        <DialogButtonGroup>
           <Button
             text={t("dashboard.communicationSection.cancel", "Cancel")}
             onClick={(e) => {
@@ -199,8 +208,8 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
             textColor="var(--color-white)"
             disabled={!isFormValid || !contactType}
           />
-        </ButtonGroup>
-      </Form>
+        </DialogButtonGroup>
+      </DialogForm>
     </Modal>
   );
 }

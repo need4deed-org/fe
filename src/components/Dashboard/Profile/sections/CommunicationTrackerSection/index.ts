@@ -1,1 +1,1 @@
-export { CommunicationTrackerSection } from "./CommunicationTrackerSection";
+export { CommunicationTrackerSection, type CommunicationTrackerSectionRef } from "./CommunicationTrackerSection";

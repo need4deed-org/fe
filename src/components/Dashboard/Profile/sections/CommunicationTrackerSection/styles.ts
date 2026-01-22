@@ -1,29 +1,8 @@
-import { Calendar } from "@phosphor-icons/react";
 import styled from "styled-components";
+import { TableContainer } from "@/components/core/common/Table";
 
-export const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--spacing-24);
-  width: 100%;
-`;
-
-export const Header = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
-  width: 100%;
-`;
-
-export const EmptyState = styled.div`
-  width: 100%;
-  padding: var(--spacing-48) var(--spacing-24);
-  text-align: center;
-  color: var(--color-grey-500);
-  font-size: var(--text-p-font-size);
-  line-height: var(--text-p-line-height);
+export const CommunicationTableContainer = styled(TableContainer)`
+  margin-top: var(--spacing-24);
 `;
 
 export const DialogHeader = styled.div`
@@ -57,12 +36,6 @@ export const CloseButton = styled.button`
   &:hover {
     opacity: var(--opacity-hover);
   }
-`;
-
-export const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-24);
 `;
 
 export const RadioOption = styled.label`
@@ -107,84 +80,6 @@ export const Label = styled.label`
   color: var(--color-midnight);
 `;
 
-export const DatePickerWrapper = styled.div`
-  position: relative;
-  width: 100%;
-
-  .rdp {
-    --rdp-accent-color: var(--color-aubergine);
-    --rdp-accent-background-color: var(--color-aubergine);
-    --rdp-background-color: var(--color-aubergine-subtle);
-    margin: 0;
-    font-family: var(--bs-body-font-family);
-  }
-
-  .rdp-day_button {
-    width: var(--communication-tracker-date-picker-day-size);
-    height: var(--communication-tracker-date-picker-day-size);
-    border-radius: var(--border-radius-xs);
-  }
-
-  .rdp-selected .rdp-day_button {
-    background-color: var(--color-aubergine);
-    color: var(--color-white);
-    font-weight: var(--font-weight-semi-bold);
-  }
-
-  .rdp-day_button:hover:not([disabled]) {
-    background-color: var(--color-aubergine-subtle);
-  }
-`;
-
-export const DateInputContainer = styled.div`
-  position: relative;
-  width: 100%;
-`;
-
-export const DateInputIcon = styled(Calendar)`
-  position: absolute;
-  left: var(--communication-tracker-input-icon-offset);
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--color-aubergine);
-  cursor: pointer;
-  z-index: 1;
-`;
-
-export const DateInput = styled.input`
-  width: 100%;
-  padding: var(--spacing-16);
-  padding-left: var(--communication-tracker-input-padding-left);
-  border: var(--border-width-thin) solid var(--color-grey-200);
-  border-radius: var(--border-radius-small);
-  font-size: var(--text-p-font-size);
-  line-height: var(--text-p-line-height);
-  font-weight: var(--font-weight-regular);
-  color: var(--color-aubergine);
-  font-family: var(--bs-body-font-family);
-  cursor: text;
-  background: var(--color-white);
-
-  &:focus {
-    outline: none;
-    border-color: var(--color-midnight);
-  }
-`;
-
-export const DatePickerPopover = styled.div<{ $isOpen: boolean }>`
-  display: ${(props) => (props.$isOpen ? "block" : "none")};
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1100;
-  background: var(--color-white);
-  border: var(--border-width-thin) solid var(--color-grey-200);
-  border-radius: var(--border-radius-small);
-  box-shadow: var(--communication-tracker-popover-box-shadow);
-  padding: var(--spacing-16);
-`;
-
 export const Select = styled.select`
   width: 100%;
   padding: var(--spacing-16);
@@ -208,13 +103,4 @@ export const Select = styled.select`
     outline: none;
     border-color: var(--color-midnight);
   }
-`;
-
-export const ButtonGroup = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  gap: var(--spacing-16);
-  margin-top: auto;
-  padding-top: var(--spacing-16);
 `;
