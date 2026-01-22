@@ -39,7 +39,7 @@ interface ProfilePageProps {
 }
 
 const ProfilePage = ({ volunteer }: ProfilePageProps) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const contactDetailsRef = useRef<ContactDetailsRef>(null);
   const volunteerProfileRef = useRef<VolunteerProfileSectionRef>(null);
 
@@ -88,7 +88,7 @@ const ProfilePage = ({ volunteer }: ProfilePageProps) => {
 
   return (
     <PageContainer>
-      <BackLink href="/dashboard">
+      <BackLink href={`/${i18n.language}/dashboard`}>
         <ArrowLeftIcon size={24} />
         {t("dashboard.volunteerProfile.backToDashboard")}
       </BackLink>

@@ -1,7 +1,7 @@
 import { useForm } from "@tanstack/react-form";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { FormInput } from "../core/common";
 import styled from "styled-components";
 import { Button, Checkbox } from "../core/button";
@@ -19,14 +19,17 @@ interface LoginResponse {
   data: { token: string };
 }
 
-const useLoginMutation = () => {
+const useLoginMutation = (lang: string) => {
   const router = useRouter();
 
   return useMutationQuery<LoginData, LoginResponse>({
     apiPath: apiPathLogin,
     successMessage: "dashboard.login.successMessage",
     onSuccessCallback: () => {
-      router.push("/");
+      // Add a small delay to ensure toast is visible before redirect
+      setTimeout(() => {
+        router.push(`/${lang}/`);
+      }, 500);
     },
   });
 };
@@ -50,8 +53,11 @@ const LoginButtonDiv = styled.div`
 `;
 
 export const LoginForm = () => {
-  const { t } = useTranslation();
-  const { mutate: login, isPending } = useLoginMutation();
+  const { t, i18n } = useTranslation();
+  const pathname = usePathname();
+  // Extract language from pathname or use i18n language, default to 'de'
+  const lang = pathname?.split("/")[1] || i18n.language || "de";
+  const { mutate: login, isPending } = useLoginMutation(lang);
   const [rememberMeChecked, setRememberMeChecked] = useState(false);
 
   const form = useForm({
@@ -134,9 +140,10 @@ export const LoginForm = () => {
         <form.Subscribe selector={(state) => state}>
           {() => (
             <Button
+              type="submit"
               text={t("dashboard.login.login")}
-              backgroundcolor="var(--color-grey-50)"
-              textColor={"var(--color-grey-400)"}
+              backgroundcolor={form.state.canSubmit && !isPending ? "var(--color-aubergine)" : "var(--color-grey-50)"}
+              textColor={form.state.canSubmit && !isPending ? "var(--color-white)" : "var(--color-grey-400)"}
               textHoverColor="var(--color-magnolia)"
               disabled={!form.state.canSubmit || isPending}
             />
