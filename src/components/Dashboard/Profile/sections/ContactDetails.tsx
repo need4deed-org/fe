@@ -1,12 +1,10 @@
 "use client";
 import Button from "@/components/core/button/Button/Button";
 import { EditableField } from "@/components/EditableField/EditableField";
-import { Heading2 } from "@/components/styled/text";
 import { useUpdateVolunteerContact } from "@/hooks/useUpdateVolunteerContact";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ChatsCircle } from "@phosphor-icons/react";
 import { ApiVolunteerGet, VolunteerCommunicationType } from "need4deed-sdk";
-import { useEffect, useMemo, useState } from "react";
+import { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from "react";
 import { Controller, ControllerRenderProps, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
@@ -15,34 +13,11 @@ import { ContactDetailsFormData, createContactDetailsSchema } from "./ContactDet
 const Container = styled.div<{ $isEditing: boolean }>`
   display: flex;
   flex-direction: column;
-  padding: 24px;
-  gap: ${(props) => (props.$isEditing ? "16px" : "8px")};
+  padding: var(--profile-section-padding);
+  gap: ${(props) => (props.$isEditing ? "var(--profile-section-gap-editing)" : "var(--profile-section-gap)")};
   background: var(--color-white);
-  border-radius: 24px;
-`;
-
-const Header = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-`;
-
-const TitleRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 16px;
-`;
-
-const IconContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 40px;
-  height: 40px;
-  color: var(--color-papaya);
+  border-radius: var(--card-border-radius);
+  margin-bottom: var(--profile-section-margin-bottom);
 `;
 
 const Details = styled.div`
@@ -50,7 +25,7 @@ const Details = styled.div`
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
-  gap: 8px;
+  gap: var(--profile-section-gap);
 `;
 
 const ButtonRow = styled.div`
@@ -58,7 +33,7 @@ const ButtonRow = styled.div`
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-  gap: 24px;
+  gap: var(--profile-section-button-row-gap);
   width: 100%;
 `;
 
@@ -81,13 +56,17 @@ const parseAddress = (addressString: string) => {
   };
 };
 
-interface Props {
+type Props = {
   volunteer: ApiVolunteerGet;
-}
+};
+
+export type ContactDetailsRef = {
+  handleEditClick: () => void;
+};
 
 const preferredCommunicationTypeKeys = Object.values(VolunteerCommunicationType);
 
-export function ContactDetails({ volunteer }: Props) {
+export const ContactDetails = forwardRef<ContactDetailsRef, Props>(function ContactDetails({ volunteer }, ref) {
   const { t } = useTranslation();
   const { mutate: updateContact, isPending } = useUpdateVolunteerContact(String(volunteer.id));
   const [isEditing, setIsEditing] = useState(false);
@@ -131,6 +110,10 @@ export function ContactDetails({ volunteer }: Props) {
     setIsEditing(true);
   };
 
+  useImperativeHandle(ref, () => ({
+    handleEditClick,
+  }));
+
   const handleCancel = () => {
     reset();
     setIsEditing(false);
@@ -173,23 +156,6 @@ export function ContactDetails({ volunteer }: Props) {
 
   return (
     <Container data-testid="contact-details-container" $isEditing={isEditing}>
-      <Header>
-        <TitleRow>
-          <IconContainer>
-            <ChatsCircle size={40} weight="fill" />
-          </IconContainer>
-          <Heading2>{t("dashboard.volunteerProfile.contactDetails.title")}</Heading2>
-        </TitleRow>
-        {!isEditing && (
-          <Button
-            text={t("dashboard.volunteerProfile.contactDetails.edit")}
-            onClick={handleEditClick}
-            width="auto"
-            padding="16px 24px"
-          />
-        )}
-      </Header>
-
       <Details>
         <Controller
           name="phone"
@@ -266,20 +232,20 @@ export function ContactDetails({ volunteer }: Props) {
             text={t("dashboard.volunteerProfile.contactDetails.cancel")}
             onClick={handleCancel}
             width="auto"
-            padding="16px 24px"
+            padding="var(--volunteer-profile-section-card-header-button-padding)"
             backgroundcolor="var(--color-white)"
             textColor="var(--color-aubergine)"
-            border="2px solid var(--color-aubergine)"
+            border="var(--volunteer-profile-section-card-header-button-border)"
           />
           <Button
             text={t("dashboard.volunteerProfile.contactDetails.saveChanges")}
             onClick={handleSubmit(onSubmit)}
             width="auto"
-            padding="16px 24px"
+            padding="var(--volunteer-profile-section-card-header-button-padding)"
             disabled={!isValid || isPending}
           />
         </ButtonRow>
       )}
     </Container>
   );
-}
+});

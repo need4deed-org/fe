@@ -48,7 +48,8 @@ export const statusColorMap = {
   [VolunteerStateMatchType.NEEDS_REMATCH]: "var(--color-yellow-500)",
   [VolunteerStateTypeType.ACCOMPANYING]: "var(--color-grey-50)",
   [VolunteerStateTypeType.EVENTS]: "var(--color-pink-50)",
-  [VolunteerStateTypeType.REGULAR]: "var(--color-grey-50)",
+  [VolunteerStateTypeType.REGULAR]: "var(--color-violet-50)",
+  [VolunteerStateTypeType.REGULAR_ACCOMPANYING]: "var(--color-indigo-50)",
 } as const satisfies Record<string, string>;
 
 export const statusIconMap = {
@@ -72,6 +73,7 @@ export const statusIconMap = {
   [VolunteerStateMatchType.MATCHED]: StopCircle,
   [VolunteerStateMatchType.NEEDS_REMATCH]: StopCircle,
   [VolunteerStateTypeType.ACCOMPANYING]: Users,
-  [VolunteerStateTypeType.REGULAR]: Users,
   [VolunteerStateTypeType.EVENTS]: Users,
+  [VolunteerStateTypeType.REGULAR]: Users,
+  [VolunteerStateTypeType.REGULAR_ACCOMPANYING]: Users,
 } as const satisfies Record<string, React.ComponentType<{ size?: number; color?: string }>>;

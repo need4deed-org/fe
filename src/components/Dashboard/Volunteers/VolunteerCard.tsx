@@ -10,7 +10,8 @@ import { BaseCard } from "@/components/styled/container";
 import { CirclePic } from "@/components/styled/img";
 import { Paragraph } from "@/components/styled/text";
 import { defaultAvatarURL } from "@/config/constants";
-import { capitalizeFirstLetter, getImageUrl } from "@/utils";
+import { getImageUrl } from "@/utils";
+import { formatAvailabilityItem } from "../Profile/sections/VolunteerProfileSection/formatters";
 import CardDetail from "./CardDetail";
 import { getNormalizedVolunteer, groupLanguagesByProficiency } from "./helpers";
 import { IconName } from "./icon";
@@ -20,7 +21,7 @@ interface Props {
 }
 
 export function VolunteerCard({ volunteer }: Props) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const router = useRouter();
 
   const { id, name, languages, activities, skills, locations, availability, avatarUrl, statusEngagement, statusType } =
@@ -28,12 +29,14 @@ export function VolunteerCard({ volunteer }: Props) {
 
   const groupedLanguages = groupLanguagesByProficiency(languages);
 
-  const availabilities = availability.map((a) => capitalizeFirstLetter(a.day) + ", " + a.daytime.join("-"));
+  const availabilities = availability
+    .filter((a): a is typeof a & { day: string; daytime: string } => Boolean(a.day && a.daytime))
+    .map((a) => formatAvailabilityItem(a.day, a.daytime, t));
 
   const handleCardClick = () => {
     if (!id) return;
 
-    router.push(`/dashboard/volunteers/${id}`);
+    router.push(`/${i18n.language}/dashboard/volunteers/${id}`);
   };
 
   return (

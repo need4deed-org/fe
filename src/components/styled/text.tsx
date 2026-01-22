@@ -7,6 +7,7 @@ interface TextProps {
   lineheight?: string;
   letterSpacing?: string;
   margin?: number | string;
+  $textWrap?: "wrap" | "nowrap" | "balance" | "stable" | "pretty";
 }
 
 export const CustomHeading = styled.h1<TextProps>`
@@ -33,7 +34,7 @@ export const Heading2 = styled.h2<TextProps>`
   line-height: var(--text-h2-line-height);
   letter-spacing: var(--text-h2-letter-spacing);
   color: ${(props) => props.color || "var(--color-midnight)"};
-  margin: ${(props) => props.margin};
+  margin: ${(props) => props.margin || 0};
 `;
 
 export const Heading3 = styled.h3<TextProps>`
@@ -61,6 +62,7 @@ export const Paragraph = styled.p<TextProps>`
   letter-spacing: ${(props) => props.letterSpacing || "var(--text-p-letter-spacing)"};
   color: ${(props) => props.color || "var(--color-midnight)"};
   margin: ${(props) => props.margin || 0};
+  text-wrap: ${(props) => props.$textWrap || "inherit"};
 `;
 
 export const ButtonSpan = styled.span<TextProps>`

@@ -130,7 +130,10 @@
           "para": "*if you can't find your language, please select \"Other\" and indicate your preferable language in comments section bellow",
           "addLanguage": "Add language",
           "chooseLanguage": "Choose a language",
+          "chooseLevel": "Choose a level",
           "removeLanguage": "Remove",
+          "language": "Language",
+          "level": "Level",
           "languagesNative": {
             "header": "Native"
           },
@@ -429,6 +432,15 @@
     "volunteerProfile": {
       "backToDashboard": "Back to Dashboard",
       "volunteersProfile": "Volunteer’s profile",
+      "contactDetailsTitle": "Contact Details",
+      "volunteerProfile": "Volunteer Profile",
+      "opportunities": "Opportunities",
+      "coordinatorComments": "Coordinator Comments",
+      "documents": "Documents",
+      "activityLog": "Activity Log",
+      "editButtonName": "Edit",
+      "findOppButtonName": "Find Opportunity",
+      "activities": "Activities",
       "volunteerHeader": {
         "modalData": {
           "title": "Change engagement status",
@@ -457,7 +469,13 @@
         "volunteerType_title": "Volunteer type",
         "volunteerType_options": {
           "accompanying": "Accompanying",
-          "other": "Other"
+          "regular": "Regular",
+          "events": "Events",
+          "regular-accompanying": "Regular + Accompanying",
+          "general": "General",
+          "event": "Event",
+          "festival": "Festival",
+          "weekend-only": "Weekend Only"
         },
         "matchStatus_title": "Match status",
         "matchStatus_options": {
@@ -485,6 +503,16 @@
           "missing": "Missing"
         }
       },
+      "opportunitiesSec": {
+        "tabs": {
+          "pending": "Pending",
+          "matched": "Matched",
+          "active": "Active",
+          "past": "Past"
+        },
+        "match": "Match",
+        "notAMatch": "Not a match"
+      },
       "contactDetails": {
         "title": "Contact details",
         "edit": "Edit",
@@ -504,13 +532,209 @@
         "saveSuccess": "Contact details updated successfully",
         "validation": {
           "phoneRequired": "Phone number is required",
-          "phoneInvalid": "Phone number must start with + and contain only digits (no spaces)",
+          "phoneInvalid": "Phone number must start with + and contain only digits and spaces",
           "emailRequired": "Email is required",
           "emailInvalid": "Please enter a valid email address",
           "addressRequired": "Address is required",
           "preferredCommunicationTypeRequired": "Please select at least one way to contact"
         }
+      },
+      "profileSection": {
+        "title": "Volunteer profile",
+        "edit": "Edit",
+        "languages": "Languages",
+        "availability": "Availability",
+        "districts": "Districts",
+        "volunteerType": "Volunteer type",
+        "activities": "Activities",
+        "skills": "Skills & experience",
+        "cancel": "Cancel",
+        "saveChanges": "Save changes",
+        "saveSuccess": "Profile updated successfully",
+        "validation": {
+          "languageRequired": "Choose a language",
+          "levelRequired": "Choose a level",
+          "availabilityRequired": "Please select your availability",
+          "districtsRequired": "Please select at least one district",
+          "volunteerTypeRequired": "Please select a volunteer type",
+          "activitiesRequired": "Please select at least one activity",
+          "skillsRequired": "Please select at least one skill"
+        }
       }
+    },
+
+    "documentSection": {
+      "title": "Documents",
+      "typeOfDocument": "Type of document",
+      "status": "Status",
+      "uploadedOn": "Uploaded on",
+      "actions": "Actions",
+      "uploaded": "Uploaded",
+      "missing": "Missing",
+      "documentNames": {
+        "measlesVaccination": "Measles vaccination",
+        "applicationCertificateGoodConduct": "Application for certificate of good conduct",
+        "certificateGoodConduct": "Certificate of good conduct",
+        "passport": "Passport / ID"
+      },
+      "tooltips": {
+        "upload": "Upload",
+        "reUpload": "Re-upload",
+        "preview": "Preview",
+        "download": "Download",
+        "delete": "Delete",
+        "uploadUnavailable": "Upload unavailable",
+        "previewUnavailable": "Preview unavailable",
+        "downloadUnavailable": "Download unavailable",
+        "deleteUnavailable": "Delete unavailable"
+      },
+      "deleteDialog": {
+        "title": "Delete document?",
+        "message": "\"{{documentName}}\" document will be deleted.",
+        "cancel": "Cancel",
+        "delete": "Delete"
+      },
+      "uploadDialog": {
+        "title": "Upload document",
+        "documentType": "{{documentName}}",
+        "dragDropText": "Drop file here or click to browse",
+        "dragDropHint": "Supported formats: PDF, JPG, PNG (max 10 MB)",
+        "selectedFile": "Selected file:",
+        "cancel": "Cancel",
+        "upload": "Upload",
+        "uploading": "Uploading..."
+      }
+    },
+    "opportunities": {
+      "accompanyingTranslation": {
+        "en": "German, English",
+        "de": "German",
+        "no": "No Translation needed"
+      },
+      "defaultMainCommunication": "English, German",
+      "otherCategory": "General Volunteering",
+      "goToProfile": "Go to Profile",
+      "mainCommunication": "Main communication",
+      "translationTo": "Translation to",
+      "residentsSpeak": "Residents speak",
+      "languages": "Languages",
+      "schedule": "Schedule",
+      "district": "District",
+      "dateOfAppointment": "Date Of Appointment",
+      "description": "Description"
+    },
+    "commentsSection": {
+      "placeholder": "Comment",
+      "addComment": "Add comment",
+      "menuAction": "Comment options",
+      "commentAdded": "Comment added successfully",
+      "editComment": "Edit comment",
+      "deleteComment": "Delete comment",
+      "commentDeleted": "Comment deleted successfully",
+      "commentUpdated": "Comment updated successfully",
+      "saveEdit": "Save",
+      "cancelEdit": "Cancel",
+      "deleteDialog": {
+        "title": "Delete comment?",
+        "message": "{{authorName}}'s comment will be permanently deleted.",
+        "cancel": "Cancel",
+        "delete": "Delete"
+      }
+    },
+    "appreciationSection": {
+      "title": "Appreciation",
+      "addNew": "+ Add appreciation",
+      "emptyState": "This volunteer hasn't received any appreciation yet",
+      "typeOfAppreciation": "Type of appreciation",
+      "typeOfAppreciationRequired": "Type of appreciation*",
+      "status": "Status",
+      "receivedOn": "Received on",
+      "statusReceived": "Received",
+      "statusDueTo": "Due on",
+      "typeOptions": {
+        "tshirt": "T-shirt",
+        "toteBag": "Tote bag",
+        "benefitCard": "Benefit card"
+      },
+      "addAppreciation": "Add appreciation",
+      "editAppreciation": "Edit appreciation",
+      "dueDateRequired": "Due date*",
+      "deliveryDate": "Delivery date (optional)",
+      "didVolunteerReceive": "Did the volunteer receive it?*",
+      "volunteerReceivedIt": "The volunteer received it",
+      "needToGiveIt": "Need to give it to the volunteer",
+      "receivedOnRequired": "Received on*",
+      "today": "today",
+      "cancel": "Cancel",
+      "save": "Save",
+      "appreciationAdded": "Appreciation added successfully",
+      "appreciationUpdated": "Appreciation updated successfully",
+      "appreciationDeleted": "Appreciation deleted successfully",
+      "deleteConfirmTitle": "Delete appreciation?",
+      "deleteConfirmText": "\"{{entryType}}\" appreciation entry will be permanently deleted."
+    },
+    "communicationSection": {
+      "title": "Communication Tracker",
+      "addNew": "+ Register contact",
+      "emptyState": "No communications recorded yet",
+      "registerContact": "Register contact",
+      "date": "Date",
+      "type": "Type",
+      "contactMethod": "Contact method",
+      "notes": "Notes",
+      "actions": "Actions",
+      "typeOfContact": "Type of contact",
+      "contactTypes": {
+        "called": "Called",
+        "triedToCall": "Tried to call",
+        "textedOrEmailed": "Texted or emailed",
+        "other": "Other"
+      },
+      "dateOfContact": "Date of contact",
+      "contactDate": "Contact date",
+      "contactDateRequired": "Contact date*",
+      "whatPlatform": "What platform did you use?",
+      "howDidYouSend": "How did you send your message?",
+      "contactMethodLabel": "Contact method",
+      "contactMethodRequired": "Contact method*",
+      "communicationTypeRequired": "Communication type*",
+      "communicationTypes": {
+        "briefedVolunteer": "Briefed (accompanying volunteer)",
+        "firstInquiry": "First inquiry sent",
+        "opportunityList": "Opportunity list sent",
+        "statusUpdate": "Status update",
+        "postMatchFollowUp": "Post-match follow-up"
+      },
+      "platformOptions": {
+        "phoneNumber": "Phone number",
+        "telegram": "Telegram",
+        "whatsapp": "Whatsapp",
+        "signal": "Signal",
+        "email": "E-mail",
+        "sms": "SMS",
+        "voicenote": "Voicenote"
+      },
+      "notesPlaceholder": "Add notes about this communication...",
+      "cancel": "Cancel",
+      "save": "Save",
+      "delete": "Delete",
+      "communicationAdded": "Communication added successfully",
+      "communicationUpdated": "Communication updated successfully",
+      "communicationDeleted": "Communication deleted successfully",
+      "deleteConfirmTitle": "Delete entry?",
+      "deleteConfirmText": "\"{{entryType}}\" communication entry will be permanently deleted.",
+      "statusChange": "Status change",
+      "followUp": "Follow-up",
+      "inquiry": "Inquiry",
+      "other": "Other",
+      "email": "Email",
+      "phone": "Phone",
+      "inPerson": "In person",
+      "message": "Message",
+      "today": "today",
+      "futureDateError": "Date cannot be in the future",
+      "contactTypeRequired": "Contact type is required",
+      "deletePermissionError": "You do not have permission to delete communication with id: {{id}}."
     }
   },
   "message": {
@@ -588,5 +812,12 @@
     "agreement": "Volunteer Participation Agreement",
     "guidelines": "Need4Deed Guidelines",
     "cookies": "Cookies"
+    "errorGeneric": "Something went wrong!",
+    "validationFailed": "Validation failed",
+    "uploadSuccess": "Document uploaded successfully!",
+    "deleteSuccess": "Document deleted successfully!",
+    "uploadError": "Upload failed. Please try again.",
+    "deleteError": "Delete failed. Please try again.",
+    "previewError": "Preview failed. Please try again."
   }
 }

@@ -180,9 +180,31 @@ html {
   --space-xxl: 40px;
   --space-2xl: 48px;
   --space-3xl: 64px;
+  /* font weights */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semi-bold: 600;
+  --font-weight-bold: 700;
+
+  /* comments section */
+  --comments-author-font-weight: var(--font-weight-semi-bold);
+  --comments-author-font-size: 20px;
+  --comments-author-line-height: 24px;
+  --comments-timestamp-font-weight: var(--font-weight-regular);
+  --comments-timestamp-font-size: 16px;
+  --comments-timestamp-line-height: 20px;
+  --comments-text-font-weight: var(--font-weight-regular);
+  --comments-text-font-size: 20px;
+  --comments-text-line-height: 24px;
+  --comments-button-font-weight: var(--font-weight-semi-bold);
+  --comments-menu-item-font-weight: var(--font-weight-regular);
+  --comments-menu-item-danger-font-weight: var(--font-weight-semi-bold);
 
   /* icon */
   --icon-color: var(--color-papaya);
+  --icon-size-24: 24px;
+  --icon-size-32: 32px;
+  --icon-size-40: 40px;
 
   /* card */
   --card-border-radius: 24px;
@@ -212,9 +234,11 @@ html {
   --homepage-testimonials-profile-gap: 16px;
 
   /* layout-static-page */
-  --layout-static-page-background-default: linear-gradient(180deg,
-      var(--color-magnolia)-5.53%,
-      var(--color-orchid-dark) 100%);
+  --layout-static-page-background-default: linear-gradient(
+    180deg,
+    var(--color-magnolia)-5.53%,
+    var(--color-orchid-dark) 100%
+  );
   /* percentages */
   --percent-10: 10%;
   --percent-20: 20%;
@@ -227,6 +251,44 @@ html {
   --percent-75: 75%;
   --percent-100: 100%;
 
+  /* shared spacing */
+  --spacing-4: 4px;
+  --spacing-8: 8px;
+  --spacing-12: 12px;
+  --spacing-16: 16px;
+  --spacing-20: 20px;
+  --spacing-24: 24px;
+  --spacing-32: 32px;
+  --spacing-48: 48px;
+
+  /* shared borders */
+  --border-width-thin: 1px;
+  --border-width-medium: 2px;
+  --border-radius-xs: 4px;
+  --border-radius-small: 8px;
+  --border-radius-medium: 12px;
+  --border-radius-large: 16px;
+
+  /* shared transitions */
+  --transition-transform: transform 0.2s ease;
+  --transition-opacity-visibility: opacity 0.2s, visibility 0.2s;
+  --transition-all: all 0.2s;
+  --transition-background: background-color 0.2s ease;
+
+  /* shared opacity */
+  --opacity-hover: 0.7;
+  --opacity-disabled: 0.6;
+
+  /* shared typography */
+  --letter-spacing-tight: 0.005em;
+  --font-size-14: 14px;
+  --font-size-16: 16px;
+  --font-size-24: 24px;
+  --font-size-32: 32px;
+  --line-height-20: 20px;
+  --line-height-32: 32px;
+  --line-height-40: 40px;
+
   /* button */
   --button-gap: 12px;
 
@@ -236,6 +298,214 @@ html {
   --checkbox-label-line-height: 32px;
   --checkbox-label-font-weight-selected: 400;
   --checkbox-label-font-weight-not-selected: 300;
+
+  /* communication tracker */
+  --communication-tracker-action-column-width: 56px;
+  --communication-tracker-dialog-max-width: 620px;
+  --communication-tracker-delete-dialog-max-width: 500px;
+  --communication-tracker-status-badge-padding: 6px 12px;
+  --communication-tracker-radio-size: 24px;
+  --communication-tracker-date-picker-day-size: 40px;
+  --communication-tracker-date-picker-nav-button-size: 32px;
+  --communication-tracker-dropdown-item-padding: 4px 8px;
+  --communication-tracker-input-icon-offset: 16px;
+  --communication-tracker-input-padding-left: 48px;
+  --communication-tracker-dropdown-arrow-size: 14px 8px;
+  --communication-tracker-button-height: 56px;
+  --communication-tracker-dialog-box-shadow: 0px 10px 30px -12px rgba(143, 81, 138, 0.2);
+  --communication-tracker-popover-box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+
+  /* dialog */
+  --dialog-title-font-size: 28px;
+  --dialog-title-line-height: 32px;
+  --dialog-title-letter-spacing: 0.14px;
+
+  /* expanded section */
+  --expanded-section-padding-left: 32px;
+  --expanded-section-border-width: 4px;
+  --expanded-section-border-color: rgba(123, 132, 203, 0.15);
+
+  /* sub question */
+  --sub-question-font-size: 20px;
+  --sub-question-line-height: 24px;
+  --sub-question-letter-spacing: 0.1px;
+
+  /* date picker */
+  --date-picker-input-margin-top: 10px;
+  --date-picker-floating-label-top: -10px;
+  --date-picker-floating-label-left: 12px;
+  --date-picker-floating-label-padding: 0 4px;
+  --date-picker-floating-label-font-size: 16px;
+  --date-picker-floating-label-line-height: 20px;
+  --date-picker-floating-label-letter-spacing: 0.08px;
+  --date-picker-input-padding-left: 52px;
+  --date-picker-input-padding-right: 44px;
+  --date-picker-input-font-size: 20px;
+  --date-picker-input-line-height: 24px;
+  --date-picker-input-letter-spacing: 0.1px;
+  --date-picker-popover-z-index: 1100;
+
+  /* selectable option */
+  --selectable-option-circle-size: 24px;
+  --selectable-option-font-size: 20px;
+  --selectable-option-line-height: 24px;
+  --selectable-option-letter-spacing: 0.1px;
+
+  /* document section - aliases to shared variables */
+  --document-section-container-padding: var(--profile-section-padding);
+  --document-section-container-gap: var(--profile-section-gap);
+  --document-section-container-margin-bottom: var(--profile-section-margin-bottom);
+  --document-section-header-gap: var(--spacing-24);
+  --document-section-title-row-gap: var(--profile-section-title-gap);
+  --document-section-icon-size: var(--icon-size);
+  --document-section-table-border-width: var(--border-width-thin);
+  --document-section-table-border-radius: var(--border-radius-small);
+  --document-section-header-cell-padding: var(--spacing-16);
+  --document-section-header-cell-gap: var(--spacing-8);
+  --document-section-header-cell-font-weight: 600;
+  --document-section-header-cell-font-size: var(--text-p-font-size);
+  --document-section-header-cell-line-height: var(--text-p-line-height);
+  --document-section-cell-padding: var(--spacing-16);
+  --document-section-cell-gap: var(--spacing-8);
+  --document-section-cell-font-size: var(--text-p-font-size);
+  --document-section-cell-line-height: var(--text-p-line-height);
+  --document-section-action-cell-padding: var(--spacing-16) var(--spacing-8);
+  --document-section-status-badge-padding: var(--profile-section-badge-padding);
+  --document-section-status-badge-gap: var(--spacing-4);
+  --document-section-status-badge-border-radius: var(--card-border-radius);
+  --document-section-status-badge-font-weight: 500;
+  --document-section-status-badge-font-size: 16px;
+  --document-section-status-badge-line-height: var(--text-p-line-height);
+  --document-section-action-button-size: var(--text-p-line-height);
+  --document-section-action-button-hover-opacity: 0.7;
+
+  /* document dialogs - aliases to shared variables */
+  --document-dialog-border-radius: var(--card-border-radius);
+  --document-dialog-padding: var(--spacing-48);
+  --document-dialog-max-width: 600px;
+  --document-dialog-width: 90%;
+  --document-dialog-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15);
+  --document-dialog-overlay-background: rgba(0, 0, 0, 0.5);
+  --document-dialog-overlay-z-index: 10001;
+  --document-dialog-title-font-weight: 700;
+  --document-dialog-title-font-size: var(--text-h3-font-size);
+  --document-dialog-title-line-height: 32px;
+  --document-dialog-title-margin-bottom: var(--spacing-16);
+  --document-dialog-message-font-weight: 400;
+  --document-dialog-message-font-size: 16px;
+  --document-dialog-message-line-height: var(--text-p-line-height);
+  --document-dialog-message-margin-bottom: var(--spacing-32);
+  --document-dialog-button-gap: var(--spacing-16);
+  --document-dialog-button-font-weight: 600;
+  --document-dialog-button-font-size: 16px;
+  --document-dialog-button-line-height: var(--text-p-line-height);
+  --document-dialog-button-border-width: var(--border-width-medium);
+  --document-dialog-button-border-radius: var(--button-border-radius);
+  --document-dialog-button-padding: var(--spacing-12) var(--spacing-32);
+  --document-dialog-button-large-font-size: var(--text-h3-font-size);
+  --document-dialog-button-large-line-height: 32px;
+  --document-dialog-button-large-padding: var(--spacing-16) var(--spacing-48);
+  --document-dialog-button-disabled-color: #D1D5DB;
+
+  /* document upload - aliases to shared variables */
+  --document-upload-title-font-weight: 700;
+  --document-upload-title-font-size: 48px;
+  --document-upload-title-line-height: 56px;
+  --document-upload-title-margin-bottom: var(--spacing-8);
+  --document-upload-subtitle-font-weight: 400;
+  --document-upload-subtitle-font-size: var(--text-p-font-size);
+  --document-upload-subtitle-line-height: 28px;
+  --document-upload-subtitle-margin-bottom: var(--spacing-32);
+  --document-upload-dropzone-border-width: var(--border-width-medium);
+  --document-upload-dropzone-border-radius: var(--border-radius-large);
+  --document-upload-dropzone-padding: var(--spacing-48) var(--spacing-24);
+  --document-upload-dropzone-margin-bottom: var(--spacing-24);
+  --document-upload-dropzone-background: #F9FAFB;
+  --document-upload-dropzone-border-color: #D1D5DB;
+  --document-upload-dropzone-icon-margin-bottom: var(--spacing-16);
+  --document-upload-dropzone-text-font-weight: 600;
+  --document-upload-dropzone-text-font-size: 18px;
+  --document-upload-dropzone-text-line-height: var(--text-p-line-height);
+  --document-upload-dropzone-text-margin-bottom: var(--spacing-8);
+  --document-upload-dropzone-hint-font-weight: 400;
+  --document-upload-dropzone-hint-font-size: 14px;
+  --document-upload-dropzone-hint-line-height: var(--spacing-20);
+  --document-upload-dropzone-hint-color: #6B7280;
+  --document-upload-selected-file-gap: var(--spacing-12);
+  --document-upload-selected-file-padding: var(--spacing-16);
+  --document-upload-selected-file-border-radius: var(--border-radius-medium);
+  --document-upload-selected-file-margin-bottom: var(--spacing-32);
+  --document-upload-selected-file-label-font-weight: 600;
+  --document-upload-selected-file-label-font-size: 14px;
+  --document-upload-selected-file-label-line-height: var(--spacing-20);
+  --document-upload-selected-file-label-margin-bottom: var(--spacing-4);
+  --document-upload-selected-file-name-font-weight: 400;
+  --document-upload-selected-file-name-font-size: 14px;
+  --document-upload-selected-file-name-line-height: var(--spacing-20);
+  --document-upload-selected-file-name-color: #6B7280;
+
+  /* document preview - specific values */
+  --document-preview-width: 1340px;
+  --document-preview-height: 944px;
+  --document-preview-max-width: 75vw;
+  --document-preview-max-height: 95vh;
+  --document-preview-background: linear-gradient(135deg, #c5b8e0 0%, #a594c8 100%);
+  --document-preview-shadow: 0px 8px 32px rgba(0, 0, 0, 0.24), 0px 16px 64px rgba(0, 0, 0, 0.16);
+  --document-preview-bar-padding: var(--spacing-16);
+  --document-preview-bar-gap: var(--spacing-32);
+  --document-preview-bar-height: 56px;
+  --document-preview-bar-background: #2f2f30;
+  --document-preview-bar-z-index: 2;
+  --document-preview-name-section-gap: 13px;
+  --document-preview-button-size: var(--text-p-line-height);
+  --document-preview-button-hover-opacity: 0.8;
+  --document-preview-name-font-weight: 400;
+  --document-preview-name-font-size: var(--text-p-font-size);
+  --document-preview-name-line-height: var(--text-p-line-height);
+  --document-preview-name-letter-spacing: var(--letter-spacing-tight);
+  --document-preview-name-color: var(--color-white);
+  --document-preview-actions-gap: 21px;
+  --document-preview-container-padding: var(--spacing-32) 0;
+  --document-preview-frame-width: 595px;
+  --document-preview-frame-height: 842px;
+  --document-preview-frame-background: var(--color-white);
+  --document-preview-frame-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+  --document-preview-zoom-controls-padding: var(--spacing-16);
+  --document-preview-zoom-controls-gap: var(--spacing-16);
+  --document-preview-zoom-controls-bottom: 74px;
+  --document-preview-zoom-controls-background: #2f2f30;
+  --document-preview-zoom-controls-opacity: 0.8;
+  --document-preview-zoom-controls-border-radius: var(--border-radius-large);
+  --document-preview-zoom-controls-z-index: 3;
+  --document-preview-zoom-button-disabled-opacity: 0.3;
+
+  /* document tooltip - aliases to shared variables */
+  --document-tooltip-background: #0b1560;
+  --document-tooltip-color: var(--color-white);
+  --document-tooltip-font-weight: 400;
+  --document-tooltip-font-size: var(--spacing-12);
+  --document-tooltip-line-height: var(--spacing-16);
+  --document-tooltip-letter-spacing: var(--letter-spacing-tight);
+  --document-tooltip-padding: var(--spacing-8);
+  --document-tooltip-border-radius: var(--border-radius-small);
+  --document-tooltip-z-index: 10000;
+  --document-tooltip-transform: translate(-50%, -100%) translateY(calc(var(--spacing-8) * -1));
+  --document-tooltip-arrow-size: var(--spacing-4);
+
+  /* profile section */
+  --profile-section-padding: 24px;
+  --profile-section-gap: 8px;
+  --profile-section-gap-editing: 16px;
+  --profile-section-margin-bottom: 24px;
+  --profile-section-title-gap: 16px;
+  --profile-section-button-row-gap: 24px;
+  --profile-section-field-row-gap: 32px;
+  --profile-section-field-row-padding: 16px 0;
+  --profile-section-badge-gap: 8px;
+  --profile-section-badge-padding: 10px 20px;
+  --profile-section-tags-gap: 8px;
+  --profile-section-error-gap: 6px;
+  --profile-section-error-margin-top: 8px;
 
   /* paginated cards*/
   --indicators-container-gap: 8px;
@@ -1129,6 +1399,47 @@ html {
     --cards-header-filter-item-icon-div-size: 28px;
     --cards-header-filter-item-icon-div-border-radius: 14px;
 
+    --volunteer-profile-container-width: 1260px;
+    --volunteer-profile-container-gap: 24px;
+    --volunteer-profile-back-link-gap: 0.5rem;
+    --volunteer-profile-back-link-font-size: 20px;
+    --volunteer-profile-back-link-transition: color 0.2s;
+    --volunteer-profile-section-card-border-radius: 16px;
+    --volunteer-profile-section-card-padding: 24px;
+    --volunteer-profile-section-card-gap: 8px;
+    --volunteer-profile-section-card-icon-size: 40px;
+    --volunteer-profile-section-card-header-info-gap: 24px;
+    --volunteer-profile-section-card-header-button-height: 56px;
+    --volunteer-profile-section-card-header-button-textFontSize: 20px;
+    --volunteer-profile-section-card-header-button-padding: 16px 24px;
+    --volunteer-profile-section-card-header-button-border: 2px solid var(--color-aubergine);
+
+    --volunteer-profile-opportunities-container-gap: 8px;
+    --volunteer-profile-opportunities-tabs-margin-top: 16px;
+    --volunteer-profile-opportunities-tabs-gap: 24px;
+    --volunteer-profile-opportunities-tabs-border-bottom: 1px solid var(--color-blue-50);
+    --volunteer-profile-opportunities-tab-heading-margin: 0;
+    --volunteer-profile-opportunities-tab-heading-padding: 16px;
+    --volunteer-profile-opportunities-tab-heading-border-bottom: 2px solid currentColor;
+    --volunteer-profile-opportunities-accordion-container-padding: 24px;
+    --volunteer-profile-opportunities-accordion-container-border-radius: 24px;
+    --volunteer-profile-opportunities-accordion-container-border: 1px solid var(--color-blue-50);
+    --volunteer-profile-opportunities-accordion-container-gap: 24px;
+    --volunteer-profile-opportunities-accordion-header-info-gap: 8px;
+    --volunteer-profile-opportunities-accordion-header-avatar-name-gap: 16px;
+    --volunteer-profile-opportunities-accordion-header-buttons-gap: 24px;
+    --volunteer-profile-opportunities-accordion-opp-detail-bold-font: 600;
+    --volunteer-profile-opportunities-accordion-opp-detail-mid-font: 550;
+    --volunteer-profile-opportunities-accordion-opp-detail-light-font: 400;
+    --volunteer-profile-opportunities-accordion-actions-container-gap: 16px;
+    --volunteer-profile-opportunities-accordion-actions-button-height: 56px;
+    --volunteer-profile-opportunities-accordion-actions-button-textFontSize: 24px;
+    --volunteer-profile-opportunities-accordion-actions-button-border: 2px solid var(--color-aubergine);
+    --volunteer-profile-opportunities-accordion-info-section-icon-size: 20px;
+    --volunteer-profile-opportunities-accordion-split-container-gap: 24px;
+    --volunteer-profile-opportunities-accordion-detail-section-gap: 8px;
+    --volunteer-profile-opportunities-accordion-detail-header-gap: 8px;
+    --volunteer-profile-opportunities-accordion-language-row-gap: 8px;
   }
 }
 
@@ -1136,6 +1447,7 @@ html {
   --editableField-fieldWrapper-display: flex;
   --editableField-fieldWrapper-borderBottom: none;
   --editableField-fieldWrapper-padding: 1rem 0;
+  --editableField-fieldWrapper-padding-error: 16px 0 0 0;
   --editableField-fieldWrapper-fontSize: 20px;
   --editableField-fieldWrapper-width: 100%;
   --editableField-fieldWrapper-alignItems: center;
@@ -1147,7 +1459,9 @@ html {
   --editableField-fieldWrapper-input-borderRadius: 8px;
   --editableField-fieldWrapper-input-width: 100%;
   --editableField-fieldWrapper-input-padding: 16px;
+  --editableField-fieldWrapper-input-paddingRight: 48px;
   --editableField-fieldWrapper-input-border: 1px solid var(--color-grey-200);
+  --editableField-clearButton-padding: 4px;
   --editableField-dropdownWrapper-position: relative;
   --editableField-dropdownWrapper-width: 100%;
   --editableField-dropdownButton-border: 1px solid var(--color-grey-200);
@@ -1169,11 +1483,14 @@ html {
   --editableField-dropdownList-border: 1px solid var(--color-grey-200);
   --editableField-dropdownList-borderRadius: 8px;
   --editableField-dropdownList-padding: 16px;
+  --editableField-dropdownList-gap: 4px;
   --editableField-dropdownList-zIndex: 20;
   --editableField-optionRow-display: flex;
   --editableField-optionRow-alignItems: center;
   --editableField-optionRow-justifyContent: space-between;
-  --editableField-optionRow-padding: 0.4rem 0.2rem;
+  --editableField-optionRow-padding: 8px 12px;
+  --editableField-optionRow-borderRadius: 6px;
+  --editableField-optionRow-gap: 12px;
   --editableField-optionRow-cursor: pointer;
   --editableField-optionRow-userSelect: none;
   --editableField-optionRow-width: 100%;
@@ -1183,6 +1500,5 @@ html {
   --editableField-text-whiteSpace: normal;
   --editableField-text-overflow: break-word;
   --editableField-text-wordBreak: break-word;
-
-
+  --editableField-errorMessage-paddingLeft: 252px;
 }

@@ -14,6 +14,7 @@ const hoverBGColorMap = {
   "var(--color-orchid-light)": "var(--color-orchid)",
   "var(--color-grey-50)": "var(--color-aubergine)",
   "var(--color-violet-500)": "var(--color-violet-400)",
+  transparent: "transparent",
 };
 
 type BackgroundColorKeys = keyof typeof hoverBGColorMap;
@@ -82,6 +83,7 @@ export interface ButtonProps {
   border?: string;
   disabled?: boolean;
   padding?: string;
+  type?: "button" | "submit" | "reset";
 }
 
 export function Button({
@@ -101,9 +103,11 @@ export function Button({
   border,
   disabled,
   padding,
+  type = "button",
 }: ButtonProps) {
   return (
     <StyledButton
+      type={type}
       disabled={disabled}
       onClick={onClick}
       backgroundcolor={backgroundcolor}

@@ -6,7 +6,7 @@ export const createContactDetailsSchema = (t: (key: string) => string) => {
     phone: z
       .string()
       .min(1, t("dashboard.volunteerProfile.contactDetails.validation.phoneRequired"))
-      .regex(/^\+[0-9]+$/, t("dashboard.volunteerProfile.contactDetails.validation.phoneInvalid")),
+      .regex(/^\+[0-9\s]+$/, t("dashboard.volunteerProfile.contactDetails.validation.phoneInvalid")),
     email: z
       .string()
       .min(1, t("dashboard.volunteerProfile.contactDetails.validation.emailRequired"))
