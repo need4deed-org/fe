@@ -155,7 +155,6 @@ html {
 
   --text-p-font-weight: 300;
 
-
   /* Font Weights */
   --font-weight-light: 300;
   --font-weight-regular: 400;
@@ -351,6 +350,15 @@ html {
   --selectable-option-line-height: 24px;
   --selectable-option-letter-spacing: 0.1px;
 
+  /* status badges */
+  --status-badge-padding: 8px 12px;
+  --status-badge-gap: 8px;
+  --status-badge-border-radius: 8px;
+  --status-badge-font-size: 16px;
+  --status-badge-font-weight: 500;
+  --status-badge-line-height: 20px;
+  --status-badge-icon-size: 20px;
+
   /* document section - aliases to shared variables */
   --document-section-container-padding: var(--profile-section-padding);
   --document-section-container-gap: var(--profile-section-gap);
@@ -405,7 +413,7 @@ html {
   --document-dialog-button-large-font-size: var(--text-h3-font-size);
   --document-dialog-button-large-line-height: 32px;
   --document-dialog-button-large-padding: var(--spacing-16) var(--spacing-48);
-  --document-dialog-button-disabled-color: #D1D5DB;
+  --document-dialog-button-disabled-color: #d1d5db;
 
   /* document upload - aliases to shared variables */
   --document-upload-title-font-weight: 700;
@@ -420,8 +428,8 @@ html {
   --document-upload-dropzone-border-radius: var(--border-radius-large);
   --document-upload-dropzone-padding: var(--spacing-48) var(--spacing-24);
   --document-upload-dropzone-margin-bottom: var(--spacing-24);
-  --document-upload-dropzone-background: #F9FAFB;
-  --document-upload-dropzone-border-color: #D1D5DB;
+  --document-upload-dropzone-background: #f9fafb;
+  --document-upload-dropzone-border-color: #d1d5db;
   --document-upload-dropzone-icon-margin-bottom: var(--spacing-16);
   --document-upload-dropzone-text-font-weight: 600;
   --document-upload-dropzone-text-font-size: 18px;
@@ -430,7 +438,7 @@ html {
   --document-upload-dropzone-hint-font-weight: 400;
   --document-upload-dropzone-hint-font-size: 14px;
   --document-upload-dropzone-hint-line-height: var(--spacing-20);
-  --document-upload-dropzone-hint-color: #6B7280;
+  --document-upload-dropzone-hint-color: #6b7280;
   --document-upload-selected-file-gap: var(--spacing-12);
   --document-upload-selected-file-padding: var(--spacing-16);
   --document-upload-selected-file-border-radius: var(--border-radius-medium);
@@ -442,7 +450,7 @@ html {
   --document-upload-selected-file-name-font-weight: 400;
   --document-upload-selected-file-name-font-size: 14px;
   --document-upload-selected-file-name-line-height: var(--spacing-20);
-  --document-upload-selected-file-name-color: #6B7280;
+  --document-upload-selected-file-name-color: #6b7280;
 
   /* document preview - specific values */
   --document-preview-width: 1340px;

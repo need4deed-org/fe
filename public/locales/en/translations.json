@@ -459,12 +459,15 @@
         },
         "notSet": "Not set",
         "change_status": "Change status",
+        "volunteer_since": "Volunteer since",
         "engagementStatus_title": "Engagement status",
         "engagementStatus_options": {
           "new": "New",
           "active": "Active",
-          "tempInactive": "Temp. inactive",
-          "inactive": "Inactive"
+          "available": "Available",
+          "tempUnavailable": "Temp. unavailable",
+          "inactive": "Inactive",
+          "unresponsive": "Unresponsive"
         },
         "volunteerType_title": "Volunteer type",
         "volunteerType_options": {
@@ -479,9 +482,10 @@
         },
         "matchStatus_title": "Match status",
         "matchStatus_options": {
+          "noMatches": "No matches",
+          "pendingMatch": "Pending match",
           "matched": "Matched",
-          "needsRematch": "Needs to be rematched",
-          "unmatched": "Unmatched"
+          "needsRematch": "Needs rematch"
         },
         "communication_title": "Communication",
         "communication_options": {

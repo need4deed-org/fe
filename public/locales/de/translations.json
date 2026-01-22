@@ -459,12 +459,15 @@
         },
         "notSet": "Nicht festgelegt",
         "change_status": "Status ändern",
-        "engagementStatus_title": "Engagement-Status",
+        "volunteer_since": "Freiwillige*r seit",
+        "engagementStatus_title": "Engagement Status",
         "engagementStatus_options": {
           "new": "Neu",
           "active": "Aktiv",
-          "tempInactive": "Vorübergehend inaktiv",
-          "inactive": "Inaktiv"
+          "available": "Verfügbar",
+          "tempUnavailable": "Vorübergehend nicht verfügbar",
+          "inactive": "Inaktiv",
+          "unresponsive": "Nicht erreichbar"
         },
         "volunteerType_title": "Freiwilligen-Typ",
         "volunteerType_options": {
@@ -477,11 +480,12 @@
           "festival": "Festival",
           "weekend-only": "Nur Wochenende"
         },
-        "matchStatus_title": "Zuweisungs-Status",
+        "matchStatus_title": "Zuweisungs Status",
         "matchStatus_options": {
+          "noMatches": "Keine Zuweisungen",
+          "pendingMatch": "Zuweisung ausstehend",
           "matched": "Zugewiesen",
-          "needsRematch": "Neu-Zuweisung erforderlich",
-          "unmatched": "Nicht zugewiesen"
+          "needsRematch": "Neu-Zuweisung erforderlich"
         },
         "communication_title": "Kommunikation",
         "communication_options": {
