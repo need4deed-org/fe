@@ -562,7 +562,6 @@
         }
       }
     },
-
     "documentSection": {
       "title": "Documents",
       "typeOfDocument": "Type of document",
@@ -737,10 +736,6 @@
       "deletePermissionError": "You do not have permission to delete communication with id: {{id}}."
     }
   },
-  "message": {
-    "successful": "Successful",
-    "errorGeneric": "Something went wrong!"
-  },
   "aboutus": {
     "aboutusHeading": "About the project",
     "aboutusSubheading": "The number of people fleeing conflict zones, persecution and human rights violations worldwide has never been as high as it is today. Need4Deed is set to promote the inclusion and integration of refugees in Berlin through the actions of civil society by making volunteering more accessible. We aim to build a sustainable and scalable mechanism for this purpose by connecting volunteers with refugees that are living in accommodation centers in Berlin based on their specific needs.",
@@ -783,6 +778,12 @@
     "group_volunteering_answer": "Yes, group volunteering is encouraged, especially for those supporting refugee accommodation centers."
   },
   "legal": {
+    "legalHeading": "Legal",
+    "impressum": "Imprint",
+    "dataPrivacy": "Privacy Policy",
+    "agreement": "Volunteer Participation Agreement",
+    "guidelines": "Need4Deed Guidelines",
+    "cookies": "Cookies",
     "notice": {
       "header": "Legal Notice",
       "contacts": {
@@ -806,18 +807,15 @@
       "dataProtectionLink": "Click here for our Privacy Policy",
       "dataProtectionOfficer": "Data Protection Officer"
     },
-    "legalHeading": "Legal",
-    "impressum": "Imprint",
-    "dataPrivacy": "Privacy Policy",
-    "agreement": "Volunteer Participation Agreement",
-    "guidelines": "Need4Deed Guidelines",
-    "cookies": "Cookies"
-    "errorGeneric": "Something went wrong!",
-    "validationFailed": "Validation failed",
-    "uploadSuccess": "Document uploaded successfully!",
-    "deleteSuccess": "Document deleted successfully!",
-    "uploadError": "Upload failed. Please try again.",
-    "deleteError": "Delete failed. Please try again.",
-    "previewError": "Preview failed. Please try again."
+    "message": {
+      "successful": "Successful",
+      "errorGeneric": "Something went wrong!",
+      "validationFailed": "Validation failed",
+      "uploadSuccess": "Document uploaded successfully!",
+      "deleteSuccess": "Document deleted successfully!",
+      "uploadError": "Upload failed. Please try again.",
+      "deleteError": "Delete failed. Please try again.",
+      "previewError": "Preview failed. Please try again."
+    }
   }
 }
