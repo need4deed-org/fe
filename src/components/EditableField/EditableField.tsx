@@ -1,4 +1,5 @@
 import { ErrorMessage } from "@/components/core/common";
+import { EMPTY_PLACEHOLDER_VALUE } from "@/config/constants";
 import { XCircle } from "@phosphor-icons/react";
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
@@ -252,7 +253,7 @@ export const EditableField = forwardRef(function EditableField<T extends string 
 
   if (mode === "display") {
     if (type === "checkbox-list" && Array.isArray(value)) {
-      const displayValue = value.length > 0 ? value.join(", ") : "–";
+      const displayValue = value.length > 0 ? value.join(", ") : EMPTY_PLACEHOLDER_VALUE;
       return (
         <FieldWrapper>
           {label && <label>{label}: </label>}
@@ -260,7 +261,7 @@ export const EditableField = forwardRef(function EditableField<T extends string 
         </FieldWrapper>
       );
     }
-    const displayValue = value && String(value).trim().length > 0 ? value : "–";
+    const displayValue = value && String(value).trim().length > 0 ? value : EMPTY_PLACEHOLDER_VALUE;
     return (
       <FieldWrapper>
         {label && <label>{label}: </label>}

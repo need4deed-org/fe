@@ -1,3 +1,4 @@
+import { EmptyPlaceholder } from "@/components/core/common/EmptyPlaceholder";
 import { Tags } from "@/components/core/common/Tags";
 import { UsersFour } from "@phosphor-icons/react";
 import styled from "styled-components";
@@ -86,7 +87,7 @@ export function DisplayFields({ languages, availability, districts, volunteerTyp
               {volunteerType}
             </VolunteerTypeBadge>
           ) : (
-            "–"
+            <EmptyPlaceholder />
           )}
         </FieldValue>
       </FieldRow>
@@ -99,7 +100,7 @@ export function DisplayFields({ languages, availability, districts, volunteerTyp
               <Tags tags={activities} backgroundColor="var(--color-pink-100)" />
             </TagsWrapper>
           ) : (
-            "–"
+            <EmptyPlaceholder />
           )}
         </FieldValue>
       </FieldRow>
@@ -112,7 +113,7 @@ export function DisplayFields({ languages, availability, districts, volunteerTyp
               <Tags tags={skills} backgroundColor="var(--color-pink-50)" />
             </TagsWrapper>
           ) : (
-            "–"
+            <EmptyPlaceholder />
           )}
         </FieldValue>
       </FieldRow>
