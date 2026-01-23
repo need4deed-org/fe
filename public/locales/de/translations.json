@@ -442,6 +442,7 @@
       "findOppButtonName": "Möglichkeit finden",
       "activities": "Aktivitäten",
       "volunteerHeader": {
+        "statusUpdateSuccess": "Status erfolgreich aktualisiert",
         "modalData": {
           "title": "Engagement-Status ändern",
           "options": {

@@ -442,6 +442,7 @@
       "findOppButtonName": "Find Opportunity",
       "activities": "Activities",
       "volunteerHeader": {
+        "statusUpdateSuccess": "Status updated successfully",
         "modalData": {
           "title": "Change engagement status",
           "options": {
@@ -480,7 +481,7 @@
           "festival": "Festival",
           "weekend-only": "Weekend Only"
         },
-        "matchStatus_title": "Match status",
+        "matchStatus_title": "Matching status",
         "matchStatus_options": {
           "noMatches": "No matches",
           "pendingMatch": "Pending match",

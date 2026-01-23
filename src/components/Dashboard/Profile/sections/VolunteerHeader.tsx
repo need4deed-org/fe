@@ -3,7 +3,20 @@ import Button from "@/components/core/button/Button/Button";
 import { EditableField } from "@/components/EditableField/EditableField";
 import { Heading4 } from "@/components/styled/text";
 import { defaultAvatarVolunteerProfile } from "@/config/constants";
+import { useUpdateVolunteerStatus } from "@/hooks/useUpdateVolunteerStatus";
 import { formatDateTime, getImageUrl } from "@/utils";
+import {
+  CalendarIcon,
+  CalendarXIcon,
+  CheckCircleIcon,
+  HourglassIcon,
+  MinusCircleIcon,
+  PhoneIcon,
+  ProhibitIcon,
+  SparkleIcon,
+  TrendUpIcon,
+  WrenchIcon,
+} from "@phosphor-icons/react";
 import {
   ApiVolunteerGet,
   VolunteerStateEngagementType,
@@ -11,10 +24,9 @@ import {
   VolunteerStateTypeType,
 } from "need4deed-sdk";
 import Image from "next/image";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { isEnumKey } from "ts-type-safe";
 
 const HeaderContainer = styled.div<{ $isEditing?: boolean }>`
   display: flex;
@@ -133,39 +145,39 @@ const StatusBadge = styled.div<{ $variant: string; $isType?: boolean }>`
       case "new":
       case "active":
         return `
-          background-color: rgba(216, 245, 240, 1);
+          background-color: var(--color-green-100);
           color: var(--color-blue-700);
         `;
       case "available":
         return `
-          background-color: var(--color-grey-50);
-          color: var(--color-grey-700);
+          background-color: var(--color-blue-50);
+          color: var(--color-blue-700);
         `;
       case "temp_unavailable":
         return `
           background-color: var(--color-red-50);
-          color: var(--color-red-500);
+          color: var(--color-blue-700);
         `;
       case "inactive":
       case "unresponsive":
         return `
           background-color: var(--color-grey-50);
-          color: var(--color-grey-500);
+          color: var(--color-blue-700);
         `;
       case "no_matches":
       case "needs_rematch":
         return `
           background-color: var(--color-grey-50);
-          color: var(--color-grey-700);
+          color: var(--color-blue-700);
         `;
       case "pending_match":
         return `
-          background-color: var(--color-red-50);
-          color: var(--color-red-500);
+          background-color: var(--color-sand);
+          color: var(--color-blue-700);
         `;
       case "matched":
         return `
-          background-color: rgba(216, 245, 240, 1);
+          background-color: var(--color-green-100);
           color: var(--color-blue-700);
         `;
       case "accompanying":
@@ -179,7 +191,7 @@ const StatusBadge = styled.div<{ $variant: string; $isType?: boolean }>`
       default:
         return `
           background-color: var(--color-grey-50);
-          color: var(--color-grey-700);
+          color: var(--color-blue-700);
         `;
     }
   }}
@@ -266,30 +278,37 @@ const createVolunteerTypeLabelMap = (t: (key: string) => string): Record<Volunte
   ),
 });
 
-const getEngagementIcon = (status: VolunteerStateEngagementType): string => {
-  const icons: Record<VolunteerStateEngagementType, string> = {
-    [VolunteerStateEngagementType.NEW]: "✨",
-    [VolunteerStateEngagementType.ACTIVE]: "📈",
-    [VolunteerStateEngagementType.AVAILABLE]: "📅",
-    [VolunteerStateEngagementType.TEMP_UNAVAILABLE]: "📅",
-    [VolunteerStateEngagementType.INACTIVE]: "⊖",
-    [VolunteerStateEngagementType.UNRESPONSIVE]: "📞",
+const getEngagementIcon = (status: VolunteerStateEngagementType) => {
+  const iconSize = 20;
+  const iconWeight = "regular" as const;
+
+  const icons: Record<VolunteerStateEngagementType, React.JSX.Element> = {
+    [VolunteerStateEngagementType.NEW]: <SparkleIcon size={iconSize} weight={iconWeight} />,
+    [VolunteerStateEngagementType.ACTIVE]: <TrendUpIcon size={iconSize} weight={iconWeight} />,
+    [VolunteerStateEngagementType.AVAILABLE]: <CalendarIcon size={iconSize} weight={iconWeight} />,
+    [VolunteerStateEngagementType.TEMP_UNAVAILABLE]: <CalendarXIcon size={iconSize} weight={iconWeight} />,
+    [VolunteerStateEngagementType.INACTIVE]: <MinusCircleIcon size={iconSize} weight={iconWeight} />,
+    [VolunteerStateEngagementType.UNRESPONSIVE]: <PhoneIcon size={iconSize} weight={iconWeight} />,
   };
-  return icons[status] || "";
+  return icons[status] || null;
 };
 
-const getMatchIcon = (status: VolunteerStateMatchType): string => {
-  const icons: Record<VolunteerStateMatchType, string> = {
-    [VolunteerStateMatchType.NO_MATCHES]: "⊘",
-    [VolunteerStateMatchType.PENDING_MATCH]: "⏳",
-    [VolunteerStateMatchType.MATCHED]: "⚓",
-    [VolunteerStateMatchType.NEEDS_REMATCH]: "🔌",
+const getMatchIcon = (status: VolunteerStateMatchType) => {
+  const iconSize = 20;
+  const iconWeight = "regular" as const;
+
+  const icons: Record<VolunteerStateMatchType, React.JSX.Element> = {
+    [VolunteerStateMatchType.NO_MATCHES]: <ProhibitIcon size={iconSize} weight={iconWeight} />,
+    [VolunteerStateMatchType.PENDING_MATCH]: <HourglassIcon size={iconSize} weight={iconWeight} />,
+    [VolunteerStateMatchType.MATCHED]: <CheckCircleIcon size={iconSize} weight={iconWeight} />,
+    [VolunteerStateMatchType.NEEDS_REMATCH]: <WrenchIcon size={iconSize} weight={iconWeight} />,
   };
-  return icons[status] || "";
+  return icons[status] || null;
 };
 
 export function VolunteerHeader({ volunteer }: Props) {
   const { t } = useTranslation();
+  const { mutate: updateStatus } = useUpdateVolunteerStatus(volunteer.id);
 
   const joinedSince = formatDateTime(volunteer.createdAt);
   const fullName = `${volunteer.person.firstName} ${volunteer.person.lastName}`;
@@ -314,11 +333,18 @@ export function VolunteerHeader({ volunteer }: Props) {
   const [statusEngagement, setStatusEngagement] = useState<VolunteerStateEngagementType>(
     volunteer.statusEngagement || VolunteerStateEngagementType.NEW,
   );
-  const [statusMatch, setStatusMatch] = useState<VolunteerStateMatchType>(
-    volunteer.statusMatch || VolunteerStateMatchType.NO_MATCHES,
-  );
+  const [statusMatch, setStatusMatch] = useState<VolunteerStateMatchType>(volunteer.statusMatch);
   const [statusType, setStatusType] = useState<VolunteerStateTypeType | undefined>(volunteer.statusType);
   const [isEditing, setIsEditing] = useState(false);
+
+  // Sync local state with prop changes when not editing
+  useEffect(() => {
+    if (!isEditing) {
+      setStatusEngagement(volunteer.statusEngagement || VolunteerStateEngagementType.NEW);
+      setStatusMatch(volunteer.statusMatch || VolunteerStateMatchType.NO_MATCHES);
+      setStatusType(volunteer.statusType);
+    }
+  }, [volunteer.statusEngagement, volunteer.statusMatch, volunteer.statusType, isEditing]);
 
   const engagementOptions = Object.values(VolunteerStateEngagementType).map((type) => engagementLabelMap[type]);
 
@@ -338,8 +364,16 @@ export function VolunteerHeader({ volunteer }: Props) {
   };
 
   const handleSave = () => {
-    // TODO: Implement save mutation
-    setIsEditing(false);
+    updateStatus(
+      {
+        statusEngagement,
+      },
+      {
+        onSuccess: () => {
+          setIsEditing(false);
+        },
+      },
+    );
   };
 
   return (
@@ -367,8 +401,9 @@ export function VolunteerHeader({ volunteer }: Props) {
                     label={t("dashboard.volunteerProfile.volunteerHeader.engagementStatus_title")}
                     value={engagementLabelMap[statusEngagement]}
                     setValue={(value) => {
-                      if (!isEnumKey(VolunteerStateEngagementType, value)) return;
-                      setStatusEngagement(engagementLabelToEnum[value]);
+                      if (typeof value !== "string") return;
+                      const enumValue = engagementLabelToEnum[value];
+                      if (enumValue) setStatusEngagement(enumValue);
                     }}
                     options={engagementOptions}
                   />
