@@ -1,9 +1,9 @@
 "use client";
 import { defaultAvatarVolunteerProfile, EMPTY_PLACEHOLDER_VALUE } from "@/config/constants";
 import { formatDateTime, getImageUrl } from "@/utils";
-import { de, enUS } from "date-fns/locale";
 import { ApiVolunteerGet, VolunteerStateEngagementType } from "need4deed-sdk";
 import Image from "next/image";
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { ChangeEngagementStatusDialog } from "./ChangeEngagementStatusDialog";
 import { createEngagementLabelMap, createMatchLabelMap, createVolunteerTypeLabelMap } from "./constants";
@@ -28,14 +28,12 @@ type Props = {
 };
 
 export const VolunteerHeader = ({ volunteer }: Props) => {
-  const { t, i18n } = useTranslation();
-  const locale = i18n.language === "de" ? de : enUS;
-
+  const { t } = useTranslation();
   const dialog = useEngagementStatusDialog(volunteer);
 
-  const engagementLabelMap = createEngagementLabelMap(t);
-  const matchLabelMap = createMatchLabelMap(t);
-  const volunteerTypeLabelMap = createVolunteerTypeLabelMap(t);
+  const engagementLabelMap = useMemo(() => createEngagementLabelMap(t), [t]);
+  const matchLabelMap = useMemo(() => createMatchLabelMap(t), [t]);
+  const volunteerTypeLabelMap = useMemo(() => createVolunteerTypeLabelMap(t), [t]);
 
   const joinedSince = formatDateTime(volunteer.createdAt);
   const fullName = `${volunteer.person.firstName} ${volunteer.person.lastName}`;
@@ -111,11 +109,7 @@ export const VolunteerHeader = ({ volunteer }: Props) => {
         onStatusChange={dialog.setStatusEngagement}
         returnDate={dialog.returnDate}
         onReturnDateChange={dialog.setReturnDate}
-        initialReturnDate={dialog.initialReturnDate}
-        originalStatus={volunteer.statusEngagement}
-        engagementLabelMap={engagementLabelMap}
-        locale={locale}
-        t={t}
+        isSaveDisabled={dialog.isSaveDisabled}
       />
     </>
   );

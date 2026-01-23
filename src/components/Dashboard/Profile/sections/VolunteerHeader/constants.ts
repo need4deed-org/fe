@@ -5,6 +5,15 @@ import {
   VolunteerStateTypeType,
 } from "need4deed-sdk";
 
+export const ENGAGEMENT_DESCRIPTION_KEYS: Record<VolunteerStateEngagementType, string> = {
+  [VolunteerStateEngagementType.NEW]: "new_description",
+  [VolunteerStateEngagementType.ACTIVE]: "active_description",
+  [VolunteerStateEngagementType.AVAILABLE]: "available_description",
+  [VolunteerStateEngagementType.TEMP_UNAVAILABLE]: "tempUnavailable_description",
+  [VolunteerStateEngagementType.INACTIVE]: "inactive_description",
+  [VolunteerStateEngagementType.UNRESPONSIVE]: "unresponsive_description",
+};
+
 export const createEngagementLabelMap = (
   t: TFunction,
 ): Record<VolunteerStateEngagementType, string> => ({

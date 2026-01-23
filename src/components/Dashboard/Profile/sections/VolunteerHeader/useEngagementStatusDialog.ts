@@ -1,12 +1,13 @@
 import { useUpdateVolunteerStatus } from "@/hooks/useUpdateVolunteerStatus";
 import { ApiVolunteerGet, VolunteerStateEngagementType } from "need4deed-sdk";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 
 type UseEngagementStatusDialogReturn = {
   isOpen: boolean;
   statusEngagement: VolunteerStateEngagementType;
   returnDate: Date | undefined;
-  initialReturnDate: Date | undefined;
+  originalStatus: VolunteerStateEngagementType;
+  isSaveDisabled: boolean;
   openDialog: () => void;
   closeDialog: () => void;
   saveDialog: () => void;
@@ -35,6 +36,14 @@ export const useEngagementStatusDialog = (
   );
   const [returnDate, setReturnDate] = useState<Date | undefined>(getInitialDate());
   const [initialReturnDate, setInitialReturnDate] = useState<Date | undefined>(getInitialDate());
+
+  const isSaveDisabled = useMemo(
+    () =>
+      statusEngagement === volunteer.statusEngagement &&
+      (statusEngagement !== VolunteerStateEngagementType.TEMP_UNAVAILABLE ||
+        returnDate?.getTime() === initialReturnDate?.getTime()),
+    [statusEngagement, volunteer.statusEngagement, returnDate, initialReturnDate],
+  );
 
   const openDialog = useCallback(() => {
     setIsOpen(true);
@@ -74,7 +83,8 @@ export const useEngagementStatusDialog = (
     isOpen,
     statusEngagement,
     returnDate,
-    initialReturnDate,
+    originalStatus: volunteer.statusEngagement,
+    isSaveDisabled,
     openDialog,
     closeDialog,
     saveDialog,
