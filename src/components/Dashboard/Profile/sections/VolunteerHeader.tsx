@@ -1,6 +1,5 @@
 "use client";
-import Button from "@/components/core/button/Button/Button";
-import { EditableField } from "@/components/EditableField/EditableField";
+import { Modal } from "@/components/core/modal/Modal";
 import { Heading4 } from "@/components/styled/text";
 import { defaultAvatarVolunteerProfile } from "@/config/constants";
 import { useUpdateVolunteerStatus } from "@/hooks/useUpdateVolunteerStatus";
@@ -24,14 +23,14 @@ import {
   VolunteerStateTypeType,
 } from "need4deed-sdk";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
-const HeaderContainer = styled.div<{ $isEditing?: boolean }>`
+const HeaderContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: ${(props) => (props.$isEditing ? "var(--spacing-24)" : "0")};
+  gap: 0;
 `;
 
 const Card = styled.div`
@@ -85,20 +84,20 @@ const VolunteerSince = styled.p`
   margin: 0;
 `;
 
-const StatusSection = styled.div<{ $isEditing?: boolean }>`
+const StatusSection = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
-  gap: ${(props) => (props.$isEditing ? "0" : "0")};
+  gap: 0;
 `;
 
-const StatusRow = styled.div<{ $isEditing?: boolean }>`
+const StatusRow = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: ${(props) => (props.$isEditing ? "flex-start" : "center")};
-  padding: ${(props) => (props.$isEditing ? "0 0" : "var(--spacing-16) 0")};
-  border-bottom: ${(props) => (props.$isEditing ? "none" : "var(--border-width-thin) solid var(--color-blue-50)")};
+  align-items: center;
+  padding: var(--spacing-16) 0;
+  border-bottom: var(--border-width-thin) solid var(--color-blue-50);
 
   h4 {
     font-size: var(--font-size-lg);
@@ -112,18 +111,18 @@ const StatusRow = styled.div<{ $isEditing?: boolean }>`
   }
 `;
 
-const FieldContainer = styled.div<{ $isEditing?: boolean }>`
+const FieldContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-8);
-  align-items: ${(props) => (props.$isEditing ? "flex-start" : "center")};
+  align-items: center;
   flex: 1;
 `;
 
-const TextAndChip = styled.div<{ $isEditing?: boolean }>`
+const TextAndChip = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: ${(props) => (props.$isEditing ? "flex-start" : "center")};
+  align-items: center;
   gap: var(--spacing-32);
   flex: 1;
 `;
@@ -205,14 +204,6 @@ const StatusIcon = styled.span`
   justify-content: center;
 `;
 
-const ButtonRow = styled.div`
-  display: flex;
-  gap: var(--profile-section-button-row-gap);
-  justify-content: flex-end;
-  align-items: center;
-  width: 100%;
-`;
-
 const EditButton = styled.button`
   background: transparent;
   color: var(--color-midnight-bright);
@@ -229,6 +220,137 @@ const EditButton = styled.button`
 
   &:hover {
     color: var(--color-blue-700);
+    opacity: var(--opacity-hover);
+  }
+`;
+
+const ModalContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: var(--dialog-gap);
+  padding: 0;
+  height: 100%;
+`;
+
+const ModalTitle = styled.h3`
+  font-size: var(--dialog-title-font-size);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--dialog-title-line-height);
+  letter-spacing: var(--dialog-title-letter-spacing);
+  color: var(--color-blue-700);
+  margin: 0;
+`;
+
+const OptionsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: var(--dialog-gap);
+`;
+
+const OptionItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: var(--dialog-option-gap);
+`;
+
+const RadioOption = styled.label<{ $checked: boolean }>`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--dialog-option-gap);
+  cursor: pointer;
+
+  input[type="radio"] {
+    appearance: none;
+    width: var(--dialog-radio-size);
+    height: var(--dialog-radio-size);
+    border: var(--dialog-radio-border-width) solid var(--color-grey-400);
+    border-radius: var(--percent-50);
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
+
+    &:checked {
+      border-color: var(--color-blue-700);
+
+      &::after {
+        content: "";
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        border-radius: var(--percent-50);
+        background-color: var(--color-blue-700);
+        top: var(--percent-50);
+        left: var(--percent-50);
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+`;
+
+const OptionLabel = styled.span`
+  font-size: var(--dialog-label-font-size);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--dialog-label-line-height);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--color-blue-700);
+  flex: 1;
+`;
+
+const OptionDescription = styled.p`
+  font-size: var(--dialog-description-font-size);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--dialog-description-line-height);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--color-grey-700);
+  margin: 0;
+`;
+
+const ModalButtonRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: var(--dialog-button-gap);
+`;
+
+const CancelButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--spacing-16) var(--spacing-24);
+  border: var(--border-width-medium) solid var(--color-aubergine);
+  border-radius: 125px;
+  background: transparent;
+  color: var(--color-aubergine);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  line-height: 24px;
+  letter-spacing: var(--letter-spacing-tight);
+  cursor: pointer;
+  transition: var(--transition-all);
+
+  &:hover {
+    opacity: var(--opacity-hover);
+  }
+`;
+
+const SaveButton = styled.button<{ $disabled?: boolean }>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--spacing-16) var(--spacing-24);
+  border-radius: 125px;
+  background: ${({ $disabled }) => ($disabled ? "var(--color-grey-50)" : "var(--color-aubergine)")};
+  color: ${({ $disabled }) => ($disabled ? "var(--color-grey-400)" : "var(--color-white)")};
+  border: none;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  line-height: 24px;
+  letter-spacing: var(--letter-spacing-tight);
+  cursor: ${({ $disabled }) => ($disabled ? "not-allowed" : "pointer")};
+  transition: var(--transition-all);
+
+  &:hover:not(:disabled) {
     opacity: var(--opacity-hover);
   }
 `;
@@ -318,189 +440,154 @@ export function VolunteerHeader({ volunteer }: Props) {
   const matchLabelMap = createMatchLabelMap(t);
   const volunteerTypeLabelMap = createVolunteerTypeLabelMap(t);
 
-  const engagementLabelToEnum = Object.fromEntries(
-    Object.entries(engagementLabelMap).map(([key, value]) => [value, key as VolunteerStateEngagementType]),
-  ) as Record<string, VolunteerStateEngagementType>;
-
-  const matchLabelToEnum = Object.fromEntries(
-    Object.entries(matchLabelMap).map(([key, value]) => [value, key as VolunteerStateMatchType]),
-  ) as Record<string, VolunteerStateMatchType>;
-
-  const volunteerTypeLabelToEnum = Object.fromEntries(
-    Object.entries(volunteerTypeLabelMap).map(([key, value]) => [value, key as VolunteerStateTypeType]),
-  ) as Record<string, VolunteerStateTypeType>;
-
-  const [statusEngagement, setStatusEngagement] = useState<VolunteerStateEngagementType>(
-    volunteer.statusEngagement || VolunteerStateEngagementType.NEW,
-  );
-  const [statusMatch, setStatusMatch] = useState<VolunteerStateMatchType>(volunteer.statusMatch);
-  const [statusType, setStatusType] = useState<VolunteerStateTypeType | undefined>(volunteer.statusType);
-  const [isEditing, setIsEditing] = useState(false);
-
-  // Sync local state with prop changes when not editing
-  useEffect(() => {
-    if (!isEditing) {
-      setStatusEngagement(volunteer.statusEngagement || VolunteerStateEngagementType.NEW);
-      setStatusMatch(volunteer.statusMatch || VolunteerStateMatchType.NO_MATCHES);
-      setStatusType(volunteer.statusType);
-    }
-  }, [volunteer.statusEngagement, volunteer.statusMatch, volunteer.statusType, isEditing]);
-
-  const engagementOptions = Object.values(VolunteerStateEngagementType).map((type) => engagementLabelMap[type]);
-
-  const matchOptions = Object.values(VolunteerStateMatchType).map((type) => matchLabelMap[type]);
-
-  const volunteerTypeOptions = Object.values(VolunteerStateTypeType).map((type) => volunteerTypeLabelMap[type]);
+  const [statusEngagement, setStatusEngagement] = useState<VolunteerStateEngagementType>(volunteer.statusEngagement);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleEditClick = () => {
-    setIsEditing(true);
+    setIsModalOpen(true);
   };
 
-  const handleCancel = () => {
-    setStatusEngagement(volunteer.statusEngagement || VolunteerStateEngagementType.NEW);
-    setStatusMatch(volunteer.statusMatch || VolunteerStateMatchType.NO_MATCHES);
-    setStatusType(volunteer.statusType);
-    setIsEditing(false);
+  const handleModalCancel = () => {
+    setStatusEngagement(volunteer.statusEngagement);
+    setIsModalOpen(false);
   };
 
-  const handleSave = () => {
+  const handleModalSave = () => {
     updateStatus(
       {
         statusEngagement,
       },
       {
         onSuccess: () => {
-          setIsEditing(false);
+          setIsModalOpen(false);
         },
       },
     );
   };
 
+  const handleStatusChange = (status: VolunteerStateEngagementType) => {
+    setStatusEngagement(status);
+  };
+
+  const getEngagementDescription = (status: VolunteerStateEngagementType): string => {
+    const descriptionKey = `dashboard.volunteerProfile.volunteerHeader.engagementStatus_options.${
+      status === VolunteerStateEngagementType.NEW
+        ? "new_description"
+        : status === VolunteerStateEngagementType.ACTIVE
+          ? "active_description"
+          : status === VolunteerStateEngagementType.AVAILABLE
+            ? "available_description"
+            : status === VolunteerStateEngagementType.TEMP_UNAVAILABLE
+              ? "tempUnavailable_description"
+              : status === VolunteerStateEngagementType.INACTIVE
+                ? "inactive_description"
+                : "unresponsive_description"
+    }`;
+    return t(descriptionKey);
+  };
+
   return (
-    <HeaderContainer data-testid="volunteer-header" $isEditing={isEditing}>
-      <Card>
-        <ProfileContent>
-          <AvatarContainer>
-            <Image src={initialAvatarUrl} alt={volunteer.person.firstName} fill style={{ objectFit: "cover" }} />
-          </AvatarContainer>
+    <>
+      <HeaderContainer data-testid="volunteer-header">
+        <Card>
+          <ProfileContent>
+            <AvatarContainer>
+              <Image src={initialAvatarUrl} alt={volunteer.person.firstName} fill style={{ objectFit: "cover" }} />
+            </AvatarContainer>
 
-          <ProfileInfo>
-            <NameSection>
-              <Name>{fullName}</Name>
-              <VolunteerSince>
-                {t("dashboard.volunteerProfile.volunteerHeader.volunteer_since")} {joinedSince}
-              </VolunteerSince>
-            </NameSection>
+            <ProfileInfo>
+              <NameSection>
+                <Name>{fullName}</Name>
+                <VolunteerSince>
+                  {t("dashboard.volunteerProfile.volunteerHeader.volunteer_since")} {joinedSince}
+                </VolunteerSince>
+              </NameSection>
 
-            <StatusSection data-testid="volunteer-header-status-section" $isEditing={isEditing}>
-              <StatusRow $isEditing={isEditing}>
-                {isEditing ? (
-                  <EditableField
-                    mode="edit"
-                    type="radio-list"
-                    label={t("dashboard.volunteerProfile.volunteerHeader.engagementStatus_title")}
-                    value={engagementLabelMap[statusEngagement]}
-                    setValue={(value) => {
-                      if (typeof value !== "string") return;
-                      const enumValue = engagementLabelToEnum[value];
-                      if (enumValue) setStatusEngagement(enumValue);
-                    }}
-                    options={engagementOptions}
-                  />
-                ) : (
-                  <>
-                    <TextAndChip>
-                      <Heading4>{t("dashboard.volunteerProfile.volunteerHeader.engagementStatus_title")}</Heading4>
-                      <FieldContainer>
-                        <StatusBadge $variant={statusEngagement.toLowerCase()}>
-                          <StatusIcon>{getEngagementIcon(statusEngagement)}</StatusIcon>
-                          <span>{engagementLabelMap[statusEngagement]}</span>
-                        </StatusBadge>
-                      </FieldContainer>
-                    </TextAndChip>
-                    <EditButton onClick={handleEditClick}>
-                      {t("dashboard.volunteerProfile.volunteerHeader.change_status")}
-                    </EditButton>
-                  </>
-                )}
-              </StatusRow>
-              <StatusRow $isEditing={isEditing}>
-                {isEditing ? (
-                  <EditableField
-                    mode="edit"
-                    type="radio-list"
-                    label={t("dashboard.volunteerProfile.volunteerHeader.matchStatus_title")}
-                    value={matchLabelMap[statusMatch]}
-                    setValue={(value) => {
-                      const enumValue = matchLabelToEnum[value as string];
-                      if (enumValue) setStatusMatch(enumValue);
-                    }}
-                    options={matchOptions}
-                  />
-                ) : (
+              <StatusSection data-testid="volunteer-header-status-section">
+                <StatusRow>
                   <TextAndChip>
-                    <Heading4>{t("dashboard.volunteerProfile.volunteerHeader.matchStatus_title")}</Heading4>
+                    <Heading4>{t("dashboard.volunteerProfile.volunteerHeader.engagementStatus_title")}</Heading4>
                     <FieldContainer>
-                      <StatusBadge $variant={statusMatch.toLowerCase()}>
-                        <StatusIcon>{getMatchIcon(statusMatch)}</StatusIcon>
-                        <span>{matchLabelMap[statusMatch]}</span>
+                      <StatusBadge $variant={statusEngagement.toLowerCase()}>
+                        <StatusIcon>{getEngagementIcon(statusEngagement)}</StatusIcon>
+                        <span>{engagementLabelMap[statusEngagement]}</span>
                       </StatusBadge>
                     </FieldContainer>
                   </TextAndChip>
-                )}
-              </StatusRow>
-              <StatusRow $isEditing={isEditing}>
-                {isEditing ? (
-                  <EditableField
-                    mode="edit"
-                    type="radio-list"
-                    label={t("dashboard.volunteerProfile.volunteerHeader.volunteerType_title")}
-                    value={statusType ? volunteerTypeLabelMap[statusType] : ""}
-                    setValue={(value) => {
-                      const enumValue = volunteerTypeLabelToEnum[value as string];
-                      if (enumValue) setStatusType(enumValue);
-                    }}
-                    options={volunteerTypeOptions}
-                  />
-                ) : (
+                  <EditButton onClick={handleEditClick}>
+                    {t("dashboard.volunteerProfile.volunteerHeader.change_status")}
+                  </EditButton>
+                </StatusRow>
+                <StatusRow>
                   <TextAndChip>
-                    <Heading4>{t("dashboard.volunteerProfile.volunteerHeader.volunteerType_title")}</Heading4>
+                    <Heading4>{t("dashboard.volunteerProfile.volunteerHeader.matchStatus_title")}</Heading4>
                     <FieldContainer>
-                      {statusType ? (
-                        <StatusBadge $variant={statusType.toLowerCase()} $isType>
-                          <span>{volunteerTypeLabelMap[statusType]}</span>
+                      {volunteer.statusMatch ? (
+                        <StatusBadge $variant={volunteer.statusMatch.toLowerCase()}>
+                          <StatusIcon>{getMatchIcon(volunteer.statusMatch)}</StatusIcon>
+                          <span>{matchLabelMap[volunteer.statusMatch]}</span>
                         </StatusBadge>
                       ) : (
                         <span style={{ color: "var(--color-grey-500)" }}>–</span>
                       )}
                     </FieldContainer>
                   </TextAndChip>
-                )}
-              </StatusRow>
-            </StatusSection>
-          </ProfileInfo>
-        </ProfileContent>
-      </Card>
+                </StatusRow>
+                <StatusRow>
+                  <TextAndChip>
+                    <Heading4>{t("dashboard.volunteerProfile.volunteerHeader.volunteerType_title")}</Heading4>
+                    <FieldContainer>
+                      {volunteer.statusType ? (
+                        <StatusBadge $variant={volunteer.statusType.toLowerCase()} $isType>
+                          <span>{volunteerTypeLabelMap[volunteer.statusType]}</span>
+                        </StatusBadge>
+                      ) : (
+                        <span style={{ color: "var(--color-grey-500)" }}>–</span>
+                      )}
+                    </FieldContainer>
+                  </TextAndChip>
+                </StatusRow>
+              </StatusSection>
+            </ProfileInfo>
+          </ProfileContent>
+        </Card>
+      </HeaderContainer>
 
-      {isEditing && (
-        <ButtonRow>
-          <Button
-            text={t("dashboard.volunteerProfile.profileSection.cancel")}
-            onClick={handleCancel}
-            width="auto"
-            padding="var(--volunteer-profile-section-card-header-button-padding)"
-            backgroundcolor="var(--color-white)"
-            textColor="var(--color-aubergine)"
-            border="var(--volunteer-profile-section-card-header-button-border)"
-          />
-          <Button
-            text={t("dashboard.volunteerProfile.profileSection.saveChanges")}
-            onClick={handleSave}
-            width="auto"
-            padding="var(--volunteer-profile-section-card-header-button-padding)"
-          />
-        </ButtonRow>
-      )}
-    </HeaderContainer>
+      <Modal isOpen={isModalOpen} onClose={handleModalCancel}>
+        <ModalContainer>
+          <ModalTitle>{t("dashboard.volunteerProfile.volunteerHeader.modalData.title")}</ModalTitle>
+
+          <OptionsContainer>
+            {Object.values(VolunteerStateEngagementType).map((status) => (
+              <OptionItem key={status}>
+                <RadioOption $checked={statusEngagement === status}>
+                  <input
+                    type="radio"
+                    name="engagement-status"
+                    checked={statusEngagement === status}
+                    onChange={() => handleStatusChange(status)}
+                  />
+                  <OptionLabel>{engagementLabelMap[status]}</OptionLabel>
+                </RadioOption>
+                <OptionDescription>{getEngagementDescription(status)}</OptionDescription>
+              </OptionItem>
+            ))}
+          </OptionsContainer>
+
+          <ModalButtonRow>
+            <CancelButton onClick={handleModalCancel}>
+              {t("dashboard.volunteerProfile.volunteerHeader.modalData.cancel")}
+            </CancelButton>
+            <SaveButton
+              onClick={handleModalSave}
+              disabled={statusEngagement === volunteer.statusEngagement}
+              $disabled={statusEngagement === volunteer.statusEngagement}
+            >
+              {t("dashboard.volunteerProfile.volunteerHeader.modalData.save")}
+            </SaveButton>
+          </ModalButtonRow>
+        </ModalContainer>
+      </Modal>
+    </>
   );
 }

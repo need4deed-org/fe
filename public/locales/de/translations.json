@@ -464,11 +464,17 @@
         "engagementStatus_title": "Engagement Status",
         "engagementStatus_options": {
           "new": "Neu",
+          "new_description": "Wir haben nicht mit ihm gesprochen",
           "active": "Aktiv",
+          "active_description": "Aktiv",
           "available": "Verfügbar",
+          "available_description": "Wir haben mit ihr gesprochen, sie kann freiwillig arbeiten",
           "tempUnavailable": "Vorübergehend nicht verfügbar",
+          "tempUnavailable_description": "Wir wissen, dass die Person in der nächsten Zeit nicht aktiv sein kann",
           "inactive": "Inaktiv",
-          "unresponsive": "Nicht erreichbar"
+          "inactive_description": "Diese*r Freiwillige kann nicht mehr freiwillig arbeiten",
+          "unresponsive": "Nicht erreichbar",
+          "unresponsive_description": "Hat nach mehreren Versuchen nie geantwortet"
         },
         "volunteerType_title": "Freiwilligen-Typ",
         "volunteerType_options": {

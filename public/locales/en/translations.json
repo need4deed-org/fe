@@ -464,11 +464,17 @@
         "engagementStatus_title": "Engagement status",
         "engagementStatus_options": {
           "new": "New",
+          "new_description": "We did not talk to him",
           "active": "Active",
+          "active_description": "Active",
           "available": "Available",
-          "tempUnavailable": "Temp. unavailable",
+          "available_description": "We talked to her, she can volunteer",
+          "tempUnavailable": "Temporarily unavailable",
+          "tempUnavailable_description": "We know that the person cannot be active in the next x time",
           "inactive": "Inactive",
-          "unresponsive": "Unresponsive"
+          "inactive_description": "This volunteer can't volunteer anymore",
+          "unresponsive": "Unresponsive",
+          "unresponsive_description": "Never replied after few times"
         },
         "volunteerType_title": "Volunteer type",
         "volunteerType_options": {

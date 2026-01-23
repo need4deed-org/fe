@@ -318,6 +318,20 @@ html {
   --dialog-title-font-size: 28px;
   --dialog-title-line-height: 32px;
   --dialog-title-letter-spacing: 0.14px;
+  --dialog-padding: 24px;
+  --dialog-gap: 24px;
+  --dialog-max-width: 620px;
+  --dialog-border-radius: 24px;
+  --dialog-box-shadow: 0px 10px 30px -12px rgba(143, 81, 138, 0.2);
+  --dialog-option-gap: 8px;
+  --dialog-option-padding: 0px;
+  --dialog-radio-size: 24px;
+  --dialog-radio-border-width: 2px;
+  --dialog-label-font-size: 20px;
+  --dialog-label-line-height: 24px;
+  --dialog-description-font-size: 16px;
+  --dialog-description-line-height: 20px;
+  --dialog-button-gap: 16px;
 
   /* expanded section */
   --expanded-section-padding-left: 32px;
