@@ -14,10 +14,12 @@ import Image from "next/image";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
+import { isEnumKey } from "ts-type-safe";
 
-const HeaderContainer = styled.div`
+const HeaderContainer = styled.div<{ $isEditing?: boolean }>`
   display: flex;
   flex-direction: column;
+  gap: ${(props) => (props.$isEditing ? "var(--spacing-24)" : "0")};
 `;
 
 const Card = styled.div`
@@ -71,19 +73,20 @@ const VolunteerSince = styled.p`
   margin: 0;
 `;
 
-const StatusSection = styled.div`
+const StatusSection = styled.div<{ $isEditing?: boolean }>`
   display: flex;
   flex-direction: column;
   flex: 1;
+  gap: ${(props) => (props.$isEditing ? "0" : "0")};
 `;
 
-const StatusRow = styled.div`
+const StatusRow = styled.div<{ $isEditing?: boolean }>`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
-  padding: var(--spacing-16) 0;
-  border-bottom: var(--border-width-thin) solid var(--color-blue-50);
+  align-items: ${(props) => (props.$isEditing ? "flex-start" : "center")};
+  padding: ${(props) => (props.$isEditing ? "0 0" : "var(--spacing-16) 0")};
+  border-bottom: ${(props) => (props.$isEditing ? "none" : "var(--border-width-thin) solid var(--color-blue-50)")};
 
   h4 {
     font-size: var(--font-size-lg);
@@ -93,21 +96,24 @@ const StatusRow = styled.div`
     color: var(--color-blue-700);
     margin: 0;
     width: 214px;
+    flex-shrink: 0;
   }
 `;
 
-const FieldContainer = styled.div`
+const FieldContainer = styled.div<{ $isEditing?: boolean }>`
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-8);
-  align-items: center;
+  align-items: ${(props) => (props.$isEditing ? "flex-start" : "center")};
+  flex: 1;
 `;
 
-const TextAndChip = styled.div`
+const TextAndChip = styled.div<{ $isEditing?: boolean }>`
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: ${(props) => (props.$isEditing ? "flex-start" : "center")};
   gap: var(--spacing-32);
+  flex: 1;
 `;
 
 const StatusBadge = styled.div<{ $variant: string; $isType?: boolean }>`
@@ -189,9 +195,10 @@ const StatusIcon = styled.span`
 
 const ButtonRow = styled.div`
   display: flex;
-  gap: var(--spacing-16);
+  gap: var(--profile-section-button-row-gap);
   justify-content: flex-end;
-  align-items: flex-start;
+  align-items: center;
+  width: 100%;
 `;
 
 const EditButton = styled.button`
@@ -206,6 +213,7 @@ const EditButton = styled.button`
   cursor: pointer;
   text-decoration: none;
   transition: var(--transition-all);
+  flex-shrink: 0;
 
   &:hover {
     color: var(--color-blue-700);
@@ -335,7 +343,7 @@ export function VolunteerHeader({ volunteer }: Props) {
   };
 
   return (
-    <HeaderContainer data-testid="volunteer-header">
+    <HeaderContainer data-testid="volunteer-header" $isEditing={isEditing}>
       <Card>
         <ProfileContent>
           <AvatarContainer>
@@ -350,84 +358,89 @@ export function VolunteerHeader({ volunteer }: Props) {
               </VolunteerSince>
             </NameSection>
 
-            <StatusSection data-testid="volunteer-header-status-section">
-              <StatusRow>
-                <TextAndChip>
-                  <Heading4>{t("dashboard.volunteerProfile.volunteerHeader.engagementStatus_title")}</Heading4>
-                  <FieldContainer>
-                    {isEditing ? (
-                      <EditableField
-                        mode="edit"
-                        type="radio-list"
-                        value={engagementLabelMap[statusEngagement]}
-                        setValue={(value) => {
-                          const enumValue = engagementLabelToEnum[value as string];
-                          if (enumValue) setStatusEngagement(enumValue);
-                        }}
-                        options={engagementOptions}
-                      />
-                    ) : (
-                      <StatusBadge $variant={statusEngagement.toLowerCase()}>
-                        <StatusIcon>{getEngagementIcon(statusEngagement)}</StatusIcon>
-                        <span>{engagementLabelMap[statusEngagement]}</span>
-                      </StatusBadge>
-                    )}
-                  </FieldContainer>
-                </TextAndChip>
-                {!isEditing && (
-                  <EditButton onClick={handleEditClick}>
-                    {t("dashboard.volunteerProfile.volunteerHeader.change_status")}
-                  </EditButton>
+            <StatusSection data-testid="volunteer-header-status-section" $isEditing={isEditing}>
+              <StatusRow $isEditing={isEditing}>
+                {isEditing ? (
+                  <EditableField
+                    mode="edit"
+                    type="radio-list"
+                    label={t("dashboard.volunteerProfile.volunteerHeader.engagementStatus_title")}
+                    value={engagementLabelMap[statusEngagement]}
+                    setValue={(value) => {
+                      if (!isEnumKey(VolunteerStateEngagementType, value)) return;
+                      setStatusEngagement(engagementLabelToEnum[value]);
+                    }}
+                    options={engagementOptions}
+                  />
+                ) : (
+                  <>
+                    <TextAndChip>
+                      <Heading4>{t("dashboard.volunteerProfile.volunteerHeader.engagementStatus_title")}</Heading4>
+                      <FieldContainer>
+                        <StatusBadge $variant={statusEngagement.toLowerCase()}>
+                          <StatusIcon>{getEngagementIcon(statusEngagement)}</StatusIcon>
+                          <span>{engagementLabelMap[statusEngagement]}</span>
+                        </StatusBadge>
+                      </FieldContainer>
+                    </TextAndChip>
+                    <EditButton onClick={handleEditClick}>
+                      {t("dashboard.volunteerProfile.volunteerHeader.change_status")}
+                    </EditButton>
+                  </>
                 )}
               </StatusRow>
-              <StatusRow>
-                <TextAndChip>
-                  <Heading4>{t("dashboard.volunteerProfile.volunteerHeader.matchStatus_title")}</Heading4>
-                  <FieldContainer>
-                    {isEditing ? (
-                      <EditableField
-                        mode="edit"
-                        type="radio-list"
-                        value={matchLabelMap[statusMatch]}
-                        setValue={(value) => {
-                          const enumValue = matchLabelToEnum[value as string];
-                          if (enumValue) setStatusMatch(enumValue);
-                        }}
-                        options={matchOptions}
-                      />
-                    ) : (
+              <StatusRow $isEditing={isEditing}>
+                {isEditing ? (
+                  <EditableField
+                    mode="edit"
+                    type="radio-list"
+                    label={t("dashboard.volunteerProfile.volunteerHeader.matchStatus_title")}
+                    value={matchLabelMap[statusMatch]}
+                    setValue={(value) => {
+                      const enumValue = matchLabelToEnum[value as string];
+                      if (enumValue) setStatusMatch(enumValue);
+                    }}
+                    options={matchOptions}
+                  />
+                ) : (
+                  <TextAndChip>
+                    <Heading4>{t("dashboard.volunteerProfile.volunteerHeader.matchStatus_title")}</Heading4>
+                    <FieldContainer>
                       <StatusBadge $variant={statusMatch.toLowerCase()}>
                         <StatusIcon>{getMatchIcon(statusMatch)}</StatusIcon>
                         <span>{matchLabelMap[statusMatch]}</span>
                       </StatusBadge>
-                    )}
-                  </FieldContainer>
-                </TextAndChip>
+                    </FieldContainer>
+                  </TextAndChip>
+                )}
               </StatusRow>
-              <StatusRow>
-                <TextAndChip>
-                  <Heading4>{t("dashboard.volunteerProfile.volunteerHeader.volunteerType_title")}</Heading4>
-                  <FieldContainer>
-                    {isEditing ? (
-                      <EditableField
-                        mode="edit"
-                        type="radio-list"
-                        value={statusType ? volunteerTypeLabelMap[statusType] : ""}
-                        setValue={(value) => {
-                          const enumValue = volunteerTypeLabelToEnum[value as string];
-                          if (enumValue) setStatusType(enumValue);
-                        }}
-                        options={volunteerTypeOptions}
-                      />
-                    ) : statusType ? (
-                      <StatusBadge $variant={statusType.toLowerCase()} $isType>
-                        <span>{volunteerTypeLabelMap[statusType]}</span>
-                      </StatusBadge>
-                    ) : (
-                      <span style={{ color: "var(--color-grey-500)" }}>–</span>
-                    )}
-                  </FieldContainer>
-                </TextAndChip>
+              <StatusRow $isEditing={isEditing}>
+                {isEditing ? (
+                  <EditableField
+                    mode="edit"
+                    type="radio-list"
+                    label={t("dashboard.volunteerProfile.volunteerHeader.volunteerType_title")}
+                    value={statusType ? volunteerTypeLabelMap[statusType] : ""}
+                    setValue={(value) => {
+                      const enumValue = volunteerTypeLabelToEnum[value as string];
+                      if (enumValue) setStatusType(enumValue);
+                    }}
+                    options={volunteerTypeOptions}
+                  />
+                ) : (
+                  <TextAndChip>
+                    <Heading4>{t("dashboard.volunteerProfile.volunteerHeader.volunteerType_title")}</Heading4>
+                    <FieldContainer>
+                      {statusType ? (
+                        <StatusBadge $variant={statusType.toLowerCase()} $isType>
+                          <span>{volunteerTypeLabelMap[statusType]}</span>
+                        </StatusBadge>
+                      ) : (
+                        <span style={{ color: "var(--color-grey-500)" }}>–</span>
+                      )}
+                    </FieldContainer>
+                  </TextAndChip>
+                )}
               </StatusRow>
             </StatusSection>
           </ProfileInfo>
@@ -435,21 +448,21 @@ export function VolunteerHeader({ volunteer }: Props) {
       </Card>
 
       {isEditing && (
-        <ButtonRow style={{ marginTop: "var(--spacing-24)", paddingInline: "var(--spacing-24)" }}>
+        <ButtonRow>
           <Button
             text={t("dashboard.volunteerProfile.profileSection.cancel")}
             onClick={handleCancel}
             width="auto"
-            padding="var(--spacing-12) var(--spacing-24)"
+            padding="var(--volunteer-profile-section-card-header-button-padding)"
             backgroundcolor="var(--color-white)"
             textColor="var(--color-aubergine)"
-            border="var(--border-width-thin) solid var(--color-aubergine)"
+            border="var(--volunteer-profile-section-card-header-button-border)"
           />
           <Button
             text={t("dashboard.volunteerProfile.profileSection.saveChanges")}
             onClick={handleSave}
             width="auto"
-            padding="var(--spacing-12) var(--spacing-24)"
+            padding="var(--volunteer-profile-section-card-header-button-padding)"
           />
         </ButtonRow>
       )}
