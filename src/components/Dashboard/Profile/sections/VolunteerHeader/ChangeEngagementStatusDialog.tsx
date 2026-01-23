@@ -1,6 +1,11 @@
 "use client";
 import { DatePickerWithLabel } from "@/components/core/common/DatePicker";
 import { Modal } from "@/components/core/modal/Modal";
+import {
+  CancelButton,
+  DialogButtonGroup,
+  LargePrimaryButton,
+} from "../VolunteerProfileDocumentSection/shared/DialogButtonGroup";
 import { VolunteerStateEngagementType } from "need4deed-sdk";
 import { Locale } from "date-fns";
 import { TFunction } from "i18next";
@@ -35,7 +40,7 @@ const OptionItem = styled.div`
   gap: var(--dialog-option-gap);
 `;
 
-const RadioOption = styled.label<{ $checked: boolean }>`
+const RadioOption = styled.label`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -90,55 +95,6 @@ const OptionDescription = styled.p`
 
 const DateFieldContainer = styled.div`
   margin-top: var(--spacing-8);
-`;
-
-const ModalButtonRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  gap: var(--dialog-button-gap);
-`;
-
-const CancelButton = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: var(--spacing-16) var(--spacing-24);
-  border: var(--border-width-medium) solid var(--color-aubergine);
-  border-radius: 125px;
-  background: transparent;
-  color: var(--color-aubergine);
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-semibold);
-  line-height: 24px;
-  letter-spacing: var(--letter-spacing-tight);
-  cursor: pointer;
-  transition: var(--transition-all);
-
-  &:hover {
-    opacity: var(--opacity-hover);
-  }
-`;
-
-const SaveButton = styled.button<{ $disabled?: boolean }>`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: var(--spacing-16) var(--spacing-24);
-  border-radius: 125px;
-  background: ${({ $disabled }) => ($disabled ? "var(--color-grey-50)" : "var(--color-aubergine)")};
-  color: ${({ $disabled }) => ($disabled ? "var(--color-grey-400)" : "var(--color-white)")};
-  border: none;
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-semibold);
-  line-height: 24px;
-  letter-spacing: var(--letter-spacing-tight);
-  cursor: ${({ $disabled }) => ($disabled ? "not-allowed" : "pointer")};
-  transition: var(--transition-all);
-
-  &:hover:not(:disabled) {
-    opacity: var(--opacity-hover);
-  }
 `;
 
 const ENGAGEMENT_DESCRIPTION_KEYS: Record<VolunteerStateEngagementType, string> = {
@@ -197,7 +153,7 @@ export const ChangeEngagementStatusDialog = ({
         <OptionsContainer>
           {Object.values(VolunteerStateEngagementType).map((status) => (
             <OptionItem key={status}>
-              <RadioOption $checked={statusEngagement === status}>
+              <RadioOption>
                 <input
                   type="radio"
                   name="engagement-status"
@@ -225,14 +181,14 @@ export const ChangeEngagementStatusDialog = ({
           ))}
         </OptionsContainer>
 
-        <ModalButtonRow>
+        <DialogButtonGroup>
           <CancelButton onClick={onClose}>
             {t("dashboard.volunteerProfile.volunteerHeader.modalData.cancel")}
           </CancelButton>
-          <SaveButton onClick={onSave} disabled={isSaveDisabled} $disabled={isSaveDisabled}>
+          <LargePrimaryButton onClick={onSave} disabled={isSaveDisabled} $disabled={isSaveDisabled}>
             {t("dashboard.volunteerProfile.volunteerHeader.modalData.save")}
-          </SaveButton>
-        </ModalButtonRow>
+          </LargePrimaryButton>
+        </DialogButtonGroup>
       </ModalContainer>
     </Modal>
   );
