@@ -460,6 +460,7 @@
         },
         "notSet": "Not set",
         "change_status": "Change status",
+        "until": "until",
         "volunteer_since": "Volunteer since",
         "engagementStatus_title": "Engagement status",
         "engagementStatus_options": {

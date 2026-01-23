@@ -138,7 +138,7 @@ export function DatePickerWithLabel({
           captionLayout="dropdown"
           startMonth={new Date(MIN_YEAR, 0)}
           endMonth={new Date(new Date().getFullYear() + 10, 11)}
-          disabled={allowFuture ? undefined : { after: new Date() }}
+          disabled={allowFuture ? { before: new Date() } : { after: new Date() }}
         />
       </DatePickerPopover>
     </DatePickerWrapper>

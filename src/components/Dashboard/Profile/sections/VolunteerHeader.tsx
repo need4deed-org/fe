@@ -1,4 +1,5 @@
 "use client";
+import { DatePickerWithLabel } from "@/components/core/common/DatePicker";
 import { Modal } from "@/components/core/modal/Modal";
 import { Heading4 } from "@/components/styled/text";
 import { defaultAvatarVolunteerProfile } from "@/config/constants";
@@ -16,6 +17,7 @@ import {
   TrendUpIcon,
   WrenchIcon,
 } from "@phosphor-icons/react";
+import { de, enUS } from "date-fns/locale";
 import {
   ApiVolunteerGet,
   VolunteerStateEngagementType,
@@ -204,6 +206,14 @@ const StatusIcon = styled.span`
   justify-content: center;
 `;
 
+const ReturnDateText = styled.span`
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-base);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--color-blue-700);
+`;
+
 const EditButton = styled.button`
   background: transparent;
   color: var(--color-midnight-bright);
@@ -304,6 +314,10 @@ const OptionDescription = styled.p`
   letter-spacing: var(--letter-spacing-tight);
   color: var(--color-grey-700);
   margin: 0;
+`;
+
+const DateFieldContainer = styled.div`
+  margin-top: var(--spacing-8);
 `;
 
 const ModalButtonRow = styled.div`
@@ -429,8 +443,9 @@ const getMatchIcon = (status: VolunteerStateMatchType) => {
 };
 
 export function VolunteerHeader({ volunteer }: Props) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { mutate: updateStatus } = useUpdateVolunteerStatus(volunteer.id);
+  const locale = i18n.language === "de" ? de : enUS;
 
   const joinedSince = formatDateTime(volunteer.createdAt);
   const fullName = `${volunteer.person.firstName} ${volunteer.person.lastName}`;
@@ -442,27 +457,61 @@ export function VolunteerHeader({ volunteer }: Props) {
 
   const [statusEngagement, setStatusEngagement] = useState<VolunteerStateEngagementType>(volunteer.statusEngagement);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [returnDate, setReturnDate] = useState<Date | undefined>(
+    volunteer.returnDate
+      ? new Date(volunteer.returnDate)
+      : volunteer.updatedAt
+        ? new Date(volunteer.updatedAt)
+        : undefined,
+  );
+  const [initialReturnDate, setInitialReturnDate] = useState<Date | undefined>(
+    volunteer.returnDate
+      ? new Date(volunteer.returnDate)
+      : volunteer.updatedAt
+        ? new Date(volunteer.updatedAt)
+        : undefined,
+  );
 
   const handleEditClick = () => {
     setIsModalOpen(true);
+    const initialDate = volunteer.returnDate
+      ? new Date(volunteer.returnDate)
+      : volunteer.updatedAt
+        ? new Date(volunteer.updatedAt)
+        : undefined;
+    setReturnDate(initialDate);
+    setInitialReturnDate(initialDate);
   };
 
   const handleModalCancel = () => {
     setStatusEngagement(volunteer.statusEngagement);
+    const initialDate = volunteer.returnDate
+      ? new Date(volunteer.returnDate)
+      : volunteer.updatedAt
+        ? new Date(volunteer.updatedAt)
+        : undefined;
+    setReturnDate(initialDate);
+    setInitialReturnDate(initialDate);
     setIsModalOpen(false);
   };
 
   const handleModalSave = () => {
-    updateStatus(
-      {
-        statusEngagement,
+    const payload: { statusEngagement: VolunteerStateEngagementType; returnDate?: string } = {
+      statusEngagement,
+    };
+
+    if (statusEngagement === VolunteerStateEngagementType.TEMP_UNAVAILABLE && returnDate) {
+      payload.returnDate = returnDate.toISOString();
+    }
+
+    updateStatus(payload, {
+      onSuccess: () => {
+        if (statusEngagement === VolunteerStateEngagementType.TEMP_UNAVAILABLE && returnDate) {
+          setInitialReturnDate(returnDate);
+        }
+        setIsModalOpen(false);
       },
-      {
-        onSuccess: () => {
-          setIsModalOpen(false);
-        },
-      },
-    );
+    });
   };
 
   const handleStatusChange = (status: VolunteerStateEngagementType) => {
@@ -512,6 +561,13 @@ export function VolunteerHeader({ volunteer }: Props) {
                         <StatusIcon>{getEngagementIcon(statusEngagement)}</StatusIcon>
                         <span>{engagementLabelMap[statusEngagement]}</span>
                       </StatusBadge>
+                      {statusEngagement === VolunteerStateEngagementType.TEMP_UNAVAILABLE && (
+                        <ReturnDateText>
+                          {returnDate
+                            ? `${t("dashboard.volunteerProfile.volunteerHeader.until")} ${returnDate.toLocaleDateString("de-DE")}`
+                            : "–"}
+                        </ReturnDateText>
+                      )}
                     </FieldContainer>
                   </TextAndChip>
                   <EditButton onClick={handleEditClick}>
@@ -570,6 +626,20 @@ export function VolunteerHeader({ volunteer }: Props) {
                   <OptionLabel>{engagementLabelMap[status]}</OptionLabel>
                 </RadioOption>
                 <OptionDescription>{getEngagementDescription(status)}</OptionDescription>
+                {status === VolunteerStateEngagementType.TEMP_UNAVAILABLE && statusEngagement === status && (
+                  <DateFieldContainer>
+                    <DatePickerWithLabel
+                      date={returnDate}
+                      onSelect={setReturnDate}
+                      locale={locale}
+                      allowFuture={true}
+                      label={t(
+                        "dashboard.volunteerProfile.volunteerHeader.modalData.options.returnDate",
+                        "Return date (optional)",
+                      )}
+                    />
+                  </DateFieldContainer>
+                )}
               </OptionItem>
             ))}
           </OptionsContainer>
@@ -580,8 +650,16 @@ export function VolunteerHeader({ volunteer }: Props) {
             </CancelButton>
             <SaveButton
               onClick={handleModalSave}
-              disabled={statusEngagement === volunteer.statusEngagement}
-              $disabled={statusEngagement === volunteer.statusEngagement}
+              disabled={
+                statusEngagement === volunteer.statusEngagement &&
+                (statusEngagement !== VolunteerStateEngagementType.TEMP_UNAVAILABLE ||
+                  returnDate?.getTime() === initialReturnDate?.getTime())
+              }
+              $disabled={
+                statusEngagement === volunteer.statusEngagement &&
+                (statusEngagement !== VolunteerStateEngagementType.TEMP_UNAVAILABLE ||
+                  returnDate?.getTime() === initialReturnDate?.getTime())
+              }
             >
               {t("dashboard.volunteerProfile.volunteerHeader.modalData.save")}
             </SaveButton>

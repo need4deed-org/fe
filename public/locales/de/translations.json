@@ -460,6 +460,7 @@
         },
         "notSet": "Nicht festgelegt",
         "change_status": "Status ändern",
+        "until": "bis",
         "volunteer_since": "Freiwillige*r seit",
         "engagementStatus_title": "Engagement Status",
         "engagementStatus_options": {
