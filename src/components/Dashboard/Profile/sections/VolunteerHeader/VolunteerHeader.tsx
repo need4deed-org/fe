@@ -94,16 +94,7 @@ export const VolunteerHeader = ({ volunteer }: Props) => {
         </Card>
       </HeaderContainer>
 
-      <ChangeEngagementStatusDialog
-        isOpen={dialog.isOpen}
-        onClose={dialog.closeDialog}
-        onSave={dialog.saveDialog}
-        statusEngagement={dialog.statusEngagement}
-        onStatusChange={dialog.setStatusEngagement}
-        dateReturn={dialog.dateReturn}
-        onDateReturnChange={dialog.setDateReturn}
-        isSaveDisabled={dialog.isSaveDisabled}
-      />
+      <ChangeEngagementStatusDialog dialog={dialog} />
     </>
   );
 };

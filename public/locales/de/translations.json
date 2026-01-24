@@ -463,7 +463,7 @@
         "change_status": "Status ändern",
         "until": "bis",
         "volunteer_since": "Freiwillige*r seit",
-        "engagementStatus_title": "Engagement Status",
+        "engagementStatus_title": "Engagement-Status",
         "engagementStatus_options": {
           "new": "Neu",
           "new_description": "Wir haben nicht mit ihm gesprochen",
@@ -489,7 +489,7 @@
           "festival": "Festival",
           "weekend-only": "Nur Wochenende"
         },
-        "matchStatus_title": "Zuweisungs Status",
+        "matchStatus_title": "Zuweisungs-Status",
         "matchStatus_options": {
           "noMatches": "Keine Zuweisungen",
           "pendingMatch": "Zuweisung ausstehend",

@@ -549,6 +549,9 @@ html {
   --avatar-img-logo-width: 280px;
   --custom-px-17: 17px;
   --zero: 0px;
+
+  /* volunteer header */
+  --volunteer-header-label-width: 214px;
 }
 
 .with-linebreaks {

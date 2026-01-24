@@ -1,14 +1,14 @@
 "use client";
 import { DatePickerWithLabel } from "@/components/core/common/DatePicker";
 import { Modal } from "@/components/core/modal/Modal";
+import { de, enUS } from "date-fns/locale";
+import { VolunteerStateEngagementType } from "need4deed-sdk";
+import { useTranslation } from "react-i18next";
 import {
   CancelButton,
   DialogButtonGroup,
   LargePrimaryButton,
 } from "../VolunteerProfileDocumentSection/shared/DialogButtonGroup";
-import { de, enUS } from "date-fns/locale";
-import { VolunteerStateEngagementType } from "need4deed-sdk";
-import { useTranslation } from "react-i18next";
 import { createEngagementLabelMap, ENGAGEMENT_DESCRIPTION_KEYS } from "./constants";
 import {
   DateFieldContainer,
@@ -20,27 +20,23 @@ import {
   OptionsContainer,
   RadioOption,
 } from "./dialogStyles";
+import { UseEngagementStatusDialogReturn } from "./useEngagementStatusDialog";
 
 type Props = {
-  isOpen: boolean;
-  onClose: () => void;
-  onSave: () => void;
-  statusEngagement: VolunteerStateEngagementType;
-  onStatusChange: (status: VolunteerStateEngagementType) => void;
-  dateReturn: Date | undefined;
-  onDateReturnChange: (date: Date | undefined) => void;
-  isSaveDisabled: boolean;
+  dialog: UseEngagementStatusDialogReturn;
 };
 
 export const ChangeEngagementStatusDialog = ({
-  isOpen,
-  onClose,
-  onSave,
-  statusEngagement,
-  onStatusChange,
-  dateReturn,
-  onDateReturnChange,
-  isSaveDisabled,
+  dialog: {
+    isOpen,
+    closeDialog,
+    statusEngagement,
+    setStatusEngagement,
+    dateReturn,
+    setDateReturn,
+    saveDialog,
+    isSaveDisabled,
+  },
 }: Props) => {
   const { t, i18n } = useTranslation();
   const locale = i18n.language === "de" ? de : enUS;
@@ -52,7 +48,7 @@ export const ChangeEngagementStatusDialog = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={closeDialog}>
       <ModalContainer data-testid="change-engagement-status-dialog">
         <ModalTitle>{t("dashboard.volunteerProfile.volunteerHeader.modalData.title")}</ModalTitle>
 
@@ -64,7 +60,7 @@ export const ChangeEngagementStatusDialog = ({
                   type="radio"
                   name="engagement-status"
                   checked={statusEngagement === status}
-                  onChange={() => onStatusChange(status)}
+                  onChange={() => setStatusEngagement(status)}
                 />
                 <OptionLabel>{engagementLabelMap[status]}</OptionLabel>
               </RadioOption>
@@ -73,7 +69,7 @@ export const ChangeEngagementStatusDialog = ({
                 <DateFieldContainer>
                   <DatePickerWithLabel
                     date={dateReturn}
-                    onSelect={onDateReturnChange}
+                    onSelect={setDateReturn}
                     locale={locale}
                     allowFuture={true}
                     label={t(
@@ -88,10 +84,10 @@ export const ChangeEngagementStatusDialog = ({
         </OptionsContainer>
 
         <DialogButtonGroup>
-          <CancelButton onClick={onClose}>
+          <CancelButton onClick={closeDialog}>
             {t("dashboard.volunteerProfile.volunteerHeader.modalData.cancel")}
           </CancelButton>
-          <LargePrimaryButton onClick={onSave} disabled={isSaveDisabled} $disabled={isSaveDisabled}>
+          <LargePrimaryButton onClick={saveDialog} disabled={isSaveDisabled} $disabled={isSaveDisabled}>
             {t("dashboard.volunteerProfile.volunteerHeader.modalData.save")}
           </LargePrimaryButton>
         </DialogButtonGroup>

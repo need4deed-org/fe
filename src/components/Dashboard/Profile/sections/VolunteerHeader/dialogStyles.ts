@@ -52,8 +52,8 @@ export const RadioOption = styled.label`
       &::after {
         content: "";
         position: absolute;
-        width: 12px;
-        height: 12px;
+        width: var(--spacing-12);
+        height: var(--spacing-12);
         border-radius: var(--percent-50);
         background-color: var(--color-blue-700);
         top: var(--percent-50);

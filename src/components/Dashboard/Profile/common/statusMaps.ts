@@ -86,8 +86,8 @@ export const statusTextColorMap: Partial<Record<StatusValue, string>> = {
 };
 
 export const statusBorderRadiusMap: Partial<Record<StatusValue, string>> = {
-  [VolunteerStateTypeType.ACCOMPANYING]: "12px",
-  [VolunteerStateTypeType.EVENTS]: "12px",
-  [VolunteerStateTypeType.REGULAR]: "12px",
-  [VolunteerStateTypeType.REGULAR_ACCOMPANYING]: "12px",
+  [VolunteerStateTypeType.ACCOMPANYING]: "var(--border-radius-medium)",
+  [VolunteerStateTypeType.EVENTS]: "var(--border-radius-medium)",
+  [VolunteerStateTypeType.REGULAR]: "var(--border-radius-medium)",
+  [VolunteerStateTypeType.REGULAR_ACCOMPANYING]: "var(--border-radius-medium)",
 };

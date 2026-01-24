@@ -1,8 +1,8 @@
 import { useUpdateVolunteerStatus, VolunteerStatusUpdateData } from "@/hooks/useUpdateVolunteerStatus";
 import { ApiVolunteerGet, VolunteerStateEngagementType } from "need4deed-sdk";
-import { useState, useCallback, useMemo } from "react";
+import { useState, useMemo } from "react";
 
-type UseEngagementStatusDialogReturn = {
+export type UseEngagementStatusDialogReturn = {
   isOpen: boolean;
   statusEngagement: VolunteerStateEngagementType;
   dateReturn: Date | undefined;
@@ -18,15 +18,12 @@ type UseEngagementStatusDialogReturn = {
 export const useEngagementStatusDialog = (volunteer: ApiVolunteerGet): UseEngagementStatusDialogReturn => {
   const { mutate: updateStatus } = useUpdateVolunteerStatus(volunteer.id);
 
-  const getInitialDate = useCallback(
-    (): Date | undefined => (volunteer.dateReturn ? new Date(volunteer.dateReturn) : undefined),
-    [volunteer.dateReturn],
-  );
+  const initialDate = volunteer.dateReturn ? new Date(volunteer.dateReturn) : undefined;
 
   const [isOpen, setIsOpen] = useState(false);
   const [statusEngagement, setStatusEngagement] = useState<VolunteerStateEngagementType>(volunteer.statusEngagement);
-  const [dateReturn, setDateReturn] = useState<Date | undefined>(getInitialDate());
-  const [initialDateReturn, setInitialDateReturn] = useState<Date | undefined>(getInitialDate());
+  const [dateReturn, setDateReturn] = useState<Date | undefined>(initialDate);
+  const [initialDateReturn, setInitialDateReturn] = useState<Date | undefined>(initialDate);
 
   const isSaveDisabled = useMemo(
     () =>
@@ -36,22 +33,19 @@ export const useEngagementStatusDialog = (volunteer: ApiVolunteerGet): UseEngage
     [statusEngagement, volunteer.statusEngagement, dateReturn, initialDateReturn],
   );
 
-  const openDialog = useCallback(() => {
+  const openDialog = () => {
     setIsOpen(true);
-    const initialDate = getInitialDate();
     setDateReturn(initialDate);
     setInitialDateReturn(initialDate);
-  }, [getInitialDate]);
-
-  const closeDialog = useCallback(() => {
+  };
+  const closeDialog = () => {
     setStatusEngagement(volunteer.statusEngagement);
-    const initialDate = getInitialDate();
     setDateReturn(initialDate);
     setInitialDateReturn(initialDate);
     setIsOpen(false);
-  }, [volunteer.statusEngagement, getInitialDate]);
+  };
 
-  const saveDialog = useCallback(() => {
+  const saveDialog = () => {
     const isTempUnavailable = statusEngagement === VolunteerStateEngagementType.TEMP_UNAVAILABLE;
 
     const payload: VolunteerStatusUpdateData = {
@@ -70,7 +64,7 @@ export const useEngagementStatusDialog = (volunteer: ApiVolunteerGet): UseEngage
         setIsOpen(false);
       },
     });
-  }, [statusEngagement, dateReturn, updateStatus]);
+  };
 
   return {
     isOpen,

@@ -2,15 +2,8 @@ import { Paragraph } from "@/components/styled/text";
 
 import React from "react";
 import styled from "styled-components";
-import {
-  statusBorderRadiusMap,
-  statusColorMap,
-  statusIconMap,
-  statusTextColorMap,
-  StatusValue,
-} from "./statusMaps";
+import { statusBorderRadiusMap, statusColorMap, statusIconMap, statusTextColorMap, StatusValue } from "./statusMaps";
 
-/* StatusDiv now accepts bg and borderRadius props so they can be set per-status */
 type StatusDivProps = {
   bg?: string;
   $borderRadius?: string;

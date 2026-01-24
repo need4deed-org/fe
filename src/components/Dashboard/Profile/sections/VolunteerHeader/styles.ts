@@ -42,7 +42,7 @@ export const NameSection = styled.div`
 export const Name = styled.h2`
   font-size: var(--font-size-2xl);
   font-weight: var(--font-weight-semibold);
-  line-height: 36px;
+  line-height: var(--space-xl);
   letter-spacing: var(--letter-spacing-tight);
   color: var(--color-blue-700);
   margin: 0;
@@ -51,7 +51,7 @@ export const Name = styled.h2`
 export const VolunteerSince = styled.p`
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-regular);
-  line-height: 24px;
+  line-height: var(--space-lg);
   letter-spacing: var(--letter-spacing-tight);
   color: var(--color-blue-700);
   margin: 0;
@@ -75,11 +75,11 @@ export const StatusRow = styled.div`
   h4 {
     font-size: var(--font-size-lg);
     font-weight: var(--font-weight-bold);
-    line-height: 28px;
+    line-height: calc(var(--space-lg) + 4px);
     letter-spacing: var(--letter-spacing-tight);
     color: var(--color-blue-700);
     margin: 0;
-    width: 214px;
+    width: var(--volunteer-header-label-width);
     flex-shrink: 0;
   }
 `;
@@ -115,7 +115,7 @@ export const EditButton = styled.button`
   padding: 0;
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-semibold);
-  line-height: 24px;
+  line-height: var(--space-lg);
   letter-spacing: var(--letter-spacing-tight);
   cursor: pointer;
   text-decoration: none;
