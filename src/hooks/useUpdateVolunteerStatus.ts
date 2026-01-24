@@ -2,8 +2,8 @@ import { apiPathVolunteer } from "@/config/constants";
 import { useMutationQuery } from "@/hooks";
 import { ApiVolunteerGet } from "need4deed-sdk";
 
-type VolunteerStatusUpdateData = Pick<ApiVolunteerGet, "statusEngagement"> & {
-  dateReturn: string | null;
+export type VolunteerStatusUpdateData = Pick<ApiVolunteerGet, "statusEngagement"> & {
+  dateReturn?: string;
 };
 
 export const useUpdateVolunteerStatus = (volunteerId: number) => {

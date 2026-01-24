@@ -1,4 +1,4 @@
-import { useUpdateVolunteerStatus } from "@/hooks/useUpdateVolunteerStatus";
+import { useUpdateVolunteerStatus, VolunteerStatusUpdateData } from "@/hooks/useUpdateVolunteerStatus";
 import { ApiVolunteerGet, VolunteerStateEngagementType } from "need4deed-sdk";
 import { useState, useCallback, useMemo } from "react";
 
@@ -52,18 +52,19 @@ export const useEngagementStatusDialog = (volunteer: ApiVolunteerGet): UseEngage
   }, [volunteer.statusEngagement, getInitialDate]);
 
   const saveDialog = useCallback(() => {
-    // Always send dateReturn: actual value or null to reset previous value on server
-    const payload: { statusEngagement: VolunteerStateEngagementType; dateReturn: string | null } = {
+    const isTempUnavailable = statusEngagement === VolunteerStateEngagementType.TEMP_UNAVAILABLE;
+
+    const payload: VolunteerStatusUpdateData = {
       statusEngagement,
-      dateReturn:
-        statusEngagement === VolunteerStateEngagementType.TEMP_UNAVAILABLE && dateReturn
-          ? dateReturn.toISOString()
-          : null,
     };
+
+    if (statusEngagement === VolunteerStateEngagementType.TEMP_UNAVAILABLE && dateReturn) {
+      payload.dateReturn = dateReturn.toISOString();
+    }
 
     updateStatus(payload, {
       onSuccess: () => {
-        if (statusEngagement === VolunteerStateEngagementType.TEMP_UNAVAILABLE && dateReturn) {
+        if (isTempUnavailable && dateReturn) {
           setInitialDateReturn(dateReturn);
         }
         setIsOpen(false);
