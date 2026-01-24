@@ -452,8 +452,9 @@
             "description2": "Der/Die Freiwillige ist vorübergehend nicht für Einsätze verfügbar.",
             "inactive": "Inaktiv",
             "description3": "Der/Die Freiwillige ist nicht mehr im Programm aktiv.",
-            "returnDate": "Rückkehrdatum",
-            "returnDatePlaceHolder": "Rückkehrdatum auswählen (optional)"
+            "dateReturn": "Rückkehrdatum",
+            "dateReturnPlaceHolder": "Rückkehrdatum auswählen (optional)",
+            "dateReturnRequired": "Rückkehrdatum ist erforderlich für vorübergehend nicht verfügbar Status"
           },
           "cancel": "Abbrechen",
           "save": "Speichern"

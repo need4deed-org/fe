@@ -452,8 +452,8 @@
             "description2": "The volunteer is temporarily unavailable for assignments.",
             "inactive": "Inactive",
             "description3": "The volunteer is no longer active in the program.",
-            "returnDate": "Return date",
-            "returnDatePlaceHolder": "Select return date (optional)"
+            "dateReturn": "Return date",
+            "dateReturnPlaceHolder": "Select return date (optional)"
           },
           "cancel": "Cancel",
           "save": "Save"

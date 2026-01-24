@@ -39,10 +39,8 @@ export const VolunteerHeader = ({ volunteer }: Props) => {
   const fullName = `${volunteer.person.firstName} ${volunteer.person.lastName}`;
   const avatarUrl = getImageUrl(volunteer.person.avatarUrl || defaultAvatarVolunteerProfile);
 
-  const formatReturnDate = (date: Date | undefined): string =>
-    date
-      ? `${t("dashboard.volunteerProfile.volunteerHeader.until")} ${date.toLocaleDateString("de-DE")}`
-      : EMPTY_PLACEHOLDER_VALUE;
+  const formatDateReturn = (date: Date | undefined): string =>
+    `${t("dashboard.volunteerProfile.volunteerHeader.until")} ${date ? date.toLocaleDateString("de-DE") : EMPTY_PLACEHOLDER_VALUE}`;
 
   return (
     <>
@@ -50,12 +48,7 @@ export const VolunteerHeader = ({ volunteer }: Props) => {
         <Card>
           <ProfileContent>
             <AvatarContainer>
-              <Image
-                src={avatarUrl}
-                alt={volunteer.person.firstName}
-                fill
-                style={{ objectFit: "cover" }}
-              />
+              <Image src={avatarUrl} alt={volunteer.person.firstName} fill style={{ objectFit: "cover" }} />
             </AvatarContainer>
 
             <ProfileInfo>
@@ -73,7 +66,7 @@ export const VolunteerHeader = ({ volunteer }: Props) => {
                   label={engagementLabelMap[dialog.statusEngagement]}
                   extra={
                     dialog.statusEngagement === VolunteerStateEngagementType.TEMP_UNAVAILABLE && (
-                      <ReturnDateText>{formatReturnDate(dialog.returnDate)}</ReturnDateText>
+                      <ReturnDateText>{formatDateReturn(dialog.dateReturn)}</ReturnDateText>
                     )
                   }
                   action={
@@ -107,8 +100,8 @@ export const VolunteerHeader = ({ volunteer }: Props) => {
         onSave={dialog.saveDialog}
         statusEngagement={dialog.statusEngagement}
         onStatusChange={dialog.setStatusEngagement}
-        returnDate={dialog.returnDate}
-        onReturnDateChange={dialog.setReturnDate}
+        dateReturn={dialog.dateReturn}
+        onDateReturnChange={dialog.setDateReturn}
         isSaveDisabled={dialog.isSaveDisabled}
       />
     </>

@@ -5,90 +5,82 @@ import { useState, useCallback, useMemo } from "react";
 type UseEngagementStatusDialogReturn = {
   isOpen: boolean;
   statusEngagement: VolunteerStateEngagementType;
-  returnDate: Date | undefined;
+  dateReturn: Date | undefined;
   originalStatus: VolunteerStateEngagementType;
   isSaveDisabled: boolean;
   openDialog: () => void;
   closeDialog: () => void;
   saveDialog: () => void;
   setStatusEngagement: (status: VolunteerStateEngagementType) => void;
-  setReturnDate: (date: Date | undefined) => void;
+  setDateReturn: (date: Date | undefined) => void;
 };
 
-export const useEngagementStatusDialog = (
-  volunteer: ApiVolunteerGet,
-): UseEngagementStatusDialogReturn => {
+export const useEngagementStatusDialog = (volunteer: ApiVolunteerGet): UseEngagementStatusDialogReturn => {
   const { mutate: updateStatus } = useUpdateVolunteerStatus(volunteer.id);
 
   const getInitialDate = useCallback(
-    (): Date | undefined =>
-      volunteer.returnDate
-        ? new Date(volunteer.returnDate)
-        : volunteer.updatedAt
-          ? new Date(volunteer.updatedAt)
-          : undefined,
-    [volunteer.returnDate, volunteer.updatedAt],
+    (): Date | undefined => (volunteer.dateReturn ? new Date(volunteer.dateReturn) : undefined),
+    [volunteer.dateReturn],
   );
 
   const [isOpen, setIsOpen] = useState(false);
-  const [statusEngagement, setStatusEngagement] = useState<VolunteerStateEngagementType>(
-    volunteer.statusEngagement,
-  );
-  const [returnDate, setReturnDate] = useState<Date | undefined>(getInitialDate());
-  const [initialReturnDate, setInitialReturnDate] = useState<Date | undefined>(getInitialDate());
+  const [statusEngagement, setStatusEngagement] = useState<VolunteerStateEngagementType>(volunteer.statusEngagement);
+  const [dateReturn, setDateReturn] = useState<Date | undefined>(getInitialDate());
+  const [initialDateReturn, setInitialDateReturn] = useState<Date | undefined>(getInitialDate());
 
   const isSaveDisabled = useMemo(
     () =>
       statusEngagement === volunteer.statusEngagement &&
       (statusEngagement !== VolunteerStateEngagementType.TEMP_UNAVAILABLE ||
-        returnDate?.getTime() === initialReturnDate?.getTime()),
-    [statusEngagement, volunteer.statusEngagement, returnDate, initialReturnDate],
+        dateReturn?.getTime() === initialDateReturn?.getTime()),
+    [statusEngagement, volunteer.statusEngagement, dateReturn, initialDateReturn],
   );
 
   const openDialog = useCallback(() => {
     setIsOpen(true);
     const initialDate = getInitialDate();
-    setReturnDate(initialDate);
-    setInitialReturnDate(initialDate);
+    setDateReturn(initialDate);
+    setInitialDateReturn(initialDate);
   }, [getInitialDate]);
 
   const closeDialog = useCallback(() => {
     setStatusEngagement(volunteer.statusEngagement);
     const initialDate = getInitialDate();
-    setReturnDate(initialDate);
-    setInitialReturnDate(initialDate);
+    setDateReturn(initialDate);
+    setInitialDateReturn(initialDate);
     setIsOpen(false);
   }, [volunteer.statusEngagement, getInitialDate]);
 
   const saveDialog = useCallback(() => {
-    const payload: { statusEngagement: VolunteerStateEngagementType; returnDate?: string } = {
+    // Always send dateReturn: actual value or null to reset previous value on server
+    const payload: { statusEngagement: VolunteerStateEngagementType; dateReturn: string | null } = {
       statusEngagement,
+      dateReturn:
+        statusEngagement === VolunteerStateEngagementType.TEMP_UNAVAILABLE && dateReturn
+          ? dateReturn.toISOString()
+          : null,
     };
-
-    if (statusEngagement === VolunteerStateEngagementType.TEMP_UNAVAILABLE && returnDate) {
-      payload.returnDate = returnDate.toISOString();
-    }
 
     updateStatus(payload, {
       onSuccess: () => {
-        if (statusEngagement === VolunteerStateEngagementType.TEMP_UNAVAILABLE && returnDate) {
-          setInitialReturnDate(returnDate);
+        if (statusEngagement === VolunteerStateEngagementType.TEMP_UNAVAILABLE && dateReturn) {
+          setInitialDateReturn(dateReturn);
         }
         setIsOpen(false);
       },
     });
-  }, [statusEngagement, returnDate, updateStatus]);
+  }, [statusEngagement, dateReturn, updateStatus]);
 
   return {
     isOpen,
     statusEngagement,
-    returnDate,
+    dateReturn,
     originalStatus: volunteer.statusEngagement,
     isSaveDisabled,
     openDialog,
     closeDialog,
     saveDialog,
     setStatusEngagement,
-    setReturnDate,
+    setDateReturn,
   };
 };

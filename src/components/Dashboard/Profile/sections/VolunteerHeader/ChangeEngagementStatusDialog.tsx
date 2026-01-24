@@ -27,8 +27,8 @@ type Props = {
   onSave: () => void;
   statusEngagement: VolunteerStateEngagementType;
   onStatusChange: (status: VolunteerStateEngagementType) => void;
-  returnDate: Date | undefined;
-  onReturnDateChange: (date: Date | undefined) => void;
+  dateReturn: Date | undefined;
+  onDateReturnChange: (date: Date | undefined) => void;
   isSaveDisabled: boolean;
 };
 
@@ -38,8 +38,8 @@ export const ChangeEngagementStatusDialog = ({
   onSave,
   statusEngagement,
   onStatusChange,
-  returnDate,
-  onReturnDateChange,
+  dateReturn,
+  onDateReturnChange,
   isSaveDisabled,
 }: Props) => {
   const { t, i18n } = useTranslation();
@@ -72,12 +72,12 @@ export const ChangeEngagementStatusDialog = ({
               {status === VolunteerStateEngagementType.TEMP_UNAVAILABLE && statusEngagement === status && (
                 <DateFieldContainer>
                   <DatePickerWithLabel
-                    date={returnDate}
-                    onSelect={onReturnDateChange}
+                    date={dateReturn}
+                    onSelect={onDateReturnChange}
                     locale={locale}
                     allowFuture={true}
                     label={t(
-                      "dashboard.volunteerProfile.volunteerHeader.modalData.options.returnDate",
+                      "dashboard.volunteerProfile.volunteerHeader.modalData.options.dateReturn",
                       "Return date (optional)",
                     )}
                   />
