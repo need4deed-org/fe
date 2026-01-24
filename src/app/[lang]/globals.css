@@ -124,6 +124,8 @@ html {
   --color-red-500: rgba(240, 49, 18, 1);
   --color-red-600: rgba(208, 41, 13, 1);
 
+  --color-violet-50: rgba(245, 240, 255, 1);
+  --color-violet-100: rgba(225, 215, 245, 1);
   --color-violet-200: rgba(193, 178, 228, 1);
   --color-violet-400: rgba(147, 121, 209, 1);
   --color-violet-500: rgba(120, 88, 197, 1);
