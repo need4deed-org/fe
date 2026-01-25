@@ -50,11 +50,12 @@ export const useEngagementStatusDialog = (volunteer: ApiVolunteerGet): UseEngage
 
     const payload: VolunteerStatusUpdateData = {
       statusEngagement,
+      dateReturn:
+        statusEngagement === VolunteerStateEngagementType.TEMP_UNAVAILABLE && dateReturn
+          ? dateReturn.toISOString()
+          : // resets dateReturn if status is changes from TEMP_UNAVAILABLE to another status
+            null,
     };
-
-    if (statusEngagement === VolunteerStateEngagementType.TEMP_UNAVAILABLE && dateReturn) {
-      payload.dateReturn = dateReturn.toISOString();
-    }
 
     updateStatus(payload, {
       onSuccess: () => {
