@@ -2,7 +2,6 @@ import { TFunction } from "i18next";
 import {
   VolunteerStateEngagementType,
   VolunteerStateMatchType,
-  VolunteerStateTypeType,
 } from "need4deed-sdk";
 
 export const ENGAGEMENT_DESCRIPTION_KEYS: Record<VolunteerStateEngagementType, string> = {
@@ -51,22 +50,5 @@ export const createMatchLabelMap = (
   ),
   [VolunteerStateMatchType.NEEDS_REMATCH]: t(
     "dashboard.volunteerProfile.volunteerHeader.matchStatus_options.needsRematch",
-  ),
-});
-
-export const createVolunteerTypeLabelMap = (
-  t: TFunction,
-): Record<VolunteerStateTypeType, string> => ({
-  [VolunteerStateTypeType.ACCOMPANYING]: t(
-    "dashboard.volunteerProfile.volunteerHeader.volunteerType_options.accompanying",
-  ),
-  [VolunteerStateTypeType.REGULAR]: t(
-    "dashboard.volunteerProfile.volunteerHeader.volunteerType_options.regular",
-  ),
-  [VolunteerStateTypeType.EVENTS]: t(
-    "dashboard.volunteerProfile.volunteerHeader.volunteerType_options.events",
-  ),
-  [VolunteerStateTypeType.REGULAR_ACCOMPANYING]: t(
-    "dashboard.volunteerProfile.volunteerHeader.volunteerType_options.regular-accompanying",
   ),
 });

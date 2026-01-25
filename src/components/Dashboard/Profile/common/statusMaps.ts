@@ -17,6 +17,7 @@ import {
   Users,
 } from "@phosphor-icons/react";
 import {
+  OpportunityStatusType,
   VolunteerStateEngagementType,
   VolunteerStateMatchType,
   VolunteerStateType,
@@ -27,7 +28,8 @@ export type StatusValue =
   | VolunteerStateType
   | VolunteerStateEngagementType
   | VolunteerStateTypeType
-  | VolunteerStateMatchType;
+  | VolunteerStateMatchType
+  | OpportunityStatusType;
 
 export const statusColorMap = {
   [VolunteerStateType.NEW]: "var(--color-green-100)",
@@ -53,6 +55,9 @@ export const statusColorMap = {
   [VolunteerStateTypeType.EVENTS]: "var(--color-blue-50)",
   [VolunteerStateTypeType.REGULAR]: "var(--color-blue-50)",
   [VolunteerStateTypeType.REGULAR_ACCOMPANYING]: "var(--color-blue-50)",
+  [OpportunityStatusType.NEW]: "var(--color-green-100)",
+  [OpportunityStatusType.ACTIVE]: "var(--color-green-100)",
+  [OpportunityStatusType.PAST]: "var(--color-grey-50)",
 } as const satisfies Record<string, string>;
 
 export const statusIconMap = {
@@ -79,6 +84,9 @@ export const statusIconMap = {
   [VolunteerStateTypeType.EVENTS]: Users,
   [VolunteerStateTypeType.REGULAR]: Users,
   [VolunteerStateTypeType.REGULAR_ACCOMPANYING]: Users,
+  [OpportunityStatusType.NEW]: Sparkle,
+  [OpportunityStatusType.ACTIVE]: ChartLine,
+  [OpportunityStatusType.PAST]: StopCircle,
 } as const satisfies Record<string, React.ComponentType<{ size?: number; color?: string }>>;
 
 export const statusTextColorMap: Partial<Record<StatusValue, string>> = {

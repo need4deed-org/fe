@@ -9,7 +9,6 @@ import {
   DialogButtonGroup,
   LargePrimaryButton,
 } from "../VolunteerProfileDocumentSection/shared/DialogButtonGroup";
-import { createEngagementLabelMap, ENGAGEMENT_DESCRIPTION_KEYS } from "./constants";
 import {
   DateFieldContainer,
   ModalContainer,
@@ -19,7 +18,8 @@ import {
   OptionLabel,
   OptionsContainer,
   RadioOption,
-} from "./dialogStyles";
+} from "../../common";
+import { createEngagementLabelMap, ENGAGEMENT_DESCRIPTION_KEYS } from "./constants";
 import { UseEngagementStatusDialogReturn } from "./useEngagementStatusDialog";
 
 type Props = {

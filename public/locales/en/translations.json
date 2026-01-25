@@ -684,6 +684,33 @@
       "deleteConfirmTitle": "Delete appreciation?",
       "deleteConfirmText": "\"{{entryType}}\" appreciation entry will be permanently deleted."
     },
+    "opportunityProfile": {
+      "opportunityProfile": "Opportunity's profile",
+      "postedOn": "Posted on",
+      "currentStatus": "Current status",
+      "matchingStatus": "Matching status",
+      "status": {
+        "new": "New",
+        "active": "Active",
+        "past": "Past"
+      },
+      "statusDescriptions": {
+        "new_description": "Opportunity is newly created and not yet active",
+        "active_description": "Opportunity is currently active and accepting volunteers",
+        "past_description": "Opportunity has ended and is no longer active"
+      },
+      "matchStatus": {
+        "matched": "Matched",
+        "needRematch": "Need rematch",
+        "unmatched": "Unmatched"
+      },
+      "modalData": {
+        "title": "Change opportunity status",
+        "cancel": "Cancel",
+        "save": "Save"
+      },
+      "statusUpdateSuccess": "Opportunity status updated successfully"
+    },
     "communicationSection": {
       "title": "Communication Tracker",
       "addNew": "+ Register contact",

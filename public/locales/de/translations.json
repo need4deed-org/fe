@@ -685,6 +685,33 @@
       "deleteConfirmTitle": "Anerkennung löschen?",
       "deleteConfirmText": "\"{{entryType}}\" Anerkennungseintrag wird dauerhaft gelöscht."
     },
+    "opportunityProfile": {
+      "opportunityProfile": "Profil der Gelegenheit",
+      "postedOn": "Veröffentlicht am",
+      "currentStatus": "Aktueller Status",
+      "matchingStatus": "Matching-Status",
+      "status": {
+        "new": "Neu",
+        "active": "Aktiv",
+        "past": "Vergangen"
+      },
+      "statusDescriptions": {
+        "new_description": "Die Gelegenheit ist neu erstellt und noch nicht aktiv",
+        "active_description": "Die Gelegenheit ist derzeit aktiv und nimmt Freiwillige an",
+        "past_description": "Die Gelegenheit ist beendet und nicht mehr aktiv"
+      },
+      "matchStatus": {
+        "matched": "Gematcht",
+        "needRematch": "Neues Matching erforderlich",
+        "unmatched": "Nicht gematcht"
+      },
+      "modalData": {
+        "title": "Status der Gelegenheit ändern",
+        "cancel": "Abbrechen",
+        "save": "Speichern"
+      },
+      "statusUpdateSuccess": "Status der Gelegenheit erfolgreich aktualisiert"
+    },
     "communicationSection": {
       "title": "Kommunikationsverfolgung",
       "addNew": "+ Kontakt registrieren",

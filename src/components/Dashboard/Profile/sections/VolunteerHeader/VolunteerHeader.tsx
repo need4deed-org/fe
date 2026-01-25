@@ -5,22 +5,23 @@ import { ApiVolunteerGet, VolunteerStateEngagementType } from "need4deed-sdk";
 import Image from "next/image";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { ChangeEngagementStatusDialog } from "./ChangeEngagementStatusDialog";
-import { createEngagementLabelMap, createMatchLabelMap, createVolunteerTypeLabelMap } from "./constants";
-import { StatusRowField } from "./StatusRowField";
 import {
   AvatarContainer,
   Card,
+  createVolunteerTypeLabelMap,
   EditButton,
   HeaderContainer,
-  Name,
-  NameSection,
   ProfileContent,
   ProfileInfo,
   ReturnDateText,
+  StatusRowField,
   StatusSection,
-  VolunteerSince,
-} from "./styles";
+  Subtitle,
+  Title,
+  TitleSection,
+} from "../../common";
+import { ChangeEngagementStatusDialog } from "./ChangeEngagementStatusDialog";
+import { createEngagementLabelMap, createMatchLabelMap } from "./constants";
 import { useEngagementStatusDialog } from "./useEngagementStatusDialog";
 
 type Props = {
@@ -52,12 +53,12 @@ export const VolunteerHeader = ({ volunteer }: Props) => {
             </AvatarContainer>
 
             <ProfileInfo>
-              <NameSection>
-                <Name>{fullName}</Name>
-                <VolunteerSince>
+              <TitleSection>
+                <Title>{fullName}</Title>
+                <Subtitle>
                   {t("dashboard.volunteerProfile.volunteerHeader.volunteer_since")} {joinedSince}
-                </VolunteerSince>
-              </NameSection>
+                </Subtitle>
+              </TitleSection>
 
               <StatusSection data-testid="volunteer-header-status-section">
                 <StatusRowField

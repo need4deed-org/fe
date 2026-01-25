@@ -1,0 +1,92 @@
+"use client";
+import { EMPTY_PLACEHOLDER_VALUE } from "@/config/constants";
+import { formatDateTime } from "@/utils";
+import { ShootingStar } from "@phosphor-icons/react";
+import { ApiOpportunityGet, OpportunityStatusType } from "need4deed-sdk";
+import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
+import {
+  Card,
+  createVolunteerTypeLabelMap,
+  EditButton,
+  HeaderContainer,
+  IconContainer,
+  ProfileContent,
+  ProfileInfo,
+  StatusSection,
+  StatusRowField,
+  Subtitle,
+  Title,
+  TitleSection,
+} from "../../common";
+import { ChangeOpportunityStatusDialog } from "./ChangeOpportunityStatusDialog";
+import { useOpportunityStatusDialog } from "./useOpportunityStatusDialog";
+
+type Props = {
+  opportunity: ApiOpportunityGet;
+};
+
+export const OpportunityHeader = ({ opportunity }: Props) => {
+  const { t } = useTranslation();
+  const dialog = useOpportunityStatusDialog(opportunity);
+
+  const postedDate = opportunity.createdAt
+    ? formatDateTime(opportunity.createdAt)
+    : EMPTY_PLACEHOLDER_VALUE;
+
+  const statusLabels = useMemo(
+    () => ({
+      [OpportunityStatusType.NEW]: t("dashboard.opportunityProfile.status.new"),
+      [OpportunityStatusType.ACTIVE]: t("dashboard.opportunityProfile.status.active"),
+      [OpportunityStatusType.PAST]: t("dashboard.opportunityProfile.status.past"),
+    }),
+    [t],
+  );
+
+  const volunteerTypeLabelMap = useMemo(() => createVolunteerTypeLabelMap(t), [t]);
+
+  return (
+    <>
+      <HeaderContainer data-testid="opportunity-header">
+        <Card>
+          <ProfileContent>
+            <IconContainer data-testid="opportunity-header-icon">
+              <ShootingStar size={120} color="var(--color-blue-500)" weight="duotone" />
+            </IconContainer>
+
+            <ProfileInfo>
+              <TitleSection>
+                <Title>{opportunity.title}</Title>
+                <Subtitle>
+                  {t("dashboard.opportunityProfile.postedOn")} {postedDate}
+                </Subtitle>
+              </TitleSection>
+
+              <StatusSection data-testid="opportunity-header-status-section">
+                <StatusRowField
+                  title={t("dashboard.opportunityProfile.currentStatus")}
+                  status={dialog.statusOpportunity}
+                  label={statusLabels[dialog.statusOpportunity]}
+                  action={
+                    <EditButton onClick={dialog.openDialog}>
+                      {t("dashboard.volunteerProfile.volunteerHeader.change_status")}
+                    </EditButton>
+                  }
+                />
+
+                <StatusRowField
+                  title={t("dashboard.volunteerProfile.volunteerHeader.volunteerType_title")}
+                  status={opportunity.volunteerType}
+                  label={opportunity.volunteerType ? volunteerTypeLabelMap[opportunity.volunteerType] : undefined}
+                  showIcon={false}
+                />
+              </StatusSection>
+            </ProfileInfo>
+          </ProfileContent>
+        </Card>
+      </HeaderContainer>
+
+      <ChangeOpportunityStatusDialog dialog={dialog} />
+    </>
+  );
+};
