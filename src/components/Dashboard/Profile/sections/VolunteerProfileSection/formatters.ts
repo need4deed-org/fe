@@ -1,4 +1,5 @@
 import { getScheduleState } from "@/components/forms/utils";
+import { EMPTY_PLACEHOLDER_VALUE } from "@/config/constants";
 import { LanguageLevel, LanguageObject } from "@/types";
 import { TFunction } from "i18next";
 import { ApiVolunteerGet, VolunteerStateTypeType } from "need4deed-sdk";
@@ -56,7 +57,7 @@ export function formatLanguagesForDisplay(
   languageIdToTitle: Record<number, string>,
   t: TFunction,
 ): string {
-  if (!langs || langs.length === 0) return "–";
+  if (!langs || langs.length === 0) return EMPTY_PLACEHOLDER_VALUE;
   return langs
     .map((lang) => {
       const localizedTitle = languageIdToTitle[lang.id] || lang.title;
@@ -89,7 +90,7 @@ export function formatAvailability(avails: VolunteerAvailability, t: TFunction):
   if (!avails || avails.length === 0) {
     const defaultSchedule = getScheduleState();
     const hasSelectedSlots = defaultSchedule.some((day) => day.timeSlots.some((slot) => slot.selected));
-    if (!hasSelectedSlots) return "–";
+    if (!hasSelectedSlots) return EMPTY_PLACEHOLDER_VALUE;
   }
 
   const timeSlotGroups = new Map<string, string[]>();
@@ -133,6 +134,6 @@ export function getVolunteerTypeLabel(statusType: VolunteerStateTypeType | undef
 }
 
 export function formatLocationsForDisplay(locations: VolunteerLocations): string {
-  if (!locations || locations.length === 0) return "–";
+  if (!locations || locations.length === 0) return EMPTY_PLACEHOLDER_VALUE;
   return locations.map((loc) => loc.title).join(", ");
 }

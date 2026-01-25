@@ -1,14 +1,17 @@
 import type React from "react";
 import {
+  ArrowsClockwise,
   CalendarBlank,
   CalendarX,
   ChartLine,
+  CheckCircle,
   FlagIcon,
   HourglassIcon,
   LinkIcon,
   PhoneX,
   Plugs,
   PlugsConnected,
+  ProhibitInset,
   Sparkle,
   StopCircle,
   Users,
@@ -37,19 +40,19 @@ export const statusColorMap = {
   [VolunteerStateType.TEMP_INACTIVE]: "var(--color-gray-400)",
   [VolunteerStateType.INACTIVE]: "var(--color-grey-50)",
   [VolunteerStateEngagementType.ACTIVE]: "var(--color-green-100)",
-  [VolunteerStateEngagementType.AVAILABLE]: "var(--color-violet-50)",
+  [VolunteerStateEngagementType.AVAILABLE]: "var(--color-violet-100)",
   [VolunteerStateEngagementType.TEMP_UNAVAILABLE]: "var( --color-red-50)",
   [VolunteerStateEngagementType.UNRESPONSIVE]: "var(--color-grey-50)",
   [VolunteerStateEngagementType.INACTIVE]: "var(--color-grey-50)",
   [VolunteerStateEngagementType.NEW]: "var(--color-green-100)",
-  [VolunteerStateMatchType.NO_MATCHES]: "var(--color-red-50)",
-  [VolunteerStateMatchType.PENDING_MATCH]: "var(--color-amber-300)",
+  [VolunteerStateMatchType.NO_MATCHES]: "var(--color-grey-50)",
+  [VolunteerStateMatchType.PENDING_MATCH]: "var(--color-violet-100)",
   [VolunteerStateMatchType.MATCHED]: "var(--color-green-100)",
-  [VolunteerStateMatchType.NEEDS_REMATCH]: "var(--color-yellow-500)",
-  [VolunteerStateTypeType.ACCOMPANYING]: "var(--color-grey-50)",
-  [VolunteerStateTypeType.EVENTS]: "var(--color-pink-50)",
-  [VolunteerStateTypeType.REGULAR]: "var(--color-violet-50)",
-  [VolunteerStateTypeType.REGULAR_ACCOMPANYING]: "var(--color-indigo-50)",
+  [VolunteerStateMatchType.NEEDS_REMATCH]: "var(--color-red-50)",
+  [VolunteerStateTypeType.ACCOMPANYING]: "var(--color-blue-500)",
+  [VolunteerStateTypeType.EVENTS]: "var(--color-blue-50)",
+  [VolunteerStateTypeType.REGULAR]: "var(--color-blue-50)",
+  [VolunteerStateTypeType.REGULAR_ACCOMPANYING]: "var(--color-blue-50)",
 } as const satisfies Record<string, string>;
 
 export const statusIconMap = {
@@ -67,13 +70,24 @@ export const statusIconMap = {
   [VolunteerStateEngagementType.TEMP_UNAVAILABLE]: CalendarX,
   [VolunteerStateEngagementType.UNRESPONSIVE]: PhoneX,
   [VolunteerStateEngagementType.INACTIVE]: StopCircle,
-  [VolunteerStateEngagementType.NEW]: StopCircle,
-  [VolunteerStateMatchType.NO_MATCHES]: StopCircle,
-  [VolunteerStateMatchType.PENDING_MATCH]: StopCircle,
-  [VolunteerStateMatchType.MATCHED]: StopCircle,
-  [VolunteerStateMatchType.NEEDS_REMATCH]: StopCircle,
+  [VolunteerStateEngagementType.NEW]: Sparkle,
+  [VolunteerStateMatchType.NO_MATCHES]: ProhibitInset,
+  [VolunteerStateMatchType.PENDING_MATCH]: HourglassIcon,
+  [VolunteerStateMatchType.MATCHED]: CheckCircle,
+  [VolunteerStateMatchType.NEEDS_REMATCH]: ArrowsClockwise,
   [VolunteerStateTypeType.ACCOMPANYING]: Users,
   [VolunteerStateTypeType.EVENTS]: Users,
   [VolunteerStateTypeType.REGULAR]: Users,
   [VolunteerStateTypeType.REGULAR_ACCOMPANYING]: Users,
 } as const satisfies Record<string, React.ComponentType<{ size?: number; color?: string }>>;
+
+export const statusTextColorMap: Partial<Record<StatusValue, string>> = {
+  [VolunteerStateTypeType.ACCOMPANYING]: "var(--color-white)",
+};
+
+export const statusBorderRadiusMap: Partial<Record<StatusValue, string>> = {
+  [VolunteerStateTypeType.ACCOMPANYING]: "var(--border-radius-medium)",
+  [VolunteerStateTypeType.EVENTS]: "var(--border-radius-medium)",
+  [VolunteerStateTypeType.REGULAR]: "var(--border-radius-medium)",
+  [VolunteerStateTypeType.REGULAR_ACCOMPANYING]: "var(--border-radius-medium)",
+};

@@ -1,3 +1,5 @@
+import { EmptyPlaceholder } from "@/components/core/common/EmptyPlaceholder";
+import { EMPTY_PLACEHOLDER_VALUE } from "@/config/constants";
 import { useAppreciationTracker } from "@/hooks/useAppreciationTracker";
 import { PencilSimple, Trash } from "@phosphor-icons/react";
 import {
@@ -112,7 +114,7 @@ export const AppreciationSection = forwardRef<AppreciationSectionRef, Props>(fun
     if (entry.dateDue) {
       return `${t("dashboard.appreciationSection.statusDueTo")} ${formatDate(entry.dateDue)}`;
     }
-    return "–";
+    return EMPTY_PLACEHOLDER_VALUE;
   };
 
   return (
@@ -151,7 +153,7 @@ export const AppreciationSection = forwardRef<AppreciationSectionRef, Props>(fun
                     </StatusBadge>
                   </TableCell>
                   <TableCell $width="146px" $noWrap>
-                    {entry.dateDelivery ? formatDate(entry.dateDelivery) : "–"}
+                    {entry.dateDelivery ? formatDate(entry.dateDelivery) : <EmptyPlaceholder />}
                   </TableCell>
                   <ActionCell>
                     <ActionButton

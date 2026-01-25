@@ -61,3 +61,5 @@ export enum DashboardRoutes {
 export const questionMark = "?";
 
 export const supportedLangs = Object.values(Lang) as string[];
+
+export const EMPTY_PLACEHOLDER_VALUE = "–";

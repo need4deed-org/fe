@@ -1,3 +1,4 @@
+import { EmptyPlaceholder } from "@/components/core/common/EmptyPlaceholder";
 import { DownloadSimple, Eye, Trash, UploadSimple } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
 import { ActionButtonWithTooltip } from "./ActionButtonWithTooltip";
@@ -41,7 +42,7 @@ export function DocumentTableRow({
               month: "2-digit",
               year: "numeric",
             })
-          : "–"}
+          : <EmptyPlaceholder />}
       </Cell>
       <ActionCell>
         <ActionButtonWithTooltip

@@ -442,6 +442,7 @@
       "findOppButtonName": "Find Opportunity",
       "activities": "Activities",
       "volunteerHeader": {
+        "statusUpdateSuccess": "Status updated successfully",
         "modalData": {
           "title": "Change engagement status",
           "options": {
@@ -451,20 +452,30 @@
             "description2": "The volunteer is temporarily unavailable for assignments.",
             "inactive": "Inactive",
             "description3": "The volunteer is no longer active in the program.",
-            "returnDate": "Return date",
-            "returnDatePlaceHolder": "Select return date (optional)"
+            "dateReturn": "Return date",
+            "dateReturnPlaceHolder": "Select return date (optional)"
           },
           "cancel": "Cancel",
           "save": "Save"
         },
         "notSet": "Not set",
         "change_status": "Change status",
+        "until": "until",
+        "volunteer_since": "Volunteer since",
         "engagementStatus_title": "Engagement status",
         "engagementStatus_options": {
           "new": "New",
+          "new_description": "We did not talk to him",
           "active": "Active",
-          "tempInactive": "Temp. inactive",
-          "inactive": "Inactive"
+          "active_description": "Active",
+          "available": "Available",
+          "available_description": "We talked to her, she can volunteer",
+          "tempUnavailable": "Temporarily unavailable",
+          "tempUnavailable_description": "We know that the person cannot be active in the next x time",
+          "inactive": "Inactive",
+          "inactive_description": "This volunteer can't volunteer anymore",
+          "unresponsive": "Unresponsive",
+          "unresponsive_description": "Never replied after few times"
         },
         "volunteerType_title": "Volunteer type",
         "volunteerType_options": {
@@ -477,11 +488,12 @@
           "festival": "Festival",
           "weekend-only": "Weekend Only"
         },
-        "matchStatus_title": "Match status",
+        "matchStatus_title": "Matching status",
         "matchStatus_options": {
+          "noMatches": "No matches",
+          "pendingMatch": "Pending match",
           "matched": "Matched",
-          "needsRematch": "Needs to be rematched",
-          "unmatched": "Unmatched"
+          "needsRematch": "Needs rematch"
         },
         "communication_title": "Communication",
         "communication_options": {
