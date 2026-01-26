@@ -50,7 +50,7 @@ export const ProfileStatusBadge = ({ status, label, showIcon = true }: Props) =>
     <StyledBadge $bg={bg} $textColor={textColor} data-testid="profile-status-badge">
       {showIcon && IconComp && (
         <IconWrapper>
-          <IconComp size={20} color={textColor} weight="fill" />
+          <IconComp size={20} color={textColor} />
         </IconWrapper>
       )}
       <span>{label}</span>
