@@ -1,14 +1,14 @@
-import { useState } from "react";
-import styled from "styled-components";
-import { Heading4, Paragraph } from "@/components/styled/text";
-import { Opportunity } from "./mockOpps/tempTypes";
 import { IconDiv } from "@/components/styled/container";
-import { iconNameMap } from "../../common/icon";
-import { CategoryTitle, getIconName } from "./mockOpps/tempUtils";
-import StatusBadge from "../../common/StatusBadge";
-import { VolunteerStateType } from "need4deed-sdk";
-import { useTranslation } from "react-i18next";
+import { Heading4, Paragraph } from "@/components/styled/text";
 import { CaretDownIcon, CaretUpIcon } from "@phosphor-icons/react";
+import { VolunteerStateMatchType } from "need4deed-sdk";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import styled from "styled-components";
+import { iconNameMap } from "../../common/icon";
+import StatusBadge from "../../common/StatusBadge";
+import { Opportunity } from "./mockOpps/tempTypes";
+import { CategoryTitle, getIconName } from "./mockOpps/tempUtils";
 import OpportunityDetail from "./OpportunityDetail";
 
 interface Props {
@@ -32,7 +32,7 @@ export default function AccordionOpportunity({ opportunity }: Props) {
               {title}
             </Heading4>
             {/* Todo: this will be updated later when opps fetched from API */}
-            <StatusBadge status={VolunteerStateType.MATCHED} />
+            <StatusBadge status={VolunteerStateMatchType.MATCHED} />
           </HeaderInfoAvatarNameContainer>
           {/* Todo: this will be updated later when opps fetched from API */}
           <Paragraph>Matched on 12.02.2025</Paragraph>
