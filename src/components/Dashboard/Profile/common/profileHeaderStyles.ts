@@ -8,6 +8,8 @@ export const HeaderContainer = styled.div`
 
 export const Card = styled.div`
   background: var(--color-white);
+  border-radius: var(--volunteer-profile-section-card-border-radius);
+  padding: var(--volunteer-profile-section-card-padding);
 `;
 
 export const ProfileContent = styled.div`
