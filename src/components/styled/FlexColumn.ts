@@ -10,6 +10,6 @@ export const FlexColumn = styled.div<FlexColumnProps>`
   display: flex;
   flex-direction: column;
   gap: ${(props) => props.$gap ?? "0"};
-  align-items: ${(props) => props.$alignItems ?? "flex-start"};
-  width: ${(props) => props.$width ?? "auto"};
+  ${(props) => props.$alignItems && `align-items: ${props.$alignItems};`}
+  ${(props) => props.$width && `width: ${props.$width};`}
 `;
