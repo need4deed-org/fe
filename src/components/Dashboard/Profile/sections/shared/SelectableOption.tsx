@@ -16,8 +16,8 @@ const Container = styled.div<{ $isSelected?: boolean }>`
 `;
 
 const Circle = styled.div<{ $isSelected?: boolean }>`
-  width: var(--selectable-option-circle-size);
-  height: var(--selectable-option-circle-size);
+  width: var(--icon-size-24);
+  height: var(--icon-size-24);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -35,8 +35,8 @@ const Label = styled.span<{ $isSelected?: boolean }>`
     props.$isSelected
       ? "var(--font-weight-semi-bold)"
       : "var(--font-weight-regular)"};
-  font-size: var(--selectable-option-font-size);
-  line-height: var(--selectable-option-line-height);
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-24);
   letter-spacing: var(--selectable-option-letter-spacing);
   color: var(--color-midnight);
 `;

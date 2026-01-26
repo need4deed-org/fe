@@ -14,7 +14,7 @@ const StyledBadge = styled.div<{
   border-radius: ${({ $borderRadius }) => $borderRadius};
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-semibold);
-  line-height: 24px;
+  line-height: var(--line-height-24);
   letter-spacing: var(--letter-spacing-tight);
   width: fit-content;
   background-color: ${({ $bg }) => $bg};

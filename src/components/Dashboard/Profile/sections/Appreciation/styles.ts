@@ -38,7 +38,7 @@ export const ExpandedSection = styled.div`
   display: flex;
   flex-direction: column;
   gap: var(--spacing-16);
-  padding-left: var(--expanded-section-padding-left);
+  padding-left: var(--spacing-32);
   border-left: var(--expanded-section-border-width) solid var(--expanded-section-border-color);
   margin-top: var(--spacing-8);
 `;
@@ -46,8 +46,8 @@ export const ExpandedSection = styled.div`
 export const SubQuestion = styled.p`
   font-family: var(--bs-body-font-family);
   font-weight: var(--font-weight-regular);
-  font-size: var(--sub-question-font-size);
-  line-height: var(--sub-question-line-height);
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-24);
   letter-spacing: var(--sub-question-letter-spacing);
   color: var(--color-grey-700);
   margin: 0;

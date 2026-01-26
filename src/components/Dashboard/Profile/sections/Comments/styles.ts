@@ -24,7 +24,7 @@ export const CommentContent = styled.div`
   flex-direction: column;
   align-items: flex-start;
   padding: 0;
-  gap: var(--profile-section-gap);
+  gap: var(--spacing-8);
   flex-grow: 1;
 `;
 
@@ -39,8 +39,8 @@ export const TopInfo = styled.div`
 export const AuthorName = styled.div`
   font-style: normal;
   font-weight: var(--comments-author-font-weight);
-  font-size: var(--comments-author-font-size);
-  line-height: var(--comments-author-line-height);
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-24);
   letter-spacing: var(--letter-spacing-tight);
   color: var(--color-midnight);
 `;
@@ -48,8 +48,8 @@ export const AuthorName = styled.div`
 export const Timestamp = styled.div`
   font-style: normal;
   font-weight: var(--comments-timestamp-font-weight);
-  font-size: var(--comments-timestamp-font-size);
-  line-height: var(--comments-timestamp-line-height);
+  font-size: var(--font-size-16);
+  line-height: var(--line-height-20);
   letter-spacing: var(--letter-spacing-tight);
   color: var(--color-grey-500);
 `;
@@ -58,8 +58,8 @@ export const CommentText = styled.div`
   width: 100%;
   font-style: normal;
   font-weight: var(--comments-text-font-weight);
-  font-size: var(--comments-text-font-size);
-  line-height: var(--comments-text-line-height);
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-24);
   letter-spacing: var(--letter-spacing-tight);
   color: var(--color-midnight);
   align-self: stretch;

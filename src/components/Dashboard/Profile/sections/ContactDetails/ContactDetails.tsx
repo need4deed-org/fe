@@ -13,11 +13,11 @@ import { ContactDetailsFormData, createContactDetailsSchema } from "./contactDet
 const Container = styled.div<{ $isEditing: boolean }>`
   display: flex;
   flex-direction: column;
-  padding: var(--profile-section-padding);
-  gap: ${(props) => (props.$isEditing ? "var(--profile-section-gap-editing)" : "var(--profile-section-gap)")};
+  padding: var(--spacing-24);
+  gap: ${(props) => (props.$isEditing ? "var(--spacing-16)" : "var(--spacing-8)")};
   background: var(--color-white);
   border-radius: var(--card-border-radius);
-  margin-bottom: var(--profile-section-margin-bottom);
+  margin-bottom: var(--spacing-24);
 `;
 
 const Details = styled.div`
@@ -25,7 +25,7 @@ const Details = styled.div`
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
-  gap: var(--profile-section-gap);
+  gap: var(--spacing-8);
 `;
 
 const ButtonRow = styled.div`
@@ -33,7 +33,7 @@ const ButtonRow = styled.div`
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-  gap: var(--profile-section-button-row-gap);
+  gap: var(--spacing-24);
   width: 100%;
 `;
 

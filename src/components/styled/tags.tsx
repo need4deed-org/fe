@@ -7,10 +7,10 @@ interface TagProps {
 export const Tag = styled.div<TagProps>`
   display: flex;
   flex-direction: row;
-  border-radius: var(--activity-tag-border-radius);
+  border-radius: var(--border-radius-xs);
   padding: var(--activity-tag-padding);
   background-color: ${(props) => props["$backgroundColor"]};
-  gap: var(--activity-tag-gap);
+  gap: var(--spacing-8);
 `;
 
 export const ATag = styled.a`

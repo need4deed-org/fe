@@ -8,7 +8,7 @@ const FieldRow = styled.div`
   flex-direction: row;
   align-items: flex-start;
   width: 100%;
-  gap: var(--profile-section-field-row-gap);
+  gap: var(--spacing-32);
   padding: var(--profile-section-field-row-padding);
   border-bottom: none;
 
@@ -35,7 +35,7 @@ const FieldValue = styled.div`
 const VolunteerTypeBadge = styled.div`
   display: inline-flex;
   align-items: center;
-  gap: var(--profile-section-badge-gap);
+  gap: var(--spacing-8);
   padding: var(--profile-section-badge-padding);
   background-color: var(--color-blue-500);
   color: var(--color-white);
@@ -47,7 +47,7 @@ const VolunteerTypeBadge = styled.div`
 const TagsWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: var(--profile-section-tags-gap);
+  gap: var(--spacing-8);
 `;
 
 type Props = {

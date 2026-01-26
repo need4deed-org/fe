@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const ModalContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: var(--dialog-gap);
+  gap: var(--spacing-24);
   padding: 0;
   height: 100%;
 `;
@@ -20,27 +20,27 @@ export const ModalTitle = styled.h3`
 export const OptionsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: var(--dialog-gap);
+  gap: var(--spacing-24);
 `;
 
 export const OptionItem = styled.div`
   display: flex;
   flex-direction: column;
-  gap: var(--dialog-option-gap);
+  gap: var(--spacing-8);
 `;
 
 export const RadioOption = styled.label`
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: var(--dialog-option-gap);
+  gap: var(--spacing-8);
   cursor: pointer;
 
   input[type="radio"] {
     appearance: none;
-    width: var(--dialog-radio-size);
-    height: var(--dialog-radio-size);
-    border: var(--dialog-radio-border-width) solid var(--color-grey-400);
+    width: var(--icon-size-24);
+    height: var(--icon-size-24);
+    border: var(--border-width-medium) solid var(--color-grey-400);
     border-radius: var(--percent-50);
     cursor: pointer;
     position: relative;
@@ -65,18 +65,18 @@ export const RadioOption = styled.label`
 `;
 
 export const OptionLabel = styled.span`
-  font-size: var(--dialog-label-font-size);
+  font-size: var(--font-size-lg);
   font-weight: var(--font-weight-regular);
-  line-height: var(--dialog-label-line-height);
+  line-height: var(--line-height-24);
   letter-spacing: var(--letter-spacing-tight);
   color: var(--color-blue-700);
   flex: 1;
 `;
 
 export const OptionDescription = styled.p`
-  font-size: var(--dialog-description-font-size);
+  font-size: var(--font-size-16);
   font-weight: var(--font-weight-regular);
-  line-height: var(--dialog-description-line-height);
+  line-height: var(--line-height-20);
   letter-spacing: var(--letter-spacing-tight);
   color: var(--color-grey-700);
   margin: 0;
