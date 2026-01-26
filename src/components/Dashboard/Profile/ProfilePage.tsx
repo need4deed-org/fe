@@ -1,21 +1,20 @@
 import { Heading2 } from "@/components/styled/text";
 import { ArrowLeftIcon } from "@phosphor-icons/react";
-import { ApiOpportunityGet, ApiVolunteerGet } from "need4deed-sdk";
+import { ApiVolunteerGet } from "need4deed-sdk";
 import Link from "next/link";
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { SectionCard, SectionCardProps } from "./common/SectionCard";
-import { ProfileEntityType } from "./ProfileLayout";
 import { Appreciation, AppreciationRef } from "./sections/Appreciation";
 import { Comments } from "./sections/Comments";
 import { CommunicationTracker, CommunicationTrackerRef } from "./sections/CommunicationTracker";
 import { ContactDetails, ContactDetailsRef } from "./sections/ContactDetails";
-import { ProfileHeader, VolunteerHeader, OpportunityHeader } from "./sections/ProfileHeader";
+import { ProfileHeader } from "./sections/ProfileHeader";
 import VolunteerOpportunities from "./sections/VolunteerOpportunities/VolunteerOpportunities";
-import { VolunteerProfileDocument } from "./sections/VolunteerProfileDocument";
 import { VolunteerProfile, VolunteerProfileRef } from "./sections/VolunteerProfile";
-import { IconName, ProfileCardTypes } from "./types/types";
+import { VolunteerProfileDocument } from "./sections/VolunteerProfileDocument";
+import { IconName, ProfileEntityProps } from "./types/types";
 
 const PageContainer = styled.div`
   display: flex;
@@ -35,39 +34,27 @@ const BackLink = styled(Link)`
   transition: var(--volunteer-profile-back-link-transition);
 `;
 
-interface ProfilePageProps {
-  type?: ProfileCardTypes;
-  data: ApiVolunteerGet | ApiOpportunityGet;
-  entityType: ProfileEntityType;
-}
-
-const ProfilePage = ({ data, entityType }: ProfilePageProps) => {
+const ProfilePage = ({ volunteer, opportunity }: ProfileEntityProps) => {
   const { t, i18n } = useTranslation();
   const contactDetailsRef = useRef<ContactDetailsRef>(null);
   const volunteerProfileRef = useRef<VolunteerProfileRef>(null);
   const communicationTrackerRef = useRef<CommunicationTrackerRef>(null);
   const appreciationRef = useRef<AppreciationRef>(null);
 
-  // Type guards
-  const isVolunteer = entityType === "volunteer";
-  const volunteer = isVolunteer ? (data as ApiVolunteerGet) : undefined;
-  const opportunity = !isVolunteer ? (data as ApiOpportunityGet) : undefined;
-
-  // Sections for volunteer profile
-  const volunteerSections: SectionCardProps[] = [
+  const getVolunteerSections = (vol: ApiVolunteerGet): SectionCardProps[] => [
     {
       iconName: IconName.ChatsCircle,
       title: t("dashboard.volunteerProfile.contactDetailsTitle"),
       headerButtonName: t("dashboard.volunteerProfile.editButtonName"),
       onHeaderButtonClick: () => contactDetailsRef.current?.handleEditClick(),
-      subComponent: volunteer ? <ContactDetails ref={contactDetailsRef} volunteer={volunteer} /> : null,
+      subComponent: <ContactDetails ref={contactDetailsRef} volunteer={vol} />,
     },
     {
       iconName: IconName.UserCircle,
       title: t("dashboard.volunteerProfile.volunteerProfile"),
       headerButtonName: t("dashboard.volunteerProfile.editButtonName"),
       onHeaderButtonClick: () => volunteerProfileRef.current?.handleEditClick(),
-      subComponent: volunteer ? <VolunteerProfile ref={volunteerProfileRef} volunteer={volunteer} /> : null,
+      subComponent: <VolunteerProfile ref={volunteerProfileRef} volunteer={vol} />,
     },
     {
       iconName: IconName.ShootingStar,
@@ -80,26 +67,24 @@ const ProfilePage = ({ data, entityType }: ProfilePageProps) => {
       title: t("dashboard.communicationSection.title"),
       headerButtonName: t("dashboard.communicationSection.addNew"),
       onHeaderButtonClick: () => communicationTrackerRef.current?.handleAddNew(),
-      subComponent: volunteer ? (
-        <CommunicationTracker ref={communicationTrackerRef} volunteer={volunteer} />
-      ) : null,
+      subComponent: <CommunicationTracker ref={communicationTrackerRef} volunteer={vol} />,
     },
     {
       iconName: IconName.ChatCircleDots,
-      title: `${t("dashboard.volunteerProfile.coordinatorComments")} • ${volunteer?.comments?.length ?? 0}`,
-      subComponent: volunteer ? <Comments volunteer={volunteer} /> : null,
+      title: `${t("dashboard.volunteerProfile.coordinatorComments")} • ${vol.comments?.length ?? 0}`,
+      subComponent: <Comments volunteer={vol} />,
     },
     {
       iconName: IconName.Gift,
       title: t("dashboard.appreciationSection.title"),
       headerButtonName: t("dashboard.appreciationSection.addNew"),
       onHeaderButtonClick: () => appreciationRef.current?.handleAddNew(),
-      subComponent: volunteer ? <Appreciation ref={appreciationRef} volunteer={volunteer} /> : null,
+      subComponent: <Appreciation ref={appreciationRef} volunteer={vol} />,
     },
     {
       iconName: IconName.ClipboardText,
       title: t("dashboard.volunteerProfile.documents"),
-      subComponent: volunteer ? <VolunteerProfileDocument volunteer={volunteer} /> : null,
+      subComponent: <VolunteerProfileDocument volunteer={vol} />,
     },
     {
       iconName: IconName.ChartLine,
@@ -108,13 +93,9 @@ const ProfilePage = ({ data, entityType }: ProfilePageProps) => {
     },
   ];
 
-  // Sections for opportunity profile - initially showing just basic info
-  // More sections will be added later
-  const opportunitySections: SectionCardProps[] = [
-    // Placeholder for future sections
-  ];
+  const getOpportunitySections = (): SectionCardProps[] => [];
 
-  const sections = isVolunteer ? volunteerSections : opportunitySections;
+  const sections = volunteer ? getVolunteerSections(volunteer) : getOpportunitySections();
 
   return (
     <PageContainer>
@@ -124,18 +105,12 @@ const ProfilePage = ({ data, entityType }: ProfilePageProps) => {
       </BackLink>
 
       <Heading2>
-        {isVolunteer
+        {volunteer
           ? t("dashboard.volunteerProfile.volunteersProfile")
           : t("dashboard.opportunityProfile.opportunityProfile")}
       </Heading2>
 
-      <ProfileHeader>
-        {isVolunteer && volunteer ? (
-          <VolunteerHeader volunteer={volunteer} />
-        ) : opportunity ? (
-          <OpportunityHeader opportunity={opportunity} />
-        ) : null}
-      </ProfileHeader>
+      {volunteer ? <ProfileHeader volunteer={volunteer} /> : <ProfileHeader opportunity={opportunity} />}
 
       {sections.map((s) => (
         <SectionCard key={s.title} {...s} />
