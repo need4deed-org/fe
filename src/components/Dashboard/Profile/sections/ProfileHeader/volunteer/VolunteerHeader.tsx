@@ -87,7 +87,6 @@ export const VolunteerHeader = ({ volunteer }: Props) => {
                   title={t("dashboard.volunteerProfile.volunteerHeader.volunteerType_title")}
                   status={volunteer.statusType}
                   label={volunteer.statusType ? volunteerTypeLabelMap[volunteer.statusType] : undefined}
-                  showIcon={false}
                 />
               </StatusSection>
             </ProfileInfo>

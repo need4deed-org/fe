@@ -1,5 +1,6 @@
 import { VolunteerStateTypeType } from "need4deed-sdk";
 import styled from "styled-components";
+import { isEnumValue } from "ts-type-safe";
 import { statusColorMap, statusIconMap, StatusValue } from "../../../common/statusMaps";
 
 const StyledBadge = styled.div<{
@@ -34,16 +35,22 @@ type Props = {
   showIcon?: boolean;
 };
 
+const DEFAULT_BG = "var(--color-grey-50)";
+const DEFAULT_TEXT_COLOR = "var(--color-blue-700)";
+const VOLUNTEER_TYPE_TEXT_COLOR = "var(--color-white)";
+
+const isVolunteerType = (status: StatusValue) => isEnumValue(VolunteerStateTypeType, status);
+
 export const ProfileStatusBadge = ({ status, label, showIcon = true }: Props) => {
-  const bg = statusColorMap[status] ?? "var(--color-grey-50)";
+  const bg = statusColorMap[status] ?? DEFAULT_BG;
+  const textColor = isVolunteerType(status) ? VOLUNTEER_TYPE_TEXT_COLOR : DEFAULT_TEXT_COLOR;
   const IconComp = statusIconMap[status];
-  const textColor = status === VolunteerStateTypeType.ACCOMPANYING ? "var(--color-white)" : "var(--color-blue-700)";
 
   return (
     <StyledBadge $bg={bg} $textColor={textColor} data-testid="profile-status-badge">
       {showIcon && IconComp && (
         <IconWrapper>
-          <IconComp size={20} color={textColor} />
+          <IconComp size={20} color={textColor} weight="fill" />
         </IconWrapper>
       )}
       <span>{label}</span>

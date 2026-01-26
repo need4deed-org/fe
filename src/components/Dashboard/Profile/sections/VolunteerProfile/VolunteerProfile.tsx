@@ -51,7 +51,11 @@ export const VolunteerProfile = forwardRef<VolunteerProfileRef, Props>(function 
   const districtMapping = useMemo(() => createMapping(apiDistricts), [apiDistricts]);
 
   const languagesForForm = useMemo(
-    () => apiLanguages.map((lang) => ({ id: lang.id, title: { [i18n.language as Lang]: lang.title } as Record<Lang, string> })),
+    () =>
+      apiLanguages.map((lang) => ({
+        id: lang.id,
+        title: { [i18n.language as Lang]: lang.title } as Record<Lang, string>,
+      })),
     [apiLanguages, i18n.language],
   );
 
@@ -60,7 +64,14 @@ export const VolunteerProfile = forwardRef<VolunteerProfileRef, Props>(function 
   const { control, handleSubmit, reset, trigger, formState } = useForm<VolunteerProfileFormData>({
     resolver: zodResolver(schema),
     mode: "onChange",
-    defaultValues: createFormDefaultValues(volunteer, languageMapping, districtMapping, activityMapping, skillMapping, t),
+    defaultValues: createFormDefaultValues(
+      volunteer,
+      languageMapping,
+      districtMapping,
+      activityMapping,
+      skillMapping,
+      t,
+    ),
   });
 
   const { errors, isValid, isDirty } = formState;
@@ -140,6 +151,7 @@ export const VolunteerProfile = forwardRef<VolunteerProfileRef, Props>(function 
             availability={formatAvailability(volunteer.availability, t)}
             districts={formatLocationsForDisplay(volunteer.locations)}
             volunteerType={getVolunteerTypeLabel(volunteer.statusType, t)}
+            volunteerTypeStatus={volunteer.statusType}
             activities={extractTitles(volunteer.activities)}
             skills={extractTitles(volunteer.skills)}
             t={t}

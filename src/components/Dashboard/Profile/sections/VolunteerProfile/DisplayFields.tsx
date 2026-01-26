@@ -1,7 +1,8 @@
 import { EmptyPlaceholder } from "@/components/core/common/EmptyPlaceholder";
 import { Tags } from "@/components/core/common/Tags";
-import { UsersFour } from "@phosphor-icons/react";
 import styled from "styled-components";
+import { StatusValue } from "../../common/statusMaps";
+import { ProfileStatusBadge } from "../ProfileHeader/common/ProfileStatusBadge";
 
 const FieldRow = styled.div`
   display: flex;
@@ -32,18 +33,6 @@ const FieldValue = styled.div`
   line-height: 1.5;
 `;
 
-const VolunteerTypeBadge = styled.div`
-  display: inline-flex;
-  align-items: center;
-  gap: var(--spacing-8);
-  padding: var(--profile-section-badge-padding);
-  background-color: var(--color-blue-500);
-  color: var(--color-white);
-  border-radius: var(--card-border-radius);
-  font-size: 16px;
-  font-weight: 500;
-`;
-
 const TagsWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -55,12 +44,22 @@ type Props = {
   availability: string;
   districts: string;
   volunteerType: string;
+  volunteerTypeStatus: StatusValue | undefined;
   activities: string[];
   skills: string[];
   t: (key: string) => string;
 };
 
-export function DisplayFields({ languages, availability, districts, volunteerType, activities, skills, t }: Props) {
+export function DisplayFields({
+  languages,
+  availability,
+  districts,
+  volunteerType,
+  volunteerTypeStatus,
+  activities,
+  skills,
+  t,
+}: Props) {
   return (
     <>
       <FieldRow>
@@ -81,11 +80,8 @@ export function DisplayFields({ languages, availability, districts, volunteerTyp
       <FieldRow>
         <FieldLabel>{t("dashboard.volunteerProfile.profileSection.volunteerType")}</FieldLabel>
         <FieldValue>
-          {volunteerType ? (
-            <VolunteerTypeBadge>
-              <UsersFour size={20} weight="fill" />
-              {volunteerType}
-            </VolunteerTypeBadge>
+          {volunteerType && volunteerTypeStatus ? (
+            <ProfileStatusBadge status={volunteerTypeStatus} label={volunteerType} />
           ) : (
             <EmptyPlaceholder />
           )}

@@ -37,9 +37,9 @@ export const statusColorMap = {
   [VolunteerStateMatchType.MATCHED]: "var(--color-green-100)",
   [VolunteerStateMatchType.NEEDS_REMATCH]: "var(--color-red-50)",
   [VolunteerStateTypeType.ACCOMPANYING]: "var(--color-blue-500)",
-  [VolunteerStateTypeType.EVENTS]: "var(--color-blue-50)",
-  [VolunteerStateTypeType.REGULAR]: "var(--color-blue-50)",
-  [VolunteerStateTypeType.REGULAR_ACCOMPANYING]: "var(--color-blue-50)",
+  [VolunteerStateTypeType.EVENTS]: "var(--color-blue-500)",
+  [VolunteerStateTypeType.REGULAR]: "var(--color-blue-500)",
+  [VolunteerStateTypeType.REGULAR_ACCOMPANYING]: "var(--color-blue-500)",
   [OpportunityStatusType.PAST]: "var(--color-grey-50)",
 } as const satisfies Record<string, string>;
 
