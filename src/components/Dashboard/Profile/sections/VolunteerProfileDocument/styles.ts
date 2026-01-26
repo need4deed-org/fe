@@ -2,6 +2,11 @@ import styled from "styled-components";
 
 export const ACTION_COLUMN_WIDTH = "56px";
 
+export const DocumentTableContainer = styled.div`
+  margin-top: var(--spacing-24);
+  width: 100%;
+`;
+
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -80,7 +85,8 @@ export const HeaderCell = styled.div<{ $width?: string; $noWrap?: boolean }>`
 export const TableRow = styled.div<{ $isLast?: boolean }>`
   display: flex;
   flex-direction: row;
-  ${(props) => !props.$isLast && `border-bottom: var(--document-section-table-border-width) solid var(--color-blue-50);`}
+  ${(props) =>
+    !props.$isLast && `border-bottom: var(--document-section-table-border-width) solid var(--color-blue-50);`}
 
   &:last-child > div:first-child {
     border-radius: 0 0 0 var(--document-section-table-border-radius);

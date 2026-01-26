@@ -5,9 +5,10 @@ import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import { ConfirmationDialog } from "../shared/ConfirmationDialog";
+import { SectionWrapper } from "../shared/styles";
 import { DocumentPreviewDialog } from "./DocumentPreviewDialog";
 import { DocumentTableRow } from "./DocumentTableRow";
-import { ACTION_COLUMN_WIDTH, Container, HeaderCell, Table, TableHeader } from "./styles";
+import { ACTION_COLUMN_WIDTH, DocumentTableContainer, HeaderCell, Table, TableHeader } from "./styles";
 import { UploadDocumentDialog } from "./UploadDocumentDialog";
 import { useDialogState } from "./useDialogState";
 import { useDeleteDocument, useUploadDocument } from "./useDocumentOperations";
@@ -97,33 +98,35 @@ export function VolunteerProfileDocument({ volunteer }: Props) {
 
   return (
     <>
-      <Container data-testid="volunteer-profile-document-container">
-        <Table>
-          <TableHeader>
-            <HeaderCell>{t("dashboard.documentSection.typeOfDocument")}</HeaderCell>
-            <HeaderCell $width="180px">{t("dashboard.documentSection.status")}</HeaderCell>
-            <HeaderCell $width="152px" $noWrap>
-              {t("dashboard.documentSection.uploadedOn")}
-            </HeaderCell>
-            <HeaderCell $width={ACTION_COLUMN_WIDTH}></HeaderCell>
-            <HeaderCell $width={ACTION_COLUMN_WIDTH}></HeaderCell>
-            <HeaderCell $width={ACTION_COLUMN_WIDTH}></HeaderCell>
-            <HeaderCell $width={ACTION_COLUMN_WIDTH}></HeaderCell>
-          </TableHeader>
+      <SectionWrapper data-testid="volunteer-profile-document-container">
+        <DocumentTableContainer>
+          <Table>
+            <TableHeader>
+              <HeaderCell>{t("dashboard.documentSection.typeOfDocument")}</HeaderCell>
+              <HeaderCell $width="180px">{t("dashboard.documentSection.status")}</HeaderCell>
+              <HeaderCell $width="152px" $noWrap>
+                {t("dashboard.documentSection.uploadedOn")}
+              </HeaderCell>
+              <HeaderCell $width={ACTION_COLUMN_WIDTH}></HeaderCell>
+              <HeaderCell $width={ACTION_COLUMN_WIDTH}></HeaderCell>
+              <HeaderCell $width={ACTION_COLUMN_WIDTH}></HeaderCell>
+              <HeaderCell $width={ACTION_COLUMN_WIDTH}></HeaderCell>
+            </TableHeader>
 
-          {documentRows.map((row, index) => (
-            <DocumentTableRow
-              key={row.type}
-              documentRow={row}
-              isLast={index === documentRows.length - 1}
-              onUpload={() => openDialog("upload", row)}
-              onPreview={() => handlePreview(row)}
-              onDownload={() => handleDownload(row)}
-              onDelete={() => openDialog("delete", row)}
-            />
-          ))}
-        </Table>
-      </Container>
+            {documentRows.map((row, index) => (
+              <DocumentTableRow
+                key={row.type}
+                documentRow={row}
+                isLast={index === documentRows.length - 1}
+                onUpload={() => openDialog("upload", row)}
+                onPreview={() => handlePreview(row)}
+                onDownload={() => handleDownload(row)}
+                onDelete={() => openDialog("delete", row)}
+              />
+            ))}
+          </Table>
+        </DocumentTableContainer>
+      </SectionWrapper>
 
       {isDeleteOpen && (
         <ConfirmationDialog
