@@ -1,4 +1,5 @@
 "use client";
+import { FlexColumn } from "@/components/styled/FlexColumn";
 import { defaultAvatarVolunteerProfile, EMPTY_PLACEHOLDER_VALUE } from "@/config/constants";
 import { formatDateTime, getImageUrl } from "@/utils";
 import { ApiVolunteerGet, VolunteerStateEngagementType } from "need4deed-sdk";
@@ -10,7 +11,6 @@ import {
   Card,
   createVolunteerTypeLabelMap,
   EditButton,
-  HeaderContainer,
   ProfileContent,
   ProfileInfo,
   ReturnDateText,
@@ -45,7 +45,7 @@ export const VolunteerHeader = ({ volunteer }: Props) => {
 
   return (
     <>
-      <HeaderContainer data-testid="volunteer-header">
+      <FlexColumn data-testid="volunteer-header">
         <Card>
           <ProfileContent>
             <AvatarContainer>
@@ -93,7 +93,7 @@ export const VolunteerHeader = ({ volunteer }: Props) => {
             </ProfileInfo>
           </ProfileContent>
         </Card>
-      </HeaderContainer>
+      </FlexColumn>
 
       <ChangeEngagementStatusDialog dialog={dialog} />
     </>

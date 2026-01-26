@@ -1,4 +1,5 @@
 "use client";
+import { FlexColumn } from "@/components/styled/FlexColumn";
 import { EMPTY_PLACEHOLDER_VALUE } from "@/config/constants";
 import { formatDateTime } from "@/utils";
 import { ShootingStar } from "@phosphor-icons/react";
@@ -9,12 +10,11 @@ import {
   Card,
   createVolunteerTypeLabelMap,
   EditButton,
-  HeaderContainer,
   IconContainer,
   ProfileContent,
   ProfileInfo,
-  StatusSection,
   StatusRowField,
+  StatusSection,
   Subtitle,
   Title,
   TitleSection,
@@ -30,9 +30,7 @@ export const OpportunityHeader = ({ opportunity }: Props) => {
   const { t } = useTranslation();
   const dialog = useOpportunityStatusDialog(opportunity);
 
-  const postedDate = opportunity.createdAt
-    ? formatDateTime(opportunity.createdAt)
-    : EMPTY_PLACEHOLDER_VALUE;
+  const postedDate = opportunity.createdAt ? formatDateTime(opportunity.createdAt) : EMPTY_PLACEHOLDER_VALUE;
 
   const statusLabels = useMemo(
     () => ({
@@ -47,7 +45,7 @@ export const OpportunityHeader = ({ opportunity }: Props) => {
 
   return (
     <>
-      <HeaderContainer data-testid="opportunity-header">
+      <FlexColumn data-testid="opportunity-header">
         <Card>
           <ProfileContent>
             <IconContainer data-testid="opportunity-header-icon">
@@ -84,7 +82,7 @@ export const OpportunityHeader = ({ opportunity }: Props) => {
             </ProfileInfo>
           </ProfileContent>
         </Card>
-      </HeaderContainer>
+      </FlexColumn>
 
       <ChangeOpportunityStatusDialog dialog={dialog} />
     </>

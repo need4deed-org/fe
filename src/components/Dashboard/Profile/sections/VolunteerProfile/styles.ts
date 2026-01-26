@@ -1,10 +1,9 @@
 import styled from "styled-components";
+import { FlexColumn } from "@/components/styled/FlexColumn";
 
-export const Container = styled.div<{ $isEditing: boolean }>`
-  display: flex;
-  flex-direction: column;
-  gap: ${(props) => (props.$isEditing ? "var(--spacing-16)" : "0")};
-`;
+export const Container = styled(FlexColumn).attrs<{ $isEditing: boolean }>((props) => ({
+  $gap: props.$isEditing ? "var(--spacing-16)" : "0",
+}))<{ $isEditing: boolean }>``;
 
 export const Header = styled.div`
   display: flex;

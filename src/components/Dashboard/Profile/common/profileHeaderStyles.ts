@@ -1,11 +1,5 @@
 import styled from "styled-components";
 
-export const HeaderContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-`;
-
 export const Card = styled.div`
   background: var(--color-white);
   border-radius: var(--volunteer-profile-section-card-border-radius);

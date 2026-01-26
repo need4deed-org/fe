@@ -1,15 +1,13 @@
 import styled from "styled-components";
 import { TableContainer } from "@/components/core/common/Table";
+import { FlexColumn } from "@/components/styled/FlexColumn";
 
 export const AppreciationTableContainer = styled(TableContainer)`
   margin-top: var(--spacing-24);
 `;
 
 export const StatusBadge = styled.div<{ $status: "received" | "pending" }>`
-  background: ${(props) =>
-    props.$status === "received"
-      ? "var(--color-green-100)"
-      : "var(--color-red-50)"};
+  background: ${(props) => (props.$status === "received" ? "var(--color-green-100)" : "var(--color-red-50)")};
   padding: var(--spacing-12);
   border-radius: var(--border-radius-xs);
   font-weight: var(--font-weight-semi-bold);
@@ -27,17 +25,14 @@ export const DialogTitle = styled.h3`
   margin: 0 0 var(--spacing-24) 0;
 `;
 
-export const RadioOptionsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-24);
-  width: 100%;
-`;
+export const RadioOptionsContainer = styled(FlexColumn).attrs({
+  $gap: "var(--spacing-24)",
+  $width: "100%",
+})``;
 
-export const ExpandedSection = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-16);
+export const ExpandedSection = styled(FlexColumn).attrs({
+  $gap: "var(--spacing-16)",
+})`
   padding-left: var(--spacing-32);
   border-left: var(--expanded-section-border-width) solid var(--expanded-section-border-color);
   margin-top: var(--spacing-8);

@@ -1,10 +1,10 @@
 import styled from "styled-components";
+import { FlexColumn } from "@/components/styled/FlexColumn";
 
-export const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-24);
-  width: 100%;
+export const Container = styled(FlexColumn).attrs({
+  $gap: "var(--spacing-24)",
+  $width: "100%",
+})`
   margin-top: var(--spacing-24);
 `;
 
