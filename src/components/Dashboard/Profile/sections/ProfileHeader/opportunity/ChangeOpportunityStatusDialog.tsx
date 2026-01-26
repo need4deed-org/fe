@@ -1,7 +1,6 @@
 "use client";
 import { Modal } from "@/components/core/modal/Modal";
 import { OpportunityStatusType } from "need4deed-sdk";
-import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import {
   CancelButton,
@@ -34,14 +33,11 @@ export const ChangeOpportunityStatusDialog = ({
 }: Props) => {
   const { t } = useTranslation();
 
-  const statusLabelMap = useMemo(
-    () => ({
-      [OpportunityStatusType.NEW]: t("dashboard.opportunityProfile.status.new"),
-      [OpportunityStatusType.ACTIVE]: t("dashboard.opportunityProfile.status.active"),
-      [OpportunityStatusType.PAST]: t("dashboard.opportunityProfile.status.past"),
-    }),
-    [t],
-  );
+  const statusLabelMap = {
+    [OpportunityStatusType.NEW]: t("dashboard.opportunityProfile.status.new"),
+    [OpportunityStatusType.ACTIVE]: t("dashboard.opportunityProfile.status.active"),
+    [OpportunityStatusType.PAST]: t("dashboard.opportunityProfile.status.past"),
+  };
 
   const getStatusDescription = (status: OpportunityStatusType): string => {
     const key = STATUS_DESCRIPTION_KEYS[status];
