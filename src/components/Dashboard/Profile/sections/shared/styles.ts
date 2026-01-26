@@ -33,8 +33,8 @@ export const DialogButtonGroup = styled.div`
   padding-top: var(--spacing-16);
 `;
 
-export const DialogForm = styled(FlexColumn)
-  .attrs({
-    $gap: "var(--spacing-24)",
-  })
-  .withComponent("form")``;
+export const DialogForm = styled.form<{ $gap?: string }>`
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-24);
+`;
