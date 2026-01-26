@@ -6,7 +6,6 @@ import { statusColorMap, statusIconMap, StatusValue } from "./statusMaps";
 
 type StatusDivProps = {
   bg?: string;
-  $borderRadius?: string;
 };
 
 const StatusDiv = styled.div<StatusDivProps>`
@@ -18,15 +17,12 @@ const StatusDiv = styled.div<StatusDivProps>`
   height: var(--dashboard-volunteers-card-status-div-height);
   gap: var(--dashboard-volunteers-card-status-div-gap);
   padding: var(--dashboard-volunteers-card-status-div-padding);
-  border-radius: ${(p) => p.$borderRadius || "var(--activity-tag-border-radius)"};
+  border-radius: var(--border-radius-xs);
 `;
 
 interface StatusBadgeProps {
   status: StatusValue | undefined;
 }
-
-const isVolunteerType = (s: StatusValue): boolean =>
-  Object.values(VolunteerStateTypeType).includes(s as VolunteerStateTypeType);
 
 const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
   if (!status) {
@@ -35,12 +31,10 @@ const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
 
   const bg = statusColorMap[status];
   const IconComp = statusIconMap[status];
-  const textColor =
-    status === VolunteerStateTypeType.ACCOMPANYING ? "var(--color-white)" : "var(--color-blue-700)";
-  const borderRadius = isVolunteerType(status) ? "var(--border-radius-medium)" : "var(--border-radius-xs)";
+  const textColor = status === VolunteerStateTypeType.ACCOMPANYING ? "var(--color-white)" : "var(--color-blue-700)";
 
   return (
-    <StatusDiv bg={bg} $borderRadius={borderRadius}>
+    <StatusDiv bg={bg} data-testid="status-badge">
       <IconComp size={20} color={textColor} />
       <Paragraph
         fontWeight="var(--text-h4-font-weight)"
