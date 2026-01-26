@@ -29,6 +29,7 @@ export const OpportunityHeader = ({ opportunity }: Props) => {
   const { t } = useTranslation();
   const dialog = useOpportunityStatusDialog(opportunity);
 
+  // @ts-expect-error createdAt missing on SDK
   const postedDate = opportunity.createdAt ? formatDateTime(opportunity.createdAt) : EMPTY_PLACEHOLDER_VALUE;
 
   const statusLabels = {
