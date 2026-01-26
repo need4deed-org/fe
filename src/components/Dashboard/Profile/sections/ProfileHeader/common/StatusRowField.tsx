@@ -2,8 +2,8 @@ import { EmptyPlaceholder } from "@/components/core/common/EmptyPlaceholder";
 import { Heading4 } from "@/components/styled/text";
 import { ReactNode } from "react";
 import styled from "styled-components";
+import { StatusValue } from "../../../common/statusMaps";
 import { ProfileStatusBadge } from "./ProfileStatusBadge";
-import { StatusValue } from "./statusMaps";
 
 const StatusRow = styled.div`
   display: flex;
@@ -50,14 +50,7 @@ type Props = {
   action?: ReactNode;
 };
 
-export const StatusRowField = ({
-  title,
-  status,
-  label,
-  showIcon = true,
-  extra,
-  action,
-}: Props) => (
+export const StatusRowField = ({ title, status, label, showIcon = true, extra, action }: Props) => (
   <StatusRow data-testid="status-row-field">
     <TextAndChip>
       <Heading4>{title}</Heading4>

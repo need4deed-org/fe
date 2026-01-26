@@ -1,6 +1,6 @@
-import {VolunteerStateTypeType} from "need4deed-sdk";
+import { VolunteerStateTypeType } from "need4deed-sdk";
 import styled from "styled-components";
-import {statusColorMap, statusIconMap, StatusValue} from "./statusMaps";
+import { statusColorMap, statusIconMap, StatusValue } from "../../../common/statusMaps";
 
 const StyledBadge = styled.div<{
   $bg: string;
@@ -37,15 +37,10 @@ type Props = {
 export const ProfileStatusBadge = ({ status, label, showIcon = true }: Props) => {
   const bg = statusColorMap[status] ?? "var(--color-grey-50)";
   const IconComp = statusIconMap[status];
-  const textColor =
-    status === VolunteerStateTypeType.ACCOMPANYING ? "var(--color-white)" : "var(--color-blue-700)";
+  const textColor = status === VolunteerStateTypeType.ACCOMPANYING ? "var(--color-white)" : "var(--color-blue-700)";
 
   return (
-    <StyledBadge
-      $bg={bg}
-      $textColor={textColor}
-      data-testid="profile-status-badge"
-    >
+    <StyledBadge $bg={bg} $textColor={textColor} data-testid="profile-status-badge">
       {showIcon && IconComp && (
         <IconWrapper>
           <IconComp size={20} color={textColor} />

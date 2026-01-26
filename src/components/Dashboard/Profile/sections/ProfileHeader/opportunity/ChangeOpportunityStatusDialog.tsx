@@ -16,7 +16,7 @@ import {
   OptionLabel,
   OptionsContainer,
   RadioOption,
-} from "../../../common";
+} from "../common";
 import { UseOpportunityStatusDialogReturn } from "./useOpportunityStatusDialog";
 
 const STATUS_DESCRIPTION_KEYS: Record<OpportunityStatusType, string> = {
@@ -30,14 +30,7 @@ type Props = {
 };
 
 export const ChangeOpportunityStatusDialog = ({
-  dialog: {
-    isOpen,
-    closeDialog,
-    statusOpportunity,
-    setStatusOpportunity,
-    saveDialog,
-    isSaveDisabled,
-  },
+  dialog: { isOpen, closeDialog, statusOpportunity, setStatusOpportunity, saveDialog, isSaveDisabled },
 }: Props) => {
   const { t } = useTranslation();
 
@@ -78,9 +71,7 @@ export const ChangeOpportunityStatusDialog = ({
         </OptionsContainer>
 
         <DialogButtonGroup>
-          <CancelButton onClick={closeDialog}>
-            {t("dashboard.opportunityProfile.modalData.cancel")}
-          </CancelButton>
+          <CancelButton onClick={closeDialog}>{t("dashboard.opportunityProfile.modalData.cancel")}</CancelButton>
           <LargePrimaryButton onClick={saveDialog} disabled={isSaveDisabled} $disabled={isSaveDisabled}>
             {t("dashboard.opportunityProfile.modalData.save")}
           </LargePrimaryButton>
