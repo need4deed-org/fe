@@ -4,7 +4,6 @@ import { EMPTY_PLACEHOLDER_VALUE } from "@/config/constants";
 import { formatDateTime } from "@/utils";
 import { ShootingStar } from "@phosphor-icons/react";
 import { ApiOpportunityGet, OpportunityStatusType } from "need4deed-sdk";
-import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Card,
@@ -32,16 +31,13 @@ export const OpportunityHeader = ({ opportunity }: Props) => {
 
   const postedDate = opportunity.createdAt ? formatDateTime(opportunity.createdAt) : EMPTY_PLACEHOLDER_VALUE;
 
-  const statusLabels = useMemo(
-    () => ({
-      [OpportunityStatusType.NEW]: t("dashboard.opportunityProfile.status.new"),
-      [OpportunityStatusType.ACTIVE]: t("dashboard.opportunityProfile.status.active"),
-      [OpportunityStatusType.PAST]: t("dashboard.opportunityProfile.status.past"),
-    }),
-    [t],
-  );
+  const statusLabels = {
+    [OpportunityStatusType.NEW]: t("dashboard.opportunityProfile.status.new"),
+    [OpportunityStatusType.ACTIVE]: t("dashboard.opportunityProfile.status.active"),
+    [OpportunityStatusType.PAST]: t("dashboard.opportunityProfile.status.past"),
+  };
 
-  const volunteerTypeLabelMap = useMemo(() => createVolunteerTypeLabelMap(t), [t]);
+  const volunteerTypeLabelMap = createVolunteerTypeLabelMap(t);
 
   return (
     <>
