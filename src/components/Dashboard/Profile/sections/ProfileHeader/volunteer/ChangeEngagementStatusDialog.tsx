@@ -8,7 +8,7 @@ import {
   CancelButton,
   DialogButtonGroup,
   LargePrimaryButton,
-} from "../VolunteerProfileDocumentSection/shared/DialogButtonGroup";
+} from "../../VolunteerProfileDocument/shared/DialogButtonGroup";
 import {
   DateFieldContainer,
   ModalContainer,
@@ -18,7 +18,7 @@ import {
   OptionLabel,
   OptionsContainer,
   RadioOption,
-} from "../../common";
+} from "../../../common";
 import { createEngagementLabelMap, ENGAGEMENT_DESCRIPTION_KEYS } from "./constants";
 import { UseEngagementStatusDialogReturn } from "./useEngagementStatusDialog";
 

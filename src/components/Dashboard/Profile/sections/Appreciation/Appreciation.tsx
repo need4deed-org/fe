@@ -34,11 +34,11 @@ type Props = {
   volunteer: ApiVolunteerGet;
 };
 
-export type AppreciationSectionRef = {
+export type AppreciationRef = {
   handleAddNew: () => void;
 };
 
-export const AppreciationSection = forwardRef<AppreciationSectionRef, Props>(function AppreciationSection({ volunteer }, ref) {
+export const Appreciation = forwardRef<AppreciationRef, Props>(function Appreciation({ volunteer }, ref) {
   const { t } = useTranslation();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingEntry, setEditingEntry] = useState<ApiAppreciationGet | undefined>(undefined);
@@ -118,7 +118,7 @@ export const AppreciationSection = forwardRef<AppreciationSectionRef, Props>(fun
   };
 
   return (
-    <SectionWrapper data-testid="appreciation-section-container">
+    <SectionWrapper data-testid="appreciation-container">
       {appreciations.length === 0 ? (
         <SectionEmptyState data-testid="empty-state">
           {t("dashboard.appreciationSection.emptyState")}

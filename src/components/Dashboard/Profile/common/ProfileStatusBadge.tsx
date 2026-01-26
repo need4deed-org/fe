@@ -1,11 +1,6 @@
+import { VolunteerStateTypeType } from "need4deed-sdk";
 import styled from "styled-components";
-import {
-  statusColorMap,
-  statusIconMap,
-  statusTextColorMap,
-  statusBorderRadiusMap,
-  StatusValue,
-} from "./statusMaps";
+import { statusColorMap, statusIconMap, StatusValue } from "./statusMaps";
 
 const StyledBadge = styled.div<{
   $bg: string;
@@ -40,11 +35,15 @@ type Props = {
   showIcon?: boolean;
 };
 
+const isVolunteerType = (s: StatusValue): boolean =>
+  Object.values(VolunteerStateTypeType).includes(s as VolunteerStateTypeType);
+
 export const ProfileStatusBadge = ({ status, label, showIcon = true }: Props) => {
   const bg = statusColorMap[status] ?? "var(--color-grey-50)";
   const IconComp = statusIconMap[status];
-  const textColor = statusTextColorMap[status] ?? "var(--color-blue-700)";
-  const borderRadius = statusBorderRadiusMap[status] ?? "var(--border-radius-xs)";
+  const textColor =
+    status === VolunteerStateTypeType.ACCOMPANYING ? "var(--color-white)" : "var(--color-blue-700)";
+  const borderRadius = isVolunteerType(status) ? "var(--border-radius-medium)" : "var(--border-radius-xs)";
 
   return (
     <StyledBadge

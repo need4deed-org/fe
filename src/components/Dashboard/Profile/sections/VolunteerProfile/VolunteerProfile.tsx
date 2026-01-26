@@ -31,11 +31,11 @@ type Props = {
   volunteer: ApiVolunteerGet;
 };
 
-export type VolunteerProfileSectionRef = {
+export type VolunteerProfileRef = {
   handleEditClick: () => void;
 };
 
-export const VolunteerProfileSection = forwardRef<VolunteerProfileSectionRef, Props>(function VolunteerProfileSection({ volunteer }, ref) {
+export const VolunteerProfile = forwardRef<VolunteerProfileRef, Props>(function VolunteerProfile({ volunteer }, ref) {
   const { t, i18n } = useTranslation();
   const { mutate: updateProfile, isPending } = useUpdateVolunteerProfile(volunteer.id);
   const [isEditing, setIsEditing] = useState(false);
@@ -117,7 +117,7 @@ export const VolunteerProfileSection = forwardRef<VolunteerProfileSectionRef, Pr
   };
 
   return (
-    <Container data-testid="volunteer-profile-section-container" $isEditing={isEditing}>
+    <Container data-testid="volunteer-profile-container" $isEditing={isEditing}>
       <Details>
         {isEditing ? (
           <FormFields

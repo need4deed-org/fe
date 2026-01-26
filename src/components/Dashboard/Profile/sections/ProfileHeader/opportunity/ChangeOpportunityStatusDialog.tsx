@@ -7,7 +7,7 @@ import {
   CancelButton,
   DialogButtonGroup,
   LargePrimaryButton,
-} from "../VolunteerProfileDocumentSection/shared/DialogButtonGroup";
+} from "../../VolunteerProfileDocument/shared/DialogButtonGroup";
 import {
   ModalContainer,
   ModalTitle,
@@ -16,7 +16,7 @@ import {
   OptionLabel,
   OptionsContainer,
   RadioOption,
-} from "../../common";
+} from "../../../common";
 import { UseOpportunityStatusDialogReturn } from "./useOpportunityStatusDialog";
 
 const STATUS_DESCRIPTION_KEYS: Record<OpportunityStatusType, string> = {

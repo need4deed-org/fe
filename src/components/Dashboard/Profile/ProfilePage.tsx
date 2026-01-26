@@ -7,16 +7,14 @@ import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { SectionCard, SectionCardProps } from "./common/SectionCard";
 import { ProfileEntityType } from "./ProfileLayout";
-import { AppreciationSection, AppreciationSectionRef } from "./sections/AppreciationSection";
-import { CommentsSection } from "./sections/CommentsSection";
-import { CommunicationTrackerSection, CommunicationTrackerSectionRef } from "./sections/CommunicationTrackerSection";
+import { Appreciation, AppreciationRef } from "./sections/Appreciation";
+import { Comments } from "./sections/Comments";
+import { CommunicationTracker, CommunicationTrackerRef } from "./sections/CommunicationTracker";
 import { ContactDetails, ContactDetailsRef } from "./sections/ContactDetails";
-import { OpportunityHeader } from "./sections/OpportunityHeader";
-import { ProfileHeader } from "./sections/ProfileHeader";
-import { VolunteerHeader } from "./sections/VolunteerHeader";
+import { ProfileHeader, VolunteerHeader, OpportunityHeader } from "./sections/ProfileHeader";
 import VolunteerOpportunities from "./sections/VolunteerOpportunities/VolunteerOpportunities";
-import { VolunteerProfileDocumentSection } from "./sections/VolunteerProfileDocumentSection";
-import { VolunteerProfileSection, VolunteerProfileSectionRef } from "./sections/VolunteerProfileSection";
+import { VolunteerProfileDocument } from "./sections/VolunteerProfileDocument";
+import { VolunteerProfile, VolunteerProfileRef } from "./sections/VolunteerProfile";
 import { IconName, ProfileCardTypes } from "./types/types";
 
 const PageContainer = styled.div`
@@ -46,9 +44,9 @@ interface ProfilePageProps {
 const ProfilePage = ({ data, entityType }: ProfilePageProps) => {
   const { t, i18n } = useTranslation();
   const contactDetailsRef = useRef<ContactDetailsRef>(null);
-  const volunteerProfileRef = useRef<VolunteerProfileSectionRef>(null);
-  const communicationTrackerRef = useRef<CommunicationTrackerSectionRef>(null);
-  const appreciationSectionRef = useRef<AppreciationSectionRef>(null);
+  const volunteerProfileRef = useRef<VolunteerProfileRef>(null);
+  const communicationTrackerRef = useRef<CommunicationTrackerRef>(null);
+  const appreciationRef = useRef<AppreciationRef>(null);
 
   // Type guards
   const isVolunteer = entityType === "volunteer";
@@ -69,7 +67,7 @@ const ProfilePage = ({ data, entityType }: ProfilePageProps) => {
       title: t("dashboard.volunteerProfile.volunteerProfile"),
       headerButtonName: t("dashboard.volunteerProfile.editButtonName"),
       onHeaderButtonClick: () => volunteerProfileRef.current?.handleEditClick(),
-      subComponent: volunteer ? <VolunteerProfileSection ref={volunteerProfileRef} volunteer={volunteer} /> : null,
+      subComponent: volunteer ? <VolunteerProfile ref={volunteerProfileRef} volunteer={volunteer} /> : null,
     },
     {
       iconName: IconName.ShootingStar,
@@ -83,25 +81,25 @@ const ProfilePage = ({ data, entityType }: ProfilePageProps) => {
       headerButtonName: t("dashboard.communicationSection.addNew"),
       onHeaderButtonClick: () => communicationTrackerRef.current?.handleAddNew(),
       subComponent: volunteer ? (
-        <CommunicationTrackerSection ref={communicationTrackerRef} volunteer={volunteer} />
+        <CommunicationTracker ref={communicationTrackerRef} volunteer={volunteer} />
       ) : null,
     },
     {
       iconName: IconName.ChatCircleDots,
       title: `${t("dashboard.volunteerProfile.coordinatorComments")} • ${volunteer?.comments?.length ?? 0}`,
-      subComponent: volunteer ? <CommentsSection volunteer={volunteer} /> : null,
+      subComponent: volunteer ? <Comments volunteer={volunteer} /> : null,
     },
     {
       iconName: IconName.Gift,
       title: t("dashboard.appreciationSection.title"),
       headerButtonName: t("dashboard.appreciationSection.addNew"),
-      onHeaderButtonClick: () => appreciationSectionRef.current?.handleAddNew(),
-      subComponent: volunteer ? <AppreciationSection ref={appreciationSectionRef} volunteer={volunteer} /> : null,
+      onHeaderButtonClick: () => appreciationRef.current?.handleAddNew(),
+      subComponent: volunteer ? <Appreciation ref={appreciationRef} volunteer={volunteer} /> : null,
     },
     {
       iconName: IconName.ClipboardText,
       title: t("dashboard.volunteerProfile.documents"),
-      subComponent: volunteer ? <VolunteerProfileDocumentSection volunteer={volunteer} /> : null,
+      subComponent: volunteer ? <VolunteerProfileDocument volunteer={volunteer} /> : null,
     },
     {
       iconName: IconName.ChartLine,

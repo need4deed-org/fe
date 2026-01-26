@@ -3,7 +3,7 @@ import { Heading4 } from "@/components/styled/text";
 import { ReactNode } from "react";
 import { FieldContainer, StatusRow, TextAndChip } from "./styles";
 import { VolunteerStatusBadge } from "./VolunteerStatusBadge";
-import { StatusValue } from "../../common/statusMaps";
+import { StatusValue } from "../../../common/statusMaps";
 
 type Props = {
   title: string;

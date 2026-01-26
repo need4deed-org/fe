@@ -8,7 +8,7 @@ import { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from "r
 import { Controller, ControllerRenderProps, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { ContactDetailsFormData, createContactDetailsSchema } from "./ContactDetails/contactDetailsSchema";
+import { ContactDetailsFormData, createContactDetailsSchema } from "./contactDetailsSchema";
 
 const Container = styled.div<{ $isEditing: boolean }>`
   display: flex;

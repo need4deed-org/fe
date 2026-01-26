@@ -18,7 +18,7 @@ import {
   Subtitle,
   Title,
   TitleSection,
-} from "../../common";
+} from "../../../common";
 import { ChangeOpportunityStatusDialog } from "./ChangeOpportunityStatusDialog";
 import { useOpportunityStatusDialog } from "./useOpportunityStatusDialog";
 

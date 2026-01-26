@@ -1,8 +1,8 @@
 import { Paragraph } from "@/components/styled/text";
-
+import { VolunteerStateTypeType } from "need4deed-sdk";
 import React from "react";
 import styled from "styled-components";
-import { statusBorderRadiusMap, statusColorMap, statusIconMap, statusTextColorMap, StatusValue } from "./statusMaps";
+import { statusColorMap, statusIconMap, StatusValue } from "./statusMaps";
 
 type StatusDivProps = {
   bg?: string;
@@ -25,6 +25,9 @@ interface StatusBadgeProps {
   status: StatusValue | undefined;
 }
 
+const isVolunteerType = (s: StatusValue): boolean =>
+  Object.values(VolunteerStateTypeType).includes(s as VolunteerStateTypeType);
+
 const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
   if (!status) {
     return null;
@@ -32,8 +35,9 @@ const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
 
   const bg = statusColorMap[status];
   const IconComp = statusIconMap[status];
-  const textColor = statusTextColorMap[status];
-  const borderRadius = statusBorderRadiusMap[status];
+  const textColor =
+    status === VolunteerStateTypeType.ACCOMPANYING ? "var(--color-white)" : "var(--color-blue-700)";
+  const borderRadius = isVolunteerType(status) ? "var(--border-radius-medium)" : "var(--border-radius-xs)";
 
   return (
     <StatusDiv bg={bg} $borderRadius={borderRadius}>

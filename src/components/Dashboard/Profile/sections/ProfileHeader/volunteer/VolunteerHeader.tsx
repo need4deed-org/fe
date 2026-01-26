@@ -19,7 +19,7 @@ import {
   Subtitle,
   Title,
   TitleSection,
-} from "../../common";
+} from "../../../common";
 import { ChangeEngagementStatusDialog } from "./ChangeEngagementStatusDialog";
 import { createEngagementLabelMap, createMatchLabelMap } from "./constants";
 import { useEngagementStatusDialog } from "./useEngagementStatusDialog";

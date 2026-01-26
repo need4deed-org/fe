@@ -17,7 +17,7 @@ type Props = {
   volunteer: ApiVolunteerGet;
 };
 
-export function VolunteerProfileDocumentSection({ volunteer }: Props) {
+export function VolunteerProfileDocument({ volunteer }: Props) {
   const { t } = useTranslation();
   const {
     deleteDocument: deleteDialogDocument,
@@ -97,7 +97,7 @@ export function VolunteerProfileDocumentSection({ volunteer }: Props) {
 
   return (
     <>
-      <Container data-testid="volunteer-profile-document-section-container">
+      <Container data-testid="volunteer-profile-document-container">
         <Table>
           <TableHeader>
             <HeaderCell>{t("dashboard.documentSection.typeOfDocument")}</HeaderCell>

@@ -55,8 +55,6 @@ export const statusColorMap = {
   [VolunteerStateTypeType.EVENTS]: "var(--color-blue-50)",
   [VolunteerStateTypeType.REGULAR]: "var(--color-blue-50)",
   [VolunteerStateTypeType.REGULAR_ACCOMPANYING]: "var(--color-blue-50)",
-  [OpportunityStatusType.NEW]: "var(--color-green-100)",
-  [OpportunityStatusType.ACTIVE]: "var(--color-green-100)",
   [OpportunityStatusType.PAST]: "var(--color-grey-50)",
 } as const satisfies Record<string, string>;
 
@@ -84,18 +82,6 @@ export const statusIconMap = {
   [VolunteerStateTypeType.EVENTS]: Users,
   [VolunteerStateTypeType.REGULAR]: Users,
   [VolunteerStateTypeType.REGULAR_ACCOMPANYING]: Users,
-  [OpportunityStatusType.NEW]: Sparkle,
-  [OpportunityStatusType.ACTIVE]: ChartLine,
   [OpportunityStatusType.PAST]: StopCircle,
 } as const satisfies Record<string, React.ComponentType<{ size?: number; color?: string }>>;
 
-export const statusTextColorMap: Partial<Record<StatusValue, string>> = {
-  [VolunteerStateTypeType.ACCOMPANYING]: "var(--color-white)",
-};
-
-export const statusBorderRadiusMap: Partial<Record<StatusValue, string>> = {
-  [VolunteerStateTypeType.ACCOMPANYING]: "var(--border-radius-medium)",
-  [VolunteerStateTypeType.EVENTS]: "var(--border-radius-medium)",
-  [VolunteerStateTypeType.REGULAR]: "var(--border-radius-medium)",
-  [VolunteerStateTypeType.REGULAR_ACCOMPANYING]: "var(--border-radius-medium)",
-};

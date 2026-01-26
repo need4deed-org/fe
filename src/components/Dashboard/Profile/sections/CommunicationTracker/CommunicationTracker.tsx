@@ -31,11 +31,11 @@ type Props = {
   volunteer: ApiVolunteerGet;
 };
 
-export type CommunicationTrackerSectionRef = {
+export type CommunicationTrackerRef = {
   handleAddNew: () => void;
 };
 
-export const CommunicationTrackerSection = forwardRef<CommunicationTrackerSectionRef, Props>(function CommunicationTrackerSection({ volunteer }, ref) {
+export const CommunicationTracker = forwardRef<CommunicationTrackerRef, Props>(function CommunicationTracker({ volunteer }, ref) {
   const { t } = useTranslation();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingEntry, setEditingEntry] = useState<ApiCommunicationGet | undefined>(undefined);
@@ -109,7 +109,7 @@ export const CommunicationTrackerSection = forwardRef<CommunicationTrackerSectio
   };
 
   return (
-    <SectionWrapper data-testid="communication-tracker-section-container">
+    <SectionWrapper data-testid="communication-tracker-container">
       {communications.length === 0 ? (
         <SectionEmptyState data-testid="empty-state">
           {t("dashboard.communicationSection.emptyState", "No communications recorded yet")}

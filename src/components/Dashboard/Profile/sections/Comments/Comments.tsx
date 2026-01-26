@@ -16,7 +16,7 @@ type Props = {
   volunteer: ApiVolunteerGet;
 };
 
-export function CommentsSection({ volunteer }: Props) {
+export function Comments({ volunteer }: Props) {
   const { t } = useTranslation();
   const { mutate: createComment, isPending: isCreating } = useCreateComment(volunteer.id);
   const [newCommentText, setNewCommentText] = useState("");
@@ -86,7 +86,7 @@ export function CommentsSection({ volunteer }: Props) {
   };
 
   return (
-    <Container data-testid="comments-section-container">
+    <Container data-testid="comments-container">
       {comments.map((comment) => (
         <Comment
           key={comment.id}
