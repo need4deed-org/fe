@@ -459,7 +459,7 @@
           "save": "Save"
         },
         "notSet": "Not set",
-        "change_status": "Change status",
+        "change_status": "Mark as searching",
         "until": "until",
         "volunteer_since": "Volunteer since",
         "engagementStatus_title": "Engagement status",
@@ -692,22 +692,13 @@
       "status": {
         "new": "New",
         "active": "Active",
-        "past": "Past"
-      },
-      "statusDescriptions": {
-        "new_description": "Opportunity is newly created and not yet active",
-        "active_description": "Opportunity is currently active and accepting volunteers",
-        "past_description": "Opportunity has ended and is no longer active"
+        "past": "Past",
+        "searching": "Searching"
       },
       "matchStatus": {
         "matched": "Matched",
         "needRematch": "Need rematch",
         "unmatched": "Unmatched"
-      },
-      "modalData": {
-        "title": "Change opportunity status",
-        "cancel": "Cancel",
-        "save": "Save"
       },
       "statusUpdateSuccess": "Opportunity status updated successfully"
     },

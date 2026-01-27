@@ -40,6 +40,8 @@ export const statusColorMap = {
   [VolunteerStateTypeType.EVENTS]: "var(--color-blue-500)",
   [VolunteerStateTypeType.REGULAR]: "var(--color-blue-500)",
   [VolunteerStateTypeType.REGULAR_ACCOMPANYING]: "var(--color-blue-500)",
+  // @ts-expect-error missing SDK-implementation
+  [OpportunityStatusType.SEARCHING]: "var(--color-violet-100)",
   [OpportunityStatusType.PAST]: "var(--color-grey-50)",
 } as const satisfies Record<string, string>;
 
@@ -58,5 +60,7 @@ export const statusIconMap = {
   [VolunteerStateTypeType.EVENTS]: Users,
   [VolunteerStateTypeType.REGULAR]: Users,
   [VolunteerStateTypeType.REGULAR_ACCOMPANYING]: Users,
+  // @ts-expect-error missing SDK-implementation
+  [OpportunityStatusType.SEARCHING]: HourglassIcon,
   [OpportunityStatusType.PAST]: StopCircle,
 } as const satisfies Record<string, React.ComponentType<{ size?: number; color?: string }>>;

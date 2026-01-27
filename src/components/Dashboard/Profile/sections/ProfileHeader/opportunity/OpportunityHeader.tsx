@@ -1,6 +1,7 @@
 "use client";
 import { FlexColumn } from "@/components/styled/FlexColumn";
 import { EMPTY_PLACEHOLDER_VALUE } from "@/config/constants";
+import { useUpdateOpportunityStatus } from "@/hooks/useUpdateOpportunityStatus";
 import { formatDateTime } from "@/utils";
 import { ShootingStar } from "@phosphor-icons/react";
 import { ApiOpportunityGet, OpportunityStatusType } from "need4deed-sdk";
@@ -18,8 +19,6 @@ import {
   Title,
   TitleSection,
 } from "../common";
-import { ChangeOpportunityStatusDialog } from "./ChangeOpportunityStatusDialog";
-import { useOpportunityStatusDialog } from "./useOpportunityStatusDialog";
 
 type Props = {
   opportunity: ApiOpportunityGet;
@@ -27,7 +26,7 @@ type Props = {
 
 export const OpportunityHeader = ({ opportunity }: Props) => {
   const { t } = useTranslation();
-  const dialog = useOpportunityStatusDialog(opportunity);
+  const { mutate: updateStatus } = useUpdateOpportunityStatus(opportunity.id);
 
   // @ts-expect-error createdAt missing on SDK
   const postedDate = opportunity.createdAt ? formatDateTime(opportunity.createdAt) : EMPTY_PLACEHOLDER_VALUE;
@@ -36,9 +35,19 @@ export const OpportunityHeader = ({ opportunity }: Props) => {
     [OpportunityStatusType.NEW]: t("dashboard.opportunityProfile.status.new"),
     [OpportunityStatusType.ACTIVE]: t("dashboard.opportunityProfile.status.active"),
     [OpportunityStatusType.PAST]: t("dashboard.opportunityProfile.status.past"),
+    // @ts-expect-error missing SDK-implementation
+    [OpportunityStatusType.SEARCHING]: t("dashboard.opportunityProfile.status.searching"),
   };
 
   const volunteerTypeLabelMap = createVolunteerTypeLabelMap(t);
+
+  const isButtonDisabled = opportunity.statusOpportunity !== OpportunityStatusType.NEW;
+
+  const handleStatusChange = () => {
+    if (opportunity.statusOpportunity !== OpportunityStatusType.NEW) return;
+    // @ts-expect-error missing SDK-implementation
+    updateStatus({ statusOpportunity: OpportunityStatusType.SEARCHING });
+  };
 
   return (
     <>
@@ -60,10 +69,10 @@ export const OpportunityHeader = ({ opportunity }: Props) => {
               <StatusSection data-testid="opportunity-header-status-section">
                 <StatusRowField
                   title={t("dashboard.opportunityProfile.currentStatus")}
-                  status={dialog.statusOpportunity}
-                  label={statusLabels[dialog.statusOpportunity]}
+                  status={opportunity.statusOpportunity}
+                  label={statusLabels[opportunity.statusOpportunity]}
                   action={
-                    <EditButton onClick={dialog.openDialog}>
+                    <EditButton onClick={handleStatusChange} disabled={isButtonDisabled}>
                       {t("dashboard.volunteerProfile.volunteerHeader.change_status")}
                     </EditButton>
                   }
@@ -79,8 +88,6 @@ export const OpportunityHeader = ({ opportunity }: Props) => {
           </ProfileContent>
         </Card>
       </FlexColumn>
-
-      <ChangeOpportunityStatusDialog dialog={dialog} />
     </>
   );
 };

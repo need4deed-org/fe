@@ -460,7 +460,7 @@
           "save": "Speichern"
         },
         "notSet": "Nicht festgelegt",
-        "change_status": "Status ändern",
+        "change_status": "Als suchend markieren",
         "until": "bis",
         "volunteer_since": "Freiwillige*r seit",
         "engagementStatus_title": "Engagement-Status",
@@ -693,22 +693,13 @@
       "status": {
         "new": "Neu",
         "active": "Aktiv",
-        "past": "Vergangen"
-      },
-      "statusDescriptions": {
-        "new_description": "Die Gelegenheit ist neu erstellt und noch nicht aktiv",
-        "active_description": "Die Gelegenheit ist derzeit aktiv und nimmt Freiwillige an",
-        "past_description": "Die Gelegenheit ist beendet und nicht mehr aktiv"
+        "past": "Vergangen",
+        "searching": "Suchend"
       },
       "matchStatus": {
         "matched": "Gematcht",
         "needRematch": "Neues Matching erforderlich",
         "unmatched": "Nicht gematcht"
-      },
-      "modalData": {
-        "title": "Status der Gelegenheit ändern",
-        "cancel": "Abbrechen",
-        "save": "Speichern"
       },
       "statusUpdateSuccess": "Status der Gelegenheit erfolgreich aktualisiert"
     },

@@ -89,6 +89,17 @@ export const EditButton = styled.button`
     color: var(--color-blue-700);
     opacity: var(--opacity-hover);
   }
+
+  &:disabled {
+    color: var(--color-gray-400);
+    cursor: not-allowed;
+    opacity: 0.5;
+
+    &:hover {
+      color: var(--color-gray-400);
+      opacity: 0.5;
+    }
+  }
 `;
 
 export const ReturnDateText = styled.span`
