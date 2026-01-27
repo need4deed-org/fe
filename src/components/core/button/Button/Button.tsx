@@ -113,7 +113,7 @@ export function Button({
       backgroundcolor={backgroundcolor}
       height={height}
       width={width}
-      gap={text ? "var(--button-gap)" : "0px"}
+      gap={text ? "var(--spacing-12)" : "0px"}
       padding={padding || (text ? "var(--button-padding)" : "0px")}
       $iconPosition={iconPosition}
       border={border}

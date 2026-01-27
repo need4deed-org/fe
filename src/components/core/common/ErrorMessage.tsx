@@ -10,7 +10,7 @@ const StyledErrorMessage = styled.div`
   display: flex;
   align-items: center;
   gap: var(--profile-section-error-gap);
-  margin-top: var(--profile-section-error-margin-top);
+  margin-top: var(--spacing-8);
 `;
 
 type Props = {

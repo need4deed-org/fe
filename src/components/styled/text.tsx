@@ -75,10 +75,9 @@ export const ButtonSpan = styled.span<TextProps>`
 `;
 
 export const ActivitySpan = styled.span<TextProps>`
-  font-weight: var(--text-activity-tag-font-weight);
-  font-size: var(--text-activity-tag-font-size);
-  line-height: var(--text-activity-tag-line-height);
-  letter-spacing: var(--text-activity-tag-letter-spacing);
-  text-align: var(--text-activity-tag-text-align);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-24);
+  letter-spacing: var(--letter-spacing-tight);
   color: ${(props) => props.color || "white"};
 `;

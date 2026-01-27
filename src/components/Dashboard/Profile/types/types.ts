@@ -1,3 +1,9 @@
+import { ApiOpportunityGet, ApiVolunteerGet } from "need4deed-sdk";
+
+export type ProfileEntityProps =
+  | { volunteer: ApiVolunteerGet; opportunity?: never }
+  | { opportunity: ApiOpportunityGet; volunteer?: never };
+
 export enum ProfileCardTypes {
   VOLUNTEER_HEADER = "VOLUNTEER_HEADER",
   CONTACT = "CONTACT",

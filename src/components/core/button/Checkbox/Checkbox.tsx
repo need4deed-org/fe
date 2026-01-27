@@ -6,7 +6,7 @@ const CheckboxContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: var(--checkbox-container-gap);
+  gap: var(--spacing-8);
 `;
 
 export interface CheckboxProps {
@@ -38,7 +38,7 @@ export function Checkbox({
             checked ? "var(--checkbox-label-font-weight-selected)" : "var(--checkbox-label-font-weight-not-selected)"
           }
           fontSize={labelFontSize || "var(--checkbox-label-font-size)"}
-          lineheight="var(--checkbox-label-line-height)"
+          lineheight="var(--line-height-32)"
         >
           {label}
         </Paragraph>

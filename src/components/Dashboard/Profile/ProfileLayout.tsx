@@ -1,13 +1,19 @@
 "use client";
 import { DashboardLayout } from "@/components/Layout";
 import { ProfileController } from "./ProfileController";
-import { VolunteerIdProps } from "@/types";
 
-export default function ProfileLayout({ volunteerId }: VolunteerIdProps) {
+export type ProfileEntityType = "volunteer" | "opportunity";
+
+interface ProfileLayoutProps {
+  entityId: string;
+  entityType: ProfileEntityType;
+}
+
+export default function ProfileLayout({ entityId, entityType }: ProfileLayoutProps) {
   const backgroundColor = "var(--layout-static-page-background-default)";
   return (
     <DashboardLayout background={backgroundColor}>
-      <ProfileController volunteerId={volunteerId} />
+      <ProfileController entityId={entityId} entityType={entityType} />
     </DashboardLayout>
   );
 }

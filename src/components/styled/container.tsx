@@ -98,7 +98,7 @@ export const PaginatedCardsContainer = styled.div.attrs<ContainerProps>((props) 
 }))<ContainerProps>`
   display: flex;
   flex-direction: column;
-  gap: var(--paginated-cards-container-gap);
+  gap: var(--spacing-20);
   background-color: ${(props) => props["background-color"]};
 `;
 
@@ -147,7 +147,7 @@ export const IndicatorsContainer = styled.div.attrs<ContainerProps>((props) => (
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: var(--indicators-container-gap);
+  gap: var(--spacing-8);
 `;
 
 export const ArrowsButtonContainer = styled.div.attrs<ContainerProps>((props) => ({
@@ -157,7 +157,7 @@ export const ArrowsButtonContainer = styled.div.attrs<ContainerProps>((props) =>
   flex-direction: row;
   align-items: center;
   justify-content: flex-end;
-  gap: var(--arrows-button-container-gap);
+  gap: var(--spacing-8);
 `;
 
 export const BaseCard = styled.div`

@@ -459,7 +459,7 @@
           "save": "Save"
         },
         "notSet": "Not set",
-        "change_status": "Change status",
+        "change_status": "Mark as searching",
         "until": "until",
         "volunteer_since": "Volunteer since",
         "engagementStatus_title": "Engagement status",
@@ -683,6 +683,24 @@
       "appreciationDeleted": "Appreciation deleted successfully",
       "deleteConfirmTitle": "Delete appreciation?",
       "deleteConfirmText": "\"{{entryType}}\" appreciation entry will be permanently deleted."
+    },
+    "opportunityProfile": {
+      "opportunityProfile": "Opportunity's profile",
+      "postedOn": "Posted on",
+      "currentStatus": "Current status",
+      "matchingStatus": "Matching status",
+      "status": {
+        "new": "New",
+        "active": "Active",
+        "past": "Past",
+        "searching": "Searching"
+      },
+      "matchStatus": {
+        "matched": "Matched",
+        "needRematch": "Need rematch",
+        "unmatched": "Unmatched"
+      },
+      "statusUpdateSuccess": "Opportunity status updated successfully"
     },
     "communicationSection": {
       "title": "Communication Tracker",

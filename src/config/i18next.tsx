@@ -1,12 +1,12 @@
 "use client";
 
+import { Env } from "@/types";
 import i18next from "i18next";
 import { Lang } from "need4deed-sdk";
-import { initReactI18next, I18nextProvider } from "react-i18next";
+import { useMemo } from "react";
+import { I18nextProvider, initReactI18next } from "react-i18next";
 import deTranslation from "../../public/locales/de/translations.json";
 import enTranslation from "../../public/locales/en/translations.json";
-import { Env } from "@/types";
-import { useEffect } from "react";
 
 i18next.use(initReactI18next).init({
   fallbackLng: Lang.DE,
@@ -24,12 +24,14 @@ interface I18nProviderProps {
 }
 
 export function I18nProvider({ children, initialLang }: I18nProviderProps) {
-  useEffect(() => {
-    // Check if the language actually needs changing to prevent unnecessary calls
+  // Set language synchronously during render to prevent race conditions
+  // with API calls that depend on the language. Using useMemo ensures this
+  // runs before children render but only when initialLang changes.
+  useMemo(() => {
     if (i18next.language !== initialLang) {
       i18next.changeLanguage(initialLang);
     }
-  }, [initialLang]); // Re-run effect only when initialLang changes
+  }, [initialLang]);
 
   return <I18nextProvider i18n={i18next}>{children}</I18nextProvider>;
 }

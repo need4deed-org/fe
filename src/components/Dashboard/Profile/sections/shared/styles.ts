@@ -1,12 +1,11 @@
 import styled from "styled-components";
+import { FlexColumn } from "@/components/styled/FlexColumn";
 
-export const SectionWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--spacing-24);
-  width: 100%;
-`;
+export const SectionWrapper = styled(FlexColumn).attrs({
+  $gap: "var(--spacing-24)",
+  $width: "100%",
+  $alignItems: "flex-start",
+})``;
 
 export const SectionHeader = styled.div`
   display: flex;
@@ -34,7 +33,7 @@ export const DialogButtonGroup = styled.div`
   padding-top: var(--spacing-16);
 `;
 
-export const DialogForm = styled.form`
+export const DialogForm = styled.form<{ $gap?: string }>`
   display: flex;
   flex-direction: column;
   gap: var(--spacing-24);

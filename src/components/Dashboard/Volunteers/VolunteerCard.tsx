@@ -11,7 +11,7 @@ import { CirclePic } from "@/components/styled/img";
 import { Paragraph } from "@/components/styled/text";
 import { defaultAvatarURL } from "@/config/constants";
 import { getImageUrl } from "@/utils";
-import { formatAvailabilityItem } from "../Profile/sections/VolunteerProfileSection/formatters";
+import { formatAvailabilityItem } from "../Profile/sections/VolunteerProfile/formatters";
 import CardDetail from "./CardDetail";
 import { getNormalizedVolunteer, groupLanguagesByProficiency } from "./helpers";
 import { IconName } from "./icon";

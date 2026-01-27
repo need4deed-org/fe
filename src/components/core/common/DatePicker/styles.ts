@@ -44,8 +44,8 @@ export const FloatingLabel = styled.span`
   padding: var(--date-picker-floating-label-padding);
   font-family: var(--bs-body-font-family);
   font-weight: var(--font-weight-regular);
-  font-size: var(--date-picker-floating-label-font-size);
-  line-height: var(--date-picker-floating-label-line-height);
+  font-size: var(--font-size-16);
+  line-height: var(--line-height-20);
   letter-spacing: var(--date-picker-floating-label-letter-spacing);
   color: var(--color-midnight);
   z-index: 1;
@@ -67,8 +67,8 @@ export const DateInput = styled.input`
   padding-left: var(--date-picker-input-padding-left);
   border: var(--border-width-thin) solid var(--color-grey-200);
   border-radius: var(--border-radius-small);
-  font-size: var(--date-picker-input-font-size);
-  line-height: var(--date-picker-input-line-height);
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-24);
   letter-spacing: var(--date-picker-input-letter-spacing);
   font-weight: var(--font-weight-regular);
   color: var(--color-midnight);

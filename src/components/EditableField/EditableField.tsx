@@ -12,7 +12,8 @@ const EditModeWrapper = styled.div`
 const FieldWrapper = styled.div<{ $hasError?: boolean }>`
   display: var(--editableField-fieldWrapper-display);
   border-bottom: var(--editableField-fieldWrapper-borderBottom);
-  padding: ${(props) => (props.$hasError ? "var(--editableField-fieldWrapper-padding-error)" : "var(--editableField-fieldWrapper-padding)")};
+  padding: ${(props) =>
+    props.$hasError ? "var(--editableField-fieldWrapper-padding-error)" : "var(--editableField-fieldWrapper-padding)"};
   color: var(--color-midnight);
   width: var(--editableField-fieldWrapper-width);
   align-items: var(--editableField-fieldWrapper-alignItems);
@@ -256,7 +257,7 @@ export const EditableField = forwardRef(function EditableField<T extends string 
       const displayValue = value.length > 0 ? value.join(", ") : EMPTY_PLACEHOLDER_VALUE;
       return (
         <FieldWrapper>
-          {label && <label>{label}: </label>}
+          {label && <label>{label}</label>}
           <span>{displayValue}</span>
         </FieldWrapper>
       );
@@ -264,7 +265,7 @@ export const EditableField = forwardRef(function EditableField<T extends string 
     const displayValue = value && String(value).trim().length > 0 ? value : EMPTY_PLACEHOLDER_VALUE;
     return (
       <FieldWrapper>
-        {label && <label>{label}: </label>}
+        {label && <label>{label}</label>}
         <span>{displayValue}</span>
       </FieldWrapper>
     );
@@ -274,7 +275,7 @@ export const EditableField = forwardRef(function EditableField<T extends string 
   return (
     <EditModeWrapper>
       <FieldWrapper $hasError={!!errorMessage}>
-        {label && <label>{label}: </label>}
+        {label && <label>{label}</label>}
 
         {type === "text" && (
           <InputWrapper $hasError={!!errorMessage}>
@@ -384,7 +385,9 @@ export const EditableField = forwardRef(function EditableField<T extends string 
         )}
       </FieldWrapper>
       {error && <p style={{ color: "red", paddingLeft: "1rem" }}>{error}</p>}
-      {errorMessage && <ErrorMessage message={errorMessage} paddingLeft="var(--editableField-errorMessage-paddingLeft)" />}
+      {errorMessage && (
+        <ErrorMessage message={errorMessage} paddingLeft="var(--editableField-errorMessage-paddingLeft)" />
+      )}
     </EditModeWrapper>
   );
 });

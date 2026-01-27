@@ -189,14 +189,8 @@ html {
 
   /* comments section */
   --comments-author-font-weight: var(--font-weight-semi-bold);
-  --comments-author-font-size: 20px;
-  --comments-author-line-height: 24px;
   --comments-timestamp-font-weight: var(--font-weight-regular);
-  --comments-timestamp-font-size: 16px;
-  --comments-timestamp-line-height: 20px;
   --comments-text-font-weight: var(--font-weight-regular);
-  --comments-text-font-size: 20px;
-  --comments-text-line-height: 24px;
   --comments-button-font-weight: var(--font-weight-semi-bold);
   --comments-menu-item-font-weight: var(--font-weight-regular);
   --comments-menu-item-danger-font-weight: var(--font-weight-semi-bold);
@@ -217,22 +211,11 @@ html {
   --text-activity-tag-text-align: center;
 
   /* activities */
-  --activities-container-gap: 8px;
-  --activity-tag-border-radius: 4px;
   --activity-tag-padding: 6px 8px;
-  --activity-tag-gap: 8px;
-
-  /*homepage volunteering opportunity */
-  --homepage-volunteering-opportunity-detail-section-gap: 4px;
-  --homepage-volunteering-opportunity-detail-header-gap: 8px;
-
-  /* paginated cards container */
-  --paginated-cards-container-gap: 20px;
 
   /* testimonials */
   --homepage-testimonials-profile-width: 60px;
   --homepage-testimonials-profile-height: 60px;
-  --homepage-testimonials-profile-gap: 16px;
 
   /* layout-static-page */
   --layout-static-page-background-default: linear-gradient(
@@ -287,16 +270,12 @@ html {
   --font-size-24: 24px;
   --font-size-32: 32px;
   --line-height-20: 20px;
+  --line-height-24: 24px;
   --line-height-32: 32px;
   --line-height-40: 40px;
 
-  /* button */
-  --button-gap: 12px;
-
   /* checkbox */
-  --checkbox-container-gap: 8px;
   --checkbox-label-font-size: 18px;
-  --checkbox-label-line-height: 32px;
   --checkbox-label-font-weight-selected: 400;
   --checkbox-label-font-weight-not-selected: 300;
 
@@ -320,29 +299,15 @@ html {
   --dialog-title-font-size: 28px;
   --dialog-title-line-height: 32px;
   --dialog-title-letter-spacing: 0.14px;
-  --dialog-padding: 24px;
-  --dialog-gap: 24px;
   --dialog-max-width: 620px;
-  --dialog-border-radius: 24px;
   --dialog-box-shadow: 0px 10px 30px -12px rgba(143, 81, 138, 0.2);
-  --dialog-option-gap: 8px;
   --dialog-option-padding: 0px;
-  --dialog-radio-size: 24px;
-  --dialog-radio-border-width: 2px;
-  --dialog-label-font-size: 20px;
-  --dialog-label-line-height: 24px;
-  --dialog-description-font-size: 16px;
-  --dialog-description-line-height: 20px;
-  --dialog-button-gap: 16px;
 
   /* expanded section */
-  --expanded-section-padding-left: 32px;
   --expanded-section-border-width: 4px;
   --expanded-section-border-color: rgba(123, 132, 203, 0.15);
 
   /* sub question */
-  --sub-question-font-size: 20px;
-  --sub-question-line-height: 24px;
   --sub-question-letter-spacing: 0.1px;
 
   /* date picker */
@@ -350,37 +315,24 @@ html {
   --date-picker-floating-label-top: -10px;
   --date-picker-floating-label-left: 12px;
   --date-picker-floating-label-padding: 0 4px;
-  --date-picker-floating-label-font-size: 16px;
-  --date-picker-floating-label-line-height: 20px;
   --date-picker-floating-label-letter-spacing: 0.08px;
   --date-picker-input-padding-left: 52px;
   --date-picker-input-padding-right: 44px;
-  --date-picker-input-font-size: 20px;
-  --date-picker-input-line-height: 24px;
   --date-picker-input-letter-spacing: 0.1px;
   --date-picker-popover-z-index: 1100;
 
   /* selectable option */
-  --selectable-option-circle-size: 24px;
-  --selectable-option-font-size: 20px;
-  --selectable-option-line-height: 24px;
   --selectable-option-letter-spacing: 0.1px;
 
   /* status badges */
-  --status-badge-padding: 8px 12px;
-  --status-badge-gap: 8px;
-  --status-badge-border-radius: 8px;
-  --status-badge-font-size: 16px;
-  --status-badge-font-weight: 500;
-  --status-badge-line-height: 20px;
   --status-badge-icon-size: 20px;
 
   /* document section - aliases to shared variables */
-  --document-section-container-padding: var(--profile-section-padding);
-  --document-section-container-gap: var(--profile-section-gap);
-  --document-section-container-margin-bottom: var(--profile-section-margin-bottom);
+  --document-section-container-padding: var(--spacing-24);
+  --document-section-container-gap: var(--spacing-8);
+  --document-section-container-margin-bottom: var(--spacing-24);
   --document-section-header-gap: var(--spacing-24);
-  --document-section-title-row-gap: var(--profile-section-title-gap);
+  --document-section-title-row-gap: var(--spacing-16);
   --document-section-icon-size: var(--icon-size);
   --document-section-table-border-width: var(--border-width-thin);
   --document-section-table-border-radius: var(--border-radius-small);
@@ -517,23 +469,9 @@ html {
   --document-tooltip-arrow-size: var(--spacing-4);
 
   /* profile section */
-  --profile-section-padding: 24px;
-  --profile-section-gap: 8px;
-  --profile-section-gap-editing: 16px;
-  --profile-section-margin-bottom: 24px;
-  --profile-section-title-gap: 16px;
-  --profile-section-button-row-gap: 24px;
-  --profile-section-field-row-gap: 32px;
   --profile-section-field-row-padding: 16px 0;
-  --profile-section-badge-gap: 8px;
   --profile-section-badge-padding: 10px 20px;
-  --profile-section-tags-gap: 8px;
   --profile-section-error-gap: 6px;
-  --profile-section-error-margin-top: 8px;
-
-  /* paginated cards*/
-  --indicators-container-gap: 8px;
-  --arrows-button-container-gap: 8px;
 
   /* image */
   --image-circle-pic-size: 60px;

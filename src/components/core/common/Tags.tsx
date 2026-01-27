@@ -41,5 +41,5 @@ export const TagsContainer = styled.div`
   width: fit-content;
   justify-content: left;
   flex-wrap: wrap;
-  gap: var(--activities-container-gap);
+  gap: var(--spacing-8);
 `;

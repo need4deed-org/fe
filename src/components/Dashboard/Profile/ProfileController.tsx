@@ -1,10 +1,12 @@
-import { apiPathVolunteer, cacheTTL } from "@/config/constants";
-import { useGetQuery } from "@/hooks";
-import { ApiVolunteerGet } from "need4deed-sdk";
-import ProfilePage from "./ProfilePage";
 import CenteredWrapper from "@/components/core/common/CenteredWrapper";
 import { Paragraph } from "@/components/styled/text";
+import { apiPathOpportunity, apiPathVolunteer, cacheTTL } from "@/config/constants";
+import { useGetQuery } from "@/hooks";
+import { ApiOpportunityGet, ApiVolunteerGet } from "need4deed-sdk";
+import { ReactNode } from "react";
 import styled from "styled-components";
+import { ProfileEntityType } from "./ProfileLayout";
+import ProfilePage from "./ProfilePage";
 
 const LoadingContainer = styled(CenteredWrapper)`
   padding: 2rem;
@@ -15,24 +17,27 @@ const ErrorContainer = styled(CenteredWrapper)`
   color: var(--color-red-600);
 `;
 
-export function ProfileController({ volunteerId }: { volunteerId: string }) {
-  const { data, isLoading, isError, error } = useGetQuery<ApiVolunteerGet>({
-    queryKey: ["volunteer", volunteerId],
-    apiPath: `${apiPathVolunteer}${volunteerId}`,
-    staleTime: cacheTTL,
-  });
+type LoadingErrorWrapperProps = {
+  isLoading: boolean;
+  isError: boolean;
+  error: unknown;
+  data: unknown;
+  entityType: ProfileEntityType;
+  children: ReactNode;
+};
 
+const LoadingErrorWrapper = ({ isLoading, isError, error, data, entityType, children }: LoadingErrorWrapperProps) => {
   if (isLoading) {
     return (
       <LoadingContainer>
-        <Paragraph>Loading volunteer profile...</Paragraph>
+        <Paragraph>Loading {entityType} profile...</Paragraph>
       </LoadingContainer>
     );
   }
 
   if (isError) {
-    let errorMessage = "Failed to load volunteer profile. Please try again.";
-    
+    let errorMessage = `Failed to load ${entityType} profile. Please try again.`;
+
     if (error) {
       if (typeof error === "string") {
         errorMessage = error;
@@ -47,7 +52,7 @@ export function ProfileController({ volunteerId }: { volunteerId: string }) {
         }
       }
     }
-    
+
     return (
       <ErrorContainer>
         <Paragraph>{errorMessage}</Paragraph>
@@ -58,10 +63,67 @@ export function ProfileController({ volunteerId }: { volunteerId: string }) {
   if (!data) {
     return (
       <ErrorContainer>
-        <Paragraph>No volunteer data available.</Paragraph>
+        <Paragraph>No {entityType} data available.</Paragraph>
       </ErrorContainer>
     );
   }
 
-  return <ProfilePage volunteer={data} />;
-}
+  return <>{children}</>;
+};
+
+type EntityIdProps = {
+  entityId: string;
+};
+
+const VolunteerProfileController = ({ entityId }: EntityIdProps) => {
+  const { data, isLoading, isError, error } = useGetQuery<ApiVolunteerGet>({
+    queryKey: ["volunteer", entityId],
+    apiPath: `${apiPathVolunteer}${entityId}`,
+    staleTime: cacheTTL,
+  });
+
+  return (
+    <LoadingErrorWrapper
+      isLoading={isLoading}
+      isError={isError}
+      error={error}
+      data={data}
+      entityType="volunteer"
+    >
+      {data && <ProfilePage volunteer={data} />}
+    </LoadingErrorWrapper>
+  );
+};
+
+const OpportunityProfileController = ({ entityId }: EntityIdProps) => {
+  const { data, isLoading, isError, error } = useGetQuery<ApiOpportunityGet>({
+    queryKey: ["opportunity", entityId],
+    apiPath: `/${apiPathOpportunity}/${entityId}`,
+    staleTime: cacheTTL,
+  });
+
+  return (
+    <LoadingErrorWrapper
+      isLoading={isLoading}
+      isError={isError}
+      error={error}
+      data={data}
+      entityType="opportunity"
+    >
+      {data && <ProfilePage opportunity={data} />}
+    </LoadingErrorWrapper>
+  );
+};
+
+type Props = {
+  entityId: string;
+  entityType: ProfileEntityType;
+};
+
+export const ProfileController = ({ entityId, entityType }: Props) => {
+  if (entityType === "volunteer") {
+    return <VolunteerProfileController entityId={entityId} />;
+  }
+
+  return <OpportunityProfileController entityId={entityId} />;
+};

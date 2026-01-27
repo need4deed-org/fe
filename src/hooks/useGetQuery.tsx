@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axios, { AxiosResponse } from "axios";
 import { Lang, SortOrder } from "need4deed-sdk";
+import { useParams } from "next/navigation";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
@@ -53,8 +54,9 @@ interface UseGetQuery {
 
 // The generic custom hook with pagination-sort-language params
 export const useGetQuery = <T,>({ queryKey, apiPath, params = {}, staleTime }: UseGetQuery) => {
-  const { t, i18n } = useTranslation();
-  params.language = i18n.language as Lang;
+  const { t } = useTranslation();
+  const { lang } = useParams<{ lang: Lang }>();
+  params.language = lang;
   params.filter = getReducedFilter(params.filter);
 
   const { data, isLoading, isError, error } = useQuery<ApiResponse<T>, Error>({

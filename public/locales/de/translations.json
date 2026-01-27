@@ -460,7 +460,7 @@
           "save": "Speichern"
         },
         "notSet": "Nicht festgelegt",
-        "change_status": "Status ändern",
+        "change_status": "Als suchend markieren",
         "until": "bis",
         "volunteer_since": "Freiwillige*r seit",
         "engagementStatus_title": "Engagement-Status",
@@ -684,6 +684,24 @@
       "appreciationDeleted": "Anerkennung erfolgreich gelöscht",
       "deleteConfirmTitle": "Anerkennung löschen?",
       "deleteConfirmText": "\"{{entryType}}\" Anerkennungseintrag wird dauerhaft gelöscht."
+    },
+    "opportunityProfile": {
+      "opportunityProfile": "Profil der Gelegenheit",
+      "postedOn": "Veröffentlicht am",
+      "currentStatus": "Aktueller Status",
+      "matchingStatus": "Matching-Status",
+      "status": {
+        "new": "Neu",
+        "active": "Aktiv",
+        "past": "Vergangen",
+        "searching": "Suchend"
+      },
+      "matchStatus": {
+        "matched": "Gematcht",
+        "needRematch": "Neues Matching erforderlich",
+        "unmatched": "Nicht gematcht"
+      },
+      "statusUpdateSuccess": "Status der Gelegenheit erfolgreich aktualisiert"
     },
     "communicationSection": {
       "title": "Kommunikationsverfolgung",
