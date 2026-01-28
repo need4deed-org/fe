@@ -2,7 +2,6 @@ import { Lang } from "need4deed-sdk";
 
 export const tokenKey = "token";
 
-export const apiURL = process.env.NEXT_PUBLIC_URL_API || "http://localhost:5000";
 export const apiPrefix = "api";
 export const apiPathVolunteer = `/${apiPrefix}/volunteer/`;
 export const apiPathComment = `/${apiPrefix}/comment`;
@@ -37,7 +36,6 @@ export const n4dLanguageLocalStorageKey = "n4d-language";
 export const eventsSectionContainerId = "events-section-container";
 
 export const cloudfrontURL = process.env.NEXT_PUBLIC_CLOUDFRONT_URL;
-export const CLOUDFRONT_HOSTNAME = "d2nwrdddg8skub.cloudfront.net";
 
 export const minPLZGermany = 1067;
 export const maxPLZGermany = 99998;
