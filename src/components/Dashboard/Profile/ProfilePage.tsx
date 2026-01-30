@@ -11,6 +11,10 @@ import { Comments } from "./sections/Comments";
 import { CommunicationTracker, CommunicationTrackerRef } from "./sections/CommunicationTracker";
 import { ContactDetails, ContactDetailsRef } from "./sections/ContactDetails";
 import { ProfileHeader } from "./sections/ProfileHeader";
+import {
+  RefugeeAccommodationCentre,
+  RefugeeAccommodationCentreRef,
+} from "./sections/RefugeeAccommodationCentre";
 import VolunteerOpportunities from "./sections/VolunteerOpportunities/VolunteerOpportunities";
 import { VolunteerProfile, VolunteerProfileRef } from "./sections/VolunteerProfile";
 import { VolunteerProfileDocument } from "./sections/VolunteerProfileDocument";
@@ -41,6 +45,7 @@ const ProfilePage = ({ volunteer, opportunity }: ProfileEntityProps) => {
   const volunteerProfileRef = useRef<VolunteerProfileRef>(null);
   const communicationTrackerRef = useRef<CommunicationTrackerRef>(null);
   const appreciationRef = useRef<AppreciationRef>(null);
+  const racRef = useRef<RefugeeAccommodationCentreRef>(null);
 
   const getVolunteerSections = (vol: ApiVolunteerGet): SectionCardProps[] => [
     {
@@ -101,6 +106,13 @@ const ProfilePage = ({ volunteer, opportunity }: ProfileEntityProps) => {
       headerButtonName: t("dashboard.opportunityProfile.editButtonName"),
       onHeaderButtonClick: () => opportunityContactDetailsRef.current?.handleEditClick(),
       subComponent: <ContactDetails ref={opportunityContactDetailsRef} opportunity={opp} />,
+    },
+    {
+      iconName: IconName.House,
+      title: t("dashboard.opportunityProfile.racTitle"),
+      headerButtonName: t("dashboard.opportunityProfile.editButtonName"),
+      onHeaderButtonClick: () => racRef.current?.handleEditClick(),
+      subComponent: <RefugeeAccommodationCentre ref={racRef} opportunity={opp} />,
     },
   ];
 
