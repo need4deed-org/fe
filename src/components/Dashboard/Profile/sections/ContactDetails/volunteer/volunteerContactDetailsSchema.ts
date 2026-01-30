@@ -1,7 +1,7 @@
 import { VolunteerCommunicationType } from "need4deed-sdk";
 import { z } from "zod";
 
-export const createContactDetailsSchema = (t: (key: string) => string) => {
+export const createVolunteerContactDetailsSchema = (t: (key: string) => string) => {
   return z.object({
     phone: z
       .string()
@@ -18,4 +18,4 @@ export const createContactDetailsSchema = (t: (key: string) => string) => {
   });
 };
 
-export type ContactDetailsFormData = z.infer<ReturnType<typeof createContactDetailsSchema>>;
+export type VolunteerContactDetailsFormData = z.infer<ReturnType<typeof createVolunteerContactDetailsSchema>>;

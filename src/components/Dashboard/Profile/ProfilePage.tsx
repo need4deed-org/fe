@@ -1,6 +1,6 @@
 import { Heading2 } from "@/components/styled/text";
 import { ArrowLeftIcon } from "@phosphor-icons/react";
-import { ApiVolunteerGet } from "need4deed-sdk";
+import { ApiOpportunityGet, ApiVolunteerGet } from "need4deed-sdk";
 import Link from "next/link";
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
@@ -37,6 +37,7 @@ const BackLink = styled(Link)`
 const ProfilePage = ({ volunteer, opportunity }: ProfileEntityProps) => {
   const { t, i18n } = useTranslation();
   const contactDetailsRef = useRef<ContactDetailsRef>(null);
+  const opportunityContactDetailsRef = useRef<ContactDetailsRef>(null);
   const volunteerProfileRef = useRef<VolunteerProfileRef>(null);
   const communicationTrackerRef = useRef<CommunicationTrackerRef>(null);
   const appreciationRef = useRef<AppreciationRef>(null);
@@ -93,9 +94,17 @@ const ProfilePage = ({ volunteer, opportunity }: ProfileEntityProps) => {
     },
   ];
 
-  const getOpportunitySections = (): SectionCardProps[] => [];
+  const getOpportunitySections = (opp: ApiOpportunityGet): SectionCardProps[] => [
+    {
+      iconName: IconName.ChatsCircle,
+      title: t("dashboard.opportunityProfile.contactDetailsTitle"),
+      headerButtonName: t("dashboard.opportunityProfile.editButtonName"),
+      onHeaderButtonClick: () => opportunityContactDetailsRef.current?.handleEditClick(),
+      subComponent: <ContactDetails ref={opportunityContactDetailsRef} opportunity={opp} />,
+    },
+  ];
 
-  const sections = volunteer ? getVolunteerSections(volunteer) : getOpportunitySections();
+  const sections = volunteer ? getVolunteerSections(volunteer) : getOpportunitySections(opportunity);
 
   return (
     <PageContainer>

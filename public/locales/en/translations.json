@@ -700,7 +700,32 @@
         "needRematch": "Need rematch",
         "unmatched": "Unmatched"
       },
-      "statusUpdateSuccess": "Opportunity status updated successfully"
+      "statusUpdateSuccess": "Opportunity status updated successfully",
+      "contactDetailsTitle": "Contact details",
+      "editButtonName": "Edit",
+      "contactDetails": {
+        "name": "Name",
+        "phone": "Phone",
+        "email": "Email",
+        "waysToContact": {
+          "label": "Ways to contact",
+          "whatsapp": "WhatsApp",
+          "telegram": "Telegram",
+          "mobilePhone": "Mobile Phone",
+          "email": "Email"
+        },
+        "cancel": "Cancel",
+        "saveChanges": "Save changes",
+        "saveSuccess": "Contact details updated successfully",
+        "validation": {
+          "nameRequired": "Name is required",
+          "phoneRequired": "Phone is required",
+          "phoneInvalid": "Phone must start with + and contain only digits/spaces",
+          "emailRequired": "Email is required",
+          "emailInvalid": "Invalid email",
+          "waysToContactRequired": "Select at least one way to contact"
+        }
+      }
     },
     "communicationSection": {
       "title": "Communication Tracker",
