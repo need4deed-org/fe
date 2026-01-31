@@ -517,7 +517,7 @@
         }
       },
       "opportunitiesSec": {
-        "tabs": {
+        "status": {
           "pending": "Ausstehend",
           "matched": "Zugeordnet",
           "active": "Aktiv",

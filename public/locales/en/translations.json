@@ -516,7 +516,7 @@
         }
       },
       "opportunitiesSec": {
-        "tabs": {
+        "status": {
           "pending": "Pending",
           "matched": "Matched",
           "active": "Active",

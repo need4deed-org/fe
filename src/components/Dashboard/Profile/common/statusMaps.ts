@@ -1,5 +1,6 @@
 import type React from "react";
 import {
+  ArchiveIcon,
   ArrowsClockwise,
   CalendarBlank,
   CalendarX,
@@ -14,6 +15,7 @@ import {
 } from "@phosphor-icons/react";
 import {
   OpportunityStatusType,
+  OpportunityVolunteerStatusType,
   VolunteerStateEngagementType,
   VolunteerStateMatchType,
   VolunteerStateTypeType,
@@ -23,7 +25,8 @@ export type StatusValue =
   | VolunteerStateEngagementType
   | VolunteerStateTypeType
   | VolunteerStateMatchType
-  | OpportunityStatusType;
+  | OpportunityStatusType
+  | OpportunityVolunteerStatusType;
 
 export const statusColorMap = {
   [VolunteerStateEngagementType.ACTIVE]: "var(--color-green-100)",
@@ -43,9 +46,10 @@ export const statusColorMap = {
   // @ts-expect-error missing SDK-implementation
   [OpportunityStatusType.SEARCHING]: "var(--color-violet-100)",
   [OpportunityStatusType.PAST]: "var(--color-grey-50)",
+  [OpportunityVolunteerStatusType.SUGGESTED]: "var(--color-red-50)",
 } as const satisfies Record<string, string>;
 
-export const statusIconMap = {
+export const statusIconMap: Record<StatusValue, React.FC<{ size?: number; color?: string }>> = {
   [VolunteerStateEngagementType.ACTIVE]: ChartLine,
   [VolunteerStateEngagementType.AVAILABLE]: CalendarBlank,
   [VolunteerStateEngagementType.TEMP_UNAVAILABLE]: CalendarX,
@@ -62,5 +66,6 @@ export const statusIconMap = {
   [VolunteerStateTypeType.REGULAR_ACCOMPANYING]: Users,
   // @ts-expect-error missing SDK-implementation
   [OpportunityStatusType.SEARCHING]: HourglassIcon,
-  [OpportunityStatusType.PAST]: StopCircle,
-} as const satisfies Record<string, React.ComponentType<{ size?: number; color?: string }>>;
+  [OpportunityVolunteerStatusType.PAST]: ArchiveIcon,
+  [OpportunityVolunteerStatusType.SUGGESTED]: HourglassIcon,
+};

@@ -60,7 +60,7 @@ const ProfilePage = ({ volunteer, opportunity }: ProfileEntityProps) => {
       iconName: IconName.ShootingStar,
       title: t("dashboard.volunteerProfile.opportunities"),
       headerButtonName: t("dashboard.volunteerProfile.findOppButtonName"),
-      subComponent: <VolunteerOpportunities />,
+      subComponent: <VolunteerOpportunities volunteer={vol} />,
     },
     {
       iconName: IconName.ChatsTeardrop,

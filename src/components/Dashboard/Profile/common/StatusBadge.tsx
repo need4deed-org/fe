@@ -22,9 +22,10 @@ const StatusDiv = styled.div<StatusDivProps>`
 
 interface StatusBadgeProps {
   status: StatusValue | undefined;
+  label: string;
 }
 
-const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
+const StatusBadge: React.FC<StatusBadgeProps> = ({ status, label }) => {
   if (!status) {
     return null;
   }
@@ -41,7 +42,7 @@ const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
         lineheight="var(--dashboard-volunteers-card-status-lineHeight)"
         color={textColor}
       >
-        {String(status)}
+        {label}
       </Paragraph>
     </StatusDiv>
   );
