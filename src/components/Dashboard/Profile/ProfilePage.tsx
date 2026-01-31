@@ -11,10 +11,7 @@ import { Comments } from "./sections/Comments";
 import { CommunicationTracker, CommunicationTrackerRef } from "./sections/CommunicationTracker";
 import { ContactDetails, ContactDetailsRef } from "./sections/ContactDetails";
 import { ProfileHeader } from "./sections/ProfileHeader";
-import {
-  RefugeeAccommodationCentre,
-  RefugeeAccommodationCentreRef,
-} from "./sections/RefugeeAccommodationCentre";
+import { RefugeeAccommodationCentre, RefugeeAccommodationCentreRef } from "./sections/RefugeeAccommodationCentre";
 import VolunteerOpportunities from "./sections/VolunteerOpportunities/VolunteerOpportunities";
 import { VolunteerProfile, VolunteerProfileRef } from "./sections/VolunteerProfile";
 import { VolunteerProfileDocument } from "./sections/VolunteerProfileDocument";
@@ -99,22 +96,32 @@ const ProfilePage = ({ volunteer, opportunity }: ProfileEntityProps) => {
     },
   ];
 
-  const getOpportunitySections = (opp: ApiOpportunityGet): SectionCardProps[] => [
-    {
-      iconName: IconName.ChatsCircle,
-      title: t("dashboard.opportunityProfile.contactDetailsTitle"),
-      headerButtonName: t("dashboard.opportunityProfile.editButtonName"),
-      onHeaderButtonClick: () => opportunityContactDetailsRef.current?.handleEditClick(),
-      subComponent: <ContactDetails ref={opportunityContactDetailsRef} opportunity={opp} />,
-    },
-    {
-      iconName: IconName.House,
-      title: t("dashboard.opportunityProfile.racTitle"),
-      headerButtonName: t("dashboard.opportunityProfile.editButtonName"),
-      onHeaderButtonClick: () => racRef.current?.handleEditClick(),
-      subComponent: <RefugeeAccommodationCentre ref={racRef} opportunity={opp} />,
-    },
-  ];
+  const getOpportunitySections = (opp: ApiOpportunityGet): SectionCardProps[] => {
+    // @ts-expect-error comments missing on SDK ApiOpportunityGet type
+    const commentsCount = (opp.comments?.length as number | undefined) ?? 0;
+
+    return [
+      {
+        iconName: IconName.ChatsCircle,
+        title: t("dashboard.opportunityProfile.contactDetailsTitle"),
+        headerButtonName: t("dashboard.opportunityProfile.editButtonName"),
+        onHeaderButtonClick: () => opportunityContactDetailsRef.current?.handleEditClick(),
+        subComponent: <ContactDetails ref={opportunityContactDetailsRef} opportunity={opp} />,
+      },
+      {
+        iconName: IconName.House,
+        title: t("dashboard.opportunityProfile.racTitle"),
+        headerButtonName: t("dashboard.opportunityProfile.editButtonName"),
+        onHeaderButtonClick: () => racRef.current?.handleEditClick(),
+        subComponent: <RefugeeAccommodationCentre ref={racRef} opportunity={opp} />,
+      },
+      {
+        iconName: IconName.ChatCircleDots,
+        title: `${t("dashboard.volunteerProfile.coordinatorComments")} • ${commentsCount}`,
+        subComponent: <Comments opportunity={opp} />,
+      },
+    ];
+  };
 
   const sections = volunteer ? getVolunteerSections(volunteer) : getOpportunitySections(opportunity);
 

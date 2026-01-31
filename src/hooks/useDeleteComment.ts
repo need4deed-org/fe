@@ -1,11 +1,14 @@
 import { apiPathComment } from "@/config/constants";
 import { useMutationQuery } from "@/hooks";
+import { Id } from "need4deed-sdk";
 
-export const useDeleteComment = (volunteerId: number, commentId: number) => {
+type EntityType = "volunteer" | "opportunity";
+
+export const useDeleteComment = (entityId: Id, commentId: number, entityType: EntityType = "volunteer") => {
   return useMutationQuery<unknown, { message: string }>({
     apiPath: `${apiPathComment}/${commentId}`,
     method: "delete",
     successMessage: "dashboard.commentsSection.commentDeleted",
-    queryKeyToInvalidate: ["volunteer", String(volunteerId)],
+    queryKeyToInvalidate: [entityType, String(entityId)],
   });
 };
