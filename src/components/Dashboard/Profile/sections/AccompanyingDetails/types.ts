@@ -1,3 +1,3 @@
 export type AccompanyingDetailsRef = {
-  handleEditClick: () => void;
+  handleEditClick?: () => void;
 };

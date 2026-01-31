@@ -7,7 +7,7 @@ import { useUpdateOpportunityAccompanyingDetails } from "@/hooks/useUpdateOpport
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
 import { de, enUS } from "date-fns/locale";
-import { ApiOpportunityGet } from "need4deed-sdk";
+import { ApiOpportunityGet, VolunteerStateTypeType } from "need4deed-sdk";
 import { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from "react";
 import { Controller, ControllerRenderProps, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -17,6 +17,20 @@ import {
   AccompanyingDetailsFormData,
 } from "./accompanyingDetailsSchema";
 import { AccompanyingDetailsRef } from "./types";
+
+const isAccompanyingType = (volunteerType: VolunteerStateTypeType | undefined): boolean => {
+  return (
+    volunteerType === VolunteerStateTypeType.ACCOMPANYING ||
+    volunteerType === VolunteerStateTypeType.REGULAR_ACCOMPANYING
+  );
+};
+
+const NotAccompanyingMessage = styled.p`
+  color: var(--color-grey-500);
+  font-size: var(--font-size-16);
+  line-height: 1.5;
+  margin: 0;
+`;
 
 const Container = styled.div<{ $isEditing: boolean }>`
   display: flex;
@@ -106,6 +120,7 @@ export const AccompanyingDetails = forwardRef<AccompanyingDetailsRef, Props>(
     const { mutate: updateAccompanyingDetails, isPending } = useUpdateOpportunityAccompanyingDetails(opportunity.id);
     const [isEditing, setIsEditing] = useState(false);
     const { data: apiLanguages } = useApiLanguages();
+    const showFullDetails = isAccompanyingType(opportunity.volunteerType);
 
     const languageOptions = useMemo(() => apiLanguages.map((lang) => lang.title), [apiLanguages]);
 
@@ -148,11 +163,13 @@ export const AccompanyingDetails = forwardRef<AccompanyingDetailsRef, Props>(
     });
 
     const handleEditClick = () => {
-      setIsEditing(true);
+      if (showFullDetails) {
+        setIsEditing(true);
+      }
     };
 
     useImperativeHandle(ref, () => ({
-      handleEditClick,
+      handleEditClick: showFullDetails ? handleEditClick : undefined,
     }));
 
     const handleCancel = () => {
@@ -185,6 +202,16 @@ export const AccompanyingDetails = forwardRef<AccompanyingDetailsRef, Props>(
         reset(initialFormValues);
       }
     }, [initialFormValues, isEditing, reset]);
+
+    if (!showFullDetails) {
+      return (
+        <div data-testid="accompanying-details-not-accompanying">
+          <NotAccompanyingMessage>
+            {t("dashboard.opportunityProfile.accompanyingDetails.notAccompanyingMessage")}
+          </NotAccompanyingMessage>
+        </div>
+      );
+    }
 
     return (
       <Container data-testid="accompanying-details-container" $isEditing={isEditing}>

@@ -745,6 +745,7 @@
         "cancel": "Cancel",
         "saveChanges": "Save changes",
         "saveSuccess": "Accompanying details updated successfully",
+        "notAccompanyingMessage": "This opportunity is not marked as accompanying. Change this status in the top card if you need to fill out the accompanying information (appointment address, refugee details, etc.).",
         "validation": {
           "invalidTimeFormat": "Invalid time format (use HH:MM)"
         }

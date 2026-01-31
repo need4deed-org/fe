@@ -1,6 +1,6 @@
 import { Heading2 } from "@/components/styled/text";
 import { ArrowLeftIcon } from "@phosphor-icons/react";
-import { ApiOpportunityGet, ApiVolunteerGet } from "need4deed-sdk";
+import { ApiOpportunityGet, ApiVolunteerGet, VolunteerStateTypeType } from "need4deed-sdk";
 import Link from "next/link";
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
@@ -101,6 +101,9 @@ const ProfilePage = ({ volunteer, opportunity }: ProfileEntityProps) => {
   const getOpportunitySections = (opp: ApiOpportunityGet): SectionCardProps[] => {
     // @ts-expect-error comments missing on SDK ApiOpportunityGet type
     const commentsCount = (opp.comments?.length as number | undefined) ?? 0;
+    const isAccompanyingType =
+      opp.volunteerType === VolunteerStateTypeType.ACCOMPANYING ||
+      opp.volunteerType === VolunteerStateTypeType.REGULAR_ACCOMPANYING;
 
     return [
       {
@@ -120,8 +123,10 @@ const ProfilePage = ({ volunteer, opportunity }: ProfileEntityProps) => {
       {
         iconName: IconName.Users,
         title: t("dashboard.opportunityProfile.accompanyingDetailsTitle"),
-        headerButtonName: t("dashboard.opportunityProfile.editButtonName"),
-        onHeaderButtonClick: () => accompanyingDetailsRef.current?.handleEditClick(),
+        ...(isAccompanyingType && {
+          headerButtonName: t("dashboard.opportunityProfile.editButtonName"),
+          onHeaderButtonClick: () => accompanyingDetailsRef.current?.handleEditClick?.(),
+        }),
         subComponent: <AccompanyingDetails ref={accompanyingDetailsRef} opportunity={opp} />,
       },
       {
