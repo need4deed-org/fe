@@ -738,12 +738,17 @@
       "accompanyingDetailsTitle": "Begleitdetails",
       "accompanyingDetails": {
         "appointmentAddress": "Terminadresse",
+        "appointmentDate": "Termindatum",
+        "appointmentTime": "Terminzeit",
         "refugeeNumber": "Geflüchtetennummer",
         "refugeeName": "Name des Geflüchteten",
         "languageToTranslate": "Zu übersetzende Sprache",
         "cancel": "Abbrechen",
         "saveChanges": "Änderungen speichern",
-        "saveSuccess": "Begleitdetails erfolgreich aktualisiert"
+        "saveSuccess": "Begleitdetails erfolgreich aktualisiert",
+        "validation": {
+          "invalidTimeFormat": "Ungültiges Zeitformat (verwenden Sie HH:MM)"
+        }
       }
     },
     "communicationSection": {

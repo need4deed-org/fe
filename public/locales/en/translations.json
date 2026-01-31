@@ -737,12 +737,17 @@
       "accompanyingDetailsTitle": "Accompanying details",
       "accompanyingDetails": {
         "appointmentAddress": "Appointment address",
+        "appointmentDate": "Appointment date",
+        "appointmentTime": "Appointment time",
         "refugeeNumber": "Refugee number",
         "refugeeName": "Refugee name",
         "languageToTranslate": "Language to translate",
         "cancel": "Cancel",
         "saveChanges": "Save changes",
-        "saveSuccess": "Accompanying details updated successfully"
+        "saveSuccess": "Accompanying details updated successfully",
+        "validation": {
+          "invalidTimeFormat": "Invalid time format (use HH:MM)"
+        }
       }
     },
     "communicationSection": {
