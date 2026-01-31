@@ -29,6 +29,7 @@ export enum IconName {
   ChatsTeardrop = "chatsTeardrop",
   ClipboardText = "clipboardText",
   Gift = "gift",
+  House = "house",
   PingPong = "pingPong",
   ShootingStar = "shootingStar",
   Sparkle = "sparkle",
