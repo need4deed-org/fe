@@ -1,8 +1,9 @@
 "use client";
 import Button from "@/components/core/button/Button/Button";
 import { DatePickerWithLabel } from "@/components/core/common/DatePicker";
-import { EditableField } from "@/components/EditableField/EditableField";
 import { useApiLanguages } from "@/components/Dashboard/Profile/sections/VolunteerProfile/hooks";
+import { EditableField } from "@/components/EditableField/EditableField";
+import { EMPTY_PLACEHOLDER_VALUE } from "@/config/constants";
 import { useUpdateOpportunityAccompanyingDetails } from "@/hooks/useUpdateOpportunityAccompanyingDetails";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
@@ -12,10 +13,7 @@ import { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from "r
 import { Controller, ControllerRenderProps, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import {
-  accompanyingDetailsSchema,
-  AccompanyingDetailsFormData,
-} from "./accompanyingDetailsSchema";
+import { AccompanyingDetailsFormData, accompanyingDetailsSchema } from "./accompanyingDetailsSchema";
 import { AccompanyingDetailsRef } from "./types";
 
 const isAccompanyingType = (volunteerType: VolunteerStateTypeType | undefined): boolean => {
@@ -111,271 +109,251 @@ type AccompanyingDetailsData = {
   refugeeNumber?: string;
   refugeeName?: string;
   languagesToTranslate?: string[];
+  languageToTranslate?: string;
 };
 
-export const AccompanyingDetails = forwardRef<AccompanyingDetailsRef, Props>(
-  function AccompanyingDetails({ opportunity }, ref) {
-    const { t, i18n } = useTranslation();
-    const locale = i18n.language === "de" ? de : enUS;
-    const { mutate: updateAccompanyingDetails, isPending } = useUpdateOpportunityAccompanyingDetails(opportunity.id);
-    const [isEditing, setIsEditing] = useState(false);
-    const { data: apiLanguages } = useApiLanguages();
-    const showFullDetails = isAccompanyingType(opportunity.volunteerType);
+export const AccompanyingDetails = forwardRef<AccompanyingDetailsRef, Props>(function AccompanyingDetails(
+  { opportunity },
+  ref,
+) {
+  const { t, i18n } = useTranslation();
+  const locale = i18n.language === "de" ? de : enUS;
+  const { mutate: updateAccompanyingDetails, isPending } = useUpdateOpportunityAccompanyingDetails(opportunity.id);
+  const [isEditing, setIsEditing] = useState(false);
+  const { data: apiLanguages } = useApiLanguages();
+  const showFullDetails = isAccompanyingType(opportunity.volunteerType);
 
-    const languageOptions = useMemo(() => apiLanguages.map((lang) => lang.title), [apiLanguages]);
+  const languageOptions = useMemo(() => apiLanguages.map((lang) => lang.title), [apiLanguages]);
 
-    const keyToLabel: Record<string, string> = {};
-    const labelToKey: Record<string, string> = {};
-    apiLanguages.forEach((lang) => {
-      keyToLabel[String(lang.id)] = lang.title;
-      labelToKey[lang.title] = String(lang.id);
-    });
+  const keyToLabel: Record<string, string> = {};
+  const labelToKey: Record<string, string> = {};
+  apiLanguages.forEach((lang) => {
+    keyToLabel[String(lang.id)] = lang.title;
+    labelToKey[lang.title] = String(lang.id);
+  });
 
-    const parseDate = (dateStr: string | undefined): Date | null => {
-      if (!dateStr) return null;
-      const parsed = new Date(dateStr);
-      return isNaN(parsed.getTime()) ? null : parsed;
+  const parseDate = (dateStr: string | undefined): Date | null => {
+    if (!dateStr) return null;
+    const parsed = new Date(dateStr);
+    return isNaN(parsed.getTime()) ? null : parsed;
+  };
+
+  const initialFormValues = useMemo((): AccompanyingDetailsFormData => {
+    // @ts-expect-error accompanyingDetails missing on SDK ApiOpportunityGet type
+    const details = opportunity.accompanyingDetails as AccompanyingDetailsData | undefined;
+
+    return {
+      appointmentAddress: details?.appointmentAddress || "",
+      appointmentDate: parseDate(details?.appointmentDate),
+      appointmentTime: details?.appointmentTime || "",
+      refugeeNumber: details?.refugeeNumber || "",
+      refugeeName: details?.refugeeName || "",
+      languageToTranslate: details?.languagesToTranslate?.[0] || "",
     };
+  }, [opportunity]);
 
-    const initialFormValues = useMemo((): AccompanyingDetailsFormData => {
-      // @ts-expect-error accompanyingDetails missing on SDK ApiOpportunityGet type
-      const details = opportunity.accompanyingDetails as AccompanyingDetailsData | undefined;
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors, isValid, isDirty },
+  } = useForm<AccompanyingDetailsFormData>({
+    resolver: zodResolver(accompanyingDetailsSchema),
+    mode: "onChange",
+    defaultValues: initialFormValues,
+  });
 
-      return {
-        appointmentAddress: details?.appointmentAddress || "",
-        appointmentDate: parseDate(details?.appointmentDate),
-        appointmentTime: details?.appointmentTime || "",
-        refugeeNumber: details?.refugeeNumber || "",
-        refugeeName: details?.refugeeName || "",
-        languagesToTranslate: details?.languagesToTranslate || [],
-      };
-    }, [opportunity]);
-
-    const {
-      control,
-      handleSubmit,
-      reset,
-      formState: { errors, isValid, isDirty },
-    } = useForm<AccompanyingDetailsFormData>({
-      resolver: zodResolver(accompanyingDetailsSchema),
-      mode: "onChange",
-      defaultValues: initialFormValues,
-    });
-
-    const handleEditClick = () => {
-      if (showFullDetails) {
-        setIsEditing(true);
-      }
-    };
-
-    useImperativeHandle(ref, () => ({
-      handleEditClick: showFullDetails ? handleEditClick : undefined,
-    }));
-
-    const handleCancel = () => {
-      reset();
-      setIsEditing(false);
-    };
-
-    const onSubmit = (values: AccompanyingDetailsFormData) => {
-      updateAccompanyingDetails(
-        {
-          accompanyingDetails: {
-            appointmentAddress: values.appointmentAddress,
-            appointmentDate: values.appointmentDate ? values.appointmentDate.toISOString() : undefined,
-            appointmentTime: values.appointmentTime || undefined,
-            refugeeNumber: values.refugeeNumber,
-            refugeeName: values.refugeeName,
-            languagesToTranslate: values.languagesToTranslate,
-          },
-        },
-        {
-          onSuccess: () => {
-            setIsEditing(false);
-          },
-        },
-      );
-    };
-
-    useEffect(() => {
-      if (!isEditing) {
-        reset(initialFormValues);
-      }
-    }, [initialFormValues, isEditing, reset]);
-
-    if (!showFullDetails) {
-      return (
-        <div data-testid="accompanying-details-not-accompanying">
-          <NotAccompanyingMessage>
-            {t("dashboard.opportunityProfile.accompanyingDetails.notAccompanyingMessage")}
-          </NotAccompanyingMessage>
-        </div>
-      );
+  const handleEditClick = () => {
+    if (showFullDetails) {
+      setIsEditing(true);
     }
+  };
 
-    return (
-      <Container data-testid="accompanying-details-container" $isEditing={isEditing}>
-        <Details>
-          <Controller
-            name="appointmentAddress"
-            control={control}
-            render={({
-              field,
-            }: {
-              field: ControllerRenderProps<AccompanyingDetailsFormData, "appointmentAddress">;
-            }) => (
-              <EditableField
-                mode={isEditing ? "edit" : "display"}
-                type="text"
-                label={t("dashboard.opportunityProfile.accompanyingDetails.appointmentAddress")}
-                value={field.value || ""}
-                setValue={field.onChange}
-                errorMessage={errors.appointmentAddress?.message}
-              />
-            )}
-          />
+  useImperativeHandle(ref, () => ({
+    handleEditClick: showFullDetails ? handleEditClick : undefined,
+  }));
 
-          <Controller
-            name="appointmentDate"
-            control={control}
-            render={({
-              field,
-            }: {
-              field: ControllerRenderProps<AccompanyingDetailsFormData, "appointmentDate">;
-            }) => (
-              <DateFieldRow data-testid="appointment-date-field">
-                <label>{t("dashboard.opportunityProfile.accompanyingDetails.appointmentDate")}</label>
-                {isEditing ? (
-                  <DatePickerContainer>
-                    <DatePickerWithLabel
-                      date={field.value ?? undefined}
-                      onSelect={(d) => field.onChange(d ?? null)}
-                      locale={locale}
-                      allowFuture
-                    />
-                  </DatePickerContainer>
-                ) : (
-                  <span>{field.value ? format(field.value, "dd.MM.yyyy") : "—"}</span>
-                )}
-              </DateFieldRow>
-            )}
-          />
+  const handleCancel = () => {
+    reset();
+    setIsEditing(false);
+  };
 
-          <Controller
-            name="appointmentTime"
-            control={control}
-            render={({
-              field,
-            }: {
-              field: ControllerRenderProps<AccompanyingDetailsFormData, "appointmentTime">;
-            }) => (
-              <DateFieldRow data-testid="appointment-time-field">
-                <label>{t("dashboard.opportunityProfile.accompanyingDetails.appointmentTime")}</label>
-                {isEditing ? (
-                  <TimeInputWrapper>
-                    <TimeInput
-                      type="text"
-                      placeholder="HH:MM"
-                      value={field.value || ""}
-                      onChange={field.onChange}
-                      $hasError={!!errors.appointmentTime}
-                    />
-                    {errors.appointmentTime && (
-                      <ErrorText>
-                        {t(`dashboard.opportunityProfile.accompanyingDetails.validation.${errors.appointmentTime.message}`)}
-                      </ErrorText>
-                    )}
-                  </TimeInputWrapper>
-                ) : (
-                  <span>{field.value || "—"}</span>
-                )}
-              </DateFieldRow>
-            )}
-          />
-
-          <Controller
-            name="refugeeNumber"
-            control={control}
-            render={({
-              field,
-            }: {
-              field: ControllerRenderProps<AccompanyingDetailsFormData, "refugeeNumber">;
-            }) => (
-              <EditableField
-                mode={isEditing ? "edit" : "display"}
-                type="text"
-                label={t("dashboard.opportunityProfile.accompanyingDetails.refugeeNumber")}
-                value={field.value || ""}
-                setValue={field.onChange}
-                errorMessage={errors.refugeeNumber?.message}
-              />
-            )}
-          />
-
-          <Controller
-            name="refugeeName"
-            control={control}
-            render={({
-              field,
-            }: {
-              field: ControllerRenderProps<AccompanyingDetailsFormData, "refugeeName">;
-            }) => (
-              <EditableField
-                mode={isEditing ? "edit" : "display"}
-                type="text"
-                label={t("dashboard.opportunityProfile.accompanyingDetails.refugeeName")}
-                value={field.value || ""}
-                setValue={field.onChange}
-                errorMessage={errors.refugeeName?.message}
-              />
-            )}
-          />
-
-          <Controller
-            name="languagesToTranslate"
-            control={control}
-            render={({
-              field,
-            }: {
-              field: ControllerRenderProps<AccompanyingDetailsFormData, "languagesToTranslate">;
-            }) => (
-              <EditableField
-                mode={isEditing ? "edit" : "display"}
-                type="checkbox-list"
-                label={t("dashboard.opportunityProfile.accompanyingDetails.languageToTranslate")}
-                value={(field.value || []).map((id) => keyToLabel[id] || id)}
-                setValue={(value) => {
-                  const labels = Array.isArray(value) ? value : [value];
-                  field.onChange(labels.map((label) => labelToKey[label] || label));
-                }}
-                options={languageOptions}
-                errorMessage={errors.languagesToTranslate?.message}
-              />
-            )}
-          />
-        </Details>
-
-        {isEditing && (
-          <ButtonRow>
-            <Button
-              text={t("dashboard.opportunityProfile.accompanyingDetails.cancel")}
-              onClick={handleCancel}
-              width="auto"
-              padding="var(--volunteer-profile-section-card-header-button-padding)"
-              backgroundcolor="var(--color-white)"
-              textColor="var(--color-aubergine)"
-              border="var(--volunteer-profile-section-card-header-button-border)"
-            />
-            <Button
-              text={t("dashboard.opportunityProfile.accompanyingDetails.saveChanges")}
-              onClick={handleSubmit(onSubmit)}
-              width="auto"
-              padding="var(--volunteer-profile-section-card-header-button-padding)"
-              disabled={!isDirty || !isValid || isPending}
-            />
-          </ButtonRow>
-        )}
-      </Container>
+  const onSubmit = (values: AccompanyingDetailsFormData) => {
+    updateAccompanyingDetails(
+      {
+        accompanyingDetails: {
+          appointmentAddress: values.appointmentAddress,
+          appointmentDate: values.appointmentDate ? values.appointmentDate.toISOString() : undefined,
+          appointmentTime: values.appointmentTime || undefined,
+          refugeeNumber: values.refugeeNumber,
+          refugeeName: values.refugeeName,
+          languagesToTranslate: values.languageToTranslate ? [values.languageToTranslate] : [],
+        },
+      },
+      {
+        onSuccess: () => {
+          setIsEditing(false);
+        },
+      },
     );
-  },
-);
+  };
+
+  useEffect(() => {
+    if (!isEditing) {
+      reset(initialFormValues);
+    }
+  }, [initialFormValues, isEditing, reset]);
+
+  if (showFullDetails) {
+    return (
+      <div data-testid="accompanying-details-not-accompanying">
+        <NotAccompanyingMessage>
+          {t("dashboard.opportunityProfile.accompanyingDetails.notAccompanyingMessage")}
+        </NotAccompanyingMessage>
+      </div>
+    );
+  }
+
+  return (
+    <Container data-testid="accompanying-details-container" $isEditing={isEditing}>
+      <Details>
+        <Controller
+          name="appointmentAddress"
+          control={control}
+          render={({ field }: { field: ControllerRenderProps<AccompanyingDetailsFormData, "appointmentAddress"> }) => (
+            <EditableField
+              mode={isEditing ? "edit" : "display"}
+              type="text"
+              label={t("dashboard.opportunityProfile.accompanyingDetails.appointmentAddress")}
+              value={field.value || ""}
+              setValue={field.onChange}
+              errorMessage={errors.appointmentAddress?.message}
+            />
+          )}
+        />
+
+        <Controller
+          name="appointmentDate"
+          control={control}
+          render={({ field }: { field: ControllerRenderProps<AccompanyingDetailsFormData, "appointmentDate"> }) => (
+            <DateFieldRow data-testid="appointment-date-field">
+              <label>{t("dashboard.opportunityProfile.accompanyingDetails.appointmentDate")}</label>
+              {isEditing ? (
+                <DatePickerContainer>
+                  <DatePickerWithLabel
+                    date={field.value ?? undefined}
+                    onSelect={(d) => field.onChange(d ?? null)}
+                    locale={locale}
+                    allowFuture
+                  />
+                </DatePickerContainer>
+              ) : (
+                <span>{field.value ? format(field.value, "dd.MM.yyyy") : EMPTY_PLACEHOLDER_VALUE}</span>
+              )}
+            </DateFieldRow>
+          )}
+        />
+
+        <Controller
+          name="appointmentTime"
+          control={control}
+          render={({ field }: { field: ControllerRenderProps<AccompanyingDetailsFormData, "appointmentTime"> }) => (
+            <DateFieldRow data-testid="appointment-time-field">
+              <label>{t("dashboard.opportunityProfile.accompanyingDetails.appointmentTime")}</label>
+              {isEditing ? (
+                <TimeInputWrapper>
+                  <TimeInput
+                    type="text"
+                    placeholder="HH:MM"
+                    value={field.value || ""}
+                    onChange={field.onChange}
+                    $hasError={!!errors.appointmentTime}
+                  />
+                  {errors.appointmentTime && (
+                    <ErrorText>
+                      {t(
+                        `dashboard.opportunityProfile.accompanyingDetails.validation.${errors.appointmentTime.message}`,
+                      )}
+                    </ErrorText>
+                  )}
+                </TimeInputWrapper>
+              ) : (
+                <span>{field.value || EMPTY_PLACEHOLDER_VALUE}</span>
+              )}
+            </DateFieldRow>
+          )}
+        />
+
+        <Controller
+          name="refugeeNumber"
+          control={control}
+          render={({ field }: { field: ControllerRenderProps<AccompanyingDetailsFormData, "refugeeNumber"> }) => (
+            <EditableField
+              mode={isEditing ? "edit" : "display"}
+              type="text"
+              label={t("dashboard.opportunityProfile.accompanyingDetails.refugeeNumber")}
+              value={field.value || ""}
+              setValue={field.onChange}
+              errorMessage={errors.refugeeNumber?.message}
+            />
+          )}
+        />
+
+        <Controller
+          name="refugeeName"
+          control={control}
+          render={({ field }: { field: ControllerRenderProps<AccompanyingDetailsFormData, "refugeeName"> }) => (
+            <EditableField
+              mode={isEditing ? "edit" : "display"}
+              type="text"
+              label={t("dashboard.opportunityProfile.accompanyingDetails.refugeeName")}
+              value={field.value || ""}
+              setValue={field.onChange}
+              errorMessage={errors.refugeeName?.message}
+            />
+          )}
+        />
+
+        <Controller
+          name="languageToTranslate"
+          control={control}
+          render={({ field }: { field: ControllerRenderProps<AccompanyingDetailsFormData, "languageToTranslate"> }) => (
+            <EditableField
+              mode={isEditing ? "edit" : "display"}
+              type="radio-list"
+              label={t("dashboard.opportunityProfile.accompanyingDetails.languageToTranslate")}
+              value={keyToLabel[field.value || ""] || field.value || ""}
+              setValue={(value) => {
+                const label = Array.isArray(value) ? value[0] : value;
+                field.onChange(labelToKey[label] || label);
+              }}
+              options={languageOptions}
+              errorMessage={errors.languageToTranslate?.message}
+            />
+          )}
+        />
+      </Details>
+
+      {isEditing && (
+        <ButtonRow>
+          <Button
+            text={t("dashboard.opportunityProfile.accompanyingDetails.cancel")}
+            onClick={handleCancel}
+            width="auto"
+            padding="var(--volunteer-profile-section-card-header-button-padding)"
+            backgroundcolor="var(--color-white)"
+            textColor="var(--color-aubergine)"
+            border="var(--volunteer-profile-section-card-header-button-border)"
+          />
+          <Button
+            text={t("dashboard.opportunityProfile.accompanyingDetails.saveChanges")}
+            onClick={handleSubmit(onSubmit)}
+            width="auto"
+            padding="var(--volunteer-profile-section-card-header-button-padding)"
+            disabled={!isDirty || !isValid || isPending}
+          />
+        </ButtonRow>
+      )}
+    </Container>
+  );
+});
