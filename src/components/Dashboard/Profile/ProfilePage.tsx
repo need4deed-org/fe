@@ -6,6 +6,7 @@ import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { SectionCard, SectionCardProps } from "./common/SectionCard";
+import { AccompanyingDetails, AccompanyingDetailsRef } from "./sections/AccompanyingDetails";
 import { Appreciation, AppreciationRef } from "./sections/Appreciation";
 import { Comments } from "./sections/Comments";
 import { CommunicationTracker, CommunicationTrackerRef } from "./sections/CommunicationTracker";
@@ -43,6 +44,7 @@ const ProfilePage = ({ volunteer, opportunity }: ProfileEntityProps) => {
   const communicationTrackerRef = useRef<CommunicationTrackerRef>(null);
   const appreciationRef = useRef<AppreciationRef>(null);
   const racRef = useRef<RefugeeAccommodationCentreRef>(null);
+  const accompanyingDetailsRef = useRef<AccompanyingDetailsRef>(null);
 
   const getVolunteerSections = (vol: ApiVolunteerGet): SectionCardProps[] => [
     {
@@ -114,6 +116,13 @@ const ProfilePage = ({ volunteer, opportunity }: ProfileEntityProps) => {
         headerButtonName: t("dashboard.opportunityProfile.editButtonName"),
         onHeaderButtonClick: () => racRef.current?.handleEditClick(),
         subComponent: <RefugeeAccommodationCentre ref={racRef} opportunity={opp} />,
+      },
+      {
+        iconName: IconName.Users,
+        title: t("dashboard.opportunityProfile.accompanyingDetailsTitle"),
+        headerButtonName: t("dashboard.opportunityProfile.editButtonName"),
+        onHeaderButtonClick: () => accompanyingDetailsRef.current?.handleEditClick(),
+        subComponent: <AccompanyingDetails ref={accompanyingDetailsRef} opportunity={opp} />,
       },
       {
         iconName: IconName.ChatCircleDots,

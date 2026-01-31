@@ -734,6 +734,16 @@
         "district": "Bezirk",
         "cancel": "Abbrechen",
         "saveChanges": "Änderungen speichern"
+      },
+      "accompanyingDetailsTitle": "Begleitdetails",
+      "accompanyingDetails": {
+        "appointmentAddress": "Terminadresse",
+        "refugeeNumber": "Geflüchtetennummer",
+        "refugeeName": "Name des Geflüchteten",
+        "languageToTranslate": "Zu übersetzende Sprache",
+        "cancel": "Abbrechen",
+        "saveChanges": "Änderungen speichern",
+        "saveSuccess": "Begleitdetails erfolgreich aktualisiert"
       }
     },
     "communicationSection": {

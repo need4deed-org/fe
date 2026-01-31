@@ -733,6 +733,16 @@
         "district": "District",
         "cancel": "Cancel",
         "saveChanges": "Save changes"
+      },
+      "accompanyingDetailsTitle": "Accompanying details",
+      "accompanyingDetails": {
+        "appointmentAddress": "Appointment address",
+        "refugeeNumber": "Refugee number",
+        "refugeeName": "Refugee name",
+        "languageToTranslate": "Language to translate",
+        "cancel": "Cancel",
+        "saveChanges": "Save changes",
+        "saveSuccess": "Accompanying details updated successfully"
       }
     },
     "communicationSection": {
