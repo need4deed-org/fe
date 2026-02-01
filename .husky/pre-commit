@@ -1,2 +1,2 @@
 yarn run lint
-NODE_ENV=production yarn run build
+yarn run typecheck
