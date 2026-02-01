@@ -733,7 +733,12 @@
         "address": "Adresse",
         "district": "Bezirk",
         "cancel": "Abbrechen",
-        "saveChanges": "Änderungen speichern"
+        "saveChanges": "Änderungen speichern",
+        "validation": {
+          "nameRequired": "Name ist erforderlich",
+          "addressRequired": "Adresse ist erforderlich",
+          "districtRequired": "Bezirk ist erforderlich"
+        }
       }
     },
     "communicationSection": {
