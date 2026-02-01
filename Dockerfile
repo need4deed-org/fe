@@ -1,7 +1,7 @@
 FROM node:22-alpine AS builder
 WORKDIR /app
 
-ARG API_URL
+ARG API_URL=http://localhost:8000
 
 COPY package.json yarn.lock* ./
 RUN yarn install --frozen-lockfile
@@ -9,6 +9,8 @@ RUN yarn install --frozen-lockfile
 COPY . .
 
 ENV API_URL=${API_URL}
+ENV NEXT_TELEMETRY_DISABLED=1
+
 
 RUN yarn build
 
