@@ -732,7 +732,12 @@
         "address": "Address",
         "district": "District",
         "cancel": "Cancel",
-        "saveChanges": "Save changes"
+        "saveChanges": "Save changes",
+        "validation": {
+          "nameRequired": "Name is required",
+          "addressRequired": "Address is required",
+          "districtRequired": "District is required"
+        }
       },
       "accompanyingDetailsTitle": "Accompanying details",
       "accompanyingDetails": {
