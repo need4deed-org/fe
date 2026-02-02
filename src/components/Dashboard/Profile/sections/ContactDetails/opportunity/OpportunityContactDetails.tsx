@@ -7,11 +7,7 @@ import { ApiOpportunityGet, VolunteerCommunicationType } from "need4deed-sdk";
 import { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import {
-  EditableButtonRow as ButtonRow,
-  EditableContainer as Container,
-  EditableDetails as Details,
-} from "../../shared/styles";
+import { FormButtonRow, FormContainer, FormDetails } from "../../shared/styles";
 import { useEnumTranslation } from "../shared";
 import { ContactDetailsRef } from "../types";
 import {
@@ -102,8 +98,8 @@ export const OpportunityContactDetails = forwardRef<ContactDetailsRef, Props>(fu
   const mode = isEditing ? "edit" : "display";
 
   return (
-    <Container data-testid="opportunity-contact-details-container" $isEditing={isEditing}>
-      <Details>
+    <FormContainer data-testid="opportunity-contact-details-container" $isEditing={isEditing}>
+      <FormDetails>
         <Controller
           name="name"
           control={control}
@@ -164,10 +160,10 @@ export const OpportunityContactDetails = forwardRef<ContactDetailsRef, Props>(fu
             />
           )}
         />
-      </Details>
+      </FormDetails>
 
       {isEditing && (
-        <ButtonRow>
+        <FormButtonRow>
           <Button
             text={t("dashboard.opportunityProfile.contactDetails.cancel")}
             onClick={handleCancel}
@@ -184,8 +180,8 @@ export const OpportunityContactDetails = forwardRef<ContactDetailsRef, Props>(fu
             padding="var(--volunteer-profile-section-card-header-button-padding)"
             disabled={!isDirty || !isValid || isPending}
           />
-        </ButtonRow>
+        </FormButtonRow>
       )}
-    </Container>
+    </FormContainer>
   );
 });

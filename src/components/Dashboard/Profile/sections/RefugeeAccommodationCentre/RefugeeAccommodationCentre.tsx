@@ -7,11 +7,7 @@ import { ApiOpportunityGet } from "need4deed-sdk";
 import { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import {
-  EditableButtonRow as ButtonRow,
-  EditableContainer as Container,
-  EditableDetails as Details,
-} from "../shared/styles";
+import { FormButtonRow, FormContainer, FormDetails } from "../shared/styles";
 import {
   createRefugeeAccommodationCentreSchema,
   RefugeeAccommodationCentreFormData,
@@ -73,8 +69,8 @@ export const RefugeeAccommodationCentre = forwardRef<RefugeeAccommodationCentreR
     const mode = isEditing ? "edit" : "display";
 
     return (
-      <Container data-testid="refugee-accommodation-centre-container" $isEditing={isEditing}>
-        <Details>
+      <FormContainer data-testid="refugee-accommodation-centre-container" $isEditing={isEditing}>
+        <FormDetails>
           <Controller
             name="name"
             control={control}
@@ -119,10 +115,10 @@ export const RefugeeAccommodationCentre = forwardRef<RefugeeAccommodationCentreR
               />
             )}
           />
-        </Details>
+        </FormDetails>
 
         {isEditing && (
-          <ButtonRow>
+          <FormButtonRow>
             <Button
               text={t("dashboard.opportunityProfile.rac.cancel")}
               onClick={handleCancel}
@@ -139,9 +135,9 @@ export const RefugeeAccommodationCentre = forwardRef<RefugeeAccommodationCentreR
               padding="var(--volunteer-profile-section-card-header-button-padding)"
               disabled={!isDirty || !isValid || isPending}
             />
-          </ButtonRow>
+          </FormButtonRow>
         )}
-      </Container>
+      </FormContainer>
     );
   },
 );

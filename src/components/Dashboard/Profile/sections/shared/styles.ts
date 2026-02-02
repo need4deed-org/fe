@@ -39,18 +39,18 @@ export const DialogForm = styled.form<{ $gap?: string }>`
   gap: var(--spacing-24);
 `;
 
-export const EditableContainer = styled(FlexColumn).attrs<{ $isEditing: boolean }>((props) => ({
+export const FormContainer = styled(FlexColumn).attrs<{ $isEditing: boolean }>((props) => ({
   $gap: props.$isEditing ? "var(--spacing-16)" : "0",
 }))<{ $isEditing: boolean }>``;
 
-export const EditableDetails = styled.div`
+export const FormDetails = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
 `;
 
-export const EditableButtonRow = styled.div`
+export const FormButtonRow = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
