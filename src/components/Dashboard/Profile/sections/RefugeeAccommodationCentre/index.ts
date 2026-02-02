@@ -1,2 +1,2 @@
 export { RefugeeAccommodationCentre } from "./RefugeeAccommodationCentre";
-export type { RefugeeAccommodationCentreRef } from "./types";
+export type { RacData, RefugeeAccommodationCentreRef } from "./types";

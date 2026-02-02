@@ -1,13 +1,10 @@
+import { RacData } from "@/components/Dashboard/Profile/sections/RefugeeAccommodationCentre/types";
 import { apiPathOpportunity } from "@/config/constants";
 import { useMutationQuery } from "@/hooks";
 import { ApiOpportunityGet } from "need4deed-sdk";
 
 export type OpportunityRacUpdateData = {
-  rac: {
-    name?: string;
-    address?: string;
-    district?: string;
-  };
+  rac: RacData;
 };
 
 export const useUpdateOpportunityRac = (opportunityId: ApiOpportunityGet["id"]) => {
