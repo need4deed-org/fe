@@ -80,9 +80,7 @@ export const VolunteerContactDetails = forwardRef<ContactDetailsRef, Props>(func
     updateContact(
       {
         person: {
-          id: volunteer.person.id,
-          phone: values.phone,
-          email: values.email,
+          ...volunteer.person,
           address: {
             id: volunteer.person.address?.id,
             street: addressData.street,
@@ -97,9 +95,8 @@ export const VolunteerContactDetails = forwardRef<ContactDetailsRef, Props>(func
   };
 
   useEffect(() => {
-    if (!isEditing) {
-      reset(initialFormValues);
-    }
+    if (isEditing) return;
+    reset(initialFormValues);
   }, [initialFormValues, isEditing, reset]);
 
   const mode = isEditing ? "edit" : "display";
