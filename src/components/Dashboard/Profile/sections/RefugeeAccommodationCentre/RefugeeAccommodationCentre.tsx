@@ -5,45 +5,17 @@ import { useUpdateOpportunityRac } from "@/hooks/useUpdateOpportunityRac";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ApiOpportunityGet } from "need4deed-sdk";
 import { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from "react";
-import { Controller, ControllerRenderProps, useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import styled from "styled-components";
+import { ButtonRow, Container, Details } from "../ContactDetails/shared";
 import {
   createRefugeeAccommodationCentreSchema,
   RefugeeAccommodationCentreFormData,
 } from "./refugeeAccommodationCentreSchema";
-import { RefugeeAccommodationCentreRef } from "./types";
-
-const Container = styled.div<{ $isEditing: boolean }>`
-  display: flex;
-  flex-direction: column;
-  gap: ${(props) => (props.$isEditing ? "var(--spacing-16)" : "0")};
-`;
-
-const Details = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 100%;
-`;
-
-const ButtonRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
-  gap: var(--spacing-24);
-  width: 100%;
-`;
+import { RacData, RefugeeAccommodationCentreRef } from "./types";
 
 type Props = {
   opportunity: ApiOpportunityGet;
-};
-
-type RacData = {
-  name?: string;
-  address?: string;
-  district?: string;
 };
 
 export const RefugeeAccommodationCentre = forwardRef<RefugeeAccommodationCentreRef, Props>(
@@ -55,13 +27,13 @@ export const RefugeeAccommodationCentre = forwardRef<RefugeeAccommodationCentreR
     const schema = createRefugeeAccommodationCentreSchema(t);
 
     const initialFormValues = useMemo((): RefugeeAccommodationCentreFormData => {
-      // @ts-expect-error rac missing on SDK ApiOpportunityGet type
-      const rac = opportunity.rac as RacData | undefined;
+      // TODO: SDK ApiOpportunityGet type doesn't include nested rac object
+      const rac = (opportunity as ApiOpportunityGet & { rac?: RacData }).rac;
 
       return {
-        name: rac?.name || "",
-        address: rac?.address || "",
-        district: rac?.district || "",
+        name: rac?.name ?? "",
+        address: rac?.address ?? "",
+        district: rac?.district ?? "",
       };
     }, [opportunity]);
 
@@ -76,13 +48,9 @@ export const RefugeeAccommodationCentre = forwardRef<RefugeeAccommodationCentreR
       defaultValues: initialFormValues,
     });
 
-    const handleEditClick = () => {
-      setIsEditing(true);
-    };
+    const handleEditClick = () => setIsEditing(true);
 
-    useImperativeHandle(ref, () => ({
-      handleEditClick,
-    }));
+    useImperativeHandle(ref, () => ({ handleEditClick }));
 
     const handleCancel = () => {
       reset();
@@ -90,27 +58,15 @@ export const RefugeeAccommodationCentre = forwardRef<RefugeeAccommodationCentreR
     };
 
     const onSubmit = (values: RefugeeAccommodationCentreFormData) => {
-      updateRac(
-        {
-          rac: {
-            name: values.name,
-            address: values.address,
-            district: values.district,
-          },
-        },
-        {
-          onSuccess: () => {
-            setIsEditing(false);
-          },
-        },
-      );
+      updateRac({ rac: values }, { onSuccess: () => setIsEditing(false) });
     };
 
     useEffect(() => {
-      if (!isEditing) {
-        reset(initialFormValues);
-      }
+      if (isEditing) return;
+      reset(initialFormValues);
     }, [initialFormValues, isEditing, reset]);
+
+    const mode = isEditing ? "edit" : "display";
 
     return (
       <Container data-testid="refugee-accommodation-centre-container" $isEditing={isEditing}>
@@ -118,9 +74,9 @@ export const RefugeeAccommodationCentre = forwardRef<RefugeeAccommodationCentreR
           <Controller
             name="name"
             control={control}
-            render={({ field }: { field: ControllerRenderProps<RefugeeAccommodationCentreFormData, "name"> }) => (
+            render={({ field }) => (
               <EditableField
-                mode={isEditing ? "edit" : "display"}
+                mode={mode}
                 type="text"
                 label={t("dashboard.opportunityProfile.rac.name")}
                 value={field.value}
@@ -133,9 +89,9 @@ export const RefugeeAccommodationCentre = forwardRef<RefugeeAccommodationCentreR
           <Controller
             name="address"
             control={control}
-            render={({ field }: { field: ControllerRenderProps<RefugeeAccommodationCentreFormData, "address"> }) => (
+            render={({ field }) => (
               <EditableField
-                mode={isEditing ? "edit" : "display"}
+                mode={mode}
                 type="text"
                 label={t("dashboard.opportunityProfile.rac.address")}
                 value={field.value}
@@ -148,9 +104,9 @@ export const RefugeeAccommodationCentre = forwardRef<RefugeeAccommodationCentreR
           <Controller
             name="district"
             control={control}
-            render={({ field }: { field: ControllerRenderProps<RefugeeAccommodationCentreFormData, "district"> }) => (
+            render={({ field }) => (
               <EditableField
-                mode={isEditing ? "edit" : "display"}
+                mode={mode}
                 type="text"
                 label={t("dashboard.opportunityProfile.rac.district")}
                 value={field.value}
