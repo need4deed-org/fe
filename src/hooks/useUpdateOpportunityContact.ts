@@ -7,7 +7,7 @@ export type OpportunityContactUpdateData = {
     name?: string;
     phone?: string;
     email?: string;
-    ways_to_contact?: string[];
+    waysToContact?: string[];
   };
 };
 
