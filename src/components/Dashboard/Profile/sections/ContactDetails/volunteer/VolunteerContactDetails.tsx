@@ -5,57 +5,29 @@ import { useUpdateVolunteerContact } from "@/hooks/useUpdateVolunteerContact";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ApiVolunteerGet, VolunteerCommunicationType } from "need4deed-sdk";
 import { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from "react";
-import { Controller, ControllerRenderProps, useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import styled from "styled-components";
+import { ButtonRow, Container, Details, useEnumTranslation } from "../shared";
 import { ContactDetailsRef } from "../types";
 import { createVolunteerContactDetailsSchema, VolunteerContactDetailsFormData } from "./volunteerContactDetailsSchema";
-
-const Container = styled.div<{ $isEditing: boolean }>`
-  display: flex;
-  flex-direction: column;
-  gap: ${(props) => (props.$isEditing ? "var(--spacing-16)" : "0")};
-`;
-
-const Details = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 100%;
-`;
-
-const ButtonRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
-  gap: var(--spacing-24);
-  width: 100%;
-`;
-
-const formatAddress = (address: ApiVolunteerGet["person"]["address"]) => {
-  if (!address || typeof address !== "object") {
-    return "";
-  }
-  const postcode = address.postcode && typeof address.postcode === "object" ? address.postcode.code : address.postcode;
-  const parts = [address.street, address.city, postcode].filter(Boolean);
-  return parts.join(", ");
-};
-
-const parseAddress = (addressString: string) => {
-  const parts = addressString.split(",").map((part) => part.trim());
-  return {
-    street: parts[0] || "",
-    city: parts[1] || "",
-    postcode: parts[2] || "",
-  };
-};
 
 type Props = {
   volunteer: ApiVolunteerGet;
 };
 
-const preferredCommunicationTypeKeys = Object.values(VolunteerCommunicationType);
+const COMMUNICATION_TYPES = Object.values(VolunteerCommunicationType);
+
+const formatAddress = (address: ApiVolunteerGet["person"]["address"]) => {
+  if (!address || typeof address !== "object") return "";
+
+  const postcode = address.postcode && typeof address.postcode === "object" ? address.postcode.code : address.postcode;
+  return [address.street, address.city, postcode].filter(Boolean).join(", ");
+};
+
+const parseAddress = (addressString: string) => {
+  const [street = "", city = "", postcode = ""] = addressString.split(",").map((part) => part.trim());
+  return { street, city, postcode };
+};
 
 export const VolunteerContactDetails = forwardRef<ContactDetailsRef, Props>(function VolunteerContactDetails(
   { volunteer },
@@ -65,26 +37,19 @@ export const VolunteerContactDetails = forwardRef<ContactDetailsRef, Props>(func
   const { mutate: updateContact, isPending } = useUpdateVolunteerContact(String(volunteer.id));
   const [isEditing, setIsEditing] = useState(false);
 
-  const preferredCommunicationTypeOptions = preferredCommunicationTypeKeys.map((key) =>
-    t(`dashboard.volunteerProfile.contactDetails.preferredCommunicationType.${key}`),
+  const { options, keysToLabels, labelsToKeys } = useEnumTranslation(
+    COMMUNICATION_TYPES,
+    "dashboard.volunteerProfile.contactDetails.preferredCommunicationType",
   );
-
-  const keyToLabel: Record<string, string> = {};
-  const labelToKey: Record<string, string> = {};
-  preferredCommunicationTypeKeys.forEach((key, index) => {
-    const label = preferredCommunicationTypeOptions[index];
-    keyToLabel[key] = label;
-    labelToKey[label] = key;
-  });
 
   const schema = createVolunteerContactDetailsSchema(t);
 
   const initialFormValues = useMemo(
-    () => ({
-      phone: volunteer.person.phone || "",
-      email: volunteer.person.email || "",
+    (): VolunteerContactDetailsFormData => ({
+      phone: volunteer.person.phone ?? "",
+      email: volunteer.person.email ?? "",
       address: formatAddress(volunteer.person.address),
-      preferredCommunicationType: volunteer.preferredCommunicationType || [],
+      preferredCommunicationType: volunteer.preferredCommunicationType ?? [],
     }),
     [volunteer],
   );
@@ -100,13 +65,9 @@ export const VolunteerContactDetails = forwardRef<ContactDetailsRef, Props>(func
     defaultValues: initialFormValues,
   });
 
-  const handleEditClick = () => {
-    setIsEditing(true);
-  };
+  const handleEditClick = () => setIsEditing(true);
 
-  useImperativeHandle(ref, () => ({
-    handleEditClick,
-  }));
+  useImperativeHandle(ref, () => ({ handleEditClick }));
 
   const handleCancel = () => {
     reset();
@@ -126,18 +87,12 @@ export const VolunteerContactDetails = forwardRef<ContactDetailsRef, Props>(func
             id: volunteer.person.address?.id,
             street: addressData.street,
             city: addressData.city,
-            postcode: {
-              code: addressData.postcode,
-            },
+            postcode: { code: addressData.postcode },
           },
         },
         preferredCommunicationType: values.preferredCommunicationType,
       },
-      {
-        onSuccess: () => {
-          setIsEditing(false);
-        },
-      },
+      { onSuccess: () => setIsEditing(false) },
     );
   };
 
@@ -147,15 +102,17 @@ export const VolunteerContactDetails = forwardRef<ContactDetailsRef, Props>(func
     }
   }, [initialFormValues, isEditing, reset]);
 
+  const mode = isEditing ? "edit" : "display";
+
   return (
     <Container data-testid="volunteer-contact-details-container" $isEditing={isEditing}>
       <Details>
         <Controller
           name="phone"
           control={control}
-          render={({ field }: { field: ControllerRenderProps<VolunteerContactDetailsFormData, "phone"> }) => (
+          render={({ field }) => (
             <EditableField
-              mode={isEditing ? "edit" : "display"}
+              mode={mode}
               type="text"
               label={t("dashboard.volunteerProfile.contactDetails.phone")}
               value={field.value}
@@ -168,9 +125,9 @@ export const VolunteerContactDetails = forwardRef<ContactDetailsRef, Props>(func
         <Controller
           name="email"
           control={control}
-          render={({ field }: { field: ControllerRenderProps<VolunteerContactDetailsFormData, "email"> }) => (
+          render={({ field }) => (
             <EditableField
-              mode={isEditing ? "edit" : "display"}
+              mode={mode}
               type="text"
               label={t("dashboard.volunteerProfile.contactDetails.email")}
               value={field.value}
@@ -183,9 +140,9 @@ export const VolunteerContactDetails = forwardRef<ContactDetailsRef, Props>(func
         <Controller
           name="address"
           control={control}
-          render={({ field }: { field: ControllerRenderProps<VolunteerContactDetailsFormData, "address"> }) => (
+          render={({ field }) => (
             <EditableField
-              mode={isEditing ? "edit" : "display"}
+              mode={mode}
               type="text"
               label={t("dashboard.volunteerProfile.contactDetails.address")}
               value={field.value}
@@ -198,21 +155,14 @@ export const VolunteerContactDetails = forwardRef<ContactDetailsRef, Props>(func
         <Controller
           name="preferredCommunicationType"
           control={control}
-          render={({
-            field,
-          }: {
-            field: ControllerRenderProps<VolunteerContactDetailsFormData, "preferredCommunicationType">;
-          }) => (
+          render={({ field }) => (
             <EditableField
-              mode={isEditing ? "edit" : "display"}
+              mode={mode}
               type="checkbox-list"
               label={t("dashboard.volunteerProfile.contactDetails.preferredCommunicationType.label")}
-              value={field.value.map((key) => keyToLabel[key])}
-              setValue={(value) => {
-                const labels = Array.isArray(value) ? value : [value];
-                field.onChange(labels.map((label) => labelToKey[label]));
-              }}
-              options={preferredCommunicationTypeOptions}
+              value={keysToLabels(field.value)}
+              setValue={(value) => field.onChange(labelsToKeys(Array.isArray(value) ? value : [value]))}
+              options={options}
               errorMessage={errors.preferredCommunicationType?.message}
             />
           )}
