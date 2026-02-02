@@ -1,4 +1,4 @@
-import { VolunteerCommunicationType } from "need4deed-sdk";
+import { PrefferedCommunicationType } from "need4deed-sdk";
 import { z } from "zod";
 
 export const createOpportunityContactDetailsSchema = (t: (key: string) => string) => {
@@ -13,7 +13,7 @@ export const createOpportunityContactDetailsSchema = (t: (key: string) => string
       .min(1, t("dashboard.opportunityProfile.contactDetails.validation.emailRequired"))
       .email(t("dashboard.opportunityProfile.contactDetails.validation.emailInvalid")),
     waysToContact: z
-      .array(z.enum(Object.values(VolunteerCommunicationType)))
+      .array(z.enum(Object.values(PrefferedCommunicationType)))
       .min(1, t("dashboard.opportunityProfile.contactDetails.validation.waysToContactRequired")),
   });
 };

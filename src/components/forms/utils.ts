@@ -2,9 +2,11 @@ import { TFunction } from "i18next";
 import {
   ApiLanguage,
   LangProficiency,
+  OccasionalType,
   OpportunityType,
   Option,
   OptionId,
+  TimeSlot as SdkTimeSlot,
   TranslatedIntoType,
   VolunteerFormData,
 } from "need4deed-sdk";
@@ -13,7 +15,7 @@ import { getDateLocalTooUTC, parseYesNo, range } from "@/utils";
 import { maxPLZBerlin, maxPLZGermany, minPLZBerlin, minPLZGermany } from "../../config/constants";
 import { OpportunityData, OpportunityParsedData } from "./AddOpportunity/dataStructure";
 import { VolunteerData } from "./BecomeVolunteer/dataStructure";
-import { Availability, Selected, TimeSlot, TypePLZ } from "./types";
+import { Availability, AvailabilitySlot, Selected, TypePLZ } from "./types";
 
 function getSelectedTimeslots(state: Availability): [number, OptionId][] {
   return state.reduce((result: [number, OptionId][], day) => {
@@ -118,14 +120,12 @@ export function getDate(datetime: string) {
 }
 
 export function getScheduleState(): Availability {
-  const createTimeSlots = (): Selected[] =>
-    Object.values(TimeSlot)
-      .filter((timeSlot) => timeSlot !== TimeSlot.WEEKDAYS && timeSlot !== TimeSlot.WEEKENDS)
-      .map((timeSlot) => ({
-        id: timeSlot,
-        title: { en: timeSlot, de: timeSlot },
-        selected: false,
-      }));
+  const createTimeSlots = (): AvailabilitySlot[] =>
+    Object.values(SdkTimeSlot).map((timeSlot) => ({
+      id: timeSlot,
+      title: { en: timeSlot, de: timeSlot },
+      selected: false,
+    }));
   const schedule: Availability = [];
 
   for (const weekday of range(1, 8)) {
@@ -136,12 +136,12 @@ export function getScheduleState(): Availability {
     weekday: 0,
     timeSlots: [
       {
-        id: "weekdays",
+        id: OccasionalType.WEEKDAYS,
         title: { en: "weekdays", de: "wochentage" },
         selected: false,
       },
       {
-        id: "weekends",
+        id: OccasionalType.WEEKENDS,
         title: { en: "weekends", de: "wocheenden" },
         selected: false,
       },
