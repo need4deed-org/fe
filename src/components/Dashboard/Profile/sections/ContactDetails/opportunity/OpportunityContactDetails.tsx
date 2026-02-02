@@ -5,42 +5,27 @@ import { useUpdateOpportunityContact } from "@/hooks/useUpdateOpportunityContact
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ApiOpportunityGet, VolunteerCommunicationType } from "need4deed-sdk";
 import { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from "react";
-import { Controller, ControllerRenderProps, useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import styled from "styled-components";
+import { ButtonRow, Container, Details, useEnumTranslation } from "../shared";
 import { ContactDetailsRef } from "../types";
 import {
   createOpportunityContactDetailsSchema,
   OpportunityContactDetailsFormData,
 } from "./opportunityContactDetailsSchema";
 
-const Container = styled.div<{ $isEditing: boolean }>`
-  display: flex;
-  flex-direction: column;
-  gap: ${(props) => (props.$isEditing ? "var(--spacing-16)" : "0")};
-`;
-
-const Details = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 100%;
-`;
-
-const ButtonRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
-  gap: var(--spacing-24);
-  width: 100%;
-`;
-
 type Props = {
   opportunity: ApiOpportunityGet;
 };
 
-const waysToContactKeys = Object.values(VolunteerCommunicationType);
+type OpportunityContact = {
+  name?: string;
+  phone?: string;
+  email?: string;
+  waysToContact?: VolunteerCommunicationType[];
+};
+
+const COMMUNICATION_TYPES = Object.values(VolunteerCommunicationType);
 
 export const OpportunityContactDetails = forwardRef<ContactDetailsRef, Props>(function OpportunityContactDetails(
   { opportunity },
@@ -50,34 +35,22 @@ export const OpportunityContactDetails = forwardRef<ContactDetailsRef, Props>(fu
   const { mutate: updateContact, isPending } = useUpdateOpportunityContact(opportunity.id);
   const [isEditing, setIsEditing] = useState(false);
 
-  const waysToContactOptions = waysToContactKeys.map((key) =>
-    t(`dashboard.opportunityProfile.contactDetails.waysToContact.${key}`),
+  const { options, keysToLabels, labelsToKeys } = useEnumTranslation(
+    COMMUNICATION_TYPES,
+    "dashboard.opportunityProfile.contactDetails.waysToContact",
   );
-
-  const keyToLabel: Record<string, string> = {};
-  const labelToKey: Record<string, string> = {};
-  waysToContactKeys.forEach((key, index) => {
-    const label = waysToContactOptions[index];
-    keyToLabel[key] = label;
-    labelToKey[label] = key;
-  });
 
   const schema = createOpportunityContactDetailsSchema(t);
 
   const initialFormValues = useMemo((): OpportunityContactDetailsFormData => {
     // @ts-expect-error contact missing on SDK ApiOpportunityGet type
-    const contact = opportunity.contact as {
-      name?: string;
-      phone?: string;
-      email?: string;
-      ways_to_contact?: VolunteerCommunicationType[];
-    } | undefined;
+    const contact = opportunity.contact as OpportunityContact | undefined;
 
     return {
-      name: contact?.name || "",
-      phone: contact?.phone || "",
-      email: contact?.email || "",
-      waysToContact: contact?.ways_to_contact || [],
+      name: contact?.name ?? "",
+      phone: contact?.phone ?? "",
+      email: contact?.email ?? "",
+      waysToContact: contact?.waysToContact ?? [],
     };
   }, [opportunity]);
 
@@ -92,13 +65,9 @@ export const OpportunityContactDetails = forwardRef<ContactDetailsRef, Props>(fu
     defaultValues: initialFormValues,
   });
 
-  const handleEditClick = () => {
-    setIsEditing(true);
-  };
+  const handleEditClick = () => setIsEditing(true);
 
-  useImperativeHandle(ref, () => ({
-    handleEditClick,
-  }));
+  useImperativeHandle(ref, () => ({ handleEditClick }));
 
   const handleCancel = () => {
     reset();
@@ -112,14 +81,10 @@ export const OpportunityContactDetails = forwardRef<ContactDetailsRef, Props>(fu
           name: values.name,
           phone: values.phone,
           email: values.email,
-          ways_to_contact: values.waysToContact,
+          waysToContact: values.waysToContact,
         },
       },
-      {
-        onSuccess: () => {
-          setIsEditing(false);
-        },
-      },
+      { onSuccess: () => setIsEditing(false) },
     );
   };
 
@@ -129,15 +94,17 @@ export const OpportunityContactDetails = forwardRef<ContactDetailsRef, Props>(fu
     }
   }, [initialFormValues, isEditing, reset]);
 
+  const mode = isEditing ? "edit" : "display";
+
   return (
     <Container data-testid="opportunity-contact-details-container" $isEditing={isEditing}>
       <Details>
         <Controller
           name="name"
           control={control}
-          render={({ field }: { field: ControllerRenderProps<OpportunityContactDetailsFormData, "name"> }) => (
+          render={({ field }) => (
             <EditableField
-              mode={isEditing ? "edit" : "display"}
+              mode={mode}
               type="text"
               label={t("dashboard.opportunityProfile.contactDetails.name")}
               value={field.value}
@@ -150,9 +117,9 @@ export const OpportunityContactDetails = forwardRef<ContactDetailsRef, Props>(fu
         <Controller
           name="phone"
           control={control}
-          render={({ field }: { field: ControllerRenderProps<OpportunityContactDetailsFormData, "phone"> }) => (
+          render={({ field }) => (
             <EditableField
-              mode={isEditing ? "edit" : "display"}
+              mode={mode}
               type="text"
               label={t("dashboard.opportunityProfile.contactDetails.phone")}
               value={field.value}
@@ -165,9 +132,9 @@ export const OpportunityContactDetails = forwardRef<ContactDetailsRef, Props>(fu
         <Controller
           name="email"
           control={control}
-          render={({ field }: { field: ControllerRenderProps<OpportunityContactDetailsFormData, "email"> }) => (
+          render={({ field }) => (
             <EditableField
-              mode={isEditing ? "edit" : "display"}
+              mode={mode}
               type="text"
               label={t("dashboard.opportunityProfile.contactDetails.email")}
               value={field.value}
@@ -180,21 +147,14 @@ export const OpportunityContactDetails = forwardRef<ContactDetailsRef, Props>(fu
         <Controller
           name="waysToContact"
           control={control}
-          render={({
-            field,
-          }: {
-            field: ControllerRenderProps<OpportunityContactDetailsFormData, "waysToContact">;
-          }) => (
+          render={({ field }) => (
             <EditableField
-              mode={isEditing ? "edit" : "display"}
+              mode={mode}
               type="checkbox-list"
               label={t("dashboard.opportunityProfile.contactDetails.waysToContact.label")}
-              value={field.value.map((key) => keyToLabel[key])}
-              setValue={(value) => {
-                const labels = Array.isArray(value) ? value : [value];
-                field.onChange(labels.map((label) => labelToKey[label]));
-              }}
-              options={waysToContactOptions}
+              value={keysToLabels(field.value)}
+              setValue={(value) => field.onChange(labelsToKeys(Array.isArray(value) ? value : [value]))}
+              options={options}
               errorMessage={errors.waysToContact?.message}
             />
           )}
