@@ -7,7 +7,12 @@ import { ApiVolunteerGet, VolunteerCommunicationType } from "need4deed-sdk";
 import { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { ButtonRow, Container, Details, useEnumTranslation } from "../shared";
+import {
+  EditableButtonRow as ButtonRow,
+  EditableContainer as Container,
+  EditableDetails as Details,
+} from "../../shared/styles";
+import { useEnumTranslation } from "../shared";
 import { ContactDetailsRef } from "../types";
 import { createVolunteerContactDetailsSchema, VolunteerContactDetailsFormData } from "./volunteerContactDetailsSchema";
 
