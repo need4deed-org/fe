@@ -22,164 +22,165 @@ type OpportunityContact = {
   name?: string;
   phone?: string;
   email?: string;
-  ways_to_contact?: VolunteerCommunicationType[];
+  waysToContact?: VolunteerCommunicationType[];
 };
 
 const COMMUNICATION_TYPES = Object.values(VolunteerCommunicationType);
 
-export const OpportunityContactDetails = forwardRef<ContactDetailsRef, Props>(
-  function OpportunityContactDetails({ opportunity }, ref) {
-    const { t } = useTranslation();
-    const { mutate: updateContact, isPending } = useUpdateOpportunityContact(opportunity.id);
-    const [isEditing, setIsEditing] = useState(false);
+export const OpportunityContactDetails = forwardRef<ContactDetailsRef, Props>(function OpportunityContactDetails(
+  { opportunity },
+  ref,
+) {
+  const { t } = useTranslation();
+  const { mutate: updateContact, isPending } = useUpdateOpportunityContact(opportunity.id);
+  const [isEditing, setIsEditing] = useState(false);
 
-    const { options, keysToLabels, labelsToKeys } = useEnumTranslation(
-      COMMUNICATION_TYPES,
-      "dashboard.opportunityProfile.contactDetails.waysToContact",
-    );
+  const { options, keysToLabels, labelsToKeys } = useEnumTranslation(
+    COMMUNICATION_TYPES,
+    "dashboard.opportunityProfile.contactDetails.waysToContact",
+  );
 
-    const schema = createOpportunityContactDetailsSchema(t);
+  const schema = createOpportunityContactDetailsSchema(t);
 
-    const initialFormValues = useMemo((): OpportunityContactDetailsFormData => {
-      // @ts-expect-error contact missing on SDK ApiOpportunityGet type
-      const contact = opportunity.contact as OpportunityContact | undefined;
+  const initialFormValues = useMemo((): OpportunityContactDetailsFormData => {
+    // @ts-expect-error contact missing on SDK ApiOpportunityGet type
+    const contact = opportunity.contact as OpportunityContact | undefined;
 
-      return {
-        name: contact?.name ?? "",
-        phone: contact?.phone ?? "",
-        email: contact?.email ?? "",
-        waysToContact: contact?.ways_to_contact ?? [],
-      };
-    }, [opportunity]);
-
-    const {
-      control,
-      handleSubmit,
-      reset,
-      formState: { errors, isValid, isDirty },
-    } = useForm<OpportunityContactDetailsFormData>({
-      resolver: zodResolver(schema),
-      mode: "onChange",
-      defaultValues: initialFormValues,
-    });
-
-    const handleEditClick = () => setIsEditing(true);
-
-    useImperativeHandle(ref, () => ({ handleEditClick }));
-
-    const handleCancel = () => {
-      reset();
-      setIsEditing(false);
+    return {
+      name: contact?.name ?? "",
+      phone: contact?.phone ?? "",
+      email: contact?.email ?? "",
+      waysToContact: contact?.waysToContact ?? [],
     };
+  }, [opportunity]);
 
-    const onSubmit = (values: OpportunityContactDetailsFormData) => {
-      updateContact(
-        {
-          contact: {
-            name: values.name,
-            phone: values.phone,
-            email: values.email,
-            ways_to_contact: values.waysToContact,
-          },
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors, isValid, isDirty },
+  } = useForm<OpportunityContactDetailsFormData>({
+    resolver: zodResolver(schema),
+    mode: "onChange",
+    defaultValues: initialFormValues,
+  });
+
+  const handleEditClick = () => setIsEditing(true);
+
+  useImperativeHandle(ref, () => ({ handleEditClick }));
+
+  const handleCancel = () => {
+    reset();
+    setIsEditing(false);
+  };
+
+  const onSubmit = (values: OpportunityContactDetailsFormData) => {
+    updateContact(
+      {
+        contact: {
+          name: values.name,
+          phone: values.phone,
+          email: values.email,
+          waysToContact: values.waysToContact,
         },
-        { onSuccess: () => setIsEditing(false) },
-      );
-    };
-
-    useEffect(() => {
-      if (!isEditing) {
-        reset(initialFormValues);
-      }
-    }, [initialFormValues, isEditing, reset]);
-
-    const mode = isEditing ? "edit" : "display";
-
-    return (
-      <Container data-testid="opportunity-contact-details-container" $isEditing={isEditing}>
-        <Details>
-          <Controller
-            name="name"
-            control={control}
-            render={({ field }) => (
-              <EditableField
-                mode={mode}
-                type="text"
-                label={t("dashboard.opportunityProfile.contactDetails.name")}
-                value={field.value}
-                setValue={field.onChange}
-                errorMessage={errors.name?.message}
-              />
-            )}
-          />
-
-          <Controller
-            name="phone"
-            control={control}
-            render={({ field }) => (
-              <EditableField
-                mode={mode}
-                type="text"
-                label={t("dashboard.opportunityProfile.contactDetails.phone")}
-                value={field.value}
-                setValue={field.onChange}
-                errorMessage={errors.phone?.message}
-              />
-            )}
-          />
-
-          <Controller
-            name="email"
-            control={control}
-            render={({ field }) => (
-              <EditableField
-                mode={mode}
-                type="text"
-                label={t("dashboard.opportunityProfile.contactDetails.email")}
-                value={field.value}
-                setValue={field.onChange}
-                errorMessage={errors.email?.message}
-              />
-            )}
-          />
-
-          <Controller
-            name="waysToContact"
-            control={control}
-            render={({ field }) => (
-              <EditableField
-                mode={mode}
-                type="checkbox-list"
-                label={t("dashboard.opportunityProfile.contactDetails.waysToContact.label")}
-                value={keysToLabels(field.value)}
-                setValue={(value) => field.onChange(labelsToKeys(Array.isArray(value) ? value : [value]))}
-                options={options}
-                errorMessage={errors.waysToContact?.message}
-              />
-            )}
-          />
-        </Details>
-
-        {isEditing && (
-          <ButtonRow>
-            <Button
-              text={t("dashboard.opportunityProfile.contactDetails.cancel")}
-              onClick={handleCancel}
-              width="auto"
-              padding="var(--volunteer-profile-section-card-header-button-padding)"
-              backgroundcolor="var(--color-white)"
-              textColor="var(--color-aubergine)"
-              border="var(--volunteer-profile-section-card-header-button-border)"
-            />
-            <Button
-              text={t("dashboard.opportunityProfile.contactDetails.saveChanges")}
-              onClick={handleSubmit(onSubmit)}
-              width="auto"
-              padding="var(--volunteer-profile-section-card-header-button-padding)"
-              disabled={!isDirty || !isValid || isPending}
-            />
-          </ButtonRow>
-        )}
-      </Container>
+      },
+      { onSuccess: () => setIsEditing(false) },
     );
-  },
-);
+  };
+
+  useEffect(() => {
+    if (!isEditing) {
+      reset(initialFormValues);
+    }
+  }, [initialFormValues, isEditing, reset]);
+
+  const mode = isEditing ? "edit" : "display";
+
+  return (
+    <Container data-testid="opportunity-contact-details-container" $isEditing={isEditing}>
+      <Details>
+        <Controller
+          name="name"
+          control={control}
+          render={({ field }) => (
+            <EditableField
+              mode={mode}
+              type="text"
+              label={t("dashboard.opportunityProfile.contactDetails.name")}
+              value={field.value}
+              setValue={field.onChange}
+              errorMessage={errors.name?.message}
+            />
+          )}
+        />
+
+        <Controller
+          name="phone"
+          control={control}
+          render={({ field }) => (
+            <EditableField
+              mode={mode}
+              type="text"
+              label={t("dashboard.opportunityProfile.contactDetails.phone")}
+              value={field.value}
+              setValue={field.onChange}
+              errorMessage={errors.phone?.message}
+            />
+          )}
+        />
+
+        <Controller
+          name="email"
+          control={control}
+          render={({ field }) => (
+            <EditableField
+              mode={mode}
+              type="text"
+              label={t("dashboard.opportunityProfile.contactDetails.email")}
+              value={field.value}
+              setValue={field.onChange}
+              errorMessage={errors.email?.message}
+            />
+          )}
+        />
+
+        <Controller
+          name="waysToContact"
+          control={control}
+          render={({ field }) => (
+            <EditableField
+              mode={mode}
+              type="checkbox-list"
+              label={t("dashboard.opportunityProfile.contactDetails.waysToContact.label")}
+              value={keysToLabels(field.value)}
+              setValue={(value) => field.onChange(labelsToKeys(Array.isArray(value) ? value : [value]))}
+              options={options}
+              errorMessage={errors.waysToContact?.message}
+            />
+          )}
+        />
+      </Details>
+
+      {isEditing && (
+        <ButtonRow>
+          <Button
+            text={t("dashboard.opportunityProfile.contactDetails.cancel")}
+            onClick={handleCancel}
+            width="auto"
+            padding="var(--volunteer-profile-section-card-header-button-padding)"
+            backgroundcolor="var(--color-white)"
+            textColor="var(--color-aubergine)"
+            border="var(--volunteer-profile-section-card-header-button-border)"
+          />
+          <Button
+            text={t("dashboard.opportunityProfile.contactDetails.saveChanges")}
+            onClick={handleSubmit(onSubmit)}
+            width="auto"
+            padding="var(--volunteer-profile-section-card-header-button-padding)"
+            disabled={!isDirty || !isValid || isPending}
+          />
+        </ButtonRow>
+      )}
+    </Container>
+  );
+});
