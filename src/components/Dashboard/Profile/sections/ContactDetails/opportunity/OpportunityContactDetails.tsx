@@ -3,7 +3,7 @@ import Button from "@/components/core/button/Button/Button";
 import { EditableField } from "@/components/EditableField/EditableField";
 import { useUpdateOpportunityContact } from "@/hooks/useUpdateOpportunityContact";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ApiOpportunityGet, VolunteerCommunicationType } from "need4deed-sdk";
+import { ApiOpportunityGet, PrefferedCommunicationType } from "need4deed-sdk";
 import { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -18,14 +18,7 @@ type Props = {
   opportunity: ApiOpportunityGet;
 };
 
-type OpportunityContact = {
-  name?: string;
-  phone?: string;
-  email?: string;
-  waysToContact?: VolunteerCommunicationType[];
-};
-
-const COMMUNICATION_TYPES = Object.values(VolunteerCommunicationType);
+const COMMUNICATION_TYPES = Object.values(PrefferedCommunicationType);
 
 export const OpportunityContactDetails = forwardRef<ContactDetailsRef, Props>(function OpportunityContactDetails(
   { opportunity },
@@ -43,8 +36,7 @@ export const OpportunityContactDetails = forwardRef<ContactDetailsRef, Props>(fu
   const schema = createOpportunityContactDetailsSchema(t);
 
   const initialFormValues = useMemo((): OpportunityContactDetailsFormData => {
-    // @ts-expect-error contact missing on SDK ApiOpportunityGet type
-    const contact = opportunity.contact as OpportunityContact | undefined;
+    const contact = opportunity.contact;
 
     return {
       name: contact?.name ?? "",

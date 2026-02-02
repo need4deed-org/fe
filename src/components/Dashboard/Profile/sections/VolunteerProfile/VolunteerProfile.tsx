@@ -115,7 +115,6 @@ export const VolunteerProfile = forwardRef<VolunteerProfileRef, Props>(function 
 
     updateProfile(
       {
-        // @ts-expect-error -- Need4Deed SDK types incorrect, 'id' should be number
         availability: formToApiAvailability(data.availability),
         ...(statusType && Object.values(VolunteerStateTypeType).includes(statusType) && { statusType }),
         languages: transformLanguagesToApi(data.languages, languageMapping),

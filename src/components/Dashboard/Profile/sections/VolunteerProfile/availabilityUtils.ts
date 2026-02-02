@@ -1,7 +1,7 @@
 import { Availability } from "@/components/forms/types";
 import { getScheduleState } from "@/components/forms/utils";
-import { ApiAvailability } from "need4deed-sdk";
-import { DAY_MAP, DAY_ENUM_TO_STRING, REVERSE_DAY_MAP } from "./constants";
+import { ApiAvailability, ByDay, Occasionally, OccasionalType, TimeSlot } from "need4deed-sdk";
+import { DAY_MAP, REVERSE_DAY_MAP } from "./constants";
 
 export function apiToFormAvailability(apiAvailability: ApiAvailability[]): Availability {
   const formAvailability = getScheduleState();
@@ -39,8 +39,8 @@ export function apiToFormAvailability(apiAvailability: ApiAvailability[]): Avail
   return formAvailability;
 }
 
-export function formToApiAvailability(formAvailability: Availability): Array<{ day: string; daytime: string }> {
-  const result: Array<{ day: string; daytime: string }> = [];
+export function formToApiAvailability(formAvailability: Availability): ApiAvailability[] {
+  const result: ApiAvailability[] = [];
 
   formAvailability.forEach((day) => {
     day.timeSlots.forEach((slot) => {
@@ -49,20 +49,17 @@ export function formToApiAvailability(formAvailability: Availability): Array<{ d
       // Handle occasional availability (weekday 0)
       if (day.weekday === 0) {
         result.push({
-          day: "occasionally",
-          daytime: String(slot.id),
+          day: Occasionally.OCCASIONALLY,
+          daytime: slot.id as OccasionalType,
         });
         return;
       }
 
       // Handle regular days (1-7)
       if (day.weekday >= 1 && day.weekday <= 7) {
-        const dayEnum = DAY_MAP[day.weekday];
-        const slotId = String(slot.id);
-
         result.push({
-          day: DAY_ENUM_TO_STRING[dayEnum],
-          daytime: slotId,
+          day: DAY_MAP[day.weekday] as ByDay,
+          daytime: slot.id as TimeSlot,
         });
       }
     });
