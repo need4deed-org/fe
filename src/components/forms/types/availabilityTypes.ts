@@ -1,15 +1,11 @@
+import { OccasionalType, TimeSlot as SdkTimeSlot } from "need4deed-sdk";
 import { Selected } from "./formTypes";
 
-export enum TimeSlot {
-  MORNING = "08-11",
-  NOON = "11-14",
-  AFTERNOON = "14-17",
-  EVENING = "17-20",
-  WEEKDAYS = "weekdays",
-  WEEKENDS = "weekends",
-}
+export type TimeSlotId = SdkTimeSlot | OccasionalType;
+
+export type AvailabilitySlot = Omit<Selected, "id"> & { id: TimeSlotId };
 
 export type Availability = Array<{
   weekday: number;
-  timeSlots: Selected[];
+  timeSlots: AvailabilitySlot[];
 }>;

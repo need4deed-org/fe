@@ -26,14 +26,13 @@ import {
   transformLanguagesToApi,
 } from "./transformers";
 import { createVolunteerProfileSchema, VolunteerProfileFormData } from "./volunteerProfileSchema";
+import { EditableSectionRef } from "../shared/types";
 
 type Props = {
   volunteer: ApiVolunteerGet;
 };
 
-export type VolunteerProfileRef = {
-  handleEditClick: () => void;
-};
+export type VolunteerProfileRef = EditableSectionRef;
 
 export const VolunteerProfile = forwardRef<VolunteerProfileRef, Props>(function VolunteerProfile({ volunteer }, ref) {
   const { t, i18n } = useTranslation();
@@ -115,7 +114,6 @@ export const VolunteerProfile = forwardRef<VolunteerProfileRef, Props>(function 
 
     updateProfile(
       {
-        // @ts-expect-error -- Need4Deed SDK types incorrect, 'id' should be number
         availability: formToApiAvailability(data.availability),
         ...(statusType && Object.values(VolunteerStateTypeType).includes(statusType) && { statusType }),
         languages: transformLanguagesToApi(data.languages, languageMapping),

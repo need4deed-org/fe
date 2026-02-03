@@ -7,8 +7,9 @@ import { ApiVolunteerGet, VolunteerCommunicationType } from "need4deed-sdk";
 import { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { ButtonRow, Container, Details, useEnumTranslation } from "../shared";
-import { ContactDetailsRef } from "../types";
+import { FormButtonRow, FormContainer, FormDetails } from "../../shared/styles";
+import { EditableSectionRef } from "../../shared/types";
+import { useEnumTranslation } from "../shared";
 import { createVolunteerContactDetailsSchema, VolunteerContactDetailsFormData } from "./volunteerContactDetailsSchema";
 
 type Props = {
@@ -29,7 +30,7 @@ const parseAddress = (addressString: string) => {
   return { street, city, postcode };
 };
 
-export const VolunteerContactDetails = forwardRef<ContactDetailsRef, Props>(function VolunteerContactDetails(
+export const VolunteerContactDetails = forwardRef<EditableSectionRef, Props>(function VolunteerContactDetails(
   { volunteer },
   ref,
 ) {
@@ -102,8 +103,8 @@ export const VolunteerContactDetails = forwardRef<ContactDetailsRef, Props>(func
   const mode = isEditing ? "edit" : "display";
 
   return (
-    <Container data-testid="volunteer-contact-details-container" $isEditing={isEditing}>
-      <Details>
+    <FormContainer data-testid="volunteer-contact-details-container" $isEditing={isEditing}>
+      <FormDetails>
         <Controller
           name="phone"
           control={control}
@@ -164,10 +165,10 @@ export const VolunteerContactDetails = forwardRef<ContactDetailsRef, Props>(func
             />
           )}
         />
-      </Details>
+      </FormDetails>
 
       {isEditing && (
-        <ButtonRow>
+        <FormButtonRow>
           <Button
             text={t("dashboard.volunteerProfile.contactDetails.cancel")}
             onClick={handleCancel}
@@ -184,8 +185,8 @@ export const VolunteerContactDetails = forwardRef<ContactDetailsRef, Props>(func
             padding="var(--volunteer-profile-section-card-header-button-padding)"
             disabled={!isDirty || !isValid || isPending}
           />
-        </ButtonRow>
+        </FormButtonRow>
       )}
-    </Container>
+    </FormContainer>
   );
 });

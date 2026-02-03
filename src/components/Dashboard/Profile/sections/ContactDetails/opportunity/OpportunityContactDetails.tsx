@@ -3,12 +3,13 @@ import Button from "@/components/core/button/Button/Button";
 import { EditableField } from "@/components/EditableField/EditableField";
 import { useUpdateOpportunityContact } from "@/hooks/useUpdateOpportunityContact";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ApiOpportunityGet, VolunteerCommunicationType } from "need4deed-sdk";
+import { ApiOpportunityGet, PrefferedCommunicationType } from "need4deed-sdk";
 import { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { ButtonRow, Container, Details, useEnumTranslation } from "../shared";
-import { ContactDetailsRef } from "../types";
+import { FormButtonRow, FormContainer, FormDetails } from "../../shared/styles";
+import { EditableSectionRef } from "../../shared/types";
+import { useEnumTranslation } from "../shared";
 import {
   createOpportunityContactDetailsSchema,
   OpportunityContactDetailsFormData,
@@ -18,16 +19,9 @@ type Props = {
   opportunity: ApiOpportunityGet;
 };
 
-type OpportunityContact = {
-  name?: string;
-  phone?: string;
-  email?: string;
-  waysToContact?: VolunteerCommunicationType[];
-};
+const COMMUNICATION_TYPES = Object.values(PrefferedCommunicationType);
 
-const COMMUNICATION_TYPES = Object.values(VolunteerCommunicationType);
-
-export const OpportunityContactDetails = forwardRef<ContactDetailsRef, Props>(function OpportunityContactDetails(
+export const OpportunityContactDetails = forwardRef<EditableSectionRef, Props>(function OpportunityContactDetails(
   { opportunity },
   ref,
 ) {
@@ -43,8 +37,7 @@ export const OpportunityContactDetails = forwardRef<ContactDetailsRef, Props>(fu
   const schema = createOpportunityContactDetailsSchema(t);
 
   const initialFormValues = useMemo((): OpportunityContactDetailsFormData => {
-    // @ts-expect-error contact missing on SDK ApiOpportunityGet type
-    const contact = opportunity.contact as OpportunityContact | undefined;
+    const contact = opportunity.contact;
 
     return {
       name: contact?.name ?? "",
@@ -97,8 +90,8 @@ export const OpportunityContactDetails = forwardRef<ContactDetailsRef, Props>(fu
   const mode = isEditing ? "edit" : "display";
 
   return (
-    <Container data-testid="opportunity-contact-details-container" $isEditing={isEditing}>
-      <Details>
+    <FormContainer data-testid="opportunity-contact-details-container" $isEditing={isEditing}>
+      <FormDetails>
         <Controller
           name="name"
           control={control}
@@ -159,10 +152,10 @@ export const OpportunityContactDetails = forwardRef<ContactDetailsRef, Props>(fu
             />
           )}
         />
-      </Details>
+      </FormDetails>
 
       {isEditing && (
-        <ButtonRow>
+        <FormButtonRow>
           <Button
             text={t("dashboard.opportunityProfile.contactDetails.cancel")}
             onClick={handleCancel}
@@ -179,8 +172,8 @@ export const OpportunityContactDetails = forwardRef<ContactDetailsRef, Props>(fu
             padding="var(--volunteer-profile-section-card-header-button-padding)"
             disabled={!isDirty || !isValid || isPending}
           />
-        </ButtonRow>
+        </FormButtonRow>
       )}
-    </Container>
+    </FormContainer>
   );
 });
