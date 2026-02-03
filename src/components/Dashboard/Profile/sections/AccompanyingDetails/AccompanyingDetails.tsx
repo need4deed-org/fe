@@ -4,7 +4,7 @@ import { useUpdateOpportunityAccompanyingDetails } from "@/hooks/useUpdateOpport
 import { zodResolver } from "@hookform/resolvers/zod";
 import { de, enUS } from "date-fns/locale";
 import { ApiOpportunityAccompanyingDetails, ApiOpportunityGet, VolunteerStateTypeType } from "need4deed-sdk";
-import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
+import { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { EditableSectionRef } from "../shared/types";
@@ -18,6 +18,20 @@ const isAccompanyingType = (volunteerType: VolunteerStateTypeType | undefined): 
     volunteerType === VolunteerStateTypeType.ACCOMPANYING ||
     volunteerType === VolunteerStateTypeType.REGULAR_ACCOMPANYING
   );
+};
+
+const getMinAppointmentDate = (): Date => {
+  const date = new Date();
+  let weekdaysAdded = 0;
+  while (weekdaysAdded < 7) {
+    date.setDate(date.getDate() + 1);
+    const dayOfWeek = date.getDay();
+    if (dayOfWeek !== 0 && dayOfWeek !== 6) {
+      weekdaysAdded++;
+    }
+  }
+  date.setHours(0, 0, 0, 0);
+  return date;
 };
 
 type Props = {
@@ -57,6 +71,7 @@ export const AccompanyingDetails = forwardRef<EditableSectionRef, Props>(functio
   const [isEditing, setIsEditing] = useState(false);
   const { data: apiLanguages } = useApiLanguages();
   const showFullDetails = isAccompanyingType(opportunity.volunteerType);
+  const minAppointmentDate = useMemo(() => getMinAppointmentDate(), []);
 
   const languageOptions = apiLanguages.map((lang) => lang.title);
 
@@ -151,6 +166,7 @@ export const AccompanyingDetails = forwardRef<EditableSectionRef, Props>(functio
           isDirty={isDirty}
           isValid={isValid}
           isPending={isPending}
+          minAppointmentDate={minAppointmentDate}
         />
       ) : (
         <AccompanyingDetailsDisplay values={formValues} languageLabel={languageLabel} />

@@ -27,6 +27,7 @@ type Props = {
   isDirty: boolean;
   isValid: boolean;
   isPending: boolean;
+  minAppointmentDate: Date;
 };
 
 export const AccompanyingDetailsEdit = ({
@@ -41,6 +42,7 @@ export const AccompanyingDetailsEdit = ({
   isDirty,
   isValid,
   isPending,
+  minAppointmentDate,
 }: Props) => {
   const { t } = useTranslation();
 
@@ -74,6 +76,7 @@ export const AccompanyingDetailsEdit = ({
                   onSelect={(d) => field.onChange(d ?? null)}
                   locale={locale}
                   allowFuture
+                  minDate={minAppointmentDate}
                 />
               </DatePickerContainer>
             </DateFieldRow>
