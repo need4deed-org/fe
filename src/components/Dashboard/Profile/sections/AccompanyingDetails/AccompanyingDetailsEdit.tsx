@@ -85,11 +85,14 @@ export const AccompanyingDetailsEdit = ({
           control={control}
           render={({ field }: { field: ControllerRenderProps<AccompanyingDetailsFormData, "appointmentTime"> }) => (
             <DateFieldRow data-testid="appointment-time-field">
-              <label>{t("dashboard.opportunityProfile.accompanyingDetails.appointmentTime")}</label>
+              <label htmlFor="appointmentTime">
+                {t("dashboard.opportunityProfile.accompanyingDetails.appointmentTime")}
+              </label>
               <TimeInputWrapper>
                 <TimeInput
-                  type="text"
-                  placeholder="HH:MM"
+                  id="appointmentTime"
+                  name="appointmentTime"
+                  type="time"
                   value={field.value || ""}
                   onChange={field.onChange}
                   $hasError={!!errors.appointmentTime}
