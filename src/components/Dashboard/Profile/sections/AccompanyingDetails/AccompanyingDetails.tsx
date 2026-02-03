@@ -3,7 +3,7 @@ import { useApiLanguages } from "@/components/Dashboard/Profile/sections/Volunte
 import { useUpdateOpportunityAccompanyingDetails } from "@/hooks/useUpdateOpportunityAccompanyingDetails";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { de, enUS } from "date-fns/locale";
-import { ApiOpportunityGet, VolunteerStateTypeType } from "need4deed-sdk";
+import { ApiOpportunityAccompanyingDetails, ApiOpportunityGet, VolunteerStateTypeType } from "need4deed-sdk";
 import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -24,35 +24,28 @@ type Props = {
   opportunity: ApiOpportunityGet;
 };
 
-type AccompanyingDetailsData = {
-  appointmentAddress?: string;
-  appointmentDate?: string;
-  appointmentTime?: string;
-  refugeeNumber?: string;
-  refugeeName?: string;
-  languagesToTranslate?: string[];
-  languageToTranslate?: string;
-};
-
-const parseDate = (dateStr: string | undefined): Date | null => {
-  if (!dateStr) return null;
-  const parsed = new Date(dateStr);
+const parseDate = (date: Date | string | undefined): Date | null => {
+  if (!date) return null;
+  const parsed = date instanceof Date ? date : new Date(date);
   return isNaN(parsed.getTime()) ? null : parsed;
 };
 
-const getInitialFormValues = (opportunity: ApiOpportunityGet): AccompanyingDetailsFormData => {
-  // @ts-expect-error accompanyingDetails missing on SDK ApiOpportunityGet type
-  const details = opportunity.accompanyingDetails as AccompanyingDetailsData | undefined;
-
-  return {
-    appointmentAddress: details?.appointmentAddress || "",
-    appointmentDate: parseDate(details?.appointmentDate),
-    appointmentTime: details?.appointmentTime || "",
-    refugeeNumber: details?.refugeeNumber || "",
-    refugeeName: details?.refugeeName || "",
-    languageToTranslate: details?.languagesToTranslate?.[0] || "",
-  };
+const parseTime = (time: Date | string | undefined): string => {
+  if (!time) return "";
+  if (typeof time === "string") return time;
+  return time.toTimeString().slice(0, 5);
 };
+
+const getInitialFormValues = (
+  details: ApiOpportunityAccompanyingDetails | undefined,
+): AccompanyingDetailsFormData => ({
+  appointmentAddress: details?.appointmentAddress || "",
+  appointmentDate: parseDate(details?.appointmentDate),
+  appointmentTime: parseTime(details?.appointmentTime),
+  refugeeNumber: details?.refugeeNumber || "",
+  refugeeName: details?.refugeeName || "",
+  languageToTranslate: details?.languageToTranslate || "",
+});
 
 export const AccompanyingDetails = forwardRef<EditableSectionRef, Props>(function AccompanyingDetails(
   { opportunity },
@@ -74,7 +67,7 @@ export const AccompanyingDetails = forwardRef<EditableSectionRef, Props>(functio
     labelToKey[lang.title] = String(lang.id);
   });
 
-  const initialFormValues = getInitialFormValues(opportunity);
+  const initialFormValues = getInitialFormValues(opportunity.accompanyingDetails);
 
   const {
     control,
@@ -127,7 +120,7 @@ export const AccompanyingDetails = forwardRef<EditableSectionRef, Props>(functio
 
   useEffect(() => {
     if (!isEditing) {
-      reset(getInitialFormValues(opportunity));
+      reset(getInitialFormValues(opportunity.accompanyingDetails));
     }
   }, [opportunity, isEditing, reset]);
 
