@@ -9,12 +9,10 @@ import { SectionCard, SectionCardProps } from "./common/SectionCard";
 import { Appreciation, AppreciationRef } from "./sections/Appreciation";
 import { Comments } from "./sections/Comments";
 import { CommunicationTracker, CommunicationTrackerRef } from "./sections/CommunicationTracker";
-import { ContactDetails, ContactDetailsRef } from "./sections/ContactDetails";
+import { ContactDetails } from "./sections/ContactDetails";
 import { ProfileHeader } from "./sections/ProfileHeader";
-import {
-  RefugeeAccommodationCentre,
-  RefugeeAccommodationCentreRef,
-} from "./sections/RefugeeAccommodationCentre";
+import { RefugeeAccommodationCentre } from "./sections/RefugeeAccommodationCentre";
+import { EditableSectionRef } from "./sections/shared/types";
 import VolunteerOpportunities from "./sections/VolunteerOpportunities/VolunteerOpportunities";
 import { VolunteerProfile, VolunteerProfileRef } from "./sections/VolunteerProfile";
 import { VolunteerProfileDocument } from "./sections/VolunteerProfileDocument";
@@ -40,12 +38,12 @@ const BackLink = styled(Link)`
 
 const ProfilePage = ({ volunteer, opportunity }: ProfileEntityProps) => {
   const { t, i18n } = useTranslation();
-  const contactDetailsRef = useRef<ContactDetailsRef>(null);
-  const opportunityContactDetailsRef = useRef<ContactDetailsRef>(null);
+  const contactDetailsRef = useRef<EditableSectionRef>(null);
+  const opportunityContactDetailsRef = useRef<EditableSectionRef>(null);
   const volunteerProfileRef = useRef<VolunteerProfileRef>(null);
   const communicationTrackerRef = useRef<CommunicationTrackerRef>(null);
   const appreciationRef = useRef<AppreciationRef>(null);
-  const racRef = useRef<RefugeeAccommodationCentreRef>(null);
+  const racRef = useRef<EditableSectionRef>(null);
 
   const getVolunteerSections = (vol: ApiVolunteerGet): SectionCardProps[] => [
     {

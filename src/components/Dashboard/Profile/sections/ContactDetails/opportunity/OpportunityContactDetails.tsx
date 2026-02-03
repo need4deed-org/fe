@@ -8,8 +8,8 @@ import { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from "r
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { FormButtonRow, FormContainer, FormDetails } from "../../shared/styles";
+import { EditableSectionRef } from "../../shared/types";
 import { useEnumTranslation } from "../shared";
-import { ContactDetailsRef } from "../types";
 import {
   createOpportunityContactDetailsSchema,
   OpportunityContactDetailsFormData,
@@ -21,7 +21,7 @@ type Props = {
 
 const COMMUNICATION_TYPES = Object.values(PrefferedCommunicationType);
 
-export const OpportunityContactDetails = forwardRef<ContactDetailsRef, Props>(function OpportunityContactDetails(
+export const OpportunityContactDetails = forwardRef<EditableSectionRef, Props>(function OpportunityContactDetails(
   { opportunity },
   ref,
 ) {

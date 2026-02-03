@@ -1,11 +1,11 @@
 "use client";
 import { ProfileEntityProps } from "@/components/Dashboard/Profile/types/types";
 import { forwardRef } from "react";
+import { EditableSectionRef } from "../shared/types";
 import { OpportunityContactDetails } from "./opportunity";
-import { ContactDetailsRef } from "./types";
 import { VolunteerContactDetails } from "./volunteer";
 
-export const ContactDetails = forwardRef<ContactDetailsRef, ProfileEntityProps>(function ContactDetails(props, ref) {
+export const ContactDetails = forwardRef<EditableSectionRef, ProfileEntityProps>(function ContactDetails(props, ref) {
   if ("volunteer" in props && props.volunteer) {
     return <VolunteerContactDetails ref={ref} volunteer={props.volunteer} />;
   }

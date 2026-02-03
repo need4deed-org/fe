@@ -8,8 +8,8 @@ import { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from "r
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { FormButtonRow, FormContainer, FormDetails } from "../../shared/styles";
+import { EditableSectionRef } from "../../shared/types";
 import { useEnumTranslation } from "../shared";
-import { ContactDetailsRef } from "../types";
 import { createVolunteerContactDetailsSchema, VolunteerContactDetailsFormData } from "./volunteerContactDetailsSchema";
 
 type Props = {
@@ -30,7 +30,7 @@ const parseAddress = (addressString: string) => {
   return { street, city, postcode };
 };
 
-export const VolunteerContactDetails = forwardRef<ContactDetailsRef, Props>(function VolunteerContactDetails(
+export const VolunteerContactDetails = forwardRef<EditableSectionRef, Props>(function VolunteerContactDetails(
   { volunteer },
   ref,
 ) {
