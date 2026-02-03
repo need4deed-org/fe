@@ -7,11 +7,11 @@ import { ApiOpportunityGet, VolunteerStateTypeType } from "need4deed-sdk";
 import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { EditableSectionRef } from "../shared/types";
 import { AccompanyingDetailsDisplay } from "./AccompanyingDetailsDisplay";
 import { AccompanyingDetailsEdit } from "./AccompanyingDetailsEdit";
 import { AccompanyingDetailsFormData, accompanyingDetailsSchema } from "./accompanyingDetailsSchema";
 import { Container, NotAccompanyingMessage } from "./styles";
-import { AccompanyingDetailsRef } from "./types";
 
 const isAccompanyingType = (volunteerType: VolunteerStateTypeType | undefined): boolean => {
   return (
@@ -54,7 +54,7 @@ const getInitialFormValues = (opportunity: ApiOpportunityGet): AccompanyingDetai
   };
 };
 
-export const AccompanyingDetails = forwardRef<AccompanyingDetailsRef, Props>(function AccompanyingDetails(
+export const AccompanyingDetails = forwardRef<EditableSectionRef, Props>(function AccompanyingDetails(
   { opportunity },
   ref,
 ) {
@@ -97,7 +97,7 @@ export const AccompanyingDetails = forwardRef<AccompanyingDetailsRef, Props>(fun
   };
 
   useImperativeHandle(ref, () => ({
-    handleEditClick: showFullDetails ? handleEditClick : undefined,
+    handleEditClick,
   }));
 
   const handleCancel = () => {

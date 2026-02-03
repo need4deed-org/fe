@@ -1,187 +1,154 @@
 "use client";
 import Button from "@/components/core/button/Button/Button";
 import { EditableField } from "@/components/EditableField/EditableField";
-import { useUpdateOpportunityRac } from "@/hooks/useUpdateOpportunityRac";
+import { useUpdateOpportunityAgent } from "@/hooks/useUpdateOpportunityAgent";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ApiOpportunityGet } from "need4deed-sdk";
+import { ApiOpportunityGet, Lang } from "need4deed-sdk";
 import { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from "react";
-import { Controller, ControllerRenderProps, useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import styled from "styled-components";
+import { FormButtonRow, FormContainer, FormDetails } from "../shared/styles";
+import { EditableSectionRef } from "../shared/types";
 import {
   createRefugeeAccommodationCentreSchema,
   RefugeeAccommodationCentreFormData,
 } from "./refugeeAccommodationCentreSchema";
-import { RefugeeAccommodationCentreRef } from "./types";
-
-const Container = styled.div<{ $isEditing: boolean }>`
-  display: flex;
-  flex-direction: column;
-  gap: ${(props) => (props.$isEditing ? "var(--spacing-16)" : "0")};
-`;
-
-const Details = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 100%;
-`;
-
-const ButtonRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
-  gap: var(--spacing-24);
-  width: 100%;
-`;
 
 type Props = {
   opportunity: ApiOpportunityGet;
 };
 
-type RacData = {
-  name?: string;
-  address?: string;
-  district?: string;
-};
+export const RefugeeAccommodationCentre = forwardRef<EditableSectionRef, Props>(function RefugeeAccommodationCentre(
+  { opportunity },
+  ref,
+) {
+  const { t, i18n } = useTranslation();
+  const { mutate: updateAgent, isPending } = useUpdateOpportunityAgent(opportunity.id);
+  const [isEditing, setIsEditing] = useState(false);
 
-export const RefugeeAccommodationCentre = forwardRef<RefugeeAccommodationCentreRef, Props>(
-  function RefugeeAccommodationCentre({ opportunity }, ref) {
-    const { t } = useTranslation();
-    const { mutate: updateRac, isPending } = useUpdateOpportunityRac(opportunity.id);
-    const [isEditing, setIsEditing] = useState(false);
+  const schema = createRefugeeAccommodationCentreSchema(t);
 
-    const schema = createRefugeeAccommodationCentreSchema(t);
+  const initialFormValues = useMemo((): RefugeeAccommodationCentreFormData => {
+    const { agent } = opportunity;
+    const lang = i18n.language as Lang;
+    const districtTitle = agent.district?.title?.[lang] ?? agent.district?.title?.en ?? "";
 
-    const initialFormValues = useMemo((): RefugeeAccommodationCentreFormData => {
-      // @ts-expect-error rac missing on SDK ApiOpportunityGet type
-      const rac = opportunity.rac as RacData | undefined;
-
-      return {
-        name: rac?.name || "",
-        address: rac?.address || "",
-        district: rac?.district || "",
-      };
-    }, [opportunity]);
-
-    const {
-      control,
-      handleSubmit,
-      reset,
-      formState: { errors, isValid, isDirty },
-    } = useForm<RefugeeAccommodationCentreFormData>({
-      resolver: zodResolver(schema),
-      mode: "onChange",
-      defaultValues: initialFormValues,
-    });
-
-    const handleEditClick = () => {
-      setIsEditing(true);
+    return {
+      name: agent.name ?? "",
+      address: agent.address ?? "",
+      district: districtTitle,
     };
+  }, [opportunity, i18n.language]);
 
-    useImperativeHandle(ref, () => ({
-      handleEditClick,
-    }));
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors, isValid, isDirty },
+  } = useForm<RefugeeAccommodationCentreFormData>({
+    resolver: zodResolver(schema),
+    mode: "onChange",
+    defaultValues: initialFormValues,
+  });
 
-    const handleCancel = () => {
-      reset();
-      setIsEditing(false);
-    };
+  const handleEditClick = () => setIsEditing(true);
 
-    const onSubmit = (values: RefugeeAccommodationCentreFormData) => {
-      updateRac(
-        {
-          rac: {
-            name: values.name,
-            address: values.address,
-            district: values.district,
-          },
+  useImperativeHandle(ref, () => ({ handleEditClick }));
+
+  const handleCancel = () => {
+    reset();
+    setIsEditing(false);
+  };
+
+  const onSubmit = (values: RefugeeAccommodationCentreFormData) => {
+    updateAgent(
+      {
+        agent: {
+          name: values.name,
+          address: values.address,
+          // TODO: district should be an ID - needs dropdown selector
         },
-        {
-          onSuccess: () => {
-            setIsEditing(false);
-          },
-        },
-      );
-    };
-
-    useEffect(() => {
-      if (!isEditing) {
-        reset(initialFormValues);
-      }
-    }, [initialFormValues, isEditing, reset]);
-
-    return (
-      <Container data-testid="refugee-accommodation-centre-container" $isEditing={isEditing}>
-        <Details>
-          <Controller
-            name="name"
-            control={control}
-            render={({ field }: { field: ControllerRenderProps<RefugeeAccommodationCentreFormData, "name"> }) => (
-              <EditableField
-                mode={isEditing ? "edit" : "display"}
-                type="text"
-                label={t("dashboard.opportunityProfile.rac.name")}
-                value={field.value}
-                setValue={field.onChange}
-                errorMessage={errors.name?.message}
-              />
-            )}
-          />
-
-          <Controller
-            name="address"
-            control={control}
-            render={({ field }: { field: ControllerRenderProps<RefugeeAccommodationCentreFormData, "address"> }) => (
-              <EditableField
-                mode={isEditing ? "edit" : "display"}
-                type="text"
-                label={t("dashboard.opportunityProfile.rac.address")}
-                value={field.value}
-                setValue={field.onChange}
-                errorMessage={errors.address?.message}
-              />
-            )}
-          />
-
-          <Controller
-            name="district"
-            control={control}
-            render={({ field }: { field: ControllerRenderProps<RefugeeAccommodationCentreFormData, "district"> }) => (
-              <EditableField
-                mode={isEditing ? "edit" : "display"}
-                type="text"
-                label={t("dashboard.opportunityProfile.rac.district")}
-                value={field.value}
-                setValue={field.onChange}
-                errorMessage={errors.district?.message}
-              />
-            )}
-          />
-        </Details>
-
-        {isEditing && (
-          <ButtonRow>
-            <Button
-              text={t("dashboard.opportunityProfile.rac.cancel")}
-              onClick={handleCancel}
-              width="auto"
-              padding="var(--volunteer-profile-section-card-header-button-padding)"
-              backgroundcolor="var(--color-white)"
-              textColor="var(--color-aubergine)"
-              border="var(--volunteer-profile-section-card-header-button-border)"
-            />
-            <Button
-              text={t("dashboard.opportunityProfile.rac.saveChanges")}
-              onClick={handleSubmit(onSubmit)}
-              width="auto"
-              padding="var(--volunteer-profile-section-card-header-button-padding)"
-              disabled={!isDirty || !isValid || isPending}
-            />
-          </ButtonRow>
-        )}
-      </Container>
+      },
+      { onSuccess: () => setIsEditing(false) },
     );
-  },
-);
+  };
+
+  useEffect(() => {
+    if (isEditing) return;
+    reset(initialFormValues);
+  }, [initialFormValues, isEditing, reset]);
+
+  const mode = isEditing ? "edit" : "display";
+
+  return (
+    <FormContainer data-testid="refugee-accommodation-centre-container" $isEditing={isEditing}>
+      <FormDetails>
+        <Controller
+          name="name"
+          control={control}
+          render={({ field }) => (
+            <EditableField
+              mode={mode}
+              type="text"
+              label={t("dashboard.opportunityProfile.rac.name")}
+              value={field.value}
+              setValue={field.onChange}
+              errorMessage={errors.name?.message}
+            />
+          )}
+        />
+
+        <Controller
+          name="address"
+          control={control}
+          render={({ field }) => (
+            <EditableField
+              mode={mode}
+              type="text"
+              label={t("dashboard.opportunityProfile.rac.address")}
+              value={field.value}
+              setValue={field.onChange}
+              errorMessage={errors.address?.message}
+            />
+          )}
+        />
+
+        <Controller
+          name="district"
+          control={control}
+          render={({ field }) => (
+            <EditableField
+              mode={mode}
+              type="text"
+              label={t("dashboard.opportunityProfile.rac.district")}
+              value={field.value}
+              setValue={field.onChange}
+              errorMessage={errors.district?.message}
+            />
+          )}
+        />
+      </FormDetails>
+
+      {isEditing && (
+        <FormButtonRow>
+          <Button
+            text={t("dashboard.opportunityProfile.rac.cancel")}
+            onClick={handleCancel}
+            width="auto"
+            padding="var(--volunteer-profile-section-card-header-button-padding)"
+            backgroundcolor="var(--color-white)"
+            textColor="var(--color-aubergine)"
+            border="var(--volunteer-profile-section-card-header-button-border)"
+          />
+          <Button
+            text={t("dashboard.opportunityProfile.rac.saveChanges")}
+            onClick={handleSubmit(onSubmit)}
+            width="auto"
+            padding="var(--volunteer-profile-section-card-header-button-padding)"
+            disabled={!isDirty || !isValid || isPending}
+          />
+        </FormButtonRow>
+      )}
+    </FormContainer>
+  );
+});

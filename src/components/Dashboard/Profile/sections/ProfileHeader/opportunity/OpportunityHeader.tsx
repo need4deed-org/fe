@@ -28,14 +28,12 @@ export const OpportunityHeader = ({ opportunity }: Props) => {
   const { t } = useTranslation();
   const { mutate: updateStatus } = useUpdateOpportunityStatus(opportunity.id);
 
-  // @ts-expect-error createdAt missing on SDK
   const postedDate = opportunity.createdAt ? formatDateTime(opportunity.createdAt) : EMPTY_PLACEHOLDER_VALUE;
 
   const statusLabels = {
     [OpportunityStatusType.NEW]: t("dashboard.opportunityProfile.status.new"),
     [OpportunityStatusType.ACTIVE]: t("dashboard.opportunityProfile.status.active"),
     [OpportunityStatusType.PAST]: t("dashboard.opportunityProfile.status.past"),
-    // @ts-expect-error missing SDK-implementation
     [OpportunityStatusType.SEARCHING]: t("dashboard.opportunityProfile.status.searching"),
   };
 
@@ -45,7 +43,6 @@ export const OpportunityHeader = ({ opportunity }: Props) => {
 
   const handleStatusChange = () => {
     if (opportunity.statusOpportunity !== OpportunityStatusType.NEW) return;
-    // @ts-expect-error missing SDK-implementation
     updateStatus({ statusOpportunity: OpportunityStatusType.SEARCHING });
   };
 
