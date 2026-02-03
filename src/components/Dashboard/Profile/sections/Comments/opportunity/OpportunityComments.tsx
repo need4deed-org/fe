@@ -2,7 +2,7 @@
 import { useCreateComment } from "@/hooks/useCreateComment";
 import { useDeleteComment } from "@/hooks/useDeleteComment";
 import { useUpdateComment } from "@/hooks/useUpdateComment";
-import { ApiOpportunityGet, TimedText } from "need4deed-sdk";
+import { ApiOpportunityGet } from "need4deed-sdk";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
@@ -38,9 +38,7 @@ export function OpportunityComments({ opportunity }: Props) {
 
   const { mutate: deleteComment } = useDeleteComment(opportunity.id, deleteState.deleteCommentId ?? 0, "opportunity");
 
-  // @ts-expect-error comments missing on SDK ApiOpportunityGet type
-  const rawComments = (opportunity.comments as TimedText[] | undefined) ?? [];
-  const comments = rawComments.slice().reverse();
+  const comments = opportunity.comments.slice().reverse();
 
   const handleAddComment = () => {
     if (!newCommentText.trim()) return;

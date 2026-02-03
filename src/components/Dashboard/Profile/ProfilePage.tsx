@@ -98,8 +98,7 @@ const ProfilePage = ({ volunteer, opportunity }: ProfileEntityProps) => {
   ];
 
   const getOpportunitySections = (opp: ApiOpportunityGet): SectionCardProps[] => {
-    // @ts-expect-error comments missing on SDK ApiOpportunityGet type
-    const commentsCount = (opp.comments?.length as number | undefined) ?? 0;
+    const commentsCount = opp.comments.length;
 
     return [
       {
