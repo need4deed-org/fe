@@ -8,7 +8,7 @@ const CLOUDFRONT_HOSTNAME = "d2nwrdddg8skub.cloudfront.net";
 const nextConfig: NextConfig = {
   compiler: {
     styledComponents: true,
-  },
+  }, 
   async rewrites() {
     return [{ source: `/${apiPrefix}/:path*`, destination: `${apiURL}/:path*` }];
   },
