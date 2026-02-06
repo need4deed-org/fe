@@ -7,7 +7,7 @@ import { getImageUrl } from "@/utils/helpers";
 import { useScreenType } from "@/context/DeviceContext";
 import { ScreenTypes } from "@/config/constants";
 import { useTranslation } from "react-i18next";
-import { LoginForm } from "./LoginForm";
+import { LoginController } from "./LoginController";
 
 const gradientClassName = "image-filter-gradient-blue ";
 
@@ -56,8 +56,7 @@ export function Login() {
             >
               {t("dashboard.login.login")}
             </CustomHeading>
-
-            <LoginForm />
+            <LoginController />
           </LoginContentContainer>
         </LoginSubContainer>
 
