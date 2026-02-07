@@ -2,7 +2,7 @@ import Button from "@/components/core/button/Button/Button";
 import { DatePickerWithLabel } from "@/components/core/common/DatePicker";
 import { EditableField } from "@/components/EditableField/EditableField";
 import { Locale } from "date-fns";
-import { Control, Controller, ControllerRenderProps, FieldErrors } from "react-hook-form";
+import { Controller, ControllerRenderProps, useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { AccompanyingDetailsFormData } from "./accompanyingDetailsSchema";
 import {
@@ -16,35 +16,31 @@ import {
 } from "./styles";
 
 type Props = {
-  control: Control<AccompanyingDetailsFormData>;
-  errors: FieldErrors<AccompanyingDetailsFormData>;
   locale: Locale;
   languageOptions: string[];
   keyToLabel: Record<string, string>;
   labelToKey: Record<string, string>;
   onCancel: () => void;
   onSubmit: () => void;
-  isDirty: boolean;
-  isValid: boolean;
   isPending: boolean;
   minAppointmentDate: Date;
 };
 
 export const AccompanyingDetailsEdit = ({
-  control,
-  errors,
   locale,
   languageOptions,
   keyToLabel,
   labelToKey,
   onCancel,
   onSubmit,
-  isDirty,
-  isValid,
   isPending,
   minAppointmentDate,
 }: Props) => {
   const { t } = useTranslation();
+  const {
+    control,
+    formState: { errors, isValid, isDirty },
+  } = useFormContext<AccompanyingDetailsFormData>();
 
   return (
     <>
