@@ -37,7 +37,7 @@ const BackLink = styled(Link)`
   transition: var(--volunteer-profile-back-link-transition);
 `;
 
-const ProfilePage = ({ volunteer, opportunity }: ProfileEntityProps) => {
+const ProfilePage = ({ volunteer, opportunity, agent }: ProfileEntityProps) => {
   const { t, i18n } = useTranslation();
   const contactDetailsRef = useRef<EditableSectionRef>(null);
   const opportunityContactDetailsRef = useRef<EditableSectionRef>(null);
@@ -137,7 +137,25 @@ const ProfilePage = ({ volunteer, opportunity }: ProfileEntityProps) => {
     ];
   };
 
-  const sections = volunteer ? getVolunteerSections(volunteer) : getOpportunitySections(opportunity);
+  const getAgentSections = (): SectionCardProps[] => [];
+
+  const sections = volunteer
+    ? getVolunteerSections(volunteer)
+    : agent
+      ? getAgentSections()
+      : getOpportunitySections(opportunity);
+
+  const getHeading = () => {
+    if (volunteer) return t("dashboard.volunteerProfile.volunteersProfile");
+    if (agent) return t("dashboard.agentProfile.agentProfile");
+    return t("dashboard.opportunityProfile.opportunityProfile");
+  };
+
+  const renderHeader = () => {
+    if (volunteer) return <ProfileHeader volunteer={volunteer} />;
+    if (agent) return <ProfileHeader agent={agent} />;
+    return <ProfileHeader opportunity={opportunity} />;
+  };
 
   return (
     <PageContainer>
@@ -146,13 +164,9 @@ const ProfilePage = ({ volunteer, opportunity }: ProfileEntityProps) => {
         {t("dashboard.volunteerProfile.backToDashboard")}
       </BackLink>
 
-      <Heading2>
-        {volunteer
-          ? t("dashboard.volunteerProfile.volunteersProfile")
-          : t("dashboard.opportunityProfile.opportunityProfile")}
-      </Heading2>
+      <Heading2>{getHeading()}</Heading2>
 
-      {volunteer ? <ProfileHeader volunteer={volunteer} /> : <ProfileHeader opportunity={opportunity} />}
+      {renderHeader()}
 
       {sections.map((s) => (
         <SectionCard key={s.title} {...s} />

@@ -8,5 +8,9 @@ export const Comments = (props: ProfileEntityProps) => {
     return <VolunteerComments volunteer={props.volunteer} />;
   }
 
-  return <OpportunityComments opportunity={props.opportunity} />;
+  if ("opportunity" in props && props.opportunity) {
+    return <OpportunityComments opportunity={props.opportunity} />;
+  }
+
+  return null;
 };

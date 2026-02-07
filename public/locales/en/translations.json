@@ -684,6 +684,32 @@
       "deleteConfirmTitle": "Delete appreciation?",
       "deleteConfirmText": "\"{{entryType}}\" appreciation entry will be permanently deleted."
     },
+    "agentProfile": {
+      "agentProfile": "Agent's profile",
+      "registeredSince": "Registered since",
+      "engagementStatus": "Engagement status",
+      "volunteerSearch": "Volunteer search",
+      "trustLevel": "Trust level",
+      "changeStatus": "Change status",
+      "status": {
+        "engagement": {
+          "new": "New",
+          "active": "Active",
+          "inactive": "Inactive"
+        },
+        "volunteerSearch": {
+          "notNeeded": "Not needed",
+          "needed": "Needed",
+          "searching": "Searching"
+        },
+        "trustLevel": {
+          "unknown": "Unknown",
+          "low": "Low",
+          "medium": "Medium",
+          "high": "High"
+        }
+      }
+    },
     "opportunityProfile": {
       "opportunityProfile": "Opportunity's profile",
       "postedOn": "Posted on",

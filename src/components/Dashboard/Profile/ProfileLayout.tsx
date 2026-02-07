@@ -2,7 +2,7 @@
 import { DashboardLayout } from "@/components/Layout";
 import { ProfileController } from "./ProfileController";
 
-export type ProfileEntityType = "volunteer" | "opportunity";
+export type ProfileEntityType = "volunteer" | "opportunity" | "agent";
 
 interface ProfileLayoutProps {
   entityId: string;

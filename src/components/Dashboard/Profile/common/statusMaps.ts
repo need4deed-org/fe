@@ -5,12 +5,17 @@ import {
   CalendarX,
   ChartLine,
   CheckCircle,
+  Eye,
   HourglassIcon,
   PhoneX,
   ProhibitInset,
+  Question,
+  ShieldCheck,
+  ShieldWarning,
   Sparkle,
   StopCircle,
   Users,
+  XCircle,
 } from "@phosphor-icons/react";
 import {
   OpportunityMatchStatus,
@@ -19,13 +24,20 @@ import {
   VolunteerStateMatchType,
   VolunteerStateTypeType,
 } from "need4deed-sdk";
+import { AgentEngagementStatus, AgentTrustLevel, AgentVolunteerSearch } from "../types/agent";
+
+// Agent engagement status values ("new", "active", "inactive") and AgentVolunteerSearch.SEARCHING ("searching")
+// share the same runtime string values as existing SDK enums, so they reuse those map entries.
 
 export type StatusValue =
   | VolunteerStateEngagementType
   | VolunteerStateTypeType
   | VolunteerStateMatchType
   | OpportunityStatusType
-  | OpportunityMatchStatus;
+  | OpportunityMatchStatus
+  | AgentEngagementStatus
+  | AgentVolunteerSearch
+  | AgentTrustLevel;
 
 export const statusColorMap: Record<string, string> = {
   [VolunteerStateEngagementType.ACTIVE]: "var(--color-green-100)",
@@ -44,6 +56,12 @@ export const statusColorMap: Record<string, string> = {
   [VolunteerStateTypeType.REGULAR_ACCOMPANYING]: "var(--color-blue-500)",
   [OpportunityStatusType.SEARCHING]: "var(--color-violet-100)",
   [OpportunityStatusType.PAST]: "var(--color-grey-50)",
+  [AgentVolunteerSearch.NOT_NEEDED]: "var(--color-grey-50)",
+  [AgentVolunteerSearch.NEEDED]: "var(--color-violet-100)",
+  [AgentTrustLevel.UNKNOWN]: "var(--color-grey-50)",
+  [AgentTrustLevel.LOW]: "var(--color-red-50)",
+  [AgentTrustLevel.MEDIUM]: "var(--color-violet-100)",
+  [AgentTrustLevel.HIGH]: "var(--color-green-100)",
 };
 
 type IconComponent = React.ComponentType<{ size?: number; color?: string }>;
@@ -65,4 +83,10 @@ export const statusIconMap: Record<string, IconComponent> = {
   [VolunteerStateTypeType.REGULAR_ACCOMPANYING]: Users,
   [OpportunityStatusType.SEARCHING]: HourglassIcon,
   [OpportunityStatusType.PAST]: StopCircle,
+  [AgentVolunteerSearch.NOT_NEEDED]: XCircle,
+  [AgentVolunteerSearch.NEEDED]: Eye,
+  [AgentTrustLevel.UNKNOWN]: Question,
+  [AgentTrustLevel.LOW]: ShieldWarning,
+  [AgentTrustLevel.MEDIUM]: ShieldCheck,
+  [AgentTrustLevel.HIGH]: ShieldCheck,
 };

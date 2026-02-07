@@ -685,6 +685,32 @@
       "deleteConfirmTitle": "Anerkennung löschen?",
       "deleteConfirmText": "\"{{entryType}}\" Anerkennungseintrag wird dauerhaft gelöscht."
     },
+    "agentProfile": {
+      "agentProfile": "Profil des Agenten",
+      "registeredSince": "Registriert seit",
+      "engagementStatus": "Engagement-Status",
+      "volunteerSearch": "Freiwilligensuche",
+      "trustLevel": "Vertrauensstufe",
+      "changeStatus": "Status ändern",
+      "status": {
+        "engagement": {
+          "new": "Neu",
+          "active": "Aktiv",
+          "inactive": "Inaktiv"
+        },
+        "volunteerSearch": {
+          "notNeeded": "Nicht benötigt",
+          "needed": "Benötigt",
+          "searching": "Suchend"
+        },
+        "trustLevel": {
+          "unknown": "Unbekannt",
+          "low": "Niedrig",
+          "medium": "Mittel",
+          "high": "Hoch"
+        }
+      }
+    },
     "opportunityProfile": {
       "opportunityProfile": "Profil der Gelegenheit",
       "postedOn": "Veröffentlicht am",

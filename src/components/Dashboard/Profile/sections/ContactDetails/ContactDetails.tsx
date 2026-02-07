@@ -10,5 +10,9 @@ export const ContactDetails = forwardRef<EditableSectionRef, ProfileEntityProps>
     return <VolunteerContactDetails ref={ref} volunteer={props.volunteer} />;
   }
 
-  return <OpportunityContactDetails ref={ref} opportunity={props.opportunity} />;
+  if ("opportunity" in props && props.opportunity) {
+    return <OpportunityContactDetails ref={ref} opportunity={props.opportunity} />;
+  }
+
+  return null;
 });
