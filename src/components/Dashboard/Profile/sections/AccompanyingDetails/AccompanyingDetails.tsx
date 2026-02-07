@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { de, enUS } from "date-fns/locale";
 import { ApiOpportunityAccompanyingDetails, ApiOpportunityGet, VolunteerStateTypeType } from "need4deed-sdk";
 import { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from "react";
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { EditableSectionRef } from "../shared/types";
 import { AccompanyingDetailsDisplay } from "./AccompanyingDetailsDisplay";
@@ -84,17 +84,12 @@ export const AccompanyingDetails = forwardRef<EditableSectionRef, Props>(functio
 
   const initialFormValues = getInitialFormValues(opportunity.accompanyingDetails);
 
-  const {
-    control,
-    handleSubmit,
-    reset,
-    watch,
-    formState: { errors, isValid, isDirty },
-  } = useForm<AccompanyingDetailsFormData>({
+  const methods = useForm<AccompanyingDetailsFormData>({
     resolver: zodResolver(accompanyingDetailsSchema),
     mode: "onChange",
     defaultValues: initialFormValues,
   });
+  const { handleSubmit, reset, watch } = methods;
 
   const formValues = watch();
 
@@ -152,25 +147,23 @@ export const AccompanyingDetails = forwardRef<EditableSectionRef, Props>(functio
   const languageLabel = keyToLabel[formValues.languageToTranslate || ""] || formValues.languageToTranslate || "";
 
   return (
-    <Container data-testid="accompanying-details-container" $isEditing={isEditing}>
-      {isEditing ? (
-        <AccompanyingDetailsEdit
-          control={control}
-          errors={errors}
-          locale={locale}
-          languageOptions={languageOptions}
-          keyToLabel={keyToLabel}
-          labelToKey={labelToKey}
-          onCancel={handleCancel}
-          onSubmit={handleSubmit(onSubmit)}
-          isDirty={isDirty}
-          isValid={isValid}
-          isPending={isPending}
-          minAppointmentDate={minAppointmentDate}
-        />
-      ) : (
-        <AccompanyingDetailsDisplay values={formValues} languageLabel={languageLabel} />
-      )}
-    </Container>
+    <FormProvider {...methods}>
+      <Container data-testid="accompanying-details-container" $isEditing={isEditing}>
+        {isEditing ? (
+          <AccompanyingDetailsEdit
+            locale={locale}
+            languageOptions={languageOptions}
+            keyToLabel={keyToLabel}
+            labelToKey={labelToKey}
+            onCancel={handleCancel}
+            onSubmit={handleSubmit(onSubmit)}
+            isPending={isPending}
+            minAppointmentDate={minAppointmentDate}
+          />
+        ) : (
+          <AccompanyingDetailsDisplay values={formValues} languageLabel={languageLabel} />
+        )}
+      </Container>
+    </FormProvider>
   );
 });
