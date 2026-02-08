@@ -701,7 +701,32 @@
         "needRematch": "Neues Matching erforderlich",
         "unmatched": "Nicht gematcht"
       },
-      "statusUpdateSuccess": "Status der Gelegenheit erfolgreich aktualisiert"
+      "statusUpdateSuccess": "Status der Gelegenheit erfolgreich aktualisiert",
+      "contactDetailsTitle": "Kontaktdaten",
+      "editButtonName": "Bearbeiten",
+      "contactDetails": {
+        "name": "Name",
+        "phone": "Telefon",
+        "email": "E-Mail",
+        "waysToContact": {
+          "label": "Kontaktmöglichkeiten",
+          "whatsapp": "WhatsApp",
+          "telegram": "Telegram",
+          "mobilePhone": "Mobiltelefon",
+          "email": "E-Mail"
+        },
+        "cancel": "Abbrechen",
+        "saveChanges": "Änderungen speichern",
+        "saveSuccess": "Kontaktdaten erfolgreich aktualisiert",
+        "validation": {
+          "nameRequired": "Name ist erforderlich",
+          "phoneRequired": "Telefon ist erforderlich",
+          "phoneInvalid": "Telefon muss mit + beginnen und nur Ziffern/Leerzeichen enthalten",
+          "emailRequired": "E-Mail ist erforderlich",
+          "emailInvalid": "Ungültige E-Mail",
+          "waysToContactRequired": "Wählen Sie mindestens eine Kontaktmöglichkeit"
+        }
+      }
     },
     "communicationSection": {
       "title": "Kommunikationsverfolgung",

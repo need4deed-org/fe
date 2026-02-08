@@ -98,7 +98,7 @@ const VolunteerProfileController = ({ entityId }: EntityIdProps) => {
 const OpportunityProfileController = ({ entityId }: EntityIdProps) => {
   const { data, isLoading, isError, error } = useGetQuery<ApiOpportunityGet>({
     queryKey: ["opportunity", entityId],
-    apiPath: `/${apiPathOpportunity}/${entityId}`,
+    apiPath: `${apiPathOpportunity}/${entityId}`,
     staleTime: cacheTTL,
   });
 

@@ -1,1 +1,2 @@
-export { ContactDetails, type ContactDetailsRef } from "./ContactDetails";
+export { ContactDetails } from "./ContactDetails";
+export { type ContactDetailsRef } from "./types";
