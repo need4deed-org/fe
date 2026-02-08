@@ -10,6 +10,7 @@ import { useTranslation } from "react-i18next";
 import { FormButtonRow, FormContainer, FormDetails } from "../../shared/styles";
 import { EditableSectionRef } from "../../shared/types";
 import { useEnumTranslation } from "../shared";
+import { formatAddress, parseAddress } from "./volunteerAddressUtils";
 import { createVolunteerContactDetailsSchema, VolunteerContactDetailsFormData } from "./volunteerContactDetailsSchema";
 
 type Props = {
@@ -17,18 +18,6 @@ type Props = {
 };
 
 const COMMUNICATION_TYPES = Object.values(VolunteerCommunicationType);
-
-const formatAddress = (address: ApiVolunteerGet["person"]["address"]) => {
-  if (!address || typeof address !== "object") return "";
-
-  const postcode = address.postcode && typeof address.postcode === "object" ? address.postcode.code : address.postcode;
-  return [address.street, address.city, postcode].filter(Boolean).join(", ");
-};
-
-const parseAddress = (addressString: string) => {
-  const [street = "", city = "", postcode = ""] = addressString.split(",").map((part) => part.trim());
-  return { street, city, postcode };
-};
 
 export const VolunteerContactDetails = forwardRef<EditableSectionRef, Props>(function VolunteerContactDetails(
   { volunteer },
