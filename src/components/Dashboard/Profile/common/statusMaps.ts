@@ -26,9 +26,6 @@ import {
 } from "need4deed-sdk";
 import { AgentEngagementStatus, AgentTrustLevel, AgentVolunteerSearch } from "../types/agent";
 
-// Agent engagement status values ("new", "active", "inactive") and AgentVolunteerSearch.SEARCHING ("searching")
-// share the same runtime string values as existing SDK enums, so they reuse those map entries.
-
 export type StatusValue =
   | VolunteerStateEngagementType
   | VolunteerStateTypeType

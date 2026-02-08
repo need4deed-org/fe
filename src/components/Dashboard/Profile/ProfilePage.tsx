@@ -139,11 +139,13 @@ const ProfilePage = ({ volunteer, opportunity, agent }: ProfileEntityProps) => {
 
   const getAgentSections = (): SectionCardProps[] => [];
 
-  const sections = volunteer
-    ? getVolunteerSections(volunteer)
-    : agent
-      ? getAgentSections()
-      : getOpportunitySections(opportunity);
+  const getSections = () => {
+    if (volunteer) return getVolunteerSections(volunteer);
+    if (agent) return getAgentSections();
+    return getOpportunitySections(opportunity);
+  };
+
+  const sections = getSections();
 
   const getHeading = () => {
     if (volunteer) return t("dashboard.volunteerProfile.volunteersProfile");
