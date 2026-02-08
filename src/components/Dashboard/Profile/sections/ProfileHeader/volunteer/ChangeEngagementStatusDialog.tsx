@@ -5,9 +5,9 @@ import { de, enUS } from "date-fns/locale";
 import { VolunteerStateEngagementType } from "need4deed-sdk";
 import { useTranslation } from "react-i18next";
 import {
-  CancelButton,
   DialogButtonGroup,
   LargePrimaryButton,
+  PrimaryCancelButton,
 } from "../../VolunteerProfileDocument/shared/DialogButtonGroup";
 import {
   DateFieldContainer,
@@ -84,9 +84,9 @@ export const ChangeEngagementStatusDialog = ({
         </OptionsContainer>
 
         <DialogButtonGroup>
-          <CancelButton onClick={closeDialog}>
+          <PrimaryCancelButton onClick={closeDialog}>
             {t("dashboard.volunteerProfile.volunteerHeader.modalData.cancel")}
-          </CancelButton>
+          </PrimaryCancelButton>
           <LargePrimaryButton onClick={saveDialog} disabled={isSaveDisabled} $disabled={isSaveDisabled}>
             {t("dashboard.volunteerProfile.volunteerHeader.modalData.save")}
           </LargePrimaryButton>

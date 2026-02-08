@@ -1,6 +1,7 @@
 export enum AgentEngagementStatus {
   NEW = "new",
   ACTIVE = "active",
+  UNRESPONSIVE = "unresponsive",
   INACTIVE = "inactive",
 }
 

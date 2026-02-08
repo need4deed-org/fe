@@ -47,18 +47,21 @@ export const RadioOption = styled.label`
     flex-shrink: 0;
 
     &:checked {
-      border-color: var(--color-blue-700);
+      background-color: var(--color-green-200);
+      border-color: var(--color-green-200);
 
       &::after {
         content: "";
         position: absolute;
-        width: var(--spacing-12);
-        height: var(--spacing-12);
-        border-radius: var(--percent-50);
-        background-color: var(--color-blue-700);
+        width: 6px;
+        height: 12px;
+        border: solid var(--color-blue-700);
+        border-width: 0 2.5px 2.5px 0;
+        border-radius: 0;
+        background-color: transparent;
         top: var(--percent-50);
         left: var(--percent-50);
-        transform: translate(-50%, -50%);
+        transform: translate(-50%, -60%) rotate(45deg);
       }
     }
   }

@@ -58,11 +58,31 @@ export const RadioRow = styled.div`
 `;
 
 export const RadioInput = styled.input`
+  appearance: none;
   width: var(--communication-tracker-radio-size);
   height: var(--communication-tracker-radio-size);
+  border: var(--border-width-medium) solid var(--color-grey-400);
+  border-radius: var(--percent-50);
   cursor: pointer;
-  accent-color: var(--color-aubergine);
+  position: relative;
   flex-shrink: 0;
+
+  &:checked {
+    background-color: var(--color-green-200);
+    border-color: var(--color-green-200);
+
+    &::after {
+      content: "";
+      position: absolute;
+      width: 6px;
+      height: 12px;
+      border: solid var(--color-blue-700);
+      border-width: 0 2.5px 2.5px 0;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -60%) rotate(45deg);
+    }
+  }
 `;
 
 export const FormField = styled.div`

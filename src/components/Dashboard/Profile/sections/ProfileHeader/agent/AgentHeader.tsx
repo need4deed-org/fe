@@ -17,7 +17,9 @@ import {
   Title,
   TitleSection,
 } from "../common";
+import { ChangeAgentEngagementStatusDialog } from "./ChangeAgentEngagementStatusDialog";
 import { createEngagementStatusLabelMap, createTrustLevelLabelMap, createVolunteerSearchLabelMap } from "./constants";
+import { useAgentEngagementStatusDialog } from "./useAgentEngagementStatusDialog";
 
 type Props = {
   agent: ApiAgentProfileGet;
@@ -25,6 +27,7 @@ type Props = {
 
 export const AgentHeader = ({ agent }: Props) => {
   const { t } = useTranslation();
+  const dialog = useAgentEngagementStatusDialog(agent);
 
   const registeredDate = agent.createdAt ? formatDateTime(agent.createdAt) : EMPTY_PLACEHOLDER_VALUE;
 
@@ -54,7 +57,7 @@ export const AgentHeader = ({ agent }: Props) => {
                 status={agent.statusEngagement}
                 label={engagementStatusLabels[agent.statusEngagement]}
                 action={
-                  <EditButton disabled>{t("dashboard.agentProfile.changeStatus")}</EditButton>
+                  <EditButton onClick={dialog.openDialog}>{t("dashboard.agentProfile.changeStatus")}</EditButton>
                 }
               />
 
@@ -73,6 +76,7 @@ export const AgentHeader = ({ agent }: Props) => {
           </ProfileInfo>
         </ProfileContent>
       </Card>
+      <ChangeAgentEngagementStatusDialog dialog={dialog} />
     </FlexColumn>
   );
 };

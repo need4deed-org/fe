@@ -154,14 +154,42 @@ const OptionRow = styled.div<{ $isSelected?: boolean }>`
     background-color: var(--color-orchid-light);
   }
 
-  input[type="checkbox"],
-  input[type="radio"] {
+  input[type="checkbox"] {
     width: 20px;
     height: 20px;
     cursor: pointer;
     margin: 0;
     flex: 0 0 auto;
     accent-color: var(--color-green-500);
+  }
+
+  input[type="radio"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: var(--border-width-medium) solid var(--color-grey-400);
+    border-radius: var(--percent-50);
+    cursor: pointer;
+    margin: 0;
+    flex: 0 0 auto;
+    position: relative;
+
+    &:checked {
+      background-color: var(--color-green-200);
+      border-color: var(--color-green-200);
+
+      &::after {
+        content: "";
+        position: absolute;
+        width: 5px;
+        height: 10px;
+        border: solid var(--color-blue-700);
+        border-width: 0 2px 2px 0;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -60%) rotate(45deg);
+      }
+    }
   }
 `;
 

@@ -696,6 +696,7 @@
         "engagement": {
           "new": "Neu",
           "active": "Aktiv",
+          "unresponsive": "Nicht erreichbar",
           "inactive": "Inaktiv"
         },
         "volunteerSearch": {
@@ -709,7 +710,19 @@
           "medium": "Mittel",
           "high": "Hoch"
         }
-      }
+      },
+      "modalData": {
+        "title": "Engagement-Status ändern",
+        "options": {
+          "unresponsive": "Nicht erreichbar",
+          "unresponsive_description": "Dieser Agent antwortet nicht.",
+          "inactive": "Inaktiv",
+          "inactive_description": "Dieser Agent arbeitet nicht mehr mit der Organisation zusammen."
+        },
+        "cancel": "Abbrechen",
+        "save": "Speichern"
+      },
+      "statusUpdateSuccess": "Agent-Status erfolgreich aktualisiert"
     },
     "opportunityProfile": {
       "opportunityProfile": "Profil der Gelegenheit",
