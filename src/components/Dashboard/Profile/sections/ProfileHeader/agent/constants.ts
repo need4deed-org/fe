@@ -21,9 +21,10 @@ export const createVolunteerSearchLabelMap = (t: TFunction): Record<AgentVolunte
   [AgentVolunteerSearch.SEARCHING]: t("dashboard.agentProfile.status.volunteerSearch.searching"),
 });
 
+export const TRUST_LEVEL_OPTIONS = [AgentTrustLevel.HIGH, AgentTrustLevel.LOW, AgentTrustLevel.UNKNOWN] as const;
+
 export const createTrustLevelLabelMap = (t: TFunction): Record<AgentTrustLevel, string> => ({
   [AgentTrustLevel.UNKNOWN]: t("dashboard.agentProfile.status.trustLevel.unknown"),
   [AgentTrustLevel.LOW]: t("dashboard.agentProfile.status.trustLevel.low"),
-  [AgentTrustLevel.MEDIUM]: t("dashboard.agentProfile.status.trustLevel.medium"),
   [AgentTrustLevel.HIGH]: t("dashboard.agentProfile.status.trustLevel.high"),
 });

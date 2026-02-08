@@ -707,7 +707,6 @@
         "trustLevel": {
           "unknown": "Unbekannt",
           "low": "Niedrig",
-          "medium": "Mittel",
           "high": "Hoch"
         }
       },

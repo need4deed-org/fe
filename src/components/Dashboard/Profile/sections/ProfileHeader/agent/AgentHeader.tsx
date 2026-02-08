@@ -18,7 +18,8 @@ import {
   TitleSection,
 } from "../common";
 import { ChangeAgentEngagementStatusDialog } from "./ChangeAgentEngagementStatusDialog";
-import { createEngagementStatusLabelMap, createTrustLevelLabelMap, createVolunteerSearchLabelMap } from "./constants";
+import { createEngagementStatusLabelMap, createTrustLevelLabelMap, createVolunteerSearchLabelMap, TRUST_LEVEL_OPTIONS } from "./constants";
+import { TrustLevelDropdown } from "./TrustLevelDropdown";
 import { useAgentEngagementStatusDialog } from "./useAgentEngagementStatusDialog";
 
 type Props = {
@@ -69,8 +70,14 @@ export const AgentHeader = ({ agent }: Props) => {
 
               <StatusRowField
                 title={t("dashboard.agentProfile.trustLevel")}
-                status={agent.trustLevel}
-                label={trustLevelLabels[agent.trustLevel]}
+                extra={
+                  <TrustLevelDropdown
+                    value={agent.trustLevel}
+                    options={TRUST_LEVEL_OPTIONS}
+                    labels={trustLevelLabels}
+                    onChange={() => {}}
+                  />
+                }
               />
             </StatusSection>
           </ProfileInfo>

@@ -10,8 +10,8 @@ import {
   PhoneXIcon,
   ProhibitInsetIcon,
   QuestionIcon,
-  ShieldCheckIcon,
-  ShieldWarningIcon,
+  SmileyIcon,
+  SmileySadIcon,
   SparkleIcon,
   StopCircleIcon,
   UsersIcon,
@@ -57,7 +57,6 @@ export const statusColorMap: Record<string, string> = {
   [AgentVolunteerSearch.NEEDED]: "var(--color-violet-100)",
   [AgentTrustLevel.UNKNOWN]: "var(--color-grey-50)",
   [AgentTrustLevel.LOW]: "var(--color-red-50)",
-  [AgentTrustLevel.MEDIUM]: "var(--color-violet-100)",
   [AgentTrustLevel.HIGH]: "var(--color-green-100)",
 };
 
@@ -83,7 +82,6 @@ export const statusIconMap: Record<string, IconComponent> = {
   [AgentVolunteerSearch.NOT_NEEDED]: XCircleIcon,
   [AgentVolunteerSearch.NEEDED]: EyeIcon,
   [AgentTrustLevel.UNKNOWN]: QuestionIcon,
-  [AgentTrustLevel.LOW]: ShieldWarningIcon,
-  [AgentTrustLevel.MEDIUM]: ShieldCheckIcon,
-  [AgentTrustLevel.HIGH]: ShieldCheckIcon,
+  [AgentTrustLevel.LOW]: SmileySadIcon,
+  [AgentTrustLevel.HIGH]: SmileyIcon,
 };

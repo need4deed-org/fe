@@ -14,7 +14,6 @@ export enum AgentVolunteerSearch {
 export enum AgentTrustLevel {
   UNKNOWN = "unknown",
   LOW = "low",
-  MEDIUM = "medium",
   HIGH = "high",
 }
 
