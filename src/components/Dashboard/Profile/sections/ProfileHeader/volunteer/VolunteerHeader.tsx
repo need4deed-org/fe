@@ -50,10 +50,10 @@ export const VolunteerHeader = ({ volunteer }: Props) => {
     >
       <StatusRowField
         title={t("dashboard.volunteerProfile.volunteerHeader.engagementStatus_title")}
-        status={dialog.statusEngagement}
-        label={engagementLabelMap[dialog.statusEngagement]}
+        status={dialog.selected}
+        label={engagementLabelMap[dialog.selected]}
         extra={
-          dialog.statusEngagement === VolunteerStateEngagementType.TEMP_UNAVAILABLE && (
+          dialog.selected === VolunteerStateEngagementType.TEMP_UNAVAILABLE && (
             <ReturnDateText>{formatDateReturn(dialog.dateReturn)}</ReturnDateText>
           )
         }

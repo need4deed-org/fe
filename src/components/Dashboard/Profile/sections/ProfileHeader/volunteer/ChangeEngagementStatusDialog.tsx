@@ -13,16 +13,7 @@ type Props = {
 };
 
 export const ChangeEngagementStatusDialog = ({
-  dialog: {
-    isOpen,
-    closeDialog,
-    statusEngagement,
-    setStatusEngagement,
-    dateReturn,
-    setDateReturn,
-    saveDialog,
-    isSaveDisabled,
-  },
+  dialog: { isOpen, closeDialog, selected, setSelected, dateReturn, setDateReturn, saveDialog, isSaveDisabled },
 }: Props) => {
   const { t, i18n } = useTranslation();
   const locale = i18n.language === "de" ? de : enUS;
@@ -35,7 +26,7 @@ export const ChangeEngagementStatusDialog = ({
       `dashboard.volunteerProfile.volunteerHeader.engagementStatus_options.${ENGAGEMENT_DESCRIPTION_KEYS[status]}`,
     ),
     extra:
-      status === VolunteerStateEngagementType.TEMP_UNAVAILABLE && statusEngagement === status ? (
+      status === VolunteerStateEngagementType.TEMP_UNAVAILABLE && selected === status ? (
         <DateFieldContainer>
           <DatePickerWithLabel
             date={dateReturn}
@@ -57,8 +48,8 @@ export const ChangeEngagementStatusDialog = ({
       isOpen={isOpen}
       title={t("dashboard.volunteerProfile.volunteerHeader.modalData.title")}
       options={options}
-      selected={statusEngagement}
-      onSelect={setStatusEngagement}
+      selected={selected}
+      onSelect={setSelected}
       onSave={saveDialog}
       onCancel={closeDialog}
       isSaveDisabled={isSaveDisabled}

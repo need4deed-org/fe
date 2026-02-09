@@ -10,7 +10,7 @@ type Props = {
 };
 
 export const ChangeAgentEngagementStatusDialog = ({
-  dialog: { isOpen, closeDialog, statusEngagement, setStatusEngagement, saveDialog, isSaveDisabled },
+  dialog: { isOpen, closeDialog, selected, setSelected, saveDialog, isSaveDisabled },
 }: Props) => {
   const { t } = useTranslation();
   const engagementStatusLabels = useMemo(() => createEngagementStatusLabelMap(t), [t]);
@@ -27,8 +27,8 @@ export const ChangeAgentEngagementStatusDialog = ({
       isOpen={isOpen}
       title={t("dashboard.agentProfile.modalData.title")}
       options={options}
-      selected={statusEngagement}
-      onSelect={setStatusEngagement}
+      selected={selected}
+      onSelect={setSelected}
       onSave={saveDialog}
       onCancel={closeDialog}
       isSaveDisabled={isSaveDisabled}

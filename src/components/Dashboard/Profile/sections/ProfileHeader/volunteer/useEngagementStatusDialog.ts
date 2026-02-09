@@ -1,82 +1,63 @@
 import { useUpdateVolunteerStatus, VolunteerStatusUpdateData } from "@/hooks/useUpdateVolunteerStatus";
 import { ApiVolunteerGet, VolunteerStateEngagementType } from "need4deed-sdk";
-import { useState, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
+import { useStatusDialog, UseStatusDialogReturn } from "../common/useStatusDialog";
 
-export type UseEngagementStatusDialogReturn = {
-  isOpen: boolean;
-  statusEngagement: VolunteerStateEngagementType;
+export type UseEngagementStatusDialogReturn = UseStatusDialogReturn<VolunteerStateEngagementType> & {
   dateReturn: Date | undefined;
-  originalStatus: VolunteerStateEngagementType;
-  isSaveDisabled: boolean;
-  openDialog: () => void;
-  closeDialog: () => void;
-  saveDialog: () => void;
-  setStatusEngagement: (status: VolunteerStateEngagementType) => void;
   setDateReturn: (date: Date | undefined) => void;
 };
 
 export const useEngagementStatusDialog = (volunteer: ApiVolunteerGet): UseEngagementStatusDialogReturn => {
   const { mutate: updateStatus } = useUpdateVolunteerStatus(volunteer.id);
-
-  const initialDate = volunteer.dateReturn ? new Date(volunteer.dateReturn) : undefined;
-
-  const [isOpen, setIsOpen] = useState(false);
-  const [statusEngagement, setStatusEngagement] = useState<VolunteerStateEngagementType>(volunteer.statusEngagement);
-  const [dateReturn, setDateReturn] = useState<Date | undefined>(initialDate);
-  const [initialDateReturn, setInitialDateReturn] = useState<Date | undefined>(initialDate);
-
-  const isSaveDisabled = useMemo(
-    () =>
-      statusEngagement === volunteer.statusEngagement &&
-      (statusEngagement !== VolunteerStateEngagementType.TEMP_UNAVAILABLE ||
-        dateReturn?.getTime() === initialDateReturn?.getTime()),
-    [statusEngagement, volunteer.statusEngagement, dateReturn, initialDateReturn],
+  const initialDate = useMemo(
+    () => (volunteer.dateReturn ? new Date(volunteer.dateReturn) : undefined),
+    [volunteer.dateReturn],
   );
 
+  const [dateReturn, setDateReturn] = useState<Date | undefined>(initialDate);
+
+  const isSaveDisabled = useCallback(
+    (selected: VolunteerStateEngagementType, original: VolunteerStateEngagementType) =>
+      selected === original &&
+      (selected !== VolunteerStateEngagementType.TEMP_UNAVAILABLE ||
+        dateReturn?.getTime() === initialDate?.getTime()),
+    [dateReturn, initialDate],
+  );
+
+  const onSave = useCallback(
+    (status: VolunteerStateEngagementType, { onSuccess }: { onSuccess: () => void }) => {
+      const payload: VolunteerStatusUpdateData = {
+        statusEngagement: status,
+        dateReturn:
+          status === VolunteerStateEngagementType.TEMP_UNAVAILABLE && dateReturn ? dateReturn.toISOString() : null,
+      };
+      updateStatus(payload, { onSuccess });
+    },
+    [updateStatus, dateReturn],
+  );
+
+  const dialog = useStatusDialog({
+    initial: volunteer.statusEngagement,
+    onSave,
+    isSaveDisabled,
+  });
+
   const openDialog = () => {
-    setIsOpen(true);
     setDateReturn(initialDate);
-    setInitialDateReturn(initialDate);
+    dialog.openDialog();
   };
+
   const closeDialog = () => {
-    setStatusEngagement(volunteer.statusEngagement);
     setDateReturn(initialDate);
-    setInitialDateReturn(initialDate);
-    setIsOpen(false);
-  };
-
-  const saveDialog = () => {
-    const isTempUnavailable = statusEngagement === VolunteerStateEngagementType.TEMP_UNAVAILABLE;
-
-    const payload: VolunteerStatusUpdateData = {
-      statusEngagement,
-      dateReturn:
-        statusEngagement === VolunteerStateEngagementType.TEMP_UNAVAILABLE && dateReturn
-          ? dateReturn.toISOString()
-          : // resets dateReturn if status is changes from TEMP_UNAVAILABLE to another status
-            null,
-    };
-
-    updateStatus(payload, {
-      onSuccess: () => {
-        if (isTempUnavailable && dateReturn) {
-          setInitialDateReturn(dateReturn);
-        }
-        setIsOpen(false);
-      },
-    });
+    dialog.closeDialog();
   };
 
   return {
-    isOpen,
-    statusEngagement,
-    dateReturn,
-    originalStatus: volunteer.statusEngagement,
-    isSaveDisabled,
+    ...dialog,
     openDialog,
     closeDialog,
-    saveDialog,
-    setStatusEngagement,
+    dateReturn,
     setDateReturn,
   };
 };
