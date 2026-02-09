@@ -700,7 +700,7 @@
         },
         "volunteerSearch": {
           "notNeeded": "Not needed",
-          "needed": "Needed",
+          "filled": "Filled",
           "searching": "Searching"
         },
         "trustLevel": {

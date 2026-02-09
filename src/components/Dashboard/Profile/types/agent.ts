@@ -7,8 +7,8 @@ export enum AgentEngagementStatus {
 
 export enum AgentVolunteerSearch {
   NOT_NEEDED = "not_needed",
-  NEEDED = "needed",
-  SEARCHING = "searching",
+  FILLED = "filled",
+  SEARCHING = "volunteer_searching",
 }
 
 export enum AgentTrustLevel {

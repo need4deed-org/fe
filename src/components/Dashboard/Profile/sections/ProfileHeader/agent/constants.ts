@@ -17,7 +17,7 @@ export const AGENT_ENGAGEMENT_DESCRIPTION_KEYS: Record<(typeof AGENT_DIALOG_STAT
 
 export const createVolunteerSearchLabelMap = (t: TFunction): Record<AgentVolunteerSearch, string> => ({
   [AgentVolunteerSearch.NOT_NEEDED]: t("dashboard.agentProfile.status.volunteerSearch.notNeeded"),
-  [AgentVolunteerSearch.NEEDED]: t("dashboard.agentProfile.status.volunteerSearch.needed"),
+  [AgentVolunteerSearch.FILLED]: t("dashboard.agentProfile.status.volunteerSearch.filled"),
   [AgentVolunteerSearch.SEARCHING]: t("dashboard.agentProfile.status.volunteerSearch.searching"),
 });
 

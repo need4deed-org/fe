@@ -1,11 +1,12 @@
 import type React from "react";
 import {
   ArrowsClockwiseIcon,
+  BinocularsIcon,
   CalendarBlankIcon,
   CalendarXIcon,
   ChartLineIcon,
   CheckCircleIcon,
-  EyeIcon,
+  HandPalmIcon,
   HourglassIcon,
   PhoneXIcon,
   ProhibitInsetIcon,
@@ -15,7 +16,6 @@ import {
   SparkleIcon,
   StopCircleIcon,
   UsersIcon,
-  XCircleIcon,
 } from "@phosphor-icons/react";
 import {
   OpportunityMatchStatus,
@@ -54,7 +54,8 @@ export const statusColorMap: Record<string, string> = {
   [OpportunityStatusType.SEARCHING]: "var(--color-violet-100)",
   [OpportunityStatusType.PAST]: "var(--color-grey-50)",
   [AgentVolunteerSearch.NOT_NEEDED]: "var(--color-grey-50)",
-  [AgentVolunteerSearch.NEEDED]: "var(--color-violet-100)",
+  [AgentVolunteerSearch.FILLED]: "var(--color-green-100)",
+  [AgentVolunteerSearch.SEARCHING]: "var(--color-red-50)",
   [AgentTrustLevel.UNKNOWN]: "var(--color-grey-50)",
   [AgentTrustLevel.LOW]: "var(--color-red-50)",
   [AgentTrustLevel.HIGH]: "var(--color-green-100)",
@@ -79,8 +80,9 @@ export const statusIconMap: Record<string, IconComponent> = {
   [VolunteerStateTypeType.REGULAR_ACCOMPANYING]: UsersIcon,
   [OpportunityStatusType.SEARCHING]: HourglassIcon,
   [OpportunityStatusType.PAST]: StopCircleIcon,
-  [AgentVolunteerSearch.NOT_NEEDED]: XCircleIcon,
-  [AgentVolunteerSearch.NEEDED]: EyeIcon,
+  [AgentVolunteerSearch.NOT_NEEDED]: HandPalmIcon,
+  [AgentVolunteerSearch.FILLED]: CheckCircleIcon,
+  [AgentVolunteerSearch.SEARCHING]: BinocularsIcon,
   [AgentTrustLevel.UNKNOWN]: QuestionIcon,
   [AgentTrustLevel.LOW]: SmileySadIcon,
   [AgentTrustLevel.HIGH]: SmileyIcon,
