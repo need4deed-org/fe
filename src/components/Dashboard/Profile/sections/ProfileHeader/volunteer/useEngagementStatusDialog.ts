@@ -1,6 +1,6 @@
 import { useUpdateVolunteerStatus, VolunteerStatusUpdateData } from "@/hooks/useUpdateVolunteerStatus";
 import { ApiVolunteerGet, VolunteerStateEngagementType } from "need4deed-sdk";
-import { useCallback, useMemo, useState } from "react";
+import { useState } from "react";
 import { useStatusDialog, UseStatusDialogReturn } from "../common/useStatusDialog";
 
 export type UseEngagementStatusDialogReturn = UseStatusDialogReturn<VolunteerStateEngagementType> & {
@@ -10,32 +10,23 @@ export type UseEngagementStatusDialogReturn = UseStatusDialogReturn<VolunteerSta
 
 export const useEngagementStatusDialog = (volunteer: ApiVolunteerGet): UseEngagementStatusDialogReturn => {
   const { mutate: updateStatus } = useUpdateVolunteerStatus(volunteer.id);
-  const initialDate = useMemo(
-    () => (volunteer.dateReturn ? new Date(volunteer.dateReturn) : undefined),
-    [volunteer.dateReturn],
-  );
+  const initialDate = volunteer.dateReturn ? new Date(volunteer.dateReturn) : undefined;
 
   const [dateReturn, setDateReturn] = useState<Date | undefined>(initialDate);
 
-  const isSaveDisabled = useCallback(
-    (selected: VolunteerStateEngagementType, original: VolunteerStateEngagementType) =>
-      selected === original &&
-      (selected !== VolunteerStateEngagementType.TEMP_UNAVAILABLE ||
-        dateReturn?.getTime() === initialDate?.getTime()),
-    [dateReturn, initialDate],
-  );
+  const isSaveDisabled = (selected: VolunteerStateEngagementType, original: VolunteerStateEngagementType) =>
+    selected === original &&
+    (selected !== VolunteerStateEngagementType.TEMP_UNAVAILABLE ||
+      dateReturn?.getTime() === initialDate?.getTime());
 
-  const onSave = useCallback(
-    (status: VolunteerStateEngagementType, { onSuccess }: { onSuccess: () => void }) => {
-      const payload: VolunteerStatusUpdateData = {
-        statusEngagement: status,
-        dateReturn:
-          status === VolunteerStateEngagementType.TEMP_UNAVAILABLE && dateReturn ? dateReturn.toISOString() : null,
-      };
-      updateStatus(payload, { onSuccess });
-    },
-    [updateStatus, dateReturn],
-  );
+  const onSave = (status: VolunteerStateEngagementType, { onSuccess }: { onSuccess: () => void }) => {
+    const payload: VolunteerStatusUpdateData = {
+      statusEngagement: status,
+      dateReturn:
+        status === VolunteerStateEngagementType.TEMP_UNAVAILABLE && dateReturn ? dateReturn.toISOString() : null,
+    };
+    updateStatus(payload, { onSuccess });
+  };
 
   const dialog = useStatusDialog({
     initial: volunteer.statusEngagement,

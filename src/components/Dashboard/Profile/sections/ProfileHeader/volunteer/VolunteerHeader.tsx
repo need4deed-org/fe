@@ -3,7 +3,6 @@ import { defaultAvatarVolunteerProfile, EMPTY_PLACEHOLDER_VALUE } from "@/config
 import { formatDateTime, getImageUrl } from "@/utils";
 import { ApiVolunteerGet, VolunteerStateEngagementType } from "need4deed-sdk";
 import Image from "next/image";
-import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import {
   AvatarContainer,
@@ -25,9 +24,9 @@ export const VolunteerHeader = ({ volunteer }: Props) => {
   const { t } = useTranslation();
   const dialog = useEngagementStatusDialog(volunteer);
 
-  const engagementLabelMap = useMemo(() => createEngagementLabelMap(t), [t]);
-  const matchLabelMap = useMemo(() => createMatchLabelMap(t), [t]);
-  const volunteerTypeLabelMap = useMemo(() => createVolunteerTypeLabelMap(t), [t]);
+  const engagementLabelMap = createEngagementLabelMap(t);
+  const matchLabelMap = createMatchLabelMap(t);
+  const volunteerTypeLabelMap = createVolunteerTypeLabelMap(t);
 
   const fullName = `${volunteer.person.firstName} ${volunteer.person.lastName}`;
   const avatarUrl = getImageUrl(volunteer.person.avatarUrl || defaultAvatarVolunteerProfile);

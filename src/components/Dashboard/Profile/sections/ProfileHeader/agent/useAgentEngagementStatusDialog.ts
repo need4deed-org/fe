@@ -1,5 +1,5 @@
 import { useUpdateAgentStatus } from "@/hooks/useUpdateAgentStatus";
-import { useCallback } from "react";
+
 import { AgentEngagementStatus, ApiAgentProfileGet } from "../../../types/agent";
 import { useStatusDialog, UseStatusDialogReturn } from "../common/useStatusDialog";
 
@@ -8,12 +8,9 @@ export type UseAgentEngagementStatusDialogReturn = UseStatusDialogReturn<AgentEn
 export const useAgentEngagementStatusDialog = (agent: ApiAgentProfileGet): UseAgentEngagementStatusDialogReturn => {
   const { mutate: updateStatus } = useUpdateAgentStatus(agent.id);
 
-  const onSave = useCallback(
-    (status: AgentEngagementStatus, { onSuccess }: { onSuccess: () => void }) => {
-      updateStatus({ statusEngagement: status }, { onSuccess });
-    },
-    [updateStatus],
-  );
+  const onSave = (status: AgentEngagementStatus, { onSuccess }: { onSuccess: () => void }) => {
+    updateStatus({ statusEngagement: status }, { onSuccess });
+  };
 
   return useStatusDialog({
     initial: agent.statusEngagement,

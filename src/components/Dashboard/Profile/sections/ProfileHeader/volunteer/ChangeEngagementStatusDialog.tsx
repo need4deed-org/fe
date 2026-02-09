@@ -2,7 +2,6 @@
 import { DatePickerWithLabel } from "@/components/core/common/DatePicker";
 import { de, enUS } from "date-fns/locale";
 import { VolunteerStateEngagementType } from "need4deed-sdk";
-import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { ChangeStatusDialog, DateFieldContainer } from "../common";
 import { createEngagementLabelMap, ENGAGEMENT_DESCRIPTION_KEYS } from "./constants";
@@ -17,7 +16,7 @@ export const ChangeEngagementStatusDialog = ({
 }: Props) => {
   const { t, i18n } = useTranslation();
   const locale = i18n.language === "de" ? de : enUS;
-  const engagementLabelMap = useMemo(() => createEngagementLabelMap(t), [t]);
+  const engagementLabelMap = createEngagementLabelMap(t);
 
   const options = Object.values(VolunteerStateEngagementType).map((status) => ({
     value: status,

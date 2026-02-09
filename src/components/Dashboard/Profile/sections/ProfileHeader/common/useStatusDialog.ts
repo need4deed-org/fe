@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 export type UseStatusDialogReturn<T extends string> = {
   isOpen: boolean;
@@ -25,10 +25,7 @@ export const useStatusDialog = <T extends string>({
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState<T>(initial);
 
-  const isSaveDisabled = useMemo(
-    () => (customIsSaveDisabled ? customIsSaveDisabled(selected, initial) : selected === initial),
-    [selected, initial, customIsSaveDisabled],
-  );
+  const isSaveDisabled = customIsSaveDisabled ? customIsSaveDisabled(selected, initial) : selected === initial;
 
   const openDialog = () => setIsOpen(true);
 

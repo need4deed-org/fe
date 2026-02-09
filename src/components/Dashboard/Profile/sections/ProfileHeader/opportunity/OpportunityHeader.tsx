@@ -4,7 +4,6 @@ import { useUpdateOpportunityStatus } from "@/hooks/useUpdateOpportunityStatus";
 import { formatDateTime } from "@/utils";
 import { ShootingStarIcon } from "@phosphor-icons/react";
 import { ApiOpportunityGet, OpportunityStatusType } from "need4deed-sdk";
-import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { createVolunteerTypeLabelMap, EditButton, HeaderCard, IconContainer, StatusRowField } from "../common";
 
@@ -23,8 +22,8 @@ export const OpportunityHeader = ({ opportunity }: Props) => {
   const { t } = useTranslation();
   const { mutate: updateStatus } = useUpdateOpportunityStatus(opportunity.id);
 
-  const statusLabels = useMemo(() => createStatusLabelMap(t), [t]);
-  const volunteerTypeLabelMap = useMemo(() => createVolunteerTypeLabelMap(t), [t]);
+  const statusLabels = createStatusLabelMap(t);
+  const volunteerTypeLabelMap = createVolunteerTypeLabelMap(t);
 
   const postedDate = opportunity.createdAt ? formatDateTime(opportunity.createdAt) : EMPTY_PLACEHOLDER_VALUE;
   const subtitle = `${t("dashboard.opportunityProfile.postedOn")} ${postedDate}`;
