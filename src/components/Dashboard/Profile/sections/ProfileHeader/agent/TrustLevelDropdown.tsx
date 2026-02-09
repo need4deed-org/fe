@@ -7,7 +7,7 @@ import {
   statusIconMap,
 } from "../../../common/statusMaps";
 import { AgentTrustLevel } from "../../../types/agent";
-import { useClickOutside } from "./useClickOutside";
+import { useClickOutside } from "@/hooks";
 
 const Container = styled.div`
   position: relative;
