@@ -74,13 +74,13 @@ export const RadioInput = styled.input`
     &::after {
       content: "";
       position: absolute;
-      width: 6px;
-      height: 12px;
+      width: var(--communication-tracker-checkmark-width);
+      height: var(--communication-tracker-checkmark-height);
       border: solid var(--color-blue-700);
-      border-width: 0 2.5px 2.5px 0;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -60%) rotate(45deg);
+      border-width: var(--communication-tracker-checkmark-border-width);
+      top: var(--percent-50);
+      left: var(--percent-50);
+      transform: var(--communication-tracker-checkmark-transform);
     }
   }
 `;

@@ -291,6 +291,10 @@ html {
   --communication-tracker-input-icon-offset: 16px;
   --communication-tracker-input-padding-left: 48px;
   --communication-tracker-dropdown-arrow-size: 14px 8px;
+  --communication-tracker-checkmark-width: 6px;
+  --communication-tracker-checkmark-height: 12px;
+  --communication-tracker-checkmark-border-width: 0 2.5px 2.5px 0;
+  --communication-tracker-checkmark-transform: translate(-50%, -60%) rotate(45deg);
   --communication-tracker-button-height: 56px;
   --communication-tracker-dialog-box-shadow: 0px 10px 30px -12px rgba(143, 81, 138, 0.2);
   --communication-tracker-popover-box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
