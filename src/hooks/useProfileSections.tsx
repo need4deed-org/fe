@@ -13,8 +13,7 @@ import { EditableSectionRef } from "@/components/Dashboard/Profile/sections/shar
 import VolunteerOpportunities from "@/components/Dashboard/Profile/sections/VolunteerOpportunities/VolunteerOpportunities";
 import { VolunteerProfile, VolunteerProfileRef } from "@/components/Dashboard/Profile/sections/VolunteerProfile";
 import { VolunteerProfileDocument } from "@/components/Dashboard/Profile/sections/VolunteerProfileDocument";
-import { IconName, ProfileEntityProps } from "@/components/Dashboard/Profile/types/types";
-import { ApiAgentProfileGet } from "@/components/Dashboard/Profile/types/agent";
+import { ApiAgentProfileGet, IconName, ProfileEntityProps } from "@/components/Dashboard/Profile/types";
 import { ApiOpportunityGet, ApiVolunteerGet, VolunteerStateTypeType } from "need4deed-sdk";
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";

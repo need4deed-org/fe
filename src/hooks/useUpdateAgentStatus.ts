@@ -1,6 +1,6 @@
 import { apiPathAgent } from "@/config/constants";
 import { useMutationQuery } from "@/hooks";
-import { AgentEngagementStatus, ApiAgentProfileGet } from "@/components/Dashboard/Profile/types/agent";
+import { AgentEngagementStatus, ApiAgentProfileGet } from "@/components/Dashboard/Profile/types";
 
 export type AgentStatusUpdateData = {
   statusEngagement: AgentEngagementStatus;

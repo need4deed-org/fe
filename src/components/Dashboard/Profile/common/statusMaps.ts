@@ -24,7 +24,7 @@ import {
   VolunteerStateMatchType,
   VolunteerStateTypeType,
 } from "need4deed-sdk";
-import { AgentEngagementStatus, AgentTrustLevel, AgentVolunteerSearch } from "../types/agent";
+import { AgentEngagementStatus, AgentTrustLevel, AgentVolunteerSearch } from "../types";
 
 export type StatusValue =
   | VolunteerStateEngagementType

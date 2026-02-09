@@ -1,3 +1,4 @@
+import { EntityType } from "@/components/Dashboard/Profile/types";
 import { apiPathComment } from "@/config/constants";
 import { useMutationQuery } from "@/hooks";
 import { Id } from "need4deed-sdk";
@@ -5,8 +6,6 @@ import { Id } from "need4deed-sdk";
 type UpdateCommentData = {
   text: string;
 };
-
-type EntityType = "volunteer" | "opportunity" | "agent";
 
 export const useUpdateComment = (entityId: Id, commentId: number, entityType: EntityType = "volunteer") => {
   return useMutationQuery<UpdateCommentData, { message: string }>({

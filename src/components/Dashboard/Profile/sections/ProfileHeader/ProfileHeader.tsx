@@ -1,5 +1,5 @@
 "use client";
-import { ProfileEntityProps } from "@/components/Dashboard/Profile/types/types";
+import { ProfileEntityProps } from "@/components/Dashboard/Profile/types";
 import { AgentHeader } from "./agent";
 import { OpportunityHeader } from "./opportunity";
 import { VolunteerHeader } from "./volunteer";
