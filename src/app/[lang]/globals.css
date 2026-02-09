@@ -299,6 +299,9 @@ html {
   --communication-tracker-dialog-box-shadow: 0px 10px 30px -12px rgba(143, 81, 138, 0.2);
   --communication-tracker-popover-box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
 
+  /* dropdown */
+  --dropdown-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+
   /* dialog */
   --dialog-title-font-size: 28px;
   --dialog-title-line-height: 32px;
@@ -306,6 +309,11 @@ html {
   --dialog-max-width: 620px;
   --dialog-box-shadow: 0px 10px 30px -12px rgba(143, 81, 138, 0.2);
   --dialog-option-padding: 0px;
+  --dialog-checkmark-width: 6px;
+  --dialog-checkmark-height: 12px;
+  --dialog-checkmark-border-width: 0 2.5px 2.5px 0;
+  --dialog-checkmark-border-radius: 0;
+  --dialog-checkmark-transform: translate(-50%, -60%) rotate(45deg);
 
   /* expanded section */
   --expanded-section-border-width: 4px;

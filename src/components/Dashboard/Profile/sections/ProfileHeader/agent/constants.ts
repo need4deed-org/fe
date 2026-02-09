@@ -15,6 +15,15 @@ export const AGENT_ENGAGEMENT_DESCRIPTION_KEYS: Record<(typeof AGENT_DIALOG_STAT
   [AgentEngagementStatus.INACTIVE]: "inactive_description",
 };
 
+export const createAgentDialogOptions = (t: TFunction) => {
+  const engagementStatusLabels = createEngagementStatusLabelMap(t);
+  return AGENT_DIALOG_STATUSES.map((status) => ({
+    value: status,
+    label: engagementStatusLabels[status],
+    description: t(`dashboard.agentProfile.modalData.options.${AGENT_ENGAGEMENT_DESCRIPTION_KEYS[status]}`),
+  }));
+};
+
 export const createVolunteerSearchLabelMap = (t: TFunction): Record<AgentVolunteerSearch, string> => ({
   [AgentVolunteerSearch.NOT_NEEDED]: t("dashboard.agentProfile.status.volunteerSearch.notNeeded"),
   [AgentVolunteerSearch.FILLED]: t("dashboard.agentProfile.status.volunteerSearch.filled"),

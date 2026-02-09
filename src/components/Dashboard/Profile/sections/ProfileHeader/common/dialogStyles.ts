@@ -53,15 +53,15 @@ export const RadioOption = styled.label`
       &::after {
         content: "";
         position: absolute;
-        width: 6px;
-        height: 12px;
+        width: var(--dialog-checkmark-width);
+        height: var(--dialog-checkmark-height);
         border: solid var(--color-blue-700);
-        border-width: 0 2.5px 2.5px 0;
-        border-radius: 0;
+        border-width: var(--dialog-checkmark-border-width);
+        border-radius: var(--dialog-checkmark-border-radius);
         background-color: transparent;
         top: var(--percent-50);
         left: var(--percent-50);
-        transform: translate(-50%, -60%) rotate(45deg);
+        transform: var(--dialog-checkmark-transform);
       }
     }
   }

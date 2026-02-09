@@ -2,7 +2,6 @@
 import { EMPTY_PLACEHOLDER_VALUE } from "@/config/constants";
 import { formatDateTime } from "@/utils";
 import { House } from "@phosphor-icons/react";
-import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { ApiAgentProfileGet } from "../../../types/agent";
 import { EditButton, HeaderCard, IconContainer, StatusRowField } from "../common";
@@ -22,9 +21,9 @@ export const AgentHeader = ({ agent }: Props) => {
   const registeredDate = agent.createdAt ? formatDateTime(agent.createdAt) : EMPTY_PLACEHOLDER_VALUE;
   const subtitle = `${t("dashboard.agentProfile.registeredSince")} ${registeredDate}`;
 
-  const engagementStatusLabels = useMemo(() => createEngagementStatusLabelMap(t), [t]);
-  const volunteerSearchLabels = useMemo(() => createVolunteerSearchLabelMap(t), [t]);
-  const trustLevelLabels = useMemo(() => createTrustLevelLabelMap(t), [t]);
+  const engagementStatusLabels = createEngagementStatusLabelMap(t);
+  const volunteerSearchLabels = createVolunteerSearchLabelMap(t);
+  const trustLevelLabels = createTrustLevelLabelMap(t);
 
   return (
     <HeaderCard

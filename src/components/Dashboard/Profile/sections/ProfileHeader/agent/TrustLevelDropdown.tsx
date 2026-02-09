@@ -39,7 +39,7 @@ const Menu = styled.ul`
   list-style: none;
   background: var(--color-white);
   border-radius: var(--border-radius-xs);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--dropdown-box-shadow);
   min-width: 140px;
 `;
 

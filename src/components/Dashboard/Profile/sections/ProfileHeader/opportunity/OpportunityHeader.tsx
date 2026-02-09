@@ -2,7 +2,7 @@
 import { EMPTY_PLACEHOLDER_VALUE } from "@/config/constants";
 import { useUpdateOpportunityStatus } from "@/hooks/useUpdateOpportunityStatus";
 import { formatDateTime } from "@/utils";
-import { ShootingStar } from "@phosphor-icons/react";
+import { ShootingStarIcon } from "@phosphor-icons/react";
 import { ApiOpportunityGet, OpportunityStatusType } from "need4deed-sdk";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
@@ -39,7 +39,7 @@ export const OpportunityHeader = ({ opportunity }: Props) => {
       testId="opportunity-header"
       avatar={
         <IconContainer data-testid="opportunity-header-icon">
-          <ShootingStar size={120} color="var(--color-blue-500)" weight="duotone" />
+          <ShootingStarIcon size={120} color="var(--color-blue-500)" weight="duotone" />
         </IconContainer>
       }
       title={opportunity.title}
