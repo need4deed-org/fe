@@ -54,14 +54,15 @@ const InputWrapper = styled.div<{ $hasError?: boolean }>`
     padding-right: var(--editableField-fieldWrapper-input-paddingRight);
     color: var(--color-midnight);
     border: ${(props) =>
-      props.$hasError ? "2px solid var(--color-red-600)" : "var(--editableField-fieldWrapper-input-border)"};
+      props.$hasError ? "var(--editableField-border-error)" : "var(--editableField-fieldWrapper-input-border)"};
     flex: 1;
     min-width: 0;
     width: 100%;
 
     &:focus {
       outline: none;
-      border: ${(props) => (props.$hasError ? "2px solid var(--color-red-600)" : "2px solid var(--color-green-200)")};
+      border: ${(props) =>
+        props.$hasError ? "var(--editableField-border-error)" : "var(--editableField-border-focus)"};
     }
   }
 `;
@@ -92,7 +93,7 @@ const DropdownWrapper = styled.div`
 
 const DropdownButton = styled.div<{ $hasError?: boolean }>`
   border: ${(props) =>
-    props.$hasError ? "2px solid var(--color-red-600)" : "var(--editableField-dropdownButton-border)"};
+    props.$hasError ? "var(--editableField-border-error)" : "var(--editableField-dropdownButton-border)"};
   padding: var(--editableField-dropdownButton-padding);
   border-radius: var(--editableField-dropdownButton-borderRadius);
   cursor: var(--editableField-dropdownButton-cursor);
@@ -105,7 +106,7 @@ const DropdownButton = styled.div<{ $hasError?: boolean }>`
 
   &:focus-within {
     outline: none;
-    border: ${(props) => (props.$hasError ? "2px solid var(--color-red-600)" : "2px solid var(--color-green-200)")};
+    border: ${(props) => (props.$hasError ? "var(--editableField-border-error)" : "var(--editableField-border-focus)")};
   }
 `;
 
@@ -148,46 +149,46 @@ const OptionRow = styled.div<{ $isSelected?: boolean }>`
   border-radius: var(--editableField-optionRow-borderRadius);
   transition: background-color 0.2s ease;
   gap: var(--editableField-optionRow-gap);
-  background-color: ${(props) => (props.$isSelected ? "var(--color-orchid-subtle)" : "transparent")};
+  background-color: ${(props) => (props.$isSelected ? "var(--editableField-optionRow-selectedBg)" : "transparent")};
 
   &:hover {
     background-color: var(--color-orchid-light);
   }
 
   input[type="checkbox"] {
-    width: 20px;
-    height: 20px;
+    width: var(--editableField-optionRow-checkbox-size);
+    height: var(--editableField-optionRow-checkbox-size);
     cursor: pointer;
-    margin: 0;
-    flex: 0 0 auto;
-    accent-color: var(--color-green-500);
+    margin: var(--editableField-optionRow-checkbox-margin);
+    flex: var(--editableField-optionRow-checkbox-flex);
+    accent-color: var(--editableField-optionRow-checkbox-accentColor);
   }
 
   input[type="radio"] {
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    border: var(--border-width-medium) solid var(--color-grey-400);
-    border-radius: var(--percent-50);
+    appearance: var(--editableField-optionRow-radio-appearance);
+    width: var(--editableField-optionRow-radio-size);
+    height: var(--editableField-optionRow-radio-size);
+    border: var(--editableField-optionRow-radio-border);
+    border-radius: var(--editableField-optionRow-radio-borderRadius);
     cursor: pointer;
-    margin: 0;
-    flex: 0 0 auto;
+    margin: var(--editableField-optionRow-radio-margin);
+    flex: var(--editableField-optionRow-radio-flex);
     position: relative;
 
     &:checked {
-      background-color: var(--color-green-200);
-      border-color: var(--color-green-200);
+      background-color: var(--editableField-optionRow-radio-checked-bg);
+      border-color: var(--editableField-optionRow-radio-checked-borderColor);
 
       &::after {
         content: "";
         position: absolute;
-        width: 5px;
-        height: 10px;
-        border: solid var(--color-blue-700);
-        border-width: 0 2px 2px 0;
+        width: var(--editableField-optionRow-radio-checkmark-width);
+        height: var(--editableField-optionRow-radio-checkmark-height);
+        border: var(--editableField-optionRow-radio-checkmark-border);
+        border-width: var(--editableField-optionRow-radio-checkmark-borderWidth);
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -60%) rotate(45deg);
+        transform: var(--editableField-optionRow-radio-checkmark-transform);
       }
     }
   }
@@ -199,7 +200,7 @@ const Text = styled.span`
   overflow-wrap: break-word;
   word-break: break-word;
   cursor: pointer;
-  font-size: 16px;
+  font-size: var(--editableField-text-fontSize);
   color: var(--color-midnight);
 `;
 
@@ -412,7 +413,11 @@ export const EditableField = forwardRef(function EditableField<T extends string 
           </DropdownWrapper>
         )}
       </FieldWrapper>
-      {error && <p style={{ color: "red", paddingLeft: "1rem" }}>{error}</p>}
+      {error && (
+        <p style={{ color: "var(--editableField-error-color)", paddingLeft: "var(--editableField-error-paddingLeft)" }}>
+          {error}
+        </p>
+      )}
       {errorMessage && (
         <ErrorMessage message={errorMessage} paddingLeft="var(--editableField-errorMessage-paddingLeft)" />
       )}
