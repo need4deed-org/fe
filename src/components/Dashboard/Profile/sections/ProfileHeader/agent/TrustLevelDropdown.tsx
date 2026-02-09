@@ -1,13 +1,11 @@
 "use client";
+import { useClickOutside } from "@/hooks";
 import { CaretDownIcon } from "@phosphor-icons/react";
 import { useRef, useState } from "react";
 import styled from "styled-components";
-import {
-  statusColorMap,
-  statusIconMap,
-} from "../../../common/statusMaps";
+import { statusColorMap, statusIconMap } from "../../../common/statusMaps";
 import { AgentTrustLevel } from "../../../types/agent";
-import { useClickOutside } from "@/hooks";
+import { IconWrapper } from "../common/profileHeaderStyles";
 
 const Container = styled.div`
   position: relative;
@@ -59,14 +57,6 @@ const MenuItem = styled.li`
   }
 `;
 
-const IconWrapper = styled.span`
-  width: var(--status-badge-icon-size);
-  height: var(--status-badge-icon-size);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
 type Props = {
   value: AgentTrustLevel;
   options: readonly AgentTrustLevel[];
@@ -74,12 +64,7 @@ type Props = {
   onChange: (value: AgentTrustLevel) => void;
 };
 
-export const TrustLevelDropdown = ({
-  value,
-  options,
-  labels,
-  onChange,
-}: Props) => {
+export const TrustLevelDropdown = ({ value, options, labels, onChange }: Props) => {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 

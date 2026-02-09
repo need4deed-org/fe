@@ -2,6 +2,7 @@ import { VolunteerStateTypeType } from "need4deed-sdk";
 import styled from "styled-components";
 import { isEnumValue } from "ts-type-safe";
 import { statusColorMap, statusIconMap, StatusValue } from "../../../common/statusMaps";
+import { IconWrapper } from "./profileHeaderStyles";
 
 const StyledBadge = styled.div<{
   $bg: string;
@@ -19,14 +20,6 @@ const StyledBadge = styled.div<{
   width: fit-content;
   background-color: ${({ $bg }) => $bg};
   color: ${({ $textColor }) => $textColor};
-`;
-
-const IconWrapper = styled.span`
-  width: var(--status-badge-icon-size);
-  height: var(--status-badge-icon-size);
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `;
 
 type Props = {
