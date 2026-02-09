@@ -1,20 +1,7 @@
 "use client";
-import { Modal } from "@/components/core/modal/Modal";
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import {
-  DialogButtonGroup,
-  LargePrimaryButton,
-  PrimaryCancelButton,
-} from "../../VolunteerProfileDocument/shared/DialogButtonGroup";
-import {
-  ModalContainer,
-  ModalTitle,
-  OptionDescription,
-  OptionItem,
-  OptionLabel,
-  OptionsContainer,
-  RadioOption,
-} from "../common";
+import { ChangeStatusDialog } from "../common";
 import { AGENT_DIALOG_STATUSES, AGENT_ENGAGEMENT_DESCRIPTION_KEYS, createEngagementStatusLabelMap } from "./constants";
 import { UseAgentEngagementStatusDialogReturn } from "./useAgentEngagementStatusDialog";
 
@@ -26,39 +13,28 @@ export const ChangeAgentEngagementStatusDialog = ({
   dialog: { isOpen, closeDialog, statusEngagement, setStatusEngagement, saveDialog, isSaveDisabled },
 }: Props) => {
   const { t } = useTranslation();
-  const engagementStatusLabels = createEngagementStatusLabelMap(t);
+  const engagementStatusLabels = useMemo(() => createEngagementStatusLabelMap(t), [t]);
+
+  const options = AGENT_DIALOG_STATUSES.map((status) => ({
+    value: status,
+    label: engagementStatusLabels[status],
+    description: t(`dashboard.agentProfile.modalData.options.${AGENT_ENGAGEMENT_DESCRIPTION_KEYS[status]}`),
+  }));
 
   return (
-    <Modal isOpen={isOpen} onClose={closeDialog}>
-      <ModalContainer data-testid="change-agent-engagement-status-dialog">
-        <ModalTitle>{t("dashboard.agentProfile.modalData.title")}</ModalTitle>
-
-        <OptionsContainer>
-          {AGENT_DIALOG_STATUSES.map((status) => (
-            <OptionItem key={status}>
-              <RadioOption>
-                <input
-                  type="radio"
-                  name="agent-engagement-status"
-                  checked={statusEngagement === status}
-                  onChange={() => setStatusEngagement(status)}
-                />
-                <OptionLabel>{engagementStatusLabels[status]}</OptionLabel>
-              </RadioOption>
-              <OptionDescription>
-                {t(`dashboard.agentProfile.modalData.options.${AGENT_ENGAGEMENT_DESCRIPTION_KEYS[status]}`)}
-              </OptionDescription>
-            </OptionItem>
-          ))}
-        </OptionsContainer>
-
-        <DialogButtonGroup>
-          <PrimaryCancelButton onClick={closeDialog}>{t("dashboard.agentProfile.modalData.cancel")}</PrimaryCancelButton>
-          <LargePrimaryButton onClick={saveDialog} disabled={isSaveDisabled} $disabled={isSaveDisabled}>
-            {t("dashboard.agentProfile.modalData.save")}
-          </LargePrimaryButton>
-        </DialogButtonGroup>
-      </ModalContainer>
-    </Modal>
+    <ChangeStatusDialog
+      testId="change-agent-engagement-status-dialog"
+      isOpen={isOpen}
+      title={t("dashboard.agentProfile.modalData.title")}
+      options={options}
+      selected={statusEngagement}
+      onSelect={setStatusEngagement}
+      onSave={saveDialog}
+      onCancel={closeDialog}
+      isSaveDisabled={isSaveDisabled}
+      radioName="agent-engagement-status"
+      saveLabel={t("dashboard.agentProfile.modalData.save")}
+      cancelLabel={t("dashboard.agentProfile.modalData.cancel")}
+    />
   );
 };

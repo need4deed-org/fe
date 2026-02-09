@@ -1,24 +1,10 @@
 "use client";
 import { DatePickerWithLabel } from "@/components/core/common/DatePicker";
-import { Modal } from "@/components/core/modal/Modal";
 import { de, enUS } from "date-fns/locale";
 import { VolunteerStateEngagementType } from "need4deed-sdk";
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import {
-  DialogButtonGroup,
-  LargePrimaryButton,
-  PrimaryCancelButton,
-} from "../../VolunteerProfileDocument/shared/DialogButtonGroup";
-import {
-  DateFieldContainer,
-  ModalContainer,
-  ModalTitle,
-  OptionDescription,
-  OptionItem,
-  OptionLabel,
-  OptionsContainer,
-  RadioOption,
-} from "../common";
+import { ChangeStatusDialog, DateFieldContainer } from "../common";
 import { createEngagementLabelMap, ENGAGEMENT_DESCRIPTION_KEYS } from "./constants";
 import { UseEngagementStatusDialogReturn } from "./useEngagementStatusDialog";
 
@@ -40,58 +26,45 @@ export const ChangeEngagementStatusDialog = ({
 }: Props) => {
   const { t, i18n } = useTranslation();
   const locale = i18n.language === "de" ? de : enUS;
-  const engagementLabelMap = createEngagementLabelMap(t);
+  const engagementLabelMap = useMemo(() => createEngagementLabelMap(t), [t]);
 
-  const getEngagementDescription = (status: VolunteerStateEngagementType): string => {
-    const key = ENGAGEMENT_DESCRIPTION_KEYS[status];
-    return t(`dashboard.volunteerProfile.volunteerHeader.engagementStatus_options.${key}`);
-  };
+  const options = Object.values(VolunteerStateEngagementType).map((status) => ({
+    value: status,
+    label: engagementLabelMap[status],
+    description: t(
+      `dashboard.volunteerProfile.volunteerHeader.engagementStatus_options.${ENGAGEMENT_DESCRIPTION_KEYS[status]}`,
+    ),
+    extra:
+      status === VolunteerStateEngagementType.TEMP_UNAVAILABLE && statusEngagement === status ? (
+        <DateFieldContainer>
+          <DatePickerWithLabel
+            date={dateReturn}
+            onSelect={setDateReturn}
+            locale={locale}
+            allowFuture={true}
+            label={t(
+              "dashboard.volunteerProfile.volunteerHeader.modalData.options.dateReturn",
+              "Return date (optional)",
+            )}
+          />
+        </DateFieldContainer>
+      ) : undefined,
+  }));
 
   return (
-    <Modal isOpen={isOpen} onClose={closeDialog}>
-      <ModalContainer data-testid="change-engagement-status-dialog">
-        <ModalTitle>{t("dashboard.volunteerProfile.volunteerHeader.modalData.title")}</ModalTitle>
-
-        <OptionsContainer>
-          {Object.values(VolunteerStateEngagementType).map((status) => (
-            <OptionItem key={status}>
-              <RadioOption>
-                <input
-                  type="radio"
-                  name="engagement-status"
-                  checked={statusEngagement === status}
-                  onChange={() => setStatusEngagement(status)}
-                />
-                <OptionLabel>{engagementLabelMap[status]}</OptionLabel>
-              </RadioOption>
-              <OptionDescription>{getEngagementDescription(status)}</OptionDescription>
-              {status === VolunteerStateEngagementType.TEMP_UNAVAILABLE && statusEngagement === status && (
-                <DateFieldContainer>
-                  <DatePickerWithLabel
-                    date={dateReturn}
-                    onSelect={setDateReturn}
-                    locale={locale}
-                    allowFuture={true}
-                    label={t(
-                      "dashboard.volunteerProfile.volunteerHeader.modalData.options.dateReturn",
-                      "Return date (optional)",
-                    )}
-                  />
-                </DateFieldContainer>
-              )}
-            </OptionItem>
-          ))}
-        </OptionsContainer>
-
-        <DialogButtonGroup>
-          <PrimaryCancelButton onClick={closeDialog}>
-            {t("dashboard.volunteerProfile.volunteerHeader.modalData.cancel")}
-          </PrimaryCancelButton>
-          <LargePrimaryButton onClick={saveDialog} disabled={isSaveDisabled} $disabled={isSaveDisabled}>
-            {t("dashboard.volunteerProfile.volunteerHeader.modalData.save")}
-          </LargePrimaryButton>
-        </DialogButtonGroup>
-      </ModalContainer>
-    </Modal>
+    <ChangeStatusDialog
+      testId="change-engagement-status-dialog"
+      isOpen={isOpen}
+      title={t("dashboard.volunteerProfile.volunteerHeader.modalData.title")}
+      options={options}
+      selected={statusEngagement}
+      onSelect={setStatusEngagement}
+      onSave={saveDialog}
+      onCancel={closeDialog}
+      isSaveDisabled={isSaveDisabled}
+      radioName="engagement-status"
+      saveLabel={t("dashboard.volunteerProfile.volunteerHeader.modalData.save")}
+      cancelLabel={t("dashboard.volunteerProfile.volunteerHeader.modalData.cancel")}
+    />
   );
 };

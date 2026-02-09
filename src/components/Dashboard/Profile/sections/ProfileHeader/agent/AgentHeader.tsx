@@ -1,22 +1,11 @@
 "use client";
-import { FlexColumn } from "@/components/styled/FlexColumn";
 import { EMPTY_PLACEHOLDER_VALUE } from "@/config/constants";
 import { formatDateTime } from "@/utils";
 import { House } from "@phosphor-icons/react";
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { ApiAgentProfileGet } from "../../../types/agent";
-import {
-  Card,
-  EditButton,
-  IconContainer,
-  ProfileContent,
-  ProfileInfo,
-  StatusRowField,
-  StatusSection,
-  Subtitle,
-  Title,
-  TitleSection,
-} from "../common";
+import { EditButton, HeaderCard, IconContainer, StatusRowField } from "../common";
 import { ChangeAgentEngagementStatusDialog } from "./ChangeAgentEngagementStatusDialog";
 import { createEngagementStatusLabelMap, createTrustLevelLabelMap, createVolunteerSearchLabelMap, TRUST_LEVEL_OPTIONS } from "./constants";
 import { TrustLevelDropdown } from "./TrustLevelDropdown";
@@ -31,59 +20,50 @@ export const AgentHeader = ({ agent }: Props) => {
   const dialog = useAgentEngagementStatusDialog(agent);
 
   const registeredDate = agent.createdAt ? formatDateTime(agent.createdAt) : EMPTY_PLACEHOLDER_VALUE;
+  const subtitle = `${t("dashboard.agentProfile.registeredSince")} ${registeredDate}`;
 
-  const engagementStatusLabels = createEngagementStatusLabelMap(t);
-  const volunteerSearchLabels = createVolunteerSearchLabelMap(t);
-  const trustLevelLabels = createTrustLevelLabelMap(t);
+  const engagementStatusLabels = useMemo(() => createEngagementStatusLabelMap(t), [t]);
+  const volunteerSearchLabels = useMemo(() => createVolunteerSearchLabelMap(t), [t]);
+  const trustLevelLabels = useMemo(() => createTrustLevelLabelMap(t), [t]);
 
   return (
-    <FlexColumn data-testid="agent-header">
-      <Card>
-        <ProfileContent>
-          <IconContainer data-testid="agent-header-icon">
-            <House size={120} color="var(--color-blue-500)" weight="duotone" />
-          </IconContainer>
+    <HeaderCard
+      testId="agent-header"
+      avatar={
+        <IconContainer data-testid="agent-header-icon">
+          <House size={120} color="var(--color-blue-500)" weight="duotone" />
+        </IconContainer>
+      }
+      title={agent.name}
+      subtitle={subtitle}
+      after={<ChangeAgentEngagementStatusDialog dialog={dialog} />}
+    >
+      <StatusRowField
+        title={t("dashboard.agentProfile.engagementStatus")}
+        status={agent.statusEngagement}
+        label={engagementStatusLabels[agent.statusEngagement]}
+        action={
+          <EditButton onClick={dialog.openDialog}>{t("dashboard.agentProfile.changeStatus")}</EditButton>
+        }
+      />
 
-          <ProfileInfo>
-            <TitleSection>
-              <Title>{agent.name}</Title>
-              <Subtitle>
-                {t("dashboard.agentProfile.registeredSince")} {registeredDate}
-              </Subtitle>
-            </TitleSection>
+      <StatusRowField
+        title={t("dashboard.agentProfile.volunteerSearch")}
+        status={agent.volunteerSearch}
+        label={volunteerSearchLabels[agent.volunteerSearch]}
+      />
 
-            <StatusSection data-testid="agent-header-status-section">
-              <StatusRowField
-                title={t("dashboard.agentProfile.engagementStatus")}
-                status={agent.statusEngagement}
-                label={engagementStatusLabels[agent.statusEngagement]}
-                action={
-                  <EditButton onClick={dialog.openDialog}>{t("dashboard.agentProfile.changeStatus")}</EditButton>
-                }
-              />
-
-              <StatusRowField
-                title={t("dashboard.agentProfile.volunteerSearch")}
-                status={agent.volunteerSearch}
-                label={volunteerSearchLabels[agent.volunteerSearch]}
-              />
-
-              <StatusRowField
-                title={t("dashboard.agentProfile.trustLevel")}
-                extra={
-                  <TrustLevelDropdown
-                    value={agent.trustLevel}
-                    options={TRUST_LEVEL_OPTIONS}
-                    labels={trustLevelLabels}
-                    onChange={() => {}}
-                  />
-                }
-              />
-            </StatusSection>
-          </ProfileInfo>
-        </ProfileContent>
-      </Card>
-      <ChangeAgentEngagementStatusDialog dialog={dialog} />
-    </FlexColumn>
+      <StatusRowField
+        title={t("dashboard.agentProfile.trustLevel")}
+        extra={
+          <TrustLevelDropdown
+            value={agent.trustLevel}
+            options={TRUST_LEVEL_OPTIONS}
+            labels={trustLevelLabels}
+            onChange={() => {}}
+          />
+        }
+      />
+    </HeaderCard>
   );
 };
