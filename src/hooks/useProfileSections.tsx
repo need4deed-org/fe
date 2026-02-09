@@ -14,6 +14,7 @@ import VolunteerOpportunities from "@/components/Dashboard/Profile/sections/Volu
 import { VolunteerProfile, VolunteerProfileRef } from "@/components/Dashboard/Profile/sections/VolunteerProfile";
 import { VolunteerProfileDocument } from "@/components/Dashboard/Profile/sections/VolunteerProfileDocument";
 import { IconName, ProfileEntityProps } from "@/components/Dashboard/Profile/types/types";
+import { ApiAgentProfileGet } from "@/components/Dashboard/Profile/types/agent";
 import { ApiOpportunityGet, ApiVolunteerGet, VolunteerStateTypeType } from "need4deed-sdk";
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
@@ -119,11 +120,17 @@ export const useProfileSections = ({ volunteer, opportunity, agent }: ProfileEnt
     ];
   };
 
-  const getAgentSections = (): SectionCardProps[] => [];
+  const getAgentSections = (ag: ApiAgentProfileGet): SectionCardProps[] => [
+    {
+      iconName: IconName.ChatCircleDots,
+      title: `${t("dashboard.volunteerProfile.coordinatorComments")} • ${ag.comments?.length ?? 0}`,
+      subComponent: <Comments agent={ag} />,
+    },
+  ];
 
   const getSections = () => {
     if (volunteer) return getVolunteerSections(volunteer);
-    if (agent) return getAgentSections();
+    if (agent) return getAgentSections(agent);
     if (opportunity) return getOpportunitySections(opportunity);
     return [];
   };

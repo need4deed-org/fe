@@ -8,7 +8,7 @@ type CreateCommentData = {
   entityId: Id;
 };
 
-type EntityType = "volunteer" | "opportunity";
+type EntityType = "volunteer" | "opportunity" | "agent";
 
 export const useCreateComment = (entityId: Id, entityType: EntityType = "volunteer") => {
   return useMutationQuery<CreateCommentData, { message: string }>({

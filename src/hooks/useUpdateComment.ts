@@ -6,7 +6,7 @@ type UpdateCommentData = {
   text: string;
 };
 
-type EntityType = "volunteer" | "opportunity";
+type EntityType = "volunteer" | "opportunity" | "agent";
 
 export const useUpdateComment = (entityId: Id, commentId: number, entityType: EntityType = "volunteer") => {
   return useMutationQuery<UpdateCommentData, { message: string }>({

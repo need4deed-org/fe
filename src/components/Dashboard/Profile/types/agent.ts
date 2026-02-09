@@ -1,3 +1,5 @@
+import { TimedText } from "need4deed-sdk";
+
 export enum AgentEngagementStatus {
   NEW = "new",
   ACTIVE = "active",
@@ -25,4 +27,5 @@ export type ApiAgentProfileGet = {
   statusEngagement: AgentEngagementStatus;
   volunteerSearch: AgentVolunteerSearch;
   trustLevel: AgentTrustLevel;
+  comments?: TimedText[];
 };

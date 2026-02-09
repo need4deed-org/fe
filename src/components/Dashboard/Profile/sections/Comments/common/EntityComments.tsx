@@ -12,7 +12,7 @@ import { useCommentEdit } from "./hooks/useCommentEdit";
 import { useCommentMenu } from "./hooks/useCommentMenu";
 import { AddCommentButton, Container, NewCommentSection, TextArea } from "./styles";
 
-type EntityType = "volunteer" | "opportunity";
+type EntityType = "volunteer" | "opportunity" | "agent";
 
 type Props = {
   entityId: Id;
