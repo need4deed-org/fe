@@ -27,6 +27,14 @@
   align-items: end;
 }
 
+.form-languages-grid-no-level {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 120px;
+  gap: 1.5rem;
+  width: 100%;
+  align-items: end;
+}
+
 .remove-language-button {
   align-self: end;
   justify-self: end;
@@ -430,7 +438,8 @@
     height: 1.3rem;
   }
 
-  .form-languages-grid {
+  .form-languages-grid,
+  .form-languages-grid-no-level {
     grid-template-columns: 1fr;
     gap: 1rem;
   }

@@ -2,12 +2,15 @@
 import Button from "@/components/core/button/Button/Button";
 import { ApiAgentProfileGet } from "@/components/Dashboard/Profile/types";
 import { EditableField } from "@/components/EditableField/EditableField";
+import { LanguageFields } from "@/components/forms/LanguageFields";
+import { useApiLanguages } from "@/components/Dashboard/Profile/sections/VolunteerProfile/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { forwardRef, useImperativeHandle, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { FormButtonRow, FormContainer, FormDetails } from "../shared/styles";
 import { EditableSectionRef } from "../shared/types";
+import { apiLanguagesToFormValues, clientLanguagesToDisplay, toLanguagesForForm } from "./formatters";
 import { OrganisationDetailsFormData, organisationDetailsSchema } from "./organisationDetailsSchema";
 
 const i18nPrefix = "dashboard.agentProfile.organisationDetails";
@@ -17,10 +20,13 @@ type Props = {
 };
 
 export const OrganisationDetails = forwardRef<EditableSectionRef, Props>(function OrganisationDetails({ agent }, ref) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [isEditing, setIsEditing] = useState(false);
+  const { data: apiLanguages } = useApiLanguages();
 
   const details = agent.organisationDetails;
+  const languagesForForm = toLanguagesForForm(apiLanguages, i18n.language);
+
   const initialFormValues: OrganisationDetailsFormData = {
     about: details?.about ?? "",
     website: details?.website ?? "",
@@ -28,7 +34,7 @@ export const OrganisationDetails = forwardRef<EditableSectionRef, Props>(functio
     organisationType: details?.organisationType ?? "",
     operator: details?.operator ?? "",
     services: details?.services ?? "",
-    clientLanguages: details?.clientLanguages ?? "",
+    clientLanguages: apiLanguagesToFormValues(details?.clientLanguages),
   };
 
   const {
@@ -138,19 +144,29 @@ export const OrganisationDetails = forwardRef<EditableSectionRef, Props>(functio
             />
           )}
         />
-        <Controller
-          name="clientLanguages"
-          control={control}
-          render={({ field }) => (
-            <EditableField
-              mode={mode}
-              type="text"
-              label={t(`${i18nPrefix}.clientLanguages`)}
-              value={field.value}
-              setValue={field.onChange}
-            />
-          )}
-        />
+        {isEditing ? (
+          <Controller
+            name="clientLanguages"
+            control={control}
+            render={({ field }) => (
+              <LanguageFields
+                languages={field.value}
+                onChange={field.onChange}
+                t={t}
+                availableLanguages={languagesForForm}
+                showLevel={false}
+              />
+            )}
+          />
+        ) : (
+          <EditableField
+            mode="display"
+            type="text"
+            label={t(`${i18nPrefix}.clientLanguages`)}
+            value={clientLanguagesToDisplay(details?.clientLanguages)}
+            setValue={() => {}}
+          />
+        )}
       </FormDetails>
 
       {isEditing && (

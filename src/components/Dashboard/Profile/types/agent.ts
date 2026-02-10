@@ -35,6 +35,6 @@ export type ApiAgentProfileGet = {
     organisationType?: string;
     operator?: string;
     services?: string;
-    clientLanguages?: string;
+    clientLanguages?: Array<{ id: number; title: string }>;
   };
 };
