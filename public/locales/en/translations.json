@@ -536,7 +536,12 @@
           "whatsapp": "WhatsApp",
           "telegram": "Telegram",
           "mobilePhone": "Mobile Phone",
-          "email": "Email"
+          "email": "Email",
+          "called": "Called",
+          "email-sent": "Email sent",
+          "briefed": "Briefed",
+          "tried-call": "Tried to call",
+          "not-responding": "Not responding"
         },
         "notProvided": "Not provided",
         "cancel": "Cancel",
