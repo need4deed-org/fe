@@ -720,7 +720,20 @@
         "cancel": "Cancel",
         "save": "Save"
       },
-      "statusUpdateSuccess": "Agent status updated successfully"
+      "statusUpdateSuccess": "Agent status updated successfully",
+      "organisationDetails": {
+        "title": "Organisation details",
+        "edit": "Edit",
+        "about": "About",
+        "website": "Website",
+        "address": "Address",
+        "organisationType": "Type of organisation",
+        "operator": "Operator / Träger",
+        "services": "Leistungen",
+        "clientLanguages": "Client languages",
+        "cancel": "Cancel",
+        "saveChanges": "Save changes"
+      }
     },
     "opportunityProfile": {
       "opportunityProfile": "Opportunity's profile",

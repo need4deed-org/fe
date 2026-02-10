@@ -7,6 +7,7 @@ import {
   CommunicationTrackerRef,
 } from "@/components/Dashboard/Profile/sections/CommunicationTracker";
 import { ContactDetails } from "@/components/Dashboard/Profile/sections/ContactDetails";
+import { OrganisationDetails } from "@/components/Dashboard/Profile/sections/OrganisationDetails";
 import { ProfileHeader } from "@/components/Dashboard/Profile/sections/ProfileHeader";
 import { RefugeeAccommodationCentre } from "@/components/Dashboard/Profile/sections/RefugeeAccommodationCentre";
 import { EditableSectionRef } from "@/components/Dashboard/Profile/sections/shared/types";
@@ -28,6 +29,7 @@ export const useProfileSections = ({ volunteer, opportunity, agent }: ProfileEnt
   const appreciationRef = useRef<AppreciationRef>(null);
   const racRef = useRef<EditableSectionRef>(null);
   const accompanyingDetailsRef = useRef<EditableSectionRef>(null);
+  const organisationDetailsRef = useRef<EditableSectionRef>(null);
 
   const getVolunteerSections = (vol: ApiVolunteerGet): SectionCardProps[] => [
     {
@@ -120,6 +122,13 @@ export const useProfileSections = ({ volunteer, opportunity, agent }: ProfileEnt
   };
 
   const getAgentSections = (ag: ApiAgentProfileGet): SectionCardProps[] => [
+    {
+      iconName: IconName.UsersThree,
+      title: t("dashboard.agentProfile.organisationDetails.title"),
+      headerButtonName: t("dashboard.agentProfile.organisationDetails.edit"),
+      onHeaderButtonClick: () => organisationDetailsRef.current?.handleEditClick(),
+      subComponent: <OrganisationDetails ref={organisationDetailsRef} agent={ag} />,
+    },
     {
       iconName: IconName.ChatsTeardrop,
       title: t("dashboard.communicationSection.title"),

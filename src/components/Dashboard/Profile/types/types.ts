@@ -40,4 +40,5 @@ export enum IconName {
   UserCheck = "userCheck",
   UserCircle = "userCircle",
   Users = "users",
+  UsersThree = "usersThree",
 }

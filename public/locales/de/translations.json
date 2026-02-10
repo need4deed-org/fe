@@ -721,7 +721,20 @@
         "cancel": "Abbrechen",
         "save": "Speichern"
       },
-      "statusUpdateSuccess": "Agent-Status erfolgreich aktualisiert"
+      "statusUpdateSuccess": "Agent-Status erfolgreich aktualisiert",
+      "organisationDetails": {
+        "title": "Organisationsdetails",
+        "edit": "Bearbeiten",
+        "about": "Über uns",
+        "website": "Webseite",
+        "address": "Adresse",
+        "organisationType": "Art der Organisation",
+        "operator": "Träger",
+        "services": "Leistungen",
+        "clientLanguages": "Sprachen der Klient:innen",
+        "cancel": "Abbrechen",
+        "saveChanges": "Änderungen speichern"
+      }
     },
     "opportunityProfile": {
       "opportunityProfile": "Profil der Gelegenheit",
