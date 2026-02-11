@@ -810,6 +810,16 @@
         "validation": {
           "invalidTimeFormat": "Invalid time format (use HH:MM)"
         }
+      },
+      "opportunityDetails": {
+        "title": "Opportunity details",
+        "description": "Description",
+        "mainCommunication": "Main communication",
+        "residentsSpeak": "Residents speak",
+        "schedule": "Schedule",
+        "numberOfVolunteers": "Number of volunteers",
+        "activities": "Activities",
+        "skills": "Skills & experience"
       }
     },
     "communicationSection": {

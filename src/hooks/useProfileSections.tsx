@@ -7,6 +7,7 @@ import {
   CommunicationTrackerRef,
 } from "@/components/Dashboard/Profile/sections/CommunicationTracker";
 import { ContactDetails } from "@/components/Dashboard/Profile/sections/ContactDetails";
+import { OpportunityDetails } from "@/components/Dashboard/Profile/sections/OpportunityDetails";
 import { OrganisationDetails } from "@/components/Dashboard/Profile/sections/OrganisationDetails";
 import { ProfileHeader } from "@/components/Dashboard/Profile/sections/ProfileHeader";
 import { RefugeeAccommodationCentre } from "@/components/Dashboard/Profile/sections/RefugeeAccommodationCentre";
@@ -90,6 +91,13 @@ export const useProfileSections = ({ volunteer, opportunity, agent }: ProfileEnt
       opp.volunteerType === VolunteerStateTypeType.REGULAR_ACCOMPANYING;
 
     return [
+      {
+        iconName: IconName.Wrench,
+        title: t("dashboard.opportunityProfile.opportunityDetails.title"),
+        headerButtonName: t("dashboard.opportunityProfile.editButtonName"),
+        onHeaderButtonClick: () => {},
+        subComponent: <OpportunityDetails opportunity={opp} />,
+      },
       {
         iconName: IconName.ChatsCircle,
         title: t("dashboard.opportunityProfile.contactDetailsTitle"),
