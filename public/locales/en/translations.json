@@ -725,6 +725,19 @@
           "emailInvalid": "Invalid email",
           "waysToContactRequired": "Select at least one way to contact"
         }
+      },
+      "racTitle": "Refugee accommodation centre",
+      "rac": {
+        "name": "Name",
+        "address": "Address",
+        "district": "District",
+        "cancel": "Cancel",
+        "saveChanges": "Save changes",
+        "validation": {
+          "nameRequired": "Name is required",
+          "addressRequired": "Address is required",
+          "districtRequired": "District is required"
+        }
       }
     },
     "communicationSection": {

@@ -726,6 +726,19 @@
           "emailInvalid": "Ungültige E-Mail",
           "waysToContactRequired": "Wählen Sie mindestens eine Kontaktmöglichkeit"
         }
+      },
+      "racTitle": "Geflüchtetenunterkunft",
+      "rac": {
+        "name": "Name",
+        "address": "Adresse",
+        "district": "Bezirk",
+        "cancel": "Abbrechen",
+        "saveChanges": "Änderungen speichern",
+        "validation": {
+          "nameRequired": "Name ist erforderlich",
+          "addressRequired": "Adresse ist erforderlich",
+          "districtRequired": "Bezirk ist erforderlich"
+        }
       }
     },
     "communicationSection": {
