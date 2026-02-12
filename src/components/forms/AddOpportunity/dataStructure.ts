@@ -1,9 +1,4 @@
-import {
-  Lang,
-  Opportunity,
-  OpportunityType,
-  TranslatedIntoType,
-} from "need4deed-sdk";
+import { Lang, OpportunityFormData, OpportunityType, TranslatedIntoType } from "need4deed-sdk";
 
 import { Availability, Selected } from "../types";
 
@@ -46,6 +41,6 @@ export enum OpportunityArrayDataKeys {
 }
 export type OpportunityDataLists = `${OpportunityArrayDataKeys}`;
 
-export interface OpportunityParsedData extends Opportunity {
+export interface OpportunityParsedData extends OpportunityFormData {
   language: Lang;
 }

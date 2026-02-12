@@ -3,7 +3,7 @@ import Button from "@/components/core/button/Button/Button";
 import { EditableField } from "@/components/EditableField/EditableField";
 import { useUpdateOpportunityContact } from "@/hooks/useUpdateOpportunityContact";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ApiOpportunityGet, PrefferedCommunicationType } from "need4deed-sdk";
+import { ApiOpportunityGet, PreferredCommunicationType } from "need4deed-sdk";
 import { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -19,7 +19,7 @@ type Props = {
   opportunity: ApiOpportunityGet;
 };
 
-const COMMUNICATION_TYPES = Object.values(PrefferedCommunicationType);
+const COMMUNICATION_TYPES = Object.values(PreferredCommunicationType);
 
 export const OpportunityContactDetails = forwardRef<EditableSectionRef, Props>(function OpportunityContactDetails(
   { opportunity },
