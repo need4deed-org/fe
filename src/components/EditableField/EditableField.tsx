@@ -48,7 +48,8 @@ const InputWrapper = styled.div<{ $hasError?: boolean }>`
   flex: 1;
   width: 100%;
 
-  input {
+  input,
+  textarea {
     border-radius: var(--editableField-fieldWrapper-input-borderRadius);
     padding: var(--editableField-fieldWrapper-input-padding);
     padding-right: var(--editableField-fieldWrapper-input-paddingRight);
@@ -58,12 +59,19 @@ const InputWrapper = styled.div<{ $hasError?: boolean }>`
     flex: 1;
     min-width: 0;
     width: 100%;
+    font-family: inherit;
+    font-size: inherit;
 
     &:focus {
       outline: none;
       border: ${(props) =>
         props.$hasError ? "var(--editableField-border-error)" : "var(--editableField-border-focus)"};
     }
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 80px;
   }
 `;
 
@@ -204,7 +212,7 @@ const Text = styled.span`
   color: var(--color-midnight);
 `;
 
-type EditableFieldType = "text" | "number" | "checkbox-list" | "radio-list";
+type EditableFieldType = "text" | "textarea" | "number" | "checkbox-list" | "radio-list";
 
 export interface EditableFieldRef<T> {
   getValue: () => T;
@@ -325,6 +333,32 @@ export const EditableField = forwardRef(function EditableField<T extends string 
                   setLocalValue(v);
                   setValue(v);
                 }}
+              >
+                <XCircle size={20} weight="bold" />
+              </ClearButton>
+            )}
+          </InputWrapper>
+        )}
+
+        {type === "textarea" && (
+          <InputWrapper $hasError={!!errorMessage}>
+            <textarea
+              value={localValue as string}
+              onChange={(e) => {
+                const v = e.target.value as T;
+                setLocalValue(v);
+                setValue(v);
+              }}
+            />
+            {Boolean(localValue) && (
+              <ClearButton
+                type="button"
+                onClick={() => {
+                  const v = "" as T;
+                  setLocalValue(v);
+                  setValue(v);
+                }}
+                style={{ alignSelf: "flex-start", marginTop: "10px" }}
               >
                 <XCircle size={20} weight="bold" />
               </ClearButton>

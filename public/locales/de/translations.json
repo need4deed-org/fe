@@ -825,7 +825,9 @@
         "schedule": "Zeitplan",
         "numberOfVolunteers": "Anzahl der Freiwilligen",
         "activities": "Aktivitäten",
-        "skills": "Fähigkeiten & Erfahrung"
+        "skills": "Fähigkeiten & Erfahrung",
+        "cancel": "Abbrechen",
+        "saveChanges": "Änderungen speichern"
       }
     },
     "communicationSection": {

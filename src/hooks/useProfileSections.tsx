@@ -30,6 +30,7 @@ export const useProfileSections = ({ volunteer, opportunity, agent }: ProfileEnt
   const appreciationRef = useRef<AppreciationRef>(null);
   const racRef = useRef<EditableSectionRef>(null);
   const accompanyingDetailsRef = useRef<EditableSectionRef>(null);
+  const opportunityDetailsRef = useRef<EditableSectionRef>(null);
   const organisationDetailsRef = useRef<EditableSectionRef>(null);
 
   const getVolunteerSections = (vol: ApiVolunteerGet): SectionCardProps[] => [
@@ -95,8 +96,8 @@ export const useProfileSections = ({ volunteer, opportunity, agent }: ProfileEnt
         iconName: IconName.Wrench,
         title: t("dashboard.opportunityProfile.opportunityDetails.title"),
         headerButtonName: t("dashboard.opportunityProfile.editButtonName"),
-        onHeaderButtonClick: () => {},
-        subComponent: <OpportunityDetails opportunity={opp} />,
+        onHeaderButtonClick: () => opportunityDetailsRef.current?.handleEditClick(),
+        subComponent: <OpportunityDetails ref={opportunityDetailsRef} opportunity={opp} />,
       },
       {
         iconName: IconName.ChatsCircle,
