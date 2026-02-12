@@ -408,7 +408,7 @@ export default function AddOpportunity() {
         </formOpportunity.Subscribe>
         <formOpportunity.Subscribe selector={(state) => state}>
           {(state) => {
-            if (state.values.opportunityType === OpportunityType.GENERAL)
+            if (state.values.opportunityType === OpportunityType.REGULAR)
               return (
                 <fieldset className={style["form-field-group"]}>
                   <b>{t("form.addOpportunity.fields.voGroup.label")}</b>
