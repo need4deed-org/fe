@@ -1,6 +1,6 @@
 import { ErrorMessage } from "@/components/core/common";
 import { EMPTY_PLACEHOLDER_VALUE } from "@/config/constants";
-import { XCircle } from "@phosphor-icons/react";
+import { Minus, Plus, XCircle } from "@phosphor-icons/react";
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import styled from "styled-components";
@@ -229,7 +229,40 @@ const Text = styled.span`
   color: var(--color-midnight);
 `;
 
-type EditableFieldType = "text" | "textarea" | "number" | "checkbox-list" | "radio-list";
+const StepperContainer = styled.div`
+  display: flex;
+  align-items: center;
+  border-radius: var(--editableField-fieldWrapper-input-borderRadius);
+  border: var(--editableField-fieldWrapper-input-border);
+  overflow: hidden;
+  height: 48px;
+`;
+
+const StepperButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--spacing-8) var(--spacing-16);
+  color: var(--color-midnight);
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+`;
+
+const StepperValue = styled.span`
+  min-width: 40px;
+  text-align: center;
+  font-size: inherit;
+  color: var(--color-midnight);
+  user-select: none;
+`;
+
+type EditableFieldType = "text" | "textarea" | "number" | "stepper" | "checkbox-list" | "radio-list";
 
 export interface EditableFieldRef<T> {
   getValue: () => T;
@@ -412,6 +445,35 @@ export const EditableField = forwardRef(function EditableField<T extends string 
               </ClearButton>
             )}
           </InputWrapper>
+        )}
+
+        {type === "stepper" && (
+          <StepperContainer data-testid="editable-field-stepper">
+            <StepperButton
+              type="button"
+              data-testid="editable-field-stepper-minus"
+              disabled={!localValue || Number(localValue) <= 0}
+              onClick={() => {
+                const v = String(Math.max(0, Number(localValue) - 1)) as T;
+                setLocalValue(v);
+                setValue(v);
+              }}
+            >
+              <Minus size={16} weight="bold" />
+            </StepperButton>
+            <StepperValue data-testid="editable-field-stepper-value">{localValue}</StepperValue>
+            <StepperButton
+              type="button"
+              data-testid="editable-field-stepper-plus"
+              onClick={() => {
+                const v = String(Number(localValue || 0) + 1) as T;
+                setLocalValue(v);
+                setValue(v);
+              }}
+            >
+              <Plus size={16} weight="bold" />
+            </StepperButton>
+          </StepperContainer>
         )}
 
         {(type === "checkbox-list" || type === "radio-list") && (

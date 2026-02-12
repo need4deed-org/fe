@@ -259,7 +259,7 @@ export const OpportunityDetails = forwardRef<EditableSectionRef, Props>(function
           render={({ field }) => (
             <EditableField
               mode={mode}
-              type="number"
+              type="stepper"
               label={t(`${prefix}.numberOfVolunteers`)}
               value={isEditing ? field.value : (opp.numberOfVolunteers ?? "")}
               setValue={field.onChange}
