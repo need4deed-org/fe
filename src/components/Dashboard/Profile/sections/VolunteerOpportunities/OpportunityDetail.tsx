@@ -1,13 +1,13 @@
-import { ReactNode } from "react";
-import styled from "styled-components";
-import { useTranslation } from "react-i18next";
 import { Icon, MapPinIcon, PencilSimpleIcon, ShootingStarIcon, TranslateIcon } from "@phosphor-icons/react";
 import { Lang, OpportunityType } from "need4deed-sdk";
+import { ReactNode } from "react";
+import { useTranslation } from "react-i18next";
+import styled from "styled-components";
 
-import { Paragraph } from "@/components/styled/text";
-import { IconDiv } from "@/components/styled/container";
-import { Tags } from "@/components/core/common";
 import { Button } from "@/components/core/button";
+import { Tags } from "@/components/core/common";
+import { IconDiv } from "@/components/styled/container";
+import { Paragraph } from "@/components/styled/text";
 
 import { Opportunity } from "./mockOpps/tempTypes";
 import { formatAccompanyingDate } from "./mockOpps/tempUtils";
@@ -51,13 +51,13 @@ export default function OpportunityDetail({ opportunity }: Props) {
           <LanguagesList>
             <LanguageRow>
               <Paragraph fontWeight="var(--volunteer-profile-opportunities-accordion-opp-detail-bold-font)">
-                {opportunityType === OpportunityType.GENERAL
+                {opportunityType === OpportunityType.REGULAR
                   ? t("dashboard.opportunities.mainCommunication")
                   : t("dashboard.opportunities.translationTo")}
                 :
               </Paragraph>
               <Paragraph fontWeight="var(--volunteer-profile-opportunities-accordion-opp-detail-light-font)">
-                {opportunityType === OpportunityType.GENERAL ? defaultMainCommunication : accompanyingTranslation}
+                {opportunityType === OpportunityType.REGULAR ? defaultMainCommunication : accompanyingTranslation}
               </Paragraph>
             </LanguageRow>
 

@@ -34,7 +34,7 @@ const mapOpportunity = (opp: OpportunityApi, t: TFunction) => {
   const otherCategory = t("dashboard.opportunities.otherCategory");
 
   const category =
-    (opp.category_id === CategoryTitle.ACCOMPANYING && opp.opportunity_type === OpportunityType.GENERAL) ||
+    (opp.category_id === CategoryTitle.ACCOMPANYING && opp.opportunity_type === OpportunityType.REGULAR) ||
     !opp.category
       ? otherCategory
       : opp.category;
