@@ -825,6 +825,7 @@
         "numberOfVolunteers": "Number of volunteers",
         "activities": "Activities",
         "skills": "Skills & experience",
+        "descriptionHint": "Max. {{max}} characters",
         "cancel": "Cancel",
         "saveChanges": "Save changes"
       }

@@ -1,4 +1,5 @@
 import { Availability } from "@/components/forms/types";
+import { MAX_DESCRIPTION_LENGTH } from "@/config/constants";
 import { LanguageLevel } from "@/types";
 import { z } from "zod";
 
@@ -10,7 +11,7 @@ const languageObjectSchema = z.object({
 
 export const createOpportunityDetailsSchema = () =>
   z.object({
-    description: z.string(),
+    description: z.string().max(MAX_DESCRIPTION_LENGTH),
     numberOfVolunteers: z.string(),
     mainCommunication: z.array(languageObjectSchema),
     residentsSpeak: z.array(languageObjectSchema),

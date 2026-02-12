@@ -9,11 +9,12 @@ const EditModeWrapper = styled.div`
   width: 100%;
 `;
 
-const FieldWrapper = styled.div<{ $hasError?: boolean }>`
+const FieldWrapper = styled.div<{ $hasError?: boolean; $hasHint?: boolean }>`
   display: var(--editableField-fieldWrapper-display);
   border-bottom: var(--editableField-fieldWrapper-borderBottom);
   padding: ${(props) =>
     props.$hasError ? "var(--editableField-fieldWrapper-padding-error)" : "var(--editableField-fieldWrapper-padding)"};
+  ${(props) => props.$hasHint && "padding-bottom: 0;"}
   color: var(--color-midnight);
   width: var(--editableField-fieldWrapper-width);
   align-items: var(--editableField-fieldWrapper-alignItems);
@@ -202,6 +203,22 @@ const OptionRow = styled.div<{ $isSelected?: boolean }>`
   }
 `;
 
+const HintWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-8) var(--spacing-16) var(--spacing-8) 0;
+  gap: var(--spacing-8);
+  padding-left: calc(var(--editableField-fieldWrapper-label-width) + var(--editableField-fieldWrapper-gap));
+`;
+
+const HintText = styled.span`
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-20);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--color-grey-500);
+  flex: 1;
+`;
+
 const Text = styled.span`
   flex: 1;
   white-space: normal;
@@ -229,6 +246,8 @@ interface EditableFieldProps<T = string | number | string[]> {
   validator?: (value: T) => string | null;
   options?: string[];
   errorMessage?: string;
+  hint?: string;
+  maxLength?: number;
 }
 
 export const EditableField = forwardRef(function EditableField<T extends string | number | string[]>(
@@ -242,6 +261,8 @@ export const EditableField = forwardRef(function EditableField<T extends string 
     validator,
     options = [],
     errorMessage,
+    hint,
+    maxLength,
   }: EditableFieldProps<T>,
   ref: React.Ref<EditableFieldRef<T>>,
 ) {
@@ -311,7 +332,7 @@ export const EditableField = forwardRef(function EditableField<T extends string 
   // edit mode
   return (
     <EditModeWrapper>
-      <FieldWrapper $hasError={!!errorMessage}>
+      <FieldWrapper $hasError={!!errorMessage} $hasHint={!!hint}>
         {label && <label>{label}</label>}
 
         {type === "text" && (
@@ -344,6 +365,7 @@ export const EditableField = forwardRef(function EditableField<T extends string 
           <InputWrapper $hasError={!!errorMessage}>
             <textarea
               value={localValue as string}
+              maxLength={maxLength}
               onChange={(e) => {
                 const v = e.target.value as T;
                 setLocalValue(v);
@@ -454,6 +476,11 @@ export const EditableField = forwardRef(function EditableField<T extends string 
       )}
       {errorMessage && (
         <ErrorMessage message={errorMessage} paddingLeft="var(--editableField-errorMessage-paddingLeft)" />
+      )}
+      {hint && (
+        <HintWrapper data-testid="editable-field-hint">
+          <HintText>{hint}</HintText>
+        </HintWrapper>
       )}
     </EditModeWrapper>
   );

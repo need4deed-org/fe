@@ -826,6 +826,7 @@
         "numberOfVolunteers": "Anzahl der Freiwilligen",
         "activities": "Aktivitäten",
         "skills": "Fähigkeiten & Erfahrung",
+        "descriptionHint": "Max. {{max}} Zeichen",
         "cancel": "Abbrechen",
         "saveChanges": "Änderungen speichern"
       }

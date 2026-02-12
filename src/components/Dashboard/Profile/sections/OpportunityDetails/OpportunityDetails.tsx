@@ -11,6 +11,7 @@ import { formatAvailability } from "@/components/Dashboard/Profile/sections/Volu
 import { useApiActivities, useApiLanguages, useApiSkills } from "@/components/Dashboard/Profile/sections/VolunteerProfile/hooks";
 import { createMapping } from "@/components/Dashboard/Profile/sections/VolunteerProfile/mappingUtils";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { MAX_DESCRIPTION_LENGTH } from "@/config/constants";
 import { ApiOpportunityGet, Lang, LangPurpose } from "need4deed-sdk";
 import { forwardRef, useImperativeHandle, useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -158,6 +159,8 @@ export const OpportunityDetails = forwardRef<EditableSectionRef, Props>(function
               label={t(`${prefix}.description`)}
               value={isEditing ? field.value : (opp.description ?? "")}
               setValue={field.onChange}
+              maxLength={MAX_DESCRIPTION_LENGTH}
+              hint={isEditing ? t(`${prefix}.descriptionHint`, { max: MAX_DESCRIPTION_LENGTH }) : undefined}
             />
           )}
         />
