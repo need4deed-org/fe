@@ -70,7 +70,7 @@ export function parseFormStateDTOVolunteer(value: VolunteerData): VolunteerFormD
 export function parseFormStateDTOOpportunity(value: OpportunityData) {
   const data = {} as OpportunityParsedData;
   data.title = value.title;
-  data.opportunity_type = value.opportunityType || OpportunityType.GENERAL;
+  data.opportunity_type = value.opportunityType || OpportunityType.REGULAR;
   data.vo_information = value.voInformation;
   data.accomp_address = value.aaAddress;
   data.accomp_postcode = value.aaPostcode;
