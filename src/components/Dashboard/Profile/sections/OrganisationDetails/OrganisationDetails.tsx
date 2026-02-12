@@ -1,5 +1,6 @@
 "use client";
 import Button from "@/components/core/button/Button/Button";
+import { ErrorMessage } from "@/components/core/common";
 import { ApiAgentProfileGet } from "@/components/Dashboard/Profile/types";
 import { EditableField } from "@/components/EditableField/EditableField";
 import { LanguageFields } from "@/components/forms/LanguageFields";
@@ -11,7 +12,7 @@ import { useTranslation } from "react-i18next";
 import { FormButtonRow, FormContainer, FormDetails } from "../shared/styles";
 import { EditableSectionRef } from "../shared/types";
 import { apiLanguagesToFormValues, clientLanguagesToDisplay, toLanguagesForForm } from "./formatters";
-import { OrganisationDetailsFormData, organisationDetailsSchema } from "./organisationDetailsSchema";
+import { createOrganisationDetailsSchema, OrganisationDetailsFormData } from "./organisationDetailsSchema";
 
 const i18nPrefix = "dashboard.agentProfile.organisationDetails";
 
@@ -26,14 +27,10 @@ export const OrganisationDetails = forwardRef<EditableSectionRef, Props>(functio
 
   const details = agent.organisationDetails;
   const languagesForForm = toLanguagesForForm(apiLanguages, i18n.language);
+  const schema = createOrganisationDetailsSchema(t);
 
-  const initialFormValues: OrganisationDetailsFormData = {
-    about: details?.about ?? "",
-    website: details?.website ?? "",
-    address: details?.address ?? "",
-    organisationType: details?.organisationType ?? "",
-    operator: details?.operator ?? "",
-    services: details?.services ?? "",
+  const initialFormValues = {
+    ...details,
     clientLanguages: apiLanguagesToFormValues(details?.clientLanguages),
   };
 
@@ -41,9 +38,9 @@ export const OrganisationDetails = forwardRef<EditableSectionRef, Props>(functio
     control,
     handleSubmit,
     reset,
-    formState: { isDirty, isValid },
+    formState: { errors, isDirty, isValid },
   } = useForm<OrganisationDetailsFormData>({
-    resolver: zodResolver(organisationDetailsSchema),
+    resolver: zodResolver(schema),
     mode: "onChange",
     defaultValues: initialFormValues,
   });
@@ -76,6 +73,7 @@ export const OrganisationDetails = forwardRef<EditableSectionRef, Props>(functio
               label={t(`${i18nPrefix}.about`)}
               value={field.value}
               setValue={field.onChange}
+              errorMessage={errors.about?.message}
             />
           )}
         />
@@ -89,6 +87,7 @@ export const OrganisationDetails = forwardRef<EditableSectionRef, Props>(functio
               label={t(`${i18nPrefix}.website`)}
               value={field.value}
               setValue={field.onChange}
+              errorMessage={errors.website?.message}
             />
           )}
         />
@@ -102,6 +101,7 @@ export const OrganisationDetails = forwardRef<EditableSectionRef, Props>(functio
               label={t(`${i18nPrefix}.address`)}
               value={field.value}
               setValue={field.onChange}
+              errorMessage={errors.address?.message}
             />
           )}
         />
@@ -115,6 +115,7 @@ export const OrganisationDetails = forwardRef<EditableSectionRef, Props>(functio
               label={t(`${i18nPrefix}.organisationType`)}
               value={field.value}
               setValue={field.onChange}
+              errorMessage={errors.organisationType?.message}
             />
           )}
         />
@@ -128,6 +129,7 @@ export const OrganisationDetails = forwardRef<EditableSectionRef, Props>(functio
               label={t(`${i18nPrefix}.operator`)}
               value={field.value}
               setValue={field.onChange}
+              errorMessage={errors.operator?.message}
             />
           )}
         />
@@ -141,6 +143,7 @@ export const OrganisationDetails = forwardRef<EditableSectionRef, Props>(functio
               label={t(`${i18nPrefix}.services`)}
               value={field.value}
               setValue={field.onChange}
+              errorMessage={errors.services?.message}
             />
           )}
         />
@@ -149,13 +152,18 @@ export const OrganisationDetails = forwardRef<EditableSectionRef, Props>(functio
             name="clientLanguages"
             control={control}
             render={({ field }) => (
-              <LanguageFields
-                languages={field.value}
-                onChange={field.onChange}
-                t={t}
-                availableLanguages={languagesForForm}
-                showLevel={false}
-              />
+              <>
+                <LanguageFields
+                  languages={field.value}
+                  onChange={field.onChange}
+                  t={t}
+                  availableLanguages={languagesForForm}
+                  showLevel={false}
+                />
+                {errors.clientLanguages?.message && (
+                  <ErrorMessage message={errors.clientLanguages.message} />
+                )}
+              </>
             )}
           />
         ) : (

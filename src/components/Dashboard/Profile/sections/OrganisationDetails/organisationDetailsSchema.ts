@@ -7,14 +7,27 @@ const languageObjectSchema = z.object({
   level: z.union([z.nativeEnum(LanguageLevel), z.literal("")]),
 });
 
-export const organisationDetailsSchema = z.object({
-  about: z.string(),
-  website: z.string(),
-  address: z.string(),
-  organisationType: z.string(),
-  operator: z.string(),
-  services: z.string(),
-  clientLanguages: z.array(languageObjectSchema),
-});
+const urlRegex = /^https?:\/\/.+/;
 
-export type OrganisationDetailsFormData = z.infer<typeof organisationDetailsSchema>;
+export const createOrganisationDetailsSchema = (t: (key: string) => string) => {
+  const required = t(`${i18nPrefix}.required`);
+
+  return z.object({
+    about: z.string().min(1, required),
+    website: z
+      .string()
+      .min(1, required)
+      .refine((val) => urlRegex.test(val), {
+        message: t(`${i18nPrefix}.websiteInvalid`),
+      }),
+    address: z.string().min(1, required),
+    organisationType: z.string().min(1, required),
+    operator: z.string().min(1, required),
+    services: z.string().min(1, required),
+    clientLanguages: z.array(languageObjectSchema).min(1, t(`${i18nPrefix}.clientLanguagesRequired`)),
+  });
+};
+
+const i18nPrefix = "dashboard.agentProfile.organisationDetails.validation";
+
+export type OrganisationDetailsFormData = z.infer<ReturnType<typeof createOrganisationDetailsSchema>>;

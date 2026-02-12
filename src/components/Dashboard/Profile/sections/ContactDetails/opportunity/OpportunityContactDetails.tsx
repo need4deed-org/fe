@@ -3,8 +3,8 @@ import Button from "@/components/core/button/Button/Button";
 import { EditableField } from "@/components/EditableField/EditableField";
 import { useUpdateOpportunityContact } from "@/hooks/useUpdateOpportunityContact";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ApiOpportunityGet, PrefferedCommunicationType } from "need4deed-sdk";
-import { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from "react";
+import { ApiOpportunityGet, PreferredCommunicationType } from "need4deed-sdk";
+import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { FormButtonRow, FormContainer, FormDetails } from "../../shared/styles";
@@ -19,7 +19,7 @@ type Props = {
   opportunity: ApiOpportunityGet;
 };
 
-const COMMUNICATION_TYPES = Object.values(PrefferedCommunicationType);
+const COMMUNICATION_TYPES = Object.values(PreferredCommunicationType);
 
 export const OpportunityContactDetails = forwardRef<EditableSectionRef, Props>(function OpportunityContactDetails(
   { opportunity },
@@ -36,16 +36,7 @@ export const OpportunityContactDetails = forwardRef<EditableSectionRef, Props>(f
 
   const schema = createOpportunityContactDetailsSchema(t);
 
-  const initialFormValues = useMemo((): OpportunityContactDetailsFormData => {
-    const contact = opportunity.contact;
-
-    return {
-      name: contact?.name ?? "",
-      phone: contact?.phone ?? "",
-      email: contact?.email ?? "",
-      waysToContact: contact?.waysToContact ?? [],
-    };
-  }, [opportunity]);
+  const initialFormValues = opportunity.contact;
 
   const {
     control,
