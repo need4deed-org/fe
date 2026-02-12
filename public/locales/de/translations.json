@@ -738,7 +738,12 @@
         "services": "Leistungen",
         "clientLanguages": "Sprachen der Klient:innen",
         "cancel": "Abbrechen",
-        "saveChanges": "Änderungen speichern"
+        "saveChanges": "Änderungen speichern",
+        "validation": {
+          "required": "Dieses Feld ist erforderlich",
+          "websiteInvalid": "Webseite muss mit http:// oder https:// beginnen",
+          "clientLanguagesRequired": "Mindestens eine Sprache ist erforderlich"
+        }
       }
     },
     "opportunityProfile": {
