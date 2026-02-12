@@ -29,13 +29,8 @@ export const OrganisationDetails = forwardRef<EditableSectionRef, Props>(functio
   const languagesForForm = toLanguagesForForm(apiLanguages, i18n.language);
   const schema = createOrganisationDetailsSchema(t);
 
-  const initialFormValues: OrganisationDetailsFormData = {
-    about: details?.about ?? "",
-    website: details?.website ?? "",
-    address: details?.address ?? "",
-    organisationType: details?.organisationType ?? "",
-    operator: details?.operator ?? "",
-    services: details?.services ?? "",
+  const initialFormValues = {
+    ...details,
     clientLanguages: apiLanguagesToFormValues(details?.clientLanguages),
   };
 
