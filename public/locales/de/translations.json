@@ -828,7 +828,16 @@
         "skills": "Fähigkeiten & Erfahrung",
         "descriptionHint": "Max. {{max}} Zeichen",
         "cancel": "Abbrechen",
-        "saveChanges": "Änderungen speichern"
+        "saveChanges": "Änderungen speichern",
+        "validation": {
+          "descriptionRequired": "Beschreibung ist erforderlich",
+          "descriptionTooLong": "Beschreibung ist zu lang",
+          "numberOfVolunteersRequired": "Anzahl der Freiwilligen muss mindestens 1 sein",
+          "languageRequired": "Mindestens eine Sprache ist erforderlich",
+          "availabilityRequired": "Mindestens ein Zeitfenster muss ausgewählt werden",
+          "activitiesRequired": "Mindestens eine Aktivität ist erforderlich",
+          "skillsRequired": "Mindestens eine Fähigkeit ist erforderlich"
+        }
       }
     },
     "communicationSection": {

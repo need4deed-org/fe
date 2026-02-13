@@ -827,7 +827,16 @@
         "skills": "Skills & experience",
         "descriptionHint": "Max. {{max}} characters",
         "cancel": "Cancel",
-        "saveChanges": "Save changes"
+        "saveChanges": "Save changes",
+        "validation": {
+          "descriptionRequired": "Description is required",
+          "descriptionTooLong": "Description is too long",
+          "numberOfVolunteersRequired": "Number of volunteers must be at least 1",
+          "languageRequired": "At least one language is required",
+          "availabilityRequired": "At least one time slot must be selected",
+          "activitiesRequired": "At least one activity is required",
+          "skillsRequired": "At least one skill is required"
+        }
       }
     },
     "communicationSection": {
