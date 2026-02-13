@@ -235,7 +235,7 @@ const StepperContainer = styled.div`
   border-radius: var(--editableField-fieldWrapper-input-borderRadius);
   border: var(--editableField-fieldWrapper-input-border);
   overflow: hidden;
-  height: 48px;
+  height: var(--form-input-height);
 `;
 
 const StepperButton = styled.button`

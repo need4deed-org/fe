@@ -68,7 +68,7 @@ export function LanguageFields({ languages, onChange, onFocus, t, availableLangu
         backgroundcolor="var(--color-white)"
         textColor="var(--color-midnight)"
         border="2px solid var(--color-neutral-700)"
-        height="3rem"
+        height="var(--form-input-height)"
       />
     </div>
   );

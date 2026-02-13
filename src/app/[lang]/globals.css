@@ -490,6 +490,7 @@ html {
   --image-circle-pic-size: 60px;
 
   /* form input */
+  --form-input-height: 3rem;
   --form-input-error-message-color: var(--color-red-600);
 
   /* checkButton */
