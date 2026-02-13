@@ -504,6 +504,14 @@ html {
 
   /* volunteer header */
   --volunteer-header-label-width: 214px;
+
+  --rac-profile-section-card-icon-size: 40px;
+  --rac-profile-section-card-padding: 20px;
+  --rac-profile-section-card-border-radius: 20px;
+  --rac-profile-section-card-header-button-height: 56px;
+  --rac-profile-section-card-header-button-textFontSize: 20px;
+  --rac-profile-section-card-header-button-padding: 16px 24px;
+  --rac-profile-section-card-header-button-border: 2px solid var(--color-aubergine);
 }
 
 .with-linebreaks {
@@ -760,6 +768,10 @@ html {
     --paginated-grid-pagination-number-width: 36px;
     --paginated-grid-pagination-number-height: 44px;
     --paginated-grid-pagination-number-border-radius: 6px;
+
+    --volunteer-profile-section-card-header-button-padding: 8px 12px;
+
+    --rac-profile-section-card-header-button-padding: 8px 12px;
   }
 }
 
@@ -1420,6 +1432,8 @@ html {
     --volunteer-profile-opportunities-accordion-detail-section-gap: 8px;
     --volunteer-profile-opportunities-accordion-detail-header-gap: 8px;
     --volunteer-profile-opportunities-accordion-language-row-gap: 8px;
+
+    --rac-profile-section-card-header-button-padding: 16px 24px;
   }
 }
 

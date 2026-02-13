@@ -840,6 +840,47 @@
         }
       }
     },
+    "racTitle": "Geflüchtetenunterkunft",
+    "rac": {
+      "name": "Name",
+      "address": "Adresse",
+      "district": "Bezirk",
+      "roles": {
+        "label": "Rolle",
+        "management": "Management",
+        "volunteer_coordinator": "Freiwilligenkoordination",
+        "social_work": "Soziale Arbeit",
+        "childcare": "Kinderbetreuung",
+        "coordination": "Koordination"
+      },
+      "cancel": "Abbrechen",
+      "saveChanges": "Änderungen speichern",
+      "editButtonName": "Bearbeiten",
+      "contactDetails": {
+        "fullName": "Name",
+        "firstName": "Vorname",
+        "middleName": "Zweiter Vorname",
+        "lastName": "Nachname",
+        "role": "Rolle",
+        "email": "E-Mail",
+        "mobile": "Mobilnummer",
+        "landline": "Festnetz",
+        "saveSuccess": "Kontaktdaten erfolgreich aktualisiert"
+      },
+      "validation": {
+        "nameRequired": "Name ist erforderlich",
+        "addressRequired": "Adresse ist erforderlich",
+        "districtRequired": "Bezirk ist erforderlich",
+        "mobileRequired": "Mobilnummer ist erforderlich",
+        "mobileInvalid": "Die Mobilnummer muss mit + beginnen und darf nur Ziffern und Leerzeichen enthalten",
+        "emailRequired": "E-Mail ist erforderlich",
+        "emailInvalid": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+        "roleRequired": "Rolle ist erforderlich",
+        "fullNameRequired": "Name ist erforderlich",
+        "fullNameInvalid": "Bitte geben Sie einen gültigen Namen ein",
+        "landlineInvalid": "Die Festnetznummer muss mit + beginnen und darf nur Ziffern und Leerzeichen enthalten"
+      }
+    },
     "communicationSection": {
       "title": "Kommunikationsverfolgung",
       "addNew": "+ Kontakt registrieren",
