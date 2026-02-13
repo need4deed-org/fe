@@ -53,7 +53,7 @@ export const OpportunityDetails = forwardRef<EditableSectionRef, Props>(function
     [apiLanguages, lang],
   );
 
-  const schema = useMemo(() => createOpportunityDetailsSchema(t), [t]);
+  const schema = createOpportunityDetailsSchema(t);
   const generalLangs = opp.languages.filter((l) => l.purpose === LangPurpose.GENERAL);
   const recipientLangs = opp.languages.filter((l) => l.purpose === LangPurpose.RECIPIENT);
 
