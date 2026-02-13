@@ -537,7 +537,10 @@ export const EditableField = forwardRef(function EditableField<T extends string 
         </p>
       )}
       {errorMessage && (
-        <ErrorMessage message={errorMessage} paddingLeft="var(--editableField-errorMessage-paddingLeft)" />
+        <ErrorMessage
+          message={errorMessage}
+          paddingLeft="calc(var(--editableField-fieldWrapper-label-width) + var(--editableField-fieldWrapper-gap))"
+        />
       )}
       {hint && (
         <HintWrapper data-testid="editable-field-hint">

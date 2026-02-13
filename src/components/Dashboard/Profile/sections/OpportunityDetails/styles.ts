@@ -10,7 +10,7 @@ export const FieldRow = styled.div`
   font-size: var(--editableField-fieldWrapper-fontSize);
   gap: var(--editableField-fieldWrapper-gap);
 
-  label {
+  > label {
     font-weight: var(--editableField-fieldWrapper-label-fontWeight);
     font-size: var(--editableField-fieldWrapper-label-fontSize);
     width: var(--editableField-fieldWrapper-label-width);
