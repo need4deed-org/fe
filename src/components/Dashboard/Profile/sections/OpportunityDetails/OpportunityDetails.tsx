@@ -16,61 +16,12 @@ import { ApiOpportunityGet, Lang, LangPurpose } from "need4deed-sdk";
 import { forwardRef, useImperativeHandle, useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import styled from "styled-components";
 import { FormButtonRow, FormContainer, FormDetails } from "../shared/styles";
 import { EditableSectionRef } from "../shared/types";
 import { extractOptionTitles, formatLanguagesByPurpose, languagesToFormValues } from "./formatters";
 import { createOpportunityDetailsSchema, OpportunityDetailsFormData } from "./opportunityDetailsSchema";
+import { FieldGroup, FieldRow, TagsValue } from "./styles";
 import { OpportunityWithDetails } from "./types";
-
-const TagsRow = styled.div`
-  display: var(--editableField-fieldWrapper-display);
-  border-bottom: var(--editableField-fieldWrapper-borderBottom);
-  padding: var(--editableField-fieldWrapper-padding);
-  color: var(--color-midnight);
-  width: var(--editableField-fieldWrapper-width);
-  align-items: var(--editableField-fieldWrapper-alignItems);
-  font-size: var(--editableField-fieldWrapper-fontSize);
-  gap: var(--editableField-fieldWrapper-gap);
-
-  label {
-    font-weight: var(--editableField-fieldWrapper-label-fontWeight);
-    font-size: var(--editableField-fieldWrapper-label-fontSize);
-    width: var(--editableField-fieldWrapper-label-width);
-    flex-shrink: var(--editableField-fieldWrapper-label-flexShrink);
-  }
-`;
-
-const TagsValue = styled.div`
-  flex: 1;
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-8);
-`;
-
-const FieldGroup = styled.div`
-  display: var(--editableField-fieldWrapper-display);
-  border-bottom: var(--editableField-fieldWrapper-borderBottom);
-  padding: var(--editableField-fieldWrapper-padding);
-  color: var(--color-midnight);
-  width: var(--editableField-fieldWrapper-width);
-  align-items: flex-start;
-  font-size: var(--editableField-fieldWrapper-fontSize);
-  gap: var(--editableField-fieldWrapper-gap);
-
-  > label {
-    font-weight: var(--editableField-fieldWrapper-label-fontWeight);
-    font-size: var(--editableField-fieldWrapper-label-fontSize);
-    width: var(--editableField-fieldWrapper-label-width);
-    flex-shrink: var(--editableField-fieldWrapper-label-flexShrink);
-    padding-top: var(--spacing-8);
-  }
-
-  > div {
-    flex: 1;
-    min-width: 0;
-  }
-`;
 
 type Props = {
   opportunity: ApiOpportunityGet;
@@ -102,7 +53,7 @@ export const OpportunityDetails = forwardRef<EditableSectionRef, Props>(function
     [apiLanguages, lang],
   );
 
-  const schema = createOpportunityDetailsSchema();
+  const schema = useMemo(() => createOpportunityDetailsSchema(t), [t]);
   const generalLangs = opp.languages.filter((l) => l.purpose === LangPurpose.GENERAL);
   const recipientLangs = opp.languages.filter((l) => l.purpose === LangPurpose.RECIPIENT);
 
@@ -110,7 +61,7 @@ export const OpportunityDetails = forwardRef<EditableSectionRef, Props>(function
     control,
     handleSubmit,
     reset,
-    formState: { isDirty, isValid },
+    formState: { errors, isDirty, isValid },
   } = useForm<OpportunityDetailsFormData>({
     resolver: zodResolver(schema),
     mode: "onChange",
@@ -161,6 +112,7 @@ export const OpportunityDetails = forwardRef<EditableSectionRef, Props>(function
               setValue={field.onChange}
               maxLength={MAX_DESCRIPTION_LENGTH}
               hint={isEditing ? t(`${prefix}.descriptionHint`, { max: MAX_DESCRIPTION_LENGTH }) : undefined}
+              errorMessage={errors.description?.message}
             />
           )}
         />
@@ -229,7 +181,7 @@ export const OpportunityDetails = forwardRef<EditableSectionRef, Props>(function
           <Controller
             name="availability"
             control={control}
-            render={({ field }) => (
+            render={({ field, fieldState }) => (
               <FieldGroup data-testid="opportunity-details-schedule-edit">
                 <label>{t(`${prefix}.schedule`)}</label>
                 <div>
@@ -239,6 +191,7 @@ export const OpportunityDetails = forwardRef<EditableSectionRef, Props>(function
                     t={t}
                     currentLanguage={lang as Lang}
                   />
+                  {fieldState.error?.message && <ErrorMessage message={fieldState.error.message} />}
                 </div>
               </FieldGroup>
             )}
@@ -263,6 +216,7 @@ export const OpportunityDetails = forwardRef<EditableSectionRef, Props>(function
               label={t(`${prefix}.numberOfVolunteers`)}
               value={isEditing ? field.value : (opp.numberOfVolunteers ?? "")}
               setValue={field.onChange}
+              errorMessage={errors.numberOfVolunteers?.message}
             />
           )}
         />
@@ -282,11 +236,12 @@ export const OpportunityDetails = forwardRef<EditableSectionRef, Props>(function
                   field.onChange(labels.map((label) => String(activityMapping.titleToId[label])));
                 }}
                 options={apiActivities.map((a) => a.title)}
+                errorMessage={errors.activities?.message}
               />
             )}
           />
         ) : (
-          <TagsRow data-testid="opportunity-details-activities">
+          <FieldRow data-testid="opportunity-details-activities">
             <label>{t(`${prefix}.activities`)}</label>
             <TagsValue>
               {activities.length > 0 ? (
@@ -295,7 +250,7 @@ export const OpportunityDetails = forwardRef<EditableSectionRef, Props>(function
                 <EmptyPlaceholder />
               )}
             </TagsValue>
-          </TagsRow>
+          </FieldRow>
         )}
 
         {isEditing ? (
@@ -313,11 +268,12 @@ export const OpportunityDetails = forwardRef<EditableSectionRef, Props>(function
                   field.onChange(labels.map((label) => String(skillMapping.titleToId[label])));
                 }}
                 options={apiSkills.map((s) => s.title)}
+                errorMessage={errors.skills?.message}
               />
             )}
           />
         ) : (
-          <TagsRow data-testid="opportunity-details-skills">
+          <FieldRow data-testid="opportunity-details-skills">
             <label>{t(`${prefix}.skills`)}</label>
             <TagsValue>
               {skills.length > 0 ? (
@@ -326,7 +282,7 @@ export const OpportunityDetails = forwardRef<EditableSectionRef, Props>(function
                 <EmptyPlaceholder />
               )}
             </TagsValue>
-          </TagsRow>
+          </FieldRow>
         )}
       </FormDetails>
 
