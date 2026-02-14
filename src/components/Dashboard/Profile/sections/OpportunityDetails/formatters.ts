@@ -1,11 +1,19 @@
 import { EMPTY_PLACEHOLDER_VALUE } from "@/config/constants";
 import { LanguageObject } from "@/types";
+import { TFunction } from "i18next";
 import { ApiLanguage, Lang, LangPurpose, OptionById } from "need4deed-sdk";
 
-export function formatLanguagesByPurpose(languages: ApiLanguage[], purpose: LangPurpose): string {
+export function formatLanguagesByPurpose(languages: ApiLanguage[], purpose: LangPurpose, t: TFunction): string {
   const filtered = languages.filter((lang) => lang.purpose === purpose);
   if (filtered.length === 0) return EMPTY_PLACEHOLDER_VALUE;
-  return filtered.map((lang) => lang.title).join(", ");
+  return filtered
+    .map((lang) => {
+      const key = `languageNames.${lang.title.toLowerCase()}`;
+      const translated = t(key);
+      const hasTranslation = translated !== key;
+      return hasTranslation ? translated : lang.title;
+    })
+    .join(", ");
 }
 
 export function extractOptionTitles(items: OptionById[], lang: string): string[] {

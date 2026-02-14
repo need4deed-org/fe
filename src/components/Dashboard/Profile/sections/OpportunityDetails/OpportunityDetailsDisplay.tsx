@@ -19,8 +19,8 @@ export function OpportunityDetailsDisplay({ opportunity }: Props) {
   const opp = opportunity as OpportunityWithDetails;
   const prefix = "dashboard.opportunityProfile.opportunityDetails";
 
-  const mainCommunication = formatLanguagesByPurpose(opp.languages, LangPurpose.GENERAL);
-  const residentsSpeak = formatLanguagesByPurpose(opp.languages, LangPurpose.RECIPIENT);
+  const mainCommunication = formatLanguagesByPurpose(opp.languages, LangPurpose.GENERAL, t);
+  const residentsSpeak = formatLanguagesByPurpose(opp.languages, LangPurpose.RECIPIENT, t);
   const schedule = formatAvailability(opp.availability, t);
   const activities = extractOptionTitles(opp.activities, lang);
   const skills = extractOptionTitles(opp.skills, lang);
