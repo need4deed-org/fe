@@ -28,4 +28,13 @@ export type ApiAgentProfileGet = {
   volunteerSearch: AgentVolunteerSearch;
   trustLevel: AgentTrustLevel;
   comments?: TimedText[];
+  organisationDetails?: {
+    about?: string;
+    website?: string;
+    address?: string;
+    organisationType?: string;
+    operator?: string;
+    services?: string;
+    clientLanguages?: Array<{ id: number; title: string }>;
+  };
 };

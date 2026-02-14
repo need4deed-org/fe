@@ -537,7 +537,12 @@
           "whatsapp": "WhatsApp",
           "telegram": "Telegram",
           "mobilePhone": "Mobiltelefon",
-          "email": "E-Mail"
+          "email": "E-Mail",
+          "called": "Angerufen",
+          "email-sent": "E-Mail gesendet",
+          "briefed": "Briefing erfolgt",
+          "tried-call": "Versucht anzurufen",
+          "not-responding": "Keine Reaktion"
         },
         "notProvided": "Nicht angegeben",
         "cancel": "Abbrechen",
@@ -721,7 +726,25 @@
         "cancel": "Abbrechen",
         "save": "Speichern"
       },
-      "statusUpdateSuccess": "Agent-Status erfolgreich aktualisiert"
+      "statusUpdateSuccess": "Agent-Status erfolgreich aktualisiert",
+      "organisationDetails": {
+        "title": "Organisationsdetails",
+        "edit": "Bearbeiten",
+        "about": "Über uns",
+        "website": "Webseite",
+        "address": "Adresse",
+        "organisationType": "Art der Organisation",
+        "operator": "Träger",
+        "services": "Leistungen",
+        "clientLanguages": "Sprachen der Klient:innen",
+        "cancel": "Abbrechen",
+        "saveChanges": "Änderungen speichern",
+        "validation": {
+          "required": "Dieses Feld ist erforderlich",
+          "websiteInvalid": "Webseite muss mit http:// oder https:// beginnen",
+          "clientLanguagesRequired": "Mindestens eine Sprache ist erforderlich"
+        }
+      }
     },
     "opportunityProfile": {
       "opportunityProfile": "Profil der Gelegenheit",

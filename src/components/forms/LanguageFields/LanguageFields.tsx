@@ -13,9 +13,10 @@ type Props = {
   onFocus?: () => void;
   t: TFunction<"translation", undefined>;
   availableLanguages?: Option[];
+  showLevel?: boolean;
 };
 
-export function LanguageFields({ languages, onChange, onFocus, t, availableLanguages }: Props) {
+export function LanguageFields({ languages, onChange, onFocus, t, availableLanguages, showLevel = true }: Props) {
   const updateLanguage = (id: number, newLang: string) => {
     onChange(languages.map((item) => (item.id === id ? { ...item, language: newLang } : item)));
   };
@@ -51,6 +52,7 @@ export function LanguageFields({ languages, onChange, onFocus, t, availableLangu
           language={lang}
           disabledLanguages={disabledLanguages}
           showRemove={lang.id !== 1}
+          showLevel={showLevel}
           onUpdateLanguage={updateLanguage}
           onUpdateLevel={updateLevel}
           onRemove={removeLanguage}
