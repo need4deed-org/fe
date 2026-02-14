@@ -1,12 +1,17 @@
 "use client";
 import { EMPTY_PLACEHOLDER_VALUE } from "@/config/constants";
 import { formatDateTime } from "@/utils";
-import { House } from "@phosphor-icons/react";
+import { HouseIcon } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
 import { ApiAgentProfileGet } from "../../../types/agent";
 import { EditButton, HeaderCard, IconContainer, StatusRowField } from "../common";
 import { ChangeAgentEngagementStatusDialog } from "./ChangeAgentEngagementStatusDialog";
-import { createEngagementStatusLabelMap, createTrustLevelLabelMap, createVolunteerSearchLabelMap, TRUST_LEVEL_OPTIONS } from "./constants";
+import {
+  createEngagementStatusLabelMap,
+  createTrustLevelLabelMap,
+  createVolunteerSearchLabelMap,
+  TRUST_LEVEL_OPTIONS,
+} from "./constants";
 import { TrustLevelDropdown } from "./TrustLevelDropdown";
 import { useAgentEngagementStatusDialog } from "./useAgentEngagementStatusDialog";
 
@@ -30,7 +35,7 @@ export const AgentHeader = ({ agent }: Props) => {
       testId="agent-header"
       avatar={
         <IconContainer data-testid="agent-header-icon">
-          <House size={120} color="var(--color-blue-500)" weight="duotone" />
+          <HouseIcon size={120} color="var(--color-blue-500)" weight="duotone" />
         </IconContainer>
       }
       title={agent.name}
@@ -41,9 +46,7 @@ export const AgentHeader = ({ agent }: Props) => {
         title={t("dashboard.agentProfile.engagementStatus")}
         status={agent.statusEngagement}
         label={engagementStatusLabels[agent.statusEngagement]}
-        action={
-          <EditButton onClick={dialog.openDialog}>{t("dashboard.agentProfile.changeStatus")}</EditButton>
-        }
+        action={<EditButton onClick={dialog.openDialog}>{t("dashboard.agentProfile.changeStatus")}</EditButton>}
       />
 
       <StatusRowField
