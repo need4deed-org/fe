@@ -738,6 +738,22 @@
           "addressRequired": "Address is required",
           "districtRequired": "District is required"
         }
+      },
+      "accompanyingDetailsTitle": "Accompanying details",
+      "accompanyingDetails": {
+        "appointmentAddress": "Appointment address",
+        "appointmentDate": "Appointment date",
+        "appointmentTime": "Appointment time",
+        "refugeeNumber": "Refugee number",
+        "refugeeName": "Refugee name",
+        "languageToTranslate": "Language to translate",
+        "cancel": "Cancel",
+        "saveChanges": "Save changes",
+        "saveSuccess": "Accompanying details updated successfully",
+        "notAccompanyingMessage": "This opportunity is not marked as accompanying. Change this status in the top card if you need to fill out the accompanying information (appointment address, refugee details, etc.).",
+        "validation": {
+          "invalidTimeFormat": "Invalid time format (use HH:MM)"
+        }
       }
     },
     "communicationSection": {

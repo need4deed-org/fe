@@ -20,6 +20,7 @@ type Props = {
   onSelect: (d: Date | undefined) => void;
   locale?: Locale;
   allowFuture?: boolean;
+  minDate?: Date;
   label?: string;
   showTodayIndicator?: boolean;
   todayText?: string;
@@ -30,6 +31,7 @@ export function DatePickerWithLabel({
   onSelect,
   locale,
   allowFuture = false,
+  minDate,
   label,
   showTodayIndicator = false,
   todayText = "today",
@@ -88,7 +90,8 @@ export function DatePickerWithLabel({
 
     const parsedDate = parse(value, "dd.MM.yyyy", new Date());
 
-    if (isValid(parsedDate) && parsedDate.getFullYear() >= MIN_YEAR) {
+    const isAfterMinDate = !minDate || parsedDate >= minDate;
+    if (isValid(parsedDate) && parsedDate.getFullYear() >= MIN_YEAR && isAfterMinDate) {
       onSelect(parsedDate);
     }
   };
@@ -138,7 +141,7 @@ export function DatePickerWithLabel({
           captionLayout="dropdown"
           startMonth={new Date(MIN_YEAR, 0)}
           endMonth={new Date(new Date().getFullYear() + 10, 11)}
-          disabled={allowFuture ? { before: new Date() } : { after: new Date() }}
+          disabled={allowFuture ? { before: minDate ?? new Date() } : { after: new Date() }}
         />
       </DatePickerPopover>
     </DatePickerWrapper>

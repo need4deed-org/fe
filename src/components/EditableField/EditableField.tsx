@@ -4,12 +4,13 @@ import { XCircle } from "@phosphor-icons/react";
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import styled from "styled-components";
+import { HasError } from "@/types";
 
 const EditModeWrapper = styled.div`
   width: 100%;
 `;
 
-const FieldWrapper = styled.div<{ $hasError?: boolean }>`
+const FieldWrapper = styled.div<HasError>`
   display: var(--editableField-fieldWrapper-display);
   border-bottom: var(--editableField-fieldWrapper-borderBottom);
   padding: ${(props) =>
@@ -41,7 +42,7 @@ const FieldWrapper = styled.div<{ $hasError?: boolean }>`
   }
 `;
 
-const InputWrapper = styled.div<{ $hasError?: boolean }>`
+const InputWrapper = styled.div<HasError>`
   position: relative;
   display: flex;
   align-items: center;

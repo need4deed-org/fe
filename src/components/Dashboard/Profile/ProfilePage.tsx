@@ -1,11 +1,12 @@
 import { Heading2 } from "@/components/styled/text";
 import { ArrowLeftIcon } from "@phosphor-icons/react";
-import { ApiOpportunityGet, ApiVolunteerGet } from "need4deed-sdk";
+import { ApiOpportunityGet, ApiVolunteerGet, VolunteerStateTypeType } from "need4deed-sdk";
 import Link from "next/link";
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { SectionCard, SectionCardProps } from "./common/SectionCard";
+import { AccompanyingDetails } from "./sections/AccompanyingDetails";
 import { Appreciation, AppreciationRef } from "./sections/Appreciation";
 import { Comments } from "./sections/Comments";
 import { CommunicationTracker, CommunicationTrackerRef } from "./sections/CommunicationTracker";
@@ -44,6 +45,7 @@ const ProfilePage = ({ volunteer, opportunity }: ProfileEntityProps) => {
   const communicationTrackerRef = useRef<CommunicationTrackerRef>(null);
   const appreciationRef = useRef<AppreciationRef>(null);
   const racRef = useRef<EditableSectionRef>(null);
+  const accompanyingDetailsRef = useRef<EditableSectionRef>(null);
 
   const getVolunteerSections = (vol: ApiVolunteerGet): SectionCardProps[] => [
     {
@@ -99,6 +101,9 @@ const ProfilePage = ({ volunteer, opportunity }: ProfileEntityProps) => {
 
   const getOpportunitySections = (opp: ApiOpportunityGet): SectionCardProps[] => {
     const commentsCount = opp.comments.length;
+    const isAccompanyingType =
+      opp.volunteerType === VolunteerStateTypeType.ACCOMPANYING ||
+      opp.volunteerType === VolunteerStateTypeType.REGULAR_ACCOMPANYING;
 
     return [
       {
@@ -114,6 +119,15 @@ const ProfilePage = ({ volunteer, opportunity }: ProfileEntityProps) => {
         headerButtonName: t("dashboard.opportunityProfile.editButtonName"),
         onHeaderButtonClick: () => racRef.current?.handleEditClick(),
         subComponent: <RefugeeAccommodationCentre ref={racRef} opportunity={opp} />,
+      },
+      {
+        iconName: IconName.Users,
+        title: t("dashboard.opportunityProfile.accompanyingDetailsTitle"),
+        ...(isAccompanyingType && {
+          headerButtonName: t("dashboard.opportunityProfile.editButtonName"),
+          onHeaderButtonClick: () => accompanyingDetailsRef.current?.handleEditClick?.(),
+        }),
+        subComponent: <AccompanyingDetails ref={accompanyingDetailsRef} opportunity={opp} />,
       },
       {
         iconName: IconName.ChatCircleDots,

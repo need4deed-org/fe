@@ -1,0 +1,1 @@
+export { AccompanyingDetails } from "./AccompanyingDetails";
