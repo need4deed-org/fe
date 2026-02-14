@@ -7,6 +7,7 @@ import {
   CommunicationTrackerRef,
 } from "@/components/Dashboard/Profile/sections/CommunicationTracker";
 import { ContactDetails } from "@/components/Dashboard/Profile/sections/ContactDetails";
+import { OpportunityDetails } from "@/components/Dashboard/Profile/sections/OpportunityDetails";
 import { OrganisationDetails } from "@/components/Dashboard/Profile/sections/OrganisationDetails";
 import { ProfileHeader } from "@/components/Dashboard/Profile/sections/ProfileHeader";
 import { RefugeeAccommodationCentre } from "@/components/Dashboard/Profile/sections/RefugeeAccommodationCentre";
@@ -29,6 +30,7 @@ export const useProfileSections = ({ volunteer, opportunity, agent }: ProfileEnt
   const appreciationRef = useRef<AppreciationRef>(null);
   const racRef = useRef<EditableSectionRef>(null);
   const accompanyingDetailsRef = useRef<EditableSectionRef>(null);
+  const opportunityDetailsRef = useRef<EditableSectionRef>(null);
   const organisationDetailsRef = useRef<EditableSectionRef>(null);
 
   const getVolunteerSections = (vol: ApiVolunteerGet): SectionCardProps[] => [
@@ -90,6 +92,13 @@ export const useProfileSections = ({ volunteer, opportunity, agent }: ProfileEnt
       opp.volunteerType === VolunteerStateTypeType.REGULAR_ACCOMPANYING;
 
     return [
+      {
+        iconName: IconName.Wrench,
+        title: t("dashboard.opportunityProfile.opportunityDetails.title"),
+        headerButtonName: t("dashboard.opportunityProfile.editButtonName"),
+        onHeaderButtonClick: () => opportunityDetailsRef.current?.handleEditClick(),
+        subComponent: <OpportunityDetails ref={opportunityDetailsRef} opportunity={opp} />,
+      },
       {
         iconName: IconName.ChatsCircle,
         title: t("dashboard.opportunityProfile.contactDetailsTitle"),

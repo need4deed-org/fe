@@ -41,5 +41,6 @@ export enum IconName {
   UserCircle = "userCircle",
   Users = "users",
   UsersThree = "usersThree",
+  Wrench = "wrench",
 }
 

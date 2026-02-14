@@ -93,7 +93,7 @@ export function DisplayFields({
         <FieldValue>
           {activities.length > 0 ? (
             <TagsWrapper>
-              <Tags tags={activities} backgroundColor="var(--color-pink-100)" />
+              <Tags tags={activities} backgroundColor="var(--color-salmon)" />
             </TagsWrapper>
           ) : (
             <EmptyPlaceholder />

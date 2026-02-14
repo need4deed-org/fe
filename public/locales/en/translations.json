@@ -815,6 +815,28 @@
         "validation": {
           "invalidTimeFormat": "Invalid time format (use HH:MM)"
         }
+      },
+      "opportunityDetails": {
+        "title": "Opportunity details",
+        "description": "Description",
+        "mainCommunication": "Main communication",
+        "residentsSpeak": "Residents speak",
+        "schedule": "Schedule",
+        "numberOfVolunteers": "Number of volunteers",
+        "activities": "Activities",
+        "skills": "Skills & experience",
+        "descriptionHint": "Max. {{max}} characters",
+        "cancel": "Cancel",
+        "saveChanges": "Save changes",
+        "validation": {
+          "descriptionRequired": "Description is required",
+          "descriptionTooLong": "Description is too long",
+          "numberOfVolunteersRequired": "Number of volunteers must be at least 1",
+          "languageRequired": "At least one language is required",
+          "availabilityRequired": "At least one time slot must be selected",
+          "activitiesRequired": "At least one activity is required",
+          "skillsRequired": "At least one skill is required"
+        }
       }
     },
     "communicationSection": {
@@ -962,5 +984,42 @@
       "deleteError": "Delete failed. Please try again.",
       "previewError": "Preview failed. Please try again."
     }
+  },
+  "languageNames": {
+    "german": "German",
+    "english": "English",
+    "arabic": "Arabic",
+    "farsi/dari": "Farsi/Dari",
+    "farsi": "Farsi",
+    "dari": "Dari",
+    "turkish": "Turkish",
+    "russian": "Russian",
+    "ukrainian": "Ukrainian",
+    "french": "French",
+    "kurmanji": "Kurmanji",
+    "sorani": "Sorani",
+    "armenian": "Armenian",
+    "belarusian": "Belarusian",
+    "chechen": "Chechen",
+    "chinese": "Chinese",
+    "czech": "Czech",
+    "dutch": "Dutch",
+    "georgian": "Georgian",
+    "greek": "Greek",
+    "hebrew": "Hebrew",
+    "hindi": "Hindi",
+    "italian": "Italian",
+    "pashto": "Pashto",
+    "polish": "Polish",
+    "punjabi": "Punjabi",
+    "romanes": "Romanes",
+    "romanian": "Romanian",
+    "serbian": "Serbian",
+    "somali": "Somali",
+    "spanish": "Spanish",
+    "swedish": "Swedish",
+    "urdu": "Urdu",
+    "vietnamese": "Vietnamese",
+    "other": "Other"
   }
 }

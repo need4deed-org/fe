@@ -111,12 +111,12 @@
           "header": "Bevorzugte Bezirke* (Berlin)",
           "para": "*Denke daran, dass die meisten Unterkünfte außerhalb des Rings liegen!",
           "error": "",
-          "helpText": "Falls wir kein perfektes Angebot finden, schicken wir Dir die Angebote, die auch auf deinem Standort basieren!",
+          "helpText": "Falls wir keine perfekte Möglichkeit finden, schicken wir Dir die Möglichkeiten, die auch auf deinem Standort basieren!",
           "helpTitle": ""
         },
         "availability": {
           "header": "Verfügbarkeit",
-          "para": "*Denke daran, dass die meisten Angebote auf die Arbeitszeiten von 9-17 Uhr begrenzt sind, zumindest am Anfang!",
+          "para": "*Denke daran, dass die meisten Möglichkeiten auf die Arbeitszeiten von 9-17 Uhr begrenzt sind, zumindest am Anfang!",
           "error": "",
           "helpText": "Die Verfügbarkeiten von Mo-So beziehen sich auf regelmäßig wiederkehrende Freiwilligenarbeit. Wenn die Zeiträume auf bestimmte Zeiträume begrenzt sind oder erklärt werden müssen, schreibe bitte im letzten Abschnitt in die Kommentare.",
           "helpTitle": ""
@@ -747,7 +747,7 @@
       }
     },
     "opportunityProfile": {
-      "opportunityProfile": "Profil der Gelegenheit",
+      "opportunityProfile": "Profil der Möglichkeit",
       "postedOn": "Veröffentlicht am",
       "currentStatus": "Aktueller Status",
       "matchingStatus": "Matching-Status",
@@ -762,7 +762,7 @@
         "needRematch": "Neues Matching erforderlich",
         "unmatched": "Nicht gematcht"
       },
-      "statusUpdateSuccess": "Status der Gelegenheit erfolgreich aktualisiert",
+      "statusUpdateSuccess": "Status der Möglichkeit erfolgreich aktualisiert",
       "contactDetailsTitle": "Kontaktdaten",
       "editButtonName": "Bearbeiten",
       "contactDetails": {
@@ -812,9 +812,31 @@
         "cancel": "Abbrechen",
         "saveChanges": "Änderungen speichern",
         "saveSuccess": "Begleitdetails erfolgreich aktualisiert",
-        "notAccompanyingMessage": "Diese Gelegenheit ist nicht als Begleitung markiert. Ändern Sie diesen Status in der oberen Karte, wenn Sie die Begleitinformationen ausfüllen müssen (Terminadresse, Angaben zu Geflüchteten usw.).",
+        "notAccompanyingMessage": "Diese Möglichkeit ist nicht als Begleitung markiert. Ändern Sie diesen Status in der oberen Karte, wenn Sie die Begleitinformationen ausfüllen müssen (Terminadresse, Angaben zu Geflüchteten usw.).",
         "validation": {
           "invalidTimeFormat": "Ungültiges Zeitformat (verwenden Sie HH:MM)"
+        }
+      },
+      "opportunityDetails": {
+        "title": "Details der Möglichkeit",
+        "description": "Beschreibung",
+        "mainCommunication": "Hauptkommunikation",
+        "residentsSpeak": "Bewohner sprechen",
+        "schedule": "Zeitplan",
+        "numberOfVolunteers": "Anzahl der Freiwilligen",
+        "activities": "Aktivitäten",
+        "skills": "Fähigkeiten & Erfahrung",
+        "descriptionHint": "Max. {{max}} Zeichen",
+        "cancel": "Abbrechen",
+        "saveChanges": "Änderungen speichern",
+        "validation": {
+          "descriptionRequired": "Beschreibung ist erforderlich",
+          "descriptionTooLong": "Beschreibung ist zu lang",
+          "numberOfVolunteersRequired": "Anzahl der Freiwilligen muss mindestens 1 sein",
+          "languageRequired": "Mindestens eine Sprache ist erforderlich",
+          "availabilityRequired": "Mindestens ein Zeitfenster muss ausgewählt werden",
+          "activitiesRequired": "Mindestens eine Aktivität ist erforderlich",
+          "skillsRequired": "Mindestens eine Fähigkeit ist erforderlich"
         }
       }
     },
@@ -846,7 +868,7 @@
       "communicationTypes": {
         "briefedVolunteer": "Briefing erfolgt (begleitende*r Freiwillige*r)",
         "firstInquiry": "Erste Anfrage gesendet",
-        "opportunityList": "Angebotsliste gesendet",
+        "opportunityList": "Möglichkeitenliste gesendet",
         "statusUpdate": "Statusaktualisierung",
         "postMatchFollowUp": "Nachverfolgung nach Vermittlung"
       },
@@ -905,7 +927,7 @@
     "first_steps_question": "Was sind die ersten Schritte, um Freiwilliger zu werden?",
     "first_steps_answer": "Beginnen Sie mit dem Ausfüllen des Freiwilligenantragsformulars auf der Need4Deed-Website.",
     "after_form_question": "Was passiert, nachdem ich das Formular ausgefüllt habe?",
-    "after_form_answer": "Nachdem wir Ihre Präferenzen und Standorte haben, suchen wir nach einem passenden Angebot für Sie und kontaktieren Sie in den nächsten Tagen.",
+    "after_form_answer": "Nachdem wir Ihre Präferenzen und Standorte haben, suchen wir nach einer passenden Möglichkeit für Sie und kontaktieren Sie in den nächsten Tagen.",
     "find_opportunities_question": "Wie finde ich verfügbare Freiwilligenmöglichkeiten?",
     "find_opportunities_answer": "Sehen Sie auf der Seite 'Möglichkeiten' auf der Need4Deed-Website nach aktuellen Freiwilligenrollen.",
     "volunteer_roles_question": "Welche Arten von Freiwilligenrollen werden angeboten?",
@@ -915,7 +937,7 @@
     "volunteering_time_question": "Wie viel Zeit nimmt das Freiwilligenengagement in Anspruch?",
     "volunteering_time_answer": "Regelmäßiges Freiwilligenengagement erfordert normalerweise etwa 2 Stunden pro Woche oder zweimal im Monat. Unregelmäßiges Freiwilligenengagement kann stattfinden, wann immer Sie Zeit haben, insbesondere bei Veranstaltungen oder Aufgaben wie Übersetzungen bei Arztterminen.",
     "age_requirements_question": "Gibt es Altersanforderungen für Freiwillige?",
-    "age_requirements_answer": "Die Altersanforderungen können variieren, aber die meisten Orte verlangen, dass die Person über 18 Jahre alt ist. Bitte überprüfen Sie die spezifischen Anforderungen in den Angeboten.",
+    "age_requirements_answer": "Die Altersanforderungen können variieren, aber die meisten Orte verlangen, dass die Person über 18 Jahre alt ist. Bitte überprüfen Sie die spezifischen Anforderungen in den Möglichkeiten.",
     "voluntea_gatherings_question": "Was kann ich bei den VolunTea-Treffen erwarten?",
     "voluntea_gatherings_answer": "Die VolunTea-Treffen umfasst die Mission von Need4Deed, Freiwilligenrollen und Unterstützung bei der Suche nach geeigneten Unterkünften für Geflüchtete.",
     "training_question": "Gibt es eine spezielle Schulung?",
@@ -1330,5 +1352,42 @@
     "uploadError": "Hochladen fehlgeschlagen. Bitte versuchen Sie es erneut.",
     "deleteError": "Löschen fehlgeschlagen. Bitte versuchen Sie es erneut.",
     "previewError": "Vorschau fehlgeschlagen. Bitte versuchen Sie es erneut."
+  },
+  "languageNames": {
+    "german": "Deutsch",
+    "english": "Englisch",
+    "arabic": "Arabisch",
+    "farsi/dari": "Farsi/Dari",
+    "farsi": "Farsi",
+    "dari": "Dari",
+    "turkish": "Türkisch",
+    "russian": "Russisch",
+    "ukrainian": "Ukrainisch",
+    "french": "Französisch",
+    "kurmanji": "Kurmanci",
+    "sorani": "Sorani",
+    "armenian": "Armenisch",
+    "belarusian": "Weißrussisch",
+    "chechen": "Tschetschenisch",
+    "chinese": "Chinesisch",
+    "czech": "Tschechisch",
+    "dutch": "Niederländisch",
+    "georgian": "Georgisch",
+    "greek": "Griechisch",
+    "hebrew": "Hebräisch",
+    "hindi": "Hindi",
+    "italian": "Italienisch",
+    "pashto": "Paschtu",
+    "polish": "Polnisch",
+    "punjabi": "Punjabi",
+    "romanes": "Romanes",
+    "romanian": "Rumänisch",
+    "serbian": "Serbisch",
+    "somali": "Somali",
+    "spanish": "Spanisch",
+    "swedish": "Schwedisch",
+    "urdu": "Urdu",
+    "vietnamese": "Vietnamesisch",
+    "other": "Andere"
   }
 }

@@ -92,6 +92,7 @@ html {
   --color-magnolia: rgba(246, 238, 231, 1);
   --color-magnolia-light: rgba(248, 244, 241, 1);
   --color-papaya: rgba(255, 125, 104, 1);
+  --color-salmon: rgba(254, 234, 231, 1);
   --color-dimmed-background: rgba(0, 0, 0, 0.4);
 
   /* Base colors */
@@ -489,6 +490,7 @@ html {
   --image-circle-pic-size: 60px;
 
   /* form input */
+  --form-input-height: 3rem;
   --form-input-error-message-color: var(--color-red-600);
 
   /* checkButton */
@@ -1445,6 +1447,7 @@ html {
   --editableField-fieldWrapper-input-border: var(--border-width-thin) solid var(--color-grey-200);
   --editableField-fieldWrapper-input-flex: 1;
   --editableField-fieldWrapper-input-minWidth: 0;
+  --editableField-fieldWrapper-textarea-minHeight: 80px;
 
   /* Shared focus/error borders */
   --editableField-border-error: var(--border-width-medium) solid var(--color-red-600);
