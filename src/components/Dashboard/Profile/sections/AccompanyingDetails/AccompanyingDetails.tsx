@@ -3,63 +3,20 @@ import { useApiLanguages } from "@/components/Dashboard/Profile/sections/Volunte
 import { useUpdateOpportunityAccompanyingDetails } from "@/hooks/useUpdateOpportunityAccompanyingDetails";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { de, enUS } from "date-fns/locale";
-import { ApiOpportunityAccompanyingDetails, ApiOpportunityGet, VolunteerStateTypeType } from "need4deed-sdk";
+import { ApiOpportunityGet } from "need4deed-sdk";
 import { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { EditableSectionRef } from "../shared/types";
 import { AccompanyingDetailsDisplay } from "./AccompanyingDetailsDisplay";
 import { AccompanyingDetailsEdit } from "./AccompanyingDetailsEdit";
+import { getInitialFormValues, getMinAppointmentDate, isAccompanyingType } from "./helpers";
 import { AccompanyingDetailsFormData, accompanyingDetailsSchema } from "./accompanyingDetailsSchema";
 import { Container, NotAccompanyingMessage } from "./styles";
-
-const isAccompanyingType = (volunteerType: VolunteerStateTypeType | undefined): boolean => {
-  return (
-    volunteerType === VolunteerStateTypeType.ACCOMPANYING ||
-    volunteerType === VolunteerStateTypeType.REGULAR_ACCOMPANYING
-  );
-};
-
-const getMinAppointmentDate = (): Date => {
-  const date = new Date();
-  let weekdaysAdded = 0;
-  while (weekdaysAdded < 7) {
-    date.setDate(date.getDate() + 1);
-    const dayOfWeek = date.getDay();
-    if (dayOfWeek !== 0 && dayOfWeek !== 6) {
-      weekdaysAdded++;
-    }
-  }
-  date.setHours(0, 0, 0, 0);
-  return date;
-};
 
 type Props = {
   opportunity: ApiOpportunityGet;
 };
-
-const parseDate = (date: Date | string | undefined): Date | null => {
-  if (!date) return null;
-  const parsed = date instanceof Date ? date : new Date(date);
-  return isNaN(parsed.getTime()) ? null : parsed;
-};
-
-const parseTime = (time: Date | string | undefined): string => {
-  if (!time) return "";
-  if (typeof time === "string") return time;
-  return time.toTimeString().slice(0, 5);
-};
-
-const getInitialFormValues = (
-  details: ApiOpportunityAccompanyingDetails | undefined,
-): AccompanyingDetailsFormData => ({
-  appointmentAddress: details?.appointmentAddress || "",
-  appointmentDate: parseDate(details?.appointmentDate),
-  appointmentTime: parseTime(details?.appointmentTime),
-  refugeeNumber: details?.refugeeNumber || "",
-  refugeeName: details?.refugeeName || "",
-  languageToTranslate: details?.languageToTranslate || "",
-});
 
 export const AccompanyingDetails = forwardRef<EditableSectionRef, Props>(function AccompanyingDetails(
   { opportunity },

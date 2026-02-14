@@ -55,3 +55,7 @@ export type LanguageObject = {
 export type FooterLink = [string, string];
 
 export type HttpMethod = "post" | "patch" | "put" | "delete";
+
+export type IsEditing = { $isEditing: boolean };
+
+export type HasError = { $hasError?: boolean };
