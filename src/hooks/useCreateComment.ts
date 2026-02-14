@@ -1,18 +1,20 @@
 import { apiPathComment } from "@/config/constants";
 import { useMutationQuery } from "@/hooks";
-import { EntityTableName } from "need4deed-sdk";
+import { EntityTableName, Id } from "need4deed-sdk";
 
 type CreateCommentData = {
   text: string;
-  entityType: EntityTableName;
-  entityId: number;
+  entityType: EntityTableName | string;
+  entityId: Id;
 };
 
-export const useCreateComment = (volunteerId: number) => {
+type EntityType = "volunteer" | "opportunity";
+
+export const useCreateComment = (entityId: Id, entityType: EntityType = "volunteer") => {
   return useMutationQuery<CreateCommentData, { message: string }>({
     apiPath: apiPathComment,
     method: "post",
     successMessage: "dashboard.commentsSection.commentAdded",
-    queryKeyToInvalidate: ["volunteer", String(volunteerId)],
+    queryKeyToInvalidate: [entityType, String(entityId)],
   });
 };
