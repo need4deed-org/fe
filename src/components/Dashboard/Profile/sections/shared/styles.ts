@@ -1,5 +1,6 @@
 import { FlexColumn } from "@/components/styled/FlexColumn";
 import styled from "styled-components";
+import { IsEditing } from "@/types";
 
 export const SectionWrapper = styled(FlexColumn).attrs({
   $gap: "var(--spacing-24)",
@@ -39,9 +40,9 @@ export const DialogForm = styled.form<{ $gap?: string }>`
   gap: var(--spacing-24);
 `;
 
-export const FormContainer = styled(FlexColumn).attrs<{ $isEditing: boolean }>((props) => ({
+export const FormContainer = styled(FlexColumn).attrs<IsEditing>((props) => ({
   $gap: props.$isEditing ? "var(--spacing-16)" : "0",
-}))<{ $isEditing: boolean }>``;
+}))<IsEditing>``;
 
 export const FormDetails = styled.div`
   display: flex;

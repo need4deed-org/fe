@@ -1,6 +1,7 @@
 import { ErrorMessage } from "@/components/core/common";
 import { EMPTY_PLACEHOLDER_VALUE } from "@/config/constants";
-import { Minus, Plus, XCircle } from "@phosphor-icons/react";
+import { HasError, HasHint } from "@/types";
+import { MinusIcon, PlusIcon, XCircleIcon } from "@phosphor-icons/react";
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import styled from "styled-components";
@@ -9,7 +10,7 @@ const EditModeWrapper = styled.div`
   width: 100%;
 `;
 
-const FieldWrapper = styled.div<{ $hasError?: boolean; $hasHint?: boolean }>`
+const FieldWrapper = styled.div<HasError & HasHint>`
   display: var(--editableField-fieldWrapper-display);
   border-bottom: var(--editableField-fieldWrapper-borderBottom);
   padding: ${(props) =>
@@ -42,7 +43,7 @@ const FieldWrapper = styled.div<{ $hasError?: boolean; $hasHint?: boolean }>`
   }
 `;
 
-const InputWrapper = styled.div<{ $hasError?: boolean }>`
+const InputWrapper = styled.div<HasError>`
   position: relative;
   display: flex;
   align-items: center;
@@ -388,7 +389,7 @@ export const EditableField = forwardRef(function EditableField<T extends string 
                   setValue(v);
                 }}
               >
-                <XCircle size={20} weight="bold" />
+                <XCircleIcon size={20} weight="bold" />
               </ClearButton>
             )}
           </InputWrapper>
@@ -415,7 +416,7 @@ export const EditableField = forwardRef(function EditableField<T extends string 
                 }}
                 style={{ alignSelf: "flex-start", marginTop: "10px" }}
               >
-                <XCircle size={20} weight="bold" />
+                <XCircleIcon size={20} weight="bold" />
               </ClearButton>
             )}
           </InputWrapper>
@@ -441,7 +442,7 @@ export const EditableField = forwardRef(function EditableField<T extends string 
                   setValue(v);
                 }}
               >
-                <XCircle size={20} weight="bold" />
+                <XCircleIcon size={20} weight="bold" />
               </ClearButton>
             )}
           </InputWrapper>
@@ -459,7 +460,7 @@ export const EditableField = forwardRef(function EditableField<T extends string 
                 setValue(v);
               }}
             >
-              <Minus size={16} weight="bold" />
+              <MinusIcon size={16} weight="bold" />
             </StepperButton>
             <StepperValue data-testid="editable-field-stepper-value">{localValue}</StepperValue>
             <StepperButton
@@ -471,7 +472,7 @@ export const EditableField = forwardRef(function EditableField<T extends string 
                 setValue(v);
               }}
             >
-              <Plus size={16} weight="bold" />
+              <PlusIcon size={16} weight="bold" />
             </StepperButton>
           </StepperContainer>
         )}
