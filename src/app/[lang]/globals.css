@@ -1447,6 +1447,7 @@ html {
   --editableField-fieldWrapper-input-border: var(--border-width-thin) solid var(--color-grey-200);
   --editableField-fieldWrapper-input-flex: 1;
   --editableField-fieldWrapper-input-minWidth: 0;
+  --editableField-fieldWrapper-textarea-minHeight: 80px;
 
   /* Shared focus/error borders */
   --editableField-border-error: var(--border-width-medium) solid var(--color-red-600);
