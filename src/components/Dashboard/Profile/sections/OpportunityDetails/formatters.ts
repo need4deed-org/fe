@@ -16,11 +16,11 @@ export function formatLanguagesByPurpose(languages: ApiLanguage[], purpose: Lang
     .join(", ");
 }
 
-export function extractOptionTitles(items: OptionById[], lang: string): string[] {
+export function extractOptionTitles(items: OptionById[], lang: Lang): string[] {
   return items
     .map((item) => {
       if (!item.title) return "";
-      return item.title[lang as Lang] ?? item.title[Lang.EN] ?? "";
+      return item.title[lang] ?? item.title[Lang.EN] ?? "";
     })
     .filter(Boolean);
 }
