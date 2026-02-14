@@ -13,7 +13,7 @@ import { EditableSectionRef } from "@/components/Dashboard/Profile/sections/shar
 import VolunteerOpportunities from "@/components/Dashboard/Profile/sections/VolunteerOpportunities/VolunteerOpportunities";
 import { VolunteerProfile, VolunteerProfileRef } from "@/components/Dashboard/Profile/sections/VolunteerProfile";
 import { VolunteerProfileDocument } from "@/components/Dashboard/Profile/sections/VolunteerProfileDocument";
-import { IconName, ProfileEntityProps } from "@/components/Dashboard/Profile/types/types";
+import { ApiAgentProfileGet, IconName, ProfileEntityProps } from "@/components/Dashboard/Profile/types";
 import { ApiOpportunityGet, ApiVolunteerGet, VolunteerStateTypeType } from "need4deed-sdk";
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
@@ -55,7 +55,7 @@ export const useProfileSections = ({ volunteer, opportunity, agent }: ProfileEnt
       title: t("dashboard.communicationSection.title"),
       headerButtonName: t("dashboard.communicationSection.addNew"),
       onHeaderButtonClick: () => communicationTrackerRef.current?.handleAddNew(),
-      subComponent: <CommunicationTracker ref={communicationTrackerRef} volunteer={vol} />,
+      subComponent: <CommunicationTracker ref={communicationTrackerRef} entityId={vol.id} entityType="volunteer" />,
     },
     {
       iconName: IconName.ChatCircleDots,
@@ -119,11 +119,24 @@ export const useProfileSections = ({ volunteer, opportunity, agent }: ProfileEnt
     ];
   };
 
-  const getAgentSections = (): SectionCardProps[] => [];
+  const getAgentSections = (ag: ApiAgentProfileGet): SectionCardProps[] => [
+    {
+      iconName: IconName.ChatsTeardrop,
+      title: t("dashboard.communicationSection.title"),
+      headerButtonName: t("dashboard.communicationSection.addNew"),
+      onHeaderButtonClick: () => communicationTrackerRef.current?.handleAddNew(),
+      subComponent: <CommunicationTracker ref={communicationTrackerRef} entityId={ag.id} entityType="agent" />,
+    },
+    {
+      iconName: IconName.ChatCircleDots,
+      title: `${t("dashboard.volunteerProfile.coordinatorComments")} • ${ag.comments?.length ?? 0}`,
+      subComponent: <Comments agent={ag} />,
+    },
+  ];
 
   const getSections = () => {
     if (volunteer) return getVolunteerSections(volunteer);
-    if (agent) return getAgentSections();
+    if (agent) return getAgentSections(agent);
     if (opportunity) return getOpportunitySections(opportunity);
     return [];
   };

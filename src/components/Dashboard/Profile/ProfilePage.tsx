@@ -4,7 +4,7 @@ import { ArrowLeftIcon } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
 import { SectionCard } from "./common/SectionCard";
 import { BackLink, PageContainer } from "./styles";
-import { ProfileEntityProps } from "./types/types";
+import { ProfileEntityProps } from "./types";
 
 const ProfilePage = (props: ProfileEntityProps) => {
   const { t, i18n } = useTranslation();

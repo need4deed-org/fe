@@ -17,7 +17,7 @@ import {
   UsersIcon,
 } from "@phosphor-icons/react";
 import { JSX } from "react";
-import { IconName } from "../types/types";
+import { IconName } from "../types";
 
 type IconMap = {
   [key in IconName]: JSX.Element;

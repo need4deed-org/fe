@@ -1,6 +1,8 @@
 import { ApiOpportunityGet, ApiVolunteerGet } from "need4deed-sdk";
 import { ApiAgentProfileGet } from "./agent";
 
+export type EntityType = "volunteer" | "opportunity" | "agent";
+
 export type ProfileEntityProps =
   | { volunteer: ApiVolunteerGet; opportunity?: never; agent?: never }
   | { opportunity: ApiOpportunityGet; volunteer?: never; agent?: never }

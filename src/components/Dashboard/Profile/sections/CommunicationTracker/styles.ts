@@ -109,7 +109,7 @@ export const Select = styled.select`
   font-size: var(--text-p-font-size);
   line-height: var(--text-p-line-height);
   font-weight: var(--font-weight-regular);
-  color: var(--color-aubergine);
+  color: var(--color-midnight);
   font-family: var(--bs-body-font-family);
   background: var(--color-white);
   cursor: pointer;

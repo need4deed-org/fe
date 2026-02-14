@@ -5,9 +5,8 @@ import { useGetQuery } from "@/hooks";
 import { ApiOpportunityGet, ApiVolunteerGet } from "need4deed-sdk";
 import { ReactNode } from "react";
 import styled from "styled-components";
-import { ProfileEntityType } from "./ProfileLayout";
 import ProfilePage from "./ProfilePage";
-import { ApiAgentProfileGet } from "./types/agent";
+import { ApiAgentProfileGet, EntityType } from "./types";
 
 const LoadingContainer = styled(CenteredWrapper)`
   padding: 2rem;
@@ -23,7 +22,7 @@ type LoadingErrorWrapperProps = {
   isError: boolean;
   error: unknown;
   data: unknown;
-  entityType: ProfileEntityType;
+  entityType: EntityType;
   children: ReactNode;
 };
 
@@ -138,7 +137,7 @@ const AgentProfileController = ({ entityId }: EntityIdProps) => {
 
 type Props = {
   entityId: string;
-  entityType: ProfileEntityType;
+  entityType: EntityType;
 };
 
 export const ProfileController = ({ entityId, entityType }: Props) => {
