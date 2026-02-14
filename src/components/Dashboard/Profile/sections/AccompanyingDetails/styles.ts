@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { HasError, IsEditing } from "@/types";
 
 export const NotAccompanyingMessage = styled.p`
   color: var(--color-grey-500);
@@ -7,7 +8,7 @@ export const NotAccompanyingMessage = styled.p`
   margin: 0;
 `;
 
-export const Container = styled.div<{ $isEditing: boolean }>`
+export const Container = styled.div<IsEditing>`
   display: flex;
   flex-direction: column;
   gap: ${(props) => (props.$isEditing ? "var(--spacing-16)" : "0")};
@@ -55,7 +56,7 @@ export const TimeInputWrapper = styled.div`
   flex: 1;
 `;
 
-export const TimeInput = styled.input<{ $hasError?: boolean }>`
+export const TimeInput = styled.input<HasError>`
   width: 100%;
   border-radius: var(--editableField-fieldWrapper-input-borderRadius);
   padding: var(--editableField-fieldWrapper-input-padding);
