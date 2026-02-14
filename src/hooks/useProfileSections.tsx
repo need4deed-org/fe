@@ -55,7 +55,7 @@ export const useProfileSections = ({ volunteer, opportunity, agent }: ProfileEnt
       title: t("dashboard.communicationSection.title"),
       headerButtonName: t("dashboard.communicationSection.addNew"),
       onHeaderButtonClick: () => communicationTrackerRef.current?.handleAddNew(),
-      subComponent: <CommunicationTracker ref={communicationTrackerRef} volunteer={vol} />,
+      subComponent: <CommunicationTracker ref={communicationTrackerRef} entityId={vol.id} entityType="volunteer" />,
     },
     {
       iconName: IconName.ChatCircleDots,
@@ -120,6 +120,13 @@ export const useProfileSections = ({ volunteer, opportunity, agent }: ProfileEnt
   };
 
   const getAgentSections = (ag: ApiAgentProfileGet): SectionCardProps[] => [
+    {
+      iconName: IconName.ChatsTeardrop,
+      title: t("dashboard.communicationSection.title"),
+      headerButtonName: t("dashboard.communicationSection.addNew"),
+      onHeaderButtonClick: () => communicationTrackerRef.current?.handleAddNew(),
+      subComponent: <CommunicationTracker ref={communicationTrackerRef} entityId={ag.id} entityType="agent" />,
+    },
     {
       iconName: IconName.ChatCircleDots,
       title: `${t("dashboard.volunteerProfile.coordinatorComments")} • ${ag.comments?.length ?? 0}`,
