@@ -1,8 +1,8 @@
 import { EmptyPlaceholder } from "@/components/core/common/EmptyPlaceholder";
 import { Tags } from "@/components/core/common/Tags";
-import { EditableField } from "@/components/EditableField/EditableField";
 import { formatAvailability } from "@/components/Dashboard/Profile/sections/VolunteerProfile/formatters";
-import { ApiOpportunityGet, LangPurpose } from "need4deed-sdk";
+import { EditableField } from "@/components/EditableField/EditableField";
+import { ApiOpportunityGet, Lang, LangPurpose } from "need4deed-sdk";
 import { useTranslation } from "react-i18next";
 import { FormDetails } from "../shared/styles";
 import { extractOptionTitles, formatLanguagesByPurpose } from "./formatters";
@@ -15,12 +15,12 @@ type Props = {
 
 export function OpportunityDetailsDisplay({ opportunity }: Props) {
   const { t, i18n } = useTranslation();
-  const lang = i18n.language;
+  const lang = i18n.language as Lang;
   const opp = opportunity as OpportunityWithDetails;
   const prefix = "dashboard.opportunityProfile.opportunityDetails";
 
-  const mainCommunication = formatLanguagesByPurpose(opp.languages, LangPurpose.GENERAL);
-  const residentsSpeak = formatLanguagesByPurpose(opp.languages, LangPurpose.RECIPIENT);
+  const mainCommunication = formatLanguagesByPurpose(opp.languages, LangPurpose.GENERAL, t);
+  const residentsSpeak = formatLanguagesByPurpose(opp.languages, LangPurpose.RECIPIENT, t);
   const schedule = formatAvailability(opp.availability, t);
   const activities = extractOptionTitles(opp.activities, lang);
   const skills = extractOptionTitles(opp.skills, lang);
@@ -51,13 +51,7 @@ export function OpportunityDetailsDisplay({ opportunity }: Props) {
         setValue={() => {}}
       />
 
-      <EditableField
-        mode="display"
-        type="text"
-        label={t(`${prefix}.schedule`)}
-        value={schedule}
-        setValue={() => {}}
-      />
+      <EditableField mode="display" type="text" label={t(`${prefix}.schedule`)} value={schedule} setValue={() => {}} />
 
       <EditableField
         mode="display"
@@ -81,11 +75,7 @@ export function OpportunityDetailsDisplay({ opportunity }: Props) {
       <FieldRow data-testid="opportunity-details-skills">
         <label>{t(`${prefix}.skills`)}</label>
         <TagsValue>
-          {skills.length > 0 ? (
-            <Tags tags={skills} backgroundColor="var(--color-pink-50)" />
-          ) : (
-            <EmptyPlaceholder />
-          )}
+          {skills.length > 0 ? <Tags tags={skills} backgroundColor="var(--color-pink-50)" /> : <EmptyPlaceholder />}
         </TagsValue>
       </FieldRow>
     </FormDetails>

@@ -73,7 +73,7 @@ const InputWrapper = styled.div<HasError>`
 
   textarea {
     resize: vertical;
-    min-height: 80px;
+    min-height: var(--editableField-fieldWrapper-textarea-minHeight);
   }
 `;
 
