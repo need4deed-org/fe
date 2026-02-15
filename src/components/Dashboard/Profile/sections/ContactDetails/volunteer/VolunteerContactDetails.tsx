@@ -1,17 +1,17 @@
 "use client";
-import Button from "@/components/core/button/Button/Button";
-import { EditableField } from "@/components/EditableField/EditableField";
 import { useUpdateVolunteerContact } from "@/hooks/useUpdateVolunteerContact";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ApiVolunteerGet, VolunteerCommunicationType } from "need4deed-sdk";
 import { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { FormButtonRow, FormContainer, FormDetails } from "../../shared/styles";
+import { FormContainer } from "../../shared/styles";
 import { EditableSectionRef } from "../../shared/types";
 import { useEnumTranslation } from "../shared";
 import { formatAddress, parseAddress } from "./volunteerAddressUtils";
 import { createVolunteerContactDetailsSchema, VolunteerContactDetailsFormData } from "./volunteerContactDetailsSchema";
+import { VolunteerContactDetailsDisplay } from "./VolunteerContactDetailsDisplay";
+import { VolunteerContactDetailsEdit } from "./VolunteerContactDetailsEdit";
 
 type Props = {
   volunteer: ApiVolunteerGet;
@@ -44,16 +44,13 @@ export const VolunteerContactDetails = forwardRef<EditableSectionRef, Props>(fun
     [volunteer],
   );
 
-  const {
-    control,
-    handleSubmit,
-    reset,
-    formState: { errors, isValid, isDirty },
-  } = useForm<VolunteerContactDetailsFormData>({
+  const methods = useForm<VolunteerContactDetailsFormData>({
     resolver: zodResolver(schema),
     mode: "onChange",
     defaultValues: initialFormValues,
   });
+
+  const { handleSubmit, reset, watch } = methods;
 
   const handleEditClick = () => setIsEditing(true);
 
@@ -89,93 +86,27 @@ export const VolunteerContactDetails = forwardRef<EditableSectionRef, Props>(fun
     reset(initialFormValues);
   }, [initialFormValues, isEditing, reset]);
 
-  const mode = isEditing ? "edit" : "display";
+  const formValues = watch();
 
   return (
-    <FormContainer data-testid="volunteer-contact-details-container" $isEditing={isEditing}>
-      <FormDetails>
-        <Controller
-          name="phone"
-          control={control}
-          render={({ field }) => (
-            <EditableField
-              mode={mode}
-              type="text"
-              label={t("dashboard.volunteerProfile.contactDetails.phone")}
-              value={field.value}
-              setValue={field.onChange}
-              errorMessage={errors.phone?.message}
-            />
-          )}
-        />
-
-        <Controller
-          name="email"
-          control={control}
-          render={({ field }) => (
-            <EditableField
-              mode={mode}
-              type="text"
-              label={t("dashboard.volunteerProfile.contactDetails.email")}
-              value={field.value}
-              setValue={field.onChange}
-              errorMessage={errors.email?.message}
-            />
-          )}
-        />
-
-        <Controller
-          name="address"
-          control={control}
-          render={({ field }) => (
-            <EditableField
-              mode={mode}
-              type="text"
-              label={t("dashboard.volunteerProfile.contactDetails.address")}
-              value={field.value}
-              setValue={field.onChange}
-              errorMessage={errors.address?.message}
-            />
-          )}
-        />
-
-        <Controller
-          name="preferredCommunicationType"
-          control={control}
-          render={({ field }) => (
-            <EditableField
-              mode={mode}
-              type="checkbox-list"
-              label={t("dashboard.volunteerProfile.contactDetails.preferredCommunicationType.label")}
-              value={keysToLabels(field.value)}
-              setValue={(value) => field.onChange(labelsToKeys(Array.isArray(value) ? value : [value]))}
-              options={options}
-              errorMessage={errors.preferredCommunicationType?.message}
-            />
-          )}
-        />
-      </FormDetails>
-
-      {isEditing && (
-        <FormButtonRow>
-          <Button
-            text={t("dashboard.volunteerProfile.contactDetails.cancel")}
-            onClick={handleCancel}
-            width="auto"
-            padding="var(--volunteer-profile-section-card-header-button-padding)"
-            backgroundcolor="var(--color-white)"
-            textColor="var(--color-aubergine)"
-            border="var(--volunteer-profile-section-card-header-button-border)"
+    <FormProvider {...methods}>
+      <FormContainer data-testid="volunteer-contact-details-container" $isEditing={isEditing}>
+        {isEditing ? (
+          <VolunteerContactDetailsEdit
+            options={options}
+            keysToLabels={keysToLabels as (keys: string[]) => string[]}
+            labelsToKeys={labelsToKeys as (labels: (string | number)[]) => string[]}
+            onCancel={handleCancel}
+            onSubmit={handleSubmit(onSubmit)}
+            isPending={isPending}
           />
-          <Button
-            text={t("dashboard.volunteerProfile.contactDetails.saveChanges")}
-            onClick={handleSubmit(onSubmit)}
-            width="auto"
-            padding="var(--volunteer-profile-section-card-header-button-padding)"
-            disabled={!isDirty || !isValid || isPending}
+        ) : (
+          <VolunteerContactDetailsDisplay
+            values={formValues}
+            communicationTypeLabels={keysToLabels(formValues.preferredCommunicationType ?? [])}
           />
-        </FormButtonRow>
-      )}
-    </FormContainer>
+        )}
+      </FormContainer>
+    </FormProvider>
   );
 });
