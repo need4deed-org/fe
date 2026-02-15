@@ -6,7 +6,8 @@ import { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from "r
 import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { FormContainer } from "../../shared/styles";
-import { EditableSectionRef } from "../../shared/types";
+import { EditableSectionProps, EditableSectionRef } from "../../shared/types";
+import { useEditingChangeNotifier } from "../../shared/useEditingChangeNotifier";
 import { useEnumTranslation } from "../shared";
 import { formatAddress, parseAddress } from "./volunteerAddressUtils";
 import { createVolunteerContactDetailsSchema, VolunteerContactDetailsFormData } from "./volunteerContactDetailsSchema";
@@ -15,17 +16,19 @@ import { VolunteerContactDetailsEdit } from "./VolunteerContactDetailsEdit";
 
 type Props = {
   volunteer: ApiVolunteerGet;
-};
+} & EditableSectionProps;
 
 const COMMUNICATION_TYPES = Object.values(VolunteerCommunicationType);
 
 export const VolunteerContactDetails = forwardRef<EditableSectionRef, Props>(function VolunteerContactDetails(
-  { volunteer },
+  { volunteer, onEditingChange },
   ref,
 ) {
   const { t } = useTranslation();
   const { mutate: updateContact, isPending } = useUpdateVolunteerContact(String(volunteer.id));
   const [isEditing, setIsEditing] = useState(false);
+
+  useEditingChangeNotifier(isEditing, onEditingChange);
 
   const { options, keysToLabels, labelsToKeys } = useEnumTranslation(
     COMMUNICATION_TYPES,

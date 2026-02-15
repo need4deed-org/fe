@@ -8,7 +8,7 @@ import { RefugeeAccommodationCentre } from "@/components/Dashboard/Profile/secti
 import { EditableSectionRef } from "@/components/Dashboard/Profile/sections/shared/types";
 import { IconName } from "@/components/Dashboard/Profile/types";
 import { ApiOpportunityGet, VolunteerStateTypeType } from "need4deed-sdk";
-import { useRef } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | undefined) => {
@@ -18,6 +18,16 @@ export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | u
   const racRef = useRef<EditableSectionRef>(null);
   const accompanyingDetailsRef = useRef<EditableSectionRef>(null);
   const opportunityDetailsRef = useRef<EditableSectionRef>(null);
+
+  const [isOppDetailsEditing, setIsOppDetailsEditing] = useState(false);
+  const [isContactEditing, setIsContactEditing] = useState(false);
+  const [isRacEditing, setIsRacEditing] = useState(false);
+  const [isAccompanyingEditing, setIsAccompanyingEditing] = useState(false);
+
+  const handleOppDetailsEditingChange = useCallback((editing: boolean) => setIsOppDetailsEditing(editing), []);
+  const handleContactEditingChange = useCallback((editing: boolean) => setIsContactEditing(editing), []);
+  const handleRacEditingChange = useCallback((editing: boolean) => setIsRacEditing(editing), []);
+  const handleAccompanyingEditingChange = useCallback((editing: boolean) => setIsAccompanyingEditing(editing), []);
 
   if (!opportunity) return null;
 
@@ -30,32 +40,62 @@ export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | u
     {
       iconName: IconName.Wrench,
       title: t("dashboard.opportunityProfile.opportunityDetails.title"),
-      headerButtonName: t("dashboard.opportunityProfile.editButtonName"),
-      onHeaderButtonClick: () => opportunityDetailsRef.current?.handleEditClick(),
-      subComponent: <OpportunityDetails ref={opportunityDetailsRef} opportunity={opportunity} />,
+      ...(!isOppDetailsEditing && {
+        headerButtonName: t("dashboard.opportunityProfile.editButtonName"),
+        onHeaderButtonClick: () => opportunityDetailsRef.current?.handleEditClick(),
+      }),
+      subComponent: (
+        <OpportunityDetails
+          ref={opportunityDetailsRef}
+          opportunity={opportunity}
+          onEditingChange={handleOppDetailsEditingChange}
+        />
+      ),
     },
     {
       iconName: IconName.ChatsCircle,
       title: t("dashboard.opportunityProfile.contactDetailsTitle"),
-      headerButtonName: t("dashboard.opportunityProfile.editButtonName"),
-      onHeaderButtonClick: () => opportunityContactDetailsRef.current?.handleEditClick(),
-      subComponent: <ContactDetails ref={opportunityContactDetailsRef} opportunity={opportunity} />,
+      ...(!isContactEditing && {
+        headerButtonName: t("dashboard.opportunityProfile.editButtonName"),
+        onHeaderButtonClick: () => opportunityContactDetailsRef.current?.handleEditClick(),
+      }),
+      subComponent: (
+        <ContactDetails
+          ref={opportunityContactDetailsRef}
+          opportunity={opportunity}
+          onEditingChange={handleContactEditingChange}
+        />
+      ),
     },
     {
       iconName: IconName.House,
       title: t("dashboard.opportunityProfile.racTitle"),
-      headerButtonName: t("dashboard.opportunityProfile.editButtonName"),
-      onHeaderButtonClick: () => racRef.current?.handleEditClick(),
-      subComponent: <RefugeeAccommodationCentre ref={racRef} opportunity={opportunity} />,
+      ...(!isRacEditing && {
+        headerButtonName: t("dashboard.opportunityProfile.editButtonName"),
+        onHeaderButtonClick: () => racRef.current?.handleEditClick(),
+      }),
+      subComponent: (
+        <RefugeeAccommodationCentre
+          ref={racRef}
+          opportunity={opportunity}
+          onEditingChange={handleRacEditingChange}
+        />
+      ),
     },
     {
       iconName: IconName.Users,
       title: t("dashboard.opportunityProfile.accompanyingDetailsTitle"),
-      ...(isAccompanyingType && {
+      ...(isAccompanyingType && !isAccompanyingEditing && {
         headerButtonName: t("dashboard.opportunityProfile.editButtonName"),
         onHeaderButtonClick: () => accompanyingDetailsRef.current?.handleEditClick?.(),
       }),
-      subComponent: <AccompanyingDetails ref={accompanyingDetailsRef} opportunity={opportunity} />,
+      subComponent: (
+        <AccompanyingDetails
+          ref={accompanyingDetailsRef}
+          opportunity={opportunity}
+          onEditingChange={handleAccompanyingEditingChange}
+        />
+      ),
     },
     {
       iconName: IconName.ChatCircleDots,

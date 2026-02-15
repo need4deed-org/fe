@@ -1388,6 +1388,7 @@ html {
     --volunteer-profile-section-card-padding: 24px;
     --volunteer-profile-section-card-gap: 8px;
     --volunteer-profile-section-card-icon-size: 40px;
+    --volunteer-profile-section-card-header-height: 56px;
     --volunteer-profile-section-card-header-info-gap: 24px;
     --volunteer-profile-section-card-header-button-height: 56px;
     --volunteer-profile-section-card-header-button-textFontSize: 20px;

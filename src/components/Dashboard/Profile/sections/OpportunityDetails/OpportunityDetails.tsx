@@ -2,19 +2,22 @@
 import { ApiOpportunityGet } from "need4deed-sdk";
 import { forwardRef, useImperativeHandle, useState } from "react";
 import { FormContainer } from "../shared/styles";
-import { EditableSectionRef } from "../shared/types";
+import { EditableSectionProps, EditableSectionRef } from "../shared/types";
+import { useEditingChangeNotifier } from "../shared/useEditingChangeNotifier";
 import { OpportunityDetailsDisplay } from "./OpportunityDetailsDisplay";
 import { OpportunityDetailsEdit } from "./OpportunityDetailsEdit";
 
 type Props = {
   opportunity: ApiOpportunityGet;
-};
+} & EditableSectionProps;
 
 export const OpportunityDetails = forwardRef<EditableSectionRef, Props>(function OpportunityDetails(
-  { opportunity },
+  { opportunity, onEditingChange },
   ref,
 ) {
   const [isEditing, setIsEditing] = useState(false);
+
+  useEditingChangeNotifier(isEditing, onEditingChange);
 
   const handleEditClick = () => setIsEditing(true);
   const handleCancel = () => setIsEditing(false);

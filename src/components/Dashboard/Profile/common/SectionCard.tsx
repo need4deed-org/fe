@@ -18,6 +18,7 @@ export const Card = styled.div`
 const CardHeader = styled.div`
   display: flex;
   justify-content: space-between;
+  height: var(--volunteer-profile-section-card-header-height);
 `;
 
 const CardHeaderInfo = styled.div`

@@ -6,7 +6,8 @@ import { forwardRef, useImperativeHandle, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { FormContainer } from "../shared/styles";
-import { EditableSectionRef } from "../shared/types";
+import { EditableSectionProps, EditableSectionRef } from "../shared/types";
+import { useEditingChangeNotifier } from "../shared/useEditingChangeNotifier";
 import { apiLanguagesToFormValues, toLanguagesForForm } from "./formatters";
 import { createOrganisationDetailsSchema, OrganisationDetailsFormData } from "./organisationDetailsSchema";
 import { OrganisationDetailsDisplay } from "./OrganisationDetailsDisplay";
@@ -14,11 +15,16 @@ import { OrganisationDetailsEdit } from "./OrganisationDetailsEdit";
 
 type Props = {
   agent: ApiAgentProfileGet;
-};
+} & EditableSectionProps;
 
-export const OrganisationDetails = forwardRef<EditableSectionRef, Props>(function OrganisationDetails({ agent }, ref) {
+export const OrganisationDetails = forwardRef<EditableSectionRef, Props>(function OrganisationDetails(
+  { agent, onEditingChange },
+  ref,
+) {
   const { t, i18n } = useTranslation();
   const [isEditing, setIsEditing] = useState(false);
+
+  useEditingChangeNotifier(isEditing, onEditingChange);
   const { data: apiLanguages } = useApiLanguages();
 
   const details = agent.organisationDetails;

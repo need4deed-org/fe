@@ -13,7 +13,7 @@ import { VolunteerProfile, VolunteerProfileRef } from "@/components/Dashboard/Pr
 import { VolunteerProfileDocument } from "@/components/Dashboard/Profile/sections/VolunteerProfileDocument";
 import { IconName } from "@/components/Dashboard/Profile/types";
 import { ApiVolunteerGet } from "need4deed-sdk";
-import { useRef } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefined) => {
@@ -24,22 +24,40 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
   const communicationTrackerRef = useRef<CommunicationTrackerRef>(null);
   const appreciationRef = useRef<AppreciationRef>(null);
 
+  const [isContactEditing, setIsContactEditing] = useState(false);
+  const [isProfileEditing, setIsProfileEditing] = useState(false);
+
+  const handleContactEditingChange = useCallback((editing: boolean) => setIsContactEditing(editing), []);
+  const handleProfileEditingChange = useCallback((editing: boolean) => setIsProfileEditing(editing), []);
+
   if (!volunteer) return null;
 
   const sections: SectionCardProps[] = [
     {
       iconName: IconName.ChatsCircle,
       title: t("dashboard.volunteerProfile.contactDetailsTitle"),
-      headerButtonName: t("dashboard.volunteerProfile.editButtonName"),
-      onHeaderButtonClick: () => contactDetailsRef.current?.handleEditClick(),
-      subComponent: <ContactDetails ref={contactDetailsRef} volunteer={volunteer} />,
+      ...(!isContactEditing && {
+        headerButtonName: t("dashboard.volunteerProfile.editButtonName"),
+        onHeaderButtonClick: () => contactDetailsRef.current?.handleEditClick(),
+      }),
+      subComponent: (
+        <ContactDetails ref={contactDetailsRef} volunteer={volunteer} onEditingChange={handleContactEditingChange} />
+      ),
     },
     {
       iconName: IconName.UserCircle,
       title: t("dashboard.volunteerProfile.volunteerProfile"),
-      headerButtonName: t("dashboard.volunteerProfile.editButtonName"),
-      onHeaderButtonClick: () => volunteerProfileRef.current?.handleEditClick(),
-      subComponent: <VolunteerProfile ref={volunteerProfileRef} volunteer={volunteer} />,
+      ...(!isProfileEditing && {
+        headerButtonName: t("dashboard.volunteerProfile.editButtonName"),
+        onHeaderButtonClick: () => volunteerProfileRef.current?.handleEditClick(),
+      }),
+      subComponent: (
+        <VolunteerProfile
+          ref={volunteerProfileRef}
+          volunteer={volunteer}
+          onEditingChange={handleProfileEditingChange}
+        />
+      ),
     },
     {
       iconName: IconName.ShootingStar,
