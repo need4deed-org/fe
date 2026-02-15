@@ -2,7 +2,7 @@ import { IconDiv } from "@/components/styled/container";
 import { PropsWithChildren, ReactNode } from "react";
 import styled from "styled-components";
 import { iconNameMap } from "./icon";
-import { IconName } from "../types/types";
+import { IconName } from "../types";
 import { Heading2 } from "@/components/styled/text";
 import { Button } from "@/components/core/button";
 

@@ -1,4 +1,5 @@
 "use client";
+import { EntityType } from "@/components/Dashboard/Profile/types/types";
 import { useCreateComment } from "@/hooks/useCreateComment";
 import { useDeleteComment } from "@/hooks/useDeleteComment";
 import { useUpdateComment } from "@/hooks/useUpdateComment";
@@ -11,8 +12,6 @@ import { useCommentDelete } from "./hooks/useCommentDelete";
 import { useCommentEdit } from "./hooks/useCommentEdit";
 import { useCommentMenu } from "./hooks/useCommentMenu";
 import { AddCommentButton, Container, NewCommentSection, TextArea } from "./styles";
-
-type EntityType = "volunteer" | "opportunity";
 
 type Props = {
   entityId: Id;

@@ -11,6 +11,7 @@ export const apiPathLogin = `/${apiPrefix}/auth/login`;
 export const apiPathAuthRefresh = `/${apiPrefix}/auth/refresh`;
 export const apiPathAuthEmailDomain = `/${apiPrefix}/auth-email-domain/`;
 export const apiPathOpportunity = `/${apiPrefix}/opportunity`;
+export const apiPathAgent = `/${apiPrefix}/agent`;
 export const apiPathOption = `/${apiPrefix}/option`;
 export const apiProfilePath = `/volunteer/9`;
 export const apiPathMe = `/${apiPrefix}/user/me`;
@@ -51,6 +52,7 @@ export enum DashboardRoutes {
   Home = "/dashboard/home",
   Volunteers = "/dashboard/volunteers",
   Opportunities = "/dashboard/opportunities",
+  Agents = "/dashboard/agents",
   Racs = "/dashboard/racs",
   Posts = "/dashboard/posts",
   Calendar = "/dashboard/calendar",
@@ -62,3 +64,5 @@ export const questionMark = "?";
 export const supportedLangs = Object.values(Lang) as string[];
 
 export const EMPTY_PLACEHOLDER_VALUE = "–";
+
+export const MAX_DESCRIPTION_LENGTH = 500;

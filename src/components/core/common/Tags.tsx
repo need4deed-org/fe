@@ -16,6 +16,7 @@ const bgTextColorMap = {
   "var(--color-white)": "var(--color-midnight)",
   "var(--color-pink-100)": "var(--color-midnight)",
   "var(--color-pink-50)": "var(--color-midnight-light)",
+  "var(--color-salmon)": "var(--color-midnight)",
 };
 
 type TagBackgroundKeys = keyof typeof bgTextColorMap;

@@ -92,6 +92,7 @@ html {
   --color-magnolia: rgba(246, 238, 231, 1);
   --color-magnolia-light: rgba(248, 244, 241, 1);
   --color-papaya: rgba(255, 125, 104, 1);
+  --color-salmon: rgba(254, 234, 231, 1);
   --color-dimmed-background: rgba(0, 0, 0, 0.4);
 
   /* Base colors */
@@ -291,9 +292,16 @@ html {
   --communication-tracker-input-icon-offset: 16px;
   --communication-tracker-input-padding-left: 48px;
   --communication-tracker-dropdown-arrow-size: 14px 8px;
+  --communication-tracker-checkmark-width: 6px;
+  --communication-tracker-checkmark-height: 12px;
+  --communication-tracker-checkmark-border-width: 0 2.5px 2.5px 0;
+  --communication-tracker-checkmark-transform: translate(-50%, -60%) rotate(45deg);
   --communication-tracker-button-height: 56px;
   --communication-tracker-dialog-box-shadow: 0px 10px 30px -12px rgba(143, 81, 138, 0.2);
   --communication-tracker-popover-box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+
+  /* dropdown */
+  --dropdown-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 
   /* dialog */
   --dialog-title-font-size: 28px;
@@ -302,6 +310,11 @@ html {
   --dialog-max-width: 620px;
   --dialog-box-shadow: 0px 10px 30px -12px rgba(143, 81, 138, 0.2);
   --dialog-option-padding: 0px;
+  --dialog-checkmark-width: 6px;
+  --dialog-checkmark-height: 12px;
+  --dialog-checkmark-border-width: 0 2.5px 2.5px 0;
+  --dialog-checkmark-border-radius: 0;
+  --dialog-checkmark-transform: translate(-50%, -60%) rotate(45deg);
 
   /* expanded section */
   --expanded-section-border-width: 4px;
@@ -477,6 +490,7 @@ html {
   --image-circle-pic-size: 60px;
 
   /* form input */
+  --form-input-height: 3rem;
   --form-input-error-message-color: var(--color-red-600);
 
   /* checkButton */
@@ -1409,61 +1423,147 @@ html {
 }
 
 :root {
+  /* EditModeWrapper */
+  --editableField-editModeWrapper-width: var(--percent-100);
+
+  /* FieldWrapper */
   --editableField-fieldWrapper-display: flex;
   --editableField-fieldWrapper-borderBottom: none;
   --editableField-fieldWrapper-padding: 1rem 0;
-  --editableField-fieldWrapper-padding-error: 16px 0 0 0;
-  --editableField-fieldWrapper-fontSize: 20px;
-  --editableField-fieldWrapper-width: 100%;
+  --editableField-fieldWrapper-padding-error: var(--spacing-16) 0 0 0;
+  --editableField-fieldWrapper-fontSize: var(--font-size-lg);
+  --editableField-fieldWrapper-width: var(--percent-100);
   --editableField-fieldWrapper-alignItems: center;
-  --editableField-fieldWrapper-gap: 32px;
-  --editableField-fieldWrapper-label-fontWeight: bold;
-  --editableField-fieldWrapper-label-fontSize: 20px;
+  --editableField-fieldWrapper-gap: var(--spacing-32);
+  --editableField-fieldWrapper-label-fontWeight: var(--font-weight-bold);
+  --editableField-fieldWrapper-label-fontSize: var(--font-size-lg);
   --editableField-fieldWrapper-label-width: 240px;
   --editableField-fieldWrapper-label-flexShrink: 0;
-  --editableField-fieldWrapper-input-borderRadius: 8px;
-  --editableField-fieldWrapper-input-width: 100%;
-  --editableField-fieldWrapper-input-padding: 16px;
-  --editableField-fieldWrapper-input-paddingRight: 48px;
-  --editableField-fieldWrapper-input-border: 1px solid var(--color-grey-200);
-  --editableField-clearButton-padding: 4px;
+  --editableField-fieldWrapper-span-flex: 1;
+  --editableField-fieldWrapper-input-borderRadius: var(--border-radius-small);
+  --editableField-fieldWrapper-input-width: var(--percent-100);
+  --editableField-fieldWrapper-input-padding: var(--spacing-16);
+  --editableField-fieldWrapper-input-paddingRight: var(--spacing-48);
+  --editableField-fieldWrapper-input-border: var(--border-width-thin) solid var(--color-grey-200);
+  --editableField-fieldWrapper-input-flex: 1;
+  --editableField-fieldWrapper-input-minWidth: 0;
+  --editableField-fieldWrapper-textarea-minHeight: 80px;
+
+  /* Shared focus/error borders */
+  --editableField-border-error: var(--border-width-medium) solid var(--color-red-600);
+  --editableField-border-focus: var(--border-width-medium) solid var(--color-green-200);
+  --editableField-focus-outline: none;
+
+  /* InputWrapper */
+  --editableField-inputWrapper-position: relative;
+  --editableField-inputWrapper-display: flex;
+  --editableField-inputWrapper-alignItems: center;
+  --editableField-inputWrapper-flex: 1;
+  --editableField-inputWrapper-width: var(--percent-100);
+  --editableField-inputWrapper-input-flex: 1;
+  --editableField-inputWrapper-input-minWidth: 0;
+  --editableField-inputWrapper-input-width: var(--percent-100);
+
+  /* ClearButton */
+  --editableField-clearButton-position: absolute;
+  --editableField-clearButton-right: var(--spacing-12);
+  --editableField-clearButton-background: none;
+  --editableField-clearButton-border: none;
+  --editableField-clearButton-padding: var(--spacing-4);
+  --editableField-clearButton-display: flex;
+  --editableField-clearButton-alignItems: center;
+  --editableField-clearButton-justifyContent: center;
+  --editableField-clearButton-color: var(--color-grey-400);
+  --editableField-clearButton-transition: color 0.2s;
+  --editableField-clearButton-hover-color: var(--color-midnight);
+
+  /* DropdownWrapper */
   --editableField-dropdownWrapper-position: relative;
-  --editableField-dropdownWrapper-width: 100%;
-  --editableField-dropdownButton-border: 1px solid var(--color-grey-200);
-  --editableField-dropdownButton-padding: 16px;
-  --editableField-dropdownButton-borderRadius: 8px;
+  --editableField-dropdownWrapper-width: var(--percent-100);
+  --editableField-dropdownWrapper-flex: 1;
+
+  /* DropdownButton */
+  --editableField-dropdownButton-border: var(--border-width-thin) solid var(--color-grey-200);
+  --editableField-dropdownButton-padding: var(--spacing-16);
+  --editableField-dropdownButton-borderRadius: var(--border-radius-small);
   --editableField-dropdownButton-cursor: pointer;
+  --editableField-dropdownButton-color: var(--color-midnight);
   --editableField-dropdownButton-display: flex;
   --editableField-dropdownButton-justifyContent: space-between;
   --editableField-dropdownButton-alignItems: center;
   --editableField-dropdownButton-userSelect: none;
+  --editableField-dropdownButton-transition: border 0.2s ease;
+
+  /* Arrow */
   --editableField-arrow-transition: 0.2s;
   --editableField-arrow-transform: rotate(0deg);
   --editableField-arrow-open-transform: rotate(180deg);
+
+  /* DropdownList */
   --editableField-dropdownList-position: absolute;
   --editableField-dropdownList-top: 110%;
   --editableField-dropdownList-left: 0;
-  --editableField-dropdownList-width: 100%;
-  --editableField-dropdownList-background: white;
-  --editableField-dropdownList-border: 1px solid var(--color-grey-200);
-  --editableField-dropdownList-borderRadius: 8px;
-  --editableField-dropdownList-padding: 16px;
-  --editableField-dropdownList-gap: 4px;
+  --editableField-dropdownList-width: var(--percent-100);
+  --editableField-dropdownList-background: var(--color-white);
+  --editableField-dropdownList-border: var(--border-width-thin) solid var(--color-grey-200);
+  --editableField-dropdownList-borderRadius: var(--border-radius-small);
+  --editableField-dropdownList-padding: var(--spacing-16);
   --editableField-dropdownList-zIndex: 20;
+  --editableField-dropdownList-boxShadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  --editableField-dropdownList-display: flex;
+  --editableField-dropdownList-flexDirection: column;
+  --editableField-dropdownList-alignItems: stretch;
+  --editableField-dropdownList-gap: var(--spacing-4);
+  --editableField-dropdownList-maxHeight: 240px;
+  --editableField-dropdownList-overflowY: auto;
+
+  /* OptionRow */
   --editableField-optionRow-display: flex;
   --editableField-optionRow-alignItems: center;
-  --editableField-optionRow-justifyContent: space-between;
-  --editableField-optionRow-padding: 8px 12px;
-  --editableField-optionRow-borderRadius: 6px;
-  --editableField-optionRow-gap: 12px;
+  --editableField-optionRow-justifyContent: flex-start;
+  --editableField-optionRow-padding: var(--spacing-8) var(--spacing-12);
   --editableField-optionRow-cursor: pointer;
   --editableField-optionRow-userSelect: none;
-  --editableField-optionRow-width: 100%;
-  --editableField-optionRow-input-width: 10%;
+  --editableField-optionRow-width: var(--percent-100);
+  --editableField-optionRow-borderRadius: 6px;
+  --editableField-optionRow-transition: var(--transition-background);
+  --editableField-optionRow-gap: var(--spacing-12);
+  --editableField-optionRow-selectedBg: var(--color-orchid-subtle);
+  --editableField-optionRow-hover-bg: var(--color-orchid-light);
+
+  /* OptionRow checkbox */
+  --editableField-optionRow-checkbox-size: var(--spacing-20);
+  --editableField-optionRow-checkbox-cursor: pointer;
+  --editableField-optionRow-checkbox-margin: 0;
+  --editableField-optionRow-checkbox-flex: 0 0 auto;
+  --editableField-optionRow-checkbox-accentColor: var(--color-green-500);
+
+  /* OptionRow radio */
+  --editableField-optionRow-radio-appearance: none;
+  --editableField-optionRow-radio-size: var(--spacing-20);
+  --editableField-optionRow-radio-border: var(--border-width-medium) solid var(--color-grey-400);
+  --editableField-optionRow-radio-borderRadius: var(--percent-50);
+  --editableField-optionRow-radio-margin: 0;
+  --editableField-optionRow-radio-flex: 0 0 auto;
+  --editableField-optionRow-radio-checked-bg: var(--color-green-200);
+  --editableField-optionRow-radio-checked-borderColor: var(--color-green-200);
+  --editableField-optionRow-radio-checkmark-width: 5px;
+  --editableField-optionRow-radio-checkmark-height: 10px;
+  --editableField-optionRow-radio-checkmark-border: solid var(--color-blue-700);
+  --editableField-optionRow-radio-checkmark-borderWidth: 0 var(--border-width-medium) var(--border-width-medium) 0;
+  --editableField-optionRow-radio-checkmark-transform: translate(-50%, -60%) rotate(45deg);
+
+  /* Text */
   --editableField-text-flex: 1;
-  --editableField-text-marginLeft: 0.7rem;
   --editableField-text-whiteSpace: normal;
-  --editableField-text-overflow: break-word;
+  --editableField-text-overflowWrap: break-word;
   --editableField-text-wordBreak: break-word;
+  --editableField-text-cursor: pointer;
+  --editableField-text-fontSize: var(--font-size-sm);
+  --editableField-text-color: var(--color-midnight);
+
+  /* Error */
+  --editableField-error-color: var(--color-red-600);
+  --editableField-error-paddingLeft: 1rem;
   --editableField-errorMessage-paddingLeft: 252px;
 }

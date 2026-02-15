@@ -43,8 +43,8 @@ const TextAndChip = styled.div`
 
 type Props = {
   title: string;
-  status: StatusValue | undefined;
-  label: string | undefined;
+  status?: StatusValue;
+  label?: string;
   showIcon?: boolean;
   extra?: ReactNode;
   action?: ReactNode;
@@ -57,9 +57,9 @@ export const StatusRowField = ({ title, status, label, showIcon = true, extra, a
       <FieldContainer>
         {status && label ? (
           <ProfileStatusBadge status={status} label={label} showIcon={showIcon} />
-        ) : (
+        ) : !extra ? (
           <EmptyPlaceholder />
-        )}
+        ) : null}
         {extra}
       </FieldContainer>
     </TextAndChip>
