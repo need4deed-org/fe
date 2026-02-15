@@ -21,7 +21,7 @@ export const OrganisationDetails = forwardRef<EditableSectionRef, Props>(functio
   const [isEditing, setIsEditing] = useState(false);
   const { data: apiLanguages } = useApiLanguages();
 
-  const details = agent.organisationDetails;
+  const details = agent.agentDetails;
   const languagesForForm = toLanguagesForForm(apiLanguages, i18n.language);
   const schema = createOrganisationDetailsSchema(t);
 

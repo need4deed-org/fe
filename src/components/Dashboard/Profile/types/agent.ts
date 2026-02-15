@@ -21,14 +21,14 @@ export enum AgentTrustLevel {
 
 export type ApiAgentProfileGet = {
   id: number;
-  name: string;
+  title: string;
   type: string;
   createdAt: string;
   statusEngagement: AgentEngagementStatus;
   volunteerSearch: AgentVolunteerSearch;
   trustLevel: AgentTrustLevel;
   comments?: TimedText[];
-  organisationDetails?: {
+  agentDetails?: {
     about?: string;
     website?: string;
     address?: string;

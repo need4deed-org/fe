@@ -38,7 +38,7 @@ export const AgentHeader = ({ agent }: Props) => {
           <HouseIcon size={120} color="var(--color-blue-500)" weight="duotone" />
         </IconContainer>
       }
-      title={agent.name}
+      title={agent.title}
       subtitle={subtitle}
       after={<ChangeAgentEngagementStatusDialog dialog={dialog} />}
     >
