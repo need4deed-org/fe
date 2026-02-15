@@ -7,7 +7,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { FormContainer } from "../shared/styles";
 import { EditableSectionRef } from "../shared/types";
-import { apiLanguagesToFormValues, clientLanguagesToDisplay, toLanguagesForForm } from "./formatters";
+import { apiLanguagesToFormValues, toLanguagesForForm } from "./formatters";
 import { createOrganisationDetailsSchema, OrganisationDetailsFormData } from "./organisationDetailsSchema";
 import { OrganisationDetailsDisplay } from "./OrganisationDetailsDisplay";
 import { OrganisationDetailsEdit } from "./OrganisationDetailsEdit";
@@ -36,7 +36,7 @@ export const OrganisationDetails = forwardRef<EditableSectionRef, Props>(functio
     defaultValues: initialFormValues,
   });
 
-  const { handleSubmit, reset, watch } = methods;
+  const { handleSubmit, reset } = methods;
 
   const handleEditClick = () => setIsEditing(true);
 
@@ -51,8 +51,6 @@ export const OrganisationDetails = forwardRef<EditableSectionRef, Props>(functio
     setIsEditing(false);
   };
 
-  const formValues = watch();
-
   return (
     <FormProvider {...methods}>
       <FormContainer data-testid="organisation-details-container" $isEditing={isEditing}>
@@ -63,10 +61,7 @@ export const OrganisationDetails = forwardRef<EditableSectionRef, Props>(functio
             onSubmit={handleSubmit(onSubmit)}
           />
         ) : (
-          <OrganisationDetailsDisplay
-            values={formValues}
-            clientLanguagesDisplay={clientLanguagesToDisplay(details?.clientLanguages)}
-          />
+          <OrganisationDetailsDisplay rawClientLanguages={details?.clientLanguages} />
         )}
       </FormContainer>
     </FormProvider>

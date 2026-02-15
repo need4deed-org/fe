@@ -1,14 +1,13 @@
 import { EditableField } from "@/components/EditableField/EditableField";
+import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { FormDetails } from "../shared/styles";
 import { RefugeeAccommodationCentreFormData } from "./refugeeAccommodationCentreSchema";
 
-type Props = {
-  values: RefugeeAccommodationCentreFormData;
-};
-
-export const RefugeeAccommodationCentreDisplay = ({ values }: Props) => {
+export const RefugeeAccommodationCentreDisplay = () => {
   const { t } = useTranslation();
+  const { watch } = useFormContext<RefugeeAccommodationCentreFormData>();
+  const values = watch();
 
   return (
     <FormDetails data-testid="refugee-accommodation-centre-display">

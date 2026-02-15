@@ -44,7 +44,7 @@ export const OpportunityContactDetails = forwardRef<EditableSectionRef, Props>(f
     defaultValues: initialFormValues,
   });
 
-  const { handleSubmit, reset, watch } = methods;
+  const { handleSubmit, reset } = methods;
 
   const handleEditClick = () => setIsEditing(true);
 
@@ -75,8 +75,6 @@ export const OpportunityContactDetails = forwardRef<EditableSectionRef, Props>(f
     }
   }, [initialFormValues, isEditing, reset]);
 
-  const formValues = watch();
-
   return (
     <FormProvider {...methods}>
       <FormContainer data-testid="opportunity-contact-details-container" $isEditing={isEditing}>
@@ -90,10 +88,7 @@ export const OpportunityContactDetails = forwardRef<EditableSectionRef, Props>(f
             isPending={isPending}
           />
         ) : (
-          <OpportunityContactDetailsDisplay
-            values={formValues}
-            waysToContactLabels={keysToLabels(formValues.waysToContact ?? [])}
-          />
+          <OpportunityContactDetailsDisplay keysToLabels={keysToLabels} />
         )}
       </FormContainer>
     </FormProvider>

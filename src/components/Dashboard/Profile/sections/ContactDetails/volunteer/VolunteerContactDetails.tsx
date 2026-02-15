@@ -50,7 +50,7 @@ export const VolunteerContactDetails = forwardRef<EditableSectionRef, Props>(fun
     defaultValues: initialFormValues,
   });
 
-  const { handleSubmit, reset, watch } = methods;
+  const { handleSubmit, reset } = methods;
 
   const handleEditClick = () => setIsEditing(true);
 
@@ -86,8 +86,6 @@ export const VolunteerContactDetails = forwardRef<EditableSectionRef, Props>(fun
     reset(initialFormValues);
   }, [initialFormValues, isEditing, reset]);
 
-  const formValues = watch();
-
   return (
     <FormProvider {...methods}>
       <FormContainer data-testid="volunteer-contact-details-container" $isEditing={isEditing}>
@@ -101,10 +99,7 @@ export const VolunteerContactDetails = forwardRef<EditableSectionRef, Props>(fun
             isPending={isPending}
           />
         ) : (
-          <VolunteerContactDetailsDisplay
-            values={formValues}
-            communicationTypeLabels={keysToLabels(formValues.preferredCommunicationType ?? [])}
-          />
+          <VolunteerContactDetailsDisplay keysToLabels={keysToLabels} />
         )}
       </FormContainer>
     </FormProvider>

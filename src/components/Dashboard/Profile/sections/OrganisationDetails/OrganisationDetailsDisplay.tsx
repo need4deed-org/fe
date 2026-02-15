@@ -1,17 +1,20 @@
 import { EditableField } from "@/components/EditableField/EditableField";
+import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { FormDetails } from "../shared/styles";
+import { clientLanguagesToDisplay } from "./formatters";
 import { OrganisationDetailsFormData } from "./organisationDetailsSchema";
 
 const i18nPrefix = "dashboard.agentProfile.organisationDetails";
 
 type Props = {
-  values: OrganisationDetailsFormData;
-  clientLanguagesDisplay: string;
+  rawClientLanguages?: Array<{ id: number; title: string }>;
 };
 
-export const OrganisationDetailsDisplay = ({ values, clientLanguagesDisplay }: Props) => {
+export const OrganisationDetailsDisplay = ({ rawClientLanguages }: Props) => {
   const { t } = useTranslation();
+  const { watch } = useFormContext<OrganisationDetailsFormData>();
+  const values = watch();
 
   return (
     <FormDetails data-testid="organisation-details-display">
@@ -61,7 +64,7 @@ export const OrganisationDetailsDisplay = ({ values, clientLanguagesDisplay }: P
         mode="display"
         type="text"
         label={t(`${i18nPrefix}.clientLanguages`)}
-        value={clientLanguagesDisplay}
+        value={clientLanguagesToDisplay(rawClientLanguages)}
         setValue={() => {}}
       />
     </FormDetails>

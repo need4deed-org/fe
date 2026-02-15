@@ -46,7 +46,7 @@ export const RefugeeAccommodationCentre = forwardRef<EditableSectionRef, Props>(
     defaultValues: initialFormValues,
   });
 
-  const { handleSubmit, reset, watch } = methods;
+  const { handleSubmit, reset } = methods;
 
   const handleEditClick = () => setIsEditing(true);
 
@@ -75,8 +75,6 @@ export const RefugeeAccommodationCentre = forwardRef<EditableSectionRef, Props>(
     reset(initialFormValues);
   }, [initialFormValues, isEditing, reset]);
 
-  const formValues = watch();
-
   return (
     <FormProvider {...methods}>
       <FormContainer data-testid="refugee-accommodation-centre-container" $isEditing={isEditing}>
@@ -87,7 +85,7 @@ export const RefugeeAccommodationCentre = forwardRef<EditableSectionRef, Props>(
             isPending={isPending}
           />
         ) : (
-          <RefugeeAccommodationCentreDisplay values={formValues} />
+          <RefugeeAccommodationCentreDisplay />
         )}
       </FormContainer>
     </FormProvider>
