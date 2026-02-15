@@ -1,5 +1,6 @@
 import Button from "@/components/core/button/Button/Button";
 import { EditableField } from "@/components/EditableField/EditableField";
+import { PreferredCommunicationType } from "need4deed-sdk";
 import { Controller, useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { FormButtonRow, FormDetails } from "../../shared/styles";
@@ -7,8 +8,8 @@ import { OpportunityContactDetailsFormData } from "./opportunityContactDetailsSc
 
 type Props = {
   options: string[];
-  keysToLabels: (keys: string[]) => string[];
-  labelsToKeys: (labels: (string | number)[]) => string[];
+  keysToLabels: (keys: PreferredCommunicationType[]) => string[];
+  labelsToKeys: (labels: (string | number)[]) => PreferredCommunicationType[];
   onCancel: () => void;
   onSubmit: () => void;
   isPending: boolean;

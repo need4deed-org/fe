@@ -83,8 +83,8 @@ export const OpportunityContactDetails = forwardRef<EditableSectionRef, Props>(f
         {isEditing ? (
           <OpportunityContactDetailsEdit
             options={options}
-            keysToLabels={keysToLabels as (keys: string[]) => string[]}
-            labelsToKeys={labelsToKeys as (labels: (string | number)[]) => string[]}
+            keysToLabels={keysToLabels}
+            labelsToKeys={labelsToKeys}
             onCancel={handleCancel}
             onSubmit={handleSubmit(onSubmit)}
             isPending={isPending}
