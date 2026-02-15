@@ -109,3 +109,11 @@ export const ReturnDateText = styled.span`
   letter-spacing: var(--letter-spacing-tight);
   color: var(--color-blue-700);
 `;
+
+export const IconWrapper = styled.span`
+  width: var(--status-badge-icon-size);
+  height: var(--status-badge-icon-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;

@@ -12,6 +12,7 @@ type Props = {
   language: LanguageObject;
   disabledLanguages: string[];
   showRemove: boolean;
+  showLevel?: boolean;
   onUpdateLanguage: (id: number, language: string) => void;
   onUpdateLevel: (id: number, level: LanguageLevel) => void;
   onRemove: (id: number) => void;
@@ -31,6 +32,7 @@ export function LanguageFieldRow({
   language,
   disabledLanguages,
   showRemove,
+  showLevel = true,
   onUpdateLanguage,
   onUpdateLevel,
   onRemove,
@@ -42,7 +44,10 @@ export function LanguageFieldRow({
   const availableLanguages = providedLanguages || fallbackLanguages;
 
   return (
-    <div className={style["form-languages-grid"]} data-testid={`language-row-${language.id}`}>
+    <div
+      className={showLevel ? style["form-languages-grid"] : style["form-languages-grid-no-level"]}
+      data-testid={`language-row-${language.id}`}
+    >
       <label className={style["form-form-field"]}>
         <span>{t("form.becomeVolunteer.fields.languages.language")}</span>
         <select
@@ -64,23 +69,25 @@ export function LanguageFieldRow({
           ))}
         </select>
       </label>
-      <label className={style["form-form-field"]}>
-        <span>{t("form.becomeVolunteer.fields.languages.level")}</span>
-        <select
-          name={`level-${language.id}`}
-          value={language.level}
-          onChange={(e) => onUpdateLevel(language.id, e.target.value as LanguageLevel)}
-        >
-          <option value="" disabled hidden>
-            {t("form.becomeVolunteer.fields.languages.chooseLevel")}
-          </option>
-          {languageLevels.map((level) => (
-            <option key={level} value={level}>
-              {t(`form.becomeVolunteer.fields.languages.${levelToI18nKey[level]}.header`)}
+      {showLevel && (
+        <label className={style["form-form-field"]}>
+          <span>{t("form.becomeVolunteer.fields.languages.level")}</span>
+          <select
+            name={`level-${language.id}`}
+            value={language.level}
+            onChange={(e) => onUpdateLevel(language.id, e.target.value as LanguageLevel)}
+          >
+            <option value="" disabled hidden>
+              {t("form.becomeVolunteer.fields.languages.chooseLevel")}
             </option>
-          ))}
-        </select>
-      </label>
+            {languageLevels.map((level) => (
+              <option key={level} value={level}>
+                {t(`form.becomeVolunteer.fields.languages.${levelToI18nKey[level]}.header`)}
+              </option>
+            ))}
+          </select>
+        </label>
+      )}
       {showRemove ? (
         <div className={style["remove-language-button"]}>
           <Button

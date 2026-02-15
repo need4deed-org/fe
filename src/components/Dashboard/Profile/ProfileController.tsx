@@ -1,12 +1,12 @@
 import CenteredWrapper from "@/components/core/common/CenteredWrapper";
 import { Paragraph } from "@/components/styled/text";
-import { apiPathOpportunity, apiPathVolunteer, cacheTTL } from "@/config/constants";
+import { apiPathAgent, apiPathOpportunity, apiPathVolunteer, cacheTTL } from "@/config/constants";
 import { useGetQuery } from "@/hooks";
 import { ApiOpportunityGet, ApiVolunteerGet } from "need4deed-sdk";
 import { ReactNode } from "react";
 import styled from "styled-components";
-import { ProfileEntityType } from "./ProfileLayout";
 import ProfilePage from "./ProfilePage";
+import { ApiAgentProfileGet, EntityType } from "./types";
 
 const LoadingContainer = styled(CenteredWrapper)`
   padding: 2rem;
@@ -22,7 +22,7 @@ type LoadingErrorWrapperProps = {
   isError: boolean;
   error: unknown;
   data: unknown;
-  entityType: ProfileEntityType;
+  entityType: EntityType;
   children: ReactNode;
 };
 
@@ -115,14 +115,38 @@ const OpportunityProfileController = ({ entityId }: EntityIdProps) => {
   );
 };
 
+const AgentProfileController = ({ entityId }: EntityIdProps) => {
+  const { data, isLoading, isError, error } = useGetQuery<ApiAgentProfileGet>({
+    queryKey: ["agent", entityId],
+    apiPath: `${apiPathAgent}/${entityId}`,
+    staleTime: cacheTTL,
+  });
+
+  return (
+    <LoadingErrorWrapper
+      isLoading={isLoading}
+      isError={isError}
+      error={error}
+      data={data}
+      entityType="agent"
+    >
+      {data && <ProfilePage agent={data} />}
+    </LoadingErrorWrapper>
+  );
+};
+
 type Props = {
   entityId: string;
-  entityType: ProfileEntityType;
+  entityType: EntityType;
 };
 
 export const ProfileController = ({ entityId, entityType }: Props) => {
   if (entityType === "volunteer") {
     return <VolunteerProfileController entityId={entityId} />;
+  }
+
+  if (entityType === "agent") {
+    return <AgentProfileController entityId={entityId} />;
   }
 
   return <OpportunityProfileController entityId={entityId} />;

@@ -58,11 +58,31 @@ export const RadioRow = styled.div`
 `;
 
 export const RadioInput = styled.input`
+  appearance: none;
   width: var(--communication-tracker-radio-size);
   height: var(--communication-tracker-radio-size);
+  border: var(--border-width-medium) solid var(--color-grey-400);
+  border-radius: var(--percent-50);
   cursor: pointer;
-  accent-color: var(--color-aubergine);
+  position: relative;
   flex-shrink: 0;
+
+  &:checked {
+    background-color: var(--color-green-200);
+    border-color: var(--color-green-200);
+
+    &::after {
+      content: "";
+      position: absolute;
+      width: var(--communication-tracker-checkmark-width);
+      height: var(--communication-tracker-checkmark-height);
+      border: solid var(--color-blue-700);
+      border-width: var(--communication-tracker-checkmark-border-width);
+      top: var(--percent-50);
+      left: var(--percent-50);
+      transform: var(--communication-tracker-checkmark-transform);
+    }
+  }
 `;
 
 export const FormField = styled.div`
@@ -89,7 +109,7 @@ export const Select = styled.select`
   font-size: var(--text-p-font-size);
   line-height: var(--text-p-line-height);
   font-weight: var(--font-weight-regular);
-  color: var(--color-aubergine);
+  color: var(--color-midnight);
   font-family: var(--bs-body-font-family);
   background: var(--color-white);
   cursor: pointer;

@@ -1,11 +1,11 @@
 import { useCommunicationTracker } from "@/hooks/useCommunicationTracker";
 import { PencilSimple, Trash } from "@phosphor-icons/react";
 import {
-  ApiVolunteerGet,
   ApiCommunicationGet,
   ApiVolunteerCommunicationPost,
   ApiVolunteerCommunicationPatch,
 } from "need4deed-sdk";
+import { EntityType } from "@/components/Dashboard/Profile/types";
 import { forwardRef, useImperativeHandle, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CommunicationDialog } from "./CommunicationDialog";
@@ -28,14 +28,15 @@ import { CommunicationTableContainer } from "./styles";
 import { formatDate, getDisplayLabel, getContactMethodLabel } from "./utils/translations";
 
 type Props = {
-  volunteer: ApiVolunteerGet;
+  entityId: number;
+  entityType: EntityType;
 };
 
 export type CommunicationTrackerRef = {
   handleAddNew: () => void;
 };
 
-export const CommunicationTracker = forwardRef<CommunicationTrackerRef, Props>(function CommunicationTracker({ volunteer }, ref) {
+export const CommunicationTracker = forwardRef<CommunicationTrackerRef, Props>(function CommunicationTracker({ entityId, entityType }, ref) {
   const { t } = useTranslation();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingEntry, setEditingEntry] = useState<ApiCommunicationGet | undefined>(undefined);
@@ -46,7 +47,7 @@ export const CommunicationTracker = forwardRef<CommunicationTrackerRef, Props>(f
     createCommunication,
     updateCommunication,
     deleteCommunication,
-  } = useCommunicationTracker(volunteer.id);
+  } = useCommunicationTracker(entityId, entityType);
 
   const handleAddNew = () => {
     setEditingEntry(undefined);

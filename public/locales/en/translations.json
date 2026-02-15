@@ -536,7 +536,12 @@
           "whatsapp": "WhatsApp",
           "telegram": "Telegram",
           "mobilePhone": "Mobile Phone",
-          "email": "Email"
+          "email": "Email",
+          "called": "Called",
+          "email-sent": "Email sent",
+          "briefed": "Briefed",
+          "tried-call": "Tried to call",
+          "not-responding": "Not responding"
         },
         "notProvided": "Not provided",
         "cancel": "Cancel",
@@ -684,6 +689,62 @@
       "deleteConfirmTitle": "Delete appreciation?",
       "deleteConfirmText": "\"{{entryType}}\" appreciation entry will be permanently deleted."
     },
+    "agentProfile": {
+      "agentProfile": "Agent's profile",
+      "registeredSince": "Registered since",
+      "engagementStatus": "Engagement status",
+      "volunteerSearch": "Volunteer search",
+      "trustLevel": "Trust level",
+      "changeStatus": "Change status",
+      "status": {
+        "engagement": {
+          "new": "New",
+          "active": "Active",
+          "unresponsive": "Unresponsive",
+          "inactive": "Inactive"
+        },
+        "volunteerSearch": {
+          "notNeeded": "Not needed",
+          "filled": "Filled",
+          "searching": "Searching"
+        },
+        "trustLevel": {
+          "unknown": "Unknown",
+          "low": "Low",
+          "high": "High"
+        }
+      },
+      "modalData": {
+        "title": "Change engagement status",
+        "options": {
+          "unresponsive": "Unresponsive",
+          "unresponsive_description": "This agent does not respond.",
+          "inactive": "Inactive",
+          "inactive_description": "This agent does not work with the organization anymore."
+        },
+        "cancel": "Cancel",
+        "save": "Save"
+      },
+      "statusUpdateSuccess": "Agent status updated successfully",
+      "organisationDetails": {
+        "title": "Organisation details",
+        "edit": "Edit",
+        "about": "About",
+        "website": "Website",
+        "address": "Address",
+        "organisationType": "Type of organisation",
+        "operator": "Operator / Träger",
+        "services": "Leistungen",
+        "clientLanguages": "Client languages",
+        "cancel": "Cancel",
+        "saveChanges": "Save changes",
+        "validation": {
+          "required": "This field is required",
+          "websiteInvalid": "Website must start with http:// or https://",
+          "clientLanguagesRequired": "At least one language is required"
+        }
+      }
+    },
     "opportunityProfile": {
       "opportunityProfile": "Opportunity's profile",
       "postedOn": "Posted on",
@@ -753,6 +814,28 @@
         "notAccompanyingMessage": "This opportunity is not marked as accompanying. Change this status in the top card if you need to fill out the accompanying information (appointment address, refugee details, etc.).",
         "validation": {
           "invalidTimeFormat": "Invalid time format (use HH:MM)"
+        }
+      },
+      "opportunityDetails": {
+        "title": "Opportunity details",
+        "description": "Description",
+        "mainCommunication": "Main communication",
+        "residentsSpeak": "Residents speak",
+        "schedule": "Schedule",
+        "numberOfVolunteers": "Number of volunteers",
+        "activities": "Activities",
+        "skills": "Skills & experience",
+        "descriptionHint": "Max. {{max}} characters",
+        "cancel": "Cancel",
+        "saveChanges": "Save changes",
+        "validation": {
+          "descriptionRequired": "Description is required",
+          "descriptionTooLong": "Description is too long",
+          "numberOfVolunteersRequired": "Number of volunteers must be at least 1",
+          "languageRequired": "At least one language is required",
+          "availabilityRequired": "At least one time slot must be selected",
+          "activitiesRequired": "At least one activity is required",
+          "skillsRequired": "At least one skill is required"
         }
       }
     },
@@ -901,5 +984,42 @@
       "deleteError": "Delete failed. Please try again.",
       "previewError": "Preview failed. Please try again."
     }
+  },
+  "languageNames": {
+    "german": "German",
+    "english": "English",
+    "arabic": "Arabic",
+    "farsi/dari": "Farsi/Dari",
+    "farsi": "Farsi",
+    "dari": "Dari",
+    "turkish": "Turkish",
+    "russian": "Russian",
+    "ukrainian": "Ukrainian",
+    "french": "French",
+    "kurmanji": "Kurmanji",
+    "sorani": "Sorani",
+    "armenian": "Armenian",
+    "belarusian": "Belarusian",
+    "chechen": "Chechen",
+    "chinese": "Chinese",
+    "czech": "Czech",
+    "dutch": "Dutch",
+    "georgian": "Georgian",
+    "greek": "Greek",
+    "hebrew": "Hebrew",
+    "hindi": "Hindi",
+    "italian": "Italian",
+    "pashto": "Pashto",
+    "polish": "Polish",
+    "punjabi": "Punjabi",
+    "romanes": "Romanes",
+    "romanian": "Romanian",
+    "serbian": "Serbian",
+    "somali": "Somali",
+    "spanish": "Spanish",
+    "swedish": "Swedish",
+    "urdu": "Urdu",
+    "vietnamese": "Vietnamese",
+    "other": "Other"
   }
 }
