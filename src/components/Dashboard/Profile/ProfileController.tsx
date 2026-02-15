@@ -83,13 +83,7 @@ const VolunteerProfileController = ({ entityId }: EntityIdProps) => {
   });
 
   return (
-    <LoadingErrorWrapper
-      isLoading={isLoading}
-      isError={isError}
-      error={error}
-      data={data}
-      entityType="volunteer"
-    >
+    <LoadingErrorWrapper isLoading={isLoading} isError={isError} error={error} data={data} entityType="volunteer">
       {data && <ProfilePage volunteer={data} />}
     </LoadingErrorWrapper>
   );
@@ -103,13 +97,7 @@ const OpportunityProfileController = ({ entityId }: EntityIdProps) => {
   });
 
   return (
-    <LoadingErrorWrapper
-      isLoading={isLoading}
-      isError={isError}
-      error={error}
-      data={data}
-      entityType="opportunity"
-    >
+    <LoadingErrorWrapper isLoading={isLoading} isError={isError} error={error} data={data} entityType="opportunity">
       {data && <ProfilePage opportunity={data} />}
     </LoadingErrorWrapper>
   );
@@ -123,16 +111,16 @@ const AgentProfileController = ({ entityId }: EntityIdProps) => {
   });
 
   return (
-    <LoadingErrorWrapper
-      isLoading={isLoading}
-      isError={isError}
-      error={error}
-      data={data}
-      entityType="agent"
-    >
+    <LoadingErrorWrapper isLoading={isLoading} isError={isError} error={error} data={data} entityType="agent">
       {data && <ProfilePage agent={data} />}
     </LoadingErrorWrapper>
   );
+};
+
+const CONTROLLER_MAP: Record<EntityType, React.ComponentType<{ entityId: string }>> = {
+  volunteer: VolunteerProfileController,
+  agent: AgentProfileController,
+  opportunity: OpportunityProfileController,
 };
 
 type Props = {
@@ -141,13 +129,6 @@ type Props = {
 };
 
 export const ProfileController = ({ entityId, entityType }: Props) => {
-  if (entityType === "volunteer") {
-    return <VolunteerProfileController entityId={entityId} />;
-  }
-
-  if (entityType === "agent") {
-    return <AgentProfileController entityId={entityId} />;
-  }
-
-  return <OpportunityProfileController entityId={entityId} />;
+  const EntityController = CONTROLLER_MAP[entityType];
+  return <EntityController entityId={entityId} />;
 };
