@@ -22,8 +22,8 @@ const CardHeader = styled.div`
 
 const CardHeaderInfo = styled.div`
   display: flex;
+  align-items: center;
   gap: var(--volunteer-profile-section-card-header-info-gap);
-  width: 100%;
 `;
 
 export interface SectionCardProps extends PropsWithChildren {
