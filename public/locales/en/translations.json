@@ -726,6 +726,41 @@
         "save": "Save"
       },
       "statusUpdateSuccess": "Agent status updated successfully",
+      "contactDetails": {
+        "title": "Contact details",
+        "fullName": "Name",
+        "firstName": "First Name",
+        "middleName": "Middle Name",
+        "lastName": "Last Name",
+        "email": "E-mail",
+        "mobile": "Mobile",
+        "landline": "Landline",
+        "saveSuccess": "Contact details updated successfully",
+        "roles": {
+          "label": "Role",
+          "management": "Management",
+          "volunteer_coordinator": "Volunteer coordinator",
+          "social_work": "Social work",
+          "childcare": "Childcare",
+          "coordination": "Coordination"
+        },
+        "cancel": "Cancel",
+        "saveChanges": "Save changes",
+        "edit": "Edit",
+        "validation": {
+          "nameRequired": "Name is required",
+          "addressRequired": "Address is required",
+          "districtRequired": "District is required",
+          "mobileRequired": "Mobile number is required",
+          "mobileInvalid": "Mobile number must start with + and contain only digits and spaces",
+          "emailRequired": "Email is required",
+          "emailInvalid": "Please enter a valid email address",
+          "roleRequired": "Role is required",
+          "fullNameRequired": "Name is required",
+          "fullNameInvalid": "Please enter a valid name",
+          "landlineInvalid": "Landline number must start with + and contain only digits and spaces"
+        }
+      },
       "organisationDetails": {
         "title": "Organisation details",
         "edit": "Edit",
@@ -844,40 +879,9 @@
       "name": "Name",
       "address": "Address",
       "district": "District",
-      "roles": {
-        "label": "Role",
-        "management": "Management",
-        "volunteer_coordinator": "Volunteer coordinator",
-        "social_work": "Social work",
-        "childcare": "Childcare",
-        "coordination": "Coordination"
-      },
       "cancel": "Cancel",
       "saveChanges": "Save changes",
-      "editButtonName": "Edit",
-      "contactDetails": {
-        "fullName": "Name",
-        "firstName": "First Name",
-        "middleName": "Middle Name",
-        "lastName": "Last Name",
-        "email": "E-mail",
-        "mobile": "Mobile",
-        "landline": "Landline",
-        "saveSuccess": "Contact details updated successfully"
-      },
-      "validation": {
-        "nameRequired": "Name is required",
-        "addressRequired": "Address is required",
-        "districtRequired": "District is required",
-        "mobileRequired": "Mobile number is required",
-        "mobileInvalid": "Mobile number must start with + and contain only digits and spaces",
-        "emailRequired": "Email is required",
-        "emailInvalid": "Please enter a valid email address",
-        "roleRequired": "Role is required",
-        "fullNameRequired": "Name is required",
-        "fullNameInvalid": "Please enter a valid name",
-        "landlineInvalid": "Landline number must start with + and contain only digits and spaces"
-      }
+      "editButtonName": "Edit"
     },
     "communicationSection": {
       "title": "Communication Tracker",

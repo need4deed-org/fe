@@ -2,15 +2,15 @@
 import Button from "@/components/core/button/Button/Button";
 import { EditableField } from "@/components/EditableField/EditableField";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ApiPersonGet } from "need4deed-sdk";
-import { forwardRef, useEffect, useImperativeHandle, useMemo } from "react";
+import { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from "react";
 import { Controller, ControllerRenderProps, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { createRacContactDetailsSchema, RacContactDetailsFormData } from "./RacContactDetailsSchema";
-import Divider from "../../common/Divider";
-import { useUpdatePersonContact } from "@/hooks/useUpdateRacPersonContact";
+import { createAgentContactDetailsSchema, AgentContactDetailsFormData } from "./agentContactDetailsSchema";
+import Divider from "../../../common/Divider";
+import { useUpdateAgentContact } from "@/hooks/useUpdateAgentContact";
 import { AgentRoles } from "@/config/constants";
+import { ApiAgentProfileGet } from "../../../types";
 
 const Container = styled.div<{ $isEditing: boolean }>`
   display: flex;
@@ -67,10 +67,7 @@ const FieldWrapper = styled.div<{ $hasError?: boolean }>`
 `;
 
 type Props = {
-  person: ApiPersonGet | undefined;
-  isEditing: boolean;
-  handleEditClick: () => void;
-  handleCancelClick: () => void;
+  agent: ApiAgentProfileGet;
 };
 
 export type ContactDetailsRef = {
@@ -79,14 +76,12 @@ export type ContactDetailsRef = {
 
 const roleKeys = Object.values(AgentRoles);
 
-export const RacContactDetails = forwardRef<ContactDetailsRef, Props>(function ContactDetails(
-  { person, isEditing, handleEditClick, handleCancelClick },
-  ref,
-) {
+export const AgentContactDetails = forwardRef<ContactDetailsRef, Props>(function ContactDetails({ agent }, ref) {
   const { t } = useTranslation();
-  const { mutate: updateAgent, isPending } = useUpdatePersonContact(String(person?.id));
+  const { mutate: updateAgent, isPending } = useUpdateAgentContact(String(agent?.id));
+  const [isEditing, setIsEditing] = useState(false);
 
-  const roleOptions = roleKeys.map((key) => t(`dashboard.rac.roles.${key}`));
+  const roleOptions = roleKeys.map((key) => t(`dashboard.agentProfile.contactDetails.roles.${key}`));
 
   const keyToLabel: Record<string, string> = {};
   const labelToKey: Record<string, string> = {};
@@ -96,55 +91,56 @@ export const RacContactDetails = forwardRef<ContactDetailsRef, Props>(function C
     labelToKey[label] = key;
   });
 
-  const schema = createRacContactDetailsSchema(t);
+  const schema = createAgentContactDetailsSchema(t);
 
-  const initialFormValues = useMemo((): RacContactDetailsFormData => {
-    // const { agent } = person;
+  const initialFormValues = useMemo((): AgentContactDetailsFormData => {
     return {
-      firstName: person?.firstName || "",
-      middleName: person?.middleName || "",
-      lastName: person?.lastName || "",
-      role: [],
-      email: person?.email || "",
-      phone: person?.phone || "",
-      landline: "",
+      firstName: agent?.contactDetails?.firstName || "",
+      middleName: agent?.contactDetails?.middleName || "",
+      lastName: agent?.contactDetails?.lastName || "",
+      role: agent?.contactDetails?.role || [],
+      email: agent?.contactDetails?.email || "",
+      phone: agent?.contactDetails?.phone || "",
+      landline: agent?.contactDetails?.landline || "",
     };
-  }, [person]);
+  }, [agent]);
 
   const {
     control,
     handleSubmit,
     reset,
     formState: { errors, isValid },
-  } = useForm<RacContactDetailsFormData>({
+  } = useForm<AgentContactDetailsFormData>({
     resolver: zodResolver(schema),
     mode: "onChange",
     defaultValues: initialFormValues,
   });
 
-  useImperativeHandle(ref, () => ({
-    handleEditClick,
-  }));
+  const handleEditClick = () => setIsEditing(true);
+
+  useImperativeHandle(ref, () => ({ handleEditClick }));
 
   const handleCancel = () => {
     reset();
-    handleCancelClick();
+    setIsEditing(false);
   };
 
-  const onSubmit = (values: RacContactDetailsFormData) => {
+  const onSubmit = (values: AgentContactDetailsFormData) => {
     updateAgent(
       {
-        firstName: values.firstName,
-        lastName: values.lastName,
-        middleName: values.middleName,
-        role: values?.role?.length ? (values.role as AgentRoles[]) : undefined,
-        email: values.email,
-        phone: values.phone,
-        landline: values.landline,
+        contactDetails: {
+          firstName: values.firstName,
+          lastName: values.lastName,
+          middleName: values.middleName,
+          role: values?.role?.length ? (values.role as AgentRoles[]) : undefined,
+          email: values.email,
+          phone: values.phone,
+          landline: values.landline,
+        },
       },
       {
         onSuccess: () => {
-          handleCancelClick();
+          handleCancel();
         },
       },
     );
@@ -164,11 +160,11 @@ export const RacContactDetails = forwardRef<ContactDetailsRef, Props>(function C
             <Controller
               name="firstName"
               control={control}
-              render={({ field }: { field: ControllerRenderProps<RacContactDetailsFormData, "firstName"> }) => (
+              render={({ field }: { field: ControllerRenderProps<AgentContactDetailsFormData, "firstName"> }) => (
                 <EditableField
                   mode="edit"
                   type="text"
-                  label={t("dashboard.rac.contactDetails.firstName")}
+                  label={t("dashboard.agentProfile.contactDetails.firstName")}
                   value={field.value}
                   setValue={field.onChange}
                   errorMessage={errors.firstName?.message}
@@ -179,11 +175,11 @@ export const RacContactDetails = forwardRef<ContactDetailsRef, Props>(function C
             <Controller
               name="middleName"
               control={control}
-              render={({ field }: { field: ControllerRenderProps<RacContactDetailsFormData, "middleName"> }) => (
+              render={({ field }: { field: ControllerRenderProps<AgentContactDetailsFormData, "middleName"> }) => (
                 <EditableField
                   mode="edit"
                   type="text"
-                  label={t("dashboard.rac.contactDetails.middleName")}
+                  label={t("dashboard.agentProfile.contactDetails.middleName")}
                   value={field.value ? field.value : ""}
                   setValue={field.onChange}
                   errorMessage={errors.middleName?.message}
@@ -194,11 +190,11 @@ export const RacContactDetails = forwardRef<ContactDetailsRef, Props>(function C
             <Controller
               name="lastName"
               control={control}
-              render={({ field }: { field: ControllerRenderProps<RacContactDetailsFormData, "lastName"> }) => (
+              render={({ field }: { field: ControllerRenderProps<AgentContactDetailsFormData, "lastName"> }) => (
                 <EditableField
                   mode="edit"
                   type="text"
-                  label={t("dashboard.rac.contactDetails.lastName")}
+                  label={t("dashboard.agentProfile.contactDetails.lastName")}
                   value={field.value}
                   setValue={field.onChange}
                   errorMessage={errors.lastName?.message}
@@ -209,8 +205,12 @@ export const RacContactDetails = forwardRef<ContactDetailsRef, Props>(function C
         ) : (
           <FieldWrapper>
             <>
-              <label>{t("dashboard.rac.contactDetails.fullName")}</label>
-              <span>{`${person?.firstName} ${person?.middleName || ""} ${person?.lastName}`}</span>
+              <label>{t("dashboard.agentProfile.contactDetails.fullName")}</label>
+              <span>
+                {agent?.contactDetails?.firstName
+                  ? `${agent?.contactDetails?.firstName} ${agent?.contactDetails?.middleName || ""} ${agent?.contactDetails?.lastName}`
+                  : "–"}
+              </span>
             </>
           </FieldWrapper>
         )}
@@ -218,11 +218,11 @@ export const RacContactDetails = forwardRef<ContactDetailsRef, Props>(function C
         <Controller
           name="role"
           control={control}
-          render={({ field }: { field: ControllerRenderProps<RacContactDetailsFormData, "role"> }) => (
+          render={({ field }: { field: ControllerRenderProps<AgentContactDetailsFormData, "role"> }) => (
             <EditableField
               mode={isEditing ? "edit" : "display"}
               type="checkbox-list"
-              label={t("dashboard.rac.roles.label")}
+              label={t("dashboard.agentProfile.contactDetails.roles.label")}
               value={field.value ? field?.value?.map((key) => keyToLabel[key]) : []}
               setValue={(value) => {
                 const labels = Array.isArray(value) ? value : [value];
@@ -237,11 +237,11 @@ export const RacContactDetails = forwardRef<ContactDetailsRef, Props>(function C
         <Controller
           name="email"
           control={control}
-          render={({ field }: { field: ControllerRenderProps<RacContactDetailsFormData, "email"> }) => (
+          render={({ field }: { field: ControllerRenderProps<AgentContactDetailsFormData, "email"> }) => (
             <EditableField
               mode={isEditing ? "edit" : "display"}
               type="text"
-              label={t("dashboard.rac.contactDetails.email")}
+              label={t("dashboard.agentProfile.contactDetails.email")}
               value={field.value}
               setValue={field.onChange}
               errorMessage={errors.email?.message}
@@ -252,11 +252,11 @@ export const RacContactDetails = forwardRef<ContactDetailsRef, Props>(function C
         <Controller
           name="phone"
           control={control}
-          render={({ field }: { field: ControllerRenderProps<RacContactDetailsFormData, "phone"> }) => (
+          render={({ field }: { field: ControllerRenderProps<AgentContactDetailsFormData, "phone"> }) => (
             <EditableField
               mode={isEditing ? "edit" : "display"}
               type="text"
-              label={t("dashboard.rac.contactDetails.mobile")}
+              label={t("dashboard.agentProfile.contactDetails.mobile")}
               value={field.value}
               setValue={field.onChange}
               errorMessage={errors.phone?.message}
@@ -267,11 +267,11 @@ export const RacContactDetails = forwardRef<ContactDetailsRef, Props>(function C
         <Controller
           name="landline"
           control={control}
-          render={({ field }: { field: ControllerRenderProps<RacContactDetailsFormData, "landline"> }) => (
+          render={({ field }: { field: ControllerRenderProps<AgentContactDetailsFormData, "landline"> }) => (
             <EditableField
               mode={isEditing ? "edit" : "display"}
               type="text"
-              label={t("dashboard.rac.contactDetails.landline")}
+              label={t("dashboard.agentProfile.contactDetails.landline")}
               value={field.value ? field.value : ""}
               setValue={field.onChange}
               errorMessage={errors.landline?.message}
@@ -283,24 +283,20 @@ export const RacContactDetails = forwardRef<ContactDetailsRef, Props>(function C
       {isEditing && (
         <ButtonRow>
           <Button
-            text={t("dashboard.rac.cancel")}
+            text={t("dashboard.agentProfile.contactDetails.cancel")}
             onClick={handleCancel}
             width="auto"
             backgroundcolor="var(--color-white)"
             textColor="var(--color-aubergine)"
+            padding="var(--volunteer-profile-section-card-header-button-padding)"
             border="var(--volunteer-profile-section-card-header-button-border)"
-            height="var(--volunteer-profile-section-card-header-button-height)"
-            textFontSize="var(--volunteer-profile-section-card-header-button-textFontSize)"
-            padding="var(--rac-profile-section-card-header-button-padding)"
           />
           <Button
-            text={t("dashboard.rac.saveChanges")}
+            text={t("dashboard.agentProfile.contactDetails.saveChanges")}
             onClick={handleSubmit(onSubmit)}
             width="auto"
             disabled={!isValid || isPending}
-            height="var(--volunteer-profile-section-card-header-button-height)"
-            textFontSize="var(--volunteer-profile-section-card-header-button-textFontSize)"
-            padding="var(--rac-profile-section-card-header-button-padding)"
+            padding="var(--volunteer-profile-section-card-header-button-padding)"
           />
         </ButtonRow>
       )}
