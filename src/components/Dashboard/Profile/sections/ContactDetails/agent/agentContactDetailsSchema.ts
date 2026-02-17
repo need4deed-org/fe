@@ -1,4 +1,4 @@
-import { AgentRoles } from "@/config/constants";
+import { AgentRoles, PHONE_NUMBER_REGEX } from "@/config/constants";
 import { z } from "zod";
 
 export const createAgentContactDetailsSchema = (t: (key: string) => string) => {
@@ -18,10 +18,10 @@ export const createAgentContactDetailsSchema = (t: (key: string) => string) => {
     phone: z
       .string()
       .min(1, t("dashboard.agentProfile.contactDetails.validation.mobileRequired"))
-      .regex(/^\+[0-9\s]+$/, t("dashboard.agentProfile.contactDetails.validation.mobileInvalid")),
+      .regex(PHONE_NUMBER_REGEX, t("dashboard.agentProfile.contactDetails.validation.mobileInvalid")),
     landline: z
       .string()
-      .regex(/^\+[0-9\s]+$/, t("dashboard.agentProfile.contactDetails.validation.landlineInvalid"))
+      .regex(PHONE_NUMBER_REGEX, t("dashboard.agentProfile.contactDetails.validation.landlineInvalid"))
       .optional()
       .or(z.literal("")),
   });
