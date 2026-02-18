@@ -1384,6 +1384,7 @@ html {
     --volunteer-profile-back-link-font-size: 20px;
     --volunteer-profile-back-link-transition: color 0.2s;
     --volunteer-profile-section-card-border-radius: 16px;
+    --volunteer-profile-loading-error-wrapper-padding: 2rem;
     --volunteer-profile-section-card-padding: 24px;
     --volunteer-profile-section-card-gap: 8px;
     --volunteer-profile-section-card-icon-size: 40px;
