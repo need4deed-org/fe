@@ -1,18 +1,18 @@
 "use client";
-import Button from "@/components/core/button/Button/Button";
-import { EditableField } from "@/components/EditableField/EditableField";
 import { useUpdateOpportunityAgent } from "@/hooks/useUpdateOpportunityAgent";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ApiOpportunityGet, Lang } from "need4deed-sdk";
 import { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { FormButtonRow, FormContainer, FormDetails } from "../shared/styles";
+import { FormContainer } from "../shared/styles";
 import { EditableSectionRef } from "../shared/types";
 import {
   createRefugeeAccommodationCentreSchema,
   RefugeeAccommodationCentreFormData,
 } from "./refugeeAccommodationCentreSchema";
+import { RefugeeAccommodationCentreDisplay } from "./RefugeeAccommodationCentreDisplay";
+import { RefugeeAccommodationCentreEdit } from "./RefugeeAccommodationCentreEdit";
 
 type Props = {
   opportunity: ApiOpportunityGet;
@@ -40,16 +40,13 @@ export const RefugeeAccommodationCentre = forwardRef<EditableSectionRef, Props>(
     };
   }, [opportunity, i18n.language]);
 
-  const {
-    control,
-    handleSubmit,
-    reset,
-    formState: { errors, isValid, isDirty },
-  } = useForm<RefugeeAccommodationCentreFormData>({
+  const methods = useForm<RefugeeAccommodationCentreFormData>({
     resolver: zodResolver(schema),
     mode: "onChange",
     defaultValues: initialFormValues,
   });
+
+  const { handleSubmit, reset } = methods;
 
   const handleEditClick = () => setIsEditing(true);
 
@@ -78,77 +75,19 @@ export const RefugeeAccommodationCentre = forwardRef<EditableSectionRef, Props>(
     reset(initialFormValues);
   }, [initialFormValues, isEditing, reset]);
 
-  const mode = isEditing ? "edit" : "display";
-
   return (
-    <FormContainer data-testid="refugee-accommodation-centre-container" $isEditing={isEditing}>
-      <FormDetails>
-        <Controller
-          name="name"
-          control={control}
-          render={({ field }) => (
-            <EditableField
-              mode={mode}
-              type="text"
-              label={t("dashboard.opportunityProfile.rac.name")}
-              value={field.value}
-              setValue={field.onChange}
-              errorMessage={errors.name?.message}
-            />
-          )}
-        />
-
-        <Controller
-          name="address"
-          control={control}
-          render={({ field }) => (
-            <EditableField
-              mode={mode}
-              type="text"
-              label={t("dashboard.opportunityProfile.rac.address")}
-              value={field.value}
-              setValue={field.onChange}
-              errorMessage={errors.address?.message}
-            />
-          )}
-        />
-
-        <Controller
-          name="district"
-          control={control}
-          render={({ field }) => (
-            <EditableField
-              mode={mode}
-              type="text"
-              label={t("dashboard.opportunityProfile.rac.district")}
-              value={field.value}
-              setValue={field.onChange}
-              errorMessage={errors.district?.message}
-            />
-          )}
-        />
-      </FormDetails>
-
-      {isEditing && (
-        <FormButtonRow>
-          <Button
-            text={t("dashboard.opportunityProfile.rac.cancel")}
-            onClick={handleCancel}
-            width="auto"
-            padding="var(--volunteer-profile-section-card-header-button-padding)"
-            backgroundcolor="var(--color-white)"
-            textColor="var(--color-aubergine)"
-            border="var(--volunteer-profile-section-card-header-button-border)"
+    <FormProvider {...methods}>
+      <FormContainer data-testid="refugee-accommodation-centre-container" $isEditing={isEditing}>
+        {isEditing ? (
+          <RefugeeAccommodationCentreEdit
+            onCancel={handleCancel}
+            onSubmit={handleSubmit(onSubmit)}
+            isPending={isPending}
           />
-          <Button
-            text={t("dashboard.opportunityProfile.rac.saveChanges")}
-            onClick={handleSubmit(onSubmit)}
-            width="auto"
-            padding="var(--volunteer-profile-section-card-header-button-padding)"
-            disabled={!isDirty || !isValid || isPending}
-          />
-        </FormButtonRow>
-      )}
-    </FormContainer>
+        ) : (
+          <RefugeeAccommodationCentreDisplay />
+        )}
+      </FormContainer>
+    </FormProvider>
   );
 });
