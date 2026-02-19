@@ -35,7 +35,13 @@ export interface SectionCardProps extends PropsWithChildren {
   subComponent: ReactNode;
 }
 
-export const SectionCard = ({ iconName, title, headerButtonName, onHeaderButtonClick, subComponent }: SectionCardProps) => {
+export const SectionCard = ({
+  iconName,
+  title,
+  headerButtonName,
+  onHeaderButtonClick,
+  subComponent,
+}: SectionCardProps) => {
   return (
     <Card>
       <CardHeader>

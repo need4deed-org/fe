@@ -727,6 +727,41 @@
         "save": "Speichern"
       },
       "statusUpdateSuccess": "Agent-Status erfolgreich aktualisiert",
+      "contactDetails": {
+        "title": "Kontaktdaten",
+        "fullName": "Name",
+        "firstName": "Vorname",
+        "middleName": "Zweitname",
+        "lastName": "Nachname",
+        "email": "E-Mail",
+        "mobile": "Mobiltelefon",
+        "landline": "Festnetz",
+        "saveSuccess": "Kontaktdaten erfolgreich aktualisiert",
+        "roles": {
+          "label": "Rolle",
+          "management": "Geschäftsführung",
+          "volunteer_coordinator": "Freiwilligenkoordinator/in",
+          "social_work": "Sozialarbeit",
+          "childcare": "Kinderbetreuung",
+          "coordination": "Koordination"
+        },
+        "cancel": "Abbrechen",
+        "saveChanges": "Änderungen speichern",
+        "edit": "Bearbeiten",
+        "validation": {
+          "nameRequired": "Name ist erforderlich",
+          "addressRequired": "Adresse ist erforderlich",
+          "districtRequired": "Bezirk ist erforderlich",
+          "mobileRequired": "Mobilnummer ist erforderlich",
+          "mobileInvalid": "Die Mobilnummer muss mit + beginnen und darf nur Ziffern und Leerzeichen enthalten",
+          "emailRequired": "E-Mail ist erforderlich",
+          "emailInvalid": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+          "roleRequired": "Rolle ist erforderlich",
+          "fullNameRequired": "Vollständiger Name ist erforderlich",
+          "fullNameInvalid": "Bitte geben Sie einen gültigen Namen ein",
+          "landlineInvalid": "Die Festnetznummer muss mit + beginnen und darf nur Ziffern und Leerzeichen enthalten"
+        }
+      },
       "organisationDetails": {
         "title": "Organisationsdetails",
         "edit": "Bearbeiten",
@@ -839,6 +874,15 @@
           "skillsRequired": "Mindestens eine Fähigkeit ist erforderlich"
         }
       }
+    },
+    "racTitle": "Geflüchtetenunterkunft",
+    "rac": {
+      "name": "Name",
+      "address": "Adresse",
+      "district": "Bezirk",
+      "cancel": "Abbrechen",
+      "saveChanges": "Änderungen speichern",
+      "editButtonName": "Bearbeiten"
     },
     "communicationSection": {
       "title": "Kommunikationsverfolgung",

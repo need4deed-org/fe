@@ -760,6 +760,8 @@ html {
     --paginated-grid-pagination-number-width: 36px;
     --paginated-grid-pagination-number-height: 44px;
     --paginated-grid-pagination-number-border-radius: 6px;
+
+    --volunteer-profile-section-card-header-button-padding: 8px 12px;
   }
 }
 
