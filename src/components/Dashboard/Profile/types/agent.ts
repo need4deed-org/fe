@@ -1,3 +1,4 @@
+import { AgentRoles } from "@/config/constants";
 import { TimedText } from "need4deed-sdk";
 
 export enum AgentEngagementStatus {
@@ -28,6 +29,15 @@ export type ApiAgentProfileGet = {
   volunteerSearch: AgentVolunteerSearch;
   trustLevel: AgentTrustLevel;
   comments?: TimedText[];
+  contactDetails?: {
+    firstName?: string;
+    lastName?: string;
+    middleName?: string;
+    role?: AgentRoles[];
+    phone?: string;
+    email?: string;
+    landline?: string;
+  };
   organisationDetails?: {
     about?: string;
     website?: string;

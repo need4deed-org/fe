@@ -15,6 +15,7 @@ export const apiPathAgent = `/${apiPrefix}/agent`;
 export const apiPathOption = `/${apiPrefix}/option`;
 export const apiProfilePath = `/volunteer/9`;
 export const apiPathMe = `/${apiPrefix}/user/me`;
+export const apiPathPerson = `/${apiPrefix}/person/`;
 
 export const cacheTTL = 1000 * 60 * 5; // 5 minutes
 
@@ -59,6 +60,14 @@ export enum DashboardRoutes {
   Profile = "/dashboard/profile",
 }
 
+export enum AgentRoles {
+  MANAGEMENT = "management",
+  VOLUNTEER_COORDINATOR = "volunteer_coordinator",
+  SOCIAL_WORK = "social_work",
+  CHILDCARE = "childcare",
+  COORDINATION = "coordination",
+}
+
 export const questionMark = "?";
 
 export const supportedLangs = Object.values(Lang) as string[];
@@ -66,3 +75,5 @@ export const supportedLangs = Object.values(Lang) as string[];
 export const EMPTY_PLACEHOLDER_VALUE = "–";
 
 export const MAX_DESCRIPTION_LENGTH = 500;
+
+export const PHONE_NUMBER_REGEX = /^\+[0-9\s]+$/;

@@ -1,3 +1,4 @@
+import { PHONE_NUMBER_REGEX } from "@/config/constants";
 import { VolunteerCommunicationType } from "need4deed-sdk";
 import { z } from "zod";
 
@@ -6,7 +7,7 @@ export const createVolunteerContactDetailsSchema = (t: (key: string) => string) 
     phone: z
       .string()
       .min(1, t("dashboard.volunteerProfile.contactDetails.validation.phoneRequired"))
-      .regex(/^\+[0-9\s]+$/, t("dashboard.volunteerProfile.contactDetails.validation.phoneInvalid")),
+      .regex(PHONE_NUMBER_REGEX, t("dashboard.volunteerProfile.contactDetails.validation.phoneInvalid")),
     email: z
       .string()
       .min(1, t("dashboard.volunteerProfile.contactDetails.validation.emailRequired"))
