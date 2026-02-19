@@ -20,7 +20,7 @@ export function LoginController() {
   useEffect(() => {
     if (!(user && "role" in user)) return;
     const path =
-      user.role !== UserRole.USER ? `/${language}/dashboard?role=${user.role}&userId=${user.id}` : `/${language}`;
+      user.role !== UserRole.USER ? `/${language}/dashboard/home?role=${user.role}&userId=${user.id}` : `/${language}`;
     router.push(path);
   }, [user, language, router]);
 
