@@ -1,21 +1,23 @@
 "use client";
 
+import { AgentRoles } from "@/config/constants";
+import { useUpdateAgentContact } from "@/hooks/useUpdateAgentContact";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { createAgentContactDetailsSchema, AgentContactDetailsFormData } from "./agentContactDetailsSchema";
-import { useUpdateAgentContact } from "@/hooks/useUpdateAgentContact";
-import { AgentRoles } from "@/config/constants";
 import { ApiAgentProfileGet } from "../../../types";
+import { FormContainer } from "../../shared/styles";
+import { EditableSectionProps } from "../../shared/types";
+import { useEditingChangeNotifier } from "../../shared/useEditingChangeNotifier";
+import { useEnumTranslation } from "../shared";
 import { AgentContactDetailsDisplay } from "./AgentContactDetailsDisplay";
 import { AgentContactDetailsEdit } from "./AgentContactDetailsEdit";
-import { FormContainer } from "../../shared/styles";
-import { useEnumTranslation } from "../shared";
+import { AgentContactDetailsFormData, createAgentContactDetailsSchema } from "./agentContactDetailsSchema";
 
 type Props = {
   agent: ApiAgentProfileGet;
-};
+} & EditableSectionProps;
 
 export type ContactDetailsRef = {
   handleEditClick: () => void;
@@ -23,10 +25,15 @@ export type ContactDetailsRef = {
 
 const roleKeys = Object.values(AgentRoles);
 
-export const AgentContactDetails = forwardRef<ContactDetailsRef, Props>(function ContactDetails({ agent }, ref) {
+export const AgentContactDetails = forwardRef<ContactDetailsRef, Props>(function ContactDetails(
+  { agent, onEditingChange },
+  ref,
+) {
   const { t } = useTranslation();
   const { mutate: updateAgent, isPending } = useUpdateAgentContact(String(agent?.id));
   const [isEditing, setIsEditing] = useState(false);
+
+  useEditingChangeNotifier(isEditing, onEditingChange);
 
   const { options, keysToLabels, labelsToKeys } = useEnumTranslation(
     roleKeys,

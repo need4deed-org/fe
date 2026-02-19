@@ -2,9 +2,9 @@
 import { ProfileEntityProps } from "@/components/Dashboard/Profile/types";
 import { forwardRef } from "react";
 import { EditableSectionProps, EditableSectionRef } from "../shared/types";
+import { AgentContactDetails } from "./agent";
 import { OpportunityContactDetails } from "./opportunity";
 import { VolunteerContactDetails } from "./volunteer";
-import { AgentContactDetails } from "./agent";
 
 type Props = ProfileEntityProps & EditableSectionProps;
 
@@ -21,7 +21,7 @@ export const ContactDetails = forwardRef<EditableSectionRef, Props>(function Con
   }
 
   if ("agent" in props && props.agent) {
-    return <AgentContactDetails ref={ref} agent={props.agent} />;
+    return <AgentContactDetails ref={ref} agent={props.agent} onEditingChange={onEditingChange} />;
   }
 
   return null;

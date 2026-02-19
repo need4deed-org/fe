@@ -19,8 +19,10 @@ export const useAgentProfileSections = (agent: ApiAgentProfileGet | undefined) =
   const organisationDetailsRef = useRef<EditableSectionRef>(null);
   const communicationTrackerRef = useRef<CommunicationTrackerRef>(null);
 
+  const [isContactEditing, setIsContactEditing] = useState(false);
   const [isOrgEditing, setIsOrgEditing] = useState(false);
 
+  const handleContactEditingChange = useCallback((editing: boolean) => setIsContactEditing(editing), []);
   const handleOrgEditingChange = useCallback((editing: boolean) => setIsOrgEditing(editing), []);
 
   if (!agent) return null;
@@ -29,9 +31,13 @@ export const useAgentProfileSections = (agent: ApiAgentProfileGet | undefined) =
     {
       iconName: IconName.ChatsCircle,
       title: t("dashboard.agentProfile.contactDetails.title"),
-      headerButtonName: t("dashboard.agentProfile.contactDetails.edit"),
-      onHeaderButtonClick: () => contactDetailsRef.current?.handleEditClick(),
-      subComponent: <ContactDetails ref={contactDetailsRef} agent={agent} />,
+      ...(!isContactEditing && {
+        headerButtonName: t("dashboard.agentProfile.contactDetails.edit"),
+        onHeaderButtonClick: () => contactDetailsRef.current?.handleEditClick(),
+      }),
+      subComponent: (
+        <ContactDetails ref={contactDetailsRef} agent={agent} onEditingChange={handleContactEditingChange} />
+      ),
     },
     {
       iconName: IconName.UsersThree,
