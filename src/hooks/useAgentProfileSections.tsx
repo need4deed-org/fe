@@ -4,6 +4,7 @@ import {
   CommunicationTracker,
   CommunicationTrackerRef,
 } from "@/components/Dashboard/Profile/sections/CommunicationTracker";
+import { ContactDetails } from "@/components/Dashboard/Profile/sections/ContactDetails";
 import { OrganisationDetails } from "@/components/Dashboard/Profile/sections/OrganisationDetails";
 import { ProfileHeader } from "@/components/Dashboard/Profile/sections/ProfileHeader";
 import { EditableSectionRef } from "@/components/Dashboard/Profile/sections/shared/types";
@@ -14,12 +15,20 @@ import { useTranslation } from "react-i18next";
 export const useAgentProfileSections = (agent: ApiAgentProfileGet | undefined) => {
   const { t } = useTranslation();
 
+  const contactDetailsRef = useRef<EditableSectionRef>(null);
   const organisationDetailsRef = useRef<EditableSectionRef>(null);
   const communicationTrackerRef = useRef<CommunicationTrackerRef>(null);
 
   if (!agent) return null;
 
   const sections: SectionCardProps[] = [
+    {
+      iconName: IconName.ChatsCircle,
+      title: t("dashboard.agentProfile.contactDetails.title"),
+      headerButtonName: t("dashboard.agentProfile.contactDetails.edit"),
+      onHeaderButtonClick: () => contactDetailsRef.current?.handleEditClick(),
+      subComponent: <ContactDetails ref={contactDetailsRef} agent={agent} />,
+    },
     {
       iconName: IconName.UsersThree,
       title: t("dashboard.agentProfile.organisationDetails.title"),
