@@ -6,7 +6,8 @@ import { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from "r
 import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { FormContainer } from "../shared/styles";
-import { EditableSectionRef } from "../shared/types";
+import { EditableSectionProps, EditableSectionRef } from "../shared/types";
+import { useEditingChangeNotifier } from "../shared/useEditingChangeNotifier";
 import {
   createRefugeeAccommodationCentreSchema,
   RefugeeAccommodationCentreFormData,
@@ -16,15 +17,17 @@ import { RefugeeAccommodationCentreEdit } from "./RefugeeAccommodationCentreEdit
 
 type Props = {
   opportunity: ApiOpportunityGet;
-};
+} & EditableSectionProps;
 
 export const RefugeeAccommodationCentre = forwardRef<EditableSectionRef, Props>(function RefugeeAccommodationCentre(
-  { opportunity },
+  { opportunity, onEditingChange },
   ref,
 ) {
   const { t, i18n } = useTranslation();
   const { mutate: updateAgent, isPending } = useUpdateOpportunityAgent(opportunity.id);
   const [isEditing, setIsEditing] = useState(false);
+
+  useEditingChangeNotifier(isEditing, onEditingChange);
 
   const schema = createRefugeeAccommodationCentreSchema(t);
 

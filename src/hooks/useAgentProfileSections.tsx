@@ -9,7 +9,7 @@ import { OrganisationDetails } from "@/components/Dashboard/Profile/sections/Org
 import { ProfileHeader } from "@/components/Dashboard/Profile/sections/ProfileHeader";
 import { EditableSectionRef } from "@/components/Dashboard/Profile/sections/shared/types";
 import { ApiAgentProfileGet, IconName } from "@/components/Dashboard/Profile/types";
-import { useRef } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 export const useAgentProfileSections = (agent: ApiAgentProfileGet | undefined) => {
@@ -19,22 +19,36 @@ export const useAgentProfileSections = (agent: ApiAgentProfileGet | undefined) =
   const organisationDetailsRef = useRef<EditableSectionRef>(null);
   const communicationTrackerRef = useRef<CommunicationTrackerRef>(null);
 
+  const [isContactEditing, setIsContactEditing] = useState(false);
+  const [isOrgEditing, setIsOrgEditing] = useState(false);
+
+  const handleContactEditingChange = useCallback((editing: boolean) => setIsContactEditing(editing), []);
+  const handleOrgEditingChange = useCallback((editing: boolean) => setIsOrgEditing(editing), []);
+
   if (!agent) return null;
 
   const sections: SectionCardProps[] = [
     {
       iconName: IconName.ChatsCircle,
       title: t("dashboard.agentProfile.contactDetails.title"),
-      headerButtonName: t("dashboard.agentProfile.contactDetails.edit"),
-      onHeaderButtonClick: () => contactDetailsRef.current?.handleEditClick(),
-      subComponent: <ContactDetails ref={contactDetailsRef} agent={agent} />,
+      ...(!isContactEditing && {
+        headerButtonName: t("dashboard.agentProfile.contactDetails.edit"),
+        onHeaderButtonClick: () => contactDetailsRef.current?.handleEditClick(),
+      }),
+      subComponent: (
+        <ContactDetails ref={contactDetailsRef} agent={agent} onEditingChange={handleContactEditingChange} />
+      ),
     },
     {
       iconName: IconName.UsersThree,
       title: t("dashboard.agentProfile.organisationDetails.title"),
-      headerButtonName: t("dashboard.agentProfile.organisationDetails.edit"),
-      onHeaderButtonClick: () => organisationDetailsRef.current?.handleEditClick(),
-      subComponent: <OrganisationDetails ref={organisationDetailsRef} agent={agent} />,
+      ...(!isOrgEditing && {
+        headerButtonName: t("dashboard.agentProfile.organisationDetails.edit"),
+        onHeaderButtonClick: () => organisationDetailsRef.current?.handleEditClick(),
+      }),
+      subComponent: (
+        <OrganisationDetails ref={organisationDetailsRef} agent={agent} onEditingChange={handleOrgEditingChange} />
+      ),
     },
     {
       iconName: IconName.ChatsTeardrop,

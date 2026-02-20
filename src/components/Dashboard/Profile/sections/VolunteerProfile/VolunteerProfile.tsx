@@ -26,18 +26,24 @@ import {
   transformLanguagesToApi,
 } from "./transformers";
 import { createVolunteerProfileSchema, VolunteerProfileFormData } from "./volunteerProfileSchema";
-import { EditableSectionRef } from "../shared/types";
+import { EditableSectionProps, EditableSectionRef } from "../shared/types";
+import { useEditingChangeNotifier } from "../shared/useEditingChangeNotifier";
 
 type Props = {
   volunteer: ApiVolunteerGet;
-};
+} & EditableSectionProps;
 
 export type VolunteerProfileRef = EditableSectionRef;
 
-export const VolunteerProfile = forwardRef<VolunteerProfileRef, Props>(function VolunteerProfile({ volunteer }, ref) {
+export const VolunteerProfile = forwardRef<VolunteerProfileRef, Props>(function VolunteerProfile(
+  { volunteer, onEditingChange },
+  ref,
+) {
   const { t, i18n } = useTranslation();
   const { mutate: updateProfile, isPending } = useUpdateVolunteerProfile(volunteer.id);
   const [isEditing, setIsEditing] = useState(false);
+
+  useEditingChangeNotifier(isEditing, onEditingChange);
 
   const { data: apiLanguages = [] } = useApiLanguages();
   const { data: apiActivities = [] } = useApiActivities();

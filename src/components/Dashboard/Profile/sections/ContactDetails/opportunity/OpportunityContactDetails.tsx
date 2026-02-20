@@ -6,7 +6,8 @@ import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { FormContainer } from "../../shared/styles";
-import { EditableSectionRef } from "../../shared/types";
+import { EditableSectionProps, EditableSectionRef } from "../../shared/types";
+import { useEditingChangeNotifier } from "../../shared/useEditingChangeNotifier";
 import { useEnumTranslation } from "../shared";
 import {
   createOpportunityContactDetailsSchema,
@@ -17,17 +18,19 @@ import { OpportunityContactDetailsEdit } from "./OpportunityContactDetailsEdit";
 
 type Props = {
   opportunity: ApiOpportunityGet;
-};
+} & EditableSectionProps;
 
 const COMMUNICATION_TYPES = Object.values(PreferredCommunicationType);
 
 export const OpportunityContactDetails = forwardRef<EditableSectionRef, Props>(function OpportunityContactDetails(
-  { opportunity },
+  { opportunity, onEditingChange },
   ref,
 ) {
   const { t } = useTranslation();
   const { mutate: updateContact, isPending } = useUpdateOpportunityContact(opportunity.id);
   const [isEditing, setIsEditing] = useState(false);
+
+  useEditingChangeNotifier(isEditing, onEditingChange);
 
   const { options, keysToLabels, labelsToKeys } = useEnumTranslation(
     COMMUNICATION_TYPES,
