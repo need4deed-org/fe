@@ -779,6 +779,14 @@
           "websiteInvalid": "Webseite muss mit http:// oder https:// beginnen",
           "clientLanguagesRequired": "Mindestens eine Sprache ist erforderlich"
         }
+      },
+      "opportunitiesSec": {
+        "postOpportunity": "Möglichkeit posten",
+        "tabs": {
+          "lookingForVolunteers": "Suche nach Freiwilligen",
+          "active": "Aktiv",
+          "past": "Vergangen"
+        }
       }
     },
     "opportunityProfile": {
