@@ -1433,6 +1433,8 @@ html {
     --volunteer-profile-opportunities-accordion-detail-section-gap: 8px;
     --volunteer-profile-opportunities-accordion-detail-header-gap: 8px;
     --volunteer-profile-opportunities-accordion-language-row-gap: 8px;
+    --opportunity-volunteers-avatar-size: 40px;
+    --opportunity-volunteers-avatar-border-radius: 50%;
   }
 }
 

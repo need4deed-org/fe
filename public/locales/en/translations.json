@@ -859,6 +859,18 @@
           "invalidTimeFormat": "Invalid time format (use HH:MM)"
         }
       },
+      "volunteersSec": {
+        "title": "Volunteers",
+        "findVolunteers": "Find volunteers",
+        "appliedOn": "Applied on",
+        "tabs": {
+          "pending": "Pending",
+          "matched": "Matched",
+          "active": "Active",
+          "past": "Past"
+        },
+        "emptyState": "No volunteers in this category yet"
+      },
       "opportunityDetails": {
         "title": "Opportunity details",
         "description": "Description",

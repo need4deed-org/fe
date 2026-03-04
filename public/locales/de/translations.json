@@ -860,6 +860,18 @@
           "invalidTimeFormat": "Ungültiges Zeitformat (verwenden Sie HH:MM)"
         }
       },
+      "volunteersSec": {
+        "title": "Freiwillige",
+        "findVolunteers": "Freiwillige finden",
+        "appliedOn": "Beworben am",
+        "tabs": {
+          "pending": "Ausstehend",
+          "matched": "Zugeordnet",
+          "active": "Aktiv",
+          "past": "Vergangen"
+        },
+        "emptyState": "Noch keine Freiwilligen in dieser Kategorie"
+      },
       "opportunityDetails": {
         "title": "Details der Möglichkeit",
         "description": "Beschreibung",

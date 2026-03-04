@@ -3,16 +3,19 @@ import { AccompanyingDetails } from "@/components/Dashboard/Profile/sections/Acc
 import { Comments } from "@/components/Dashboard/Profile/sections/Comments";
 import { ContactDetails } from "@/components/Dashboard/Profile/sections/ContactDetails";
 import { OpportunityDetails } from "@/components/Dashboard/Profile/sections/OpportunityDetails";
+import { OpportunityVolunteers } from "@/components/Dashboard/Profile/sections/OpportunityVolunteers";
 import { ProfileHeader } from "@/components/Dashboard/Profile/sections/ProfileHeader";
 import { RefugeeAccommodationCentre } from "@/components/Dashboard/Profile/sections/RefugeeAccommodationCentre";
 import { EditableSectionRef } from "@/components/Dashboard/Profile/sections/shared/types";
 import { IconName } from "@/components/Dashboard/Profile/types";
-import { ApiOpportunityGet, VolunteerStateTypeType } from "need4deed-sdk";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { ApiOpportunityGet, UserRole, VolunteerStateTypeType } from "need4deed-sdk";
 import { useCallback, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | undefined) => {
   const { t } = useTranslation();
+  const currentUser = useCurrentUser();
 
   const opportunityContactDetailsRef = useRef<EditableSectionRef>(null);
   const racRef = useRef<EditableSectionRef>(null);
@@ -30,6 +33,8 @@ export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | u
   const handleAccompanyingEditingChange = useCallback((editing: boolean) => setIsAccompanyingEditing(editing), []);
 
   if (!opportunity) return null;
+
+  const canFindVolunteers = currentUser?.role === UserRole.COORDINATOR || currentUser?.role === UserRole.AGENT;
 
   const commentsCount = opportunity.comments.length;
   const isAccompanyingType =
@@ -75,20 +80,17 @@ export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | u
         onHeaderButtonClick: () => racRef.current?.handleEditClick(),
       }),
       subComponent: (
-        <RefugeeAccommodationCentre
-          ref={racRef}
-          opportunity={opportunity}
-          onEditingChange={handleRacEditingChange}
-        />
+        <RefugeeAccommodationCentre ref={racRef} opportunity={opportunity} onEditingChange={handleRacEditingChange} />
       ),
     },
     {
       iconName: IconName.Users,
       title: t("dashboard.opportunityProfile.accompanyingDetailsTitle"),
-      ...(isAccompanyingType && !isAccompanyingEditing && {
-        headerButtonName: t("dashboard.opportunityProfile.editButtonName"),
-        onHeaderButtonClick: () => accompanyingDetailsRef.current?.handleEditClick?.(),
-      }),
+      ...(isAccompanyingType &&
+        !isAccompanyingEditing && {
+          headerButtonName: t("dashboard.opportunityProfile.editButtonName"),
+          onHeaderButtonClick: () => accompanyingDetailsRef.current?.handleEditClick?.(),
+        }),
       subComponent: (
         <AccompanyingDetails
           ref={accompanyingDetailsRef}
@@ -96,6 +98,15 @@ export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | u
           onEditingChange={handleAccompanyingEditingChange}
         />
       ),
+    },
+    {
+      iconName: IconName.UsersThree,
+      title: t("dashboard.opportunityProfile.volunteersSec.title"),
+      ...(canFindVolunteers && {
+        headerButtonName: t("dashboard.opportunityProfile.volunteersSec.findVolunteers"),
+        headerButtonDisabled: true,
+      }),
+      subComponent: <OpportunityVolunteers />,
     },
     {
       iconName: IconName.ChatCircleDots,
