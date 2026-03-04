@@ -2,6 +2,7 @@ import { Heading4, Paragraph } from "@/components/styled/text";
 import { defaultAvatarVolunteerProfile } from "@/config/constants";
 import { getImageUrl } from "@/utils";
 import { CaretDownIcon, CaretUpIcon } from "@phosphor-icons/react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import StatusBadge from "../../common/StatusBadge";
@@ -21,8 +22,13 @@ type Props = {
 
 export const VolunteerAccordion = ({ volunteer }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { t } = useTranslation();
-  const { name, avatarUrl, engagementStatus, volunteerType, appliedAt } = volunteer;
+  const { t, i18n } = useTranslation();
+  const router = useRouter();
+  const { id, name, avatarUrl, engagementStatus, volunteerType, appliedAt } = volunteer;
+
+  const handleGoToProfile = () => {
+    router.push(`/${i18n.language}/dashboard/volunteers/${id}`);
+  };
   const CaretIcon = isOpen ? CaretUpIcon : CaretDownIcon;
   const resolvedAvatarUrl = getImageUrl(avatarUrl || defaultAvatarVolunteerProfile);
 
@@ -42,7 +48,12 @@ export const VolunteerAccordion = ({ volunteer }: Props) => {
         </HeaderInfoContainer>
 
         <HeaderButtonsContainer>
-          <Heading4 margin={0} color="var(--color-midnight-light)">
+          <Heading4
+            margin={0}
+            color="var(--color-midnight-light)"
+            onClick={handleGoToProfile}
+            style={{ cursor: "pointer" }}
+          >
             {t("dashboard.opportunities.goToProfile")}
           </Heading4>
           <CaretIcon
