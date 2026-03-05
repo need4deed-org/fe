@@ -2,18 +2,18 @@ import { Icon, MapPinIcon, ShootingStarIcon, TranslateIcon, CalendarDotsIcon } f
 import { ApiVolunteerGetList } from "need4deed-sdk";
 import { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
-import styled from "styled-components";
 
 import { Button } from "@/components/core/button";
 import { Tags } from "@/components/core/common";
 import { IconDiv } from "@/components/styled/container";
 import { Paragraph } from "@/components/styled/text";
+import { Actions, Container, DetailHeader, DetailSection, LanguageRow, LanguagesList, SplitContainer } from "./styles";
 
 interface Props {
   volunteer: ApiVolunteerGetList;
 }
 
-export default function VolunteerDetail({ volunteer }: Props) {
+export const VolunteerDetail = ({ volunteer }: Props) => {
   const { t } = useTranslation();
 
   const { languages, locations, activities, availability, skills } = volunteer;
@@ -88,7 +88,7 @@ export default function VolunteerDetail({ volunteer }: Props) {
       </Actions>
     </Container>
   );
-}
+};
 
 /* Helper Components */
 
@@ -109,47 +109,3 @@ const InfoSection = ({ icon: Icon, title, children }: InfoSectionProps) => (
     {children}
   </DetailSection>
 );
-
-/* Styled Components */
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: var(--volunteer-profile-opportunities-accordion-container-gap);
-`;
-
-const SplitContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--volunteer-profile-opportunities-accordion-split-container-gap);
-`;
-
-const DetailSection = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: var(--volunteer-profile-opportunities-accordion-detail-section-gap);
-`;
-
-const DetailHeader = styled.div`
-  display: flex;
-  align-items: center;
-  gap: var(--volunteer-profile-opportunities-accordion-detail-header-gap);
-`;
-
-const LanguagesList = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: var(--homepage-volunteering-opportunity-details-languages-gap);
-`;
-
-const LanguageRow = styled.div`
-  display: flex;
-  gap: var(--volunteer-profile-opportunities-accordion-language-row-gap);
-`;
-
-const Actions = styled.div`
-  display: flex;
-  gap: var(--volunteer-profile-opportunities-accordion-actions-container-gap);
-  justify-content: center;
-`;

@@ -3,20 +3,26 @@ import { CaretDownIcon, CaretUpIcon } from "@phosphor-icons/react";
 import { ApiVolunteerGetList } from "need4deed-sdk";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import styled from "styled-components";
-import { createStatusLabelMap } from "./mockOpps/tempUtils";
+import { createStatusLabelMap } from "./mockVols/tempUtils";
 import { CirclePic } from "@/components/styled/img";
 import { getImageUrl } from "@/utils";
 import { defaultAvatarURL } from "@/config/constants";
-import VolunteerDetail from "./VolunteerDetail";
+import { VolunteerDetail } from "./VolunteerDetail";
 import { ProfileStatusBadge } from "../ProfileHeader/common";
-import { createEngagementStatusLabelMap } from "./mockOpps/tempUtils";
+import { createEngagementStatusLabelMap } from "./mockVols/tempUtils";
+import {
+  AccordionContainer,
+  HeaderButtonsContainer,
+  HeaderContainer,
+  HeaderInfoAvatarNameContainer,
+  HeaderInfoContainer,
+} from "./styles";
 
 interface Props {
   volunteer: ApiVolunteerGetList;
 }
 
-export default function AccordionVolunteer({ volunteer }: Props) {
+export const AccordionVolunteer = ({ volunteer }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const { t } = useTranslation();
 
@@ -61,45 +67,4 @@ export default function AccordionVolunteer({ volunteer }: Props) {
       {isOpen && <VolunteerDetail volunteer={volunteer} />}
     </AccordionContainer>
   );
-}
-
-/* Styles */
-
-const AccordionContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  background: var(--color-white);
-  padding: var(--volunteer-profile-opportunities-accordion-container-padding);
-  border-radius: var(--volunteer-profile-opportunities-accordion-container-border-radius);
-  border: var(--volunteer-profile-opportunities-accordion-container-border);
-  gap: var(--volunteer-profile-opportunities-accordion-container-gap);
-`;
-
-const HeaderContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-`;
-
-const HeaderInfoContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--volunteer-profile-opportunities-accordion-header-info-gap);
-`;
-
-const HeaderInfoAvatarNameContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: var(--volunteer-profile-opportunities-accordion-header-avatar-name-gap);
-  align-self: stretch;
-`;
-
-const HeaderButtonsContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: var(--volunteer-profile-opportunities-accordion-header-buttons-gap);
-`;
+};

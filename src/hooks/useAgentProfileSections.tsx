@@ -8,7 +8,7 @@ import { ContactDetails } from "@/components/Dashboard/Profile/sections/ContactD
 import { OrganisationDetails } from "@/components/Dashboard/Profile/sections/OrganisationDetails";
 import { ProfileHeader } from "@/components/Dashboard/Profile/sections/ProfileHeader";
 import { EditableSectionRef } from "@/components/Dashboard/Profile/sections/shared/types";
-import VolunteerAgents from "@/components/Dashboard/Profile/sections/VolunteerAgents/VolunteerAgents";
+import { VolunteerAgents } from "@/components/Dashboard/Profile/sections/VolunteerAgents/VolunteerAgents";
 import { ApiAgentProfileGet, IconName } from "@/components/Dashboard/Profile/types";
 import { useCallback, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";

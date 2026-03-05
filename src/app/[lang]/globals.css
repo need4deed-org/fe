@@ -1404,6 +1404,16 @@ html {
     --volunteer-profile-opportunities-tab-heading-margin: 0;
     --volunteer-profile-opportunities-tab-heading-padding: 16px;
     --volunteer-profile-opportunities-tab-heading-border-bottom: 2px solid currentColor;
+    --volunteer-profile-opportunities-tab-heading-gap: 6px;
+    --volunteer-profile-opportunities-tab-count-badge-min-width: 18px;
+    --volunteer-profile-opportunities-tab-count-badge-height: 18px;
+    --volunteer-profile-opportunities-tab-count-badge-padding: 0 5px;
+    --volunteer-profile-opportunities-tab-count-badge-border-radius: 9px;
+    --volunteer-profile-opportunities-tab-count-badge-background: var(--color-papaya);
+    --volunteer-profile-opportunities-tab-count-badge-color: var(--color-white);
+    --volunteer-profile-opportunities-tab-count-badge-font-size: 11px;
+    --volunteer-profile-opportunities-tab-count-badge-font-weight: var(--font-weight-semibold);
+    --volunteer-profile-opportunities-tab-count-badge-line-height: 1;
     --volunteer-profile-opportunities-accordion-container-padding: 24px;
     --volunteer-profile-opportunities-accordion-container-border-radius: 24px;
     --volunteer-profile-opportunities-accordion-container-border: 1px solid var(--color-blue-50);

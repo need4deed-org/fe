@@ -1,17 +1,27 @@
-import styled from "styled-components";
 import { Tabs } from "./Tabs";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { getMappedOpportunities } from "./mockOpps/tempUtils";
-import { mockRawVolunteers } from "./mockOpps/mockVolunteers";
-import AccordionVolunteer from "./AccordionVolunteer";
+import { getMappedOpportunities } from "./mockVols/tempUtils";
+import { mockRawVolunteers } from "./mockVols/mockVolunteers";
+import { AccordionVolunteer } from "./AccordionVolunteer";
+import { VolunteerOpportunitiesContainer } from "./styles";
 
-const tabsKeys = ["pending", "matched", "active", "past"];
+const tabsKeys = ["pending", "matched", "active", "past"] as const;
+const tabCounts: Record<(typeof tabsKeys)[number], number | undefined> = {
+  pending: 1,
+  matched: 2,
+  active: 0,
+  past: undefined,
+};
 
-export default function VolunteerAgents() {
+export const VolunteerAgents = () => {
   const { t } = useTranslation();
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
-  const tabs = tabsKeys.map((key) => t(`dashboard.volunteerProfile.opportunitiesSec.tabs.${key}`));
+
+  const tabs = tabsKeys.map((key) => ({
+    label: t(`dashboard.volunteerProfile.opportunitiesSec.tabs.${key}`),
+    count: tabCounts[key],
+  }));
 
   const volunteers = getMappedOpportunities(mockRawVolunteers);
   return (
@@ -21,12 +31,4 @@ export default function VolunteerAgents() {
         volunteers?.map((volunteer) => <AccordionVolunteer volunteer={volunteer} key={volunteer.id} />)}
     </VolunteerOpportunitiesContainer>
   );
-}
-
-/* Styles */
-
-const VolunteerOpportunitiesContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: var(--volunteer-profile-opportunities-container-gap);
-`;
+};
