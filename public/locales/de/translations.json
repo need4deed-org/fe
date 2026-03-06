@@ -596,6 +596,39 @@
       }
     },
     "opportunities": {
+      "opportunities": "Möglichkeiten",
+      "tabs": {
+        "tab1": "Liste",
+        "tab2": "Karten",
+        "tab3": "Karte"
+      },
+      "status": {
+        "new": "Neu",
+        "searching": "Suche läuft",
+        "active": "Aktiv",
+        "past": "Vergangen"
+      },
+      "type": {
+        "accompanying": "Begleitung",
+        "regular": "Regelmäßig",
+        "events": "Veranstaltungen",
+        "regular-accompanying": "Regelmäßig + Begleitung"
+      },
+      "card": {
+        "mainCommunication": "Hauptkommunikation",
+        "residentsSpeak": "Bewohner sprechen",
+        "schedule": "Zeitplan",
+        "search": "Suchen"
+      },
+      "filters": {
+        "status": {
+          "header": "Status",
+          "new": "Neu",
+          "searching": "Suche läuft",
+          "active": "Aktiv",
+          "past": "Vergangen"
+        }
+      },
       "accompanyingTranslation": {
         "en": "Deutsch, Englisch",
         "de": "Deutsch",

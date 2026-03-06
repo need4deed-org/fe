@@ -1,5 +1,6 @@
 export * from "./useClickOutside";
 export * from "./useGetOpportunity";
+export * from "./useGetVolunteer";
 export * from "./useGetQuery";
 export * from "./useMutationQuery";
 export * from "./useSwipe";

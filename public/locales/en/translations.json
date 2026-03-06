@@ -637,6 +637,39 @@
       }
     },
     "opportunities": {
+      "opportunities": "Opportunities",
+      "tabs": {
+        "tab1": "List",
+        "tab2": "Cards",
+        "tab3": "Map"
+      },
+      "status": {
+        "new": "New",
+        "searching": "Searching",
+        "active": "Active",
+        "past": "Past"
+      },
+      "type": {
+        "accompanying": "Accompanying",
+        "regular": "Regular",
+        "events": "Events",
+        "regular-accompanying": "Regular + Accompanying"
+      },
+      "card": {
+        "mainCommunication": "Main communication",
+        "residentsSpeak": "Residents speak",
+        "schedule": "Schedule",
+        "search": "Search"
+      },
+      "filters": {
+        "status": {
+          "header": "Status",
+          "new": "New",
+          "searching": "Searching",
+          "active": "Active",
+          "past": "Past"
+        }
+      },
       "accompanyingTranslation": {
         "en": "German, English",
         "de": "German",
