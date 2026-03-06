@@ -1,27 +1,47 @@
-import styled from "styled-components";
-import { Tabs } from "./Tabs";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { getMappedOpportunities } from "./mockOpps/tempUtils";
-import { mockRawOpportunities } from "./mockOpps/mockOpportunities";
+import styled from "styled-components";
+import { SectionEmptyState } from "../shared/styles";
 import AccordionOpportunity from "./AccordionOpportunity";
+import { mockRawOpportunities } from "./mockOpps/mockOpportunities";
+import { getMappedOpportunities } from "./mockOpps/tempUtils";
+import { Tabs } from "../shared/Tabs";
 
 const tabsKeys = ["pending", "matched", "active", "past"];
+
+/**
+ * Temporary tab assignment for mock opportunities until fetched from API.
+ * Maps opportunity index → tab index (0=pending, 1=matched, 2=active, 3=past).
+ */
+const mockTabAssignment: Record<number, number> = { 0: 0, 1: 1, 2: 1 };
 
 export default function VolunteerOpportunities() {
   const { t } = useTranslation();
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
-  const tabs = tabsKeys.map((key) => ({ label: t(`dashboard.volunteerProfile.opportunitiesSec.tabs.${key}`) }));
 
   const opportunities = getMappedOpportunities(mockRawOpportunities, t);
+
+  const groupedByTab = tabsKeys.map((_, tabIndex) =>
+    opportunities.filter((_, oppIndex) => (mockTabAssignment[oppIndex] ?? -1) === tabIndex),
+  );
+
+  const tabs = tabsKeys.map((key, index) => ({
+    label: t(`dashboard.volunteerProfile.opportunitiesSec.tabs.${key}`),
+    count: groupedByTab[index].length,
+  }));
+
+  const visibleOpportunities = groupedByTab[selectedTabIndex];
 
   return (
     <VolunteerOpportunitiesContainer>
       <Tabs tabs={tabs} selectedTabIndex={selectedTabIndex} setSelectedTabIndex={setSelectedTabIndex} />
-      {/* opportunities will be grouped and render beneath each tab after fetching opps from API */}
-      <AccordionOpportunity opportunity={opportunities[0]} />
-      <AccordionOpportunity opportunity={opportunities[1]} />
-      <AccordionOpportunity opportunity={opportunities[2]} />
+      {visibleOpportunities.length === 0 ? (
+        <SectionEmptyState>{t("dashboard.opportunityProfile.volunteersSec.emptyState")}</SectionEmptyState>
+      ) : (
+        visibleOpportunities.map((opportunity) => (
+          <AccordionOpportunity key={opportunity.id} opportunity={opportunity} />
+        ))
+      )}
     </VolunteerOpportunitiesContainer>
   );
 }

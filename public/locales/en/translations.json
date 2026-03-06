@@ -869,7 +869,14 @@
           "active": "Active",
           "past": "Past"
         },
-        "emptyState": "No volunteers in this category yet"
+        "emptyState": "No volunteers in this category yet",
+        "matchSuccess": "Volunteer matched",
+        "notAMatchSuccess": "Volunteer unmatched",
+        "notAMatch": "Not a Match",
+        "markAsActive": "Mark as active",
+        "markAsPast": "Mark as past",
+        "markAsActiveSuccess": "Volunteer marked as active",
+        "markAsPastSuccess": "Volunteer marked as past"
       },
       "opportunityDetails": {
         "title": "Opportunity details",

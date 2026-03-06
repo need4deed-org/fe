@@ -1,4 +1,4 @@
-import { CountBadge, TabHeading, TabsContainer } from "./styles";
+import { CountBadge, TabHeading, TabsContainer } from "./tabStyles";
 
 type Tab = { label: string; count?: number };
 
@@ -10,7 +10,7 @@ type Props = {
 
 export const Tabs = ({ selectedTabIndex, setSelectedTabIndex, tabs }: Props) => {
   return (
-    <TabsContainer>
+    <TabsContainer data-testid="tabs">
       {tabs.map((tab, index) => (
         <TabHeading key={tab.label} onClick={() => setSelectedTabIndex(index)} $isSelected={selectedTabIndex === index}>
           {tab.label}

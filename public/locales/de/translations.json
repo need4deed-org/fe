@@ -870,7 +870,14 @@
           "active": "Aktiv",
           "past": "Vergangen"
         },
-        "emptyState": "Noch keine Freiwilligen in dieser Kategorie"
+        "emptyState": "Noch keine Freiwilligen in dieser Kategorie",
+        "matchSuccess": "Freiwillige/r zugeordnet",
+        "notAMatchSuccess": "Zuordnung für Freiwillige/n entfernt",
+        "notAMatch": "Kein Match",
+        "markAsActive": "Als aktiv markieren",
+        "markAsPast": "Als vergangen markieren",
+        "markAsActiveSuccess": "Freiwillige/r als aktiv markiert",
+        "markAsPastSuccess": "Freiwillige/r als vergangen markiert"
       },
       "opportunityDetails": {
         "title": "Details der Möglichkeit",

@@ -1,11 +1,12 @@
 import { OpportunityVolunteerStatusType } from "need4deed-sdk";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
 import { SectionEmptyState } from "../shared/styles";
-import { Tabs } from "../VolunteerOpportunities/Tabs";
+import { Tabs } from "../shared/Tabs";
 import { mockVolunteers } from "./mockVolunteers";
 import { OpportunityVolunteersContainer } from "./styles";
-import { VolunteerAccordion } from "./VolunteerAccordion";
+import { AccordionVolunteer } from "./AccordionVolunteer";
 
 const tabStatusOrder: OpportunityVolunteerStatusType[] = [
   OpportunityVolunteerStatusType.SUGGESTED,
@@ -19,13 +20,38 @@ const tabKeys = ["pending", "matched", "active", "past"];
 export const OpportunityVolunteers = () => {
   const { t } = useTranslation();
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
+  const [statusOverrides, setStatusOverrides] = useState<Record<number, OpportunityVolunteerStatusType | "removed">>(
+    {},
+  );
+
+  const getStatus = (v: (typeof mockVolunteers)[0]) => statusOverrides[v.id] ?? v.tabStatus;
 
   const tabs = tabKeys.map((key, index) => ({
     label: t(`dashboard.opportunityProfile.volunteersSec.tabs.${key}`),
-    count: mockVolunteers.filter((v) => v.tabStatus === tabStatusOrder[index]).length,
+    count: mockVolunteers.filter((v) => getStatus(v) === tabStatusOrder[index]).length,
   }));
 
-  const visibleVolunteers = mockVolunteers.filter((v) => v.tabStatus === tabStatusOrder[selectedTabIndex]);
+  const visibleVolunteers = mockVolunteers.filter((v) => getStatus(v) === tabStatusOrder[selectedTabIndex]);
+
+  const handleMatch = (id: number) => {
+    setStatusOverrides((prev) => ({ ...prev, [id]: OpportunityVolunteerStatusType.MATCHED }));
+    toast.success(t("dashboard.opportunityProfile.volunteersSec.matchSuccess"));
+  };
+
+  const handleNotAMatch = (id: number) => {
+    setStatusOverrides((prev) => ({ ...prev, [id]: "removed" }));
+    toast.success(t("dashboard.opportunityProfile.volunteersSec.notAMatchSuccess"));
+  };
+
+  const handleMarkAsActive = (id: number) => {
+    setStatusOverrides((prev) => ({ ...prev, [id]: OpportunityVolunteerStatusType.ACTIVE }));
+    toast.success(t("dashboard.opportunityProfile.volunteersSec.markAsActiveSuccess"));
+  };
+
+  const handleMarkAsPast = (id: number) => {
+    setStatusOverrides((prev) => ({ ...prev, [id]: OpportunityVolunteerStatusType.PAST }));
+    toast.success(t("dashboard.opportunityProfile.volunteersSec.markAsPastSuccess"));
+  };
 
   return (
     <OpportunityVolunteersContainer data-testid="opportunity-volunteers">
@@ -35,7 +61,17 @@ export const OpportunityVolunteers = () => {
           {t("dashboard.opportunityProfile.volunteersSec.emptyState")}
         </SectionEmptyState>
       ) : (
-        visibleVolunteers.map((volunteer) => <VolunteerAccordion key={volunteer.id} volunteer={volunteer} />)
+        visibleVolunteers.map((volunteer) => (
+          <AccordionVolunteer
+            key={volunteer.id}
+            volunteer={volunteer}
+            currentStatus={tabStatusOrder[selectedTabIndex]}
+            onMatch={() => handleMatch(volunteer.id)}
+            onNotAMatch={() => handleNotAMatch(volunteer.id)}
+            onMarkAsActive={() => handleMarkAsActive(volunteer.id)}
+            onMarkAsPast={() => handleMarkAsPast(volunteer.id)}
+          />
+        ))
       )}
     </OpportunityVolunteersContainer>
   );

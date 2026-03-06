@@ -39,7 +39,7 @@ export const HeaderButtonsContainer = styled.div`
   gap: var(--volunteer-profile-opportunities-accordion-header-buttons-gap);
 `;
 
-export const Container = styled.div`
+export const DetailContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -52,12 +52,6 @@ export const SplitContainer = styled.div`
   gap: var(--volunteer-profile-opportunities-accordion-split-container-gap);
 `;
 
-export const VolunteerOpportunitiesContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: var(--volunteer-profile-opportunities-container-gap);
-`;
-
 export const DetailSection = styled.div`
   display: flex;
   flex-direction: column;
@@ -68,17 +62,6 @@ export const DetailHeader = styled.div`
   display: flex;
   align-items: center;
   gap: var(--volunteer-profile-opportunities-accordion-detail-header-gap);
-`;
-
-export const LanguagesList = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: var(--homepage-volunteering-opportunity-details-languages-gap);
-`;
-
-export const LanguageRow = styled.div`
-  display: flex;
-  gap: var(--volunteer-profile-opportunities-accordion-language-row-gap);
 `;
 
 export const Actions = styled.div`

@@ -1,4 +1,4 @@
-import { Tabs } from "./Tabs";
+import { Tabs } from "../shared/Tabs";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { getMappedOpportunities } from "./mockVols/tempUtils";

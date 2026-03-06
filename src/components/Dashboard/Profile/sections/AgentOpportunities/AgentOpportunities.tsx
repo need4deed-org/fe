@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import AccordionOpportunity from "../VolunteerOpportunities/AccordionOpportunity";
 import { mockRawOpportunities } from "../VolunteerOpportunities/mockOpps/mockOpportunities";
 import { getMappedOpportunities } from "../VolunteerOpportunities/mockOpps/tempUtils";
-import { Tabs } from "../VolunteerOpportunities/Tabs";
+import { Tabs } from "../shared/Tabs";
 import { AgentOpportunitiesContainer } from "./styles";
 
 const tabsKeys = ["lookingForVolunteers", "active", "past"] as const;
