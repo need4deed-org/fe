@@ -11,7 +11,7 @@ const tabsKeys = ["pending", "matched", "active", "past"];
 export default function VolunteerOpportunities() {
   const { t } = useTranslation();
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
-  const tabs = tabsKeys.map((key) => t(`dashboard.volunteerProfile.opportunitiesSec.tabs.${key}`));
+  const tabs = tabsKeys.map((key) => ({ label: t(`dashboard.volunteerProfile.opportunitiesSec.tabs.${key}`) }));
 
   const opportunities = getMappedOpportunities(mockRawOpportunities, t);
 

@@ -2,19 +2,19 @@
 import { useUpdateOpportunityContact } from "@/hooks/useUpdateOpportunityContact";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ApiOpportunityGet, PreferredCommunicationType } from "need4deed-sdk";
-import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
+import { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { FormContainer } from "../../shared/styles";
 import { EditableSectionProps, EditableSectionRef } from "../../shared/types";
 import { useEditingChangeNotifier } from "../../shared/useEditingChangeNotifier";
 import { useEnumTranslation } from "../shared";
+import { OpportunityContactDetailsDisplay } from "./OpportunityContactDetailsDisplay";
+import { OpportunityContactDetailsEdit } from "./OpportunityContactDetailsEdit";
 import {
   createOpportunityContactDetailsSchema,
   OpportunityContactDetailsFormData,
 } from "./opportunityContactDetailsSchema";
-import { OpportunityContactDetailsDisplay } from "./OpportunityContactDetailsDisplay";
-import { OpportunityContactDetailsEdit } from "./OpportunityContactDetailsEdit";
 
 type Props = {
   opportunity: ApiOpportunityGet;
@@ -39,7 +39,13 @@ export const OpportunityContactDetails = forwardRef<EditableSectionRef, Props>(f
 
   const schema = createOpportunityContactDetailsSchema(t);
 
-  const initialFormValues = opportunity.contact;
+  const initialFormValues = useMemo(
+    () => ({
+      ...opportunity.contact,
+      waysToContact: Array.isArray(opportunity.contact.waysToContact) ? opportunity.contact.waysToContact : [],
+    }),
+    [opportunity.contact],
+  );
 
   const methods = useForm<OpportunityContactDetailsFormData>({
     resolver: zodResolver(schema),
