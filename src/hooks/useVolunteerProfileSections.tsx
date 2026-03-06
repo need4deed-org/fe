@@ -81,7 +81,9 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
       headerButtonName: opportunityId
         ? t("dashboard.volunteerProfile.suggestButtonName")
         : t("dashboard.volunteerProfile.findOppButtonName"),
-      onHeaderButtonClick: opportunityId ? () => setIsSuggestDialogOpen(true) : undefined,
+      onHeaderButtonClick: opportunityId
+        ? () => setIsSuggestDialogOpen(true)
+        : () => router.push(`/${i18n.language}/dashboard/opportunities?volunteer=${volunteer.id}`),
       subComponent: (
         <>
           <VolunteerOpportunities />
