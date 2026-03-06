@@ -18,9 +18,10 @@ import { IconName } from "./icon";
 
 interface Props {
   volunteer: ApiVolunteerGetList;
+  opportunityId?: string;
 }
 
-export function VolunteerCard({ volunteer }: Props) {
+export function VolunteerCard({ volunteer, opportunityId }: Props) {
   const { t, i18n } = useTranslation();
   const router = useRouter();
 
@@ -36,7 +37,8 @@ export function VolunteerCard({ volunteer }: Props) {
   const handleCardClick = () => {
     if (!id) return;
 
-    router.push(`/${i18n.language}/dashboard/volunteers/${id}`);
+    const params = opportunityId ? `?opportunity=${opportunityId}` : "";
+    router.push(`/${i18n.language}/dashboard/volunteers/${id}${params}`);
   };
 
   return (
@@ -182,7 +184,9 @@ const Card = styled(BaseCard)`
   height: var(--dashboard-volunteers-card-height);
   gap: var(--dashboard-volunteers-card-gap);
   padding: var(--dashboard-volunteers-card-padding);
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  transition:
+    transform 0.3s ease-in-out,
+    box-shadow 0.3s ease-in-out;
   cursor: pointer;
 
   &:hover {

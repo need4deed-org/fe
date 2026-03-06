@@ -11,6 +11,7 @@ interface VolunteerCardListProps {
   rows: number;
   currentPage: number;
   setCurrentPage: (page: number) => void;
+  opportunityId?: string;
 }
 
 const VolunteerCardListContainer = styled.div`
@@ -25,8 +26,11 @@ export function VolunteerCardList({
   rows,
   currentPage,
   setCurrentPage,
+  opportunityId,
 }: VolunteerCardListProps) {
-  const items = volunteers.map((volunteer) => <VolunteerCard key={volunteer.id} volunteer={volunteer} />);
+  const items = volunteers.map((volunteer) => (
+    <VolunteerCard key={volunteer.id} volunteer={volunteer} opportunityId={opportunityId} />
+  ));
 
   return (
     <VolunteerCardListContainer>

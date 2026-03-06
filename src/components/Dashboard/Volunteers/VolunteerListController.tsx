@@ -62,6 +62,7 @@ export function VolunteerListController({
       rows={rows + (isFiltersOpen ? 1 : 0)}
       currentPage={currentPage}
       setCurrentPage={setCurrentPage}
+      opportunityId={opportunityId}
     />
   );
 }
