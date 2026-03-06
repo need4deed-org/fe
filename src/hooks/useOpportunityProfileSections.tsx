@@ -8,14 +8,14 @@ import { ProfileHeader } from "@/components/Dashboard/Profile/sections/ProfileHe
 import { RefugeeAccommodationCentre } from "@/components/Dashboard/Profile/sections/RefugeeAccommodationCentre";
 import { EditableSectionRef } from "@/components/Dashboard/Profile/sections/shared/types";
 import { IconName } from "@/components/Dashboard/Profile/types";
-import { useCurrentUser } from "@/hooks/useCurrentUser";
-import { ApiOpportunityGet, UserRole, VolunteerStateTypeType } from "need4deed-sdk";
+import { ApiOpportunityGet, VolunteerStateTypeType } from "need4deed-sdk";
+import { useRouter } from "next/navigation";
 import { useCallback, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | undefined) => {
-  const { t } = useTranslation();
-  const currentUser = useCurrentUser();
+  const { t, i18n } = useTranslation();
+  const router = useRouter();
 
   const opportunityContactDetailsRef = useRef<EditableSectionRef>(null);
   const racRef = useRef<EditableSectionRef>(null);
@@ -33,8 +33,6 @@ export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | u
   const handleAccompanyingEditingChange = useCallback((editing: boolean) => setIsAccompanyingEditing(editing), []);
 
   if (!opportunity) return null;
-
-  const canFindVolunteers = currentUser?.role === UserRole.COORDINATOR || currentUser?.role === UserRole.AGENT;
 
   const commentsCount = opportunity.comments.length;
   const isAccompanyingType =
@@ -102,10 +100,8 @@ export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | u
     {
       iconName: IconName.UsersThree,
       title: t("dashboard.opportunityProfile.volunteersSec.title"),
-      ...(canFindVolunteers && {
-        headerButtonName: t("dashboard.opportunityProfile.volunteersSec.findVolunteers"),
-        headerButtonDisabled: true,
-      }),
+      headerButtonName: t("dashboard.opportunityProfile.volunteersSec.findVolunteers"),
+      onHeaderButtonClick: () => router.push(`/${i18n.language}/dashboard/volunteers?opportunity=${opportunity.id}`),
       subComponent: <OpportunityVolunteers />,
     },
     {
