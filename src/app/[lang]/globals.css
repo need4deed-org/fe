@@ -1380,6 +1380,12 @@ html {
     --cards-header-filter-item-icon-div-size: 28px;
     --cards-header-filter-item-icon-div-border-radius: 14px;
 
+    --opportunity-filter-chip-bg: var(--color-midnight);
+    --opportunity-filter-chip-avatar-size: 28px;
+    --opportunity-filter-chip-x-hover-bg: rgba(255, 255, 255, 0.15);
+    --opportunity-filter-chip-default-avatar-bg: var(--color-blue-50);
+    --opportunity-filter-chip-default-avatar-icon-color: var(--color-midnight);
+
     --volunteer-profile-container-width: 1260px;
     --volunteer-profile-container-gap: 24px;
     --volunteer-profile-back-link-gap: 0.5rem;

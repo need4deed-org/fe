@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 import { DashboardLayout } from "@/components/Layout";
 import { apiPathOption, questionMark } from "@/config/constants";
-import { useGetQuery } from "@/hooks";
+import { useGetOpportunity, useGetQuery } from "@/hooks";
 import { ApiOptionLists, EntityTableName, QueryParamsKeys, SortOrder } from "need4deed-sdk";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Filters from "../common/CardsFilter/Filters";
@@ -29,6 +29,9 @@ export function Volunteers() {
   const router = useRouter();
   const tabs = [t("dashboard.volunteers.tabs.tab1"), t("dashboard.volunteers.tabs.tab2")];
 
+  const opportunityId = searchParams.get("opportunity") ?? undefined;
+  const opportunityFilter = useGetOpportunity(opportunityId);
+
   const handleSearchInputChange = (searchInput: string) => {
     handleFilterUpdate((prev) => ({ ...prev, [QueryParamsKeys.SEARCH]: searchInput }));
   };
@@ -42,6 +45,12 @@ export function Volunteers() {
 
     setCardsFilter(updatedFilter);
     router.push(pathname + questionMark + serializeFilters(updatedFilter, searchParams));
+  };
+
+  const handleRemoveOpportunityFilter = () => {
+    const params = new URLSearchParams(searchParams);
+    params.delete("opportunity");
+    router.push(pathname + questionMark + params.toString());
   };
 
   useEffect(() => {
@@ -78,6 +87,9 @@ export function Volunteers() {
           onSortOrderChange={handleSortChange}
           filter={cardsFilter}
           setFilter={handleFilterUpdate}
+          opportunityFilter={
+            opportunityFilter ? { ...opportunityFilter, onRemove: handleRemoveOpportunityFilter } : undefined
+          }
         />
         <VolunteerListController
           setNumOfVols={setNumOfVols}
@@ -85,6 +97,7 @@ export function Volunteers() {
           isFiltersOpen={isFiltersOpen}
           filter={cardsFilter}
           apiFilterOptions={apiFilterOptions}
+          opportunityId={opportunityId}
         />
       </VolunteersContainer>
     </DashboardLayout>
