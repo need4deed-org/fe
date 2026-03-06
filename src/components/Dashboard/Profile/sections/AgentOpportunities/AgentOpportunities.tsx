@@ -20,7 +20,7 @@ export const AgentOpportunities = () => {
 
   const opportunities = getMappedOpportunities(mockRawOpportunities, t, mockTabAssignment);
 
-  const { selectedTabIndex, setSelectedTabIndex, currentTabStatus, tabCounts, visibleItems, setItemStatus } =
+  const { selectedTabIndex, setSelectedTabIndex, currentTabStatus, tabCounts, visibleItems } =
     useTabTransitions(opportunities);
 
   const tabs = tabsKeys.map((key, index) => ({
@@ -28,24 +28,11 @@ export const AgentOpportunities = () => {
     count: tabCounts[index],
   }));
 
-  const handleMatch = (id: number) => setItemStatus(id, OpportunityVolunteerStatusType.MATCHED);
-  const handleNotAMatch = (id: number) => setItemStatus(id, "removed");
-  const handleMarkAsActive = (id: number) => setItemStatus(id, OpportunityVolunteerStatusType.ACTIVE);
-  const handleMarkAsPast = (id: number) => setItemStatus(id, OpportunityVolunteerStatusType.PAST);
-
   return (
     <AgentOpportunitiesContainer data-testid="agent-opportunities">
       <Tabs tabs={tabs} selectedTabIndex={selectedTabIndex} setSelectedTabIndex={setSelectedTabIndex} />
       {visibleItems.map((opportunity) => (
-        <AccordionOpportunity
-          key={opportunity.id}
-          opportunity={opportunity}
-          currentStatus={currentTabStatus}
-          onMatch={() => handleMatch(opportunity.id)}
-          onNotAMatch={() => handleNotAMatch(opportunity.id)}
-          onMarkAsActive={() => handleMarkAsActive(opportunity.id)}
-          onMarkAsPast={() => handleMarkAsPast(opportunity.id)}
-        />
+        <AccordionOpportunity key={opportunity.id} opportunity={opportunity} currentStatus={currentTabStatus} />
       ))}
     </AgentOpportunitiesContainer>
   );

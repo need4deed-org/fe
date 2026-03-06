@@ -9,17 +9,14 @@ import { Paragraph } from "@/components/styled/text";
 import { StatusAccordionActions } from "../shared/AccordionActions";
 import { DetailContainer, SplitContainer } from "../shared/accordionStyles";
 import { InfoSection } from "../shared/InfoSection";
+import { AccordionActionProps } from "../shared/types";
 import { Opportunity } from "./mockOpps/tempTypes";
 import { formatAccompanyingDate } from "./mockOpps/tempUtils";
 
 type Props = {
   opportunity: Opportunity;
   currentStatus: OpportunityVolunteerStatusType;
-  onMatch: () => void;
-  onNotAMatch: () => void;
-  onMarkAsActive: () => void;
-  onMarkAsPast: () => void;
-};
+} & AccordionActionProps;
 
 export default function OpportunityDetail({
   opportunity,
@@ -113,13 +110,15 @@ export default function OpportunityDetail({
       </SplitContainer>
 
       {/* 4. Action Buttons */}
-      <StatusAccordionActions
-        currentStatus={currentStatus}
-        onMatch={onMatch}
-        onNotAMatch={onNotAMatch}
-        onMarkAsActive={onMarkAsActive}
-        onMarkAsPast={onMarkAsPast}
-      />
+      {onMatch && onNotAMatch && onMarkAsActive && onMarkAsPast && (
+        <StatusAccordionActions
+          currentStatus={currentStatus}
+          onMatch={onMatch}
+          onNotAMatch={onNotAMatch}
+          onMarkAsActive={onMarkAsActive}
+          onMarkAsPast={onMarkAsPast}
+        />
+      )}
     </DetailContainer>
   );
 }
