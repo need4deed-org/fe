@@ -523,7 +523,14 @@
           "past": "Past"
         },
         "match": "Match",
-        "notAMatch": "Not a match"
+        "notAMatch": "Not a match",
+        "markAsActive": "Mark as active",
+        "markAsPast": "Mark as past",
+        "matchSuccess": "Matched",
+        "notAMatchSuccess": "Removed",
+        "markAsActiveSuccess": "Marked as active",
+        "markAsPastSuccess": "Marked as past",
+        "emptyState": "No items in this category yet"
       },
       "contactDetails": {
         "title": "Contact details",
@@ -869,14 +876,7 @@
           "active": "Active",
           "past": "Past"
         },
-        "emptyState": "No volunteers in this category yet",
-        "matchSuccess": "Volunteer matched",
-        "notAMatchSuccess": "Volunteer unmatched",
-        "notAMatch": "Not a Match",
-        "markAsActive": "Mark as active",
-        "markAsPast": "Mark as past",
-        "markAsActiveSuccess": "Volunteer marked as active",
-        "markAsPastSuccess": "Volunteer marked as past"
+        "emptyState": "No volunteers in this category yet"
       },
       "opportunityDetails": {
         "title": "Opportunity details",

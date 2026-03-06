@@ -1,71 +1,58 @@
 import { OpportunityVolunteerStatusType } from "need4deed-sdk";
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import { SectionEmptyState } from "../shared/styles";
 import { Tabs } from "../shared/Tabs";
+import { useTabTransitions } from "../shared/useTabTransitions";
 import { mockVolunteers } from "./mockVolunteers";
 import { OpportunityVolunteersContainer } from "./styles";
 import { AccordionVolunteer } from "./AccordionVolunteer";
-
-const tabStatusOrder: OpportunityVolunteerStatusType[] = [
-  OpportunityVolunteerStatusType.SUGGESTED,
-  OpportunityVolunteerStatusType.MATCHED,
-  OpportunityVolunteerStatusType.ACTIVE,
-  OpportunityVolunteerStatusType.PAST,
-];
 
 const tabKeys = ["pending", "matched", "active", "past"];
 
 export const OpportunityVolunteers = () => {
   const { t } = useTranslation();
-  const [selectedTabIndex, setSelectedTabIndex] = useState(0);
-  const [statusOverrides, setStatusOverrides] = useState<Record<number, OpportunityVolunteerStatusType | "removed">>(
-    {},
-  );
-
-  const getStatus = (v: (typeof mockVolunteers)[0]) => statusOverrides[v.id] ?? v.tabStatus;
+  const { selectedTabIndex, setSelectedTabIndex, currentTabStatus, tabCounts, visibleItems, setItemStatus } =
+    useTabTransitions(mockVolunteers);
 
   const tabs = tabKeys.map((key, index) => ({
     label: t(`dashboard.opportunityProfile.volunteersSec.tabs.${key}`),
-    count: mockVolunteers.filter((v) => getStatus(v) === tabStatusOrder[index]).length,
+    count: tabCounts[index],
   }));
 
-  const visibleVolunteers = mockVolunteers.filter((v) => getStatus(v) === tabStatusOrder[selectedTabIndex]);
-
   const handleMatch = (id: number) => {
-    setStatusOverrides((prev) => ({ ...prev, [id]: OpportunityVolunteerStatusType.MATCHED }));
-    toast.success(t("dashboard.opportunityProfile.volunteersSec.matchSuccess"));
+    setItemStatus(id, OpportunityVolunteerStatusType.MATCHED);
+    toast.success(t("dashboard.volunteerProfile.opportunitiesSec.matchSuccess"));
   };
 
   const handleNotAMatch = (id: number) => {
-    setStatusOverrides((prev) => ({ ...prev, [id]: "removed" }));
-    toast.success(t("dashboard.opportunityProfile.volunteersSec.notAMatchSuccess"));
+    setItemStatus(id, "removed");
+    toast.success(t("dashboard.volunteerProfile.opportunitiesSec.notAMatchSuccess"));
   };
 
   const handleMarkAsActive = (id: number) => {
-    setStatusOverrides((prev) => ({ ...prev, [id]: OpportunityVolunteerStatusType.ACTIVE }));
-    toast.success(t("dashboard.opportunityProfile.volunteersSec.markAsActiveSuccess"));
+    setItemStatus(id, OpportunityVolunteerStatusType.ACTIVE);
+    toast.success(t("dashboard.volunteerProfile.opportunitiesSec.markAsActiveSuccess"));
   };
 
   const handleMarkAsPast = (id: number) => {
-    setStatusOverrides((prev) => ({ ...prev, [id]: OpportunityVolunteerStatusType.PAST }));
-    toast.success(t("dashboard.opportunityProfile.volunteersSec.markAsPastSuccess"));
+    setItemStatus(id, OpportunityVolunteerStatusType.PAST);
+    toast.success(t("dashboard.volunteerProfile.opportunitiesSec.markAsPastSuccess"));
   };
 
   return (
     <OpportunityVolunteersContainer data-testid="opportunity-volunteers">
       <Tabs tabs={tabs} selectedTabIndex={selectedTabIndex} setSelectedTabIndex={setSelectedTabIndex} />
-      {visibleVolunteers.length === 0 ? (
+      {visibleItems.length === 0 ? (
         <SectionEmptyState data-testid="volunteers-empty-state">
           {t("dashboard.opportunityProfile.volunteersSec.emptyState")}
         </SectionEmptyState>
       ) : (
-        visibleVolunteers.map((volunteer) => (
+        visibleItems.map((volunteer) => (
           <AccordionVolunteer
             key={volunteer.id}
             volunteer={volunteer}
-            currentStatus={tabStatusOrder[selectedTabIndex]}
+            currentStatus={currentTabStatus}
             onMatch={() => handleMatch(volunteer.id)}
             onNotAMatch={() => handleNotAMatch(volunteer.id)}
             onMarkAsActive={() => handleMarkAsActive(volunteer.id)}

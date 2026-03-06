@@ -1,22 +1,34 @@
 import { MapPinIcon, PencilSimpleIcon, ShootingStarIcon, TranslateIcon } from "@phosphor-icons/react";
-import { Lang, OpportunityType } from "need4deed-sdk";
+import { Lang, OpportunityType, OpportunityVolunteerStatusType } from "need4deed-sdk";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
 import { Tags } from "@/components/core/common";
 import { Paragraph } from "@/components/styled/text";
 
-import { AccordionActions } from "../shared/AccordionActions";
+import { StatusAccordionActions } from "../shared/AccordionActions";
 import { DetailContainer, SplitContainer } from "../shared/accordionStyles";
 import { InfoSection } from "../shared/InfoSection";
 import { Opportunity } from "./mockOpps/tempTypes";
 import { formatAccompanyingDate } from "./mockOpps/tempUtils";
 
-interface Props {
+type Props = {
   opportunity: Opportunity;
-}
+  currentStatus: OpportunityVolunteerStatusType;
+  onMatch: () => void;
+  onNotAMatch: () => void;
+  onMarkAsActive: () => void;
+  onMarkAsPast: () => void;
+};
 
-export default function OpportunityDetail({ opportunity }: Props) {
+export default function OpportunityDetail({
+  opportunity,
+  currentStatus,
+  onMatch,
+  onNotAMatch,
+  onMarkAsActive,
+  onMarkAsPast,
+}: Props) {
   const { t, i18n } = useTranslation();
   const language = i18n.language as Lang;
 
@@ -101,7 +113,13 @@ export default function OpportunityDetail({ opportunity }: Props) {
       </SplitContainer>
 
       {/* 4. Action Buttons */}
-      <AccordionActions />
+      <StatusAccordionActions
+        currentStatus={currentStatus}
+        onMatch={onMatch}
+        onNotAMatch={onNotAMatch}
+        onMarkAsActive={onMarkAsActive}
+        onMarkAsPast={onMarkAsPast}
+      />
     </DetailContainer>
   );
 }

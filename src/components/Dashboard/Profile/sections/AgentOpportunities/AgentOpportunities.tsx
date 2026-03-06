@@ -1,35 +1,52 @@
-import { useState } from "react";
+import { OpportunityVolunteerStatusType } from "need4deed-sdk";
 import { useTranslation } from "react-i18next";
 import AccordionOpportunity from "../VolunteerOpportunities/AccordionOpportunity";
 import { mockRawOpportunities } from "../VolunteerOpportunities/mockOpps/mockOpportunities";
 import { getMappedOpportunities } from "../VolunteerOpportunities/mockOpps/tempUtils";
+import { useTabTransitions } from "../shared/useTabTransitions";
 import { Tabs } from "../shared/Tabs";
 import { AgentOpportunitiesContainer } from "./styles";
 
 const tabsKeys = ["lookingForVolunteers", "active", "past"] as const;
-const tabCounts: Record<(typeof tabsKeys)[number], number | undefined> = {
-  lookingForVolunteers: 1,
-  active: 2,
-  past: undefined,
+
+const mockTabAssignment: Record<number, OpportunityVolunteerStatusType> = {
+  0: OpportunityVolunteerStatusType.SUGGESTED,
+  1: OpportunityVolunteerStatusType.ACTIVE,
+  2: OpportunityVolunteerStatusType.ACTIVE,
 };
 
 export const AgentOpportunities = () => {
   const { t } = useTranslation();
-  const [selectedTabIndex, setSelectedTabIndex] = useState(0);
 
-  const tabs = tabsKeys.map((key) => ({
+  const opportunities = getMappedOpportunities(mockRawOpportunities, t, mockTabAssignment);
+
+  const { selectedTabIndex, setSelectedTabIndex, currentTabStatus, tabCounts, visibleItems, setItemStatus } =
+    useTabTransitions(opportunities);
+
+  const tabs = tabsKeys.map((key, index) => ({
     label: t(`dashboard.agentProfile.opportunitiesSec.tabs.${key}`),
-    count: tabCounts[key],
+    count: tabCounts[index],
   }));
 
-  const opportunities = getMappedOpportunities(mockRawOpportunities, t);
+  const handleMatch = (id: number) => setItemStatus(id, OpportunityVolunteerStatusType.MATCHED);
+  const handleNotAMatch = (id: number) => setItemStatus(id, "removed");
+  const handleMarkAsActive = (id: number) => setItemStatus(id, OpportunityVolunteerStatusType.ACTIVE);
+  const handleMarkAsPast = (id: number) => setItemStatus(id, OpportunityVolunteerStatusType.PAST);
 
   return (
     <AgentOpportunitiesContainer data-testid="agent-opportunities">
       <Tabs tabs={tabs} selectedTabIndex={selectedTabIndex} setSelectedTabIndex={setSelectedTabIndex} />
-      <AccordionOpportunity opportunity={opportunities[0]} />
-      <AccordionOpportunity opportunity={opportunities[1]} />
-      <AccordionOpportunity opportunity={opportunities[2]} />
+      {visibleItems.map((opportunity) => (
+        <AccordionOpportunity
+          key={opportunity.id}
+          opportunity={opportunity}
+          currentStatus={currentTabStatus}
+          onMatch={() => handleMatch(opportunity.id)}
+          onNotAMatch={() => handleNotAMatch(opportunity.id)}
+          onMarkAsActive={() => handleMarkAsActive(opportunity.id)}
+          onMarkAsPast={() => handleMarkAsPast(opportunity.id)}
+        />
+      ))}
     </AgentOpportunitiesContainer>
   );
 };

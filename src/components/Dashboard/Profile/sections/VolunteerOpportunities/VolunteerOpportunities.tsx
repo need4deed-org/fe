@@ -1,52 +1,76 @@
-import { useState } from "react";
+import { OpportunityVolunteerStatusType } from "need4deed-sdk";
 import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
 import styled from "styled-components";
 import { SectionEmptyState } from "../shared/styles";
+import { Tabs } from "../shared/Tabs";
+import { useTabTransitions } from "../shared/useTabTransitions";
 import AccordionOpportunity from "./AccordionOpportunity";
 import { mockRawOpportunities } from "./mockOpps/mockOpportunities";
 import { getMappedOpportunities } from "./mockOpps/tempUtils";
-import { Tabs } from "../shared/Tabs";
 
 const tabsKeys = ["pending", "matched", "active", "past"];
 
-/**
- * Temporary tab assignment for mock opportunities until fetched from API.
- * Maps opportunity index → tab index (0=pending, 1=matched, 2=active, 3=past).
- */
-const mockTabAssignment: Record<number, number> = { 0: 0, 1: 1, 2: 1 };
+const mockTabAssignment: Record<number, OpportunityVolunteerStatusType> = {
+  0: OpportunityVolunteerStatusType.SUGGESTED,
+  1: OpportunityVolunteerStatusType.MATCHED,
+  2: OpportunityVolunteerStatusType.MATCHED,
+};
 
 export default function VolunteerOpportunities() {
   const { t } = useTranslation();
-  const [selectedTabIndex, setSelectedTabIndex] = useState(0);
 
-  const opportunities = getMappedOpportunities(mockRawOpportunities, t);
+  const opportunities = getMappedOpportunities(mockRawOpportunities, t, mockTabAssignment);
 
-  const groupedByTab = tabsKeys.map((_, tabIndex) =>
-    opportunities.filter((_, oppIndex) => (mockTabAssignment[oppIndex] ?? -1) === tabIndex),
-  );
+  const { selectedTabIndex, setSelectedTabIndex, currentTabStatus, tabCounts, visibleItems, setItemStatus } =
+    useTabTransitions(opportunities);
 
   const tabs = tabsKeys.map((key, index) => ({
     label: t(`dashboard.volunteerProfile.opportunitiesSec.tabs.${key}`),
-    count: groupedByTab[index].length,
+    count: tabCounts[index],
   }));
 
-  const visibleOpportunities = groupedByTab[selectedTabIndex];
+  const handleMatch = (id: number) => {
+    setItemStatus(id, OpportunityVolunteerStatusType.MATCHED);
+    toast.success(t("dashboard.volunteerProfile.opportunitiesSec.matchSuccess"));
+  };
+
+  const handleNotAMatch = (id: number) => {
+    setItemStatus(id, "removed");
+    toast.success(t("dashboard.volunteerProfile.opportunitiesSec.notAMatchSuccess"));
+  };
+
+  const handleMarkAsActive = (id: number) => {
+    setItemStatus(id, OpportunityVolunteerStatusType.ACTIVE);
+    toast.success(t("dashboard.volunteerProfile.opportunitiesSec.markAsActiveSuccess"));
+  };
+
+  const handleMarkAsPast = (id: number) => {
+    setItemStatus(id, OpportunityVolunteerStatusType.PAST);
+    toast.success(t("dashboard.volunteerProfile.opportunitiesSec.markAsPastSuccess"));
+  };
 
   return (
     <VolunteerOpportunitiesContainer>
       <Tabs tabs={tabs} selectedTabIndex={selectedTabIndex} setSelectedTabIndex={setSelectedTabIndex} />
-      {visibleOpportunities.length === 0 ? (
-        <SectionEmptyState>{t("dashboard.opportunityProfile.volunteersSec.emptyState")}</SectionEmptyState>
+      {visibleItems.length === 0 ? (
+        <SectionEmptyState>{t("dashboard.volunteerProfile.opportunitiesSec.emptyState")}</SectionEmptyState>
       ) : (
-        visibleOpportunities.map((opportunity) => (
-          <AccordionOpportunity key={opportunity.id} opportunity={opportunity} />
+        visibleItems.map((opportunity) => (
+          <AccordionOpportunity
+            key={opportunity.id}
+            opportunity={opportunity}
+            currentStatus={currentTabStatus}
+            onMatch={() => handleMatch(opportunity.id)}
+            onNotAMatch={() => handleNotAMatch(opportunity.id)}
+            onMarkAsActive={() => handleMarkAsActive(opportunity.id)}
+            onMarkAsPast={() => handleMarkAsPast(opportunity.id)}
+          />
         ))
       )}
     </VolunteerOpportunitiesContainer>
   );
 }
-
-/* Styles */
 
 const VolunteerOpportunitiesContainer = styled.div`
   display: flex;

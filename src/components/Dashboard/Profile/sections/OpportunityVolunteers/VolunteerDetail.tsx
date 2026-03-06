@@ -1,11 +1,11 @@
 import { CalendarDotsIcon, MapPinIcon, ShootingStarIcon, TranslateIcon, WrenchIcon } from "@phosphor-icons/react";
-import { OpportunityVolunteerStatusType } from "need4deed-sdk";
 import { useTranslation } from "react-i18next";
 import { TagsContainer } from "@/components/core/common/Tags";
 import { Tag } from "@/components/styled/tags";
 import { ActivitySpan } from "@/components/styled/text";
 
-import { AccordionActions } from "../shared/AccordionActions";
+import { OpportunityVolunteerStatusType } from "need4deed-sdk";
+import { StatusAccordionActions } from "../shared/AccordionActions";
 import { DetailContainer, SplitContainer } from "../shared/accordionStyles";
 import { DetailParagraph } from "./styles";
 import { InfoSection } from "../shared/InfoSection";
@@ -111,13 +111,13 @@ export default function VolunteerDetail({
       </InfoSection>
 
       {/* 4. Action Buttons */}
-      {currentStatus === OpportunityVolunteerStatusType.SUGGESTED && (
-        <AccordionActions onNotAMatch={onNotAMatch} onMatch={onMatch} />
-      )}
-      {currentStatus === OpportunityVolunteerStatusType.MATCHED && (
-        <AccordionActions onNotAMatch={onNotAMatch} onMarkAsActive={onMarkAsActive} />
-      )}
-      {currentStatus === OpportunityVolunteerStatusType.ACTIVE && <AccordionActions onMarkAsPast={onMarkAsPast} />}
+      <StatusAccordionActions
+        currentStatus={currentStatus}
+        onMatch={onMatch}
+        onNotAMatch={onNotAMatch}
+        onMarkAsActive={onMarkAsActive}
+        onMarkAsPast={onMarkAsPast}
+      />
     </DetailContainer>
   );
 }

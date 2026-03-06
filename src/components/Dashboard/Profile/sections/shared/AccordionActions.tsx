@@ -1,15 +1,16 @@
+import { OpportunityVolunteerStatusType } from "need4deed-sdk";
 import { useTranslation } from "react-i18next";
 
 import { Button } from "@/components/core/button";
 
 import { Actions } from "./accordionStyles";
 
-interface AccordionActionsProps {
+type AccordionActionsProps = {
   onNotAMatch?: () => void;
   onMatch?: () => void;
   onMarkAsActive?: () => void;
   onMarkAsPast?: () => void;
-}
+};
 
 export const AccordionActions = ({ onNotAMatch, onMatch, onMarkAsActive, onMarkAsPast }: AccordionActionsProps) => {
   const { t } = useTranslation();
@@ -19,7 +20,7 @@ export const AccordionActions = ({ onNotAMatch, onMatch, onMarkAsActive, onMarkA
       {onNotAMatch && (
         <Button
           onClick={onNotAMatch}
-          text={t("dashboard.opportunityProfile.volunteersSec.notAMatch")}
+          text={t("dashboard.volunteerProfile.opportunitiesSec.notAMatch")}
           height="var(--volunteer-profile-opportunities-accordion-actions-button-height)"
           textFontSize="var(--volunteer-profile-opportunities-accordion-actions-button-textFontSize)"
           textColor="var(--color-aubergine)"
@@ -38,7 +39,7 @@ export const AccordionActions = ({ onNotAMatch, onMatch, onMarkAsActive, onMarkA
       {onMarkAsActive && (
         <Button
           onClick={onMarkAsActive}
-          text={t("dashboard.opportunityProfile.volunteersSec.markAsActive")}
+          text={t("dashboard.volunteerProfile.opportunitiesSec.markAsActive")}
           height="var(--volunteer-profile-opportunities-accordion-actions-button-height)"
           textFontSize="var(--volunteer-profile-opportunities-accordion-actions-button-textFontSize)"
         />
@@ -46,11 +47,38 @@ export const AccordionActions = ({ onNotAMatch, onMatch, onMarkAsActive, onMarkA
       {onMarkAsPast && (
         <Button
           onClick={onMarkAsPast}
-          text={t("dashboard.opportunityProfile.volunteersSec.markAsPast")}
+          text={t("dashboard.volunteerProfile.opportunitiesSec.markAsPast")}
           height="var(--volunteer-profile-opportunities-accordion-actions-button-height)"
           textFontSize="var(--volunteer-profile-opportunities-accordion-actions-button-textFontSize)"
         />
       )}
     </Actions>
   );
+};
+
+type StatusAccordionActionsProps = {
+  currentStatus: OpportunityVolunteerStatusType;
+  onMatch: () => void;
+  onNotAMatch: () => void;
+  onMarkAsActive: () => void;
+  onMarkAsPast: () => void;
+};
+
+export const StatusAccordionActions = ({
+  currentStatus,
+  onMatch,
+  onNotAMatch,
+  onMarkAsActive,
+  onMarkAsPast,
+}: StatusAccordionActionsProps) => {
+  if (currentStatus === OpportunityVolunteerStatusType.SUGGESTED) {
+    return <AccordionActions onNotAMatch={onNotAMatch} onMatch={onMatch} />;
+  }
+  if (currentStatus === OpportunityVolunteerStatusType.MATCHED) {
+    return <AccordionActions onNotAMatch={onNotAMatch} onMarkAsActive={onMarkAsActive} />;
+  }
+  if (currentStatus === OpportunityVolunteerStatusType.ACTIVE) {
+    return <AccordionActions onMarkAsPast={onMarkAsPast} />;
+  }
+  return null;
 };

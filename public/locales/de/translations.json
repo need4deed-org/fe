@@ -524,7 +524,14 @@
           "past": "Vergangen"
         },
         "match": "Match",
-        "notAMatch": "Kein Match"
+        "notAMatch": "Kein Match",
+        "markAsActive": "Als aktiv markieren",
+        "markAsPast": "Als vergangen markieren",
+        "matchSuccess": "Zugeordnet",
+        "notAMatchSuccess": "Entfernt",
+        "markAsActiveSuccess": "Als aktiv markiert",
+        "markAsPastSuccess": "Als vergangen markiert",
+        "emptyState": "Noch keine Einträge in dieser Kategorie"
       },
       "contactDetails": {
         "title": "Kontaktdaten",
@@ -870,14 +877,7 @@
           "active": "Aktiv",
           "past": "Vergangen"
         },
-        "emptyState": "Noch keine Freiwilligen in dieser Kategorie",
-        "matchSuccess": "Freiwillige/r zugeordnet",
-        "notAMatchSuccess": "Zuordnung für Freiwillige/n entfernt",
-        "notAMatch": "Kein Match",
-        "markAsActive": "Als aktiv markieren",
-        "markAsPast": "Als vergangen markieren",
-        "markAsActiveSuccess": "Freiwillige/r als aktiv markiert",
-        "markAsPastSuccess": "Freiwillige/r als vergangen markiert"
+        "emptyState": "Noch keine Freiwilligen in dieser Kategorie"
       },
       "opportunityDetails": {
         "title": "Details der Möglichkeit",
