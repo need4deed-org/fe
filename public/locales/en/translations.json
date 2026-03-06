@@ -440,6 +440,14 @@
       "activityLog": "Activity Log",
       "editButtonName": "Edit",
       "findOppButtonName": "Find Opportunity",
+      "suggestButtonName": "Suggest",
+      "suggestDialog": {
+        "title": "Suggest to this volunteer?",
+        "messageMid": "will be notified that you suggested",
+        "messageEnd": "to them. It will appear in their profile under \"pending\" opportunities.",
+        "confirm": "Suggest",
+        "cancel": "Cancel"
+      },
       "activities": "Activities",
       "volunteerHeader": {
         "statusUpdateSuccess": "Status updated successfully",

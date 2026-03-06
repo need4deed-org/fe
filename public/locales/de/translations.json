@@ -440,6 +440,14 @@
       "activityLog": "Aktivitätsprotokoll",
       "editButtonName": "Bearbeiten",
       "findOppButtonName": "Möglichkeit finden",
+      "suggestButtonName": "Vorschlagen",
+      "suggestDialog": {
+        "title": "Diesem Freiwilligen vorschlagen?",
+        "messageMid": "wird benachrichtigt, dass Sie",
+        "messageEnd": "vorgeschlagen haben. Es erscheint in seinem / ihrem Profil unter \"ausstehenden\" Möglichkeiten.",
+        "confirm": "Vorschlagen",
+        "cancel": "Abbrechen"
+      },
       "activities": "Aktivitäten",
       "volunteerHeader": {
         "statusUpdateSuccess": "Status erfolgreich aktualisiert",
