@@ -1,18 +1,22 @@
 import { Heading4 } from "@/components/styled/text";
 import styled from "styled-components";
+import { CountBadge } from "./styles";
 
-interface Props {
-  tabs: string[];
+type Tab = { label: string; count?: number };
+
+type Props = {
+  tabs: Tab[];
   selectedTabIndex: number;
   setSelectedTabIndex: (index: number) => void;
-}
+};
 
 export const Tabs = ({ selectedTabIndex, setSelectedTabIndex, tabs }: Props) => {
   return (
     <TabsContainer>
       {tabs.map((tab, index) => (
-        <TabHeading key={tab} onClick={() => setSelectedTabIndex(index)} $isSelected={selectedTabIndex === index}>
-          {tab}
+        <TabHeading key={tab.label} onClick={() => setSelectedTabIndex(index)} $isSelected={selectedTabIndex === index}>
+          {tab.label}
+          {tab.count !== undefined && <CountBadge>{tab.count}</CountBadge>}
         </TabHeading>
       ))}
     </TabsContainer>
@@ -28,12 +32,15 @@ const TabsContainer = styled.div`
   border-bottom: var(--volunteer-profile-opportunities-tabs-border-bottom);
 `;
 
-interface TabHeadingProps {
+type TabHeadingProps = {
   $isSelected: boolean;
-}
+};
 
 const TabHeading = styled(Heading4)<TabHeadingProps>`
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: var(--volunteer-profile-opportunities-tab-heading-gap);
   border-bottom: ${(props) =>
     props.$isSelected ? "var(--volunteer-profile-opportunities-tab-heading-border-bottom)" : "none"};
   color: ${(props) => (props.$isSelected ? "var(--color-violet-500)" : "none")};

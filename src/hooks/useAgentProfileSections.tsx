@@ -1,4 +1,5 @@
 import { SectionCardProps } from "@/components/Dashboard/Profile/common/SectionCard";
+import { AgentOpportunities } from "@/components/Dashboard/Profile/sections/AgentOpportunities";
 import { Comments } from "@/components/Dashboard/Profile/sections/Comments";
 import {
   CommunicationTracker,
@@ -55,6 +56,12 @@ export const useAgentProfileSections = (agent: ApiAgentProfileGet | undefined) =
       iconName: IconName.UserCheck,
       title: t("dashboard.volunteers.volunteers"),
       subComponent: <VolunteerAgents />,
+    },
+    {
+      iconName: IconName.ShootingStar,
+      title: t("dashboard.volunteerProfile.opportunities"),
+      headerButtonName: t("dashboard.agentProfile.opportunitiesSec.postOpportunity"),
+      subComponent: <AgentOpportunities />,
     },
     {
       iconName: IconName.ChatsTeardrop,
