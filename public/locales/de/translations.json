@@ -323,6 +323,14 @@
     }
   },
   "dashboard": {
+    "common": {
+      "datePrefix": {
+        "appliedOn": "Beworben am",
+        "matchedOn": "Zugeordnet am",
+        "activeSince": "Aktiv seit",
+        "pastSince": "Vergangen seit"
+      }
+    },
     "volunteers": {
       "header": "Freiwilligenverzeichnis",
       "tabs": {
@@ -911,6 +919,15 @@
       "volunteersSec": {
         "title": "Freiwillige",
         "findVolunteers": "Freiwillige finden",
+        "suggestButtonName": "Vorschlagen",
+        "suggestDialog": {
+          "title": "Für diese Möglichkeit vorschlagen?",
+          "messageStart": "Der Verantwortliche von",
+          "messageMid": "wird benachrichtigt, dass Sie",
+          "messageEnd": "vorgeschlagen haben. Es erscheint in seinem / ihrem Profil unter \"ausstehenden\" Freiwilligen.",
+          "confirm": "Vorschlagen",
+          "cancel": "Abbrechen"
+        },
         "appliedOn": "Beworben am",
         "tabs": {
           "pending": "Ausstehend",

@@ -3,16 +3,22 @@ import { useTranslation } from "react-i18next";
 import AccordionOpportunity from "../VolunteerOpportunities/AccordionOpportunity";
 import { mockRawOpportunities } from "../VolunteerOpportunities/mockOpps/mockOpportunities";
 import { getMappedOpportunities } from "../VolunteerOpportunities/mockOpps/tempUtils";
-import { useTabTransitions } from "../shared/useTabTransitions";
 import { Tabs } from "../shared/Tabs";
+import { useTabTransitions } from "../shared/useTabTransitions";
 import { AgentOpportunitiesContainer } from "./styles";
 
 const tabsKeys = ["lookingForVolunteers", "active", "past"] as const;
 
+const agentTabStatusOrder: OpportunityVolunteerStatusType[] = [
+  OpportunityVolunteerStatusType.SUGGESTED,
+  OpportunityVolunteerStatusType.ACTIVE,
+  OpportunityVolunteerStatusType.PAST,
+];
+
 const mockTabAssignment: Record<number, OpportunityVolunteerStatusType> = {
   0: OpportunityVolunteerStatusType.SUGGESTED,
   1: OpportunityVolunteerStatusType.ACTIVE,
-  2: OpportunityVolunteerStatusType.ACTIVE,
+  2: OpportunityVolunteerStatusType.PAST,
 };
 
 export const AgentOpportunities = () => {
@@ -20,8 +26,10 @@ export const AgentOpportunities = () => {
 
   const opportunities = getMappedOpportunities(mockRawOpportunities, t, mockTabAssignment);
 
-  const { selectedTabIndex, setSelectedTabIndex, currentTabStatus, tabCounts, visibleItems } =
-    useTabTransitions(opportunities);
+  const { selectedTabIndex, setSelectedTabIndex, currentTabStatus, tabCounts, visibleItems } = useTabTransitions(
+    opportunities,
+    agentTabStatusOrder,
+  );
 
   const tabs = tabsKeys.map((key, index) => ({
     label: t(`dashboard.agentProfile.opportunitiesSec.tabs.${key}`),

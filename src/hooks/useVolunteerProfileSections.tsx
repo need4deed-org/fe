@@ -44,7 +44,11 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
   const volunteerFullName = `${volunteer.person.firstName} ${volunteer.person.lastName}`;
 
   const handleSuggestConfirm = () => {
+    // TODO: make suggest-backend request, disable buttons and show button-spinner while loading
+    // TODO: when backend-response returns: check it. if failed, show error notifications
+    //  close dialoge in any case
     setIsSuggestDialogOpen(false);
+    // only if successful, navigate
     router.push(`/${i18n.language}/dashboard/opportunities/${opportunityId}`);
   };
 

@@ -16,7 +16,7 @@ import {
 interface AccordionProps {
   headerLeft: ReactNode;
   subtitle: string;
-  onGoToProfile?: () => void;
+  onGoToProfile: () => void;
   children?: ReactNode;
   "data-testid"?: string;
 }
@@ -35,16 +35,14 @@ export const Accordion = ({ headerLeft, subtitle, onGoToProfile, children, "data
         </HeaderInfoContainer>
 
         <HeaderButtonsContainer>
-          {onGoToProfile && (
-            <Heading4
-              margin={0}
-              color="var(--color-midnight-light)"
-              onClick={onGoToProfile}
-              style={{ cursor: "pointer" }}
-            >
-              {t("dashboard.opportunities.goToProfile")}
-            </Heading4>
-          )}
+          <Heading4
+            margin={0}
+            color="var(--color-midnight-light)"
+            onClick={onGoToProfile}
+            style={{ cursor: "pointer" }}
+          >
+            {t("dashboard.opportunities.goToProfile")}
+          </Heading4>
           <CaretIcon
             size={24}
             onClick={() => setIsOpen((prev) => !prev)}

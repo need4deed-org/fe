@@ -5,7 +5,7 @@ import { useGetQuery } from "./useGetQuery";
 
 export const useGetVolunteer = (volunteerId: string | undefined) => {
   const { data } = useGetQuery<ApiVolunteerGet>({
-    queryKey: ["volunteer-info", volunteerId ?? ""],
+    queryKey: ["volunteer", volunteerId ?? ""],
     apiPath: `${apiPathVolunteer}${volunteerId}`,
     staleTime: cacheTTL,
     enabled: !!volunteerId,
