@@ -323,6 +323,14 @@
     }
   },
   "dashboard": {
+    "common": {
+      "datePrefix": {
+        "appliedOn": "Applied on",
+        "matchedOn": "Matched on",
+        "activeSince": "Active since",
+        "pastSince": "Past since"
+      }
+    },
     "volunteers": {
       "header": "Volunteer Directory",
       "tabs": {

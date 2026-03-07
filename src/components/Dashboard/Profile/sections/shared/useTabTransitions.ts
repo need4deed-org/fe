@@ -10,17 +10,18 @@ export const TAB_STATUS_ORDER: OpportunityVolunteerStatusType[] = [
 
 type StatusOverride = OpportunityVolunteerStatusType | "removed";
 
-export function useTabTransitions<T extends { id: number; tabStatus: OpportunityVolunteerStatusType }>(items: T[]) {
+export function useTabTransitions<T extends { id: number; tabStatus: OpportunityVolunteerStatusType }>(
+  items: T[],
+  statusOrder: OpportunityVolunteerStatusType[] = TAB_STATUS_ORDER,
+) {
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
   const [statusOverrides, setStatusOverrides] = useState<Record<number, StatusOverride>>({});
 
   const getEffectiveStatus = (item: T): StatusOverride => statusOverrides[item.id] ?? item.tabStatus;
 
-  const currentTabStatus = TAB_STATUS_ORDER[selectedTabIndex];
+  const currentTabStatus = statusOrder[selectedTabIndex];
 
-  const tabCounts = TAB_STATUS_ORDER.map(
-    (status) => items.filter((item) => getEffectiveStatus(item) === status).length,
-  );
+  const tabCounts = statusOrder.map((status) => items.filter((item) => getEffectiveStatus(item) === status).length);
 
   const visibleItems = items.filter((item) => getEffectiveStatus(item) === currentTabStatus);
 

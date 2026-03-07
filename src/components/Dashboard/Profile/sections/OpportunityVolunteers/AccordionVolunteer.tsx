@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import StatusBadge from "../../common/StatusBadge";
 import { Accordion } from "../shared/Accordion";
+import { getDatePrefixKey } from "../shared/getDatePrefixKey";
 import { MockOpportunityVolunteer } from "./mockVolunteers";
 import { AvatarImg } from "./styles";
 import VolunteerDetail from "./VolunteerDetail";
@@ -52,7 +53,7 @@ export const AccordionVolunteer = ({
     <Accordion
       data-testid="volunteer-accordion"
       headerLeft={headerLeft}
-      subtitle={`${t("dashboard.opportunityProfile.volunteersSec.appliedOn")} ${appliedAt}`}
+      subtitle={`${t(getDatePrefixKey(currentStatus))} ${appliedAt}`}
       onGoToProfile={handleGoToProfile}
     >
       <VolunteerDetail

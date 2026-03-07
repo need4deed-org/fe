@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import { ProfileStatusBadge } from "../ProfileHeader/common";
 import { Accordion } from "../shared/Accordion";
+import { getDatePrefixKey } from "../shared/getDatePrefixKey";
 import { createEngagementStatusLabelMap, createStatusLabelMap, MappedVolunteerAgent } from "./mockVols/tempUtils";
 import { VolunteerDetail } from "./VolunteerDetail";
 
@@ -56,7 +57,9 @@ export const AccordionVolunteer = ({
     <Accordion
       data-testid="volunteer-accordion"
       headerLeft={headerLeft}
-      subtitle={/* Todo: this will be updated later when vol fetched from API */ "Applied on 12.02.2025"}
+      subtitle={
+        /* Todo: this will be updated later when vol fetched from API */ `${t(getDatePrefixKey(currentStatus))} 12.02.2025`
+      }
       onGoToProfile={handleGoToProfile}
     >
       <VolunteerDetail

@@ -323,6 +323,14 @@
     }
   },
   "dashboard": {
+    "common": {
+      "datePrefix": {
+        "appliedOn": "Beworben am",
+        "matchedOn": "Zugeordnet am",
+        "activeSince": "Aktiv seit",
+        "pastSince": "Vergangen seit"
+      }
+    },
     "volunteers": {
       "header": "Freiwilligenverzeichnis",
       "tabs": {
