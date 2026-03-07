@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { CaretDownIcon, CaretUpIcon } from "@phosphor-icons/react";
+import { useState } from "react";
 import styled from "styled-components";
 import { Paragraph } from "../styled/text";
-import { CaretUpIcon, CaretDownIcon } from "@phosphor-icons/react";
-import { useCurrentUser } from "@/hooks/useCurrentUser";
 
 const UserProfileContainer = styled.div`
   display: flex;

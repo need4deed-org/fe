@@ -7,12 +7,12 @@ import { useTranslation } from "react-i18next";
 import StatusBadge from "../../common/StatusBadge";
 import { Accordion } from "../shared/Accordion";
 import { getDatePrefixKey } from "../shared/getDatePrefixKey";
-import { MockOpportunityVolunteer } from "./mockVolunteers";
 import { AvatarImg } from "./styles";
+import { OpportunityLinkedVolunteer } from "./types";
 import VolunteerDetail from "./VolunteerDetail";
 
 type Props = {
-  volunteer: MockOpportunityVolunteer;
+  volunteer: OpportunityLinkedVolunteer;
   currentStatus: OpportunityVolunteerStatusType;
   onMatch: () => void;
   onNotAMatch: () => void;

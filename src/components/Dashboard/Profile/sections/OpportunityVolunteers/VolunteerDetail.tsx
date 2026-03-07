@@ -8,11 +8,11 @@ import { OpportunityVolunteerStatusType } from "need4deed-sdk";
 import { StatusAccordionActions } from "../shared/AccordionActions";
 import { DetailContainer, SplitContainer } from "../shared/accordionStyles";
 import { InfoSection } from "../shared/InfoSection";
-import { MockOpportunityVolunteer, MockVolunteerLanguage } from "./mockVolunteers";
 import { DetailParagraph } from "./styles";
+import { OpportunityLinkedVolunteer, VolunteerLanguage } from "./types";
 
 type Props = {
-  volunteer: MockOpportunityVolunteer;
+  volunteer: OpportunityLinkedVolunteer;
   currentStatus: OpportunityVolunteerStatusType;
   onMatch: () => void;
   onNotAMatch: () => void;
@@ -22,9 +22,9 @@ type Props = {
 
 const MAX_VISIBLE_TAGS = 3;
 
-function groupLanguages(languages: MockVolunteerLanguage[]): [string, string[]][] {
+function groupLanguages(languages: VolunteerLanguage[]): [string, string[]][] {
   const grouped = languages.reduce<Record<string, string[]>>((acc, lang) => {
-    const key = lang.proficiency;
+    const key = lang.proficiency ?? "Other";
     if (!acc[key]) acc[key] = [];
     acc[key].push(lang.title);
     return acc;
@@ -33,7 +33,7 @@ function groupLanguages(languages: MockVolunteerLanguage[]): [string, string[]][
   return Object.entries(grouped);
 }
 
-function LanguagesText({ languages }: { languages: MockVolunteerLanguage[] }) {
+function LanguagesText({ languages }: { languages: VolunteerLanguage[] }) {
   const groups = groupLanguages(languages);
 
   return (

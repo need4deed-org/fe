@@ -1,5 +1,8 @@
 import styled from "styled-components";
 
+import { Paragraph } from "@/components/styled/text";
+import { DashboardRoutes } from "@/config/constants";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
 import {
   BookOpenTextIcon,
   CalendarDotsIcon,
@@ -8,12 +11,9 @@ import {
   ShootingStarIcon,
   UserCheckIcon,
 } from "@phosphor-icons/react";
-import { useTranslation } from "react-i18next";
-import { Paragraph } from "@/components/styled/text";
 import { usePathname, useRouter } from "next/navigation";
-import { DashboardRoutes } from "@/config/constants";
-import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { ElementType } from "react";
+import { useTranslation } from "react-i18next";
 
 const BarContainer = styled.div`
   display: flex;

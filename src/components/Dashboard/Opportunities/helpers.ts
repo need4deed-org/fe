@@ -82,6 +82,6 @@ export function getLanguagesByPurpose(languages: ApiLanguage[] | undefined, purp
 }
 
 export function getOptionTitles(items: OptionById[] | undefined): string[] {
-  if (!items) return [];
+  if (!items || !Array.isArray(items)) return [];
   return items.map((item) => (typeof item.title === "string" ? item.title : "")).filter(Boolean);
 }

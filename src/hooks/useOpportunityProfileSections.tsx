@@ -130,7 +130,7 @@ export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | u
         : () => router.push(`/${i18n.language}/dashboard/volunteers?opportunity=${opportunity.id}`),
       subComponent: (
         <>
-          <OpportunityVolunteers />
+          <OpportunityVolunteers opportunityId={opportunity.id} />
           {isSuggestDialogOpen && (
             <SuggestDialog
               opportunityName={opportunity.title}
