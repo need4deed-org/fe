@@ -1,24 +1,24 @@
-import { CalendarDotsIcon, MapPinIcon, ShootingStarIcon, TranslateIcon, WrenchIcon } from "@phosphor-icons/react";
-import { useTranslation } from "react-i18next";
 import { TagsContainer } from "@/components/core/common/Tags";
 import { Tag } from "@/components/styled/tags";
 import { ActivitySpan } from "@/components/styled/text";
+import { CalendarDotsIcon, MapPinIcon, ShootingStarIcon, TranslateIcon, WrenchIcon } from "@phosphor-icons/react";
+import { useTranslation } from "react-i18next";
 
 import { OpportunityVolunteerStatusType } from "need4deed-sdk";
 import { StatusAccordionActions } from "../shared/AccordionActions";
 import { DetailContainer, SplitContainer } from "../shared/accordionStyles";
-import { DetailParagraph } from "./styles";
 import { InfoSection } from "../shared/InfoSection";
 import { MockOpportunityVolunteer, MockVolunteerLanguage } from "./mockVolunteers";
+import { DetailParagraph } from "./styles";
 
-interface Props {
+type Props = {
   volunteer: MockOpportunityVolunteer;
   currentStatus: OpportunityVolunteerStatusType;
   onMatch: () => void;
   onNotAMatch: () => void;
   onMarkAsActive: () => void;
   onMarkAsPast: () => void;
-}
+};
 
 const MAX_VISIBLE_TAGS = 3;
 

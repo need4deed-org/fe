@@ -13,13 +13,13 @@ import {
   HeaderInfoContainer,
 } from "./accordionStyles";
 
-interface AccordionProps {
+type AccordionProps = {
   headerLeft: ReactNode;
   subtitle: string;
   onGoToProfile: () => void;
   children?: ReactNode;
   "data-testid"?: string;
-}
+};
 
 export const Accordion = ({ headerLeft, subtitle, onGoToProfile, children, "data-testid": testId }: AccordionProps) => {
   const [isOpen, setIsOpen] = useState(false);
