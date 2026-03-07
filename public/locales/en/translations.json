@@ -936,7 +936,9 @@
           "active": "Active",
           "past": "Past"
         },
-        "emptyState": "No volunteers in this category yet"
+        "emptyState": "No volunteers in this category yet",
+        "statusUpdateSuccess": "Volunteer status updated successfully",
+        "removeSuccess": "Volunteer removed successfully"
       },
       "opportunityDetails": {
         "title": "Opportunity details",

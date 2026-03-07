@@ -1,9 +1,12 @@
 import { apiPathVolunteer, cacheTTL } from "@/config/constants";
 import { useGetQuery } from "@/hooks/useGetQuery";
+import {
+  useDeleteOpportunityVolunteer,
+  useUpdateOpportunityVolunteerStatus,
+} from "@/hooks/useUpdateOpportunityVolunteerStatus";
 import { ApiOpportunityVolunteerGet, Id, OpportunityVolunteerStatusType } from "need4deed-sdk";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { toast } from "react-toastify";
 import styled from "styled-components";
 import { SectionEmptyState } from "../shared/styles";
 import { Tabs } from "../shared/Tabs";
@@ -27,8 +30,10 @@ function mapOpportunity(o: ApiOpportunityVolunteerGet): VolunteerLinkedOpportuni
 export default function VolunteerOpportunities({ volunteerId }: { volunteerId: Id }) {
   const { t } = useTranslation();
 
+  const queryKey = ["volunteer-opportunities", String(volunteerId)];
+
   const { data, isLoading } = useGetQuery<ApiOpportunityVolunteerGet[]>({
-    queryKey: ["volunteer-opportunities", String(volunteerId)],
+    queryKey,
     apiPath: `${apiPathVolunteer}${volunteerId}/opportunity-linked`,
     staleTime: cacheTTL,
     enabled: !!volunteerId,
@@ -36,8 +41,16 @@ export default function VolunteerOpportunities({ volunteerId }: { volunteerId: I
 
   const opportunities = useMemo(() => (data ?? []).map(mapOpportunity), [data]);
 
+  const { mutate: updateStatus } = useUpdateOpportunityVolunteerStatus(queryKey);
+  const { mutate: deleteLink } = useDeleteOpportunityVolunteer(queryKey);
+
   const { selectedTabIndex, setSelectedTabIndex, currentTabStatus, tabCounts, visibleItems, setItemStatus } =
     useTabTransitions(opportunities);
+
+  const findM2mId = useCallback(
+    (opportunityId: number) => opportunities.find((o) => o.id === opportunityId)?.m2mId,
+    [opportunities],
+  );
 
   const tabs = tabsKeys.map((key, index) => ({
     label: t(`dashboard.volunteerProfile.opportunitiesSec.tabs.${key}`),
@@ -45,23 +58,31 @@ export default function VolunteerOpportunities({ volunteerId }: { volunteerId: I
   }));
 
   const handleMatch = (id: number) => {
+    const m2mId = findM2mId(id);
+    if (!m2mId) return;
     setItemStatus(id, OpportunityVolunteerStatusType.MATCHED);
-    toast.success(t("dashboard.volunteerProfile.opportunitiesSec.matchSuccess"));
+    updateStatus({ m2mId, status: OpportunityVolunteerStatusType.MATCHED });
   };
 
   const handleNotAMatch = (id: number) => {
+    const m2mId = findM2mId(id);
+    if (!m2mId) return;
     setItemStatus(id, "removed");
-    toast.success(t("dashboard.volunteerProfile.opportunitiesSec.notAMatchSuccess"));
+    deleteLink({ m2mId });
   };
 
   const handleMarkAsActive = (id: number) => {
+    const m2mId = findM2mId(id);
+    if (!m2mId) return;
     setItemStatus(id, OpportunityVolunteerStatusType.ACTIVE);
-    toast.success(t("dashboard.volunteerProfile.opportunitiesSec.markAsActiveSuccess"));
+    updateStatus({ m2mId, status: OpportunityVolunteerStatusType.ACTIVE });
   };
 
   const handleMarkAsPast = (id: number) => {
+    const m2mId = findM2mId(id);
+    if (!m2mId) return;
     setItemStatus(id, OpportunityVolunteerStatusType.PAST);
-    toast.success(t("dashboard.volunteerProfile.opportunitiesSec.markAsPastSuccess"));
+    updateStatus({ m2mId, status: OpportunityVolunteerStatusType.PAST });
   };
 
   if (isLoading) {

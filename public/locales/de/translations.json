@@ -937,7 +937,9 @@
           "active": "Aktiv",
           "past": "Vergangen"
         },
-        "emptyState": "Noch keine Freiwilligen in dieser Kategorie"
+        "emptyState": "Noch keine Freiwilligen in dieser Kategorie",
+        "statusUpdateSuccess": "Freiwilligen-Status erfolgreich aktualisiert",
+        "removeSuccess": "Freiwilliger erfolgreich entfernt"
       },
       "opportunityDetails": {
         "title": "Details der Möglichkeit",
