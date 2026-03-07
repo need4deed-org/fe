@@ -1,13 +1,13 @@
-import { Heading4 } from "@/components/styled/text";
 import { CirclePic } from "@/components/styled/img";
-import { getImageUrl } from "@/utils";
+import { Heading4 } from "@/components/styled/text";
 import { defaultAvatarURL } from "@/config/constants";
+import { getImageUrl } from "@/utils";
 import { OpportunityVolunteerStatusType } from "need4deed-sdk";
+import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import { ProfileStatusBadge } from "../ProfileHeader/common";
 import { Accordion } from "../shared/Accordion";
-import { MappedVolunteerAgent } from "./mockVols/tempUtils";
-import { createEngagementStatusLabelMap, createStatusLabelMap } from "./mockVols/tempUtils";
+import { createEngagementStatusLabelMap, createStatusLabelMap, MappedVolunteerAgent } from "./mockVols/tempUtils";
 import { VolunteerDetail } from "./VolunteerDetail";
 
 type Props = {
@@ -27,7 +27,12 @@ export const AccordionVolunteer = ({
   onMarkAsActive,
   onMarkAsPast,
 }: Props) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const router = useRouter();
+
+  const handleGoToProfile = () => {
+    router.push(`/${i18n.language}/dashboard/volunteers/${volunteer.id}`);
+  };
 
   const engagementStatusLabels = createEngagementStatusLabelMap(t);
   const statusLabels = createStatusLabelMap(t);
@@ -52,6 +57,7 @@ export const AccordionVolunteer = ({
       data-testid="volunteer-accordion"
       headerLeft={headerLeft}
       subtitle={/* Todo: this will be updated later when vol fetched from API */ "Applied on 12.02.2025"}
+      onGoToProfile={handleGoToProfile}
     >
       <VolunteerDetail
         volunteer={volunteer}
