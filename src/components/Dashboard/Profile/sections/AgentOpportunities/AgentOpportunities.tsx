@@ -10,13 +10,13 @@ import { AgentOpportunitiesContainer } from "./styles";
 const tabsKeys = ["lookingForVolunteers", "active", "past"] as const;
 
 const agentTabStatusOrder: OpportunityVolunteerStatusType[] = [
-  OpportunityVolunteerStatusType.SUGGESTED,
+  OpportunityVolunteerStatusType.PENDING,
   OpportunityVolunteerStatusType.ACTIVE,
   OpportunityVolunteerStatusType.PAST,
 ];
 
 const mockTabAssignment: Record<number, OpportunityVolunteerStatusType> = {
-  0: OpportunityVolunteerStatusType.SUGGESTED,
+  0: OpportunityVolunteerStatusType.PENDING,
   1: OpportunityVolunteerStatusType.ACTIVE,
   2: OpportunityVolunteerStatusType.PAST,
 };

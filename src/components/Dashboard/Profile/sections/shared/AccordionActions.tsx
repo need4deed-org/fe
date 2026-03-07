@@ -71,7 +71,7 @@ export const StatusAccordionActions = ({
   onMarkAsActive,
   onMarkAsPast,
 }: StatusAccordionActionsProps) => {
-  if (currentStatus === OpportunityVolunteerStatusType.SUGGESTED) {
+  if (currentStatus === OpportunityVolunteerStatusType.PENDING) {
     return <AccordionActions onNotAMatch={onNotAMatch} onMatch={onMatch} />;
   }
   if (currentStatus === OpportunityVolunteerStatusType.MATCHED) {

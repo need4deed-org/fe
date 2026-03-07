@@ -12,7 +12,7 @@ import { getMappedOpportunities } from "./mockOpps/tempUtils";
 const tabsKeys = ["pending", "matched", "active", "past"];
 
 const mockTabAssignment: Record<number, OpportunityVolunteerStatusType> = {
-  0: OpportunityVolunteerStatusType.SUGGESTED,
+  0: OpportunityVolunteerStatusType.PENDING,
   1: OpportunityVolunteerStatusType.MATCHED,
   2: OpportunityVolunteerStatusType.MATCHED,
 };

@@ -27,7 +27,7 @@ export const mockVolunteers: MockOpportunityVolunteer[] = [
     engagementStatus: VolunteerStateEngagementType.AVAILABLE,
     volunteerType: VolunteerStateTypeType.REGULAR,
     appliedAt: "12.02.2025",
-    tabStatus: OpportunityVolunteerStatusType.SUGGESTED,
+    tabStatus: OpportunityVolunteerStatusType.PENDING,
     languages: [
       { title: "German", proficiency: "Native" },
       { title: "French", proficiency: "Fluent" },
