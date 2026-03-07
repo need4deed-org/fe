@@ -1,4 +1,7 @@
-import { OpportunityVolunteerStatusType } from "need4deed-sdk";
+import { apiPathVolunteer, cacheTTL } from "@/config/constants";
+import { useGetQuery } from "@/hooks/useGetQuery";
+import { ApiOpportunityVolunteerGet, Id, OpportunityVolunteerStatusType } from "need4deed-sdk";
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import styled from "styled-components";
@@ -6,21 +9,32 @@ import { SectionEmptyState } from "../shared/styles";
 import { Tabs } from "../shared/Tabs";
 import { useTabTransitions } from "../shared/useTabTransitions";
 import AccordionOpportunity from "./AccordionOpportunity";
-import { mockRawOpportunities } from "./mockOpps/mockOpportunities";
-import { getMappedOpportunities } from "./mockOpps/tempUtils";
+import { VolunteerLinkedOpportunity } from "./types";
 
 const tabsKeys = ["pending", "matched", "active", "past"];
 
-const mockTabAssignment: Record<number, OpportunityVolunteerStatusType> = {
-  0: OpportunityVolunteerStatusType.PENDING,
-  1: OpportunityVolunteerStatusType.MATCHED,
-  2: OpportunityVolunteerStatusType.MATCHED,
-};
+function mapOpportunity(o: ApiOpportunityVolunteerGet): VolunteerLinkedOpportunity {
+  return {
+    id: o.opportunityId,
+    m2mId: o.id,
+    opportunityId: o.opportunityId,
+    title: o.title,
+    appliedAt: new Date(o.updatedAt).toLocaleDateString("de-DE"),
+    tabStatus: o.status,
+  };
+}
 
-export default function VolunteerOpportunities() {
+export default function VolunteerOpportunities({ volunteerId }: { volunteerId: Id }) {
   const { t } = useTranslation();
 
-  const opportunities = getMappedOpportunities(mockRawOpportunities, t, mockTabAssignment);
+  const { data, isLoading } = useGetQuery<ApiOpportunityVolunteerGet[]>({
+    queryKey: ["volunteer-opportunities", String(volunteerId)],
+    apiPath: `${apiPathVolunteer}${volunteerId}/opportunity-linked`,
+    staleTime: cacheTTL,
+    enabled: !!volunteerId,
+  });
+
+  const opportunities = useMemo(() => (data ?? []).map(mapOpportunity), [data]);
 
   const { selectedTabIndex, setSelectedTabIndex, currentTabStatus, tabCounts, visibleItems, setItemStatus } =
     useTabTransitions(opportunities);
@@ -49,6 +63,10 @@ export default function VolunteerOpportunities() {
     setItemStatus(id, OpportunityVolunteerStatusType.PAST);
     toast.success(t("dashboard.volunteerProfile.opportunitiesSec.markAsPastSuccess"));
   };
+
+  if (isLoading) {
+    return <VolunteerOpportunitiesContainer />;
+  }
 
   return (
     <VolunteerOpportunitiesContainer>

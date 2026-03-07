@@ -96,7 +96,7 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
         : () => router.push(`/${i18n.language}/dashboard/opportunities?volunteer=${volunteer.id}`),
       subComponent: (
         <>
-          <VolunteerOpportunities />
+          <VolunteerOpportunities volunteerId={volunteer.id} />
           {isSuggestDialogOpen && (
             <SuggestDialog
               volunteerName={volunteerFullName}
