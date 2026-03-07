@@ -43,7 +43,7 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
   const { mutate: suggestMutate } = useSuggestVolunteerOpportunity(() => {
     setIsSuggestDialogOpen(false);
     router.push(`/${i18n.language}/dashboard/opportunities/${opportunityId}`);
-  });
+  }, ["opportunity-volunteers", String(opportunityId)]);
 
   if (!volunteer) return null;
 

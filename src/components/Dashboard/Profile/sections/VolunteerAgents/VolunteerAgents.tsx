@@ -2,8 +2,8 @@ import { useTranslation } from "react-i18next";
 import { SectionEmptyState } from "../shared/styles";
 import { Tabs } from "../shared/Tabs";
 import { useTabTransitions } from "../shared/useTabTransitions";
-import { MappedVolunteerAgent } from "./types";
 import { VolunteerOpportunitiesContainer } from "./styles";
+import { MappedVolunteerAgent } from "./types";
 
 const agentTabStatusOrder = ["pending", "matched", "active", "past"] as const;
 

@@ -8,11 +8,12 @@ type SuggestPayload = {
   status: OpportunityVolunteerStatusType;
 };
 
-export const useSuggestVolunteerOpportunity = (onSuccess?: () => void) => {
+export const useSuggestVolunteerOpportunity = (onSuccess?: () => void, queryKeyToInvalidate?: (string | number)[]) => {
   return useMutationQuery<SuggestPayload, unknown>({
     apiPath: apiPathOpportunityVolunteer,
     method: "post",
     successMessage: "dashboard.volunteerProfile.suggestDialog.success",
     onSuccessCallback: onSuccess,
+    queryKeyToInvalidate,
   });
 };

@@ -8,8 +8,8 @@ import { Paragraph } from "@/components/styled/text";
 import { StatusAccordionActions } from "../shared/AccordionActions";
 import { DetailContainer, SplitContainer } from "../shared/accordionStyles";
 import { InfoSection } from "../shared/InfoSection";
-import { MappedVolunteerAgent } from "./types";
 import { LanguageRow, LanguagesList } from "./styles";
+import { MappedVolunteerAgent } from "./types";
 
 type Props = {
   volunteer: MappedVolunteerAgent;
