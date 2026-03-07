@@ -885,6 +885,15 @@
       "volunteersSec": {
         "title": "Volunteers",
         "findVolunteers": "Find volunteers",
+        "suggestButtonName": "Suggest",
+        "suggestDialog": {
+          "title": "Suggest for this opportunity?",
+          "messageStart": "The responsible of",
+          "messageMid": "will be notified that you suggested",
+          "messageEnd": "to them. It will appear in their profile under \"pending\" volunteers.",
+          "confirm": "Suggest",
+          "cancel": "Cancel"
+        },
         "appliedOn": "Applied on",
         "tabs": {
           "pending": "Pending",
