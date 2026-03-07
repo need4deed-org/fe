@@ -454,7 +454,8 @@
         "messageMid": "wird benachrichtigt, dass Sie",
         "messageEnd": "vorgeschlagen haben. Es erscheint in seinem / ihrem Profil unter \"ausstehenden\" Möglichkeiten.",
         "confirm": "Vorschlagen",
-        "cancel": "Abbrechen"
+        "cancel": "Abbrechen",
+        "success": "Vorschlag erfolgreich gesendet"
       },
       "activities": "Aktivitäten",
       "volunteerHeader": {
@@ -926,7 +927,8 @@
           "messageMid": "wird benachrichtigt, dass Sie",
           "messageEnd": "vorgeschlagen haben. Es erscheint in seinem / ihrem Profil unter \"ausstehenden\" Freiwilligen.",
           "confirm": "Vorschlagen",
-          "cancel": "Abbrechen"
+          "cancel": "Abbrechen",
+          "success": "Vorschlag erfolgreich gesendet"
         },
         "appliedOn": "Beworben am",
         "tabs": {
