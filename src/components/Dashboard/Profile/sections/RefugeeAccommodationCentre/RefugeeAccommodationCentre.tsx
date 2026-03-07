@@ -8,12 +8,12 @@ import { useTranslation } from "react-i18next";
 import { FormContainer } from "../shared/styles";
 import { EditableSectionProps, EditableSectionRef } from "../shared/types";
 import { useEditingChangeNotifier } from "../shared/useEditingChangeNotifier";
+import { RefugeeAccommodationCentreDisplay } from "./RefugeeAccommodationCentreDisplay";
+import { RefugeeAccommodationCentreEdit } from "./RefugeeAccommodationCentreEdit";
 import {
   createRefugeeAccommodationCentreSchema,
   RefugeeAccommodationCentreFormData,
 } from "./refugeeAccommodationCentreSchema";
-import { RefugeeAccommodationCentreDisplay } from "./RefugeeAccommodationCentreDisplay";
-import { RefugeeAccommodationCentreEdit } from "./RefugeeAccommodationCentreEdit";
 
 type Props = {
   opportunity: ApiOpportunityGet;
@@ -66,7 +66,6 @@ export const RefugeeAccommodationCentre = forwardRef<EditableSectionRef, Props>(
         agent: {
           name: values.name,
           address: values.address,
-          // TODO: district should be an ID - needs dropdown selector
         },
       },
       { onSuccess: () => setIsEditing(false) },

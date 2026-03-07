@@ -128,7 +128,6 @@ export default VolunteerCard;
 
 /* Helper maps */
 
-// Todo: this map will be updated Later
 const stateEngagementColorMap: Record<VolunteerStateEngagementType, string> = {
   [VolunteerStateEngagementType.NEW]: "var(--color-red-500)",
   [VolunteerStateEngagementType.ACTIVE]: "var(--color-green-700)",
@@ -138,7 +137,6 @@ const stateEngagementColorMap: Record<VolunteerStateEngagementType, string> = {
   [VolunteerStateEngagementType.UNRESPONSIVE]: "var(--color-500-200)",
 };
 
-// Todo: this map will be updated Later
 const stateEngagementIconMap: Record<VolunteerStateEngagementType, JSX.Element> = {
   [VolunteerStateEngagementType.NEW]: (
     <HourglassIcon size={18} color={stateEngagementColorMap[VolunteerStateEngagementType.NEW]} />

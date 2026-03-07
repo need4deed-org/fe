@@ -33,7 +33,6 @@ export default function AccordionOpportunity({ opportunity, currentStatus, ...ac
       <Heading4 margin={0} color="var(--color-midnight)">
         {title}
       </Heading4>
-      {/* Todo: this will be updated later when opps fetched from API */}
       <StatusBadge status={VolunteerStateMatchType.MATCHED} />
     </>
   );
@@ -41,7 +40,6 @@ export default function AccordionOpportunity({ opportunity, currentStatus, ...ac
   return (
     <Accordion
       headerLeft={headerLeft}
-      /* Todo: this will be updated later when opps fetched from API */
       subtitle={`${t(getDatePrefixKey(currentStatus))} 12.02.2025`}
       onGoToProfile={handleGoToProfile}
     >

@@ -1,14 +1,15 @@
+import { ListIcon } from "@phosphor-icons/react";
 import { ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { ListIcon } from "@phosphor-icons/react";
 
-import BurgerMenuItems from "./BurgerMenuItems";
-import MenuItems from "./MenuItems";
-import { MenuItemType, Subpage } from "@/types";
 import { eventsSectionContainerId } from "@/config/constants";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { MenuItemType, Subpage } from "@/types";
+import BurgerMenuItems from "./BurgerMenuItems";
 import LoginRegister from "./LoginRegister";
-// import UserProfile from "./UserProfile";
+import MenuItems from "./MenuItems";
+import UserProfile from "./UserProfile";
 
 interface HeaderContainerProps {
   height?: string;
@@ -48,6 +49,7 @@ export function Header({
 }: Props) {
   const { t } = useTranslation();
   const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState<boolean>(false);
+  const user = useCurrentUser();
 
   const menuItems: MenuItemType[] = [
     [t("homepage.heroSection.menuItems.about"), `/${Subpage.ABOUT}`],
@@ -75,9 +77,7 @@ export function Header({
         <MenuItems items={menuItems} menuItemColor={menuItemColor} />
       )}
 
-      <LoginRegister />
-      {/* TODO: add this after user login state implemented */}
-      {/* <UserProfile /> */}
+      {user ? <UserProfile /> : <LoginRegister />}
     </HeaderContainer>
   );
 }

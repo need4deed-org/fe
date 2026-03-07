@@ -44,7 +44,6 @@ export const AccordionVolunteer = ({
       <Heading4 margin={0} color="var(--color-midnight)">
         {volunteer?.name}
       </Heading4>
-      {/* Todo: this will be updated later when vol fetched from API */}
       <ProfileStatusBadge
         status={volunteer?.statusEngagement}
         label={engagementStatusLabels[volunteer?.statusEngagement]}
@@ -57,9 +56,7 @@ export const AccordionVolunteer = ({
     <Accordion
       data-testid="volunteer-accordion"
       headerLeft={headerLeft}
-      subtitle={
-        /* Todo: this will be updated later when vol fetched from API */ `${t(getDatePrefixKey(currentStatus))} 12.02.2025`
-      }
+      subtitle={`${t(getDatePrefixKey(currentStatus))} 12.02.2025`}
       onGoToProfile={handleGoToProfile}
     >
       <VolunteerDetail
