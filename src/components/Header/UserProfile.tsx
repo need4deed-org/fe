@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Paragraph } from "../styled/text";
 import { CaretUpIcon, CaretDownIcon } from "@phosphor-icons/react";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
 
 const UserProfileContainer = styled.div`
   display: flex;
@@ -21,9 +22,21 @@ const UserIconDiv = styled.div`
   border-radius: var(--dashboard-cards-header-user-icon-border-radius);
 `;
 
+const getInitials = (fullName: string | undefined): string => {
+  if (!fullName) return "";
+  return fullName
+    .split(" ")
+    .filter(Boolean)
+    .map((part) => part[0])
+    .join("")
+    .toUpperCase()
+    .slice(0, 2);
+};
+
 export function UserProfile() {
   const [isCaretDown, setIsCaretDown] = useState(true);
-  const userName = "OA"; // TODO: update this after user login state implemented.
+  const user = useCurrentUser();
+  const userName = getInitials(user?.fullName) || user?.firstName?.[0]?.toUpperCase() || "";
 
   return (
     <UserProfileContainer onClick={() => setIsCaretDown(!isCaretDown)}>

@@ -12,6 +12,7 @@ import { useTranslation } from "react-i18next";
 import { Paragraph } from "@/components/styled/text";
 import { usePathname, useRouter } from "next/navigation";
 import { DashboardRoutes } from "@/config/constants";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { ElementType } from "react";
 
 const BarContainer = styled.div`
@@ -84,6 +85,16 @@ export default function NavigationBar() {
   const { t } = useTranslation();
   const router = useRouter();
   const currentPathname = usePathname();
+  const user = useCurrentUser();
+  const userInitials = user?.fullName
+    ? user.fullName
+        .split(" ")
+        .filter(Boolean)
+        .map((part) => part[0])
+        .join("")
+        .toUpperCase()
+        .slice(0, 2)
+    : user?.firstName?.[0]?.toUpperCase() || "";
 
   const options: BarOptions[] = [
     { label: t("dashboard.home.sidebar.home"), Icon: HouseIcon, route: DashboardRoutes.Home },
@@ -114,7 +125,7 @@ export default function NavigationBar() {
     },
     {
       label: t("dashboard.home.sidebar.profile"),
-      text: "OA", // TODO; after user login enabled, use user info in here !
+      text: userInitials,
       route: DashboardRoutes.Profile,
     },
   ];
