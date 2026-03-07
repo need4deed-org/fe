@@ -83,7 +83,12 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
         : t("dashboard.volunteerProfile.findOppButtonName"),
       onHeaderButtonClick: opportunityId
         ? () => setIsSuggestDialogOpen(true)
-        : () => router.push(`/${i18n.language}/dashboard/opportunities?volunteer=${volunteer.id}`),
+        : () => {
+            // TODO: make suggest-backend request, show spinner while loading
+            // TODO: check backend-response: if failed, show error notifications
+            // only if successful, navigate
+            router.push(`/${i18n.language}/dashboard/opportunities?volunteer=${volunteer.id}`);
+          },
       subComponent: (
         <>
           <VolunteerOpportunities />
