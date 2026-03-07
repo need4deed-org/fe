@@ -8,7 +8,7 @@ import { Paragraph } from "@/components/styled/text";
 import { StatusAccordionActions } from "../shared/AccordionActions";
 import { DetailContainer, SplitContainer } from "../shared/accordionStyles";
 import { InfoSection } from "../shared/InfoSection";
-import { MappedVolunteerAgent } from "./mockVols/tempUtils";
+import { MappedVolunteerAgent } from "./types";
 import { LanguageRow, LanguagesList } from "./styles";
 
 type Props = {

@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 import { ProfileStatusBadge } from "../ProfileHeader/common";
 import { Accordion } from "../shared/Accordion";
 import { getDatePrefixKey } from "../shared/getDatePrefixKey";
-import { createEngagementStatusLabelMap, createStatusLabelMap, MappedVolunteerAgent } from "./mockVols/tempUtils";
+import { createEngagementStatusLabelMap, createStatusLabelMap, MappedVolunteerAgent } from "./types";
 import { VolunteerDetail } from "./VolunteerDetail";
 
 type Props = {
