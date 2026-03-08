@@ -1,5 +1,5 @@
 import { OpportunityVolunteerStatusType } from "need4deed-sdk";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const TAB_STATUS_ORDER: OpportunityVolunteerStatusType[] = [
   OpportunityVolunteerStatusType.PENDING,
@@ -16,6 +16,31 @@ export function useTabTransitions<T extends { id: number; tabStatus: Opportunity
 ) {
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
   const [statusOverrides, setStatusOverrides] = useState<Record<number, StatusOverride>>({});
+
+  // Clear overrides once server data confirms the transition
+  useEffect(() => {
+    setStatusOverrides((prev) => {
+      if (Object.keys(prev).length === 0) return prev;
+
+      const next: Record<number, StatusOverride> = {};
+      let changed = false;
+
+      for (const [idStr, overrideStatus] of Object.entries(prev)) {
+        const id = Number(idStr);
+        const item = items.find((i) => i.id === id);
+
+        if (item && (overrideStatus === "removed" || item.tabStatus !== overrideStatus)) {
+          // Server hasn't caught up yet — keep the override
+          next[id] = overrideStatus;
+        } else {
+          // Server confirmed the change (or item was removed) — drop override
+          changed = true;
+        }
+      }
+
+      return changed ? next : prev;
+    });
+  }, [items]);
 
   const getEffectiveStatus = (item: T): StatusOverride => statusOverrides[item.id] ?? item.tabStatus;
 

@@ -97,7 +97,7 @@ export default function VolunteerOpportunities({ volunteerId }: { volunteerId: I
       ) : (
         visibleItems.map((opportunity) => (
           <AccordionOpportunity
-            key={opportunity.id}
+            key={opportunity.m2mId}
             opportunity={opportunity}
             currentStatus={currentTabStatus}
             onMatch={() => handleMatch(opportunity.id)}

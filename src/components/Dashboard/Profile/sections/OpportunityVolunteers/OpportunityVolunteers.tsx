@@ -106,7 +106,7 @@ export const OpportunityVolunteers = ({ opportunityId }: { opportunityId: Id }) 
       ) : (
         visibleItems.map((volunteer) => (
           <AccordionVolunteer
-            key={volunteer.id}
+            key={volunteer.m2mId}
             volunteer={volunteer}
             currentStatus={currentTabStatus}
             onMatch={() => handleMatch(volunteer.id)}
