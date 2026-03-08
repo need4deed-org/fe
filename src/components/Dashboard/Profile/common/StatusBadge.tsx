@@ -32,8 +32,8 @@ const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
 
   const bg = statusColorMap[status];
   const IconComp = statusIconMap[status];
-  const isBlueType = isEnumValue(VolunteerStateTypeType, status);
-  const textColor = isBlueType ? "var(--color-white)" : "var(--color-blue-700)";
+  const isBlueBadge = isEnumValue(VolunteerStateTypeType, status);
+  const textColor = isBlueBadge ? "var(--color-white)" : "var(--color-blue-700)";
 
   return (
     <StatusDiv bg={bg} data-testid="status-badge">
