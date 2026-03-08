@@ -1,25 +1,13 @@
 import {
-  ApiAvailability,
-  ApiLanguage,
+  ApiVolunteerGetList,
   OpportunityVolunteerStatusType,
-  OptionItem,
   VolunteerStateEngagementType,
   VolunteerStateTypeType,
 } from "need4deed-sdk";
 
 import { TFunction } from "i18next";
 
-export type MappedVolunteerAgent = {
-  id: number;
-  name: string;
-  avatarUrl: string;
-  languages: ApiLanguage[];
-  locations: string[];
-  availability: ApiAvailability[];
-  activities: OptionItem[];
-  skills: OptionItem[];
-  statusEngagement: VolunteerStateEngagementType;
-  statusType: VolunteerStateTypeType;
+export type MappedVolunteerAgent = ApiVolunteerGetList & {
   tabStatus: OpportunityVolunteerStatusType;
 };
 

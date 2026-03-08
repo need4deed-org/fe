@@ -44,4 +44,3 @@ next-env.d.ts
 # dev
 dev/
 dev.*
-.playwright-mcp/

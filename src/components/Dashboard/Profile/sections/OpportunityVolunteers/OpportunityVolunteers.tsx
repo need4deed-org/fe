@@ -4,7 +4,7 @@ import {
   useDeleteOpportunityVolunteer,
   useUpdateOpportunityVolunteerStatus,
 } from "@/hooks/useUpdateOpportunityVolunteerStatus";
-import { ApiVolunteerOpportunityGet, Id, OpportunityVolunteerStatusType, VolunteerStateTypeType } from "need4deed-sdk";
+import { ApiVolunteerOpportunityGet, Id, OpportunityVolunteerStatusType } from "need4deed-sdk";
 import { useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { SectionEmptyState } from "../shared/styles";
@@ -23,7 +23,7 @@ function mapVolunteer(v: ApiVolunteerOpportunityGet): OpportunityLinkedVolunteer
     name: v.name,
     avatarUrl: v.avatarUrl,
     engagementStatus: v.engagement,
-    volunteerType: v.volunteeringType as VolunteerStateTypeType,
+    volunteerType: v.volunteeringType,
     appliedAt: new Date(v.updatedAt).toLocaleDateString("de-DE"),
     tabStatus: v.status,
     languages: v.languages.map((l) => ({ title: l.title, proficiency: l.proficiency })),
