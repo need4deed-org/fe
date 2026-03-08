@@ -9,11 +9,9 @@ import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { SectionEmptyState } from "../shared/styles";
 import { Tabs } from "../shared/Tabs";
-import { ITEM_STATUS_REMOVED, useTabTransitions } from "../shared/useTabTransitions";
+import { ITEM_STATUS_REMOVED, TAB_STATUS_ORDER, useTabTransitions } from "../shared/useTabTransitions";
 import { AccordionVolunteer } from "./AccordionVolunteer";
 import { OpportunityVolunteersContainer } from "./styles";
-
-const tabKeys = ["pending", "matched", "active", "past"];
 
 export const OpportunityVolunteers = ({ opportunityId }: { opportunityId: Id }) => {
   const { t } = useTranslation();
@@ -35,7 +33,7 @@ export const OpportunityVolunteers = ({ opportunityId }: { opportunityId: Id }) 
   const { selectedTabIndex, setSelectedTabIndex, currentTabStatus, tabCounts, visibleItems, setItemStatus } =
     useTabTransitions(volunteers);
 
-  const tabs = tabKeys.map((key, index) => ({
+  const tabs = TAB_STATUS_ORDER.map((key, index) => ({
     label: t(`dashboard.opportunityProfile.volunteersSec.tabs.${key}`),
     count: tabCounts[index],
   }));

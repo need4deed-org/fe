@@ -10,10 +10,8 @@ import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { SectionEmptyState } from "../shared/styles";
 import { Tabs } from "../shared/Tabs";
-import { ITEM_STATUS_REMOVED, useTabTransitions } from "../shared/useTabTransitions";
+import { ITEM_STATUS_REMOVED, TAB_STATUS_ORDER, useTabTransitions } from "../shared/useTabTransitions";
 import AccordionOpportunity from "./AccordionOpportunity";
-
-const tabsKeys = ["pending", "matched", "active", "past"];
 
 export default function VolunteerOpportunities({ volunteerId }: { volunteerId: Id }) {
   const { t } = useTranslation();
@@ -35,7 +33,7 @@ export default function VolunteerOpportunities({ volunteerId }: { volunteerId: I
   const { selectedTabIndex, setSelectedTabIndex, currentTabStatus, tabCounts, visibleItems, setItemStatus } =
     useTabTransitions(opportunities);
 
-  const tabs = tabsKeys.map((key, index) => ({
+  const tabs = TAB_STATUS_ORDER.map((key, index) => ({
     label: t(`dashboard.volunteerProfile.opportunitiesSec.tabs.${key}`),
     count: tabCounts[index],
   }));
