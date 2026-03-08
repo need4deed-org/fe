@@ -8,7 +8,9 @@ export const TAB_STATUS_ORDER: OpportunityVolunteerStatusType[] = [
   OpportunityVolunteerStatusType.PAST,
 ];
 
-type StatusOverride = OpportunityVolunteerStatusType | "removed";
+export const ITEM_STATUS_REMOVED = "removed" as const;
+
+type StatusOverride = OpportunityVolunteerStatusType | typeof ITEM_STATUS_REMOVED;
 
 export function useTabTransitions<T extends { id: number; status: OpportunityVolunteerStatusType }>(
   items: T[],
@@ -29,7 +31,7 @@ export function useTabTransitions<T extends { id: number; status: OpportunityVol
         const id = Number(idStr);
         const item = items.find((i) => i.id === id);
 
-        if (item && (overrideStatus === "removed" || item.status !== overrideStatus)) {
+        if (item && (overrideStatus === ITEM_STATUS_REMOVED || item.status !== overrideStatus)) {
           // Server hasn't caught up yet — keep the override
           next[id] = overrideStatus;
         } else {

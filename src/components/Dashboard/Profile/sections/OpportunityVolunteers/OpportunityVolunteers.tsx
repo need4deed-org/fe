@@ -9,7 +9,7 @@ import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { SectionEmptyState } from "../shared/styles";
 import { Tabs } from "../shared/Tabs";
-import { useTabTransitions } from "../shared/useTabTransitions";
+import { ITEM_STATUS_REMOVED, useTabTransitions } from "../shared/useTabTransitions";
 import { AccordionVolunteer } from "./AccordionVolunteer";
 import { OpportunityVolunteersContainer } from "./styles";
 
@@ -46,7 +46,7 @@ export const OpportunityVolunteers = ({ opportunityId }: { opportunityId: Id }) 
   };
 
   const handleNotAMatch = (m2mId: number) => {
-    setItemStatus(m2mId, "removed");
+    setItemStatus(m2mId, ITEM_STATUS_REMOVED);
     deleteLink({ m2mId });
   };
 

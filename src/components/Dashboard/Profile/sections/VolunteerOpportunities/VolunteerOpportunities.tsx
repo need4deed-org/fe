@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { SectionEmptyState } from "../shared/styles";
 import { Tabs } from "../shared/Tabs";
-import { useTabTransitions } from "../shared/useTabTransitions";
+import { ITEM_STATUS_REMOVED, useTabTransitions } from "../shared/useTabTransitions";
 import AccordionOpportunity from "./AccordionOpportunity";
 
 const tabsKeys = ["pending", "matched", "active", "past"];
@@ -46,7 +46,7 @@ export default function VolunteerOpportunities({ volunteerId }: { volunteerId: I
   };
 
   const handleNotAMatch = (m2mId: number) => {
-    setItemStatus(m2mId, "removed");
+    setItemStatus(m2mId, ITEM_STATUS_REMOVED);
     deleteLink({ m2mId });
   };
 
