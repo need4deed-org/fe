@@ -8,7 +8,7 @@ import {
 import { TFunction } from "i18next";
 
 export type MappedVolunteerAgent = ApiVolunteerGetList & {
-  tabStatus: OpportunityVolunteerStatusType;
+  status: OpportunityVolunteerStatusType;
 };
 
 export const createEngagementStatusLabelMap = (t: TFunction): Record<VolunteerStateEngagementType, string> => ({

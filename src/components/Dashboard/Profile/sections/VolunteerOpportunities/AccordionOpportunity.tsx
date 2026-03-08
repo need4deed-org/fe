@@ -1,15 +1,14 @@
 import { Heading4 } from "@/components/styled/text";
-import { OpportunityVolunteerStatusType } from "need4deed-sdk";
+import { ApiOpportunityVolunteerGet, OpportunityVolunteerStatusType } from "need4deed-sdk";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import { Accordion } from "../shared/Accordion";
 import { getDatePrefixKey } from "../shared/getDatePrefixKey";
 import { AccordionActionProps } from "../shared/types";
 import OpportunityDetail from "./OpportunityDetail";
-import { VolunteerLinkedOpportunity } from "./types";
 
 type Props = {
-  opportunity: VolunteerLinkedOpportunity;
+  opportunity: ApiOpportunityVolunteerGet;
   currentStatus: OpportunityVolunteerStatusType;
 } & AccordionActionProps;
 
@@ -30,7 +29,7 @@ export default function AccordionOpportunity({ opportunity, currentStatus, ...ac
   return (
     <Accordion
       headerLeft={headerLeft}
-      subtitle={`${t(getDatePrefixKey(currentStatus))} ${opportunity.appliedAt}`}
+      subtitle={`${t(getDatePrefixKey(currentStatus))} ${new Date(opportunity.updatedAt).toLocaleDateString("de-DE")}`}
       onGoToProfile={handleGoToProfile}
     >
       <OpportunityDetail opportunity={opportunity} currentStatus={currentStatus} {...actionProps} />

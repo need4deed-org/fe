@@ -5,34 +5,15 @@ import {
   useUpdateOpportunityVolunteerStatus,
 } from "@/hooks/useUpdateOpportunityVolunteerStatus";
 import { ApiVolunteerOpportunityGet, Id, OpportunityVolunteerStatusType } from "need4deed-sdk";
-import { useCallback, useMemo } from "react";
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { SectionEmptyState } from "../shared/styles";
 import { Tabs } from "../shared/Tabs";
 import { useTabTransitions } from "../shared/useTabTransitions";
 import { AccordionVolunteer } from "./AccordionVolunteer";
 import { OpportunityVolunteersContainer } from "./styles";
-import { OpportunityLinkedVolunteer } from "./types";
 
 const tabKeys = ["pending", "matched", "active", "past"];
-
-function mapVolunteer(v: ApiVolunteerOpportunityGet): OpportunityLinkedVolunteer {
-  return {
-    id: v.volunteerId,
-    m2mId: v.id,
-    name: v.name,
-    avatarUrl: v.avatarUrl,
-    engagementStatus: v.engagement,
-    volunteerType: v.volunteeringType,
-    appliedAt: new Date(v.updatedAt).toLocaleDateString("de-DE"),
-    tabStatus: v.status,
-    languages: v.languages.map((l) => ({ title: l.title, proficiency: l.proficiency })),
-    activities: v.activities.map((a) => a.title),
-    skills: v.skills.map((s) => s.title),
-    availability: v.availability.map((a) => [a.day, a.daytime].filter(Boolean).join(" ")).join(", ") || "–",
-    locations: v.locations.map((l) => l.title),
-  };
-}
 
 export const OpportunityVolunteers = ({ opportunityId }: { opportunityId: Id }) => {
   const { t } = useTranslation();
@@ -46,7 +27,7 @@ export const OpportunityVolunteers = ({ opportunityId }: { opportunityId: Id }) 
     enabled: !!opportunityId,
   });
 
-  const volunteers = useMemo(() => (data ?? []).map(mapVolunteer), [data]);
+  const volunteers = useMemo(() => data ?? [], [data]);
 
   const { mutate: updateStatus } = useUpdateOpportunityVolunteerStatus(queryKey);
   const { mutate: deleteLink } = useDeleteOpportunityVolunteer(queryKey);
@@ -54,41 +35,28 @@ export const OpportunityVolunteers = ({ opportunityId }: { opportunityId: Id }) 
   const { selectedTabIndex, setSelectedTabIndex, currentTabStatus, tabCounts, visibleItems, setItemStatus } =
     useTabTransitions(volunteers);
 
-  const findM2mId = useCallback(
-    (volunteerId: number) => volunteers.find((v) => v.id === volunteerId)?.m2mId,
-    [volunteers],
-  );
-
   const tabs = tabKeys.map((key, index) => ({
     label: t(`dashboard.opportunityProfile.volunteersSec.tabs.${key}`),
     count: tabCounts[index],
   }));
 
-  const handleMatch = (id: number) => {
-    const m2mId = findM2mId(id);
-    if (!m2mId) return;
-    setItemStatus(id, OpportunityVolunteerStatusType.MATCHED);
+  const handleMatch = (m2mId: number) => {
+    setItemStatus(m2mId, OpportunityVolunteerStatusType.MATCHED);
     updateStatus({ m2mId, status: OpportunityVolunteerStatusType.MATCHED });
   };
 
-  const handleNotAMatch = (id: number) => {
-    const m2mId = findM2mId(id);
-    if (!m2mId) return;
-    setItemStatus(id, "removed");
+  const handleNotAMatch = (m2mId: number) => {
+    setItemStatus(m2mId, "removed");
     deleteLink({ m2mId });
   };
 
-  const handleMarkAsActive = (id: number) => {
-    const m2mId = findM2mId(id);
-    if (!m2mId) return;
-    setItemStatus(id, OpportunityVolunteerStatusType.ACTIVE);
+  const handleMarkAsActive = (m2mId: number) => {
+    setItemStatus(m2mId, OpportunityVolunteerStatusType.ACTIVE);
     updateStatus({ m2mId, status: OpportunityVolunteerStatusType.ACTIVE });
   };
 
-  const handleMarkAsPast = (id: number) => {
-    const m2mId = findM2mId(id);
-    if (!m2mId) return;
-    setItemStatus(id, OpportunityVolunteerStatusType.PAST);
+  const handleMarkAsPast = (m2mId: number) => {
+    setItemStatus(m2mId, OpportunityVolunteerStatusType.PAST);
     updateStatus({ m2mId, status: OpportunityVolunteerStatusType.PAST });
   };
 
@@ -106,7 +74,7 @@ export const OpportunityVolunteers = ({ opportunityId }: { opportunityId: Id }) 
       ) : (
         visibleItems.map((volunteer) => (
           <AccordionVolunteer
-            key={volunteer.m2mId}
+            key={volunteer.id}
             volunteer={volunteer}
             currentStatus={currentTabStatus}
             onMatch={() => handleMatch(volunteer.id)}

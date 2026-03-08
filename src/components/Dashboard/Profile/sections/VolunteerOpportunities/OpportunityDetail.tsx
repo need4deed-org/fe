@@ -1,12 +1,11 @@
-import { OpportunityVolunteerStatusType } from "need4deed-sdk";
+import { ApiOpportunityVolunteerGet, OpportunityVolunteerStatusType } from "need4deed-sdk";
 
 import { StatusAccordionActions } from "../shared/AccordionActions";
 import { DetailContainer } from "../shared/accordionStyles";
 import { AccordionActionProps } from "../shared/types";
-import { VolunteerLinkedOpportunity } from "./types";
 
 type Props = {
-  opportunity: VolunteerLinkedOpportunity;
+  opportunity: ApiOpportunityVolunteerGet;
   currentStatus: OpportunityVolunteerStatusType;
 } & AccordionActionProps;
 
