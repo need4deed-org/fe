@@ -16,9 +16,10 @@ export default function OpportunityDetail({
   onMarkAsActive,
   onMarkAsPast,
 }: Props) {
+  const canShowActions = onMatch;
   return (
     <DetailContainer>
-      {onMatch && onNotAMatch && onMarkAsActive && onMarkAsPast && (
+      {canShowActions && (
         <StatusAccordionActions
           currentStatus={currentStatus}
           onMatch={onMatch}
