@@ -1,6 +1,7 @@
-import { OpportunityType, TranslatedIntoType } from "need4deed-sdk";
+import { OpportunityType, OpportunityVolunteerStatusType, TranslatedIntoType } from "need4deed-sdk";
 
 export interface Opportunity {
+  tabStatus: OpportunityVolunteerStatusType;
   accompanyingDate: Date | null;
   accompanyingInfo: string | null;
   accompanyingTranslation: string;

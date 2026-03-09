@@ -1,18 +1,18 @@
-import { CirclePic } from "@/components/styled/img";
 import { Heading4 } from "@/components/styled/text";
-import { defaultAvatarURL } from "@/config/constants";
+import { defaultAvatarVolunteerProfile } from "@/config/constants";
 import { getImageUrl } from "@/utils";
 import { OpportunityVolunteerStatusType } from "need4deed-sdk";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
-import { ProfileStatusBadge } from "../ProfileHeader/common";
+import StatusBadge from "../../common/StatusBadge";
 import { Accordion } from "../shared/Accordion";
 import { getDatePrefixKey } from "../shared/getDatePrefixKey";
-import { createEngagementStatusLabelMap, createStatusLabelMap, MappedVolunteerAgent } from "./mockVols/tempUtils";
-import { VolunteerDetail } from "./VolunteerDetail";
+import { MockOpportunityVolunteer } from "./mockVolunteers";
+import { AvatarImg } from "./styles";
+import VolunteerDetail from "./VolunteerDetail";
 
 type Props = {
-  volunteer: MappedVolunteerAgent;
+  volunteer: MockOpportunityVolunteer;
   currentStatus: OpportunityVolunteerStatusType;
   onMatch: () => void;
   onNotAMatch: () => void;
@@ -30,26 +30,22 @@ export const AccordionVolunteer = ({
 }: Props) => {
   const { t, i18n } = useTranslation();
   const router = useRouter();
+  const { id, name, avatarUrl, engagementStatus, volunteerType, appliedAt } = volunteer;
 
   const handleGoToProfile = () => {
-    router.push(`/${i18n.language}/dashboard/volunteers/${volunteer.id}`);
+    router.push(`/${i18n.language}/dashboard/volunteers/${id}`);
   };
 
-  const engagementStatusLabels = createEngagementStatusLabelMap(t);
-  const statusLabels = createStatusLabelMap(t);
+  const resolvedAvatarUrl = getImageUrl(avatarUrl || defaultAvatarVolunteerProfile);
 
   const headerLeft = (
     <>
-      <CirclePic src={getImageUrl(volunteer?.avatarUrl || defaultAvatarURL)} size="40px" />
+      <AvatarImg src={resolvedAvatarUrl} alt={name} />
       <Heading4 margin={0} color="var(--color-midnight)">
-        {volunteer?.name}
+        {name}
       </Heading4>
-      {/* Todo: this will be updated later when vol fetched from API */}
-      <ProfileStatusBadge
-        status={volunteer?.statusEngagement}
-        label={engagementStatusLabels[volunteer?.statusEngagement]}
-      />
-      <ProfileStatusBadge status={volunteer?.statusType} label={statusLabels[volunteer?.statusType]} />
+      <StatusBadge status={engagementStatus} />
+      <StatusBadge status={volunteerType} />
     </>
   );
 
@@ -57,9 +53,7 @@ export const AccordionVolunteer = ({
     <Accordion
       data-testid="volunteer-accordion"
       headerLeft={headerLeft}
-      subtitle={
-        /* Todo: this will be updated later when vol fetched from API */ `${t(getDatePrefixKey(currentStatus))} 12.02.2025`
-      }
+      subtitle={`${t(getDatePrefixKey(currentStatus))} ${appliedAt}`}
       onGoToProfile={handleGoToProfile}
     >
       <VolunteerDetail

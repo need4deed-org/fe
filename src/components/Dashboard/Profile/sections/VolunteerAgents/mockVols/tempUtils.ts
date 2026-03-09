@@ -1,25 +1,31 @@
-import { ApiVolunteerGetList, VolunteerStateEngagementType, VolunteerStateTypeType } from "need4deed-sdk";
+import {
+  ApiVolunteerGetList,
+  OpportunityVolunteerStatusType,
+  VolunteerStateEngagementType,
+  VolunteerStateTypeType,
+} from "need4deed-sdk";
 
 import { TFunction } from "i18next";
 
-const mapOpportunity = (volunteer: ApiVolunteerGetList) => {
-  const newVolunteer = {
-    activities: volunteer.activities,
-    id: volunteer.id,
-    avatarUrl: volunteer.avatarUrl,
-    languages: volunteer.languages,
-    locations: volunteer.locations,
-    availability: volunteer.availability,
-    skills: volunteer.skills,
-    statusEngagement: volunteer.statusEngagement,
-    statusType: volunteer.statusType,
-    name: volunteer.name,
-  };
+type VolunteerWithTabStatus = ApiVolunteerGetList & { tabStatus: OpportunityVolunteerStatusType };
 
-  return newVolunteer;
-};
+const mapOpportunity = (volunteer: VolunteerWithTabStatus) => ({
+  id: volunteer.id,
+  name: volunteer.name,
+  avatarUrl: volunteer.avatarUrl,
+  languages: volunteer.languages,
+  locations: volunteer.locations,
+  availability: volunteer.availability,
+  activities: volunteer.activities,
+  skills: volunteer.skills,
+  statusEngagement: volunteer.statusEngagement,
+  statusType: volunteer.statusType,
+  tabStatus: volunteer.tabStatus,
+});
 
-export const getMappedOpportunities = (volunteers: ApiVolunteerGetList[]) => {
+export type MappedVolunteerAgent = ReturnType<typeof mapOpportunity>;
+
+export const getMappedOpportunities = (volunteers: VolunteerWithTabStatus[]) => {
   return volunteers.map((volunteer) => mapOpportunity(volunteer));
 };
 

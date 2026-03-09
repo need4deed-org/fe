@@ -4,23 +4,19 @@ import { toast } from "react-toastify";
 import { SectionEmptyState } from "../shared/styles";
 import { Tabs } from "../shared/Tabs";
 import { useTabTransitions } from "../shared/useTabTransitions";
+import { mockVolunteers } from "./mockVolunteers";
+import { OpportunityVolunteersContainer } from "./styles";
 import { AccordionVolunteer } from "./AccordionVolunteer";
-import { mockRawVolunteers } from "./mockVols/mockVolunteers";
-import { getMappedOpportunities } from "./mockVols/tempUtils";
-import { VolunteerOpportunitiesContainer } from "./styles";
 
-const tabsKeys = ["pending", "matched", "active", "past"] as const;
+const tabKeys = ["pending", "matched", "active", "past"];
 
-export const VolunteerAgents = () => {
+export const OpportunityVolunteers = () => {
   const { t } = useTranslation();
-
-  const volunteers = getMappedOpportunities(mockRawVolunteers);
-
   const { selectedTabIndex, setSelectedTabIndex, currentTabStatus, tabCounts, visibleItems, setItemStatus } =
-    useTabTransitions(volunteers);
+    useTabTransitions(mockVolunteers);
 
-  const tabs = tabsKeys.map((key, index) => ({
-    label: t(`dashboard.volunteerProfile.opportunitiesSec.tabs.${key}`),
+  const tabs = tabKeys.map((key, index) => ({
+    label: t(`dashboard.opportunityProfile.volunteersSec.tabs.${key}`),
     count: tabCounts[index],
   }));
 
@@ -45,10 +41,12 @@ export const VolunteerAgents = () => {
   };
 
   return (
-    <VolunteerOpportunitiesContainer>
+    <OpportunityVolunteersContainer data-testid="opportunity-volunteers">
       <Tabs tabs={tabs} selectedTabIndex={selectedTabIndex} setSelectedTabIndex={setSelectedTabIndex} />
       {visibleItems.length === 0 ? (
-        <SectionEmptyState>{t("dashboard.volunteerProfile.opportunitiesSec.emptyState")}</SectionEmptyState>
+        <SectionEmptyState data-testid="volunteers-empty-state">
+          {t("dashboard.opportunityProfile.volunteersSec.emptyState")}
+        </SectionEmptyState>
       ) : (
         visibleItems.map((volunteer) => (
           <AccordionVolunteer
@@ -62,6 +60,6 @@ export const VolunteerAgents = () => {
           />
         ))
       )}
-    </VolunteerOpportunitiesContainer>
+    </OpportunityVolunteersContainer>
   );
 };

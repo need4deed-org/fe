@@ -1,7 +1,6 @@
-import { apiPathMe, cacheTTL } from "@/config/constants";
-import { useGetQuery } from "@/hooks";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
 import i18next from "i18next";
-import { ApiUserGet, UserRole } from "need4deed-sdk";
+import { UserRole } from "need4deed-sdk";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { LoginForm } from "./LoginForm";
@@ -11,12 +10,7 @@ export function LoginController() {
   const router = useRouter();
   const { language } = i18next;
 
-  const { data: user } = useGetQuery<ApiUserGet>({
-    queryKey: ["user"],
-    apiPath: apiPathMe,
-    staleTime: cacheTTL,
-    enabled: isLoggedIn,
-  });
+  const user = useCurrentUser(isLoggedIn);
   useEffect(() => {
     if (!(user && "role" in user)) return;
     const path =

@@ -13,6 +13,13 @@ import { XIcon } from "@phosphor-icons/react";
 import { createSelectedFilterItemsAsFlatArray } from "../../Volunteers/Filters/helpers";
 import ClearAllFilters from "../CardsFilter/ClearAllFilters";
 import { SetFilter } from "../CardsFilter/types";
+import { OpportunityFilterChip } from "./OpportunityFilterChip";
+
+type OpportunityFilter = {
+  name: string;
+  avatarUrl?: string;
+  onRemove: () => void;
+};
 
 interface Props {
   header: string;
@@ -27,6 +34,7 @@ interface Props {
   onSortOrderChange?: OnChangeSortOrder;
   filter: CardsFilter;
   setFilter: SetFilter<CardsFilter>;
+  opportunityFilter?: OpportunityFilter;
 }
 
 export default function CardsHeader({
@@ -42,6 +50,7 @@ export default function CardsHeader({
   onSortOrderChange,
   filter,
   setFilter,
+  opportunityFilter,
 }: Props) {
   const { t } = useTranslation();
 
@@ -77,6 +86,13 @@ export default function CardsHeader({
         <Results counter={resultCounter} text={resultText} />
 
         <HeaderFilterItemContainer>
+          {opportunityFilter && (
+            <OpportunityFilterChip
+              name={opportunityFilter.name}
+              avatarUrl={opportunityFilter.avatarUrl}
+              onRemove={opportunityFilter.onRemove}
+            />
+          )}
           {selectedFilters.map((f) => (
             <HeaderFilterItem key={f.label}>
               <Paragraph

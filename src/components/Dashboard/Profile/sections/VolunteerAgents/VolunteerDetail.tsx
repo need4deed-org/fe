@@ -1,19 +1,33 @@
-import { Icon, MapPinIcon, ShootingStarIcon, TranslateIcon, CalendarDotsIcon } from "@phosphor-icons/react";
-import { ApiVolunteerGetList } from "need4deed-sdk";
-import { ReactNode } from "react";
+import { CalendarDotsIcon, MapPinIcon, ShootingStarIcon, TranslateIcon } from "@phosphor-icons/react";
+import { OpportunityVolunteerStatusType } from "need4deed-sdk";
 import { useTranslation } from "react-i18next";
 
-import { Button } from "@/components/core/button";
 import { Tags } from "@/components/core/common";
-import { IconDiv } from "@/components/styled/container";
 import { Paragraph } from "@/components/styled/text";
-import { Actions, Container, DetailHeader, DetailSection, LanguageRow, LanguagesList, SplitContainer } from "./styles";
 
-interface Props {
-  volunteer: ApiVolunteerGetList;
-}
+import { StatusAccordionActions } from "../shared/AccordionActions";
+import { DetailContainer, SplitContainer } from "../shared/accordionStyles";
+import { InfoSection } from "../shared/InfoSection";
+import { MappedVolunteerAgent } from "./mockVols/tempUtils";
+import { LanguageRow, LanguagesList } from "./styles";
 
-export const VolunteerDetail = ({ volunteer }: Props) => {
+type Props = {
+  volunteer: MappedVolunteerAgent;
+  currentStatus: OpportunityVolunteerStatusType;
+  onMatch: () => void;
+  onNotAMatch: () => void;
+  onMarkAsActive: () => void;
+  onMarkAsPast: () => void;
+};
+
+export const VolunteerDetail = ({
+  volunteer,
+  currentStatus,
+  onMatch,
+  onNotAMatch,
+  onMarkAsActive,
+  onMarkAsPast,
+}: Props) => {
   const { t } = useTranslation();
 
   const { languages, locations, activities, availability, skills } = volunteer;
@@ -21,10 +35,10 @@ export const VolunteerDetail = ({ volunteer }: Props) => {
   const languagesText = languages.map((lan) => lan.title).join(", ");
   const district = locations.join(", ");
   const activity = activities.map((act) => act.title);
-  const skill = skills.map((skill) => skill.title);
+  const skill = skills.map((s) => s.title);
+
   return (
-    <Container>
-      {/* 2. Languages & Activities */}
+    <DetailContainer>
       <SplitContainer>
         <InfoSection icon={TranslateIcon} title={t("dashboard.volunteerProfile.profileSection.languages")}>
           <LanguagesList>
@@ -51,7 +65,6 @@ export const VolunteerDetail = ({ volunteer }: Props) => {
         </InfoSection>
       </SplitContainer>
 
-      {/* 3. Location & Schedule */}
       <SplitContainer>
         <InfoSection icon={MapPinIcon} title={t("dashboard.volunteerProfile.profileSection.districts")}>
           <Paragraph fontWeight="var(--volunteer-profile-opportunities-accordion-opp-detail-light-font)">
@@ -68,44 +81,13 @@ export const VolunteerDetail = ({ volunteer }: Props) => {
         </InfoSection>
       </SplitContainer>
 
-      {/* 4. Action Buttons */}
-      <Actions>
-        <Button
-          onClick={() => {}}
-          text={t("dashboard.volunteerProfile.opportunitiesSec.notAMatch")}
-          height="var(--volunteer-profile-opportunities-accordion-actions-button-height)"
-          textFontSize="var(--volunteer-profile-opportunities-accordion-actions-button-textFontSize)"
-          textColor="var(--color-aubergine)"
-          backgroundcolor="var(--color-white)"
-          border="var(--volunteer-profile-opportunities-accordion-actions-button-border)"
-        />
-        <Button
-          onClick={() => {}}
-          text={t("dashboard.volunteerProfile.opportunitiesSec.match")}
-          height="var(--volunteer-profile-opportunities-accordion-actions-button-height)"
-          textFontSize="var(--volunteer-profile-opportunities-accordion-actions-button-textFontSize)"
-        />
-      </Actions>
-    </Container>
+      <StatusAccordionActions
+        currentStatus={currentStatus}
+        onMatch={onMatch}
+        onNotAMatch={onNotAMatch}
+        onMarkAsActive={onMarkAsActive}
+        onMarkAsPast={onMarkAsPast}
+      />
+    </DetailContainer>
   );
 };
-
-/* Helper Components */
-
-interface InfoSectionProps {
-  icon: Icon;
-  title: string;
-  children: ReactNode;
-}
-const InfoSection = ({ icon: Icon, title, children }: InfoSectionProps) => (
-  <DetailSection>
-    <DetailHeader>
-      <IconDiv size="var(--volunteer-profile-opportunities-accordion-info-section-icon-size)">
-        <Icon weight={Icon === MapPinIcon ? "fill" : "regular"} />
-      </IconDiv>
-      <Paragraph fontWeight="var(--volunteer-profile-opportunities-accordion-opp-detail-mid-font)">{title}</Paragraph>
-    </DetailHeader>
-
-    {children}
-  </DetailSection>
-);

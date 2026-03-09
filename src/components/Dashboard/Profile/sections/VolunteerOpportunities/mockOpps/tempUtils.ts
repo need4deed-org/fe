@@ -1,4 +1,4 @@
-import { Lang, OpportunityType, TranslatedIntoType } from "need4deed-sdk";
+import { Lang, OpportunityType, OpportunityVolunteerStatusType, TranslatedIntoType } from "need4deed-sdk";
 
 import { TFunction } from "i18next";
 import { Opportunity, OpportunityApi } from "./tempTypes";
@@ -22,7 +22,7 @@ export enum CategoryTitle {
   DE_LNG_SUPPORT = 1,
 }
 
-const mapOpportunity = (opp: OpportunityApi, t: TFunction) => {
+const mapOpportunity = (opp: OpportunityApi, t: TFunction, tabStatus: OpportunityVolunteerStatusType) => {
   const accompanyingTranslationMap = {
     [TranslatedIntoType.ENGLISH_OK]: t("dashboard.opportunities.accompanyingTranslation.en"),
     [TranslatedIntoType.DEUTSCHE]: t("dashboard.opportunities.accompanyingTranslation.de"),
@@ -40,6 +40,7 @@ const mapOpportunity = (opp: OpportunityApi, t: TFunction) => {
       : opp.category;
 
   const newOpp: Opportunity = {
+    tabStatus,
     accompanyingDate: opp.accomp_datetime ? new Date(opp.accomp_datetime) : null,
     accompanyingInfo: opp.accomp_information,
     accompanyingTranslation: accompanyingTranslationMap[opp.accomp_translation || TranslatedIntoType.NO_TRANSLATION],
@@ -66,8 +67,12 @@ const mapOpportunity = (opp: OpportunityApi, t: TFunction) => {
   return newOpp;
 };
 
-export const getMappedOpportunities = (opps: OpportunityApi[], t: TFunction) => {
-  return opps.map((opp) => mapOpportunity(opp, t));
+export const getMappedOpportunities = (
+  opps: OpportunityApi[],
+  t: TFunction,
+  tabAssignment: Record<number, OpportunityVolunteerStatusType> = {},
+) => {
+  return opps.map((opp, index) => mapOpportunity(opp, t, tabAssignment[index] ?? OpportunityVolunteerStatusType.PAST));
 };
 
 export function getIconName(category: CategoryTitle) {

@@ -31,6 +31,7 @@ export interface SectionCardProps extends PropsWithChildren {
   iconName: IconName;
   title: string;
   headerButtonName?: string;
+  headerButtonDisabled?: boolean;
   onHeaderButtonClick?: () => void;
   subComponent: ReactNode;
 }
@@ -39,6 +40,7 @@ export const SectionCard = ({
   iconName,
   title,
   headerButtonName,
+  headerButtonDisabled,
   onHeaderButtonClick,
   subComponent,
 }: SectionCardProps) => {
@@ -57,6 +59,7 @@ export const SectionCard = ({
             height="var(--volunteer-profile-section-card-header-button-height)"
             textFontSize="var(--volunteer-profile-section-card-header-button-textFontSize)"
             padding="var(--volunteer-profile-section-card-header-button-padding)"
+            disabled={headerButtonDisabled}
           />
         )}
       </CardHeader>

@@ -1,11 +1,12 @@
 import { Button } from "@/components/core/button";
 import { Modal } from "@/components/core/modal";
+import { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
 type Props = {
   title: string;
-  message: string;
+  message: ReactNode;
   confirmText?: string;
   cancelText?: string;
   onCancel: () => void;

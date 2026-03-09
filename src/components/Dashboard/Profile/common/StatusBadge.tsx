@@ -2,6 +2,7 @@ import { Paragraph } from "@/components/styled/text";
 import { VolunteerStateTypeType } from "need4deed-sdk";
 import React from "react";
 import styled from "styled-components";
+import { isEnumValue } from "ts-type-safe";
 import { statusColorMap, statusIconMap, StatusValue } from "./statusMaps";
 
 type StatusDivProps = {
@@ -31,7 +32,8 @@ const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
 
   const bg = statusColorMap[status];
   const IconComp = statusIconMap[status];
-  const textColor = status === VolunteerStateTypeType.ACCOMPANYING ? "var(--color-white)" : "var(--color-blue-700)";
+  const isBlueType = isEnumValue(VolunteerStateTypeType, status);
+  const textColor = isBlueType ? "var(--color-white)" : "var(--color-blue-700)";
 
   return (
     <StatusDiv bg={bg} data-testid="status-badge">

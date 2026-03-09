@@ -323,6 +323,14 @@
     }
   },
   "dashboard": {
+    "common": {
+      "datePrefix": {
+        "appliedOn": "Applied on",
+        "matchedOn": "Matched on",
+        "activeSince": "Active since",
+        "pastSince": "Past since"
+      }
+    },
     "volunteers": {
       "header": "Volunteer Directory",
       "tabs": {
@@ -440,6 +448,14 @@
       "activityLog": "Activity Log",
       "editButtonName": "Edit",
       "findOppButtonName": "Find Opportunity",
+      "suggestButtonName": "Suggest",
+      "suggestDialog": {
+        "title": "Suggest to this volunteer?",
+        "messageMid": "will be notified that you suggested",
+        "messageEnd": "to them. It will appear in their profile under \"pending\" opportunities.",
+        "confirm": "Suggest",
+        "cancel": "Cancel"
+      },
       "activities": "Activities",
       "volunteerHeader": {
         "statusUpdateSuccess": "Status updated successfully",
@@ -523,7 +539,14 @@
           "past": "Past"
         },
         "match": "Match",
-        "notAMatch": "Not a match"
+        "notAMatch": "Not a match",
+        "markAsActive": "Mark as active",
+        "markAsPast": "Mark as past",
+        "matchSuccess": "Matched",
+        "notAMatchSuccess": "Removed",
+        "markAsActiveSuccess": "Marked as active",
+        "markAsPastSuccess": "Marked as past",
+        "emptyState": "No items in this category yet"
       },
       "contactDetails": {
         "title": "Contact details",
@@ -858,6 +881,27 @@
         "validation": {
           "invalidTimeFormat": "Invalid time format (use HH:MM)"
         }
+      },
+      "volunteersSec": {
+        "title": "Volunteers",
+        "findVolunteers": "Find volunteers",
+        "suggestButtonName": "Suggest",
+        "suggestDialog": {
+          "title": "Suggest for this opportunity?",
+          "messageStart": "The responsible of",
+          "messageMid": "will be notified that you suggested",
+          "messageEnd": "to them. It will appear in their profile under \"pending\" volunteers.",
+          "confirm": "Suggest",
+          "cancel": "Cancel"
+        },
+        "appliedOn": "Applied on",
+        "tabs": {
+          "pending": "Pending",
+          "matched": "Matched",
+          "active": "Active",
+          "past": "Past"
+        },
+        "emptyState": "No volunteers in this category yet"
       },
       "opportunityDetails": {
         "title": "Opportunity details",

@@ -1,22 +1,31 @@
-import { Icon, MapPinIcon, PencilSimpleIcon, ShootingStarIcon, TranslateIcon } from "@phosphor-icons/react";
-import { Lang, OpportunityType } from "need4deed-sdk";
-import { ReactNode } from "react";
+import { MapPinIcon, PencilSimpleIcon, ShootingStarIcon, TranslateIcon } from "@phosphor-icons/react";
+import { Lang, OpportunityType, OpportunityVolunteerStatusType } from "need4deed-sdk";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
-import { Button } from "@/components/core/button";
 import { Tags } from "@/components/core/common";
-import { IconDiv } from "@/components/styled/container";
 import { Paragraph } from "@/components/styled/text";
 
+import { StatusAccordionActions } from "../shared/AccordionActions";
+import { DetailContainer, SplitContainer } from "../shared/accordionStyles";
+import { InfoSection } from "../shared/InfoSection";
+import { AccordionActionProps } from "../shared/types";
 import { Opportunity } from "./mockOpps/tempTypes";
 import { formatAccompanyingDate } from "./mockOpps/tempUtils";
 
-interface Props {
+type Props = {
   opportunity: Opportunity;
-}
+  currentStatus: OpportunityVolunteerStatusType;
+} & AccordionActionProps;
 
-export default function OpportunityDetail({ opportunity }: Props) {
+export default function OpportunityDetail({
+  opportunity,
+  currentStatus,
+  onMatch,
+  onNotAMatch,
+  onMarkAsActive,
+  onMarkAsPast,
+}: Props) {
   const { t, i18n } = useTranslation();
   const language = i18n.language as Lang;
 
@@ -37,7 +46,7 @@ export default function OpportunityDetail({ opportunity }: Props) {
   const scheduleAsStr = (accompanyingDate && formatAccompanyingDate(accompanyingDate, language)) || schedule || "";
 
   return (
-    <Container>
+    <DetailContainer>
       {/* 1. Description */}
       <InfoSection icon={PencilSimpleIcon} title={t("dashboard.opportunities.description")}>
         <Paragraph fontWeight="var(--volunteer-profile-opportunities-accordion-opp-detail-light-font)">
@@ -101,73 +110,20 @@ export default function OpportunityDetail({ opportunity }: Props) {
       </SplitContainer>
 
       {/* 4. Action Buttons */}
-      <Actions>
-        <Button
-          onClick={() => {}}
-          text={t("dashboard.volunteerProfile.opportunitiesSec.notAMatch")}
-          height="var(--volunteer-profile-opportunities-accordion-actions-button-height)"
-          textFontSize="var(--volunteer-profile-opportunities-accordion-actions-button-textFontSize)"
-          textColor="var(--color-aubergine)"
-          backgroundcolor="var(--color-white)"
-          border="var(--volunteer-profile-opportunities-accordion-actions-button-border)"
+      {onMatch && onNotAMatch && onMarkAsActive && onMarkAsPast && (
+        <StatusAccordionActions
+          currentStatus={currentStatus}
+          onMatch={onMatch}
+          onNotAMatch={onNotAMatch}
+          onMarkAsActive={onMarkAsActive}
+          onMarkAsPast={onMarkAsPast}
         />
-        <Button
-          onClick={() => {}}
-          text={t("dashboard.volunteerProfile.opportunitiesSec.match")}
-          height="var(--volunteer-profile-opportunities-accordion-actions-button-height)"
-          textFontSize="var(--volunteer-profile-opportunities-accordion-actions-button-textFontSize)"
-        />
-      </Actions>
-    </Container>
+      )}
+    </DetailContainer>
   );
 }
 
-/* Helper Components */
-
-interface InfoSectionProps {
-  icon: Icon;
-  title: string;
-  children: ReactNode;
-}
-const InfoSection = ({ icon: Icon, title, children }: InfoSectionProps) => (
-  <DetailSection>
-    <DetailHeader>
-      <IconDiv size="var(--volunteer-profile-opportunities-accordion-info-section-icon-size)">
-        <Icon weight={Icon === MapPinIcon ? "fill" : "regular"} />
-      </IconDiv>
-      <Paragraph fontWeight="var(--volunteer-profile-opportunities-accordion-opp-detail-mid-font)">{title}</Paragraph>
-    </DetailHeader>
-
-    {children}
-  </DetailSection>
-);
-
 /* Styled Components */
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: var(--volunteer-profile-opportunities-accordion-container-gap);
-`;
-
-const SplitContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--volunteer-profile-opportunities-accordion-split-container-gap);
-`;
-
-const DetailSection = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: var(--volunteer-profile-opportunities-accordion-detail-section-gap);
-`;
-
-const DetailHeader = styled.div`
-  display: flex;
-  align-items: center;
-  gap: var(--volunteer-profile-opportunities-accordion-detail-header-gap);
-`;
 
 const LanguagesList = styled.div`
   display: flex;
@@ -178,10 +134,4 @@ const LanguagesList = styled.div`
 const LanguageRow = styled.div`
   display: flex;
   gap: var(--volunteer-profile-opportunities-accordion-language-row-gap);
-`;
-
-const Actions = styled.div`
-  display: flex;
-  gap: var(--volunteer-profile-opportunities-accordion-actions-container-gap);
-  justify-content: center;
 `;

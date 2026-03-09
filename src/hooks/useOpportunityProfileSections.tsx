@@ -3,16 +3,22 @@ import { AccompanyingDetails } from "@/components/Dashboard/Profile/sections/Acc
 import { Comments } from "@/components/Dashboard/Profile/sections/Comments";
 import { ContactDetails } from "@/components/Dashboard/Profile/sections/ContactDetails";
 import { OpportunityDetails } from "@/components/Dashboard/Profile/sections/OpportunityDetails";
+import { OpportunityVolunteers } from "@/components/Dashboard/Profile/sections/OpportunityVolunteers";
+import { SuggestDialog } from "@/components/Dashboard/Profile/sections/OpportunityVolunteers/SuggestDialog";
 import { ProfileHeader } from "@/components/Dashboard/Profile/sections/ProfileHeader";
 import { RefugeeAccommodationCentre } from "@/components/Dashboard/Profile/sections/RefugeeAccommodationCentre";
 import { EditableSectionRef } from "@/components/Dashboard/Profile/sections/shared/types";
 import { IconName } from "@/components/Dashboard/Profile/types";
+import { useGetVolunteer } from "@/hooks/useGetVolunteer";
 import { ApiOpportunityGet, VolunteerStateTypeType } from "need4deed-sdk";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | undefined) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   const opportunityContactDetailsRef = useRef<EditableSectionRef>(null);
   const racRef = useRef<EditableSectionRef>(null);
@@ -23,11 +29,15 @@ export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | u
   const [isContactEditing, setIsContactEditing] = useState(false);
   const [isRacEditing, setIsRacEditing] = useState(false);
   const [isAccompanyingEditing, setIsAccompanyingEditing] = useState(false);
+  const [isSuggestDialogOpen, setIsSuggestDialogOpen] = useState(false);
 
   const handleOppDetailsEditingChange = useCallback((editing: boolean) => setIsOppDetailsEditing(editing), []);
   const handleContactEditingChange = useCallback((editing: boolean) => setIsContactEditing(editing), []);
   const handleRacEditingChange = useCallback((editing: boolean) => setIsRacEditing(editing), []);
   const handleAccompanyingEditingChange = useCallback((editing: boolean) => setIsAccompanyingEditing(editing), []);
+
+  const volunteerId = searchParams.get("volunteer") ?? undefined;
+  const volunteer = useGetVolunteer(volunteerId);
 
   if (!opportunity) return null;
 
@@ -35,6 +45,15 @@ export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | u
   const isAccompanyingType =
     opportunity.volunteerType === VolunteerStateTypeType.ACCOMPANYING ||
     opportunity.volunteerType === VolunteerStateTypeType.REGULAR_ACCOMPANYING;
+
+  const handleSuggestConfirm = () => {
+    // TODO: make suggest-backend request, disable buttons and show button-spinner while loading
+    // TODO: when backend-response returns: check it. if failed, show error notifications
+    //  close dialoge in any case
+    setIsSuggestDialogOpen(false);
+    // only if successful, navigate
+    router.push(`/${i18n.language}/dashboard/volunteers/${volunteerId}`);
+  };
 
   const sections: SectionCardProps[] = [
     {
@@ -75,26 +94,46 @@ export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | u
         onHeaderButtonClick: () => racRef.current?.handleEditClick(),
       }),
       subComponent: (
-        <RefugeeAccommodationCentre
-          ref={racRef}
-          opportunity={opportunity}
-          onEditingChange={handleRacEditingChange}
-        />
+        <RefugeeAccommodationCentre ref={racRef} opportunity={opportunity} onEditingChange={handleRacEditingChange} />
       ),
     },
     {
       iconName: IconName.Users,
       title: t("dashboard.opportunityProfile.accompanyingDetailsTitle"),
-      ...(isAccompanyingType && !isAccompanyingEditing && {
-        headerButtonName: t("dashboard.opportunityProfile.editButtonName"),
-        onHeaderButtonClick: () => accompanyingDetailsRef.current?.handleEditClick?.(),
-      }),
+      ...(isAccompanyingType &&
+        !isAccompanyingEditing && {
+          headerButtonName: t("dashboard.opportunityProfile.editButtonName"),
+          onHeaderButtonClick: () => accompanyingDetailsRef.current?.handleEditClick?.(),
+        }),
       subComponent: (
         <AccompanyingDetails
           ref={accompanyingDetailsRef}
           opportunity={opportunity}
           onEditingChange={handleAccompanyingEditingChange}
         />
+      ),
+    },
+    {
+      iconName: IconName.UsersThree,
+      title: t("dashboard.opportunityProfile.volunteersSec.title"),
+      headerButtonName: volunteerId
+        ? t("dashboard.opportunityProfile.volunteersSec.suggestButtonName")
+        : t("dashboard.opportunityProfile.volunteersSec.findVolunteers"),
+      onHeaderButtonClick: volunteerId
+        ? () => setIsSuggestDialogOpen(true)
+        : () => router.push(`/${i18n.language}/dashboard/volunteers?opportunity=${opportunity.id}`),
+      subComponent: (
+        <>
+          <OpportunityVolunteers />
+          {isSuggestDialogOpen && (
+            <SuggestDialog
+              opportunityName={opportunity.title}
+              volunteerName={volunteer?.name}
+              onCancel={() => setIsSuggestDialogOpen(false)}
+              onConfirm={handleSuggestConfirm}
+            />
+          )}
+        </>
       ),
     },
     {
