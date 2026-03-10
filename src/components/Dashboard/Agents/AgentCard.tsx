@@ -9,9 +9,9 @@ import { IconDiv } from "@/components/styled/container";
 
 import { Heading2, Heading4, Paragraph } from "@/components/styled/text";
 import { getNormalizedAgent } from "./helpers";
-import { createEngagementStatusLabelMap, createVolunteerSearchMap } from "./icon";
+import { createEngagementStatusLabelMap, createServiceTypeMap, createVolunteerSearchMap } from "./icon";
 import { StatusBadge } from "../common/StatusBadge";
-import { Card, CardHeader, CardHeaderInfo, DistrictContainer, DistrictDiv } from "./styles";
+import { Card, CardDetailsInfo, CardHeader, CardHeaderInfo, DistrictContainer, DistrictDiv } from "./styles";
 
 interface Props {
   agent: ApiAgentGet;
@@ -21,10 +21,11 @@ export const AgentCard = ({ agent }: Props) => {
   const { t, i18n } = useTranslation();
   const router = useRouter();
 
-  const { id, title, district, statusEngagement, volunteerSearch } = getNormalizedAgent(agent);
+  const { id, title, district, statusEngagement, volunteerSearch, serviceType } = getNormalizedAgent(agent);
 
   const engagementStatusLabels = createEngagementStatusLabelMap(t);
   const volunteerSearchLabels = createVolunteerSearchMap(t);
+  const serviceTypeLabels = createServiceTypeMap(t);
 
   const handleCardClick = () => {
     if (!id) return;
@@ -39,9 +40,22 @@ export const AgentCard = ({ agent }: Props) => {
           <Heading2>{title}</Heading2>
         </CardHeaderInfo>
       </CardHeader>
-
-      <StatusBadge status={agent?.statusEngagement} label={engagementStatusLabels[statusEngagement]} />
-      <StatusBadge status={agent?.volunteerSearch} label={volunteerSearchLabels[volunteerSearch]} />
+      <CardDetailsInfo>
+        <Heading4>{t("dashboard.agentProfile.engagementStatus")}</Heading4>
+        <StatusBadge status={agent?.statusEngagement} label={engagementStatusLabels[statusEngagement]} />
+      </CardDetailsInfo>
+      <CardDetailsInfo>
+        <Heading4>{t("dashboard.agentProfile.volunteerSearch")}</Heading4>
+        <StatusBadge status={agent?.volunteerSearch} label={volunteerSearchLabels[volunteerSearch]} />
+      </CardDetailsInfo>
+      {serviceType?.length
+        ? serviceType?.map((service) => (
+            <CardDetailsInfo key={service}>
+              <Heading4>{t("dashboard.agentProfile.serviceType")}</Heading4>
+              <Paragraph>{serviceTypeLabels[service]}</Paragraph>
+            </CardDetailsInfo>
+          ))
+        : null}
       <DistrictContainer>
         <DistrictDiv>
           <IconDiv size="var(--dashboard-agents-card-detail-icon-size)">
@@ -49,7 +63,7 @@ export const AgentCard = ({ agent }: Props) => {
           </IconDiv>
           <Heading4 margin={0}>{t("dashboard.agentProfile.district")}</Heading4>
         </DistrictDiv>
-        <Paragraph fontWeight={"20px"}>{district?.title?.[i18n.language as "en" | "de"]}</Paragraph>
+        <Paragraph>{district?.title?.[i18n.language as "en" | "de"]}</Paragraph>
       </DistrictContainer>
     </Card>
   );

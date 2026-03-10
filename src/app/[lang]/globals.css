@@ -1303,6 +1303,7 @@ html {
 
     --agent-profile-section-card-header-height: 56px;
     --agent-profile-section-card-header-info-gap: 24px;
+    --agent-profile-section-card-info-gap: 5px;
 
     --dashboard-agents-card-width: 320px;
     --dashboard-agents-card-height: auto;

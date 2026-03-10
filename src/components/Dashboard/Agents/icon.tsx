@@ -1,5 +1,5 @@
 import { CalendarDotsIcon, MapPinIcon, ShootingStarIcon, HandPalmIcon } from "@phosphor-icons/react";
-import { AgentEngagementStatusType, AgentVolunteerSearchType } from "need4deed-sdk";
+import { AgentEngagementStatusType, AgentServiceType, AgentVolunteerSearchType } from "need4deed-sdk";
 import { JSX } from "react";
 
 import { TFunction } from "i18next";
@@ -33,4 +33,17 @@ export const createVolunteerSearchMap = (t: TFunction): Record<AgentVolunteerSea
   [AgentVolunteerSearchType.SEARCHING]: t("dashboard.agentProfile.status.volunteerSearch.searching"),
   [AgentVolunteerSearchType.NOT_NEEDED]: t("dashboard.agentProfile.status.volunteerSearch.notNeeded"),
   [AgentVolunteerSearchType.VOLUNTEERS_FOUND]: t("dashboard.agentProfile.status.volunteerSearch.filled"),
+});
+
+export const createServiceTypeMap = (t: TFunction): Record<AgentServiceType, string> => ({
+  [AgentServiceType.CHILDCARE]: t("dashboard.agentProfile.status.serviceType.childcare"),
+  [AgentServiceType.CONSULTATION]: t("dashboard.agentProfile.status.serviceType.consultation"),
+  [AgentServiceType.JOB_COACHING]: t("dashboard.agentProfile.status.serviceType.jobCoaching"),
+  [AgentServiceType.REFUGEE_ACCOMMODATION]: t("dashboard.agentProfile.status.serviceType.refugeeAccommodation"),
+  [AgentServiceType.SPORT]: t("dashboard.agentProfile.status.serviceType.sport"),
+  [AgentServiceType.TANDEM]: t("dashboard.agentProfile.status.serviceType.tandem"),
+  [AgentServiceType.TUTORING]: t("dashboard.agentProfile.status.serviceType.tutoring"),
+  [AgentServiceType.VOLUNTARY_SUPPORT]: t("dashboard.agentProfile.status.serviceType.volunteerSupport"),
+  [AgentServiceType.WELFARE]: t("dashboard.agentProfile.status.serviceType.welfare"),
+  [AgentServiceType.YOUTH]: t("dashboard.agentProfile.status.serviceType.youth"),
 });

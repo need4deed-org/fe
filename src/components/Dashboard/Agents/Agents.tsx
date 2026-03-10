@@ -9,7 +9,7 @@ export const Agents = () => {
       createdAt: "2026-03-06T14:38:26.104Z",
       statusEngagement: "new",
       volunteerSearch: "searching",
-      serviceType: "",
+      serviceType: ["refugee-accommodation"],
       trustLevel: "unknown",
       activeVolunteers: 0,
       district: {
@@ -29,7 +29,7 @@ export const Agents = () => {
       createdAt: "2026-03-06T14:38:26.104Z",
       statusEngagement: "active",
       volunteerSearch: "not-needed",
-      serviceType: "",
+      serviceType: ["childcare"],
       trustLevel: "unknown",
       activeVolunteers: 0,
       district: {
@@ -49,7 +49,7 @@ export const Agents = () => {
       createdAt: "2026-03-06T14:38:26.104Z",
       statusEngagement: "unresponsive",
       volunteerSearch: "volunteers-found",
-      serviceType: "",
+      serviceType: ["welfare"],
       trustLevel: "unknown",
       activeVolunteers: 0,
       district: {
@@ -69,7 +69,7 @@ export const Agents = () => {
       createdAt: "2026-03-06T14:38:26.104Z",
       statusEngagement: "inactive",
       volunteerSearch: "volunteers-found",
-      serviceType: "",
+      serviceType: ["consultation"],
       trustLevel: "unknown",
       activeVolunteers: 0,
       district: {

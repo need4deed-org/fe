@@ -716,6 +716,7 @@
       "agentProfile": "Agent's profile",
       "registeredSince": "Registered since",
       "engagementStatus": "Engagement status",
+      "serviceType": "Service Type",
       "volunteerSearch": "Volunteer search",
       "trustLevel": "Trust level",
       "changeStatus": "Change status",
@@ -731,6 +732,18 @@
           "notNeeded": "Not needed",
           "filled": "Filled",
           "searching": "Searching"
+        },
+        "serviceType": {
+          "childcare": "Childcare",
+          "welfare": "Welfare",
+          "consultation": "Consultation",
+          "voluntarySupport": "Voluntary support",
+          "tandem": "Tandem",
+          "sport": "Sport",
+          "tutoring": "Tutoring",
+          "refugeeAccommodation": "Refugee-accommodation",
+          "jobCoaching": "Job-coaching",
+          "youth": "Youth"
         },
         "trustLevel": {
           "unknown": "Unknown",

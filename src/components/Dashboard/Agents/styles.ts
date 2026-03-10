@@ -43,3 +43,9 @@ export const CardHeaderInfo = styled.div`
   align-items: center;
   gap: var(--agent-profile-section-card-header-info-gap);
 `;
+
+export const CardDetailsInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: var(--agent-profile-section-card-info-gap);
+`;
