@@ -720,6 +720,7 @@
       "volunteerSearch": "Freiwilligensuche",
       "trustLevel": "Vertrauensstufe",
       "changeStatus": "Status ändern",
+      "district": "Bezirk",
       "status": {
         "engagement": {
           "new": "Neu",

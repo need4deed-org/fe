@@ -719,6 +719,7 @@
       "volunteerSearch": "Volunteer search",
       "trustLevel": "Trust level",
       "changeStatus": "Change status",
+      "district": "District",
       "status": {
         "engagement": {
           "new": "New",
