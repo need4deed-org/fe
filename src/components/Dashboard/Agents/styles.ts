@@ -1,8 +1,13 @@
 import { BaseCard } from "@/components/styled/container";
 import styled from "styled-components";
 
+export const AgentCardListContainer = styled.div`
+  display: flex;
+  justify-content: left;
+`;
+
 export const Card = styled(BaseCard)`
-  background-color: var(--color-white);
+  background-color: var(--color-orchid-subtle);
   width: var(--dashboard-agents-card-width);
   height: var(--dashboard-agents-card-height);
   gap: var(--dashboard-agents-card-gap);
