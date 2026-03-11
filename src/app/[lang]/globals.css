@@ -1301,6 +1301,18 @@ html {
     --app-header-language-switcher-gap: 8px;
     --app-header-menu-item-fontWeight-secondary: 400;
 
+    --agent-profile-section-card-header-height: 56px;
+    --agent-profile-section-card-header-info-gap: 24px;
+    --agent-profile-section-card-info-gap: 5px;
+
+    --dashboard-agents-card-width: 320px;
+    --dashboard-agents-card-height: auto;
+    --dashboard-agents-card-gap: 20px;
+    --dashboard-agents-card-padding: 0 20px 24px 20px;
+    --dashboard-agents-card-status-tags-div-gap: 8px;
+    --dashboard-agents-card-status-tags-div-margin-top: 4px;
+    --dashboard-agents-card-detail-icon-size: 25px;
+
     --dashboard-volunteers-container-gap: 40px;
     --dashboard-volunteers-card-width: 320px;
     --dashboard-volunteers-card-height: auto;
