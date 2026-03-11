@@ -1,7 +1,7 @@
 "use client";
 
 import { MapPinIcon } from "@phosphor-icons/react";
-import { ApiAgentGet, ApiAgentGetList } from "need4deed-sdk";
+import { ApiAgentGet } from "need4deed-sdk";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 
@@ -14,7 +14,7 @@ import { StatusBadge } from "../common/StatusBadge";
 import { Card, CardDetailsInfo, CardHeader, CardHeaderInfo, DistrictContainer, DistrictDiv } from "./styles";
 
 interface Props {
-  agent: ApiAgentGetList & ApiAgentGet;
+  agent: ApiAgentGet;
 }
 
 export const AgentCard = ({ agent }: Props) => {
