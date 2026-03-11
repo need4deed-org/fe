@@ -10,7 +10,8 @@ import { RefugeeAccommodationCentre } from "@/components/Dashboard/Profile/secti
 import { EditableSectionRef } from "@/components/Dashboard/Profile/sections/shared/types";
 import { IconName } from "@/components/Dashboard/Profile/types";
 import { useGetVolunteer } from "@/hooks/useGetVolunteer";
-import { ApiOpportunityGet, VolunteerStateTypeType } from "need4deed-sdk";
+import { useSuggestVolunteerOpportunity } from "@/hooks/useSuggestVolunteerOpportunity";
+import { ApiOpportunityGet, OpportunityVolunteerStatusType, VolunteerStateTypeType } from "need4deed-sdk";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -39,6 +40,11 @@ export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | u
   const volunteerId = searchParams.get("volunteer") ?? undefined;
   const volunteer = useGetVolunteer(volunteerId);
 
+  const { mutate: suggestMutate } = useSuggestVolunteerOpportunity(() => {
+    setIsSuggestDialogOpen(false);
+    router.push(`/${i18n.language}/dashboard/volunteers/${volunteerId}`);
+  }, ["volunteer-opportunities", String(volunteerId)]);
+
   if (!opportunity) return null;
 
   const commentsCount = opportunity.comments.length;
@@ -47,12 +53,12 @@ export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | u
     opportunity.volunteerType === VolunteerStateTypeType.REGULAR_ACCOMPANYING;
 
   const handleSuggestConfirm = () => {
-    // TODO: make suggest-backend request, disable buttons and show button-spinner while loading
-    // TODO: when backend-response returns: check it. if failed, show error notifications
-    //  close dialoge in any case
-    setIsSuggestDialogOpen(false);
-    // only if successful, navigate
-    router.push(`/${i18n.language}/dashboard/volunteers/${volunteerId}`);
+    if (!volunteerId) return;
+    suggestMutate({
+      opportunityId: Number(opportunity.id),
+      volunteerId: Number(volunteerId),
+      status: OpportunityVolunteerStatusType.PENDING,
+    });
   };
 
   const sections: SectionCardProps[] = [
@@ -124,7 +130,7 @@ export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | u
         : () => router.push(`/${i18n.language}/dashboard/volunteers?opportunity=${opportunity.id}`),
       subComponent: (
         <>
-          <OpportunityVolunteers />
+          <OpportunityVolunteers opportunityId={opportunity.id} />
           {isSuggestDialogOpen && (
             <SuggestDialog
               opportunityName={opportunity.title}

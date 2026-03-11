@@ -8,8 +8,8 @@ import { Paragraph } from "@/components/styled/text";
 import { StatusAccordionActions } from "../shared/AccordionActions";
 import { DetailContainer, SplitContainer } from "../shared/accordionStyles";
 import { InfoSection } from "../shared/InfoSection";
-import { MappedVolunteerAgent } from "./mockVols/tempUtils";
 import { LanguageRow, LanguagesList } from "./styles";
+import { MappedVolunteerAgent } from "./types";
 
 type Props = {
   volunteer: MappedVolunteerAgent;
@@ -33,7 +33,7 @@ export const VolunteerDetail = ({
   const { languages, locations, activities, availability, skills } = volunteer;
 
   const languagesText = languages.map((lan) => lan.title).join(", ");
-  const district = locations.join(", ");
+  const district = locations.map((loc) => loc.title).join(", ");
   const activity = activities.map((act) => act.title);
   const skill = skills.map((s) => s.title);
 

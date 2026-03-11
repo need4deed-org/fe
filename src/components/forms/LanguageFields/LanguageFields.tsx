@@ -1,6 +1,6 @@
 import { TFunction } from "i18next";
-import { useMemo } from "react";
 import { Option } from "need4deed-sdk";
+import { useMemo } from "react";
 
 import { Button } from "@/components/core/button";
 import { LanguageLevel, LanguageObject } from "@/types";

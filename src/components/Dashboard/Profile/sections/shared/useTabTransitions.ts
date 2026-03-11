@@ -1,23 +1,50 @@
 import { OpportunityVolunteerStatusType } from "need4deed-sdk";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const TAB_STATUS_ORDER: OpportunityVolunteerStatusType[] = [
-  OpportunityVolunteerStatusType.SUGGESTED,
+  OpportunityVolunteerStatusType.PENDING,
   OpportunityVolunteerStatusType.MATCHED,
   OpportunityVolunteerStatusType.ACTIVE,
   OpportunityVolunteerStatusType.PAST,
 ];
 
-type StatusOverride = OpportunityVolunteerStatusType | "removed";
+export const ITEM_STATUS_REMOVED = "removed" as const;
 
-export function useTabTransitions<T extends { id: number; tabStatus: OpportunityVolunteerStatusType }>(
+type StatusOverride = OpportunityVolunteerStatusType | typeof ITEM_STATUS_REMOVED;
+
+export function useTabTransitions<T extends { id: number; status: OpportunityVolunteerStatusType }>(
   items: T[],
   statusOrder: OpportunityVolunteerStatusType[] = TAB_STATUS_ORDER,
 ) {
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
   const [statusOverrides, setStatusOverrides] = useState<Record<number, StatusOverride>>({});
 
-  const getEffectiveStatus = (item: T): StatusOverride => statusOverrides[item.id] ?? item.tabStatus;
+  // Clear overrides once server data confirms the transition
+  useEffect(() => {
+    setStatusOverrides((prev) => {
+      if (Object.keys(prev).length === 0) return prev;
+
+      const next: Record<number, StatusOverride> = {};
+      let changed = false;
+
+      for (const [idStr, overrideStatus] of Object.entries(prev)) {
+        const id = Number(idStr);
+        const item = items.find((i) => i.id === id);
+
+        if (item && (overrideStatus === ITEM_STATUS_REMOVED || item.status !== overrideStatus)) {
+          // Server hasn't caught up yet — keep the override
+          next[id] = overrideStatus;
+        } else {
+          // Server confirmed the change (or item was removed) — drop override
+          changed = true;
+        }
+      }
+
+      return changed ? next : prev;
+    });
+  }, [items]);
+
+  const getEffectiveStatus = (item: T): StatusOverride => statusOverrides[item.id] ?? item.status;
 
   const currentTabStatus = statusOrder[selectedTabIndex];
 

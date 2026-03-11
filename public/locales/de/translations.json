@@ -454,7 +454,8 @@
         "messageMid": "wird benachrichtigt, dass Sie",
         "messageEnd": "vorgeschlagen haben. Es erscheint in seinem / ihrem Profil unter \"ausstehenden\" Möglichkeiten.",
         "confirm": "Vorschlagen",
-        "cancel": "Abbrechen"
+        "cancel": "Abbrechen",
+        "success": "Vorschlag erfolgreich gesendet"
       },
       "activities": "Aktivitäten",
       "volunteerHeader": {
@@ -940,7 +941,8 @@
           "messageMid": "wird benachrichtigt, dass Sie",
           "messageEnd": "vorgeschlagen haben. Es erscheint in seinem / ihrem Profil unter \"ausstehenden\" Freiwilligen.",
           "confirm": "Vorschlagen",
-          "cancel": "Abbrechen"
+          "cancel": "Abbrechen",
+          "success": "Vorschlag erfolgreich gesendet"
         },
         "appliedOn": "Beworben am",
         "tabs": {
@@ -949,7 +951,9 @@
           "active": "Aktiv",
           "past": "Vergangen"
         },
-        "emptyState": "Noch keine Freiwilligen in dieser Kategorie"
+        "emptyState": "Noch keine Freiwilligen in dieser Kategorie",
+        "statusUpdateSuccess": "Freiwilligen-Status erfolgreich aktualisiert",
+        "removeSuccess": "Freiwilliger erfolgreich entfernt"
       },
       "opportunityDetails": {
         "title": "Details der Möglichkeit",

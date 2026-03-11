@@ -27,5 +27,5 @@ export function extractOptionTitles(items: OptionById[], lang: Lang): string[] {
 
 export function languagesToFormValues(langs: ApiLanguage[]): LanguageObject[] {
   if (langs.length === 0) return [{ id: 1, language: "", level: "" }];
-  return langs.map((lang) => ({ id: lang.id, language: String(lang.id), level: "" as const }));
+  return langs.map((lang, index) => ({ id: index + 1, language: String(lang.id), level: "" as const }));
 }
