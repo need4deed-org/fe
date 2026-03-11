@@ -1,82 +1,86 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import styled from "styled-components";
 
 import { DashboardLayout } from "@/components/Layout";
 import { apiPathOption, questionMark } from "@/config/constants";
-import { useGetOpportunity, useGetQuery } from "@/hooks";
-import { ApiOptionLists, EntityTableName, QueryParamsKeys, SortOrder } from "need4deed-sdk";
+import { useGetVolunteer, useGetQuery } from "@/hooks";
+import { ApiOptionLists, EntityTableName, SortOrder } from "need4deed-sdk";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Filters from "../common/CardsFilter/Filters";
 import CardsHeader from "../common/CardsHeader/CardsHeader";
-import { getClearFilter } from "../common/CardsFilter/helpers";
-import { defaultVolunteerCardsFilter } from "./Filters/constants";
+import { createFilterFromOption, getClearFilter } from "../common/CardsFilter/helpers";
+import { defaultOpportunityCardsFilter } from "./Filters/constants";
 import FiltersContent from "./Filters/FiltersContent";
-import { CardsFilter } from "./Filters/types";
-import { createFilterFromOption, createSelectedFilterItemsAsFlatArray, serializeFilters } from "./helpers";
-import { VolunteerListController } from "./VolunteerListController";
+import { OpportunityCardsFilter } from "./Filters/types";
+import { createSelectedOpportunityFiltersAsFlatArray } from "./Filters/helpers";
+import { serializeOpportunityFilters } from "./helpers";
+import { OpportunityListController } from "./OpportunityListController";
+import { OpportunitiesContainer } from "./styles";
 
-export function Volunteers() {
+export function Opportunities() {
   const { t } = useTranslation();
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
-  const [numOfVols, setNumOfVols] = useState(0);
+  const [numOfOpps, setNumOfOpps] = useState(0);
   const [sortOrder, setSortOrder] = useState(SortOrder.NewToOld);
-  const [cardsFilter, setCardsFilter] = useState(defaultVolunteerCardsFilter);
+  const [cardsFilter, setCardsFilter] = useState(defaultOpportunityCardsFilter);
   const { data: apiFilterOptions } = useGetQuery<ApiOptionLists>({ queryKey: ["options"], apiPath: apiPathOption });
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
-  const tabs = [t("dashboard.volunteers.tabs.tab1"), t("dashboard.volunteers.tabs.tab2")];
+  const tabs = [
+    t("dashboard.opportunities.tabs.tab1"),
+    t("dashboard.opportunities.tabs.tab2"),
+    t("dashboard.opportunities.tabs.tab3"),
+  ];
 
-  const opportunityId = searchParams.get("opportunity") ?? undefined;
-  const opportunityFilter = useGetOpportunity(opportunityId);
+  const volunteerId = searchParams.get("volunteer") ?? undefined;
+  const volunteerFilter = useGetVolunteer(volunteerId);
 
   const handleSearchInputChange = (searchInput: string) => {
-    handleFilterUpdate((prev) => ({ ...prev, [QueryParamsKeys.SEARCH]: searchInput }));
+    handleFilterUpdate((prev) => ({ ...prev, search: searchInput }));
   };
 
-  const handleSortChange = (sortOrder: SortOrder) => {
-    setSortOrder(sortOrder);
+  const handleSortChange = (order: SortOrder) => {
+    setSortOrder(order);
   };
 
-  const handleFilterUpdate = (newFilter: CardsFilter | ((prev: CardsFilter) => CardsFilter)) => {
+  const handleFilterUpdate = (
+    newFilter: OpportunityCardsFilter | ((prev: OpportunityCardsFilter) => OpportunityCardsFilter),
+  ) => {
     const updatedFilter = typeof newFilter === "function" ? newFilter(cardsFilter) : newFilter;
-
     setCardsFilter(updatedFilter);
-    router.push(pathname + questionMark + serializeFilters(updatedFilter, searchParams));
+    router.push(pathname + questionMark + serializeOpportunityFilters(updatedFilter, searchParams));
   };
 
-  const handleRemoveOpportunityFilter = () => {
+  const handleRemoveVolunteerFilter = () => {
     const params = new URLSearchParams(searchParams);
-    params.delete("opportunity");
+    params.delete("volunteer");
     router.push(pathname + questionMark + params.toString());
   };
 
   const handleClearAllFilters = () => {
-    const cleared = getClearFilter(cardsFilter) as unknown as CardsFilter;
+    const cleared = getClearFilter(cardsFilter) as unknown as OpportunityCardsFilter;
     setCardsFilter(cleared);
-    router.push(pathname + questionMark + serializeFilters(cleared, searchParams));
+    router.push(pathname + questionMark + serializeOpportunityFilters(cleared, searchParams));
   };
 
   useEffect(() => {
     if (!apiFilterOptions) return;
 
-    // Merge and set 'district' - 'languages' of query params and API option
     setCardsFilter((prev) => {
       const district = createFilterFromOption(apiFilterOptions, EntityTableName.DISTRICT);
       const language = createFilterFromOption(apiFilterOptions, EntityTableName.LANGUAGE);
-
       return { ...prev, district, language };
     });
   }, [apiFilterOptions]);
 
-  const activeFilters = createSelectedFilterItemsAsFlatArray(cardsFilter, setCardsFilter, t);
+  const activeFilters = createSelectedOpportunityFiltersAsFlatArray(cardsFilter, setCardsFilter, t);
 
   return (
     <DashboardLayout>
-      <VolunteersContainer>
+      <OpportunitiesContainer data-testid="opportunities-container">
         <Filters
           isFiltersOpen={isFiltersOpen}
           setIsFiltersOpen={setIsFiltersOpen}
@@ -84,43 +88,32 @@ export function Volunteers() {
         />
 
         <CardsHeader
-          header={t("dashboard.volunteers.volunteers")}
-          resultCounter={numOfVols}
-          resultText={t("dashboard.home.sidebar.volunteers")}
+          header={t("dashboard.opportunities.opportunities")}
+          resultCounter={numOfOpps}
+          resultText={t("dashboard.home.sidebar.opportunities")}
           tabs={tabs}
           selectedTabIndex={selectedTabIndex}
           setSelectedTabIndex={setSelectedTabIndex}
           setIsFiltersOpen={setIsFiltersOpen}
           onSearchInputChange={handleSearchInputChange}
           searchValue={cardsFilter.search}
+          searchPlaceholder={t("dashboard.opportunities.card.search")}
           sortOrder={sortOrder}
           onSortOrderChange={handleSortChange}
           activeFilters={activeFilters}
           onClearAllFilters={handleClearAllFilters}
-          entityFilter={
-            opportunityFilter ? { ...opportunityFilter, onRemove: handleRemoveOpportunityFilter } : undefined
-          }
+          entityFilter={volunteerFilter ? { ...volunteerFilter, onRemove: handleRemoveVolunteerFilter } : undefined}
         />
-        <VolunteerListController
-          setNumOfVols={setNumOfVols}
+
+        <OpportunityListController
+          setNumOfOpps={setNumOfOpps}
           sortOrder={sortOrder}
           isFiltersOpen={isFiltersOpen}
           filter={cardsFilter}
           apiFilterOptions={apiFilterOptions}
-          opportunityId={opportunityId}
+          volunteerId={volunteerId}
         />
-      </VolunteersContainer>
+      </OpportunitiesContainer>
     </DashboardLayout>
   );
 }
-
-export default Volunteers;
-
-/** Styles */
-
-const VolunteersContainer = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: var(--dashboard-volunteers-container-gap);
-`;

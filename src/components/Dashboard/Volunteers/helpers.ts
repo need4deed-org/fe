@@ -6,6 +6,8 @@ import {
   OptionItem,
   QueryParamsKeys,
 } from "need4deed-sdk";
+export { createFilterFromOption } from "../common/CardsFilter/helpers";
+export { createSelectedFilterItemsAsFlatArray } from "./Filters/helpers";
 import { ReadonlyURLSearchParams } from "next/navigation";
 import { AvailabilityKeys, AvailabilitySubKeys, SEPARATOR } from "./Filters/constants";
 import { CardsFilter } from "./Filters/types";
@@ -170,9 +172,6 @@ export function deserializeFilters(filter: CardsFilter, searchParams: ReadonlyUR
 
   return newFilter;
 }
-
-export const createFilterFromOption = (option: ApiOptionLists, field: keyof ApiOptionLists) =>
-  option[field] ? option[field].reduce((acc, curr) => ({ ...acc, [curr.title]: false }), {}) : {};
 
 function getTitleFromOptionItem(optionItem: OptionItem): string {
   return optionItem.title;
