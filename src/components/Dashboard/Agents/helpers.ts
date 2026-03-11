@@ -3,11 +3,14 @@ import {
   AgentServiceType,
   AgentVolunteerSearchType,
   ApiAgentGet,
+  ApiAgentGetList,
   OptionById,
 } from "need4deed-sdk";
 
-export function getNormalizedAgent(agent: ApiAgentGet): Omit<
-  ApiAgentGet,
+type AgentListItem = ApiAgentGetList & ApiAgentGet;
+
+export function getNormalizedAgent(agent: AgentListItem): Omit<
+  AgentListItem,
   "district" | "statusEngagement" | "volunteerSearch" | "serviceType"
 > & {
   district: OptionById | undefined;
