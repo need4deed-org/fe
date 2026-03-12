@@ -645,6 +645,63 @@
         "uploading": "Uploading..."
       }
     },
+    "agents": {
+      "agents": "RAC Directory",
+      "tabs": {
+        "tab1": "List",
+        "tab2": "Cards",
+        "tab3": "Map"
+      },
+      "status": {
+        "new": "New",
+        "searching": "Searching",
+        "active": "Active",
+        "past": "Past"
+      },
+      "type": {
+        "accompanying": "Accompanying",
+        "regular": "Regular",
+        "events": "Events",
+        "regular-accompanying": "Regular + Accompanying"
+      },
+      "card": {
+        "mainCommunication": "Main communication",
+        "residentsSpeak": "Residents speak",
+        "schedule": "Schedule",
+        "search": "Search"
+      },
+      "filters": {
+        "status": {
+          "header": "Status",
+          "new": "New",
+          "inactive": "Inactive",
+          "active": "Active",
+          "unresponsive": "Unresponsive"
+        },
+        "volunteerSearch": {
+          "header": "Volunteer Search",
+          "searching": "Searching",
+          "volunteers-found": "Filled",
+          "not-needed": "Not needed"
+        }
+      },
+      "accompanyingTranslation": {
+        "en": "German, English",
+        "de": "German",
+        "no": "No Translation needed"
+      },
+      "defaultMainCommunication": "English, German",
+      "otherCategory": "General Volunteering",
+      "goToProfile": "Go to Profile",
+      "mainCommunication": "Main communication",
+      "translationTo": "Translation to",
+      "residentsSpeak": "Residents speak",
+      "languages": "Languages",
+      "schedule": "Schedule",
+      "district": "District",
+      "dateOfAppointment": "Date Of Appointment",
+      "description": "Description"
+    },
     "opportunities": {
       "opportunities": "Opportunities",
       "tabs": {
