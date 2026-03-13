@@ -2,7 +2,7 @@ import { OpportunityVolunteerStatusType } from "need4deed-sdk";
 import { useState } from "react";
 
 export const TAB_STATUS_ORDER: OpportunityVolunteerStatusType[] = [
-  OpportunityVolunteerStatusType.SUGGESTED,
+  OpportunityVolunteerStatusType.PENDING,
   OpportunityVolunteerStatusType.MATCHED,
   OpportunityVolunteerStatusType.ACTIVE,
   OpportunityVolunteerStatusType.PAST,
