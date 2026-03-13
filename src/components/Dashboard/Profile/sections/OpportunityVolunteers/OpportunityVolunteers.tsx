@@ -1,44 +1,66 @@
-import { OpportunityVolunteerStatusType } from "need4deed-sdk";
+import { apiPathOpportunity, cacheTTL } from "@/config/constants";
+import { useGetQuery } from "@/hooks/useGetQuery";
+import {
+  useDeleteOpportunityVolunteer,
+  useUpdateOpportunityVolunteerStatus,
+} from "@/hooks/useUpdateOpportunityVolunteerStatus";
+import { ApiVolunteerOpportunityGet, Id, OpportunityVolunteerStatusType } from "need4deed-sdk";
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { toast } from "react-toastify";
 import { SectionEmptyState } from "../shared/styles";
 import { Tabs } from "../shared/Tabs";
-import { useTabTransitions } from "../shared/useTabTransitions";
-import { mockVolunteers } from "./mockVolunteers";
-import { OpportunityVolunteersContainer } from "./styles";
+import { ITEM_STATUS_REMOVED, TAB_STATUS_ORDER, useTabTransitions } from "../shared/useTabTransitions";
 import { AccordionVolunteer } from "./AccordionVolunteer";
+import { OpportunityVolunteersContainer } from "./styles";
 
-const tabKeys = ["pending", "matched", "active", "past"];
-
-export const OpportunityVolunteers = () => {
+export const OpportunityVolunteers = ({ opportunityId }: { opportunityId: Id }) => {
   const { t } = useTranslation();
-  const { selectedTabIndex, setSelectedTabIndex, currentTabStatus, tabCounts, visibleItems, setItemStatus } =
-    useTabTransitions(mockVolunteers);
 
-  const tabs = tabKeys.map((key, index) => ({
+  const queryKey = ["opportunity-volunteers", String(opportunityId)];
+
+  const { data, isLoading } = useGetQuery<ApiVolunteerOpportunityGet[]>({
+    queryKey,
+    apiPath: `${apiPathOpportunity}/${opportunityId}/volunteer-linked`,
+    staleTime: cacheTTL,
+    enabled: !!opportunityId,
+  });
+
+  const volunteers = useMemo(() => data ?? [], [data]);
+
+  const { mutate: updateStatus } = useUpdateOpportunityVolunteerStatus(queryKey);
+  const { mutate: deleteLink } = useDeleteOpportunityVolunteer(queryKey);
+
+  const { selectedTabIndex, setSelectedTabIndex, currentTabStatus, tabCounts, visibleItems, setItemStatus } =
+    useTabTransitions(volunteers);
+
+  const tabs = TAB_STATUS_ORDER.map((key, index) => ({
     label: t(`dashboard.opportunityProfile.volunteersSec.tabs.${key}`),
     count: tabCounts[index],
   }));
 
-  const handleMatch = (id: number) => {
-    setItemStatus(id, OpportunityVolunteerStatusType.MATCHED);
-    toast.success(t("dashboard.volunteerProfile.opportunitiesSec.matchSuccess"));
+  const handleMatch = (m2mId: number) => {
+    setItemStatus(m2mId, OpportunityVolunteerStatusType.MATCHED);
+    updateStatus({ m2mId, status: OpportunityVolunteerStatusType.MATCHED });
   };
 
-  const handleNotAMatch = (id: number) => {
-    setItemStatus(id, "removed");
-    toast.success(t("dashboard.volunteerProfile.opportunitiesSec.notAMatchSuccess"));
+  const handleNotAMatch = (m2mId: number) => {
+    setItemStatus(m2mId, ITEM_STATUS_REMOVED);
+    deleteLink({ m2mId });
   };
 
-  const handleMarkAsActive = (id: number) => {
-    setItemStatus(id, OpportunityVolunteerStatusType.ACTIVE);
-    toast.success(t("dashboard.volunteerProfile.opportunitiesSec.markAsActiveSuccess"));
+  const handleMarkAsActive = (m2mId: number) => {
+    setItemStatus(m2mId, OpportunityVolunteerStatusType.ACTIVE);
+    updateStatus({ m2mId, status: OpportunityVolunteerStatusType.ACTIVE });
   };
 
-  const handleMarkAsPast = (id: number) => {
-    setItemStatus(id, OpportunityVolunteerStatusType.PAST);
-    toast.success(t("dashboard.volunteerProfile.opportunitiesSec.markAsPastSuccess"));
+  const handleMarkAsPast = (m2mId: number) => {
+    setItemStatus(m2mId, OpportunityVolunteerStatusType.PAST);
+    updateStatus({ m2mId, status: OpportunityVolunteerStatusType.PAST });
   };
+
+  if (isLoading) {
+    return <OpportunityVolunteersContainer data-testid="opportunity-volunteers" />;
+  }
 
   return (
     <OpportunityVolunteersContainer data-testid="opportunity-volunteers">

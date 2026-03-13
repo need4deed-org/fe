@@ -1,4 +1,5 @@
 import { apiPathVolunteer, cacheTTL } from "@/config/constants";
+import { getImageUrl } from "@/utils";
 import { ApiVolunteerGet } from "need4deed-sdk";
 import { useGetQuery } from "./useGetQuery";
 
@@ -12,7 +13,8 @@ export const useGetVolunteer = (volunteerId: string | undefined) => {
 
   if (!data) return undefined;
 
-  return {
-    name: `${data.person.firstName} ${data.person.lastName}`,
-  };
+  const name = `${data.person.firstName} ${data.person.lastName}`.trim();
+  const avatarUrl = data.person.avatarUrl ? getImageUrl(data.person.avatarUrl) : undefined;
+
+  return { name, avatarUrl };
 };

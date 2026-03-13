@@ -1,60 +1,70 @@
 import { useTranslation } from "react-i18next";
-import styled from "styled-components";
 
-import { Heading2, Heading4, Paragraph } from "../../../styled/text";
+import { Paragraph } from "../../../styled/text";
 import { Search } from "../../../core/common";
 import FiltersButton from "./FiltersButton";
-import { hyphenationStyles } from "../../../styled/mixins";
 import Results from "./Results";
 import SortBy, { OnChangeSortOrder } from "./SortBy";
 import { SortOrder } from "need4deed-sdk";
-import { CardsFilter } from "../../Volunteers/Filters/types";
 import { XIcon } from "@phosphor-icons/react";
-import { createSelectedFilterItemsAsFlatArray } from "../../Volunteers/Filters/helpers";
-import ClearAllFilters from "../CardsFilter/ClearAllFilters";
-import { SetFilter } from "../CardsFilter/types";
-import { OpportunityFilterChip } from "./OpportunityFilterChip";
+import { FilterItem } from "../CardsFilter/types";
+import { EntityFilterChip } from "./EntityFilterChip";
+import {
+  ClearAllButton,
+  HeaderContainer,
+  HeaderFilterItem,
+  HeaderFilterItemContainer,
+  HyphenatedHeading2,
+  SearchBarSectionContainer,
+  TabHeading,
+  Tabs,
+  TabsSectionContainer,
+  TabsSearchBarContainer,
+  XIconDiv,
+} from "./styles";
 
-type OpportunityFilter = {
+export type EntityFilter = {
   name: string;
   avatarUrl?: string;
   onRemove: () => void;
 };
 
-interface Props {
+type Props = {
   header: string;
   resultCounter: number;
   resultText: string;
   onSearchInputChange: (input: string) => void;
+  searchValue: string;
+  searchPlaceholder?: string;
   tabs: string[];
   selectedTabIndex: number;
   setSelectedTabIndex: (index: number) => void;
   setIsFiltersOpen: (isOpen: boolean) => void;
   sortOrder: SortOrder;
   onSortOrderChange?: OnChangeSortOrder;
-  filter: CardsFilter;
-  setFilter: SetFilter<CardsFilter>;
-  opportunityFilter?: OpportunityFilter;
-}
+  activeFilters: FilterItem[];
+  onClearAllFilters?: () => void;
+  entityFilter?: EntityFilter;
+};
 
 export default function CardsHeader({
   header,
   resultCounter,
   resultText,
   onSearchInputChange,
+  searchValue,
+  searchPlaceholder,
   selectedTabIndex,
   setSelectedTabIndex,
   tabs,
   setIsFiltersOpen,
   sortOrder,
   onSortOrderChange,
-  filter,
-  setFilter,
-  opportunityFilter,
+  activeFilters,
+  onClearAllFilters,
+  entityFilter,
 }: Props) {
   const { t } = useTranslation();
-
-  const selectedFilters = createSelectedFilterItemsAsFlatArray(filter, setFilter, t);
 
   return (
     <HeaderContainer>
@@ -74,11 +84,11 @@ export default function CardsHeader({
 
         <SearchBarSectionContainer>
           <Search
-            placeHolder={`${t("dashboard.searchPlaceHolder")}...`}
+            placeHolder={searchPlaceholder ?? `${t("dashboard.searchPlaceHolder")}...`}
             onInputChange={onSearchInputChange}
             width="var(--filters-search-bar-width)"
             backgroundColor="var(--color-magnolia-light)"
-            value={filter.search}
+            value={searchValue}
           />
           <FiltersButton setIsFiltersOpen={setIsFiltersOpen} />
         </SearchBarSectionContainer>
@@ -86,14 +96,14 @@ export default function CardsHeader({
         <Results counter={resultCounter} text={resultText} />
 
         <HeaderFilterItemContainer>
-          {opportunityFilter && (
-            <OpportunityFilterChip
-              name={opportunityFilter.name}
-              avatarUrl={opportunityFilter.avatarUrl}
-              onRemove={opportunityFilter.onRemove}
+          {entityFilter && (
+            <EntityFilterChip
+              name={entityFilter.name}
+              avatarUrl={entityFilter.avatarUrl}
+              onRemove={entityFilter.onRemove}
             />
           )}
-          {selectedFilters.map((f) => (
+          {activeFilters.map((f) => (
             <HeaderFilterItem key={f.label}>
               <Paragraph
                 color="var(--color-midnight)"
@@ -107,89 +117,19 @@ export default function CardsHeader({
               </XIconDiv>
             </HeaderFilterItem>
           ))}
-          {selectedFilters.length > 1 && <ClearAllFilters filter={filter} setFilter={setFilter} />}
+          {activeFilters.length > 1 && onClearAllFilters && (
+            <ClearAllButton onClick={onClearAllFilters}>
+              <Paragraph
+                color="var(--color-midnight)"
+                fontSize="var(--filters-clear-all-button-text-font-size)"
+                fontWeight="var(--filters-clear-all-button-text-font-weight)"
+              >
+                {t("dashboard.filters.clearAll")}
+              </Paragraph>
+            </ClearAllButton>
+          )}
         </HeaderFilterItemContainer>
       </TabsSearchBarContainer>
     </HeaderContainer>
   );
 }
-
-/* Styles */
-
-const XIconDiv = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: var(--cards-header-filter-item-icon-div-size);
-  height: var(--cards-header-filter-item-icon-div-size);
-  border-radius: var(--cards-header-filter-item-icon-div-border-radius);
-
-  &:hover {
-    background-color: var(--color-pink-200);
-  }
-`;
-
-const HeaderFilterItem = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-  height: var(--cards-header-filter-item-height);
-  gap: var(--cards-header-filter-item-gap);
-  border-radius: var(--cards-header-filter-item-border-radius);
-  padding: var(--cards-header-filter-item-padding);
-  background-color: var(--color-pink-50);
-`;
-
-const HeaderFilterItemContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: var(--dashboard-cards-header-filter-item-container-gap);
-  flex-wrap: wrap;
-`;
-
-const HeaderContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: var(--opportunities-header-title-tabs-gap);
-`;
-
-const TabsSearchBarContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: var(--opportunities-header-tabs-searchbar-gap);
-`;
-
-const TabsSectionContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: var(--filters-search-bar-width);
-`;
-
-const Tabs = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: var(--opportunities-header-tabs-gap);
-`;
-
-const SearchBarSectionContainer = styled.div`
-  display: flex;
-  flex-direction: var(--opportunities-header-searchbar-flex-direction);
-  gap: var(--filters-search-bar-section-container-gap);
-`;
-
-interface TabHeadingProps {
-  $isSelected: boolean;
-}
-
-const TabHeading = styled(Heading4)<TabHeadingProps>`
-  cursor: pointer;
-  border-bottom: ${(props) =>
-    props.$isSelected ? "var(--opportunities-header-tabs-border-bottom) solid currentColor" : "none"};
-  padding-bottom: ${(props) => (props.$isSelected ? "var(--opportunities-header-tabs-padding-bottom)" : "0")};
-`;
-
-const HyphenatedHeading2 = styled(Heading2)`
-  ${hyphenationStyles}
-`;

@@ -13,7 +13,7 @@ export const apiPathAuthEmailDomain = `/${apiPrefix}/auth-email-domain/`;
 export const apiPathOpportunity = `/${apiPrefix}/opportunity`;
 export const apiPathAgent = `/${apiPrefix}/agent`;
 export const apiPathOption = `/${apiPrefix}/option`;
-export const apiProfilePath = `/volunteer/9`;
+export const apiPathOpportunityVolunteer = `/${apiPrefix}/opportunity-volunteer`;
 export const apiPathMe = `/${apiPrefix}/user/me`;
 export const apiPathPerson = `/${apiPrefix}/person/`;
 

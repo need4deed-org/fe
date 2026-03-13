@@ -7,26 +7,8 @@ import {
 
 import { TFunction } from "i18next";
 
-type VolunteerWithTabStatus = ApiVolunteerGetList & { tabStatus: OpportunityVolunteerStatusType };
-
-const mapOpportunity = (volunteer: VolunteerWithTabStatus) => ({
-  id: volunteer.id,
-  name: volunteer.name,
-  avatarUrl: volunteer.avatarUrl,
-  languages: volunteer.languages,
-  locations: volunteer.locations,
-  availability: volunteer.availability,
-  activities: volunteer.activities,
-  skills: volunteer.skills,
-  statusEngagement: volunteer.statusEngagement,
-  statusType: volunteer.statusType,
-  tabStatus: volunteer.tabStatus,
-});
-
-export type MappedVolunteerAgent = ReturnType<typeof mapOpportunity>;
-
-export const getMappedOpportunities = (volunteers: VolunteerWithTabStatus[]) => {
-  return volunteers.map((volunteer) => mapOpportunity(volunteer));
+export type MappedVolunteerAgent = ApiVolunteerGetList & {
+  status: OpportunityVolunteerStatusType;
 };
 
 export const createEngagementStatusLabelMap = (t: TFunction): Record<VolunteerStateEngagementType, string> => ({

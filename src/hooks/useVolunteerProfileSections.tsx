@@ -14,7 +14,8 @@ import { VolunteerProfile, VolunteerProfileRef } from "@/components/Dashboard/Pr
 import { VolunteerProfileDocument } from "@/components/Dashboard/Profile/sections/VolunteerProfileDocument";
 import { IconName } from "@/components/Dashboard/Profile/types";
 import { useGetOpportunity } from "@/hooks/useGetOpportunity";
-import { ApiVolunteerGet } from "need4deed-sdk";
+import { useSuggestVolunteerOpportunity } from "@/hooks/useSuggestVolunteerOpportunity";
+import { ApiVolunteerGet, OpportunityVolunteerStatusType } from "need4deed-sdk";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -39,17 +40,22 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
   const opportunityId = searchParams.get("opportunity") ?? undefined;
   const opportunity = useGetOpportunity(opportunityId);
 
+  const { mutate: suggestMutate } = useSuggestVolunteerOpportunity(() => {
+    setIsSuggestDialogOpen(false);
+    router.push(`/${i18n.language}/dashboard/opportunities/${opportunityId}`);
+  }, ["opportunity-volunteers", String(opportunityId)]);
+
   if (!volunteer) return null;
 
   const volunteerFullName = `${volunteer.person.firstName} ${volunteer.person.lastName}`;
 
   const handleSuggestConfirm = () => {
-    // TODO: make suggest-backend request, disable buttons and show button-spinner while loading
-    // TODO: when backend-response returns: check it. if failed, show error notifications
-    //  close dialoge in any case
-    setIsSuggestDialogOpen(false);
-    // only if successful, navigate
-    router.push(`/${i18n.language}/dashboard/opportunities/${opportunityId}`);
+    if (!opportunityId) return;
+    suggestMutate({
+      opportunityId: Number(opportunityId),
+      volunteerId: volunteer.id,
+      status: OpportunityVolunteerStatusType.PENDING,
+    });
   };
 
   const sections: SectionCardProps[] = [
@@ -90,7 +96,7 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
         : () => router.push(`/${i18n.language}/dashboard/opportunities?volunteer=${volunteer.id}`),
       subComponent: (
         <>
-          <VolunteerOpportunities />
+          <VolunteerOpportunities volunteerId={volunteer.id} />
           {isSuggestDialogOpen && (
             <SuggestDialog
               volunteerName={volunteerFullName}

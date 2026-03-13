@@ -455,7 +455,8 @@
         "messageMid": "will be notified that you suggested",
         "messageEnd": "to them. It will appear in their profile under \"pending\" opportunities.",
         "confirm": "Suggest",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "success": "Suggestion sent successfully"
       },
       "activities": "Activities",
       "volunteerHeader": {
@@ -646,6 +647,39 @@
       }
     },
     "opportunities": {
+      "opportunities": "Opportunities",
+      "tabs": {
+        "tab1": "List",
+        "tab2": "Cards",
+        "tab3": "Map"
+      },
+      "status": {
+        "new": "New",
+        "searching": "Searching",
+        "active": "Active",
+        "past": "Past"
+      },
+      "type": {
+        "accompanying": "Accompanying",
+        "regular": "Regular",
+        "events": "Events",
+        "regular-accompanying": "Regular + Accompanying"
+      },
+      "card": {
+        "mainCommunication": "Main communication",
+        "residentsSpeak": "Residents speak",
+        "schedule": "Schedule",
+        "search": "Search"
+      },
+      "filters": {
+        "status": {
+          "header": "Status",
+          "new": "New",
+          "searching": "Searching",
+          "active": "Active",
+          "past": "Past"
+        }
+      },
       "accompanyingTranslation": {
         "en": "German, English",
         "de": "German",
@@ -907,7 +941,8 @@
           "messageMid": "will be notified that you suggested",
           "messageEnd": "to them. It will appear in their profile under \"pending\" volunteers.",
           "confirm": "Suggest",
-          "cancel": "Cancel"
+          "cancel": "Cancel",
+          "success": "Suggestion sent successfully"
         },
         "appliedOn": "Applied on",
         "tabs": {
@@ -916,7 +951,9 @@
           "active": "Active",
           "past": "Past"
         },
-        "emptyState": "No volunteers in this category yet"
+        "emptyState": "No volunteers in this category yet",
+        "statusUpdateSuccess": "Volunteer status updated successfully",
+        "removeSuccess": "Volunteer removed successfully"
       },
       "opportunityDetails": {
         "title": "Opportunity details",

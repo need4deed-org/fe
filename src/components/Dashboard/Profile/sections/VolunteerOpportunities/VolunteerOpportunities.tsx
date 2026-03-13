@@ -1,54 +1,66 @@
-import { OpportunityVolunteerStatusType } from "need4deed-sdk";
+import { apiPathVolunteer, cacheTTL } from "@/config/constants";
+import { useGetQuery } from "@/hooks/useGetQuery";
+import {
+  useDeleteOpportunityVolunteer,
+  useUpdateOpportunityVolunteerStatus,
+} from "@/hooks/useUpdateOpportunityVolunteerStatus";
+import { ApiOpportunityVolunteerGet, Id, OpportunityVolunteerStatusType } from "need4deed-sdk";
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { toast } from "react-toastify";
 import styled from "styled-components";
 import { SectionEmptyState } from "../shared/styles";
 import { Tabs } from "../shared/Tabs";
-import { useTabTransitions } from "../shared/useTabTransitions";
+import { ITEM_STATUS_REMOVED, TAB_STATUS_ORDER, useTabTransitions } from "../shared/useTabTransitions";
 import AccordionOpportunity from "./AccordionOpportunity";
-import { mockRawOpportunities } from "./mockOpps/mockOpportunities";
-import { getMappedOpportunities } from "./mockOpps/tempUtils";
 
-const tabsKeys = ["pending", "matched", "active", "past"];
-
-const mockTabAssignment: Record<number, OpportunityVolunteerStatusType> = {
-  0: OpportunityVolunteerStatusType.PENDING,
-  1: OpportunityVolunteerStatusType.MATCHED,
-  2: OpportunityVolunteerStatusType.MATCHED,
-};
-
-export default function VolunteerOpportunities() {
+export default function VolunteerOpportunities({ volunteerId }: { volunteerId: Id }) {
   const { t } = useTranslation();
 
-  const opportunities = getMappedOpportunities(mockRawOpportunities, t, mockTabAssignment);
+  const queryKey = ["volunteer-opportunities", String(volunteerId)];
+
+  const { data, isLoading } = useGetQuery<ApiOpportunityVolunteerGet[]>({
+    queryKey,
+    apiPath: `${apiPathVolunteer}${volunteerId}/opportunity-linked`,
+    staleTime: cacheTTL,
+    enabled: !!volunteerId,
+  });
+
+  const opportunities = useMemo(() => data ?? [], [data]);
+
+  const { mutate: updateStatus } = useUpdateOpportunityVolunteerStatus(queryKey);
+  const { mutate: deleteLink } = useDeleteOpportunityVolunteer(queryKey);
 
   const { selectedTabIndex, setSelectedTabIndex, currentTabStatus, tabCounts, visibleItems, setItemStatus } =
     useTabTransitions(opportunities);
 
-  const tabs = tabsKeys.map((key, index) => ({
+  const tabs = TAB_STATUS_ORDER.map((key, index) => ({
     label: t(`dashboard.volunteerProfile.opportunitiesSec.tabs.${key}`),
     count: tabCounts[index],
   }));
 
-  const handleMatch = (id: number) => {
-    setItemStatus(id, OpportunityVolunteerStatusType.MATCHED);
-    toast.success(t("dashboard.volunteerProfile.opportunitiesSec.matchSuccess"));
+  const handleMatch = (m2mId: number) => {
+    setItemStatus(m2mId, OpportunityVolunteerStatusType.MATCHED);
+    updateStatus({ m2mId, status: OpportunityVolunteerStatusType.MATCHED });
   };
 
-  const handleNotAMatch = (id: number) => {
-    setItemStatus(id, "removed");
-    toast.success(t("dashboard.volunteerProfile.opportunitiesSec.notAMatchSuccess"));
+  const handleNotAMatch = (m2mId: number) => {
+    setItemStatus(m2mId, ITEM_STATUS_REMOVED);
+    deleteLink({ m2mId });
   };
 
-  const handleMarkAsActive = (id: number) => {
-    setItemStatus(id, OpportunityVolunteerStatusType.ACTIVE);
-    toast.success(t("dashboard.volunteerProfile.opportunitiesSec.markAsActiveSuccess"));
+  const handleMarkAsActive = (m2mId: number) => {
+    setItemStatus(m2mId, OpportunityVolunteerStatusType.ACTIVE);
+    updateStatus({ m2mId, status: OpportunityVolunteerStatusType.ACTIVE });
   };
 
-  const handleMarkAsPast = (id: number) => {
-    setItemStatus(id, OpportunityVolunteerStatusType.PAST);
-    toast.success(t("dashboard.volunteerProfile.opportunitiesSec.markAsPastSuccess"));
+  const handleMarkAsPast = (m2mId: number) => {
+    setItemStatus(m2mId, OpportunityVolunteerStatusType.PAST);
+    updateStatus({ m2mId, status: OpportunityVolunteerStatusType.PAST });
   };
+
+  if (isLoading) {
+    return <VolunteerOpportunitiesContainer />;
+  }
 
   return (
     <VolunteerOpportunitiesContainer>

@@ -68,6 +68,7 @@ export const OpportunityContactDetails = forwardRef<EditableSectionRef, Props>(f
     updateContact(
       {
         contact: {
+          id: opportunity.contact.id,
           name: values.name,
           phone: values.phone,
           email: values.email,

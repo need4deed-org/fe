@@ -1,7 +1,7 @@
-import { Paragraph } from "@/components/styled/text";
-import { ShootingStarIcon, XIcon } from "@phosphor-icons/react";
 import Image from "next/image";
-import { AvatarWrapper, DefaultAvatarWrapper, OpportunityChip, XIconDiv } from "./styles";
+import { ShootingStarIcon, XIcon } from "@phosphor-icons/react";
+import { Paragraph } from "@/components/styled/text";
+import { AvatarWrapper, DefaultAvatarWrapper, EntityChip, EntityChipXIconDiv } from "./styles";
 
 type Props = {
   name: string;
@@ -9,9 +9,9 @@ type Props = {
   onRemove: () => void;
 };
 
-export function OpportunityFilterChip({ name, avatarUrl, onRemove }: Props) {
+export function EntityFilterChip({ name, avatarUrl, onRemove }: Props) {
   return (
-    <OpportunityChip data-testid="opportunity-filter-chip">
+    <EntityChip data-testid="entity-filter-chip">
       <AvatarWrapper>
         {avatarUrl ? (
           <Image src={avatarUrl} alt={name} fill style={{ objectFit: "cover" }} />
@@ -32,9 +32,9 @@ export function OpportunityFilterChip({ name, avatarUrl, onRemove }: Props) {
       >
         {name}
       </Paragraph>
-      <XIconDiv onClick={onRemove}>
+      <EntityChipXIconDiv onClick={onRemove}>
         <XIcon size={20} color="var(--color-white)" />
-      </XIconDiv>
-    </OpportunityChip>
+      </EntityChipXIconDiv>
+    </EntityChip>
   );
 }

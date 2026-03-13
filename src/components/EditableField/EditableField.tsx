@@ -291,7 +291,7 @@ export const EditableField = forwardRef(function EditableField<T extends string 
     label,
     value,
     setValue,
-    // submit, // TODO: implement submit (on blur or enter?)
+    submit,
     validator,
     options = [],
     errorMessage,
@@ -329,6 +329,17 @@ export const EditableField = forwardRef(function EditableField<T extends string 
     }
     setLocalValue(newValue as T);
     setValue(newValue as T);
+  };
+
+  const handleSubmit = () => {
+    submit?.(localValue);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleSubmit();
+    }
   };
 
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -379,6 +390,8 @@ export const EditableField = forwardRef(function EditableField<T extends string 
                 setLocalValue(v);
                 setValue(v);
               }}
+              onBlur={handleSubmit}
+              onKeyDown={handleKeyDown}
             />
             {Boolean(localValue) && (
               <ClearButton
@@ -405,6 +418,7 @@ export const EditableField = forwardRef(function EditableField<T extends string 
                 setLocalValue(v);
                 setValue(v);
               }}
+              onBlur={handleSubmit}
             />
             {Boolean(localValue) && (
               <ClearButton
@@ -432,6 +446,8 @@ export const EditableField = forwardRef(function EditableField<T extends string 
                 setLocalValue(v);
                 setValue(v);
               }}
+              onBlur={handleSubmit}
+              onKeyDown={handleKeyDown}
             />
             {String(localValue).length > 0 && (
               <ClearButton
