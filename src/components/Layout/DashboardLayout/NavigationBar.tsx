@@ -109,9 +109,9 @@ export default function NavigationBar() {
       route: DashboardRoutes.Opportunities,
     },
     {
-      label: t("dashboard.home.sidebar.racs"),
+      label: t("dashboard.home.sidebar.agents"),
       Icon: BookOpenTextIcon,
-      route: DashboardRoutes.Racs,
+      route: DashboardRoutes.Agents,
     },
     {
       label: t("dashboard.home.sidebar.posts"),
