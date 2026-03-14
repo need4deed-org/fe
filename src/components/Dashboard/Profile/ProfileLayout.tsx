@@ -1,12 +1,11 @@
 "use client";
 import { DashboardLayout } from "@/components/Layout";
 import { ProfileController } from "./ProfileController";
-
-export type ProfileEntityType = "volunteer" | "opportunity";
+import { EntityType } from "./types/types";
 
 interface ProfileLayoutProps {
   entityId: string;
-  entityType: ProfileEntityType;
+  entityType: EntityType;
 }
 
 export default function ProfileLayout({ entityId, entityType }: ProfileLayoutProps) {

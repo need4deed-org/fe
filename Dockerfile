@@ -10,7 +10,7 @@ COPY . .
 
 ENV API_URL=${API_URL}
 ENV NEXT_TELEMETRY_DISABLED=1
-
+ENV NEXT_PUBLIC_CLOUDFRONT_URL=https://d2nwrdddg8skub.cloudfront.net/images
 
 RUN yarn build
 

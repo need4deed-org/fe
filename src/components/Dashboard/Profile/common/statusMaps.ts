@@ -1,13 +1,18 @@
 import type React from "react";
 import {
   ArrowsClockwiseIcon,
+  BinocularsIcon,
   CalendarBlankIcon,
   CalendarXIcon,
   ChartLineIcon,
   CheckCircleIcon,
+  HandPalmIcon,
   HourglassIcon,
   PhoneXIcon,
   ProhibitInsetIcon,
+  QuestionIcon,
+  SmileyIcon,
+  SmileySadIcon,
   SparkleIcon,
   StopCircleIcon,
   UsersIcon,
@@ -19,13 +24,17 @@ import {
   VolunteerStateMatchType,
   VolunteerStateTypeType,
 } from "need4deed-sdk";
+import { AgentEngagementStatus, AgentTrustLevel, AgentVolunteerSearch } from "../types";
 
 export type StatusValue =
   | VolunteerStateEngagementType
   | VolunteerStateTypeType
   | VolunteerStateMatchType
   | OpportunityStatusType
-  | OpportunityMatchStatus;
+  | OpportunityMatchStatus
+  | AgentEngagementStatus
+  | AgentVolunteerSearch
+  | AgentTrustLevel;
 
 export const statusColorMap: Record<string, string> = {
   [VolunteerStateEngagementType.ACTIVE]: "var(--color-green-100)",
@@ -44,6 +53,12 @@ export const statusColorMap: Record<string, string> = {
   [VolunteerStateTypeType.REGULAR_ACCOMPANYING]: "var(--color-blue-500)",
   [OpportunityStatusType.SEARCHING]: "var(--color-violet-100)",
   [OpportunityStatusType.PAST]: "var(--color-grey-50)",
+  [AgentVolunteerSearch.NOT_NEEDED]: "var(--color-grey-50)",
+  [AgentVolunteerSearch.FILLED]: "var(--color-green-100)",
+  [AgentVolunteerSearch.SEARCHING]: "var(--color-red-50)",
+  [AgentTrustLevel.UNKNOWN]: "var(--color-grey-50)",
+  [AgentTrustLevel.LOW]: "var(--color-red-50)",
+  [AgentTrustLevel.HIGH]: "var(--color-green-100)",
 };
 
 type IconComponent = React.ComponentType<{ size?: number; color?: string }>;
@@ -65,4 +80,10 @@ export const statusIconMap: Record<string, IconComponent> = {
   [VolunteerStateTypeType.REGULAR_ACCOMPANYING]: UsersIcon,
   [OpportunityStatusType.SEARCHING]: HourglassIcon,
   [OpportunityStatusType.PAST]: StopCircleIcon,
+  [AgentVolunteerSearch.NOT_NEEDED]: HandPalmIcon,
+  [AgentVolunteerSearch.FILLED]: CheckCircleIcon,
+  [AgentVolunteerSearch.SEARCHING]: BinocularsIcon,
+  [AgentTrustLevel.UNKNOWN]: QuestionIcon,
+  [AgentTrustLevel.LOW]: SmileySadIcon,
+  [AgentTrustLevel.HIGH]: SmileyIcon,
 };

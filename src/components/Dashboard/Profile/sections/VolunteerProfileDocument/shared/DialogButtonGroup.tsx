@@ -6,9 +6,11 @@ type Props = {
 };
 
 const Container = styled.div`
-  display: flex;
-  justify-content: flex-end;
+  display: inline-grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
   gap: var(--document-dialog-button-gap);
+  align-self: flex-end;
 `;
 
 export function DialogButtonGroup({ children }: Props) {

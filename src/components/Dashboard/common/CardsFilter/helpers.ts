@@ -1,3 +1,4 @@
+import { ApiOptionLists } from "need4deed-sdk";
 import { SelectionMap, SetFilter } from "./types";
 
 export const getClearFilter = (filter: object) => {
@@ -36,6 +37,9 @@ export const generateNestedFilterControlItems = <TFilter>(
 /**
  * Generic helper to create a list of checkbox-like filter items from a record of boolean.
  */
+export const createFilterFromOption = (option: ApiOptionLists, field: keyof ApiOptionLists) =>
+  option[field] ? option[field].reduce((acc, curr) => ({ ...acc, [curr.title]: false }), {}) : {};
+
 export const generateFilterControlItem = <TFilter>(
   obj: TFilter,
   setFilter: SetFilter<TFilter>,

@@ -1,20 +1,21 @@
 import { ErrorMessage } from "@/components/core/common";
 import { EMPTY_PLACEHOLDER_VALUE } from "@/config/constants";
-import { XCircle } from "@phosphor-icons/react";
+import { HasError, HasHint } from "@/types";
+import { MinusIcon, PlusIcon, XCircleIcon } from "@phosphor-icons/react";
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import styled from "styled-components";
-import { HasError } from "@/types";
 
 const EditModeWrapper = styled.div`
   width: 100%;
 `;
 
-const FieldWrapper = styled.div<HasError>`
+const FieldWrapper = styled.div<HasError & HasHint>`
   display: var(--editableField-fieldWrapper-display);
   border-bottom: var(--editableField-fieldWrapper-borderBottom);
   padding: ${(props) =>
     props.$hasError ? "var(--editableField-fieldWrapper-padding-error)" : "var(--editableField-fieldWrapper-padding)"};
+  ${(props) => props.$hasHint && "padding-bottom: 0;"}
   color: var(--color-midnight);
   width: var(--editableField-fieldWrapper-width);
   align-items: var(--editableField-fieldWrapper-alignItems);
@@ -49,21 +50,30 @@ const InputWrapper = styled.div<HasError>`
   flex: 1;
   width: 100%;
 
-  input {
+  input,
+  textarea {
     border-radius: var(--editableField-fieldWrapper-input-borderRadius);
     padding: var(--editableField-fieldWrapper-input-padding);
     padding-right: var(--editableField-fieldWrapper-input-paddingRight);
     color: var(--color-midnight);
     border: ${(props) =>
-      props.$hasError ? "2px solid var(--color-red-600)" : "var(--editableField-fieldWrapper-input-border)"};
+      props.$hasError ? "var(--editableField-border-error)" : "var(--editableField-fieldWrapper-input-border)"};
     flex: 1;
     min-width: 0;
     width: 100%;
+    font-family: inherit;
+    font-size: inherit;
 
     &:focus {
       outline: none;
-      border: ${(props) => (props.$hasError ? "2px solid var(--color-red-600)" : "2px solid var(--color-green-200)")};
+      border: ${(props) =>
+        props.$hasError ? "var(--editableField-border-error)" : "var(--editableField-border-focus)"};
     }
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: var(--editableField-fieldWrapper-textarea-minHeight);
   }
 `;
 
@@ -93,7 +103,7 @@ const DropdownWrapper = styled.div`
 
 const DropdownButton = styled.div<{ $hasError?: boolean }>`
   border: ${(props) =>
-    props.$hasError ? "2px solid var(--color-red-600)" : "var(--editableField-dropdownButton-border)"};
+    props.$hasError ? "var(--editableField-border-error)" : "var(--editableField-dropdownButton-border)"};
   padding: var(--editableField-dropdownButton-padding);
   border-radius: var(--editableField-dropdownButton-borderRadius);
   cursor: var(--editableField-dropdownButton-cursor);
@@ -106,7 +116,7 @@ const DropdownButton = styled.div<{ $hasError?: boolean }>`
 
   &:focus-within {
     outline: none;
-    border: ${(props) => (props.$hasError ? "2px solid var(--color-red-600)" : "2px solid var(--color-green-200)")};
+    border: ${(props) => (props.$hasError ? "var(--editableField-border-error)" : "var(--editableField-border-focus)")};
   }
 `;
 
@@ -149,21 +159,65 @@ const OptionRow = styled.div<{ $isSelected?: boolean }>`
   border-radius: var(--editableField-optionRow-borderRadius);
   transition: background-color 0.2s ease;
   gap: var(--editableField-optionRow-gap);
-  background-color: ${(props) => (props.$isSelected ? "var(--color-orchid-subtle)" : "transparent")};
+  background-color: ${(props) => (props.$isSelected ? "var(--editableField-optionRow-selectedBg)" : "transparent")};
 
   &:hover {
     background-color: var(--color-orchid-light);
   }
 
-  input[type="checkbox"],
-  input[type="radio"] {
-    width: 20px;
-    height: 20px;
+  input[type="checkbox"] {
+    width: var(--editableField-optionRow-checkbox-size);
+    height: var(--editableField-optionRow-checkbox-size);
     cursor: pointer;
-    margin: 0;
-    flex: 0 0 auto;
-    accent-color: var(--color-green-500);
+    margin: var(--editableField-optionRow-checkbox-margin);
+    flex: var(--editableField-optionRow-checkbox-flex);
+    accent-color: var(--editableField-optionRow-checkbox-accentColor);
   }
+
+  input[type="radio"] {
+    appearance: var(--editableField-optionRow-radio-appearance);
+    width: var(--editableField-optionRow-radio-size);
+    height: var(--editableField-optionRow-radio-size);
+    border: var(--editableField-optionRow-radio-border);
+    border-radius: var(--editableField-optionRow-radio-borderRadius);
+    cursor: pointer;
+    margin: var(--editableField-optionRow-radio-margin);
+    flex: var(--editableField-optionRow-radio-flex);
+    position: relative;
+
+    &:checked {
+      background-color: var(--editableField-optionRow-radio-checked-bg);
+      border-color: var(--editableField-optionRow-radio-checked-borderColor);
+
+      &::after {
+        content: "";
+        position: absolute;
+        width: var(--editableField-optionRow-radio-checkmark-width);
+        height: var(--editableField-optionRow-radio-checkmark-height);
+        border: var(--editableField-optionRow-radio-checkmark-border);
+        border-width: var(--editableField-optionRow-radio-checkmark-borderWidth);
+        top: 50%;
+        left: 50%;
+        transform: var(--editableField-optionRow-radio-checkmark-transform);
+      }
+    }
+  }
+`;
+
+const HintWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-8) var(--spacing-16) var(--spacing-8) 0;
+  gap: var(--spacing-8);
+  padding-left: calc(var(--editableField-fieldWrapper-label-width) + var(--editableField-fieldWrapper-gap));
+`;
+
+const HintText = styled.span`
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-20);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--color-grey-500);
+  flex: 1;
 `;
 
 const Text = styled.span`
@@ -172,11 +226,44 @@ const Text = styled.span`
   overflow-wrap: break-word;
   word-break: break-word;
   cursor: pointer;
-  font-size: 16px;
+  font-size: var(--editableField-text-fontSize);
   color: var(--color-midnight);
 `;
 
-type EditableFieldType = "text" | "number" | "checkbox-list" | "radio-list";
+const StepperContainer = styled.div`
+  display: flex;
+  align-items: center;
+  border-radius: var(--editableField-fieldWrapper-input-borderRadius);
+  border: var(--editableField-fieldWrapper-input-border);
+  overflow: hidden;
+  height: var(--form-input-height);
+`;
+
+const StepperButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--spacing-8) var(--spacing-16);
+  color: var(--color-midnight);
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+`;
+
+const StepperValue = styled.span`
+  min-width: 40px;
+  text-align: center;
+  font-size: inherit;
+  color: var(--color-midnight);
+  user-select: none;
+`;
+
+type EditableFieldType = "text" | "textarea" | "number" | "stepper" | "checkbox-list" | "radio-list";
 
 export interface EditableFieldRef<T> {
   getValue: () => T;
@@ -193,6 +280,8 @@ interface EditableFieldProps<T = string | number | string[]> {
   validator?: (value: T) => string | null;
   options?: string[];
   errorMessage?: string;
+  hint?: string;
+  maxLength?: number;
 }
 
 export const EditableField = forwardRef(function EditableField<T extends string | number | string[]>(
@@ -202,10 +291,12 @@ export const EditableField = forwardRef(function EditableField<T extends string 
     label,
     value,
     setValue,
-    // submit, // TODO: implement submit (on blur or enter?)
+    submit,
     validator,
     options = [],
     errorMessage,
+    hint,
+    maxLength,
   }: EditableFieldProps<T>,
   ref: React.Ref<EditableFieldRef<T>>,
 ) {
@@ -238,6 +329,17 @@ export const EditableField = forwardRef(function EditableField<T extends string 
     }
     setLocalValue(newValue as T);
     setValue(newValue as T);
+  };
+
+  const handleSubmit = () => {
+    submit?.(localValue);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleSubmit();
+    }
   };
 
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -275,7 +377,7 @@ export const EditableField = forwardRef(function EditableField<T extends string 
   // edit mode
   return (
     <EditModeWrapper>
-      <FieldWrapper $hasError={!!errorMessage}>
+      <FieldWrapper $hasError={!!errorMessage} $hasHint={!!hint}>
         {label && <label>{label}</label>}
 
         {type === "text" && (
@@ -288,6 +390,8 @@ export const EditableField = forwardRef(function EditableField<T extends string 
                 setLocalValue(v);
                 setValue(v);
               }}
+              onBlur={handleSubmit}
+              onKeyDown={handleKeyDown}
             />
             {Boolean(localValue) && (
               <ClearButton
@@ -298,7 +402,35 @@ export const EditableField = forwardRef(function EditableField<T extends string 
                   setValue(v);
                 }}
               >
-                <XCircle size={20} weight="bold" />
+                <XCircleIcon size={20} weight="bold" />
+              </ClearButton>
+            )}
+          </InputWrapper>
+        )}
+
+        {type === "textarea" && (
+          <InputWrapper $hasError={!!errorMessage}>
+            <textarea
+              value={localValue as string}
+              maxLength={maxLength}
+              onChange={(e) => {
+                const v = e.target.value as T;
+                setLocalValue(v);
+                setValue(v);
+              }}
+              onBlur={handleSubmit}
+            />
+            {Boolean(localValue) && (
+              <ClearButton
+                type="button"
+                onClick={() => {
+                  const v = "" as T;
+                  setLocalValue(v);
+                  setValue(v);
+                }}
+                style={{ alignSelf: "flex-start", marginTop: "10px" }}
+              >
+                <XCircleIcon size={20} weight="bold" />
               </ClearButton>
             )}
           </InputWrapper>
@@ -314,6 +446,8 @@ export const EditableField = forwardRef(function EditableField<T extends string 
                 setLocalValue(v);
                 setValue(v);
               }}
+              onBlur={handleSubmit}
+              onKeyDown={handleKeyDown}
             />
             {String(localValue).length > 0 && (
               <ClearButton
@@ -324,10 +458,39 @@ export const EditableField = forwardRef(function EditableField<T extends string 
                   setValue(v);
                 }}
               >
-                <XCircle size={20} weight="bold" />
+                <XCircleIcon size={20} weight="bold" />
               </ClearButton>
             )}
           </InputWrapper>
+        )}
+
+        {type === "stepper" && (
+          <StepperContainer data-testid="editable-field-stepper">
+            <StepperButton
+              type="button"
+              data-testid="editable-field-stepper-minus"
+              disabled={!localValue || Number(localValue) <= 0}
+              onClick={() => {
+                const v = String(Math.max(0, Number(localValue) - 1)) as T;
+                setLocalValue(v);
+                setValue(v);
+              }}
+            >
+              <MinusIcon size={16} weight="bold" />
+            </StepperButton>
+            <StepperValue data-testid="editable-field-stepper-value">{localValue}</StepperValue>
+            <StepperButton
+              type="button"
+              data-testid="editable-field-stepper-plus"
+              onClick={() => {
+                const v = String(Number(localValue || 0) + 1) as T;
+                setLocalValue(v);
+                setValue(v);
+              }}
+            >
+              <PlusIcon size={16} weight="bold" />
+            </StepperButton>
+          </StepperContainer>
         )}
 
         {(type === "checkbox-list" || type === "radio-list") && (
@@ -385,9 +548,21 @@ export const EditableField = forwardRef(function EditableField<T extends string 
           </DropdownWrapper>
         )}
       </FieldWrapper>
-      {error && <p style={{ color: "red", paddingLeft: "1rem" }}>{error}</p>}
+      {error && (
+        <p style={{ color: "var(--editableField-error-color)", paddingLeft: "var(--editableField-error-paddingLeft)" }}>
+          {error}
+        </p>
+      )}
       {errorMessage && (
-        <ErrorMessage message={errorMessage} paddingLeft="var(--editableField-errorMessage-paddingLeft)" />
+        <ErrorMessage
+          message={errorMessage}
+          paddingLeft="calc(var(--editableField-fieldWrapper-label-width) + var(--editableField-fieldWrapper-gap))"
+        />
+      )}
+      {hint && (
+        <HintWrapper data-testid="editable-field-hint">
+          <HintText>{hint}</HintText>
+        </HintWrapper>
       )}
     </EditModeWrapper>
   );

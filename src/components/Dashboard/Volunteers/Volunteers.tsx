@@ -5,15 +5,16 @@ import styled from "styled-components";
 
 import { DashboardLayout } from "@/components/Layout";
 import { apiPathOption, questionMark } from "@/config/constants";
-import { useGetQuery } from "@/hooks";
+import { useGetOpportunity, useGetQuery } from "@/hooks";
 import { ApiOptionLists, EntityTableName, QueryParamsKeys, SortOrder } from "need4deed-sdk";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Filters from "../common/CardsFilter/Filters";
 import CardsHeader from "../common/CardsHeader/CardsHeader";
+import { getClearFilter } from "../common/CardsFilter/helpers";
 import { defaultVolunteerCardsFilter } from "./Filters/constants";
 import FiltersContent from "./Filters/FiltersContent";
 import { CardsFilter } from "./Filters/types";
-import { createFilterFromOption, serializeFilters } from "./helpers";
+import { createFilterFromOption, createSelectedFilterItemsAsFlatArray, serializeFilters } from "./helpers";
 import { VolunteerListController } from "./VolunteerListController";
 
 export function Volunteers() {
@@ -28,6 +29,9 @@ export function Volunteers() {
   const pathname = usePathname();
   const router = useRouter();
   const tabs = [t("dashboard.volunteers.tabs.tab1"), t("dashboard.volunteers.tabs.tab2")];
+
+  const opportunityId = searchParams.get("opportunity") ?? undefined;
+  const opportunityFilter = useGetOpportunity(opportunityId);
 
   const handleSearchInputChange = (searchInput: string) => {
     handleFilterUpdate((prev) => ({ ...prev, [QueryParamsKeys.SEARCH]: searchInput }));
@@ -44,6 +48,18 @@ export function Volunteers() {
     router.push(pathname + questionMark + serializeFilters(updatedFilter, searchParams));
   };
 
+  const handleRemoveOpportunityFilter = () => {
+    const params = new URLSearchParams(searchParams);
+    params.delete("opportunity");
+    router.push(pathname + questionMark + params.toString());
+  };
+
+  const handleClearAllFilters = () => {
+    const cleared = getClearFilter(cardsFilter) as unknown as CardsFilter;
+    setCardsFilter(cleared);
+    router.push(pathname + questionMark + serializeFilters(cleared, searchParams));
+  };
+
   useEffect(() => {
     if (!apiFilterOptions) return;
 
@@ -55,6 +71,8 @@ export function Volunteers() {
       return { ...prev, district, language };
     });
   }, [apiFilterOptions]);
+
+  const activeFilters = createSelectedFilterItemsAsFlatArray(cardsFilter, setCardsFilter, t);
 
   return (
     <DashboardLayout>
@@ -74,10 +92,14 @@ export function Volunteers() {
           setSelectedTabIndex={setSelectedTabIndex}
           setIsFiltersOpen={setIsFiltersOpen}
           onSearchInputChange={handleSearchInputChange}
+          searchValue={cardsFilter.search}
           sortOrder={sortOrder}
           onSortOrderChange={handleSortChange}
-          filter={cardsFilter}
-          setFilter={handleFilterUpdate}
+          activeFilters={activeFilters}
+          onClearAllFilters={handleClearAllFilters}
+          entityFilter={
+            opportunityFilter ? { ...opportunityFilter, onRemove: handleRemoveOpportunityFilter } : undefined
+          }
         />
         <VolunteerListController
           setNumOfVols={setNumOfVols}
@@ -85,6 +107,7 @@ export function Volunteers() {
           isFiltersOpen={isFiltersOpen}
           filter={cardsFilter}
           apiFilterOptions={apiFilterOptions}
+          opportunityId={opportunityId}
         />
       </VolunteersContainer>
     </DashboardLayout>

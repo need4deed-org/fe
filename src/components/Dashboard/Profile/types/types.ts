@@ -1,8 +1,12 @@
 import { ApiOpportunityGet, ApiVolunteerGet } from "need4deed-sdk";
+import { ApiAgentProfileGet } from "./agent";
+
+export type EntityType = "volunteer" | "opportunity" | "agent";
 
 export type ProfileEntityProps =
-  | { volunteer: ApiVolunteerGet; opportunity?: never }
-  | { opportunity: ApiOpportunityGet; volunteer?: never };
+  | { volunteer: ApiVolunteerGet; opportunity?: never; agent?: never }
+  | { opportunity: ApiOpportunityGet; volunteer?: never; agent?: never }
+  | { agent: ApiAgentProfileGet; volunteer?: never; opportunity?: never };
 
 export enum ProfileCardTypes {
   VOLUNTEER_HEADER = "VOLUNTEER_HEADER",
@@ -36,5 +40,7 @@ export enum IconName {
   UserCheck = "userCheck",
   UserCircle = "userCircle",
   Users = "users",
+  UsersThree = "usersThree",
+  Wrench = "wrench",
 }
 

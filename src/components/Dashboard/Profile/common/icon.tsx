@@ -15,9 +15,11 @@ import {
   UserCheckIcon,
   UserCircleIcon,
   UsersIcon,
+  UsersThreeIcon,
+  WrenchIcon,
 } from "@phosphor-icons/react";
 import { JSX } from "react";
-import { IconName } from "../types/types";
+import { IconName } from "../types";
 
 type IconMap = {
   [key in IconName]: JSX.Element;
@@ -40,4 +42,6 @@ export const iconNameMap: IconMap = {
   [IconName.UserCheck]: <UserCheckIcon />,
   [IconName.UserCircle]: <UserCircleIcon />,
   [IconName.Users]: <UsersIcon />,
+  [IconName.UsersThree]: <UsersThreeIcon />,
+  [IconName.Wrench]: <WrenchIcon />,
 };

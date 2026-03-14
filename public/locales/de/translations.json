@@ -111,12 +111,12 @@
           "header": "Bevorzugte Bezirke* (Berlin)",
           "para": "*Denke daran, dass die meisten Unterkünfte außerhalb des Rings liegen!",
           "error": "",
-          "helpText": "Falls wir kein perfektes Angebot finden, schicken wir Dir die Angebote, die auch auf deinem Standort basieren!",
+          "helpText": "Falls wir keine perfekte Möglichkeit finden, schicken wir Dir die Möglichkeiten, die auch auf deinem Standort basieren!",
           "helpTitle": ""
         },
         "availability": {
           "header": "Verfügbarkeit",
-          "para": "*Denke daran, dass die meisten Angebote auf die Arbeitszeiten von 9-17 Uhr begrenzt sind, zumindest am Anfang!",
+          "para": "*Denke daran, dass die meisten Möglichkeiten auf die Arbeitszeiten von 9-17 Uhr begrenzt sind, zumindest am Anfang!",
           "error": "",
           "helpText": "Die Verfügbarkeiten von Mo-So beziehen sich auf regelmäßig wiederkehrende Freiwilligenarbeit. Wenn die Zeiträume auf bestimmte Zeiträume begrenzt sind oder erklärt werden müssen, schreibe bitte im letzten Abschnitt in die Kommentare.",
           "helpTitle": ""
@@ -323,6 +323,14 @@
     }
   },
   "dashboard": {
+    "common": {
+      "datePrefix": {
+        "appliedOn": "Beworben am",
+        "matchedOn": "Zugeordnet am",
+        "activeSince": "Aktiv seit",
+        "pastSince": "Vergangen seit"
+      }
+    },
     "volunteers": {
       "header": "Freiwilligenverzeichnis",
       "tabs": {
@@ -388,6 +396,7 @@
         "home": "Startseite",
         "volunteers": "Freiwillige",
         "opportunities": "Möglichkeiten",
+        "agents": "Akteure",
         "racs": "RACs",
         "posts": "Beiträge",
         "calendar": "Kalender",
@@ -440,6 +449,15 @@
       "activityLog": "Aktivitätsprotokoll",
       "editButtonName": "Bearbeiten",
       "findOppButtonName": "Möglichkeit finden",
+      "suggestButtonName": "Vorschlagen",
+      "suggestDialog": {
+        "title": "Diesem Freiwilligen vorschlagen?",
+        "messageMid": "wird benachrichtigt, dass Sie",
+        "messageEnd": "vorgeschlagen haben. Es erscheint in seinem / ihrem Profil unter \"ausstehenden\" Möglichkeiten.",
+        "confirm": "Vorschlagen",
+        "cancel": "Abbrechen",
+        "success": "Vorschlag erfolgreich gesendet"
+      },
       "activities": "Aktivitäten",
       "volunteerHeader": {
         "statusUpdateSuccess": "Status erfolgreich aktualisiert",
@@ -524,7 +542,14 @@
           "past": "Vergangen"
         },
         "match": "Match",
-        "notAMatch": "Kein Match"
+        "notAMatch": "Kein Match",
+        "markAsActive": "Als aktiv markieren",
+        "markAsPast": "Als vergangen markieren",
+        "matchSuccess": "Zugeordnet",
+        "notAMatchSuccess": "Entfernt",
+        "markAsActiveSuccess": "Als aktiv markiert",
+        "markAsPastSuccess": "Als vergangen markiert",
+        "emptyState": "Noch keine Einträge in dieser Kategorie"
       },
       "contactDetails": {
         "title": "Kontaktdaten",
@@ -537,7 +562,12 @@
           "whatsapp": "WhatsApp",
           "telegram": "Telegram",
           "mobilePhone": "Mobiltelefon",
-          "email": "E-Mail"
+          "email": "E-Mail",
+          "called": "Angerufen",
+          "email-sent": "E-Mail gesendet",
+          "briefed": "Briefing erfolgt",
+          "tried-call": "Versucht anzurufen",
+          "not-responding": "Keine Reaktion"
         },
         "notProvided": "Nicht angegeben",
         "cancel": "Abbrechen",
@@ -576,6 +606,39 @@
       }
     },
     "opportunities": {
+      "opportunities": "Möglichkeiten",
+      "tabs": {
+        "tab1": "Liste",
+        "tab2": "Karten",
+        "tab3": "Karte"
+      },
+      "status": {
+        "new": "Neu",
+        "searching": "Suche läuft",
+        "active": "Aktiv",
+        "past": "Vergangen"
+      },
+      "type": {
+        "accompanying": "Begleitung",
+        "regular": "Regelmäßig",
+        "events": "Veranstaltungen",
+        "regular-accompanying": "Regelmäßig + Begleitung"
+      },
+      "card": {
+        "mainCommunication": "Hauptkommunikation",
+        "residentsSpeak": "Bewohner sprechen",
+        "schedule": "Zeitplan",
+        "search": "Suchen"
+      },
+      "filters": {
+        "status": {
+          "header": "Status",
+          "new": "Neu",
+          "searching": "Suche läuft",
+          "active": "Aktiv",
+          "past": "Vergangen"
+        }
+      },
       "accompanyingTranslation": {
         "en": "Deutsch, Englisch",
         "de": "Deutsch",
@@ -685,8 +748,121 @@
       "deleteConfirmTitle": "Anerkennung löschen?",
       "deleteConfirmText": "\"{{entryType}}\" Anerkennungseintrag wird dauerhaft gelöscht."
     },
+    "agentProfile": {
+      "agentProfile": "Profil des Agenten",
+      "registeredSince": "Registriert seit",
+      "engagementStatus": "Engagement-Status",
+      "serviceType": "Dienstleistungsart",
+      "volunteerSearch": "Freiwilligensuche",
+      "trustLevel": "Vertrauensstufe",
+      "changeStatus": "Status ändern",
+      "district": "Bezirk",
+      "status": {
+        "engagement": {
+          "new": "Neu",
+          "active": "Aktiv",
+          "unresponsive": "Nicht erreichbar",
+          "inactive": "Inaktiv"
+        },
+        "volunteerSearch": {
+          "notNeeded": "Nicht benötigt",
+          "filled": "Besetzt",
+          "searching": "Suchend"
+        },
+        "serviceType": {
+          "childcare": "Kinderbetreuung",
+          "welfare": "Wohlfahrt",
+          "consultation": "Beratung",
+          "voluntarySupport": "Ehrenamtliche Unterstützung",
+          "tandem": "Tandem",
+          "sport": "Sport",
+          "tutoring": "Nachhilfe",
+          "refugeeAccommodation": "Unterkunft für geflüchteten",
+          "jobCoaching": "Job-Coaching",
+          "youth": "Jugend"
+        },
+        "trustLevel": {
+          "unknown": "Unbekannt",
+          "low": "Niedrig",
+          "high": "Hoch"
+        }
+      },
+      "modalData": {
+        "title": "Engagement-Status ändern",
+        "options": {
+          "unresponsive": "Nicht erreichbar",
+          "unresponsive_description": "Dieser Agent antwortet nicht.",
+          "inactive": "Inaktiv",
+          "inactive_description": "Dieser Agent arbeitet nicht mehr mit der Organisation zusammen."
+        },
+        "cancel": "Abbrechen",
+        "save": "Speichern"
+      },
+      "statusUpdateSuccess": "Agent-Status erfolgreich aktualisiert",
+      "contactDetails": {
+        "title": "Kontaktdaten",
+        "fullName": "Name",
+        "firstName": "Vorname",
+        "middleName": "Zweitname",
+        "lastName": "Nachname",
+        "email": "E-Mail",
+        "mobile": "Mobiltelefon",
+        "landline": "Festnetz",
+        "saveSuccess": "Kontaktdaten erfolgreich aktualisiert",
+        "roles": {
+          "label": "Rolle",
+          "management": "Geschäftsführung",
+          "volunteer_coordinator": "Freiwilligenkoordinator/in",
+          "social_work": "Sozialarbeit",
+          "childcare": "Kinderbetreuung",
+          "coordination": "Koordination"
+        },
+        "cancel": "Abbrechen",
+        "saveChanges": "Änderungen speichern",
+        "edit": "Bearbeiten",
+        "validation": {
+          "nameRequired": "Name ist erforderlich",
+          "addressRequired": "Adresse ist erforderlich",
+          "districtRequired": "Bezirk ist erforderlich",
+          "mobileRequired": "Mobilnummer ist erforderlich",
+          "mobileInvalid": "Die Mobilnummer muss mit + beginnen und darf nur Ziffern und Leerzeichen enthalten",
+          "emailRequired": "E-Mail ist erforderlich",
+          "emailInvalid": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+          "roleRequired": "Rolle ist erforderlich",
+          "fullNameRequired": "Vollständiger Name ist erforderlich",
+          "fullNameInvalid": "Bitte geben Sie einen gültigen Namen ein",
+          "landlineInvalid": "Die Festnetznummer muss mit + beginnen und darf nur Ziffern und Leerzeichen enthalten"
+        }
+      },
+      "organisationDetails": {
+        "title": "Organisationsdetails",
+        "edit": "Bearbeiten",
+        "about": "Über uns",
+        "website": "Webseite",
+        "address": "Adresse",
+        "organisationType": "Art der Organisation",
+        "operator": "Träger",
+        "services": "Leistungen",
+        "clientLanguages": "Sprachen der Klient:innen",
+        "cancel": "Abbrechen",
+        "saveChanges": "Änderungen speichern",
+        "validation": {
+          "required": "Dieses Feld ist erforderlich",
+          "websiteInvalid": "Webseite muss mit http:// oder https:// beginnen",
+          "clientLanguagesRequired": "Mindestens eine Sprache ist erforderlich"
+        }
+      },
+      "opportunitiesSec": {
+        "postOpportunity": "Möglichkeit posten",
+        "tabs": {
+          "lookingForVolunteers": "Suche nach Freiwilligen",
+          "active": "Aktiv",
+          "past": "Vergangen"
+        }
+      }
+    },
     "opportunityProfile": {
-      "opportunityProfile": "Profil der Gelegenheit",
+      "opportunityProfile": "Profil der Möglichkeit",
       "postedOn": "Veröffentlicht am",
       "currentStatus": "Aktueller Status",
       "matchingStatus": "Matching-Status",
@@ -701,7 +877,7 @@
         "needRematch": "Neues Matching erforderlich",
         "unmatched": "Nicht gematcht"
       },
-      "statusUpdateSuccess": "Status der Gelegenheit erfolgreich aktualisiert",
+      "statusUpdateSuccess": "Status der Möglichkeit erfolgreich aktualisiert",
       "contactDetailsTitle": "Kontaktdaten",
       "editButtonName": "Bearbeiten",
       "contactDetails": {
@@ -751,11 +927,66 @@
         "cancel": "Abbrechen",
         "saveChanges": "Änderungen speichern",
         "saveSuccess": "Begleitdetails erfolgreich aktualisiert",
-        "notAccompanyingMessage": "Diese Gelegenheit ist nicht als Begleitung markiert. Ändern Sie diesen Status in der oberen Karte, wenn Sie die Begleitinformationen ausfüllen müssen (Terminadresse, Angaben zu Geflüchteten usw.).",
+        "notAccompanyingMessage": "Diese Möglichkeit ist nicht als Begleitung markiert. Ändern Sie diesen Status in der oberen Karte, wenn Sie die Begleitinformationen ausfüllen müssen (Terminadresse, Angaben zu Geflüchteten usw.).",
         "validation": {
           "invalidTimeFormat": "Ungültiges Zeitformat (verwenden Sie HH:MM)"
         }
+      },
+      "volunteersSec": {
+        "title": "Freiwillige",
+        "findVolunteers": "Freiwillige finden",
+        "suggestButtonName": "Vorschlagen",
+        "suggestDialog": {
+          "title": "Für diese Möglichkeit vorschlagen?",
+          "messageStart": "Der Verantwortliche von",
+          "messageMid": "wird benachrichtigt, dass Sie",
+          "messageEnd": "vorgeschlagen haben. Es erscheint in seinem / ihrem Profil unter \"ausstehenden\" Freiwilligen.",
+          "confirm": "Vorschlagen",
+          "cancel": "Abbrechen",
+          "success": "Vorschlag erfolgreich gesendet"
+        },
+        "appliedOn": "Beworben am",
+        "tabs": {
+          "pending": "Ausstehend",
+          "matched": "Zugeordnet",
+          "active": "Aktiv",
+          "past": "Vergangen"
+        },
+        "emptyState": "Noch keine Freiwilligen in dieser Kategorie",
+        "statusUpdateSuccess": "Freiwilligen-Status erfolgreich aktualisiert",
+        "removeSuccess": "Freiwilliger erfolgreich entfernt"
+      },
+      "opportunityDetails": {
+        "title": "Details der Möglichkeit",
+        "description": "Beschreibung",
+        "mainCommunication": "Hauptkommunikation",
+        "residentsSpeak": "Bewohner sprechen",
+        "schedule": "Zeitplan",
+        "numberOfVolunteers": "Anzahl der Freiwilligen",
+        "activities": "Aktivitäten",
+        "skills": "Fähigkeiten & Erfahrung",
+        "descriptionHint": "Max. {{max}} Zeichen",
+        "cancel": "Abbrechen",
+        "saveChanges": "Änderungen speichern",
+        "validation": {
+          "descriptionRequired": "Beschreibung ist erforderlich",
+          "descriptionTooLong": "Beschreibung ist zu lang",
+          "numberOfVolunteersRequired": "Anzahl der Freiwilligen muss mindestens 1 sein",
+          "languageRequired": "Mindestens eine Sprache ist erforderlich",
+          "availabilityRequired": "Mindestens ein Zeitfenster muss ausgewählt werden",
+          "activitiesRequired": "Mindestens eine Aktivität ist erforderlich",
+          "skillsRequired": "Mindestens eine Fähigkeit ist erforderlich"
+        }
       }
+    },
+    "racTitle": "Geflüchtetenunterkunft",
+    "rac": {
+      "name": "Name",
+      "address": "Adresse",
+      "district": "Bezirk",
+      "cancel": "Abbrechen",
+      "saveChanges": "Änderungen speichern",
+      "editButtonName": "Bearbeiten"
     },
     "communicationSection": {
       "title": "Kommunikationsverfolgung",
@@ -785,7 +1016,7 @@
       "communicationTypes": {
         "briefedVolunteer": "Briefing erfolgt (begleitende*r Freiwillige*r)",
         "firstInquiry": "Erste Anfrage gesendet",
-        "opportunityList": "Angebotsliste gesendet",
+        "opportunityList": "Möglichkeitenliste gesendet",
         "statusUpdate": "Statusaktualisierung",
         "postMatchFollowUp": "Nachverfolgung nach Vermittlung"
       },
@@ -844,7 +1075,7 @@
     "first_steps_question": "Was sind die ersten Schritte, um Freiwilliger zu werden?",
     "first_steps_answer": "Beginnen Sie mit dem Ausfüllen des Freiwilligenantragsformulars auf der Need4Deed-Website.",
     "after_form_question": "Was passiert, nachdem ich das Formular ausgefüllt habe?",
-    "after_form_answer": "Nachdem wir Ihre Präferenzen und Standorte haben, suchen wir nach einem passenden Angebot für Sie und kontaktieren Sie in den nächsten Tagen.",
+    "after_form_answer": "Nachdem wir Ihre Präferenzen und Standorte haben, suchen wir nach einer passenden Möglichkeit für Sie und kontaktieren Sie in den nächsten Tagen.",
     "find_opportunities_question": "Wie finde ich verfügbare Freiwilligenmöglichkeiten?",
     "find_opportunities_answer": "Sehen Sie auf der Seite 'Möglichkeiten' auf der Need4Deed-Website nach aktuellen Freiwilligenrollen.",
     "volunteer_roles_question": "Welche Arten von Freiwilligenrollen werden angeboten?",
@@ -854,7 +1085,7 @@
     "volunteering_time_question": "Wie viel Zeit nimmt das Freiwilligenengagement in Anspruch?",
     "volunteering_time_answer": "Regelmäßiges Freiwilligenengagement erfordert normalerweise etwa 2 Stunden pro Woche oder zweimal im Monat. Unregelmäßiges Freiwilligenengagement kann stattfinden, wann immer Sie Zeit haben, insbesondere bei Veranstaltungen oder Aufgaben wie Übersetzungen bei Arztterminen.",
     "age_requirements_question": "Gibt es Altersanforderungen für Freiwillige?",
-    "age_requirements_answer": "Die Altersanforderungen können variieren, aber die meisten Orte verlangen, dass die Person über 18 Jahre alt ist. Bitte überprüfen Sie die spezifischen Anforderungen in den Angeboten.",
+    "age_requirements_answer": "Die Altersanforderungen können variieren, aber die meisten Orte verlangen, dass die Person über 18 Jahre alt ist. Bitte überprüfen Sie die spezifischen Anforderungen in den Möglichkeiten.",
     "voluntea_gatherings_question": "Was kann ich bei den VolunTea-Treffen erwarten?",
     "voluntea_gatherings_answer": "Die VolunTea-Treffen umfasst die Mission von Need4Deed, Freiwilligenrollen und Unterstützung bei der Suche nach geeigneten Unterkünften für Geflüchtete.",
     "training_question": "Gibt es eine spezielle Schulung?",
@@ -1269,5 +1500,42 @@
     "uploadError": "Hochladen fehlgeschlagen. Bitte versuchen Sie es erneut.",
     "deleteError": "Löschen fehlgeschlagen. Bitte versuchen Sie es erneut.",
     "previewError": "Vorschau fehlgeschlagen. Bitte versuchen Sie es erneut."
+  },
+  "languageNames": {
+    "german": "Deutsch",
+    "english": "Englisch",
+    "arabic": "Arabisch",
+    "farsi/dari": "Farsi/Dari",
+    "farsi": "Farsi",
+    "dari": "Dari",
+    "turkish": "Türkisch",
+    "russian": "Russisch",
+    "ukrainian": "Ukrainisch",
+    "french": "Französisch",
+    "kurmanji": "Kurmanci",
+    "sorani": "Sorani",
+    "armenian": "Armenisch",
+    "belarusian": "Weißrussisch",
+    "chechen": "Tschetschenisch",
+    "chinese": "Chinesisch",
+    "czech": "Tschechisch",
+    "dutch": "Niederländisch",
+    "georgian": "Georgisch",
+    "greek": "Griechisch",
+    "hebrew": "Hebräisch",
+    "hindi": "Hindi",
+    "italian": "Italienisch",
+    "pashto": "Paschtu",
+    "polish": "Polnisch",
+    "punjabi": "Punjabi",
+    "romanes": "Romanes",
+    "romanian": "Rumänisch",
+    "serbian": "Serbisch",
+    "somali": "Somali",
+    "spanish": "Spanisch",
+    "swedish": "Schwedisch",
+    "urdu": "Urdu",
+    "vietnamese": "Vietnamesisch",
+    "other": "Andere"
   }
 }

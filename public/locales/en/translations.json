@@ -323,6 +323,14 @@
     }
   },
   "dashboard": {
+    "common": {
+      "datePrefix": {
+        "appliedOn": "Applied on",
+        "matchedOn": "Matched on",
+        "activeSince": "Active since",
+        "pastSince": "Past since"
+      }
+    },
     "volunteers": {
       "header": "Volunteer Directory",
       "tabs": {
@@ -388,6 +396,7 @@
         "home": "Home",
         "volunteers": "Volunteers",
         "opportunities": "Opportunities",
+        "agents": "Agents",
         "racs": "RAC's",
         "posts": "Posts",
         "calendar": "Calendar",
@@ -440,6 +449,15 @@
       "activityLog": "Activity Log",
       "editButtonName": "Edit",
       "findOppButtonName": "Find Opportunity",
+      "suggestButtonName": "Suggest",
+      "suggestDialog": {
+        "title": "Suggest to this volunteer?",
+        "messageMid": "will be notified that you suggested",
+        "messageEnd": "to them. It will appear in their profile under \"pending\" opportunities.",
+        "confirm": "Suggest",
+        "cancel": "Cancel",
+        "success": "Suggestion sent successfully"
+      },
       "activities": "Activities",
       "volunteerHeader": {
         "statusUpdateSuccess": "Status updated successfully",
@@ -523,7 +541,14 @@
           "past": "Past"
         },
         "match": "Match",
-        "notAMatch": "Not a match"
+        "notAMatch": "Not a match",
+        "markAsActive": "Mark as active",
+        "markAsPast": "Mark as past",
+        "matchSuccess": "Matched",
+        "notAMatchSuccess": "Removed",
+        "markAsActiveSuccess": "Marked as active",
+        "markAsPastSuccess": "Marked as past",
+        "emptyState": "No items in this category yet"
       },
       "contactDetails": {
         "title": "Contact details",
@@ -536,7 +561,12 @@
           "whatsapp": "WhatsApp",
           "telegram": "Telegram",
           "mobilePhone": "Mobile Phone",
-          "email": "Email"
+          "email": "Email",
+          "called": "Called",
+          "email-sent": "Email sent",
+          "briefed": "Briefed",
+          "tried-call": "Tried to call",
+          "not-responding": "Not responding"
         },
         "notProvided": "Not provided",
         "cancel": "Cancel",
@@ -617,6 +647,39 @@
       }
     },
     "opportunities": {
+      "opportunities": "Opportunities",
+      "tabs": {
+        "tab1": "List",
+        "tab2": "Cards",
+        "tab3": "Map"
+      },
+      "status": {
+        "new": "New",
+        "searching": "Searching",
+        "active": "Active",
+        "past": "Past"
+      },
+      "type": {
+        "accompanying": "Accompanying",
+        "regular": "Regular",
+        "events": "Events",
+        "regular-accompanying": "Regular + Accompanying"
+      },
+      "card": {
+        "mainCommunication": "Main communication",
+        "residentsSpeak": "Residents speak",
+        "schedule": "Schedule",
+        "search": "Search"
+      },
+      "filters": {
+        "status": {
+          "header": "Status",
+          "new": "New",
+          "searching": "Searching",
+          "active": "Active",
+          "past": "Past"
+        }
+      },
       "accompanyingTranslation": {
         "en": "German, English",
         "de": "German",
@@ -683,6 +746,119 @@
       "appreciationDeleted": "Appreciation deleted successfully",
       "deleteConfirmTitle": "Delete appreciation?",
       "deleteConfirmText": "\"{{entryType}}\" appreciation entry will be permanently deleted."
+    },
+    "agentProfile": {
+      "agentProfile": "Agent's profile",
+      "registeredSince": "Registered since",
+      "engagementStatus": "Engagement status",
+      "serviceType": "Service Type",
+      "volunteerSearch": "Volunteer search",
+      "trustLevel": "Trust level",
+      "changeStatus": "Change status",
+      "district": "District",
+      "status": {
+        "engagement": {
+          "new": "New",
+          "active": "Active",
+          "unresponsive": "Unresponsive",
+          "inactive": "Inactive"
+        },
+        "volunteerSearch": {
+          "notNeeded": "Not needed",
+          "filled": "Filled",
+          "searching": "Searching"
+        },
+        "serviceType": {
+          "childcare": "Childcare",
+          "welfare": "Welfare",
+          "consultation": "Consultation",
+          "voluntarySupport": "Voluntary support",
+          "tandem": "Tandem",
+          "sport": "Sport",
+          "tutoring": "Tutoring",
+          "refugeeAccommodation": "Refugee-accommodation",
+          "jobCoaching": "Job-coaching",
+          "youth": "Youth"
+        },
+        "trustLevel": {
+          "unknown": "Unknown",
+          "low": "Low",
+          "high": "High"
+        }
+      },
+      "modalData": {
+        "title": "Change engagement status",
+        "options": {
+          "unresponsive": "Unresponsive",
+          "unresponsive_description": "This agent does not respond.",
+          "inactive": "Inactive",
+          "inactive_description": "This agent does not work with the organization anymore."
+        },
+        "cancel": "Cancel",
+        "save": "Save"
+      },
+      "statusUpdateSuccess": "Agent status updated successfully",
+      "contactDetails": {
+        "title": "Contact details",
+        "fullName": "Name",
+        "firstName": "First Name",
+        "middleName": "Middle Name",
+        "lastName": "Last Name",
+        "email": "E-mail",
+        "mobile": "Mobile",
+        "landline": "Landline",
+        "saveSuccess": "Contact details updated successfully",
+        "roles": {
+          "label": "Role",
+          "management": "Management",
+          "volunteer_coordinator": "Volunteer coordinator",
+          "social_work": "Social work",
+          "childcare": "Childcare",
+          "coordination": "Coordination"
+        },
+        "cancel": "Cancel",
+        "saveChanges": "Save changes",
+        "edit": "Edit",
+        "validation": {
+          "nameRequired": "Name is required",
+          "addressRequired": "Address is required",
+          "districtRequired": "District is required",
+          "mobileRequired": "Mobile number is required",
+          "mobileInvalid": "Mobile number must start with + and contain only digits and spaces",
+          "emailRequired": "Email is required",
+          "emailInvalid": "Please enter a valid email address",
+          "roleRequired": "Role is required",
+          "fullNameRequired": "Name is required",
+          "fullNameInvalid": "Please enter a valid name",
+          "landlineInvalid": "Landline number must start with + and contain only digits and spaces"
+        }
+      },
+      "organisationDetails": {
+        "title": "Organisation details",
+        "edit": "Edit",
+        "about": "About",
+        "website": "Website",
+        "address": "Address",
+        "organisationType": "Type of organisation",
+        "operator": "Operator / Träger",
+        "services": "Leistungen",
+        "clientLanguages": "Client languages",
+        "cancel": "Cancel",
+        "saveChanges": "Save changes",
+        "validation": {
+          "required": "This field is required",
+          "websiteInvalid": "Website must start with http:// or https://",
+          "clientLanguagesRequired": "At least one language is required"
+        }
+      },
+      "opportunitiesSec": {
+        "postOpportunity": "Post opportunity",
+        "tabs": {
+          "lookingForVolunteers": "Looking for volunteers",
+          "active": "Active",
+          "past": "Past"
+        }
+      }
     },
     "opportunityProfile": {
       "opportunityProfile": "Opportunity's profile",
@@ -754,7 +930,62 @@
         "validation": {
           "invalidTimeFormat": "Invalid time format (use HH:MM)"
         }
+      },
+      "volunteersSec": {
+        "title": "Volunteers",
+        "findVolunteers": "Find volunteers",
+        "suggestButtonName": "Suggest",
+        "suggestDialog": {
+          "title": "Suggest for this opportunity?",
+          "messageStart": "The responsible of",
+          "messageMid": "will be notified that you suggested",
+          "messageEnd": "to them. It will appear in their profile under \"pending\" volunteers.",
+          "confirm": "Suggest",
+          "cancel": "Cancel",
+          "success": "Suggestion sent successfully"
+        },
+        "appliedOn": "Applied on",
+        "tabs": {
+          "pending": "Pending",
+          "matched": "Matched",
+          "active": "Active",
+          "past": "Past"
+        },
+        "emptyState": "No volunteers in this category yet",
+        "statusUpdateSuccess": "Volunteer status updated successfully",
+        "removeSuccess": "Volunteer removed successfully"
+      },
+      "opportunityDetails": {
+        "title": "Opportunity details",
+        "description": "Description",
+        "mainCommunication": "Main communication",
+        "residentsSpeak": "Residents speak",
+        "schedule": "Schedule",
+        "numberOfVolunteers": "Number of volunteers",
+        "activities": "Activities",
+        "skills": "Skills & experience",
+        "descriptionHint": "Max. {{max}} characters",
+        "cancel": "Cancel",
+        "saveChanges": "Save changes",
+        "validation": {
+          "descriptionRequired": "Description is required",
+          "descriptionTooLong": "Description is too long",
+          "numberOfVolunteersRequired": "Number of volunteers must be at least 1",
+          "languageRequired": "At least one language is required",
+          "availabilityRequired": "At least one time slot must be selected",
+          "activitiesRequired": "At least one activity is required",
+          "skillsRequired": "At least one skill is required"
+        }
       }
+    },
+    "racTitle": "Refugee accommodation centre",
+    "rac": {
+      "name": "Name",
+      "address": "Address",
+      "district": "District",
+      "cancel": "Cancel",
+      "saveChanges": "Save changes",
+      "editButtonName": "Edit"
     },
     "communicationSection": {
       "title": "Communication Tracker",
@@ -901,5 +1132,42 @@
       "deleteError": "Delete failed. Please try again.",
       "previewError": "Preview failed. Please try again."
     }
+  },
+  "languageNames": {
+    "german": "German",
+    "english": "English",
+    "arabic": "Arabic",
+    "farsi/dari": "Farsi/Dari",
+    "farsi": "Farsi",
+    "dari": "Dari",
+    "turkish": "Turkish",
+    "russian": "Russian",
+    "ukrainian": "Ukrainian",
+    "french": "French",
+    "kurmanji": "Kurmanji",
+    "sorani": "Sorani",
+    "armenian": "Armenian",
+    "belarusian": "Belarusian",
+    "chechen": "Chechen",
+    "chinese": "Chinese",
+    "czech": "Czech",
+    "dutch": "Dutch",
+    "georgian": "Georgian",
+    "greek": "Greek",
+    "hebrew": "Hebrew",
+    "hindi": "Hindi",
+    "italian": "Italian",
+    "pashto": "Pashto",
+    "polish": "Polish",
+    "punjabi": "Punjabi",
+    "romanes": "Romanes",
+    "romanian": "Romanian",
+    "serbian": "Serbian",
+    "somali": "Somali",
+    "spanish": "Spanish",
+    "swedish": "Swedish",
+    "urdu": "Urdu",
+    "vietnamese": "Vietnamese",
+    "other": "Other"
   }
 }

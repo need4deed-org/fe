@@ -11,9 +11,11 @@ export const apiPathLogin = `/${apiPrefix}/auth/login`;
 export const apiPathAuthRefresh = `/${apiPrefix}/auth/refresh`;
 export const apiPathAuthEmailDomain = `/${apiPrefix}/auth-email-domain/`;
 export const apiPathOpportunity = `/${apiPrefix}/opportunity`;
+export const apiPathAgent = `/${apiPrefix}/agent`;
 export const apiPathOption = `/${apiPrefix}/option`;
-export const apiProfilePath = `/volunteer/9`;
+export const apiPathOpportunityVolunteer = `/${apiPrefix}/opportunity-volunteer`;
 export const apiPathMe = `/${apiPrefix}/user/me`;
+export const apiPathPerson = `/${apiPrefix}/person/`;
 
 export const cacheTTL = 1000 * 60 * 5; // 5 minutes
 
@@ -51,10 +53,19 @@ export enum DashboardRoutes {
   Home = "/dashboard/home",
   Volunteers = "/dashboard/volunteers",
   Opportunities = "/dashboard/opportunities",
+  Agents = "/dashboard/agents",
   Racs = "/dashboard/racs",
   Posts = "/dashboard/posts",
   Calendar = "/dashboard/calendar",
   Profile = "/dashboard/profile",
+}
+
+export enum AgentRoles {
+  MANAGEMENT = "management",
+  VOLUNTEER_COORDINATOR = "volunteer_coordinator",
+  SOCIAL_WORK = "social_work",
+  CHILDCARE = "childcare",
+  COORDINATION = "coordination",
 }
 
 export const questionMark = "?";
@@ -62,3 +73,7 @@ export const questionMark = "?";
 export const supportedLangs = Object.values(Lang) as string[];
 
 export const EMPTY_PLACEHOLDER_VALUE = "–";
+
+export const MAX_DESCRIPTION_LENGTH = 500;
+
+export const PHONE_NUMBER_REGEX = /^\+[0-9\s]+$/;

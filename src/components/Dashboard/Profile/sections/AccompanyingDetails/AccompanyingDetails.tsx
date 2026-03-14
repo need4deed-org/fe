@@ -7,7 +7,8 @@ import { ApiOpportunityGet } from "need4deed-sdk";
 import { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { EditableSectionRef } from "../shared/types";
+import { EditableSectionProps, EditableSectionRef } from "../shared/types";
+import { useEditingChangeNotifier } from "../shared/useEditingChangeNotifier";
 import { AccompanyingDetailsDisplay } from "./AccompanyingDetailsDisplay";
 import { AccompanyingDetailsEdit } from "./AccompanyingDetailsEdit";
 import { getInitialFormValues, getMinAppointmentDate, isAccompanyingType } from "./helpers";
@@ -16,16 +17,18 @@ import { Container, NotAccompanyingMessage } from "./styles";
 
 type Props = {
   opportunity: ApiOpportunityGet;
-};
+} & EditableSectionProps;
 
 export const AccompanyingDetails = forwardRef<EditableSectionRef, Props>(function AccompanyingDetails(
-  { opportunity },
+  { opportunity, onEditingChange },
   ref,
 ) {
   const { t, i18n } = useTranslation();
   const locale = i18n.language === "de" ? de : enUS;
   const { mutate: updateAccompanyingDetails, isPending } = useUpdateOpportunityAccompanyingDetails(opportunity.id);
   const [isEditing, setIsEditing] = useState(false);
+
+  useEditingChangeNotifier(isEditing, onEditingChange);
   const { data: apiLanguages } = useApiLanguages();
   const showFullDetails = isAccompanyingType(opportunity.volunteerType);
   const minAppointmentDate = useMemo(() => getMinAppointmentDate(), []);

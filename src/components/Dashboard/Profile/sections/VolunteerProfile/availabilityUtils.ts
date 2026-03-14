@@ -3,8 +3,10 @@ import { getScheduleState } from "@/components/forms/utils";
 import { ApiAvailability, Occasionally } from "need4deed-sdk";
 import { DAY_MAP, REVERSE_DAY_MAP } from "./constants";
 
-export function apiToFormAvailability(apiAvailability: ApiAvailability[]): Availability {
+export function apiToFormAvailability(apiAvailability: ApiAvailability[] | undefined): Availability {
   const formAvailability = getScheduleState();
+
+  if (!apiAvailability) return formAvailability;
 
   apiAvailability.forEach((avail) => {
     if (!avail.daytime) return;

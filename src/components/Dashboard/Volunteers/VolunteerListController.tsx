@@ -17,6 +17,7 @@ interface VolunteerListControllerProps {
   isFiltersOpen: boolean;
   filter: CardsFilter;
   apiFilterOptions?: ApiOptionLists;
+  opportunityId?: string;
 }
 
 export function VolunteerListController({
@@ -25,12 +26,17 @@ export function VolunteerListController({
   isFiltersOpen,
   filter,
   apiFilterOptions,
+  opportunityId,
 }: VolunteerListControllerProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const serializedFilter = serializeFilters(filter, undefined, false, {
     serializeToIDs: true,
     apiFilterOptions,
   }) as URLSearchParams;
+
+  if (opportunityId) {
+    serializedFilter.set("opportunity", opportunityId);
+  }
   const { data, count } = useGetQuery<ApiVolunteerGetList[]>({
     queryKey: ["volunteers"],
     apiPath: apiPathVolunteer,
@@ -56,6 +62,7 @@ export function VolunteerListController({
       rows={rows + (isFiltersOpen ? 1 : 0)}
       currentPage={currentPage}
       setCurrentPage={setCurrentPage}
+      opportunityId={opportunityId}
     />
   );
 }

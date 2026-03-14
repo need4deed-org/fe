@@ -1,5 +1,8 @@
 import styled from "styled-components";
 
+import { Paragraph } from "@/components/styled/text";
+import { DashboardRoutes } from "@/config/constants";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
 import {
   BookOpenTextIcon,
   CalendarDotsIcon,
@@ -8,11 +11,9 @@ import {
   ShootingStarIcon,
   UserCheckIcon,
 } from "@phosphor-icons/react";
-import { useTranslation } from "react-i18next";
-import { Paragraph } from "@/components/styled/text";
 import { usePathname, useRouter } from "next/navigation";
-import { DashboardRoutes } from "@/config/constants";
 import { ElementType } from "react";
+import { useTranslation } from "react-i18next";
 
 const BarContainer = styled.div`
   display: flex;
@@ -84,6 +85,16 @@ export default function NavigationBar() {
   const { t } = useTranslation();
   const router = useRouter();
   const currentPathname = usePathname();
+  const user = useCurrentUser();
+  const userInitials = user?.fullName
+    ? user.fullName
+        .split(" ")
+        .filter(Boolean)
+        .map((part) => part[0])
+        .join("")
+        .toUpperCase()
+        .slice(0, 2)
+    : user?.firstName?.[0]?.toUpperCase() || "";
 
   const options: BarOptions[] = [
     { label: t("dashboard.home.sidebar.home"), Icon: HouseIcon, route: DashboardRoutes.Home },
@@ -98,9 +109,9 @@ export default function NavigationBar() {
       route: DashboardRoutes.Opportunities,
     },
     {
-      label: t("dashboard.home.sidebar.racs"),
+      label: t("dashboard.home.sidebar.agents"),
       Icon: BookOpenTextIcon,
-      route: DashboardRoutes.Racs,
+      route: DashboardRoutes.Agents,
     },
     {
       label: t("dashboard.home.sidebar.posts"),
@@ -114,7 +125,7 @@ export default function NavigationBar() {
     },
     {
       label: t("dashboard.home.sidebar.profile"),
-      text: "OA", // TODO; after user login enabled, use user info in here !
+      text: userInitials,
       route: DashboardRoutes.Profile,
     },
   ];

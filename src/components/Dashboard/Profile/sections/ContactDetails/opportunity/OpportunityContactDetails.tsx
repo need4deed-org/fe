@@ -1,15 +1,16 @@
 "use client";
-import Button from "@/components/core/button/Button/Button";
-import { EditableField } from "@/components/EditableField/EditableField";
 import { useUpdateOpportunityContact } from "@/hooks/useUpdateOpportunityContact";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ApiOpportunityGet, PreferredCommunicationType } from "need4deed-sdk";
 import { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { FormButtonRow, FormContainer, FormDetails } from "../../shared/styles";
-import { EditableSectionRef } from "../../shared/types";
+import { FormContainer } from "../../shared/styles";
+import { EditableSectionProps, EditableSectionRef } from "../../shared/types";
+import { useEditingChangeNotifier } from "../../shared/useEditingChangeNotifier";
 import { useEnumTranslation } from "../shared";
+import { OpportunityContactDetailsDisplay } from "./OpportunityContactDetailsDisplay";
+import { OpportunityContactDetailsEdit } from "./OpportunityContactDetailsEdit";
 import {
   createOpportunityContactDetailsSchema,
   OpportunityContactDetailsFormData,
@@ -17,17 +18,19 @@ import {
 
 type Props = {
   opportunity: ApiOpportunityGet;
-};
+} & EditableSectionProps;
 
 const COMMUNICATION_TYPES = Object.values(PreferredCommunicationType);
 
 export const OpportunityContactDetails = forwardRef<EditableSectionRef, Props>(function OpportunityContactDetails(
-  { opportunity },
+  { opportunity, onEditingChange },
   ref,
 ) {
   const { t } = useTranslation();
   const { mutate: updateContact, isPending } = useUpdateOpportunityContact(opportunity.id);
   const [isEditing, setIsEditing] = useState(false);
+
+  useEditingChangeNotifier(isEditing, onEditingChange);
 
   const { options, keysToLabels, labelsToKeys } = useEnumTranslation(
     COMMUNICATION_TYPES,
@@ -36,27 +39,21 @@ export const OpportunityContactDetails = forwardRef<EditableSectionRef, Props>(f
 
   const schema = createOpportunityContactDetailsSchema(t);
 
-  const initialFormValues = useMemo((): OpportunityContactDetailsFormData => {
-    const contact = opportunity.contact;
+  const initialFormValues = useMemo(
+    () => ({
+      ...opportunity.contact,
+      waysToContact: Array.isArray(opportunity.contact.waysToContact) ? opportunity.contact.waysToContact : [],
+    }),
+    [opportunity.contact],
+  );
 
-    return {
-      name: contact?.name ?? "",
-      phone: contact?.phone ?? "",
-      email: contact?.email ?? "",
-      waysToContact: contact?.waysToContact ?? [],
-    };
-  }, [opportunity]);
-
-  const {
-    control,
-    handleSubmit,
-    reset,
-    formState: { errors, isValid, isDirty },
-  } = useForm<OpportunityContactDetailsFormData>({
+  const methods = useForm<OpportunityContactDetailsFormData>({
     resolver: zodResolver(schema),
     mode: "onChange",
     defaultValues: initialFormValues,
   });
+
+  const { handleSubmit, reset } = methods;
 
   const handleEditClick = () => setIsEditing(true);
 
@@ -71,6 +68,7 @@ export const OpportunityContactDetails = forwardRef<EditableSectionRef, Props>(f
     updateContact(
       {
         contact: {
+          id: opportunity.contact.id,
           name: values.name,
           phone: values.phone,
           email: values.email,
@@ -87,93 +85,22 @@ export const OpportunityContactDetails = forwardRef<EditableSectionRef, Props>(f
     }
   }, [initialFormValues, isEditing, reset]);
 
-  const mode = isEditing ? "edit" : "display";
-
   return (
-    <FormContainer data-testid="opportunity-contact-details-container" $isEditing={isEditing}>
-      <FormDetails>
-        <Controller
-          name="name"
-          control={control}
-          render={({ field }) => (
-            <EditableField
-              mode={mode}
-              type="text"
-              label={t("dashboard.opportunityProfile.contactDetails.name")}
-              value={field.value}
-              setValue={field.onChange}
-              errorMessage={errors.name?.message}
-            />
-          )}
-        />
-
-        <Controller
-          name="phone"
-          control={control}
-          render={({ field }) => (
-            <EditableField
-              mode={mode}
-              type="text"
-              label={t("dashboard.opportunityProfile.contactDetails.phone")}
-              value={field.value}
-              setValue={field.onChange}
-              errorMessage={errors.phone?.message}
-            />
-          )}
-        />
-
-        <Controller
-          name="email"
-          control={control}
-          render={({ field }) => (
-            <EditableField
-              mode={mode}
-              type="text"
-              label={t("dashboard.opportunityProfile.contactDetails.email")}
-              value={field.value}
-              setValue={field.onChange}
-              errorMessage={errors.email?.message}
-            />
-          )}
-        />
-
-        <Controller
-          name="waysToContact"
-          control={control}
-          render={({ field }) => (
-            <EditableField
-              mode={mode}
-              type="checkbox-list"
-              label={t("dashboard.opportunityProfile.contactDetails.waysToContact.label")}
-              value={keysToLabels(field.value)}
-              setValue={(value) => field.onChange(labelsToKeys(Array.isArray(value) ? value : [value]))}
-              options={options}
-              errorMessage={errors.waysToContact?.message}
-            />
-          )}
-        />
-      </FormDetails>
-
-      {isEditing && (
-        <FormButtonRow>
-          <Button
-            text={t("dashboard.opportunityProfile.contactDetails.cancel")}
-            onClick={handleCancel}
-            width="auto"
-            padding="var(--volunteer-profile-section-card-header-button-padding)"
-            backgroundcolor="var(--color-white)"
-            textColor="var(--color-aubergine)"
-            border="var(--volunteer-profile-section-card-header-button-border)"
+    <FormProvider {...methods}>
+      <FormContainer data-testid="opportunity-contact-details-container" $isEditing={isEditing}>
+        {isEditing ? (
+          <OpportunityContactDetailsEdit
+            options={options}
+            keysToLabels={keysToLabels}
+            labelsToKeys={labelsToKeys}
+            onCancel={handleCancel}
+            onSubmit={handleSubmit(onSubmit)}
+            isPending={isPending}
           />
-          <Button
-            text={t("dashboard.opportunityProfile.contactDetails.saveChanges")}
-            onClick={handleSubmit(onSubmit)}
-            width="auto"
-            padding="var(--volunteer-profile-section-card-header-button-padding)"
-            disabled={!isDirty || !isValid || isPending}
-          />
-        </FormButtonRow>
-      )}
-    </FormContainer>
+        ) : (
+          <OpportunityContactDetailsDisplay keysToLabels={keysToLabels} />
+        )}
+      </FormContainer>
+    </FormProvider>
   );
 });

@@ -2,7 +2,7 @@ import { IconDiv } from "@/components/styled/container";
 import { PropsWithChildren, ReactNode } from "react";
 import styled from "styled-components";
 import { iconNameMap } from "./icon";
-import { IconName } from "../types/types";
+import { IconName } from "../types";
 import { Heading2 } from "@/components/styled/text";
 import { Button } from "@/components/core/button";
 
@@ -18,6 +18,7 @@ export const Card = styled.div`
 const CardHeader = styled.div`
   display: flex;
   justify-content: space-between;
+  height: var(--volunteer-profile-section-card-header-height);
 `;
 
 const CardHeaderInfo = styled.div`
@@ -30,11 +31,19 @@ export interface SectionCardProps extends PropsWithChildren {
   iconName: IconName;
   title: string;
   headerButtonName?: string;
+  headerButtonDisabled?: boolean;
   onHeaderButtonClick?: () => void;
   subComponent: ReactNode;
 }
 
-export const SectionCard = ({ iconName, title, headerButtonName, onHeaderButtonClick, subComponent }: SectionCardProps) => {
+export const SectionCard = ({
+  iconName,
+  title,
+  headerButtonName,
+  headerButtonDisabled,
+  onHeaderButtonClick,
+  subComponent,
+}: SectionCardProps) => {
   return (
     <Card>
       <CardHeader>
@@ -50,6 +59,7 @@ export const SectionCard = ({ iconName, title, headerButtonName, onHeaderButtonC
             height="var(--volunteer-profile-section-card-header-button-height)"
             textFontSize="var(--volunteer-profile-section-card-header-button-textFontSize)"
             padding="var(--volunteer-profile-section-card-header-button-padding)"
+            disabled={headerButtonDisabled}
           />
         )}
       </CardHeader>
