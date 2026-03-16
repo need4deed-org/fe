@@ -605,6 +605,63 @@
         }
       }
     },
+    "agents": {
+      "agents": "RAC-Verzeichnis",
+      "tabs": {
+        "tab1": "Liste",
+        "tab2": "Karten",
+        "tab3": "Karte"
+      },
+      "status": {
+        "new": "Neu",
+        "searching": "Suchend",
+        "active": "Aktiv",
+        "past": "Vergangen"
+      },
+      "type": {
+        "accompanying": "Begleitend",
+        "regular": "Regulär",
+        "events": "Veranstaltungen",
+        "regular-accompanying": "Regulär + Begleitend"
+      },
+      "card": {
+        "mainCommunication": "Hauptkommunikation",
+        "residentsSpeak": "Bewohner sprechen",
+        "schedule": "Zeitplan",
+        "search": "Suche"
+      },
+      "filters": {
+        "status": {
+          "header": "Status",
+          "new": "Neu",
+          "inactive": "Inaktiv",
+          "active": "Aktiv",
+          "unresponsive": "Reagiert nicht"
+        },
+        "volunteerSearch": {
+          "header": "Freiwilligensuche",
+          "searching": "Suchend",
+          "volunteers-found": "Besetzt",
+          "not-needed": "Nicht benötigt"
+        }
+      },
+      "accompanyingTranslation": {
+        "en": "Deutsch, Englisch",
+        "de": "Deutsch",
+        "no": "Keine Übersetzung erforderlich"
+      },
+      "defaultMainCommunication": "Englisch, Deutsch",
+      "otherCategory": "Allgemeine Freiwilligenarbeit",
+      "goToProfile": "Zum Profil",
+      "mainCommunication": "Hauptkommunikation",
+      "translationTo": "Übersetzung nach",
+      "residentsSpeak": "Bewohner sprechen",
+      "languages": "Sprachen",
+      "schedule": "Zeitplan",
+      "district": "Stadtviertel",
+      "dateOfAppointment": "Termindatum",
+      "description": "Beschreibung"
+    },
     "opportunities": {
       "opportunities": "Möglichkeiten",
       "tabs": {
