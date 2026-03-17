@@ -536,10 +536,10 @@
       },
       "opportunitiesSec": {
         "tabs": {
-          "pending": "Ausstehend",
-          "matched": "Zugeordnet",
-          "active": "Aktiv",
-          "past": "Vergangen"
+          "opp-pending": "Ausstehend",
+          "opp-matched": "Zugeordnet",
+          "opp-active": "Aktiv",
+          "opp-past": "Vergangen"
         },
         "match": "Match",
         "notAMatch": "Kein Match",
@@ -868,11 +868,15 @@
         "saveSuccess": "Kontaktdaten erfolgreich aktualisiert",
         "roles": {
           "label": "Rolle",
-          "management": "Geschäftsführung",
-          "volunteer_coordinator": "Freiwilligenkoordinator/in",
-          "social_work": "Sozialarbeit",
-          "childcare": "Kinderbetreuung",
-          "coordination": "Koordination"
+          "social-worker": "Sozialarbeiter",
+          "volunteer-coordinator": "Ehrenamtskoordinator",
+          "manager": "Leitung",
+          "project-coordinator": "Projektkoordinator",
+          "coordination": "Koordination",
+          "psychologist": "Psychologe",
+          "project-staff": "Projektmitarbeiter",
+          "childcare-worker": "Kinderbetreuer",
+          "other": "Sonstiges"
         },
         "cancel": "Abbrechen",
         "saveChanges": "Änderungen speichern",

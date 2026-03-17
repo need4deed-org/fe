@@ -535,10 +535,10 @@
       },
       "opportunitiesSec": {
         "tabs": {
-          "pending": "Pending",
-          "matched": "Matched",
-          "active": "Active",
-          "past": "Past"
+          "opp-pending": "Pending",
+          "opp-matched": "Matched",
+          "opp-active": "Active",
+          "opp-past": "Past"
         },
         "match": "Match",
         "notAMatch": "Not a match",
@@ -867,11 +867,15 @@
         "saveSuccess": "Contact details updated successfully",
         "roles": {
           "label": "Role",
-          "management": "Management",
-          "volunteer_coordinator": "Volunteer coordinator",
-          "social_work": "Social work",
-          "childcare": "Childcare",
-          "coordination": "Coordination"
+          "social-worker": "Social worker",
+          "volunteer-coordinator": "Volunteer coordinator",
+          "manager": "Manager",
+          "project-coordinator": "Project coordinator",
+          "coordination": "Coordination",
+          "psychologist": "Psychologist",
+          "project-staff": "Project staff",
+          "childcare-worker": "Childcare worker",
+          "other": "Other"
         },
         "cancel": "Cancel",
         "saveChanges": "Save changes",
