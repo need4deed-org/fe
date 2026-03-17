@@ -3,7 +3,7 @@
 import { AgentRoles } from "@/config/constants";
 import { useUpdateAgentContact } from "@/hooks/useUpdateAgentContact";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
+import { forwardRef, useImperativeHandle, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { ApiAgentProfileGet } from "../../../types";
@@ -30,7 +30,7 @@ export const AgentContactDetails = forwardRef<ContactDetailsRef, Props>(function
   ref,
 ) {
   const { t } = useTranslation();
-  const { mutate: updateAgent, isPending } = useUpdateAgentContact(String(agent?.id));
+  const { mutate: updateAgent, isPending } = useUpdateAgentContact(String(agent?.representative?.id));
   const [isEditing, setIsEditing] = useState(false);
 
   useEditingChangeNotifier(isEditing, onEditingChange);
@@ -42,7 +42,7 @@ export const AgentContactDetails = forwardRef<ContactDetailsRef, Props>(function
 
   const schema = createAgentContactDetailsSchema(t);
 
-  const initialFormValues = agent?.contactDetails;
+  const initialFormValues = agent?.representative;
 
   const methods = useForm<AgentContactDetailsFormData>({
     resolver: zodResolver(schema),
@@ -62,26 +62,14 @@ export const AgentContactDetails = forwardRef<ContactDetailsRef, Props>(function
   };
 
   const onSubmit = (values: AgentContactDetailsFormData) => {
-    updateAgent(
-      {
-        contactDetails: {
-          ...values,
-        },
+    updateAgent(values, {
+      onSuccess: () => {
+        reset(values);
+        setIsEditing(false);
       },
-      {
-        onSuccess: () => {
-          handleCancel();
-        },
-      },
-    );
+    });
   };
 
-  // Reset form when person data changes (after successful mutation & refetch)
-  useEffect(() => {
-    if (!isEditing) {
-      reset(initialFormValues);
-    }
-  }, [initialFormValues, isEditing, reset]);
   return (
     <FormProvider {...methods}>
       <FormContainer $isEditing={isEditing}>
