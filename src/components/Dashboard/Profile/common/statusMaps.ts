@@ -1,4 +1,3 @@
-import type React from "react";
 import {
   ArrowsClockwiseIcon,
   BinocularsIcon,
@@ -24,6 +23,7 @@ import {
   VolunteerStateMatchType,
   VolunteerStateTypeType,
 } from "need4deed-sdk";
+import type React from "react";
 import { AgentEngagementStatus, AgentTrustLevel, AgentVolunteerSearch } from "../types";
 
 export type StatusValue =
@@ -54,7 +54,7 @@ export const statusColorMap: Record<string, string> = {
   [OpportunityStatusType.SEARCHING]: "var(--color-violet-100)",
   [OpportunityStatusType.PAST]: "var(--color-grey-50)",
   [AgentVolunteerSearch.NOT_NEEDED]: "var(--color-grey-50)",
-  [AgentVolunteerSearch.FILLED]: "var(--color-green-100)",
+  [AgentVolunteerSearch.VOLUNTEERS_FOUND]: "var(--color-green-100)",
   [AgentVolunteerSearch.SEARCHING]: "var(--color-red-50)",
   [AgentTrustLevel.UNKNOWN]: "var(--color-grey-50)",
   [AgentTrustLevel.LOW]: "var(--color-red-50)",
@@ -81,7 +81,7 @@ export const statusIconMap: Record<string, IconComponent> = {
   [OpportunityStatusType.SEARCHING]: HourglassIcon,
   [OpportunityStatusType.PAST]: StopCircleIcon,
   [AgentVolunteerSearch.NOT_NEEDED]: HandPalmIcon,
-  [AgentVolunteerSearch.FILLED]: CheckCircleIcon,
+  [AgentVolunteerSearch.VOLUNTEERS_FOUND]: CheckCircleIcon,
   [AgentVolunteerSearch.SEARCHING]: BinocularsIcon,
   [AgentTrustLevel.UNKNOWN]: QuestionIcon,
   [AgentTrustLevel.LOW]: SmileySadIcon,
