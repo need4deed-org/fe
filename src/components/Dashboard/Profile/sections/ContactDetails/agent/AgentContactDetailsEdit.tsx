@@ -1,10 +1,10 @@
 import Button from "@/components/core/button/Button/Button";
 import { EditableField } from "@/components/EditableField/EditableField";
+import { AgentRoles } from "@/config/constants";
 import { Controller, ControllerRenderProps, useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { ButtonRow, FormDetails } from "../../shared/styles";
 import { AgentContactDetailsFormData } from "./agentContactDetailsSchema";
-import { AgentRoles } from "@/config/constants";
 
 type Props = {
   options: string[];
@@ -86,7 +86,7 @@ export const AgentContactDetailsEdit = ({
               mode="edit"
               type="checkbox-list"
               label={t("dashboard.agentProfile.contactDetails.roles.label")}
-              value={field.value ? keysToLabels(field.value) : []}
+              value={field.value ? keysToLabels([field.value]) : []}
               setValue={(value) => field.onChange(labelsToKeys(Array.isArray(value) ? value : [value]))}
               options={options}
               errorMessage={errors.role?.message}
