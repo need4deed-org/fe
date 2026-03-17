@@ -631,6 +631,19 @@
         "search": "Suche"
       },
       "filters": {
+        "type": {
+          "header": "Type",
+          "ae": "Aufnahmeeinrichtung",
+          "gu1": "Gemeinschaftsunterkunft 1",
+          "gu2": "Gemeinschaftsunterkunft 2",
+          "gu2+": "Gemeinschaftsunterkunft 2+",
+          "gu3": "Gemeinschaftsunterkunft 3",
+          "nu": "Notunterkunft",
+          "asog": "ASOG",
+          "counseling-center": "Beratungsstelle",
+          "tandem": "Tandem-Projekt",
+          "multiple-social-support": "Multiple soziale Unterstützung"
+        },
         "status": {
           "header": "Status",
           "new": "Neu",
@@ -814,6 +827,7 @@
       "trustLevel": "Vertrauensstufe",
       "changeStatus": "Status ändern",
       "district": "Bezirk",
+      "type": "Typ",
       "status": {
         "engagement": {
           "new": "Neu",

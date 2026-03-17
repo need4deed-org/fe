@@ -1,34 +1,28 @@
 import {
-  AgentEngagementStatusType,
-  AgentServiceType,
   AgentVolunteerSearchType,
-  ApiAgentGet,
-  ApiAgentGetList,
   OptionById,
   ApiOptionLists,
   QueryParamsKeys,
+  AgentType,
+  ApiAgentGetList,
 } from "need4deed-sdk";
 
 import { ReadonlyURLSearchParams } from "next/navigation";
 import { AgentCardsFilter } from "./Filters/types";
 
-type AgentListItem = ApiAgentGetList & ApiAgentGet;
-
-export function getNormalizedAgent(agent: AgentListItem): Omit<
-  AgentListItem,
-  "district" | "statusEngagement" | "volunteerSearch" | "serviceType"
+export function getNormalizedAgent(agent: ApiAgentGetList): Omit<
+  ApiAgentGetList,
+  "district" | "volunteerSearch" | "type"
 > & {
   district: OptionById | undefined;
-  statusEngagement: AgentEngagementStatusType;
   volunteerSearch: AgentVolunteerSearchType;
-  serviceType: AgentServiceType[] | undefined;
+  type: AgentType;
 } {
   return {
     ...agent,
+    type: agent.type,
     district: agent.district,
-    statusEngagement: agent.statusEngagement,
     volunteerSearch: agent.volunteerSearch,
-    serviceType: agent.serviceType,
   };
 }
 
@@ -57,10 +51,10 @@ export function serializeAgentFilters(
     }
   });
 
-  params.delete("status");
-  Object.entries(filter.status).forEach(([key, value]) => {
+  params.delete("type");
+  Object.entries(filter.type).forEach(([key, value]) => {
     if (value === true) {
-      params.append("status", key);
+      params.append("type", key);
     }
   });
 
@@ -88,9 +82,9 @@ export function deserializeAgentFilters(
     if (newFilter.district[d] !== undefined) newFilter.district[d] = true;
   });
 
-  const queryStatus = searchParams.getAll("status");
-  queryStatus.forEach((s) => {
-    if (newFilter.status[s] !== undefined) newFilter.status[s] = true;
+  const queryType = searchParams.getAll("type");
+  queryType.forEach((s) => {
+    if (newFilter.type[s] !== undefined) newFilter.type[s] = true;
   });
 
   const queryVolunteerSearch = searchParams.getAll("volunteerSearch");

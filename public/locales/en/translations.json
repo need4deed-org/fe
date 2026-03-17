@@ -672,6 +672,19 @@
         "search": "Search"
       },
       "filters": {
+        "type": {
+          "header": "Type",
+          "ae": "Reception Center",
+          "gu1": "Community Accommodation 1",
+          "gu2": "Community Accommodation 2",
+          "gu2+": "Community Accommodation 2+",
+          "gu3": "Community Accommodation 3",
+          "nu": "Emergency Accommodation",
+          "asog": "ASOG",
+          "counseling-center": "Counseling-center",
+          "tandem": "Tandem",
+          "multiple-social-support": "Multiple-social-support"
+        },
         "status": {
           "header": "Status",
           "new": "New",
@@ -813,6 +826,7 @@
       "trustLevel": "Trust level",
       "changeStatus": "Change status",
       "district": "District",
+      "type": "Type",
       "status": {
         "engagement": {
           "new": "New",

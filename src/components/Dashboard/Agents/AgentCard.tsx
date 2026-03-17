@@ -1,31 +1,30 @@
 "use client";
 
 import { MapPinIcon } from "@phosphor-icons/react";
-import { ApiAgentGet } from "need4deed-sdk";
+import { ApiAgentGetList, Lang } from "need4deed-sdk";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 
 import { IconDiv } from "@/components/styled/container";
 
-import { Heading2, Heading4, Paragraph } from "@/components/styled/text";
+import { Heading4, Paragraph } from "@/components/styled/text";
 import { getNormalizedAgent } from "./helpers";
-import { createEngagementStatusLabelMap, createServiceTypeMap, createVolunteerSearchMap } from "./icon";
+import { createAgentTypeMap, createVolunteerSearchMap } from "./icon";
 import { StatusBadge } from "../common/StatusBadge";
 import { Card, CardDetailsInfo, CardHeader, CardHeaderInfo, DistrictContainer, DistrictDiv } from "./styles";
 
 interface Props {
-  agent: ApiAgentGet;
+  agent: ApiAgentGetList;
 }
 
 export const AgentCard = ({ agent }: Props) => {
   const { t, i18n } = useTranslation();
   const router = useRouter();
 
-  const { id, title, district, statusEngagement, volunteerSearch, serviceType } = getNormalizedAgent(agent);
+  const { id, title, district, volunteerSearch } = getNormalizedAgent(agent);
 
-  const engagementStatusLabels = createEngagementStatusLabelMap(t);
   const volunteerSearchLabels = createVolunteerSearchMap(t);
-  const serviceTypeLabels = createServiceTypeMap(t);
+  const agentTypeLabels = createAgentTypeMap(t);
 
   const handleCardClick = () => {
     if (!id) return;
@@ -37,25 +36,17 @@ export const AgentCard = ({ agent }: Props) => {
     <Card onClick={handleCardClick}>
       <CardHeader>
         <CardHeaderInfo>
-          <Heading2>{title}</Heading2>
+          <Heading4>{title}</Heading4>
         </CardHeaderInfo>
       </CardHeader>
       <CardDetailsInfo>
-        <Heading4>{t("dashboard.agentProfile.engagementStatus")}</Heading4>
-        <StatusBadge status={agent?.statusEngagement} label={engagementStatusLabels[statusEngagement]} />
+        <Heading4>{t("dashboard.agentProfile.type")}</Heading4>
+        <Paragraph> {agentTypeLabels[agent.type]}</Paragraph>
       </CardDetailsInfo>
       <CardDetailsInfo>
         <Heading4>{t("dashboard.agentProfile.volunteerSearch")}</Heading4>
         <StatusBadge status={agent?.volunteerSearch} label={volunteerSearchLabels[volunteerSearch]} />
       </CardDetailsInfo>
-      {serviceType?.length
-        ? serviceType?.map((service) => (
-            <CardDetailsInfo key={service}>
-              <Heading4>{t("dashboard.agentProfile.serviceType")}</Heading4>
-              <Paragraph>{serviceTypeLabels[service]}</Paragraph>
-            </CardDetailsInfo>
-          ))
-        : null}
       <DistrictContainer>
         <DistrictDiv>
           <IconDiv size="var(--dashboard-agents-card-detail-icon-size)">
@@ -63,7 +54,7 @@ export const AgentCard = ({ agent }: Props) => {
           </IconDiv>
           <Heading4 margin={0}>{t("dashboard.agentProfile.district")}</Heading4>
         </DistrictDiv>
-        <Paragraph>{district?.title?.[i18n.language as "en" | "de"]}</Paragraph>
+        <Paragraph>{district?.title?.[i18n.language as Lang]}</Paragraph>
       </DistrictContainer>
     </Card>
   );

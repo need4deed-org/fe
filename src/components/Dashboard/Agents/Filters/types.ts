@@ -4,8 +4,7 @@ import { SelectionMap } from "../../common/CardsFilter/types";
 export interface AgentCardsFilter {
   [QueryParamsKeys.SEARCH]: string;
   [QueryParamsKeys.DISTRICT]: SelectionMap;
-  [QueryParamsKeys.LANGUAGE]: SelectionMap;
-  status: SelectionMap;
+  type: SelectionMap;
   volunteerSearch: SelectionMap;
 }
 

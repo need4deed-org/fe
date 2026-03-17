@@ -16,8 +16,8 @@ export const createAgentFilterItems = (
     (key) => key,
   );
 
-  const statusFilters = generateNestedFilterControlItems(filter.status, setFilter, "status", (key) =>
-    t(`dashboard.agents.filters.status.${key}`),
+  const typeFilters = generateNestedFilterControlItems(filter.type, setFilter, "type", (key) =>
+    t(`dashboard.agents.filters.type.${key.toLocaleLowerCase()}`),
   );
 
   const volunteerSearchFilters = generateNestedFilterControlItems(
@@ -27,7 +27,11 @@ export const createAgentFilterItems = (
     (key) => t(`dashboard.agents.filters.volunteerSearch.${key}`),
   );
 
-  return { districtFilters, statusFilters, volunteerSearchFilters };
+  return {
+    districtFilters,
+    volunteerSearchFilters,
+    typeFilters,
+  };
 };
 
 export const createSelectedAgentFiltersAsFlatArray = (
@@ -35,6 +39,6 @@ export const createSelectedAgentFiltersAsFlatArray = (
   setFilter: SetFilter<AgentCardsFilter>,
   t: TFunction,
 ) => {
-  const { districtFilters, statusFilters, volunteerSearchFilters } = createAgentFilterItems(filter, setFilter, t);
-  return [...districtFilters, ...statusFilters, ...volunteerSearchFilters].filter((f) => f.checked);
+  const { districtFilters, volunteerSearchFilters, typeFilters } = createAgentFilterItems(filter, setFilter, t);
+  return [...districtFilters, ...volunteerSearchFilters, ...typeFilters].filter((f) => f.checked);
 };
