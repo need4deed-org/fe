@@ -13,13 +13,16 @@ type Props = {
 export default function FiltersContent({ setFilter, filter }: Props) {
   const { t } = useTranslation();
 
-  const { districtFilters, volunteerSearchFilters, typeFilters } = createAgentFilterItems(filter, setFilter, t);
+  const { districtFilters, volunteerSearchFilters, typeFilters, engagementStatusFilters, servicesFilters } =
+    createAgentFilterItems(filter, setFilter, t);
 
   return (
     <FiltersContentContainer data-testid="agent-filters-content">
       <AccordionFilter header={t("dashboard.agents.filters.type.header")} items={typeFilters} />
       <AccordionFilter header={t("dashboard.agents.filters.volunteerSearch.header")} items={volunteerSearchFilters} />
-      <AccordionFilter header={t("dashboard.volunteers.filters.district")} items={districtFilters} />
+      <AccordionFilter header={t("dashboard.agents.filters.district.header")} items={districtFilters} />
+      <AccordionFilter header={t("dashboard.agents.filters.engagementStatus.header")} items={engagementStatusFilters} />
+      <AccordionFilter header={t("dashboard.agents.filters.services.header")} items={servicesFilters} />
     </FiltersContentContainer>
   );
 }

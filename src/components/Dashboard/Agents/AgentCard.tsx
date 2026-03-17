@@ -21,7 +21,7 @@ export const AgentCard = ({ agent }: Props) => {
   const { t, i18n } = useTranslation();
   const router = useRouter();
 
-  const { id, title, district, volunteerSearch } = getNormalizedAgent(agent);
+  const { id, title, district, volunteerSearch, type } = getNormalizedAgent(agent);
 
   const volunteerSearchLabels = createVolunteerSearchMap(t);
   const agentTypeLabels = createAgentTypeMap(t);
@@ -41,7 +41,7 @@ export const AgentCard = ({ agent }: Props) => {
       </CardHeader>
       <CardDetailsInfo>
         <Heading4>{t("dashboard.agentProfile.type")}</Heading4>
-        <Paragraph> {agentTypeLabels[agent.type]}</Paragraph>
+        <Paragraph> {agentTypeLabels[type]}</Paragraph>
       </CardDetailsInfo>
       <CardDetailsInfo>
         <Heading4>{t("dashboard.agentProfile.volunteerSearch")}</Heading4>
@@ -52,9 +52,8 @@ export const AgentCard = ({ agent }: Props) => {
           <IconDiv size="var(--dashboard-agents-card-detail-icon-size)">
             <MapPinIcon weight="fill" />
           </IconDiv>
-          <Heading4 margin={0}>{t("dashboard.agentProfile.district")}</Heading4>
+          <Paragraph>{district?.title?.[i18n.language as Lang]}</Paragraph>
         </DistrictDiv>
-        <Paragraph>{district?.title?.[i18n.language as Lang]}</Paragraph>
       </DistrictContainer>
     </Card>
   );

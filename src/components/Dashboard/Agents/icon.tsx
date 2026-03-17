@@ -1,5 +1,5 @@
 import { CalendarDotsIcon, MapPinIcon, ShootingStarIcon, HandPalmIcon } from "@phosphor-icons/react";
-import { AgentEngagementStatusType, AgentType, AgentVolunteerSearchType } from "need4deed-sdk";
+import { AgentType, AgentVolunteerSearchType } from "need4deed-sdk";
 import { JSX } from "react";
 
 import { TFunction } from "i18next";
@@ -21,13 +21,6 @@ export const iconNameMap: IconMap = {
   [IconName.MapPin]: <MapPinIcon />,
   [IconName.HandPalmIcon]: <HandPalmIcon />,
 };
-
-export const createEngagementStatusLabelMap = (t: TFunction): Record<AgentEngagementStatusType, string> => ({
-  [AgentEngagementStatusType.NEW]: t("dashboard.agentProfile.status.engagement.new"),
-  [AgentEngagementStatusType.ACTIVE]: t("dashboard.agentProfile.status.engagement.active"),
-  [AgentEngagementStatusType.UNRESPONSIVE]: t("dashboard.agentProfile.status.engagement.unresponsive"),
-  [AgentEngagementStatusType.INACTIVE]: t("dashboard.agentProfile.status.engagement.inactive"),
-});
 
 export const createAgentTypeMap = (t: TFunction): Record<AgentType, string> => ({
   [AgentType.AE]: t("dashboard.agents.filters.type.ae"),

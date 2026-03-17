@@ -65,6 +65,20 @@ export function serializeAgentFilters(
     }
   });
 
+  params.delete("engagementStatus");
+  Object.entries(filter.engagementStatus).forEach(([key, value]) => {
+    if (value === true) {
+      params.append("engagementStatus", key);
+    }
+  });
+
+  params.delete("services");
+  Object.entries(filter.services).forEach(([key, value]) => {
+    if (value === true) {
+      params.append("services", key);
+    }
+  });
+
   return asString ? params.toString() : params;
 }
 
@@ -90,6 +104,16 @@ export function deserializeAgentFilters(
   const queryVolunteerSearch = searchParams.getAll("volunteerSearch");
   queryVolunteerSearch.forEach((s) => {
     if (newFilter.volunteerSearch[s] !== undefined) newFilter.volunteerSearch[s] = true;
+  });
+
+  const queryEngagementStatus = searchParams.getAll("engagementStatus");
+  queryEngagementStatus.forEach((s) => {
+    if (newFilter.engagementStatus[s] !== undefined) newFilter.engagementStatus[s] = true;
+  });
+
+  const queryServices = searchParams.getAll("services");
+  queryServices.forEach((s) => {
+    if (newFilter.services[s] !== undefined) newFilter.services[s] = true;
   });
 
   return newFilter;

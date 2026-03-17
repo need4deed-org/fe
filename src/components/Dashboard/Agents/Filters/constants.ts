@@ -1,4 +1,10 @@
-import { AgentType, AgentVolunteerSearchType, QueryParamsKeys } from "need4deed-sdk";
+import {
+  AgentEngagementStatusType,
+  AgentServiceType,
+  AgentType,
+  AgentVolunteerSearchType,
+  QueryParamsKeys,
+} from "need4deed-sdk";
 import { AgentCardsFilter } from "./types";
 
 export const defaultAgentCardsFilter: AgentCardsFilter = {
@@ -20,5 +26,23 @@ export const defaultAgentCardsFilter: AgentCardsFilter = {
     [AgentVolunteerSearchType.SEARCHING]: false,
     [AgentVolunteerSearchType.NOT_NEEDED]: false,
     [AgentVolunteerSearchType.VOLUNTEERS_FOUND]: false,
+  },
+  engagementStatus: {
+    [AgentEngagementStatusType.NEW]: false,
+    [AgentEngagementStatusType.INACTIVE]: false,
+    [AgentEngagementStatusType.ACTIVE]: false,
+    [AgentEngagementStatusType.UNRESPONSIVE]: false,
+  },
+  services: {
+    [AgentServiceType.CHILDCARE]: false,
+    [AgentServiceType.CONSULTATION]: false,
+    [AgentServiceType.JOB_COACHING]: false,
+    [AgentServiceType.REFUGEE_ACCOMMODATION]: false,
+    [AgentServiceType.SPORT]: false,
+    [AgentServiceType.TANDEM]: false,
+    [AgentServiceType.TUTORING]: false,
+    [AgentServiceType.VOLUNTARY_SUPPORT]: false,
+    [AgentServiceType.WELFARE]: false,
+    [AgentServiceType.YOUTH]: false,
   },
 };

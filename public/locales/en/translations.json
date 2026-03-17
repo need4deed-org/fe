@@ -674,18 +674,18 @@
       "filters": {
         "type": {
           "header": "Type",
-          "ae": "Reception Center",
-          "gu1": "Community Accommodation 1",
-          "gu2": "Community Accommodation 2",
-          "gu2+": "Community Accommodation 2+",
-          "gu3": "Community Accommodation 3",
-          "nu": "Emergency Accommodation",
+          "ae": "AE",
+          "gu1": "GU1",
+          "gu2": "GU2",
+          "gu2+": "GU2+",
+          "gu3": "GU3",
+          "nu": "NU",
           "asog": "ASOG",
           "counseling-center": "Counseling-center",
           "tandem": "Tandem",
           "multiple-social-support": "Multiple-social-support"
         },
-        "status": {
+        "engagementStatus": {
           "header": "Status",
           "new": "New",
           "inactive": "Inactive",
@@ -697,6 +697,22 @@
           "searching": "Searching",
           "volunteers-found": "Filled",
           "not-needed": "Not needed"
+        },
+        "district": {
+          "header": "District"
+        },
+        "services": {
+          "header": "Services",
+          "childcare": "Childcare",
+          "consultation": "Consultation",
+          "job-coaching": "Job-coaching",
+          "refugee-accommodation": "Refugee Accommodation",
+          "sport": "Sport",
+          "tandem": "Tandem",
+          "tutoring": "Tutoring",
+          "voluntary-support": "Voluntary-support",
+          "welfare": "Welfare",
+          "youth": "Youth"
         }
       },
       "accompanyingTranslation": {

@@ -6,6 +6,8 @@ export interface AgentCardsFilter {
   [QueryParamsKeys.DISTRICT]: SelectionMap;
   type: SelectionMap;
   volunteerSearch: SelectionMap;
+  engagementStatus: SelectionMap;
+  services: SelectionMap;
 }
 
 export type AgentCardFilterKeys = keyof AgentCardsFilter;
