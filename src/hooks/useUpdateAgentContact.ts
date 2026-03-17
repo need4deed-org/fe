@@ -1,26 +1,14 @@
-import { useMutationQuery } from "@/hooks";
-import { AgentRoles, apiPathPerson } from "@/config/constants";
-import { DeepPartial } from "ts-type-safe";
 import { ApiAgentProfileGet } from "@/components/Dashboard/Profile/types";
+import { apiPathPerson } from "@/config/constants";
+import { useMutationQuery } from "@/hooks";
+import { ApiRepresentativePatch } from "need4deed-sdk";
+import { DeepPartial } from "ts-type-safe";
 
-interface ApiAgentPersonPatch {
-  contactDetails: {
-    id: number;
-    firstName: string;
-    lastName: string;
-    middleName?: string;
-    role?: AgentRoles[];
-    phone: string;
-    email: string;
-    landline?: string;
-  };
-}
-
-export const useUpdateAgentContact = (agentId: string) => {
-  return useMutationQuery<DeepPartial<ApiAgentPersonPatch>, ApiAgentProfileGet>({
-    apiPath: `${apiPathPerson}${agentId}`,
+export const useUpdateAgentContact = (personId: string) => {
+  return useMutationQuery<DeepPartial<ApiRepresentativePatch>, ApiAgentProfileGet>({
+    apiPath: `${apiPathPerson}${personId}`,
     method: "patch",
     successMessage: "dashboard.agentProfile.contactDetails.saveSuccess",
-    queryKeyToInvalidate: ["agent", agentId],
+    queryKeyToInvalidate: ["agent", personId],
   });
 };
