@@ -10,7 +10,7 @@ export const createAgentContactDetailsSchema = (t: (key: string) => string) => {
       .optional()
       .or(z.literal("")),
     lastName: z.string().min(1, t("dashboard.agentProfile.contactDetails.validation.nameRequired")),
-    role: z.enum(Object.values(AgentRoles)),
+    role: z.enum(AgentRoles),
     email: z
       .email(t("dashboard.agentProfile.contactDetails.validation.emailInvalid"))
       .min(1, t("dashboard.agentProfile.contactDetails.validation.emailRequired")),

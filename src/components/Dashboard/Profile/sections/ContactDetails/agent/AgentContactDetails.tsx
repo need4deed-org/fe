@@ -35,7 +35,7 @@ export const AgentContactDetails = forwardRef<ContactDetailsRef, Props>(function
 
   useEditingChangeNotifier(isEditing, onEditingChange);
 
-  const { options, keysToLabels, labelsToKeys } = useEnumTranslation(
+  const { options, keysToLabels, toLabel, toKey } = useEnumTranslation(
     roleKeys,
     "dashboard.agentProfile.contactDetails.roles",
   );
@@ -76,8 +76,8 @@ export const AgentContactDetails = forwardRef<ContactDetailsRef, Props>(function
         {isEditing ? (
           <AgentContactDetailsEdit
             options={options}
-            keysToLabels={keysToLabels}
-            labelsToKeys={labelsToKeys}
+            toLabel={toLabel}
+            toKey={toKey}
             onCancel={handleCancel}
             onSubmit={handleSubmit(onSubmit)}
             isPending={isPending}

@@ -8,21 +8,14 @@ import { AgentContactDetailsFormData } from "./agentContactDetailsSchema";
 
 type Props = {
   options: string[];
-  keysToLabels: (keys: AgentRoles[]) => string[];
-  labelsToKeys: (labels: (string | number)[]) => string[];
+  toLabel: (key: AgentRoles) => string;
+  toKey: (label: string) => AgentRoles;
   onCancel: () => void;
   onSubmit: () => void;
   isPending: boolean;
 };
 
-export const AgentContactDetailsEdit = ({
-  options,
-  keysToLabels,
-  labelsToKeys,
-  onCancel,
-  onSubmit,
-  isPending,
-}: Props) => {
+export const AgentContactDetailsEdit = ({ options, toLabel, toKey, onCancel, onSubmit, isPending }: Props) => {
   const { t } = useTranslation();
   const {
     control,
@@ -84,10 +77,10 @@ export const AgentContactDetailsEdit = ({
           render={({ field }: { field: ControllerRenderProps<AgentContactDetailsFormData, "role"> }) => (
             <EditableField
               mode="edit"
-              type="checkbox-list"
+              type="radio-list"
               label={t("dashboard.agentProfile.contactDetails.roles.label")}
-              value={field.value ? keysToLabels(field.value as unknown as AgentRoles[]) : []}
-              setValue={(value) => field.onChange(labelsToKeys(Array.isArray(value) ? value : [value]))}
+              value={field.value ? toLabel(field.value) : ""}
+              setValue={(value) => field.onChange(toKey(value as string))}
               options={options}
               errorMessage={errors.role?.message}
             />
