@@ -86,7 +86,7 @@ export const AgentContactDetailsEdit = ({
               mode="edit"
               type="checkbox-list"
               label={t("dashboard.agentProfile.contactDetails.roles.label")}
-              value={field.value ? keysToLabels([field.value]) : []}
+              value={field.value ? keysToLabels(field.value as unknown as AgentRoles[]) : []}
               setValue={(value) => field.onChange(labelsToKeys(Array.isArray(value) ? value : [value]))}
               options={options}
               errorMessage={errors.role?.message}
