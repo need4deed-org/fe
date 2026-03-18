@@ -600,14 +600,20 @@
   resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-19.2.3.tgz#c1e305d15a52a3e508d54dca770d202cb63abf2c"
   integrity sha512-jp2L/eY6fn+KgVVQAOqYItbF0VY/YApe5Mz2F0aykSO8gx31bYCZyvSeYxCHKvzHG5eZjc+zyaS5BrBWya2+kQ==
 
-"@types/react-toastify@^4.1.0":
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/@types/react-toastify/-/react-toastify-4.1.0.tgz#604e712855dd677916d5c66af595d3b590f5d95d"
-  integrity sha512-u7Ie/7LHBsPVz/iJxi/WlRDS7Gh9csCJACTDXx+pSLuZCm94xpkwzhM3jV1L5ZxP/in0Gp2tFbJ91VrSGr1gyQ==
+"@types/react-toastify@4.0.2":
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/@types/react-toastify/-/react-toastify-4.0.2.tgz#a7db2002c0b3080b28969e9d6a8d4daeb18baa6d"
+  integrity sha512-pHjCstnN0ZgopIWQ9UiWsD9n+HsXs1PnMQC4hIZuSzpDO0lRjigpTuqsUtnBkMbLIg+mGFSAsBjL49SspzoLKA==
   dependencies:
-    react-toastify "*"
+    "@types/react" "*"
+    "@types/react-transition-group" "*"
 
-"@types/react@19.2.14":
+"@types/react-transition-group@*":
+  version "4.4.12"
+  resolved "https://registry.yarnpkg.com/@types/react-transition-group/-/react-transition-group-4.4.12.tgz#b5d76568485b02a307238270bfe96cb51ee2a044"
+  integrity sha512-8TV6R3h2j7a91c+1DXdJi3Syo69zzIZbz7Lg5tORM5LEJG7X/E6a1V3drRyBRZq7/utz7A+c4OgYLiLcYGHG6w==
+
+"@types/react@*", "@types/react@19.2.14":
   version "19.2.14"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-19.2.14.tgz#39604929b5e3957e3a6fa0001dafb17c7af70bad"
   integrity sha512-ilcTH/UniCkMdtexkoCN0bI7pMcJDvmQFPvuPvmEaYA/NSfFTAgdUSLAoVjaRJm7+6PvcM+q1zYOwS4wTYMF9w==
@@ -2712,7 +2718,7 @@ react-is@^16.13.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
-react-toastify@*, react-toastify@^11.0.5:
+react-toastify@^11.0.5:
   version "11.0.5"
   resolved "https://registry.yarnpkg.com/react-toastify/-/react-toastify-11.0.5.tgz#ce4c42d10eeb433988ab2264d3e445c4e9d13313"
   integrity sha512-EpqHBGvnSTtHYhCPLxML05NLY2ZX0JURbAdNYa6BUkk+amz4wbKBQvoKQAB0ardvSarUBuY4Q4s1sluAzZwkmA==
