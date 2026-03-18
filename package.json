@@ -22,7 +22,7 @@
     "email-validator": "^2.0.4",
     "i18next": "^25.3.2",
     "need4deed-sdk": "^0.0.66",
-    "next": "15.3.8",
+    "next": "16.1.7",
     "react": "^19.0.0",
     "react-day-picker": "^9.13.0",
     "react-dom": "^19.0.0",
