@@ -7,7 +7,7 @@
     "dev:docker": "docker compose -p n4d up",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "prepare": "husky"
   },
@@ -35,13 +35,12 @@
     "zod": "4.3.6"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "3.3.5",
     "@types/node": "25.5.0",
     "@types/react": "19.2.14",
     "@types/react-dom": "^19",
     "@types/react-toastify": "4.0.2",
     "babel-plugin-react-compiler": "^1.0.0",
-    "eslint": "10.0.3",
+    "eslint": "^9.0.0",
     "eslint-config-next": "16.1.7",
     "husky": "^9.1.7",
     "lint-staged": "16.4.0",
