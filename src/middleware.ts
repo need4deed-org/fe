@@ -32,7 +32,7 @@ export function middleware(request: NextRequest) {
     redirectNeeded = true;
   }
 
-  if (redirectNeeded) {
+  if (redirectNeeded && newPathname !== pathname) {
     const url = request.nextUrl.clone();
     url.pathname = newPathname;
     return NextResponse.redirect(url);
