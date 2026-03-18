@@ -670,10 +670,10 @@
         "tab3": "Karte"
       },
       "status": {
-        "new": "Neu",
-        "searching": "Suche läuft",
-        "active": "Aktiv",
-        "past": "Vergangen"
+        "opp-new": "Neu",
+        "opp-searching": "Suche läuft",
+        "opp-active": "Aktiv",
+        "opp-past": "Vergangen"
       },
       "type": {
         "accompanying": "Begleitung",
@@ -1008,10 +1008,10 @@
         },
         "appliedOn": "Beworben am",
         "tabs": {
-          "pending": "Ausstehend",
-          "matched": "Zugeordnet",
-          "active": "Aktiv",
-          "past": "Vergangen"
+          "opp-pending": "Ausstehend",
+          "opp-matched": "Zugeordnet",
+          "opp-active": "Aktiv",
+          "opp-past": "Vergangen"
         },
         "emptyState": "Noch keine Freiwilligen in dieser Kategorie",
         "statusUpdateSuccess": "Freiwilligen-Status erfolgreich aktualisiert",
