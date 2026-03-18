@@ -17,7 +17,7 @@ type EditState = {
 
 type MenuState = {
   isOpen: boolean;
-  anchorElement: HTMLButtonElement | null;
+  anchorElement: () => HTMLButtonElement | null;
   buttonRef: (el: HTMLButtonElement | null) => void;
   onToggle: (e: React.MouseEvent<HTMLButtonElement>) => void;
   onClose: () => void;

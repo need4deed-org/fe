@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { HttpMethod, Option } from "need4deed-sdk";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useEffectEvent } from "react";
 import { fetchFn } from "@/utils";
 import { apiPathVolunteer } from "@/config/constants";
 import { fallbackLists } from "@/components/forms/fallbackLists";
@@ -31,9 +31,13 @@ export default function useList(listType: ListsOfOptions) {
   const [list, setList] = useState<Option[]>([]);
   const listsOptions = useListQuery();
 
-  useEffect(() => {
+  const applyListOptions = useEffectEvent(() => {
     const listTmp = listsOptions?.[listType] ?? [];
     setList(listTmp.length ? listTmp : fallbackLists[listType]);
+  });
+
+  useEffect(() => {
+    applyListOptions();
   }, [listType, listsOptions]);
 
   return list;

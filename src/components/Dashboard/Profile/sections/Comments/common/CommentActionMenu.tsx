@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState, useEffectEvent } from "react";
 import styled from "styled-components";
 
 type Props = {
@@ -7,7 +7,7 @@ type Props = {
   onClose: () => void;
   onEdit: () => void;
   onDelete: () => void;
-  anchorElement: HTMLElement | null;
+  anchorElement: () => HTMLElement | null;
 };
 
 const MenuContainer = styled.div<{ $isOpen: boolean; $top: number; $right: number }>`
@@ -59,23 +59,29 @@ export function CommentActionMenu({ isOpen, onClose, onEdit, onDelete, anchorEle
   const menuRef = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState({ top: 0, right: 0 });
 
-  useLayoutEffect(() => {
-    if (isOpen && anchorElement) {
-      const rect = anchorElement.getBoundingClientRect();
+  const updatePosition = useEffectEvent(() => {
+    const el = anchorElement && anchorElement();
+    if (isOpen && el) {
+      const rect = el.getBoundingClientRect();
       setPosition({
         top: rect.bottom + 4,
         right: window.innerWidth - rect.right,
       });
     }
-  }, [isOpen, anchorElement]);
+  });
+
+  useLayoutEffect(() => {
+    updatePosition();
+  }, [isOpen]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
+      const el = anchorElement && anchorElement();
       if (
         menuRef.current &&
         !menuRef.current.contains(event.target as Node) &&
-        anchorElement &&
-        !anchorElement.contains(event.target as Node)
+        el &&
+        !el.contains(event.target as Node)
       ) {
         onClose();
       }

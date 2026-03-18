@@ -108,11 +108,11 @@ export function EntityComments({ entityId, entityType, comments, testId }: Props
           }}
           menu={{
             isOpen: menu.openMenuCommentId === comment.id,
-            anchorElement: menu.menuButtonRefs.current[comment.id] ?? null,
+            anchorElement: () => menu.menuButtonRefs.current[comment.id] ?? null,
             buttonRef: (el) => {
               menu.menuButtonRefs.current[comment.id] = el;
             },
-            onToggle: (e) => {
+            onToggle: (e: React.MouseEvent<HTMLButtonElement>) => {
               e.stopPropagation();
               menu.toggleMenu(comment.id);
             },

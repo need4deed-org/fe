@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Paragraph } from "../../styled/text";
 import FunderLogoClubDialog from "../../svg/FunderLogoClubDialog";
 import { ScreenTypes } from "@/config/constants";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useEffectEvent } from "react";
 import { useScreenType } from "@/context/DeviceContext";
 
 const logoSizeMap = {
@@ -22,7 +22,7 @@ export function LogoClubDialog() {
   const [logoWidth, setLogoWidth] = useState(logoSizeMap[screenType].width);
   const [logoHeight, setLogoHeight] = useState(logoSizeMap[screenType].height);
 
-  useEffect(() => {
+  const updateLogoSize = useEffectEvent(() => {
     // This code will only run on the client-side
     const computedHeight = getComputedStyle(document.documentElement).getPropertyValue(
       "--homepage-footer-partners-section-logo-club-dialog-height",
@@ -34,6 +34,10 @@ export function LogoClubDialog() {
 
     setLogoWidth(computedWidth);
     setLogoHeight(computedHeight);
+  });
+
+  useEffect(() => {
+    updateLogoSize();
   }, [screenType]);
 
   return (

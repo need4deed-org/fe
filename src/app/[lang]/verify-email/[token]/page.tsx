@@ -1,15 +1,16 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useEffectEvent } from "react";
 
 export default function Page() {
   const [verified, setVerified] = useState(false);
   const [verifying, setVerifying] = useState(true);
+  const setVerifyingEvent = useEffectEvent(() => setVerifying(true));
   const { token } = useParams();
 
   useEffect(() => {
-    setVerifying(true);
+    setVerifyingEvent();
     if (!token) {
       console.error("No token provided for email verification.");
       return;

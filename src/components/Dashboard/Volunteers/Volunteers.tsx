@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useEffectEvent } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
@@ -60,16 +60,18 @@ export function Volunteers() {
     router.push(pathname + questionMark + serializeFilters(cleared, searchParams));
   };
 
-  useEffect(() => {
+  const applyApiFilterOptions = useEffectEvent(() => {
     if (!apiFilterOptions) return;
 
     // Merge and set 'district' - 'languages' of query params and API option
-    setCardsFilter((prev) => {
-      const district = createFilterFromOption(apiFilterOptions, EntityTableName.DISTRICT);
-      const language = createFilterFromOption(apiFilterOptions, EntityTableName.LANGUAGE);
+    const district = createFilterFromOption(apiFilterOptions, EntityTableName.DISTRICT);
+    const language = createFilterFromOption(apiFilterOptions, EntityTableName.LANGUAGE);
 
-      return { ...prev, district, language };
-    });
+    setCardsFilter((prev) => ({ ...prev, district, language }));
+  });
+
+  useEffect(() => {
+    applyApiFilterOptions();
   }, [apiFilterOptions]);
 
   const activeFilters = createSelectedFilterItemsAsFlatArray(cardsFilter, setCardsFilter, t);

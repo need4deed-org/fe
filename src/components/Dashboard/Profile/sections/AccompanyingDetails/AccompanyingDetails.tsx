@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { de, enUS } from "date-fns/locale";
 import { ApiOpportunityGet } from "need4deed-sdk";
 import { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from "react";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider, useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { EditableSectionProps, EditableSectionRef } from "../shared/types";
 import { useEditingChangeNotifier } from "../shared/useEditingChangeNotifier";
@@ -49,9 +49,9 @@ export const AccompanyingDetails = forwardRef<EditableSectionRef, Props>(functio
     mode: "onChange",
     defaultValues: initialFormValues,
   });
-  const { handleSubmit, reset, watch } = methods;
+  const { handleSubmit, reset } = methods;
 
-  const formValues = watch();
+  const formValues = useWatch({ control: methods.control });
 
   const handleEditClick = () => {
     if (showFullDetails) {

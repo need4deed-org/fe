@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useEffectEvent } from "react";
 import { useTranslation } from "react-i18next";
 
 import { DashboardLayout } from "@/components/Layout";
@@ -26,6 +26,15 @@ export function Opportunities() {
   const [sortOrder, setSortOrder] = useState(SortOrder.NewToOld);
   const [cardsFilter, setCardsFilter] = useState(defaultOpportunityCardsFilter);
   const { data: apiFilterOptions } = useGetQuery<ApiOptionLists>({ queryKey: ["options"], apiPath: apiPathOption });
+
+  const applyApiFilterOptions = useEffectEvent(() => {
+    if (!apiFilterOptions) return;
+
+    const district = createFilterFromOption(apiFilterOptions, EntityTableName.DISTRICT);
+    const language = createFilterFromOption(apiFilterOptions, EntityTableName.LANGUAGE);
+
+    setCardsFilter((prev) => ({ ...prev, district, language }));
+  });
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
@@ -67,13 +76,7 @@ export function Opportunities() {
   };
 
   useEffect(() => {
-    if (!apiFilterOptions) return;
-
-    setCardsFilter((prev) => {
-      const district = createFilterFromOption(apiFilterOptions, EntityTableName.DISTRICT);
-      const language = createFilterFromOption(apiFilterOptions, EntityTableName.LANGUAGE);
-      return { ...prev, district, language };
-    });
+    applyApiFilterOptions();
   }, [apiFilterOptions]);
 
   const activeFilters = createSelectedOpportunityFiltersAsFlatArray(cardsFilter, setCardsFilter, t);

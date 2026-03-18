@@ -2,7 +2,7 @@ import N4DLogoFlat from "@/components/svg/N4DLogoFlat";
 import { ScreenTypes } from "@/config/constants";
 import { useScreenType } from "@/context/DeviceContext";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useEffectEvent } from "react";
 
 const logoSizeMap = {
   [ScreenTypes.DESKTOP]: { width: "230", height: "32" },
@@ -16,7 +16,7 @@ export function N4DLogo() {
   const [logoHeight, setLogoHeight] = useState(logoSizeMap[screenType].height);
   const router = useRouter();
 
-  useEffect(() => {
+  const updateLogoSize = useEffectEvent(() => {
     // This code will only run on the client-side
     const computedWidth = getComputedStyle(document.documentElement).getPropertyValue(
       "--layout-static-page-n4d-logo-width",
@@ -27,6 +27,10 @@ export function N4DLogo() {
 
     setLogoWidth(computedWidth);
     setLogoHeight(computedHeight);
+  });
+
+  useEffect(() => {
+    updateLogoSize();
   }, [screenType]);
 
   return (
