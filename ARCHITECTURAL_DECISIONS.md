@@ -14,3 +14,7 @@
 
 - Avoid `as` casts and double casts (e.g., `as unknown as Foo`).
 - Use type guards or runtime validation (e.g., Zod, isEnumKey or isEnumValue from ts-type-safe).
+
+## ADR-004: Prohibit eslint-disable Directives (2026-03-18)
+
+- Must not use `eslint-disable` directives. Fix the underlying linting issue instead of suppressing it.
