@@ -1,4 +1,4 @@
-import { useForm } from "@tanstack/react-form";
+import { useForm, Controller } from "react-hook-form";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FormInput } from "../core/common";
@@ -55,63 +55,62 @@ export const LoginForm = ({ onLoginSuccess }: LoginFormProps) => {
   const { mutate: login, isPending } = useLoginMutation(onLoginSuccess);
   const [rememberMeChecked, setRememberMeChecked] = useState(false);
 
-  const form = useForm({
+  const methods = useForm<LoginData>({
     defaultValues: {
       email: "",
       password: "",
     },
-    onSubmit: async ({ value }) => {
-      login(value);
-    },
+    mode: "onChange",
+    reValidateMode: "onChange",
   });
+
+  const onSubmit = async (data: LoginData) => {
+    login(data);
+  };
 
   return (
     <StyledForm
       onSubmit={(e) => {
         e.preventDefault();
         e.stopPropagation();
-        form.handleSubmit();
+        void methods.handleSubmit(onSubmit)();
       }}
     >
-      <form.Field
+      <Controller
         name="email"
-        validators={{
-          onChange: ({ value }) => (!value ? t("dashboard.login.emailMissing") : undefined),
-          onChangeAsyncDebounceMs: 500,
-          onChangeAsync: async ({ value }) => {
-            // Simulating a network request for validation
+        control={methods.control}
+        rules={{
+          required: t("dashboard.login.emailMissing"),
+          validate: async (value: string) => {
             await new Promise((resolve) => setTimeout(resolve, 500));
-            return value.includes("@") ? undefined : t("dashboard.login.emailMissingAtChar");
+            return value.includes("@") || t("dashboard.login.emailMissingAtChar");
           },
         }}
-      >
-        {(field) => (
+        render={({ field, fieldState }) => (
           <FormInput
             type="email"
-            value={field.state.value}
-            onInputChange={field.handleChange}
+            value={field.value ?? ""}
+            onInputChange={(v: string) => field.onChange(v)}
             placeHolder={t("dashboard.login.email")}
-            errors={field.state.meta.errors}
+            errors={fieldState.error ? [String(fieldState.error.message ?? fieldState.error)] : []}
           />
         )}
-      </form.Field>
+      />
 
-      <form.Field
+      <Controller
         name="password"
-        validators={{
-          onChange: ({ value }) => (!value ? t("dashboard.login.passwordMissing") : undefined),
-        }}
-      >
-        {(field) => (
+        control={methods.control}
+        rules={{ required: t("dashboard.login.passwordMissing") }}
+        render={({ field, fieldState }) => (
           <FormInput
             type="password"
-            value={field.state.value}
-            onInputChange={field.handleChange}
+            value={field.value ?? ""}
+            onInputChange={(v: string) => field.onChange(v)}
             placeHolder={t("dashboard.login.password")}
-            errors={field.state.meta.errors}
+            errors={fieldState.error ? [String(fieldState.error.message ?? fieldState.error)] : []}
           />
         )}
-      </form.Field>
+      />
 
       <FormActions>
         <Checkbox
@@ -132,18 +131,14 @@ export const LoginForm = ({ onLoginSuccess }: LoginFormProps) => {
       </FormActions>
 
       <LoginButtonDiv>
-        <form.Subscribe selector={(state) => state}>
-          {() => (
-            <Button
-              type="submit"
-              text={t("dashboard.login.login")}
-              backgroundcolor={form.state.canSubmit && !isPending ? "var(--color-aubergine)" : "var(--color-grey-50)"}
-              textColor={form.state.canSubmit && !isPending ? "var(--color-white)" : "var(--color-grey-400)"}
-              textHoverColor="var(--color-magnolia)"
-              disabled={!form.state.canSubmit || isPending}
-            />
-          )}
-        </form.Subscribe>
+        <Button
+          type="submit"
+          text={t("dashboard.login.login")}
+          backgroundcolor={methods.formState.isValid && !isPending ? "var(--color-aubergine)" : "var(--color-grey-50)"}
+          textColor={methods.formState.isValid && !isPending ? "var(--color-white)" : "var(--color-grey-400)"}
+          textHoverColor="var(--color-magnolia)"
+          disabled={!methods.formState.isValid || isPending}
+        />
       </LoginButtonDiv>
     </StyledForm>
   );

@@ -1,22 +1,17 @@
 "use client";
-import { DeepKeys, FieldApi } from "@tanstack/react-form";
 import style from "./index.module.css";
+
 export interface IncludeClassName {
   className?: string;
 }
 
-interface Props<T, K extends DeepKeys<T>> extends IncludeClassName {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  field: FieldApi<T, K, any, any>;
+interface Props {
+  error?: string | string[];
+  className?: string;
 }
 
-export default function FieldInfo<T, K extends DeepKeys<T>>({ field, className }: Props<T, K>) {
-  // Check if field is touched and has errors
-  const showError = field.state.meta.isTouched && field.state.meta.errors.length > 0;
+export default function FieldInfo({ error, className }: Props) {
+  const errorMsg = Array.isArray(error) ? error.join(", ") : error;
 
-  return (
-    <div className={`${style["form-error"]} ${className}`}>
-      {showError ? <em>{field.state.meta.errors.join(", ")}</em> : null}
-    </div>
-  );
+  return <div className={`${style["form-error"]} ${className}`}>{errorMsg ? <em>{errorMsg}</em> : null}</div>;
 }

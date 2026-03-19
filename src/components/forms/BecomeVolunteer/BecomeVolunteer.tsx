@@ -1,5 +1,5 @@
 "use client";
-import { useForm } from "@tanstack/react-form";
+import { useForm, Controller, FormProvider } from "react-hook-form";
 import { validate as validateEmail } from "email-validator";
 import { Lang, VolunteerFormData } from "need4deed-sdk";
 import Image from "next/image";
@@ -23,7 +23,7 @@ import style from "../index.module.css";
 import MultipleCheckBoxInputsWithMore from "../MultipleCheckBoxInputsWithMore";
 import MultipleRadioInputsWithMore from "../MultipleRadioInputsWithMore";
 import SimpleInputField from "../SimpleInputField";
-import { ListsOfOptions, OpportunityInfo } from "../types";
+import { ListsOfOptions, OpportunityInfo, Selected } from "../types";
 import {
   getAllSelectedFalse,
   getScheduleState,
@@ -55,7 +55,7 @@ export default function BecomeVolunteer() {
     title: opportunityParams.get("title") || "",
   };
 
-  const formVolunteer = useForm({
+  const formMethods = useForm<VolunteerData>({
     defaultValues: {
       opportunityId: opportunity.id,
       name: "",
@@ -77,32 +77,20 @@ export default function BecomeVolunteer() {
       consent: undefined,
       language,
     } as VolunteerData,
-    validators: {
-      onSubmit: ({ value }) => {
-        const hasEmptyLanguage = value.languages.some((lang) => !lang.language);
-        if (hasEmptyLanguage) {
-          return t("form.error.language");
-        }
+    mode: "onBlur",
+  });
 
-        const languageIds = value.languages.map((lang) => lang.language);
-        const uniqueLanguages = new Set(languageIds);
-        if (languageIds.length !== uniqueLanguages.size) {
-          return t("form.becomeVolunteer.fields.languages.singleLevelError");
-        }
+  const { handleSubmit, control, formState } = formMethods;
 
-        return undefined;
-      },
-    },
-    onSubmit: async ({ value }) => {
-      const data = parseFormStateDTOVolunteer(value);
+  const onSubmit = handleSubmit(async (value) => {
+    const data = parseFormStateDTOVolunteer(value);
 
-      const { success } = await postRequest(data);
-      if (success) {
-        navigate.push(`/${Subpage.ANNOUNCEMENT}/?pointer=${thankYou}`);
-      } else {
-        setShowErrorAnnouncement(true);
-      }
-    },
+    const { success } = await postRequest(data);
+    if (success) {
+      navigate.push(`/${Subpage.ANNOUNCEMENT}/?pointer=${thankYou}`);
+    } else {
+      setShowErrorAnnouncement(true);
+    }
   });
 
   if (showErrorAnnouncement) {
@@ -122,65 +110,83 @@ export default function BecomeVolunteer() {
           </h6>
         ) : null}
       </div>
-      <form
-        className={style["form-form-container"]}
-        onSubmit={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          formVolunteer.handleSubmit();
-        }}
-      >
-        <SimpleInputField<VolunteerData>
-          name="name"
-          FieldTag={formVolunteer.Field}
-          label={t("form.becomeVolunteer.fields.name.label")}
-          onChangeValidator={({ value }) => (!value ? t("form.error.required") : undefined)}
-        />
-        <SimpleInputField<VolunteerData>
-          name="email"
-          FieldTag={formVolunteer.Field}
-          label={t("form.becomeVolunteer.fields.email.label")}
-          onChangeValidator={({ value }) => {
-            if (!value) {
-              return t("form.error.required");
-            }
-            if (!validateEmail(value as string)) {
-              return t("form.error.email");
-            }
-            return undefined;
-          }}
-        />
-        <SimpleInputField<VolunteerData>
-          name="phone"
-          FieldTag={formVolunteer.Field}
-          label={t("form.becomeVolunteer.fields.phone.label")}
-          onChangeValidator={({ value }) => (!value ? t("form.error.required") : undefined)}
-        />
-        <SimpleInputField<VolunteerData>
-          name="postcode"
-          FieldTag={formVolunteer.Field}
-          label={t("form.becomeVolunteer.fields.postcode.label")}
-          onChangeValidator={({ value }) => {
-            if (!value) {
-              return t("form.error.required");
-            }
-            if (!isValidPLZ(value as string)) {
-              return t("form.error.postcode");
-            }
-            return undefined;
-          }}
-        />
-        <formVolunteer.Field
-          name="locations"
-          validators={{
-            onBlur: ({ value }) => {
-              const isSelected = !!value.filter(({ selected }) => selected).length;
-              return isSelected ? undefined : t("form.error.location");
-            },
+      <FormProvider {...formMethods}>
+        <form
+          className={style["form-form-container"]}
+          onSubmit={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            void onSubmit();
           }}
         >
-          {(fieldLocations) => {
-            return (
+          <Controller
+            name="name"
+            control={control}
+            rules={{
+              required: t("form.error.required"),
+            }}
+            render={({ field, fieldState }) => (
+              <SimpleInputField
+                field={field}
+                label={t("form.becomeVolunteer.fields.name.label")}
+                error={fieldState.error?.message}
+              />
+            )}
+          />
+          <Controller
+            name="email"
+            control={control}
+            rules={{
+              required: t("form.error.required"),
+              validate: (value) => (validateEmail(value as string) ? true : t("form.error.email")),
+            }}
+            render={({ field, fieldState }) => (
+              <SimpleInputField
+                field={field}
+                label={t("form.becomeVolunteer.fields.email.label")}
+                error={fieldState.error?.message}
+              />
+            )}
+          />
+          <Controller
+            name="phone"
+            control={control}
+            rules={{
+              required: t("form.error.required"),
+            }}
+            render={({ field, fieldState }) => (
+              <SimpleInputField
+                field={field}
+                label={t("form.becomeVolunteer.fields.phone.label")}
+                error={fieldState.error?.message}
+              />
+            )}
+          />
+          <Controller
+            name="postcode"
+            control={control}
+            rules={{
+              required: t("form.error.required"),
+              validate: (value) => (isValidPLZ(value as string) ? true : t("form.error.postcode")),
+            }}
+            render={({ field, fieldState }) => (
+              <SimpleInputField
+                field={field}
+                label={t("form.becomeVolunteer.fields.postcode.label")}
+                error={fieldState.error?.message}
+              />
+            )}
+          />
+          <Controller
+            name="locations"
+            control={control}
+            rules={{
+              validate: (value) => {
+                const isAnySelected = !!(value as Selected[]).filter(({ selected }) => selected).length;
+                return isAnySelected ? true : t("form.error.location");
+              },
+            }}
+            render={({ field, fieldState }) => (
               <fieldset>
                 <HeaderWithHelp
                   textHelp={t("form.becomeVolunteer.fields.locations.helpText")}
@@ -191,82 +197,78 @@ export default function BecomeVolunteer() {
                 </HeaderWithHelp>
                 <h6>{t("form.becomeVolunteer.fields.locations.para")}</h6>
                 <WithParentRef
-                  onFocus={() => setTimeout(fieldLocations.handleBlur, 0)}
+                  onFocus={() => setTimeout(field.onBlur, 0)}
                   className={`${style["form-chip-list"]} ${style["form-pick"]}`}
                 >
-                  <MultipleCheckBoxInputsWithMore<VolunteerData, "locations">
-                    FieldTag={formVolunteer.Field}
-                    field={fieldLocations}
-                  />
-                  <FieldInfo field={fieldLocations} />
+                  <MultipleCheckBoxInputsWithMore<VolunteerData, "locations"> field={field} />
+                  <FieldInfo error={fieldState.error?.message} />
                 </WithParentRef>
               </fieldset>
-            );
-          }}
-        </formVolunteer.Field>
-        <hr />
-        <formVolunteer.Field
-          name="languages"
-          validators={{
-            onBlur: ({ value }) => {
-              const hasEmptyLanguage = value.some((lang) => !lang.language);
-              return hasEmptyLanguage ? t("form.error.language") : undefined;
-            },
-          }}
-        >
-          {(fieldLanguages) => {
-            return (
+            )}
+          />
+          <hr />
+          <Controller
+            name="languages"
+            control={control}
+            rules={{
+              validate: (value) => {
+                const hasEmptyLanguage = (value as VolunteerData["languages"]).some((lang) => !lang.language);
+                if (hasEmptyLanguage) return t("form.error.language");
+
+                const languageIds = (value as VolunteerData["languages"]).map((lang) => lang.language);
+                const uniqueLanguages = new Set(languageIds);
+                if (languageIds.length !== uniqueLanguages.size) {
+                  return t("form.becomeVolunteer.fields.languages.singleLevelError");
+                }
+                return true;
+              },
+            }}
+            render={({ field, fieldState }) => (
               <fieldset>
                 <div className={style["form-table-wrapper"]}>
                   <h3>{t("form.becomeVolunteer.fields.languages.headerWithoutAsterick")}</h3>
                   <LanguageFields
-                    languages={fieldLanguages.state.value}
-                    onChange={fieldLanguages.handleChange}
-                    onFocus={() => setTimeout(fieldLanguages.handleBlur, 0)}
+                    languages={field.value}
+                    onChange={field.onChange}
+                    onFocus={() => setTimeout(field.onBlur, 0)}
                     t={t}
                   />
                 </div>
-                <FieldInfo field={fieldLanguages} />
+                <FieldInfo error={fieldState.error?.message} />
               </fieldset>
-            );
-          }}
-        </formVolunteer.Field>
-        <formVolunteer.Field
-          name="availability"
-          validators={{
-            onBlur: ({ value }) => {
-              return isTimeSlotSelected(value) ? undefined : t("form.error.availability");
-            },
-          }}
-        >
-          {(fieldAvailability) => {
-            return (
+            )}
+          />
+          <Controller
+            name="availability"
+            control={control}
+            rules={{
+              validate: (value) => (isTimeSlotSelected(value) ? true : t("form.error.availability")),
+            }}
+            render={({ field, fieldState }) => (
               <fieldset>
                 <AvailabilityGrid
-                  availability={fieldAvailability.state.value}
-                  onChange={fieldAvailability.handleChange}
-                  onFocus={() => setTimeout(fieldAvailability.handleBlur, 0)}
+                  availability={field.value}
+                  onChange={field.onChange}
+                  onFocus={() => setTimeout(field.onBlur, 0)}
                   header={t("form.becomeVolunteer.fields.availability.header")}
                   t={t}
                   currentLanguage={i18n.language as Lang}
                 />
-                <FieldInfo field={fieldAvailability} />
+                <FieldInfo error={fieldState.error?.message} />
               </fieldset>
-            );
-          }}
-        </formVolunteer.Field>
-        <hr />
-        <formVolunteer.Field
-          name="activities"
-          validators={{
-            onBlur: ({ value }) => {
-              const isSelected = !!value.filter(({ selected }) => selected).length;
-              return isSelected ? undefined : t("form.becomeVolunteer.fields.activities.error");
-            },
-          }}
-        >
-          {(fieldActivities) => {
-            return (
+            )}
+          />
+          <hr />
+          <Controller
+            name="activities"
+            control={control}
+            rules={{
+              validate: (value) => {
+                const isAnySelected = !!(value as Selected[]).filter(({ selected }) => selected).length;
+                return isAnySelected ? true : t("form.becomeVolunteer.fields.activities.error");
+              },
+            }}
+            render={({ field, fieldState }) => (
               <fieldset>
                 <HeaderWithHelp
                   textHelp={t("form.becomeVolunteer.fields.activities.helpText")}
@@ -277,23 +279,20 @@ export default function BecomeVolunteer() {
                 </HeaderWithHelp>
                 <WithParentRef
                   onFocus={() => {
-                    setTimeout(fieldActivities.handleBlur, 0);
+                    setTimeout(field.onBlur, 0);
                   }}
                   className={`${style["form-chip-list"]} ${style["form-pick"]}`}
                 >
-                  <MultipleCheckBoxInputsWithMore<VolunteerData, "activities">
-                    FieldTag={formVolunteer.Field}
-                    field={fieldActivities}
-                  />
-                  <FieldInfo field={fieldActivities} />
+                  <MultipleCheckBoxInputsWithMore<VolunteerData, "activities"> field={field} />
+                  <FieldInfo error={fieldState.error?.message} />
                 </WithParentRef>
               </fieldset>
-            );
-          }}
-        </formVolunteer.Field>
-        <formVolunteer.Field name="skills">
-          {(fieldSkills) => {
-            return (
+            )}
+          />
+          <Controller
+            name="skills"
+            control={control}
+            render={({ field, fieldState }) => (
               <fieldset>
                 <HeaderWithHelp
                   textHelp={t("form.becomeVolunteer.fields.skills.helpText")}
@@ -303,88 +302,85 @@ export default function BecomeVolunteer() {
                   {t("form.becomeVolunteer.fields.skills.header")}
                 </HeaderWithHelp>
                 <WithParentRef className={`${style["form-chip-list"]} ${style["form-pick"]}`}>
-                  <MultipleCheckBoxInputsWithMore<VolunteerData, "skills">
-                    FieldTag={formVolunteer.Field}
-                    field={fieldSkills}
-                  />
-                  <FieldInfo field={fieldSkills} />
+                  <MultipleCheckBoxInputsWithMore<VolunteerData, "skills"> field={field} />
+                  <FieldInfo error={fieldState.error?.message} />
                 </WithParentRef>
               </fieldset>
-            );
-          }}
-        </formVolunteer.Field>
-        <formVolunteer.Field
-          name="certOfGoodConduct"
-          validators={{
-            onBlur: ({ value }) => (value === undefined ? t("form.error.required") : undefined),
-          }}
-        >
-          {(field) => (
-            <fieldset>
-              <div
+            )}
+          />
+          <Controller
+            name="certOfGoodConduct"
+            control={control}
+            rules={{
+              required: t("form.error.required"),
+            }}
+            render={({ field, fieldState }) => (
+              <fieldset>
+                <div
+                  className={style["form-pick"]}
+                  onFocus={() => {
+                    setTimeout(field.onBlur, 0);
+                  }}
+                >
+                  <HeaderWithHelp
+                    textHelp={t("form.becomeVolunteer.fields.certOfGoodConduct.helpText")}
+                    titleHelp={t("form.becomeVolunteer.fields.certOfGoodConduct.helpTitle")}
+                    classNamePopup="form-help"
+                  >
+                    {t("form.becomeVolunteer.fields.certOfGoodConduct.header")}
+                  </HeaderWithHelp>
+                  <div className={style["form-chip-list"]}>
+                    <MultipleRadioInputsWithMore
+                      items={[true, false]}
+                      copyPath="form.becomeVolunteer.fields.certOfGoodConduct."
+                      field={field}
+                    />
+                  </div>
+                  <FieldInfo error={fieldState.error?.message} />
+                </div>
+                <h6>
+                  <a href="https://www.berlin.de/laf/engagement/fuehrungszeugnis/" target="_blanc">
+                    {t("form.becomeVolunteer.fields.certOfGoodConduct.why")}
+                  </a>
+                </h6>
+              </fieldset>
+            )}
+          />
+          <Controller
+            name="certMeaslesVaccination"
+            control={control}
+            rules={{
+              required: t("form.error.required"),
+            }}
+            render={({ field, fieldState }) => (
+              <fieldset
                 className={style["form-pick"]}
                 onFocus={() => {
-                  setTimeout(field.handleBlur, 0);
+                  setTimeout(field.onBlur, 0);
                 }}
               >
                 <HeaderWithHelp
-                  textHelp={t("form.becomeVolunteer.fields.certOfGoodConduct.helpText")}
-                  titleHelp={t("form.becomeVolunteer.fields.certOfGoodConduct.helpTitle")}
+                  textHelp={t("form.becomeVolunteer.fields.certMeaslesVaccination.helpText")}
+                  titleHelp={t("form.becomeVolunteer.fields.certMeaslesVaccination.helpTitle")}
                   classNamePopup="form-help"
                 >
-                  {t("form.becomeVolunteer.fields.certOfGoodConduct.header")}
+                  {t("form.becomeVolunteer.fields.certMeaslesVaccination.header")}
                 </HeaderWithHelp>
                 <div className={style["form-chip-list"]}>
                   <MultipleRadioInputsWithMore
                     items={[true, false]}
-                    copyPath="form.becomeVolunteer.fields.certOfGoodConduct."
+                    copyPath="form.becomeVolunteer.fields.certMeaslesVaccination."
                     field={field}
                   />
                 </div>
-                <FieldInfo field={field} />
-              </div>
-              <h6>
-                <a href="https://www.berlin.de/laf/engagement/fuehrungszeugnis/" target="_blanc">
-                  {t("form.becomeVolunteer.fields.certOfGoodConduct.why")}
-                </a>
-              </h6>
-            </fieldset>
-          )}
-        </formVolunteer.Field>
-        <formVolunteer.Field
-          name="certMeaslesVaccination"
-          validators={{
-            onBlur: ({ value }) => (value === undefined ? t("form.error.required") : undefined),
-          }}
-        >
-          {(field) => (
-            <fieldset
-              className={style["form-pick"]}
-              onFocus={() => {
-                setTimeout(field.handleBlur, 0);
-              }}
-            >
-              <HeaderWithHelp
-                textHelp={t("form.becomeVolunteer.fields.certMeaslesVaccination.helpText")}
-                titleHelp={t("form.becomeVolunteer.fields.certMeaslesVaccination.helpTitle")}
-                classNamePopup="form-help"
-              >
-                {t("form.becomeVolunteer.fields.certMeaslesVaccination.header")}
-              </HeaderWithHelp>
-              <div className={style["form-chip-list"]}>
-                <MultipleRadioInputsWithMore
-                  items={[true, false]}
-                  copyPath="form.becomeVolunteer.fields.certMeaslesVaccination."
-                  field={field}
-                />
-              </div>
-              <FieldInfo field={field} />
-            </fieldset>
-          )}
-        </formVolunteer.Field>
-        <formVolunteer.Field name="leadFrom">
-          {(fieldLeadFrom) => {
-            return (
+                <FieldInfo error={fieldState.error?.message} />
+              </fieldset>
+            )}
+          />
+          <Controller
+            name="leadFrom"
+            control={control}
+            render={({ field, fieldState }) => (
               <fieldset>
                 <HeaderWithHelp
                   textHelp={t("form.becomeVolunteer.fields.leadFrom.helpText")}
@@ -394,41 +390,37 @@ export default function BecomeVolunteer() {
                   {t("form.becomeVolunteer.fields.leadFrom.header")}
                 </HeaderWithHelp>
                 <WithParentRef className={`${style["form-chip-list"]} ${style["form-pick"]}`}>
-                  <MultipleCheckBoxInputsWithMore<VolunteerData, "leadFrom">
-                    FieldTag={formVolunteer.Field}
-                    field={fieldLeadFrom}
-                  />
-                  <FieldInfo field={fieldLeadFrom} />
+                  <MultipleCheckBoxInputsWithMore<VolunteerData, "leadFrom"> field={field} />
+                  <FieldInfo error={fieldState.error?.message} />
                 </WithParentRef>
               </fieldset>
-            );
-          }}
-        </formVolunteer.Field>
-        <SimpleInputField
-          name="comments"
-          FieldTag={formVolunteer.Field}
-          label={t("form.becomeVolunteer.fields.comments.label")}
-        />
-        <formVolunteer.Field
-          name="consent"
-          validators={{
-            onChange: ({ value }) => (value ? undefined : t("form.error.required")),
-          }}
-        >
-          {(fieldConsent) => {
-            return (
+            )}
+          />
+          <Controller
+            name="comments"
+            control={control}
+            render={({ field }) => (
+              <SimpleInputField field={field} label={t("form.becomeVolunteer.fields.comments.label")} />
+            )}
+          />
+          <Controller
+            name="consent"
+            control={control}
+            rules={{
+              required: t("form.error.required"),
+            }}
+            render={({ field, fieldState }) => (
               <div>
                 <div className={`${style["form-chip-list"]} ${style["form-pick"]}`}>
                   <input
                     id="consent"
                     type="checkbox"
-                    name="consent"
+                    checked={!!field.value}
                     onChange={(e) => {
-                      fieldConsent.handleChange(e.target.checked);
-                      fieldConsent.validate("change");
+                      field.onChange(e.target.checked);
                     }}
                   />
-                  <label htmlFor="consent">{getTickMark(!!fieldConsent.state.value)}</label>
+                  <label htmlFor="consent">{getTickMark(!!field.value)}</label>
                   <span>
                     {t("form.becomeVolunteer.fields.consent.header")}{" "}
                     <a href={`/${Subpage.DATA_PROTECTION}/${lng}`}>{t("homepage.footer.legal.dataPrivacy")}</a>{" "}
@@ -436,48 +428,33 @@ export default function BecomeVolunteer() {
                     <a href={`/${Subpage.AGREEMENT}/${lng}`}>{t("homepage.footer.legal.agreement")}</a>
                   </span>
                 </div>
-                <FieldInfo field={fieldConsent} />
+                <FieldInfo error={fieldState.error?.message} />
               </div>
-            );
-          }}
-        </formVolunteer.Field>
-        <formVolunteer.Subscribe selector={(state) => state}>
-          {(state) => {
-            const errorMessages = Array.from(
-              new Set(
-                Object.keys(state.fieldMeta)
-                  .reduce((errorList: string[], key) => {
-                    const fieldErrors = state.fieldMeta[key as keyof typeof state.fieldMeta].errors?.join(", ");
-                    errorList.push(fieldErrors);
-                    return errorList;
-                  }, [])
-                  .filter(Boolean),
-              ),
-            )
-              .concat(state.errors as string[])
-              .join(", ");
-            return (
-              <div className={style["form-submit"]}>
-                <button className="n4d-cta" type="submit" disabled={!state.canSubmit}>
-                  {state.isSubmitting ? (
-                    "..."
-                  ) : (
-                    <>
-                      <UploadIcon />
-                      {t("form.button.submit").toUpperCase()}
-                    </>
-                  )}
-                </button>
-                {errorMessages ? (
-                  <em>
-                    {t("form.error.labelErrors")}: {errorMessages}
-                  </em>
-                ) : null}
-              </div>
-            );
-          }}
-        </formVolunteer.Subscribe>
-      </form>
+            )}
+          />
+          <div className={style["form-submit"]}>
+            <button className="n4d-cta" type="submit" disabled={formState.isSubmitting}>
+              {formState.isSubmitting ? (
+                "..."
+              ) : (
+                <>
+                  <UploadIcon />
+                  {t("form.button.submit").toUpperCase()}
+                </>
+              )}
+            </button>
+            {Object.keys(formState.errors).length > 0 && (
+              <em>
+                {t("form.error.labelErrors")}:{" "}
+                {Object.values(formState.errors)
+                  .map((error) => error?.message)
+                  .filter(Boolean)
+                  .join(", ")}
+              </em>
+            )}
+          </div>
+        </form>
+      </FormProvider>
     </div>
   );
 }
