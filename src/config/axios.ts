@@ -1,6 +1,6 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-import { apiPathAuthRefresh } from "./constants";
+import { apiPathAuthRefresh, apiPathLogin } from "./constants";
 
 let isRefreshing = false;
 let failedQueue: { resolve: (value?: unknown) => void; reject: (reason?: unknown) => void }[] = [];
@@ -25,10 +25,11 @@ axios.interceptors.response.use(
     const originalRequest = error.config;
 
     // Only retry on 401 (unauthorized), not 403 (forbidden - permission issue)
-    // Also skip if it's a refresh request itself or if already retried
+    // Also skip if it's a refresh request itself or if already retried or it's login
     if (
       error.response?.status !== 401 ||
       originalRequest.url.includes(apiPathAuthRefresh) ||
+      originalRequest.url.includes(apiPathLogin) ||
       originalRequest._retry ||
       !originalRequest.url
     ) {
