@@ -1,6 +1,5 @@
 import { Paragraph } from "@/components/styled/text";
 import { WarningCircleIcon } from "@phosphor-icons/react";
-import { ValidationError } from "@tanstack/react-form";
 import { ChangeEvent } from "react";
 import styled from "styled-components";
 
@@ -47,7 +46,7 @@ interface Props {
   width?: string;
   backgroundColor?: string;
   value?: string;
-  errors?: ValidationError[];
+  errors?: string[];
 }
 
 export function FormInput({
