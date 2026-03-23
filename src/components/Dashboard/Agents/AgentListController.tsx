@@ -22,10 +22,12 @@ type Props = {
 export const AgentListController = ({ setNumOfAgents, sortOrder, isFiltersOpen, filter, apiFilterOptions }: Props) => {
   const [currentPage, setCurrentPage] = useState(1);
 
-  const serializedFilter = serializeAgentFilters(filter, undefined, false, {
-    serializeToIDs: true,
-    apiFilterOptions,
-  }) as URLSearchParams;
+  const serializedFilter = new URLSearchParams(
+    serializeAgentFilters(filter, undefined, false, {
+      serializeToIDs: true,
+      apiFilterOptions,
+    }),
+  );
 
   const { data, count } = useGetQuery<ApiAgentGetList[]>({
     queryKey: ["agents"],
