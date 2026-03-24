@@ -654,10 +654,10 @@
         "tab3": "Map"
       },
       "status": {
-        "new": "New",
-        "searching": "Searching",
-        "active": "Active",
-        "past": "Past"
+        "opp-new": "New",
+        "opp-searching": "Searching",
+        "opp-active": "Active",
+        "opp-past": "Past"
       },
       "type": {
         "accompanying": "Accompanying",
