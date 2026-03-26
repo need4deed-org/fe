@@ -43,6 +43,7 @@ export function LanguageFields({ languages, onChange, onFocus, t, availableLangu
   };
 
   const disabledLanguages = useMemo(() => languages.map((item) => item.language), [languages]);
+
   return (
     <div className={style["form-languages-wrapper"]} data-testid="language-fields-container" onFocus={onFocus}>
       {languages.map((lang) => (
