@@ -43,6 +43,11 @@ export const AgentCard = ({ agent }: Props) => {
     router.push(`/${i18n.language}/dashboard/agents/${id}`);
   };
 
+  const handleTrustLevelChange = (next: AgentTrustLevel) => {
+    if (id == null) return;
+    patchAgent({ trustLevel: next });
+  };
+
   return (
     <Card onClick={handleCardClick}>
       <CardHeader>
@@ -64,9 +69,7 @@ export const AgentCard = ({ agent }: Props) => {
           value={agent.trustLevel as unknown as AgentTrustLevel}
           options={TRUST_LEVEL_OPTIONS}
           labels={trustLevelLabels}
-          onChange={(next) => {
-            if (id != null) patchAgent({ trustLevel: next });
-          }}
+          onChange={handleTrustLevelChange}
         />
       </CardDetailsInfo>
       {serviceType?.length

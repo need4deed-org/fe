@@ -4,7 +4,7 @@ import { formatDateTime } from "@/utils";
 import { HouseIcon } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
 import { useUpdateAgentStatus } from "@/hooks";
-import { ApiAgentProfileGet } from "../../../types/agent";
+import { AgentTrustLevel, ApiAgentProfileGet } from "../../../types/agent";
 import { EditButton, HeaderCard, IconContainer, StatusRowField } from "../common";
 import { ChangeAgentEngagementStatusDialog } from "./ChangeAgentEngagementStatusDialog";
 import {
@@ -31,6 +31,10 @@ export const AgentHeader = ({ agent }: Props) => {
   const engagementStatusLabels = createEngagementStatusLabelMap(t);
   const volunteerSearchLabels = createVolunteerSearchLabelMap(t);
   const trustLevelLabels = createTrustLevelLabelMap(t);
+
+  const handleTrustLevelChange = (next: AgentTrustLevel) => {
+    patchAgent({ trustLevel: next });
+  };
 
   return (
     <HeaderCard
@@ -64,7 +68,7 @@ export const AgentHeader = ({ agent }: Props) => {
             value={agent.trustLevel}
             options={TRUST_LEVEL_OPTIONS}
             labels={trustLevelLabels}
-            onChange={(next) => patchAgent({ trustLevel: next })}
+            onChange={handleTrustLevelChange}
           />
         }
       />

@@ -15,7 +15,7 @@ import { AgentEngagementStatusType, AgentTrustType, AgentVolunteerSearchType } f
 
 export type StatusValue = AgentEngagementStatusType | AgentVolunteerSearchType | AgentTrustType;
 
-export const statusColorMap: Record<string, string> = {
+export const statusColorMap: Record<StatusValue, string> = {
   [AgentEngagementStatusType.ACTIVE]: "var(--color-green-100)",
   [AgentEngagementStatusType.UNRESPONSIVE]: "var(--color-grey-50)",
   [AgentEngagementStatusType.INACTIVE]: "var(--color-grey-50)",
@@ -30,7 +30,7 @@ export const statusColorMap: Record<string, string> = {
 
 type IconComponent = React.ComponentType<{ size?: number; color?: string }>;
 
-export const statusIconMap: Record<string, IconComponent> = {
+export const statusIconMap: Record<StatusValue, IconComponent> = {
   [AgentEngagementStatusType.ACTIVE]: ChartLineIcon,
   [AgentEngagementStatusType.UNRESPONSIVE]: PhoneXIcon,
   [AgentEngagementStatusType.INACTIVE]: StopCircleIcon,
