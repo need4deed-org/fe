@@ -3,6 +3,7 @@ import { EMPTY_PLACEHOLDER_VALUE } from "@/config/constants";
 import { formatDateTime } from "@/utils";
 import { HouseIcon } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
+import { useUpdateAgentStatus } from "@/hooks";
 import { ApiAgentProfileGet } from "../../../types/agent";
 import { EditButton, HeaderCard, IconContainer, StatusRowField } from "../common";
 import { ChangeAgentEngagementStatusDialog } from "./ChangeAgentEngagementStatusDialog";
@@ -22,6 +23,7 @@ type Props = {
 export const AgentHeader = ({ agent }: Props) => {
   const { t } = useTranslation();
   const dialog = useAgentEngagementStatusDialog(agent);
+  const { mutate: patchAgent } = useUpdateAgentStatus(agent.id);
 
   const registeredDate = agent.createdAt ? formatDateTime(agent.createdAt) : EMPTY_PLACEHOLDER_VALUE;
   const subtitle = `${t("dashboard.agentProfile.registeredSince")} ${registeredDate}`;
@@ -62,7 +64,7 @@ export const AgentHeader = ({ agent }: Props) => {
             value={agent.trustLevel}
             options={TRUST_LEVEL_OPTIONS}
             labels={trustLevelLabels}
-            onChange={() => {}}
+            onChange={(next) => patchAgent({ trustLevel: next })}
           />
         }
       />

@@ -1,21 +1,20 @@
 import {
   AgentEngagementStatusType,
   AgentServiceType,
+  AgentTrustType,
   AgentVolunteerSearchType,
   ApiAgentGet,
-  ApiAgentGetList,
   OptionById,
 } from "need4deed-sdk";
 
-type AgentListItem = ApiAgentGetList & ApiAgentGet;
-
-export function getNormalizedAgent(agent: AgentListItem): Omit<
-  AgentListItem,
-  "district" | "statusEngagement" | "volunteerSearch" | "serviceType"
+export function getNormalizedAgent(agent: ApiAgentGet): Omit<
+  ApiAgentGet,
+  "district" | "statusEngagement" | "volunteerSearch" | "serviceType" | "trustLevel"
 > & {
   district: OptionById | undefined;
   statusEngagement: AgentEngagementStatusType;
   volunteerSearch: AgentVolunteerSearchType;
+  trustLevel: AgentTrustType;
   serviceType: AgentServiceType[] | undefined;
 } {
   return {
@@ -23,6 +22,7 @@ export function getNormalizedAgent(agent: AgentListItem): Omit<
     district: agent.district,
     statusEngagement: agent.statusEngagement,
     volunteerSearch: agent.volunteerSearch,
+    trustLevel: agent.trustLevel,
     serviceType: agent.serviceType,
   };
 }

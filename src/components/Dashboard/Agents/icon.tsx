@@ -1,5 +1,5 @@
 import { CalendarDotsIcon, MapPinIcon, ShootingStarIcon, HandPalmIcon } from "@phosphor-icons/react";
-import { AgentEngagementStatusType, AgentServiceType, AgentVolunteerSearchType } from "need4deed-sdk";
+import { AgentEngagementStatusType, AgentServiceType, AgentTrustType, AgentVolunteerSearchType } from "need4deed-sdk";
 import { JSX } from "react";
 
 import { TFunction } from "i18next";
@@ -33,6 +33,12 @@ export const createVolunteerSearchMap = (t: TFunction): Record<AgentVolunteerSea
   [AgentVolunteerSearchType.SEARCHING]: t("dashboard.agentProfile.status.volunteerSearch.searching"),
   [AgentVolunteerSearchType.NOT_NEEDED]: t("dashboard.agentProfile.status.volunteerSearch.notNeeded"),
   [AgentVolunteerSearchType.VOLUNTEERS_FOUND]: t("dashboard.agentProfile.status.volunteerSearch.filled"),
+});
+
+export const createTrustLevelMap = (t: TFunction): Record<AgentTrustType, string> => ({
+  [AgentTrustType.UNKNOWN]: t("dashboard.agentProfile.status.trustLevel.unknown"),
+  [AgentTrustType.LOW]: t("dashboard.agentProfile.status.trustLevel.low"),
+  [AgentTrustType.HIGH]: t("dashboard.agentProfile.status.trustLevel.high"),
 });
 
 export const createServiceTypeMap = (t: TFunction): Record<AgentServiceType, string> => ({
