@@ -36,7 +36,7 @@ export type StatusValue =
   | AgentVolunteerSearch
   | AgentTrustLevel;
 
-export const statusColorMap: Record<string, string> = {
+export const statusColorMap: Record<StatusValue, string> = {
   [VolunteerStateEngagementType.ACTIVE]: "var(--color-green-100)",
   [VolunteerStateEngagementType.AVAILABLE]: "var(--color-violet-100)",
   [VolunteerStateEngagementType.TEMP_UNAVAILABLE]: "var( --color-red-50)",
@@ -44,9 +44,10 @@ export const statusColorMap: Record<string, string> = {
   [VolunteerStateEngagementType.INACTIVE]: "var(--color-grey-50)",
   [VolunteerStateEngagementType.NEW]: "var(--color-green-100)",
   [OpportunityMatchStatus.UNMATCHED]: "var(--color-grey-50)",
-  [OpportunityMatchStatus.MATCHED]: "var(--color-green-100)",
-  [OpportunityMatchStatus.NEEDS_REMATCH]: "var(--color-red-50)",
+  [VolunteerStateMatchType.NO_MATCHES]: "var(--color-grey-50)",
   [VolunteerStateMatchType.PENDING_MATCH]: "var(--color-violet-100)",
+  [VolunteerStateMatchType.MATCHED]: "var(--color-green-100)",
+  [VolunteerStateMatchType.NEEDS_REMATCH]: "var(--color-red-50)",
   [VolunteerStateTypeType.ACCOMPANYING]: "var(--color-blue-500)",
   [VolunteerStateTypeType.EVENTS]: "var(--color-blue-500)",
   [VolunteerStateTypeType.REGULAR]: "var(--color-blue-500)",
@@ -63,7 +64,7 @@ export const statusColorMap: Record<string, string> = {
 
 type IconComponent = React.ComponentType<{ size?: number; color?: string }>;
 
-export const statusIconMap: Record<string, IconComponent> = {
+export const statusIconMap: Record<StatusValue, IconComponent> = {
   [VolunteerStateEngagementType.ACTIVE]: ChartLineIcon,
   [VolunteerStateEngagementType.AVAILABLE]: CalendarBlankIcon,
   [VolunteerStateEngagementType.TEMP_UNAVAILABLE]: CalendarXIcon,
@@ -71,9 +72,10 @@ export const statusIconMap: Record<string, IconComponent> = {
   [VolunteerStateEngagementType.INACTIVE]: StopCircleIcon,
   [VolunteerStateEngagementType.NEW]: SparkleIcon,
   [OpportunityMatchStatus.UNMATCHED]: ProhibitInsetIcon,
-  [OpportunityMatchStatus.MATCHED]: CheckCircleIcon,
-  [OpportunityMatchStatus.NEEDS_REMATCH]: ArrowsClockwiseIcon,
+  [VolunteerStateMatchType.NO_MATCHES]: ProhibitInsetIcon,
   [VolunteerStateMatchType.PENDING_MATCH]: HourglassIcon,
+  [VolunteerStateMatchType.MATCHED]: CheckCircleIcon,
+  [VolunteerStateMatchType.NEEDS_REMATCH]: ArrowsClockwiseIcon,
   [VolunteerStateTypeType.ACCOMPANYING]: UsersIcon,
   [VolunteerStateTypeType.EVENTS]: UsersIcon,
   [VolunteerStateTypeType.REGULAR]: UsersIcon,

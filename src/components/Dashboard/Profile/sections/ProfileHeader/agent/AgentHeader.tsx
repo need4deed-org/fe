@@ -3,7 +3,8 @@ import { EMPTY_PLACEHOLDER_VALUE } from "@/config/constants";
 import { formatDateTime } from "@/utils";
 import { HouseIcon } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
-import { ApiAgentProfileGet } from "../../../types/agent";
+import { useUpdateAgentStatus } from "@/hooks";
+import { AgentTrustLevel, ApiAgentProfileGet } from "../../../types/agent";
 import { EditButton, HeaderCard, IconContainer, StatusRowField } from "../common";
 import { ChangeAgentEngagementStatusDialog } from "./ChangeAgentEngagementStatusDialog";
 import {
@@ -22,6 +23,7 @@ type Props = {
 export const AgentHeader = ({ agent }: Props) => {
   const { t } = useTranslation();
   const dialog = useAgentEngagementStatusDialog(agent);
+  const { mutate: patchAgent } = useUpdateAgentStatus(agent.id);
 
   const registeredDate = agent.createdAt ? formatDateTime(agent.createdAt) : EMPTY_PLACEHOLDER_VALUE;
   const subtitle = `${t("dashboard.agentProfile.registeredSince")} ${registeredDate}`;
@@ -29,6 +31,10 @@ export const AgentHeader = ({ agent }: Props) => {
   const engagementStatusLabels = createEngagementStatusLabelMap(t);
   const volunteerSearchLabels = createVolunteerSearchLabelMap(t);
   const trustLevelLabels = createTrustLevelLabelMap(t);
+
+  const handleTrustLevelChange = (next: AgentTrustLevel) => {
+    patchAgent({ trustLevel: next });
+  };
 
   return (
     <HeaderCard
@@ -62,7 +68,7 @@ export const AgentHeader = ({ agent }: Props) => {
             value={agent.trustLevel}
             options={TRUST_LEVEL_OPTIONS}
             labels={trustLevelLabels}
-            onChange={() => {}}
+            onChange={handleTrustLevelChange}
           />
         }
       />
