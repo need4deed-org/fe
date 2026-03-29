@@ -5,7 +5,7 @@ import { CommentText, MenuAction } from "./styles";
 
 type MenuState = {
   isOpen: boolean;
-  anchorElement: HTMLButtonElement | null;
+  anchorElement: () => HTMLButtonElement | null;
   buttonRef: (el: HTMLButtonElement | null) => void;
   onToggle: (e: React.MouseEvent<HTMLButtonElement>) => void;
   onClose: () => void;
@@ -26,8 +26,8 @@ export function CommentDisplay({ commentId, content, menu }: Props) {
     <>
       <CommentText>{content}</CommentText>
       <MenuAction
-        ref={menu.buttonRef}
-        onClick={menu.onToggle}
+        ref={(el) => menu.buttonRef(el)}
+        onClick={(e) => menu.onToggle(e)}
         aria-label={t("dashboard.commentsSection.menuAction")}
         data-testid={`comment-menu-${commentId}`}
       >

@@ -1,6 +1,6 @@
 import { useScreenType } from "@/context/DeviceContext";
 import FunderLogoEU from "../../svg/FunderLogoEU";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useEffectEvent } from "react";
 import { ScreenTypes } from "@/config/constants";
 
 const logoSizeMap = {
@@ -14,7 +14,7 @@ export function LogoEU() {
   const [logoWidth, setLogoWidth] = useState(logoSizeMap[screenType].width);
   const [logoHeight, setLogoHeight] = useState(logoSizeMap[screenType].height);
 
-  useEffect(() => {
+  const updateLogoSize = useEffectEvent(() => {
     // This code will only run on the client-side
     const computedHeight = getComputedStyle(document.documentElement).getPropertyValue(
       "--homepage-footer-partners-section-logo-eu-height",
@@ -26,6 +26,10 @@ export function LogoEU() {
 
     setLogoWidth(computedWidth);
     setLogoHeight(computedHeight);
+  });
+
+  useEffect(() => {
+    updateLogoSize();
   }, [screenType]);
 
   return <FunderLogoEU width={logoWidth} height={logoHeight} />;

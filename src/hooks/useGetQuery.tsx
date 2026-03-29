@@ -57,12 +57,16 @@ interface UseGetQuery {
 export const useGetQuery = <T,>({ queryKey, apiPath, params = {}, staleTime, enabled }: UseGetQuery) => {
   const { t } = useTranslation();
   const { lang } = useParams<{ lang: Lang }>();
-  params.language = lang;
-  params.filter = getReducedFilter(params.filter);
+
+  const queryParams: Params = {
+    ...params,
+    language: lang,
+    filter: getReducedFilter(params.filter),
+  };
 
   const { data, isLoading, isError, error } = useQuery<ApiResponse<T>, Error>({
-    queryKey: [...queryKey, params],
-    queryFn: () => fetchData<T>(apiPath, params),
+    queryKey: [...queryKey, queryParams],
+    queryFn: () => fetchData<T>(apiPath, queryParams),
     staleTime,
     enabled,
   });

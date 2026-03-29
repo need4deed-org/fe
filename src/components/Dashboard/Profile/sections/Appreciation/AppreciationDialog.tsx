@@ -3,7 +3,7 @@ import { DatePickerWithLabel } from "@/components/core/common/DatePicker";
 import { Modal } from "@/components/core/modal";
 import { de, enUS, Locale } from "date-fns/locale";
 import { ApiAppreciationGet, VolunteerStateAppreciationType } from "need4deed-sdk";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useEffectEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { SelectableOption } from "../shared/SelectableOption";
 import { DialogButtonGroup, DialogForm } from "../shared/styles";
@@ -77,12 +77,7 @@ function DeliveryStatusOption({
 }: DeliveryStatusOptionProps) {
   return (
     <>
-      <SelectableOption
-        isSelected={isSelected}
-        label={label}
-        onClick={onSelect}
-        data-testid={`sub-option-${status}`}
-      />
+      <SelectableOption isSelected={isSelected} label={label} onClick={onSelect} data-testid={`sub-option-${status}`} />
       {showDatePicker && (
         <DateFieldWrapper data-testid={testId}>
           <DatePickerWithLabel
@@ -108,7 +103,7 @@ export function AppreciationDialog({ isOpen, onClose, onSave, initialData }: Pro
   const [deliveryStatus, setDeliveryStatus] = useState<DeliveryStatus | undefined>(undefined);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
 
-  useEffect(() => {
+  const applyInitialData = useEffectEvent(() => {
     if (!isOpen) return;
 
     if (initialData) {
@@ -125,6 +120,10 @@ export function AppreciationDialog({ isOpen, onClose, onSave, initialData }: Pro
       setDeliveryStatus(undefined);
       setSelectedDate(undefined);
     }
+  });
+
+  useEffect(() => {
+    applyInitialData();
   }, [isOpen, initialData]);
 
   const handleTypeSelect = (type: VolunteerStateAppreciationType) => {

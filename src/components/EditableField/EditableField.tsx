@@ -2,7 +2,7 @@ import { ErrorMessage } from "@/components/core/common";
 import { EMPTY_PLACEHOLDER_VALUE } from "@/config/constants";
 import { HasError, HasHint } from "@/types";
 import { MinusIcon, PlusIcon, XCircleIcon } from "@phosphor-icons/react";
-import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState, useEffectEvent } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import styled from "styled-components";
 
@@ -304,9 +304,13 @@ export const EditableField = forwardRef(function EditableField<T extends string 
   const [localValue, setLocalValue] = useState<T>(value);
   const [open, setOpen] = useState<boolean>(false);
 
-  useEffect(() => {
+  const syncLocalValue = useEffectEvent(() => {
     setLocalValue(value);
     setError(null);
+  });
+
+  useEffect(() => {
+    syncLocalValue();
   }, [value]);
 
   useImperativeHandle(ref, () => ({

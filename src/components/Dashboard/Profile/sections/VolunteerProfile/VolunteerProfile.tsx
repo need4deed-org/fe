@@ -3,7 +3,7 @@ import Button from "@/components/core/button/Button/Button";
 import { useUpdateVolunteerProfile } from "@/hooks/useUpdateVolunteerProfile";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ApiVolunteerGet, Lang, VolunteerStateTypeType } from "need4deed-sdk";
-import { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from "react";
+import { forwardRef, useEffect, useImperativeHandle, useMemo, useState, useEffectEvent } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { formToApiAvailability } from "./availabilityUtils";
@@ -81,12 +81,16 @@ export const VolunteerProfile = forwardRef<VolunteerProfileRef, Props>(function 
 
   const { errors, isValid, isDirty } = formState;
 
-  useEffect(() => {
+  const resetFormAndStopEditing = useEffectEvent(() => {
     if (!apiLanguages.length || !apiActivities.length || !apiSkills.length || !apiDistricts.length) return;
 
     reset(createFormDefaultValues(volunteer, languageMapping, districtMapping, activityMapping, skillMapping, t));
     trigger();
     setIsEditing(false);
+  });
+
+  useEffect(() => {
+    resetFormAndStopEditing();
   }, [
     volunteer,
     reset,

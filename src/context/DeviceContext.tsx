@@ -27,12 +27,14 @@ export function DeviceProvider({ children, initialScreenType }: DeviceProviderPr
   useEffect(() => {
     // Only run on the client-side
     const handleResize = () => {
-      setScreenType(getClientScreenType());
+      // update via timeout to avoid sync setState during event handling
+      window.requestAnimationFrame(() => setScreenType(getClientScreenType()));
     };
 
     window.addEventListener("resize", handleResize);
 
-    setScreenType(getClientScreenType());
+    // schedule initial update asynchronously
+    window.requestAnimationFrame(() => setScreenType(getClientScreenType()));
 
     return () => {
       window.removeEventListener("resize", handleResize);

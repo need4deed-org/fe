@@ -3,14 +3,9 @@ import { Modal } from "@/components/core/modal";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { X } from "@phosphor-icons/react";
 import { de, enUS } from "date-fns/locale";
-import {
-  ApiCommunicationGet,
-  CommunicationType,
-  ContactMethodType,
-  ContactType,
-} from "need4deed-sdk";
+import { ApiCommunicationGet, CommunicationType, ContactMethodType, ContactType } from "need4deed-sdk";
 import { useEffect } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { DatePickerWithLabel } from "@/components/core/common/DatePicker";
 import { DialogButtonGroup, DialogForm } from "../shared/styles";
@@ -45,7 +40,6 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
   const {
     control,
     handleSubmit,
-    watch,
     reset,
     setValue,
     formState: { isValid: isFormValid },
@@ -60,7 +54,7 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
     },
   });
 
-  const contactType = watch("contactType");
+  const contactType = useWatch({ control, name: "contactType" });
 
   useEffect(() => {
     if (isOpen) {

@@ -1,6 +1,6 @@
 import { format, isValid, parse } from "date-fns";
 import { type Locale } from "date-fns/locale";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useEffectEvent } from "react";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/style.css";
 
@@ -42,7 +42,7 @@ export function DatePickerWithLabel({
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
+  const updateInputValue = useEffectEvent(() => {
     if (document.activeElement === inputRef.current) return;
 
     if (date) {
@@ -57,12 +57,20 @@ export function DatePickerWithLabel({
     } else {
       setInputValue("");
     }
-  }, [date, showTodayIndicator, todayText]);
+  });
 
   useEffect(() => {
+    updateInputValue();
+  }, [date, showTodayIndicator, todayText]);
+
+  const updateMonth = useEffectEvent(() => {
     if (isOpen && date && isValid(date)) {
       setMonth(date);
     }
+  });
+
+  useEffect(() => {
+    updateMonth();
   }, [isOpen, date]);
 
   useEffect(() => {
