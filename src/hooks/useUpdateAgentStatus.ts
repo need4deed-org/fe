@@ -1,9 +1,10 @@
 import { apiPathAgent } from "@/config/constants";
 import { useMutationQuery } from "@/hooks";
-import { AgentEngagementStatus, ApiAgentProfileGet } from "@/components/Dashboard/Profile/types";
+import { AgentEngagementStatus, AgentTrustLevel, ApiAgentProfileGet } from "@/components/Dashboard/Profile/types";
 
 export type AgentStatusUpdateData = {
-  statusEngagement: AgentEngagementStatus;
+  statusEngagement?: AgentEngagementStatus;
+  trustLevel?: AgentTrustLevel;
 };
 
 export const useUpdateAgentStatus = (agentId: number) => {

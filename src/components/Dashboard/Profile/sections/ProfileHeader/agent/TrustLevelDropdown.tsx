@@ -25,13 +25,20 @@ export const TrustLevelDropdown = ({ value, options, labels, onChange }: Props) 
 
   return (
     <Container ref={ref} data-testid="trust-level-dropdown">
-      <Trigger $bg={bg} onClick={() => setOpen((prev) => !prev)}>
+      <Trigger
+        type="button"
+        $bg={bg}
+        onClick={(e) => {
+          e.stopPropagation();
+          setOpen((prev) => !prev);
+        }}
+      >
         {CurrentIcon && (
           <IconWrapper>
             <CurrentIcon size={20} color="var(--color-blue-700)" />
           </IconWrapper>
         )}
-        <span>{labels[value]}</span>
+        <span>{labels[value] ?? String(value)}</span>
         <CaretDownIcon size={16} color="var(--color-blue-700)" />
       </Trigger>
 
@@ -43,7 +50,8 @@ export const TrustLevelDropdown = ({ value, options, labels, onChange }: Props) 
               <MenuItem
                 key={option}
                 data-testid={`trust-level-option-${option}`}
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   onChange(option);
                   setOpen(false);
                 }}
