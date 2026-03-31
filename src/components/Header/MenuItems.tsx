@@ -1,0 +1,33 @@
+import styled from "styled-components";
+
+import LanguageSwitcher from "./LanguageSwitcher";
+import MenuitemList from "./MenuitemList";
+import { MenuItemType } from "@/types";
+
+export const MenuItemsContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: var(--homepage-hero-section-header-menu-items-flex-direction);
+  width: var(--homepage-hero-section-header-menu-items-width);
+  gap: var(--homepage-hero-section-header-menu-items-gap);
+  height: fit-content;
+  a {
+    text-decoration: none;
+  }
+`;
+
+interface Props {
+  items: MenuItemType[];
+  menuItemColor: string;
+}
+
+export default function MenuItems({ items, menuItemColor }: Props) {
+  return (
+    <MenuItemsContainer>
+      <MenuitemList items={items} menuItemColor={menuItemColor} />
+
+      <LanguageSwitcher textColor={menuItemColor} />
+    </MenuItemsContainer>
+  );
+}

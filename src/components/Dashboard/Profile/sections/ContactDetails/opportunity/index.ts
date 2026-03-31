@@ -1,0 +1,1 @@
+export { OpportunityContactDetails } from "./OpportunityContactDetails";

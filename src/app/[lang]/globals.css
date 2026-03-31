@@ -1,0 +1,1615 @@
+body {
+  font-family: "Figtree", sans-serif !important;
+  width: 100%;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.gradient-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.image-filter-gradient-blue {
+  background: linear-gradient(180deg, var(--color-midnight-misty) 11.02%, var(--color-barely-blue) 89.66%);
+}
+
+.n4d-information-tooltip-parent {
+  position: relative;
+}
+
+.n4d-container {
+  padding-top: var(--n4d-gap);
+  margin-inline: auto;
+  max-width: var(--n4d-w);
+  direction: var(--n4d-lang-direction);
+}
+
+.n4d-cta {
+  background-color: var(--color-green-800);
+  color: var(--color-neutral-100);
+  font-weight: bold;
+  border-color: transparent;
+  border-radius: 25px;
+  padding: 15px 25px;
+}
+
+.n4d-cta[disabled] {
+  background-color: var(--color-neutral-700);
+  color: var(--color-neutral-200);
+  border-color: transparent;
+  border-radius: 25px;
+  padding: 15px 25px;
+}
+
+.n4d-cta a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.n4d-cta:hover {
+  background-color: var(--color-green-900);
+}
+
+.n4d-cta[disabled]:hover {
+  background-color: var(--color-neutral-700);
+}
+
+:root {
+  --n4d-gap: 0;
+  --n4d-w: min(90vw, 1080px);
+  --n4d-lang-direction: ltr;
+  --bs-body-font-family: "Figtree", sans-serif;
+  --n4d-box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.15), 0px 4px 4px rgba(0, 0, 0, 0.3);
+  /* color */
+  --color-midnight: rgba(26, 38, 132, 1);
+  --color-midnight-light: rgba(58, 72, 178, 1);
+  --color-midnight-misty: rgba(44, 47, 153, 0.6);
+  --color-midnight-bright: rgba(75, 91, 212, 1);
+  --color-barely-blue: rgba(73, 79, 255, 0.05);
+  --color-aubergine: rgba(95, 38, 77, 1);
+  --color-aubergine-light: rgba(133, 63, 110, 1);
+  --color-aubergine-subtle: rgba(95, 38, 77, 0.1);
+  --color-orchid: rgba(247, 205, 255, 1);
+  --color-orchid-dark: rgba(242, 177, 255, 1);
+  --color-orchid-light: rgba(251, 226, 255, 1);
+  --color-orchid-subtle: rgba(254, 244, 255, 1);
+  --color-sand: rgba(242, 226, 211, 1);
+  --color-sand-dark: rgba(184, 172, 137, 1);
+  --color-magnolia: rgba(246, 238, 231, 1);
+  --color-magnolia-light: rgba(248, 244, 241, 1);
+  --color-papaya: rgba(255, 125, 104, 1);
+  --color-salmon: rgba(254, 234, 231, 1);
+  --color-dimmed-background: rgba(0, 0, 0, 0.4);
+
+  /* Base colors */
+  --color-white: rgba(255, 255, 255, 1);
+  --color-black: rgba(0, 0, 0, 1);
+
+  --color-grey-10: rgba(238, 238, 238, 1);
+  --color-grey-50: rgba(240, 241, 243, 1);
+  --color-grey-200: rgba(185, 189, 199, 1);
+  --color-grey-400: rgba(133, 141, 157, 1);
+  --color-grey-500: rgba(102, 112, 133, 1);
+  --color-grey-700: rgba(72, 80, 94, 1);
+
+  --color-neutral-200: rgb(68, 68, 68);
+  --color-neutral-500: rgb(187, 187, 187);
+  --color-neutral-700: rgb(221, 221, 221);
+
+  --color-green-50: rgba(242, 252, 250, 1);
+  --color-green-100: rgba(216, 245, 240, 1);
+  --color-green-200: rgba(198, 240, 232, 1);
+  --color-green-400: rgba(159, 229, 216, 1);
+  --color-green-500: rgba(126, 203, 188, 1);
+  --color-green-700: rgba(98, 158, 146, 1);
+  --color-green-800: rgba(65, 242, 141, 1);
+  --color-green-900: rgba(0, 201, 128, 1);
+
+  --color-red-50: rgba(254, 234, 231, 1);
+  --color-red-200: rgba(248, 160, 146, 1);
+  --color-red-400: rgba(243, 90, 65, 1);
+  --color-red-500: rgba(240, 49, 18, 1);
+  --color-red-600: rgba(208, 41, 13, 1);
+
+  --color-violet-50: rgba(245, 240, 255, 1);
+  --color-violet-100: rgba(225, 215, 245, 1);
+  --color-violet-200: rgba(193, 178, 228, 1);
+  --color-violet-400: rgba(147, 121, 209, 1);
+  --color-violet-500: rgba(120, 88, 197, 1);
+  --color-violet-700: rgba(85, 62, 140, 1);
+
+  --color-blue-50: rgba(235, 237, 247, 1);
+  --color-blue-100: rgba(194, 198, 231, 1);
+  --color-blue-200: rgba(123, 132, 203, 1);
+  --color-blue-400: rgba(99, 111, 188, 1);
+  --color-blue-500: rgba(58, 72, 178, 1);
+  --color-blue-700: rgba(26, 38, 132, 1);
+
+  --color-pink-50: rgba(254, 247, 255, 1);
+  --color-pink-100: rgba(251, 231, 255, 1);
+  --color-pink-200: rgba(249, 219, 255, 1);
+  --color-pink-400: rgba(245, 193, 255, 1);
+  --color-pink-500: rgba(242, 177, 255, 1);
+  --color-pink-600: rgba(220, 161, 232, 1);
+
+  /* text */
+  --text-h2-font-weight: 600;
+  --text-h2-font-size: 32px;
+  --text-h2-line-height: 38px;
+
+  --text-h3-font-weight: 600;
+  --text-h3-font-size: 24px;
+  --text-h3-line-height: 30px;
+  --text-h3-letter-spacing: 0.1px;
+
+  --text-p-font-weight: 300;
+
+  /* Font Weights */
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* font Size */
+  --font-size-xs: 14px;
+  --font-size-sm: 16px;
+  --font-size-md: 18px;
+  --font-size-lg: 20px;
+  --font-size-xl: 24px;
+  --font-size-2xl: 32px;
+  --font-size-3xl: 48px;
+
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-xxl: 40px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+  /* font weights */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semi-bold: 600;
+  --font-weight-bold: 700;
+
+  /* comments section */
+  --comments-author-font-weight: var(--font-weight-semi-bold);
+  --comments-timestamp-font-weight: var(--font-weight-regular);
+  --comments-text-font-weight: var(--font-weight-regular);
+  --comments-button-font-weight: var(--font-weight-semi-bold);
+  --comments-menu-item-font-weight: var(--font-weight-regular);
+  --comments-menu-item-danger-font-weight: var(--font-weight-semi-bold);
+
+  /* icon */
+  --icon-color: var(--color-papaya);
+  --icon-size-24: 24px;
+  --icon-size-32: 32px;
+  --icon-size-40: 40px;
+
+  /* card */
+  --card-border-radius: 24px;
+
+  /* text-activity-tag */
+  --text-activity-tag-font-weight: 600;
+  --text-activity-tag-font-size: 14px;
+  --text-activity-tag-line-height: 17px;
+  --text-activity-tag-text-align: center;
+
+  /* activities */
+  --activity-tag-padding: 6px 8px;
+
+  /* testimonials */
+  --homepage-testimonials-profile-width: 60px;
+  --homepage-testimonials-profile-height: 60px;
+
+  /* layout-static-page */
+  --layout-static-page-background-default: linear-gradient(
+    180deg,
+    var(--color-magnolia)-5.53%,
+    var(--color-orchid-dark) 100%
+  );
+  /* percentages */
+  --percent-10: 10%;
+  --percent-20: 20%;
+  --percent-25: 25%;
+  --percent-30: 30%;
+  --percent-35: 35%;
+  --percent-40: 40%;
+  --percent-45: 45%;
+  --percent-50: 50%;
+  --percent-75: 75%;
+  --percent-100: 100%;
+
+  /* shared spacing */
+  --spacing-4: 4px;
+  --spacing-8: 8px;
+  --spacing-12: 12px;
+  --spacing-16: 16px;
+  --spacing-20: 20px;
+  --spacing-24: 24px;
+  --spacing-32: 32px;
+  --spacing-48: 48px;
+
+  /* shared borders */
+  --border-width-thin: 1px;
+  --border-width-medium: 2px;
+  --border-radius-xs: 4px;
+  --border-radius-small: 8px;
+  --border-radius-medium: 12px;
+  --border-radius-large: 16px;
+
+  /* shared transitions */
+  --transition-transform: transform 0.2s ease;
+  --transition-opacity-visibility: opacity 0.2s, visibility 0.2s;
+  --transition-all: all 0.2s;
+  --transition-background: background-color 0.2s ease;
+
+  /* shared opacity */
+  --opacity-hover: 0.7;
+  --opacity-disabled: 0.6;
+
+  /* shared typography */
+  --letter-spacing-tight: 0.005em;
+  --font-size-14: 14px;
+  --font-size-16: 16px;
+  --font-size-24: 24px;
+  --font-size-32: 32px;
+  --line-height-20: 20px;
+  --line-height-24: 24px;
+  --line-height-32: 32px;
+  --line-height-40: 40px;
+
+  /* checkbox */
+  --checkbox-label-font-size: 18px;
+  --checkbox-label-font-weight-selected: 400;
+  --checkbox-label-font-weight-not-selected: 300;
+
+  /* communication tracker */
+  --communication-tracker-action-column-width: 56px;
+  --communication-tracker-dialog-max-width: 620px;
+  --communication-tracker-delete-dialog-max-width: 500px;
+  --communication-tracker-status-badge-padding: 6px 12px;
+  --communication-tracker-radio-size: 24px;
+  --communication-tracker-date-picker-day-size: 40px;
+  --communication-tracker-date-picker-nav-button-size: 32px;
+  --communication-tracker-dropdown-item-padding: 4px 8px;
+  --communication-tracker-input-icon-offset: 16px;
+  --communication-tracker-input-padding-left: 48px;
+  --communication-tracker-dropdown-arrow-size: 14px 8px;
+  --communication-tracker-checkmark-width: 6px;
+  --communication-tracker-checkmark-height: 12px;
+  --communication-tracker-checkmark-border-width: 0 2.5px 2.5px 0;
+  --communication-tracker-checkmark-transform: translate(-50%, -60%) rotate(45deg);
+  --communication-tracker-button-height: 56px;
+  --communication-tracker-dialog-box-shadow: 0px 10px 30px -12px rgba(143, 81, 138, 0.2);
+  --communication-tracker-popover-box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+
+  /* dropdown */
+  --dropdown-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+
+  /* dialog */
+  --dialog-title-font-size: 28px;
+  --dialog-title-line-height: 32px;
+  --dialog-title-letter-spacing: 0.14px;
+  --dialog-max-width: 620px;
+  --dialog-box-shadow: 0px 10px 30px -12px rgba(143, 81, 138, 0.2);
+  --dialog-option-padding: 0px;
+  --dialog-checkmark-width: 6px;
+  --dialog-checkmark-height: 12px;
+  --dialog-checkmark-border-width: 0 2.5px 2.5px 0;
+  --dialog-checkmark-border-radius: 0;
+  --dialog-checkmark-transform: translate(-50%, -60%) rotate(45deg);
+
+  /* expanded section */
+  --expanded-section-border-width: 4px;
+  --expanded-section-border-color: rgba(123, 132, 203, 0.15);
+
+  /* sub question */
+  --sub-question-letter-spacing: 0.1px;
+
+  /* date picker */
+  --date-picker-input-margin-top: 10px;
+  --date-picker-floating-label-top: -10px;
+  --date-picker-floating-label-left: 12px;
+  --date-picker-floating-label-padding: 0 4px;
+  --date-picker-floating-label-letter-spacing: 0.08px;
+  --date-picker-input-padding-left: 52px;
+  --date-picker-input-padding-right: 44px;
+  --date-picker-input-letter-spacing: 0.1px;
+  --date-picker-popover-z-index: 1100;
+
+  /* selectable option */
+  --selectable-option-letter-spacing: 0.1px;
+
+  /* status badges */
+  --status-badge-icon-size: 20px;
+
+  /* document section - aliases to shared variables */
+  --document-section-container-padding: var(--spacing-24);
+  --document-section-container-gap: var(--spacing-8);
+  --document-section-container-margin-bottom: var(--spacing-24);
+  --document-section-header-gap: var(--spacing-24);
+  --document-section-title-row-gap: var(--spacing-16);
+  --document-section-icon-size: var(--icon-size);
+  --document-section-table-border-width: var(--border-width-thin);
+  --document-section-table-border-radius: var(--border-radius-small);
+  --document-section-header-cell-padding: var(--spacing-16);
+  --document-section-header-cell-gap: var(--spacing-8);
+  --document-section-header-cell-font-weight: 600;
+  --document-section-header-cell-font-size: var(--text-p-font-size);
+  --document-section-header-cell-line-height: var(--text-p-line-height);
+  --document-section-cell-padding: var(--spacing-16);
+  --document-section-cell-gap: var(--spacing-8);
+  --document-section-cell-font-size: var(--text-p-font-size);
+  --document-section-cell-line-height: var(--text-p-line-height);
+  --document-section-action-cell-padding: var(--spacing-16) var(--spacing-8);
+  --document-section-status-badge-padding: var(--profile-section-badge-padding);
+  --document-section-status-badge-gap: var(--spacing-4);
+  --document-section-status-badge-border-radius: var(--card-border-radius);
+  --document-section-status-badge-font-weight: 500;
+  --document-section-status-badge-font-size: 16px;
+  --document-section-status-badge-line-height: var(--text-p-line-height);
+  --document-section-action-button-size: var(--text-p-line-height);
+  --document-section-action-button-hover-opacity: 0.7;
+
+  /* document dialogs - aliases to shared variables */
+  --document-dialog-border-radius: var(--card-border-radius);
+  --document-dialog-padding: var(--spacing-48);
+  --document-dialog-max-width: 600px;
+  --document-dialog-width: 90%;
+  --document-dialog-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15);
+  --document-dialog-overlay-background: rgba(0, 0, 0, 0.5);
+  --document-dialog-overlay-z-index: 10001;
+  --document-dialog-title-font-weight: 700;
+  --document-dialog-title-font-size: var(--text-h3-font-size);
+  --document-dialog-title-line-height: 32px;
+  --document-dialog-title-margin-bottom: var(--spacing-16);
+  --document-dialog-message-font-weight: 400;
+  --document-dialog-message-font-size: 16px;
+  --document-dialog-message-line-height: var(--text-p-line-height);
+  --document-dialog-message-margin-bottom: var(--spacing-32);
+  --document-dialog-button-gap: var(--spacing-16);
+  --document-dialog-button-font-weight: 600;
+  --document-dialog-button-font-size: 16px;
+  --document-dialog-button-line-height: var(--text-p-line-height);
+  --document-dialog-button-border-width: var(--border-width-medium);
+  --document-dialog-button-border-radius: var(--button-border-radius);
+  --document-dialog-button-padding: var(--spacing-12) var(--spacing-32);
+  --document-dialog-button-large-font-size: var(--text-h3-font-size);
+  --document-dialog-button-large-line-height: 32px;
+  --document-dialog-button-large-padding: var(--spacing-16) var(--spacing-48);
+  --document-dialog-button-disabled-color: #d1d5db;
+
+  /* document upload - aliases to shared variables */
+  --document-upload-title-font-weight: 700;
+  --document-upload-title-font-size: 48px;
+  --document-upload-title-line-height: 56px;
+  --document-upload-title-margin-bottom: var(--spacing-8);
+  --document-upload-subtitle-font-weight: 400;
+  --document-upload-subtitle-font-size: var(--text-p-font-size);
+  --document-upload-subtitle-line-height: 28px;
+  --document-upload-subtitle-margin-bottom: var(--spacing-32);
+  --document-upload-dropzone-border-width: var(--border-width-medium);
+  --document-upload-dropzone-border-radius: var(--border-radius-large);
+  --document-upload-dropzone-padding: var(--spacing-48) var(--spacing-24);
+  --document-upload-dropzone-margin-bottom: var(--spacing-24);
+  --document-upload-dropzone-background: #f9fafb;
+  --document-upload-dropzone-border-color: #d1d5db;
+  --document-upload-dropzone-icon-margin-bottom: var(--spacing-16);
+  --document-upload-dropzone-text-font-weight: 600;
+  --document-upload-dropzone-text-font-size: 18px;
+  --document-upload-dropzone-text-line-height: var(--text-p-line-height);
+  --document-upload-dropzone-text-margin-bottom: var(--spacing-8);
+  --document-upload-dropzone-hint-font-weight: 400;
+  --document-upload-dropzone-hint-font-size: 14px;
+  --document-upload-dropzone-hint-line-height: var(--spacing-20);
+  --document-upload-dropzone-hint-color: #6b7280;
+  --document-upload-selected-file-gap: var(--spacing-12);
+  --document-upload-selected-file-padding: var(--spacing-16);
+  --document-upload-selected-file-border-radius: var(--border-radius-medium);
+  --document-upload-selected-file-margin-bottom: var(--spacing-32);
+  --document-upload-selected-file-label-font-weight: 600;
+  --document-upload-selected-file-label-font-size: 14px;
+  --document-upload-selected-file-label-line-height: var(--spacing-20);
+  --document-upload-selected-file-label-margin-bottom: var(--spacing-4);
+  --document-upload-selected-file-name-font-weight: 400;
+  --document-upload-selected-file-name-font-size: 14px;
+  --document-upload-selected-file-name-line-height: var(--spacing-20);
+  --document-upload-selected-file-name-color: #6b7280;
+
+  /* document preview - specific values */
+  --document-preview-width: 1340px;
+  --document-preview-height: 944px;
+  --document-preview-max-width: 75vw;
+  --document-preview-max-height: 95vh;
+  --document-preview-background: linear-gradient(135deg, #c5b8e0 0%, #a594c8 100%);
+  --document-preview-shadow: 0px 8px 32px rgba(0, 0, 0, 0.24), 0px 16px 64px rgba(0, 0, 0, 0.16);
+  --document-preview-bar-padding: var(--spacing-16);
+  --document-preview-bar-gap: var(--spacing-32);
+  --document-preview-bar-height: 56px;
+  --document-preview-bar-background: #2f2f30;
+  --document-preview-bar-z-index: 2;
+  --document-preview-name-section-gap: 13px;
+  --document-preview-button-size: var(--text-p-line-height);
+  --document-preview-button-hover-opacity: 0.8;
+  --document-preview-name-font-weight: 400;
+  --document-preview-name-font-size: var(--text-p-font-size);
+  --document-preview-name-line-height: var(--text-p-line-height);
+  --document-preview-name-letter-spacing: var(--letter-spacing-tight);
+  --document-preview-name-color: var(--color-white);
+  --document-preview-actions-gap: 21px;
+  --document-preview-container-padding: var(--spacing-32) 0;
+  --document-preview-frame-width: 595px;
+  --document-preview-frame-height: 842px;
+  --document-preview-frame-background: var(--color-white);
+  --document-preview-frame-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+  --document-preview-zoom-controls-padding: var(--spacing-16);
+  --document-preview-zoom-controls-gap: var(--spacing-16);
+  --document-preview-zoom-controls-bottom: 74px;
+  --document-preview-zoom-controls-background: #2f2f30;
+  --document-preview-zoom-controls-opacity: 0.8;
+  --document-preview-zoom-controls-border-radius: var(--border-radius-large);
+  --document-preview-zoom-controls-z-index: 3;
+  --document-preview-zoom-button-disabled-opacity: 0.3;
+
+  /* document tooltip - aliases to shared variables */
+  --document-tooltip-background: #0b1560;
+  --document-tooltip-color: var(--color-white);
+  --document-tooltip-font-weight: 400;
+  --document-tooltip-font-size: var(--spacing-12);
+  --document-tooltip-line-height: var(--spacing-16);
+  --document-tooltip-letter-spacing: var(--letter-spacing-tight);
+  --document-tooltip-padding: var(--spacing-8);
+  --document-tooltip-border-radius: var(--border-radius-small);
+  --document-tooltip-z-index: 10000;
+  --document-tooltip-transform: translate(-50%, -100%) translateY(calc(var(--spacing-8) * -1));
+  --document-tooltip-arrow-size: var(--spacing-4);
+
+  /* profile section */
+  --profile-section-field-row-padding: 16px 0;
+  --profile-section-badge-padding: 10px 20px;
+  --profile-section-error-gap: 6px;
+
+  /* image */
+  --image-circle-pic-size: 60px;
+
+  /* form input */
+  --form-input-height: 3rem;
+  --form-input-error-message-color: var(--color-red-600);
+
+  /* checkButton */
+  --check-button-label-font-size: 18px;
+  --check-button-label-font-weight: 400;
+  --check-button-border: solid 1px var(--color-grey-200);
+  --check-button-padding: 12px;
+  --avatar-img-logo-width: 280px;
+  --custom-px-17: 17px;
+  --zero: 0px;
+
+  /* volunteer header */
+  --volunteer-header-label-width: 214px;
+}
+
+.with-linebreaks {
+  white-space: pre-wrap;
+}
+
+@media (min-width: 360px) {
+  :root {
+    --max-width-section: 360px;
+
+    --text-p-font-size: 18px;
+    --text-p-line-height: 21px;
+    --text-p-letter-spacing: 0;
+
+    --text-h1-font-weight: 700;
+    --text-h1-font-size: 28px;
+    --text-h1-line-height: 28px;
+
+    --text-h4-font-weight: 500;
+    --text-h4-font-size: 18px;
+    --text-h4-line-height: 18px;
+    --text-h4-letter-spacing: 0.1;
+
+    --icon-size: 40px;
+
+    --text-button-font-size: 18px;
+
+    --homepage-section-container-padding: 48px 20px;
+    --homepage-section-container-gap: 16px;
+    --homepage-section-container-footer-justify-content: center;
+
+    --homepage-volunteering-categories-header-gap: 12px;
+    --homepage-volunteering-category-card-width: 320px;
+    --homepage-volunteering-category-card-height: 328px;
+    --homepage-volunteering-category-card-padding-top: 24px;
+    --homepage-volunteering-category-card-padding-right: 24px;
+    --homepage-volunteering-category-card-padding-bottom: 48px;
+    --homepage-volunteering-category-card-padding-left: 24px;
+    --homepage-volunteering-category-card-gap: 16px;
+
+    --homepage-volunteering-opportunities-grid-template-columns: 1fr;
+    --homepage-volunteering-opportunities-grid-template-rows: repeat(2, auto);
+    --homepage-volunteering-opportunities-grid-gap: 16px;
+    --homepage-volunteering-opportunity-card-width: 320px;
+    --homepage-volunteering-opportunity-card-padding-top: 24px;
+    --homepage-volunteering-opportunity-card-padding-right: 24px;
+    --homepage-volunteering-opportunity-card-padding-bottom: 40px;
+    --homepage-volunteering-opportunity-card-padding-left: 24px;
+    --homepage-volunteering-opportunity-card-gap: 16px;
+    --homepage-volunteering-opportunity-details-gap: 12px;
+    --homepage-volunteering-opportunity-details-languages-gap: 4px;
+    --homepage-volunteering-opportunity-details-languages-detail-gap: 4px;
+
+    --page-opportunity-grid-max-width: 360px;
+    --page-opportunity-grid-template-columns: 1fr;
+    --page-opportunity-card-width: 312px;
+    --page-opportunity-card-height: auto;
+    /*421px;*/
+    --page-opportunity-popup-card-width: 328px;
+    --page-opportunity-popup-card-height: auto;
+    --page-opportunity-popup-card-x-margins: 36px;
+    --page-opportunity-popup-ctas-gap: 24px;
+    --page-opportunity-popup-ctas-margin-top: 24px;
+
+    --homepage-testimonials-header-gap: 16px;
+    --homepage-testimonial-card-width: 320px;
+    --homepage-testimonial-card-padding-top: 24px;
+    --homepage-testimonial-card-padding-right: 24px;
+    --homepage-testimonial-card-padding-bottom: 32px;
+    --homepage-testimonial-card-padding-left: 24px;
+    --homepage-testimonial-card-gap: 14px;
+    --homepage-testimonial-card-text-p-font-size: 16px;
+    --homepage-testimonial-card-text-p-line-height: 22px;
+
+    --homepage-hero-section-container-height: 760px;
+    --homepage-hero-section-container-gap: 80px;
+    --homepage-hero-section-logo-height: 152px;
+    --homepage-hero-section-logo-width: 280px;
+    --homepage-hero-section-header-height: 202px;
+    --homepage-hero-section-header-menu-items-width: 100%;
+    --homepage-hero-section-header-menu-items-gap: 24px;
+    --homepage-hero-section-header-menu-items-flex-direction: column;
+    --homepage-hero-section-header-menu-items-padding-top: 24px;
+    --homepage-hero-section-header-menu-items-padding-bottom: 32px;
+    --homepage-hero-section-header-menu-items-padding-right: 20px;
+    --homepage-hero-section-header-menu-items-padding-left: 20px;
+    --homepage-hero-section-header-menu-items-border-bottom-right-radius: 10px;
+    --homepage-hero-section-header-menu-items-border-bottom-left-radius: 10px;
+    --homepage-hero-section-header-menu-item-fontSize: 16px;
+    --homepage-hero-section-header-menu-item-fontWeight: 600;
+    --homepage-hero-section-header-menu-item-letterSpacing: 0px;
+    --homepage-hero-section-header-menu-item-lineheight: 16px;
+    --homepage-hero-section-content-container-width: 100%;
+    --homepage-hero-section-content-container-height: 440px;
+    --homepage-hero-section-content-hero-text-container-gap: 20px;
+    --homepage-hero-section-content-hero-text-color: var(--color-white);
+    --homepage-hero-section-content-hero-text-fontSize: 32px;
+    --homepage-hero-section-content-hero-text-fontWeight: 600;
+    --homepage-hero-section-content-hero-text-letterSpacing: 0.1px;
+    --homepage-hero-section-content-hero-text-lineheight: 36px;
+    --homepage-hero-section-content-hero-supporting-text-fontSize: 20px;
+    --homepage-hero-section-content-hero-supporting-text-fontWeight: 400;
+    --homepage-hero-section-content-hero-supporting-text-letterSpacing: 0.25px;
+    --homepage-hero-section-content-hero-supporting-text-lineheight: 20px;
+    --homepage-hero-section-content-hero-button-container-gap: 16px;
+    --homepage-hero-section-content-hero-button-container-flex-direction: column;
+
+    --homepage-footer-partners-section-container-height: auto;
+    --homepage-footer-partners-section-container-padding: 32px 20px;
+    --homepage-footer-partners-section-container-gap: 64px;
+    --homepage-footer-partners-section-partners-container-height: 443px;
+    --homepage-footer-partners-section-partners-container-flex-direction: column;
+    --homepage-footer-partners-section-partners-container-justify-content: center;
+    --homepage-footer-partners-section-partners-container-gap: 48px;
+    --homepage-footer-partners-section-partners-frame-container-gap: 75px;
+    --homepage-footer-partners-section-partners-club-dialog-div-gap: 8px;
+    --homepage-footer-partners-section-logo-club-dialog-width: 200;
+    --homepage-footer-partners-section-logo-club-dialog-height: 36;
+    --homepage-footer-partners-section-logo-berlin-width: 112;
+    --homepage-footer-partners-section-logo-berlin-height: 120;
+    --homepage-footer-partners-section-logo-eu-width: 130px;
+    --homepage-footer-partners-section-logo-eu-height: 120px;
+    --homepage-footer-partners-section-logo-SchönebergHilft-width: 100px;
+    --homepage-footer-partners-section-logo-SchönebergHilft-height: 100px;
+    --homepage-footer-partners-section-logo-n4d-width: 68px;
+    --homepage-footer-partners-section-logo-n4d-height: 90px;
+    --homepage-footer-partners-section-footer-container-height: 364px;
+    --homepage-footer-partners-section-footer-container-flex-direction: column;
+    --homepage-footer-partners-section-footer-container-justify-content: space-between;
+    --homepage-footer-partners-section-contact-socials-container-flex-direction: column;
+    --homepage-footer-partners-section-contact-socials-container-justify-content: unset;
+    --homepage-footer-partners-section-contact-socials-container-gap: 32px;
+    --homepage-footer-partners-section-contact-container-gap: 10px;
+    --homepage-footer-partners-section-socials-container-gap: 20px;
+    --homepage-footer-partners-section-footer-links-container-width: 310px;
+    --homepage-footer-partners-section-footer-frame-container-gap: 16px;
+    --homepage-footer-partners-section-p-fontWeight-large: 500;
+    --homepage-footer-partners-section-p-fontWeight-small: 400;
+    --homepage-footer-partners-section-p-fontSize: 16px;
+
+    --homepage-rac-section-container-height: 720px;
+    --homepage-rac-section-content-container-gap: 80px;
+    --homepage-rac-section-content-headLine-container-gap: 16px;
+    --homepage-rac-section-content-headLine2-fontWeight: 700;
+    --homepage-rac-section-content-headLine2-fontSize: 40px;
+    --homepage-rac-section-content-headLine2-lineheight: 40px;
+    --homepage-rac-section-content-headLine2-letterSpacing: 0.1px;
+    --homepage-rac-section-content-buttons-container-flex-direction: column;
+    --homepage-rac-section-content-buttons-container-gap: 16px;
+
+    --homepage-process-section-gap: 40px;
+    --homepage-process-section-header-gap: 24px;
+    --homepage-process-section-video-height: 208px;
+    --homepage-process-section-video-width: 360px;
+    --homepage-process-section-video-border-radius: 8px;
+    --homepage-process-section-video-margin-left: -20px;
+    --homepage-process-section-card-flex-direction: column;
+    --homepage-process-section-card-width: 320px;
+    --homepage-process-section-card-height: 330px;
+    --homepage-process-section-card-border-radius: 24px;
+    --homepage-process-section-card-padding: 20px 28px 32px 20px;
+    --homepage-process-section-card-gap: 24px;
+    --homepage-process-section-card-header-flex-direction: row;
+    --homepage-process-section-card-header-gap: 20px;
+    --homepage-process-section-card-week-div-padding: 8px 12px 6px 12px;
+    --homepage-process-section-card-week-div-radius: 4px;
+    --homepage-process-section-card-info-div-gap: 16px;
+    --homepage-process-section-card-info-headline-div-gap: 12px;
+    --homepage-process-section-card-info-bullet-div-padding-left: 8px;
+    --homepage-process-section-card-info-text-div-gap: 24px;
+    --homepage-process-section-card-info-text-fontWeight: 400;
+    --homepage-process-section-card-info-text-fontSize: 16px;
+    --homepage-process-section-card-info-text-lineheight: 20px;
+    --homepage-process-section-card-info-text-letterSpacing: 0px;
+    --homepage-process-section-card-icon-size: 40px;
+    --homepage-process-section-card-last-step-width: 320px;
+
+    --homepage-events-section-container-height: 455px;
+    --homepage-events-section-content-container-gap: 32px;
+    --homepage-events-section-event-container-flex-direction: column;
+    --homepage-events-section-event-container-gap: 32px;
+    --homepage-events-section-event-card-gap: 20px;
+    --homepage-events-section-event-card-headline-gap: 16px;
+    --homepage-events-section-event-card-event-title-tag-padding: 8px 12px;
+    --homepage-events-section-event-card-event-title-tag-border-radius: 8px;
+    --homepage-events-section-button-container-justify-content: center;
+
+    --button-height: 64px;
+    --button-width: auto;
+    --button-padding: 12px 24px;
+    --button-border-radius: 125px;
+    --button-text-font-weight: 500;
+    --button-text-font-size: 18px;
+    --button-text-line-height: 25px;
+    --button-text-letter-spacing: 0.13px;
+    --button-text-text-align: center;
+
+    --numbering-div-width: 32px;
+    --numbering-div-height: 32px;
+    --numbering-div-border-radius: 16.57px;
+
+    --layout-static-page-n4d-logo-width: 144;
+    --layout-static-page-n4d-logo-height: 24;
+    --layout-static-page-header-height: 64px;
+    --layout-static-page-header-content-bottom-padding: 100px;
+    --layout-static-page-header-padding: 10px 18px;
+
+    --agents-filters-content-container-width: auto;
+    --agents-filters-content-container-gap: 16px;
+    --agents-filters-content-container-padding: 20px 20px 20px 20px;
+
+    --opportunities-container-width: fit-content;
+    --opportunities-container-min-height: none;
+    --opportunities-container-gap: 24px;
+    --opportunities-container-padding: 12px;
+    --opportunities-container-padding-inline: 16px;
+    --opportunities-header-title-tabs-gap: 24px;
+    --opportunities-header-tabs-searchbar-gap: 12px;
+    --opportunities-header-tabs-section-width: -webkit-fill-available;
+    --opportunities-header-tabs-gap: 16px;
+    --opportunities-header-tabs-border-bottom: 4px;
+    --opportunities-header-tabs-padding-bottom: 4px;
+    --opportunities-header-result-gap: 10px;
+    --opportunities-header-result-padding: 10px;
+    --opportunities-header-searchbar-flex-direction: column;
+    --opportunities-header-searchbar-width: -webkit-fill-available;
+    --opportunities-map-view-container-height: 200px;
+    --opportunities-cards-container-justify-content: center;
+    --opportunities-filters-button-height: 48px;
+    --opportunities-filters-button-width: 48px;
+    --opportunities-filters-button-icon-size: 32px;
+    --opportunities-filters-close-filter-height: 64px;
+    --opportunities-filters-close-filter-gap: 12px;
+    --opportunities-filters-close-filter-padding: 16px 0px 16px 32px;
+    --opportunities-filters-content-container-width: auto;
+    --opportunities-filters-content-container-gap: 16px;
+    --opportunities-filters-content-container-padding: 20px 20px 20px 20px;
+    --opportunities-filters-content-filter-container-gap: 16px;
+    --opportunities-filters-content-accordion-options-gap: 6px;
+    --opportunities-filters-content-accordion-options-max-height: 500px;
+    --opportunities-filters-content-accordion-options-checkbox-height: 18px;
+    --opportunities-filters-content-accordion-group-options-checkbox-height: 16px;
+    --opportunities-filters-content-accordion-group-options-checkbox-labelFontSize: 14px;
+    --opportunities-filters-content-accordion-header-border-top: 1px;
+    --opportunities-filters-content-accordion-header-padding-top: 16px;
+    --opportunities-filters-clear-all-button-icon-size: 24px;
+    --opportunities-filters-clear-all-button-height: 64px;
+    --opportunities-filters-clear-all-button-text-font-size: 20px;
+    --opportunities-filters-description-font-size: 14px;
+    --opportunities-filters-description-font-weight: 400;
+
+    --search-container-height: 64px;
+    --search-container-border-radius: 40px;
+    --search-container-padding: 0 32px;
+    --search-input-font-size: 16px;
+
+    --paginated-grid-container-gap: 24px;
+    --paginated-grid-pagination-number-width: 36px;
+    --paginated-grid-pagination-number-height: 44px;
+    --paginated-grid-pagination-number-border-radius: 6px;
+
+    --volunteer-profile-section-card-header-button-padding: 8px 12px;
+  }
+}
+
+@media (min-width: 768px) {
+  :root {
+    --max-width-section: 768px;
+
+    --icon-size: 48px;
+
+    --text-p-font-size: 20px;
+    --text-p-line-height: 24px;
+    --text-p-letter-spacing: 0.1px;
+
+    --text-h1-font-weight: 700;
+    --text-h1-font-size: 32px;
+    --text-h1-line-height: 32px;
+    --text-h1-letter-spacing: 0.1px;
+
+    --text-h4-font-weight: 600;
+    --text-h4-font-size: 20px;
+    --text-h4-line-height: 20px;
+    --text-h4-letter-spacing: 0.1;
+
+    --text-button-font-size: 24px;
+
+    --homepage-section-container-padding: 64px 40px;
+    --homepage-section-container-gap: 48px;
+    --homepage-section-container-footer-justify-content: flex-end;
+
+    --homepage-volunteering-categories-grid-template-columns: repeat(2, 1fr);
+    --homepage-volunteering-categories-grid-template-rows: repeat(3, auto);
+    --homepage-volunteering-categories-grid-gap: 24px;
+    --homepage-volunteering-categories-header-gap: 16px;
+    --homepage-volunteering-category-card-width: 332px;
+    --homepage-volunteering-category-card-height: 380px;
+    --homepage-volunteering-category-card-padding-top: 28px;
+    --homepage-volunteering-category-card-padding-right: 28px;
+    --homepage-volunteering-category-card-padding-bottom: 48px;
+    --homepage-volunteering-category-card-padding-left: 28px;
+    --homepage-volunteering-category-card-gap: 20px;
+
+    --homepage-volunteering-opportunities-grid-template-columns: repeat(2, 1fr);
+    --homepage-volunteering-opportunities-grid-template-rows: auto;
+    --homepage-volunteering-opportunities-grid-gap: 24px;
+    --homepage-volunteering-opportunity-card-width: 332px;
+    --homepage-volunteering-opportunity-card-padding-top: 28px;
+    --homepage-volunteering-opportunity-card-padding-right: 28px;
+    --homepage-volunteering-opportunity-card-padding-bottom: 48px;
+    --homepage-volunteering-opportunity-card-padding-left: 28px;
+    --homepage-volunteering-opportunity-card-gap: 20px;
+    --homepage-volunteering-opportunity-details-gap: 16px;
+
+    --page-opportunity-grid-max-width: 768px;
+    --page-opportunity-grid-template-columns: repeat(2, 1fr);
+    --page-opportunity-card-width: 332px;
+    --page-opportunity-card-height: auto;
+    /*472px;*/
+    --page-opportunity-popup-card-width: 688px;
+    --page-opportunity-popup-card-height: auto;
+    --page-opportunity-popup-card-x-margins: 36px;
+    --page-opportunity-popup-ctas-gap: 24px;
+    --page-opportunity-popup-ctas-margin-top: 24px;
+
+    --homepage-testimonials-header-gap: 24px;
+    --homepage-testimonial-card-width: 328px;
+    --homepage-testimonial-card-padding-top: 28px;
+    --homepage-testimonial-card-padding-right: 28px;
+    --homepage-testimonial-card-padding-bottom: 40px;
+    --homepage-testimonial-card-padding-left: 28px;
+    --homepage-testimonial-card-gap: 14px;
+    --homepage-testimonial-card-text-p-font-size: 18px;
+    --homepage-testimonial-card-text-p-line-height: 24px;
+
+    --homepage-hero-section-container-height: 844px;
+    --homepage-hero-section-container-gap: 80px;
+    --homepage-hero-section-logo-height: 200px;
+    --homepage-hero-section-logo-width: 370px;
+    --homepage-hero-section-header-height: 202px;
+    --homepage-hero-section-header-menu-items-width: 200px;
+    --homepage-hero-section-header-menu-items-gap: 24px;
+    --homepage-hero-section-header-menu-items-flex-direction: column;
+    --homepage-hero-section-header-menu-item-fontSize: 16px;
+    --homepage-hero-section-header-menu-item-fontWeight: 600;
+    --homepage-hero-section-header-menu-item-letterSpacing: 0px;
+    --homepage-hero-section-header-menu-item-lineheight: 16px;
+    --homepage-hero-section-content-container-width: 100%;
+    --homepage-hero-section-content-container-height: 440px;
+    --homepage-hero-section-content-hero-text-container-gap: 20px;
+    --homepage-hero-section-content-hero-text-color: var(--color-white);
+    --homepage-hero-section-content-hero-text-fontSize: 48px;
+    --homepage-hero-section-content-hero-text-fontWeight: 600;
+    --homepage-hero-section-content-hero-text-letterSpacing: 0.1px;
+    --homepage-hero-section-content-hero-text-lineheight: 48px;
+    --homepage-hero-section-content-hero-supporting-text-fontSize: 24px;
+    --homepage-hero-section-content-hero-supporting-text-fontWeight: 500;
+    --homepage-hero-section-content-hero-supporting-text-letterSpacing: 0.25px;
+    --homepage-hero-section-content-hero-supporting-text-lineheight: 24px;
+    --homepage-hero-section-content-hero-button-container-gap: 24px;
+    --homepage-hero-section-content-hero-button-container-flex-direction: row;
+
+    --homepage-footer-partners-section-container-height: 800px;
+    --homepage-footer-partners-section-container-padding: 48px;
+    --homepage-footer-partners-section-container-gap: 96px;
+    --homepage-footer-partners-section-partners-container-height: 504px;
+    --homepage-footer-partners-section-partners-container-flex-direction: column;
+    --homepage-footer-partners-section-partners-container-justify-content: center;
+    --homepage-footer-partners-section-partners-frame-container-height: 180px;
+    --homepage-footer-partners-section-partners-frame-container-gap-1: 160px;
+    --homepage-footer-partners-section-partners-frame-container-gap-2: 120px;
+    --homepage-footer-partners-section-partners-club-dialog-div-gap: 16px;
+    --homepage-footer-partners-section-logo-club-dialog-width: 316;
+    --homepage-footer-partners-section-logo-club-dialog-height: 58;
+    --homepage-footer-partners-section-logo-berlin-width: 170;
+    --homepage-footer-partners-section-logo-berlin-height: 180;
+    --homepage-footer-partners-section-logo-eu-width: 194px;
+    --homepage-footer-partners-section-logo-eu-height: 180px;
+    --homepage-footer-partners-section-logo-SchönebergHilft-width: 150px;
+    --homepage-footer-partners-section-logo-SchönebergHilft-height: 150px;
+    --homepage-footer-partners-section-logo-n4d-width: 68px;
+    --homepage-footer-partners-section-logo-n4d-height: 90px;
+    --homepage-footer-partners-section-footer-container-height: 200px;
+    --homepage-footer-partners-section-footer-container-flex-direction: row;
+    --homepage-footer-partners-section-footer-container-justify-content: space-between;
+    --homepage-footer-partners-section-contact-socials-container-flex-direction: row;
+    --homepage-footer-partners-section-contact-socials-container-justify-content: space-between;
+    --homepage-footer-partners-section-contact-socials-container-gap: 110px;
+    --homepage-footer-partners-section-contact-container-gap: 10px;
+    --homepage-footer-partners-section-socials-container-gap: 20px;
+    --homepage-footer-partners-section-footer-links-container-gap: 40px;
+    --homepage-footer-partners-section-footer-links-container-width: 500px;
+    --homepage-footer-partners-section-footer-frame-container-gap: 20px;
+    --homepage-footer-partners-section-p-fontWeight-large: 500;
+    --homepage-footer-partners-section-p-fontWeight-small: 400;
+    --homepage-footer-partners-section-p-fontSize: 18px;
+
+    --homepage-rac-section-container-height: 720px;
+    --homepage-rac-section-content-container-gap: 80px;
+    --homepage-rac-section-content-headLine-container-gap: 24px;
+    --homepage-rac-section-content-headLine2-fontWeight: 700;
+    --homepage-rac-section-content-headLine2-fontSize: 48px;
+    --homepage-rac-section-content-headLine2-lineheight: 48px;
+    --homepage-rac-section-content-headLine2-letterSpacing: 0.1px;
+    --homepage-rac-section-content-buttons-container-flex-direction: row;
+    --homepage-rac-section-content-buttons-container-gap: 16px;
+
+    --homepage-process-section-gap: 80px;
+    --homepage-process-section-header-gap: 40px;
+    --homepage-process-section-video-height: 378px;
+    --homepage-process-section-video-width: 672px;
+    --homepage-process-section-video-border-radius: 8px;
+    --homepage-process-section-video-margin-left: 0;
+    --homepage-process-section-card-flex-direction: column;
+    --homepage-process-section-card-width: 328px;
+    --homepage-process-section-card-height: 330px;
+    --homepage-process-section-card-border-radius: 24px;
+    --homepage-process-section-card-padding: 20px 28px 32px 20px;
+    --homepage-process-section-card-gap: 24px;
+    --homepage-process-section-card-header-flex-direction: row;
+    --homepage-process-section-card-header-gap: 20px;
+    --homepage-process-section-card-week-div-padding: 8px 12px 6px 12px;
+    --homepage-process-section-card-week-div-radius: 4px;
+    --homepage-process-section-card-info-div-gap: 16px;
+    --homepage-process-section-card-info-headline-div-gap: 20px;
+    --homepage-process-section-card-info-bullet-div-padding-left: 8px;
+    --homepage-process-section-card-info-text-div-gap: 28px;
+    --homepage-process-section-card-info-text-fontWeight: 400;
+    --homepage-process-section-card-info-text-fontSize: 16px;
+    --homepage-process-section-card-info-text-lineheight: 20px;
+    --homepage-process-section-card-info-text-letterSpacing: 0px;
+    --homepage-process-section-card-icon-size: 40px;
+    --homepage-process-section-card-last-step-width: 328px;
+
+    --homepage-events-section-container-height: 455px;
+    --homepage-events-section-content-container-gap: 48px;
+    --homepage-events-section-event-container-flex-direction: column;
+    --homepage-events-section-event-container-gap: 48px;
+    --homepage-events-section-event-card-gap: 20px;
+    --homepage-events-section-event-card-headline-gap: 16px;
+    --homepage-events-section-event-card-event-title-tag-padding: 8px 12px;
+    --homepage-events-section-event-card-event-title-tag-border-radius: 8px;
+    --homepage-events-section-button-container-justify-content: end;
+
+    --button-height: 72px;
+    --button-width: fit-content;
+    --button-padding: 16px 36px;
+    --button-border-radius: 125px;
+    --button-text-font-weight: 500;
+    --button-text-font-size: 24px;
+    --button-text-line-height: 25px;
+    --button-text-letter-spacing: 0.13px;
+    --button-text-text-align: center;
+
+    --paginated-cards-visible-cards-container-gap: 20px;
+
+    --numbering-div-width: 32px;
+    --numbering-div-height: 32px;
+    --numbering-div-border-radius: 16.57px;
+
+    --layout-static-page-n4d-logo-width: 230;
+    --layout-static-page-n4d-logo-height: 32;
+    --layout-static-page-header-height: 76px;
+    --layout-static-page-header-padding: 20px 36px;
+    --layout-static-page-header-content-bottom-padding: 100px;
+
+    --agents-filters-content-container-width: auto;
+    --agents-filters-content-container-gap: 16px;
+    --agents-filters-content-container-padding: 40px 40px 40px 32px;
+
+    --opportunities-container-width: 720px;
+    --opportunities-container-min-height: 1700px;
+    --opportunities-container-gap: 40px;
+    --opportunities-container-padding: none;
+    --opportunities-container-padding-inline: 16px;
+    --opportunities-header-title-tabs-gap: 27px;
+    --opportunities-header-tabs-searchbar-gap: 20px;
+    --opportunities-header-tabs-section-width: 688px;
+    --opportunities-header-tabs-gap: 16px;
+    --opportunities-header-tabs-border-bottom: 4px;
+    --opportunities-header-tabs-padding-bottom: 4px;
+    --opportunities-header-result-gap: 10px;
+    --opportunities-header-result-padding: 10px;
+    --opportunities-header-searchbar-width: 466px;
+    --opportunities-header-searchbar-flex-direction: row;
+    --opportunities-map-view-container-height: 300px;
+    --opportunities-cards-container-justify-content: center;
+    --opportunities-filters-button-height: 64px;
+    --opportunities-filters-button-icon-size: 32px;
+    --opportunities-filters-close-filter-height: 64px;
+    --opportunities-filters-close-filter-gap: 12px;
+    --opportunities-filters-close-filter-padding: 16px 0px 16px 32px;
+    --opportunities-filters-content-container-width: auto;
+    --opportunities-filters-content-container-gap: 16px;
+    --opportunities-filters-content-container-padding: 40px 40px 40px 32px;
+    --opportunities-filters-content-filter-container-gap: 16px;
+    --opportunities-filters-content-accordion-options-gap: 8px;
+    --opportunities-filters-content-accordion-options-max-height: 500px;
+    --opportunities-filters-content-accordion-options-checkbox-height: 18px;
+    --opportunities-filters-content-accordion-group-options-checkbox-height: 16px;
+    --opportunities-filters-content-accordion-group-options-checkbox-labelFontSize: 14px;
+    --opportunities-filters-content-accordion-header-border-top: 1px;
+    --opportunities-filters-content-accordion-header-padding-top: 16px;
+    --opportunities-filters-clear-all-button-icon-size: 24px;
+    --opportunities-filters-clear-all-button-text-font-size: 16px;
+    --opportunities-filters-description-font-size: 14px;
+    --opportunities-filters-description-font-weight: 400;
+
+    --search-container-height: 64px;
+    --search-container-border-radius: 40px;
+    --search-container-padding: 0 32px;
+    --search-input-font-size: 16px;
+
+    --paginated-grid-container-gap: 24px;
+    --paginated-grid-pagination-number-width: 36px;
+    --paginated-grid-pagination-number-height: 44px;
+    --paginated-grid-pagination-number-border-radius: 6px;
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --max-width-section: 1440px;
+
+    --icon-size: 48px;
+
+    --text-p-font-size: 20px;
+    --text-p-line-height: 24px;
+    --text-p-letter-spacing: 0.1px;
+
+    --text-h1-font-weight: 700;
+    --text-h1-font-size: 32px;
+    --text-h1-line-height: 32px;
+    --text-h1-letter-spacing: 0.1px;
+
+    --text-h4-font-weight: 600;
+    --text-h4-font-size: 20px;
+    --text-h4-line-height: 20px;
+    --text-h4-letter-spacing: 0.1;
+
+    --text-button-font-size: 24px;
+
+    --homepage-section-container-padding: 100px 120px;
+    --homepage-section-container-gap: 56px;
+    --homepage-section-container-footer-justify-content: flex-end;
+
+    --homepage-volunteering-categories-grid-template-columns: repeat(3, 1fr);
+    --homepage-volunteering-categories-grid-template-rows: repeat(2, auto);
+    --homepage-volunteering-categories-grid-gap: 32px;
+    --homepage-volunteering-categories-header-gap: 36px;
+    --homepage-volunteering-category-card-width: 378px;
+    --homepage-volunteering-category-card-height: 350px;
+    --homepage-volunteering-category-card-padding-top: 32px;
+    --homepage-volunteering-category-card-padding-right: 32px;
+    --homepage-volunteering-category-card-padding-bottom: 48px;
+    --homepage-volunteering-category-card-padding-left: 32px;
+    --homepage-volunteering-category-card-gap: 24px;
+
+    --page-opportunity-grid-max-width: 1440px;
+    --page-opportunity-grid-template-columns: 1fr 1fr 1fr 1fr;
+    --page-opportunity-card-width: 310px;
+    --page-opportunity-card-height: auto;
+    /*472px;*/
+    --page-opportunity-popup-card-width: 688px;
+    --page-opportunity-popup-card-height: auto;
+    --page-opportunity-popup-card-x-margins: 36px;
+    --page-opportunity-popup-ctas-gap: 24px;
+    --page-opportunity-popup-ctas-margin-top: 24px;
+
+    --homepage-volunteering-opportunities-grid-template-columns: repeat(3, 1fr);
+    --homepage-volunteering-opportunities-grid-template-rows: auto;
+    --homepage-volunteering-opportunities-grid-gap: 40px;
+    --homepage-volunteering-opportunity-card-width: 372px;
+    --homepage-volunteering-opportunity-card-padding-top: 32px;
+    --homepage-volunteering-opportunity-card-padding-right: 32px;
+    --homepage-volunteering-opportunity-card-padding-bottom: 48px;
+    --homepage-volunteering-opportunity-card-padding-left: 32px;
+    --homepage-volunteering-opportunity-card-gap: 24px;
+    --homepage-volunteering-opportunity-details-gap: 16px;
+
+    --homepage-testimonials-header-gap: 24px;
+    --homepage-testimonial-card-width: 384px;
+    --homepage-testimonial-card-padding-top: 32px;
+    --homepage-testimonial-card-padding-right: 32px;
+    --homepage-testimonial-card-padding-bottom: 48px;
+    --homepage-testimonial-card-padding-left: 32px;
+    --homepage-testimonial-card-gap: 16px;
+    --homepage-testimonial-card-text-p-font-size: 18px;
+    --homepage-testimonial-card-text-p-line-height: 24px;
+
+    --homepage-hero-section-container-height: 790px;
+    --homepage-hero-section-container-gap: 48px;
+    --homepage-hero-section-logo-height: 244;
+    --homepage-hero-section-logo-width: 450;
+    --homepage-hero-section-header-height: 80px;
+    --homepage-hero-section-header-menu-items-flex-direction: row;
+    --homepage-hero-section-header-menu-items-width: 680px;
+    --homepage-hero-section-header-menu-items-gap: 20px;
+    --homepage-hero-section-header-menu-item-fontSize: 16px;
+    --homepage-hero-section-header-menu-item-fontWeight: 600;
+    --homepage-hero-section-header-menu-item-letterSpacing: 0px;
+    --homepage-hero-section-header-menu-item-lineheight: 16px;
+    --homepage-hero-section-content-div-padding-top: 200px;
+    --homepage-hero-section-content-container-width: 680px;
+    --homepage-hero-section-content-container-height: 485px;
+    --homepage-hero-section-content-hero-text-container-gap: 20px;
+    --homepage-hero-section-content-hero-text-color: var(--color-white);
+    --homepage-hero-section-content-hero-text-fontSize: 48px;
+    --homepage-hero-section-content-hero-text-fontWeight: 600;
+    --homepage-hero-section-content-hero-text-letterSpacing: 0.1px;
+    --homepage-hero-section-content-hero-text-lineheight: 48px;
+    --homepage-hero-section-content-hero-supporting-text-fontSize: 24px;
+    --homepage-hero-section-content-hero-supporting-text-fontWeight: 500;
+    --homepage-hero-section-content-hero-supporting-text-letterSpacing: 0.25px;
+    --homepage-hero-section-content-hero-supporting-text-lineheight: 24px;
+    --homepage-hero-section-content-hero-button-container-gap: 24px;
+    --homepage-hero-section-content-hero-button-container-flex-direction: row;
+
+    --homepage-footer-partners-section-container-height: 570px;
+    --homepage-footer-partners-section-container-padding: 64px 80px;
+    --homepage-footer-partners-section-container-gap: 128px;
+    --homepage-footer-partners-section-partners-container-height: 180px;
+    --homepage-footer-partners-section-partners-container-flex-direction: row;
+    --homepage-footer-partners-section-partners-container-justify-content: space-between;
+    --homepage-footer-partners-section-partners-club-dialog-div-gap: 16px;
+    --homepage-footer-partners-section-logo-club-dialog-width: 316;
+    --homepage-footer-partners-section-logo-club-dialog-height: 58;
+    --homepage-footer-partners-section-logo-berlin-width: 170;
+    --homepage-footer-partners-section-logo-berlin-height: 180;
+    --homepage-footer-partners-section-logo-eu-width: 194px;
+    --homepage-footer-partners-section-logo-eu-height: 180px;
+    --homepage-footer-partners-section-logo-SchönebergHilft-width: 150px;
+    --homepage-footer-partners-section-logo-SchönebergHilft-height: 150px;
+    --homepage-footer-partners-section-logo-n4d-width: 100px;
+    --homepage-footer-partners-section-logo-n4d-height: 132px;
+    --homepage-footer-partners-section-footer-container-height: 260px;
+    --homepage-footer-partners-section-footer-container-flex-direction: row;
+    --homepage-footer-partners-section-footer-container-justify-content: space-between;
+    --homepage-footer-partners-section-contact-socials-container-flex-direction: column;
+    --homepage-footer-partners-section-contact-socials-container-justify-content: unset;
+    --homepage-footer-partners-section-contact-socials-container-gap: 20px;
+    --homepage-footer-partners-section-contact-container-gap: 10px;
+    --homepage-footer-partners-section-socials-container-gap: 20px;
+    --homepage-footer-partners-section-footer-links-container-gap: 100px;
+    --homepage-footer-partners-section-footer-links-container-width: 770px;
+    --homepage-footer-partners-section-footer-frame-container-gap: 20px;
+    --homepage-footer-partners-section-p-fontWeight-large: 500;
+    --homepage-footer-partners-section-p-fontWeight-small: 400;
+    --homepage-footer-partners-section-p-fontSize: 18px;
+
+    --homepage-rac-section-container-height: 720px;
+    --homepage-rac-section-content-container-gap: 80px;
+    --homepage-rac-section-content-headLine-container-gap: 24px;
+    --homepage-rac-section-content-headLine2-fontWeight: 700;
+    --homepage-rac-section-content-headLine2-fontSize: 48px;
+    --homepage-rac-section-content-headLine2-lineheight: 48px;
+    --homepage-rac-section-content-headLine2-letterSpacing: 0.1px;
+    --homepage-rac-section-content-buttons-container-flex-direction: row;
+    --homepage-rac-section-content-buttons-container-gap: 24px;
+
+    --homepage-process-section-gap: 80px;
+    --homepage-process-section-header-gap: 56px;
+    --homepage-process-section-video-height: 562px;
+    --homepage-process-section-video-width: 1000px;
+    --homepage-process-section-video-border-radius: 10px;
+    --homepage-process-section-video-margin-left: 0;
+    --homepage-process-section-card-flex-direction: row;
+    --homepage-process-section-card-width: 880px;
+    --homepage-process-section-card-height: 274px;
+    --homepage-process-section-card-border-radius: 24px;
+    --homepage-process-section-card-padding: 32px 64px 48px 32px;
+    --homepage-process-section-card-gap: 32px;
+    --homepage-process-section-card-header-flex-direction: column;
+    --homepage-process-section-card-header-gap: 20px;
+    --homepage-process-section-card-week-div-padding: 8px 12px 6px 12px;
+    --homepage-process-section-card-week-div-radius: 4px;
+    --homepage-process-section-card-info-div-gap: 20px;
+    --homepage-process-section-card-info-headline-div-gap: 16px;
+    --homepage-process-section-card-info-text-div-gap: 24px;
+    --homepage-process-section-card-info-text-fontWeight: 400;
+    --homepage-process-section-card-info-text-fontSize: 20px;
+    --homepage-process-section-card-info-text-lineheight: 20px;
+    --homepage-process-section-card-info-text-letterSpacing: 0px;
+    --homepage-process-section-card-icon-size: 40px;
+    --homepage-process-section-card-last-step-width: 296px;
+
+    --homepage-events-section-container-height: 400px;
+    --homepage-events-section-content-container-gap: 48px;
+    --homepage-events-section-event-container-flex-direction: row;
+    --homepage-events-section-event-container-gap: 200px;
+    --homepage-events-section-event-card-width: 682px;
+    --homepage-events-section-event-card-gap: 20px;
+    --homepage-events-section-event-card-headline-gap: 16px;
+    --homepage-events-section-event-card-event-title-tag-padding: 8px 12px;
+    --homepage-events-section-event-card-event-title-tag-border-radius: 8px;
+    --homepage-events-section-button-container-justify-content: end;
+
+    --button-height: 72px;
+    --button-width: fit-content;
+    --button-padding: 16px 36px;
+    --button-border-radius: 125px;
+    --button-text-font-weight: 500;
+    --button-text-font-size: 24px;
+    --button-text-line-height: 25px;
+    --button-text-letter-spacing: 0.13px;
+    --button-text-text-align: center;
+
+    --paginated-cards-visible-cards-container-gap: 24px;
+
+    --numbering-div-width: 36px;
+    --numbering-div-height: 36px;
+    --numbering-div-border-radius: 18.64px;
+
+    --layout-static-page-n4d-logo-width: 230;
+    --layout-static-page-n4d-logo-height: 32;
+    --layout-static-page-header-height: 80px;
+    --layout-static-page-header-padding: 20px 36px;
+    --layout-static-page-header-content-bottom-padding: 100px;
+    --layout-static-page-header-button-height: 48px;
+    --layout-static-page-header-button-text-font-size: 20px;
+    --layout-static-page-header-button-border: 2px solid var(--color-aubergine);
+    --layout-static-page-header-buttons-gap: 24px;
+
+    --agents-filters-content-container-width: 350px;
+    --agents-filters-content-container-gap: 16px;
+    --agents-filters-content-container-padding: 40px 40px 40px 20px;
+
+    --opportunities-container-width: 1312px;
+    --opportunities-container-min-height: 1800px;
+    --opportunities-container-gap: 40px;
+    --opportunities-container-padding: none;
+    --opportunities-container-padding-inline: 16px;
+    --opportunities-header-title-tabs-gap: 24px;
+    --opportunities-header-tabs-searchbar-gap: 20px;
+    --opportunities-header-tabs-section-width: 980px;
+    --opportunities-header-tabs-gap: 16px;
+    --opportunities-header-tabs-border-bottom: 4px;
+    --opportunities-header-tabs-padding-bottom: 4px;
+    --opportunities-header-result-gap: 10px;
+    --opportunities-header-result-padding: 10px;
+    --opportunities-header-searchbar-width: 980px;
+    --opportunities-header-searchbar-flex-direction: row;
+    --opportunities-map-view-container-height: 300px;
+    --opportunities-cards-container-justify-content: left;
+    --opportunities-filters-button-height: 64px;
+    --opportunities-filters-button-icon-size: 32px;
+    --opportunities-filters-close-filter-height: 64px;
+    --opportunities-filters-close-filter-gap: 12px;
+    --opportunities-filters-close-filter-padding: 16px 0px 16px 32px;
+    --opportunities-filters-content-container-width: 350px;
+    --opportunities-filters-content-container-gap: 16px;
+    --opportunities-filters-content-container-padding: 40px 40px 40px 20px;
+    --opportunities-filters-content-filter-container-gap: 16px;
+    --opportunities-filters-content-accordion-options-gap: 8px;
+    --opportunities-filters-content-accordion-options-max-height: 500px;
+    --opportunities-filters-content-accordion-options-checkbox-height: 18px;
+    --opportunities-filters-content-accordion-group-options-checkbox-height: 16px;
+    --opportunities-filters-content-accordion-group-options-checkbox-labelFontSize: 14px;
+    --opportunities-filters-content-accordion-header-border-top: 1px;
+    --opportunities-filters-content-accordion-header-padding-top: 16px;
+    --opportunities-filters-clear-all-button-icon-size: 24px;
+    --opportunities-filters-clear-all-button-text-font-size: 16px;
+
+    --search-container-height: 60px;
+    --search-container-border-radius: 160px;
+    --search-container-padding: 0 32px;
+    --search-input-font-size: 16px;
+
+    --paginated-grid-container-gap: 16px;
+    --paginated-grid-pagination-number-width: 36px;
+    --paginated-grid-pagination-number-height: 44px;
+    --paginated-grid-pagination-number-border-radius: 6px;
+
+    --dashboard-base-container-width: 1340px;
+    --dashboard-base-container-padding-top: 48px;
+    --dashboard-base-container-padding-bottom: 100px;
+
+    --dashboard-navigation-bar-container-width: 110px;
+    --dashboard-navigation-bar-gap: 20px;
+    --dashboard-navigation-bar-border-radius: 12px;
+    --dashboard-navigation-bar-padding: 40px 16px 40px 16px;
+    --dashboard-navigation-bar-option-gap: 4px;
+    --dashboard-navigation-bar-option-icon-div-size: 40px;
+    --dashboard-navigation-bar-option-text-weight: 500;
+    --dashboard-navigation-bar-option-text-size: 14px;
+    --dashboard-navigation-bar-option-text-letter-spacing: 0.14px;
+
+    --dashboard-cards-header-result-sortBy-gap: 20px;
+    --dashboard-cards-header-sortBy-container-gap: 4px;
+    --dashboard-cards-header-sortBy-options-gap: 6px;
+    --dashboard-cards-header-sortBy-options-padding: 6px;
+    --dashboard-cards-header-sortBy-option-button-padding: 6px;
+    --dashboard-cards-header-sortBy-option-button-border-radius: 6px;
+    --dashboard-cards-header-sortBy-circle-arrow-margin-left: 12px;
+    --dashboard-cards-header-user-profile-container-gap: 8px;
+    --dashboard-cards-header-user-icon-size: 32px;
+    --dashboard-cards-header-user-icon-border-radius: 16px;
+    --dashboard-cards-header-filter-item-container-gap: 8px;
+
+    --dashboard-home-container-padding: 40px 120px 100px 132px;
+    --dashboard-home-container-gap: 20px;
+
+    --search-container-height: 64px;
+    --search-container-border-radius: 160px;
+    --search-container-padding: 0 32px;
+
+    --app-header-language-switcher-gap: 8px;
+    --app-header-menu-item-fontWeight-secondary: 400;
+
+    --agent-profile-section-card-header-height: 56px;
+    --agent-profile-section-card-header-info-gap: 24px;
+    --agent-profile-section-card-info-gap: 5px;
+
+    --dashboard-agents-card-width: 320px;
+    --dashboard-agents-card-height: auto;
+    --dashboard-agents-card-gap: 20px;
+    --dashboard-agents-card-padding: 0 20px 24px 20px;
+    --dashboard-agents-card-status-tags-div-gap: 8px;
+    --dashboard-agents-card-status-tags-div-margin-top: 4px;
+    --dashboard-agents-card-detail-icon-size: 25px;
+
+    --dashboard-volunteers-container-gap: 40px;
+    --dashboard-volunteers-card-width: 320px;
+    --dashboard-volunteers-card-height: auto;
+    --dashboard-volunteers-card-gap: 20px;
+    --dashboard-volunteers-card-padding: 0 20px 24px 20px;
+    --dashboard-volunteers-card-status-tags-div-gap: 8px;
+    --dashboard-volunteers-card-status-tags-div-margin-top: 4px;
+    --dashboard-volunteers-card-status-div-height: 40px;
+    --dashboard-volunteers-card-status-div-bordor-bottom: 4px;
+    --dashboard-volunteers-card-status-div-gap: 8px;
+    --dashboard-volunteers-card-status-div-padding: 6px 12px 6px 8px;
+    --dashboard-volunteers-card-tag-div-gap: 4px;
+    --dashboard-volunteers-card-tag-div-padding: 12px 14px 12px 14px;
+    --dashboard-volunteers-card-profile-div-gap: 16px;
+    --dashboard-volunteers-card-detail-gap: 4px;
+    --dashboard-volunteers-card-detail-icon-size: 20px;
+    --dashboard-volunteers-card-status-fontWeight: 600;
+    --dashboard-volunteers-card-status-fontSize: 14px;
+    --dashboard-volunteers-card-status-lineHeight: 20px;
+    --dashboard-volunteers-card-tag-fontWeight: 500;
+    --dashboard-volunteers-card-tag-fontSize: 18px;
+    --dashboard-volunteers-card-tag-lineHeight: 18px;
+    --dashboard-volunteers-card-profile-fontWeight: 600;
+    --dashboard-volunteers-card-profile-fontSize: 20px;
+    --dashboard-volunteers-card-profile-lineHeight: 24px;
+    --dashboard-volunteers-card-paragraph-fontWeight: 400;
+    --dashboard-volunteers-card-paragraph-fontWeight-bold: 500;
+    --dashboard-volunteers-card-paragraph-fontSize: 16px;
+    --dashboard-volunteers-card-paragraph-lineHeight: 16px;
+    --dashboard-volunteers-card-paragraph-lineHeight: 16px;
+    --dashboard-volunteers-filters-accompanying-header-container-gap: 8px;
+
+    --form-input-container-height: 56px;
+    --form-input-container-border-radius: 8px;
+    --form-input-container-padding: 16px;
+    --form-input-container-border: 1px solid var(--color-grey-200);
+    --form-input-container-border-focus: 2px solid var(--color-green-200);
+    --form-input-container-border-error: 2px solid var(--color-red-600);
+    --form-input-fontSize: 20px;
+    --form-input-error-message-container-gap: 8px;
+    --form-input-error-message-container-padding: 8px;
+    --form-input-error-message-fontSize: 16px;
+    --form-input-error-message-lineHeight: 20px;
+    --form-input-error-message-fontWeight: 400;
+
+    --dashboard-login-container-height: 944px;
+    --dashboard-login-content-container-width: 638px;
+    --dashboard-login-content-container-gap: 32px;
+    --dashboard-login-heading-fontWeight: 600;
+    --dashboard-login-heading-fontSize: 48px;
+    --dashboard-login-heading-lineHeight: 52px;
+    --dashboard-login-heading-letterSpacing: 0.25px;
+    --dashboard-login-checkbox-label-fontSize: 20px;
+    --dashboard-login-forgot-password-label-fontWeight: 600;
+
+    --filters-container-width: 340px;
+    --filters-container-border-radius: 16px;
+    --filters-description-font-size: 16px;
+    --filters-description-font-weight: 400;
+    --filters-description-line-height: 20px;
+    --filters-description-letter-spacing: 0.5%;
+    --filters-accordion-group-options-gap: 16px;
+    --filters-accordion-group-options-gap: 16px;
+    --filters-search-bar-section-container-gap: 16px;
+    --filters-search-bar-width: 630px;
+    --filters-clear-all-button-height: 44px;
+    --filters-clear-all-button-padding: 12px;
+    --filters-clear-all-button-text-font-size: 18px;
+    --filters-clear-all-button-text-font-weight: 600;
+
+    --cards-header-filter-item-height: 44px;
+    --cards-header-filter-item-gap: 8px;
+    --cards-header-filter-item-border-radius: 32px;
+    --cards-header-filter-item-padding: 12px;
+    --cards-header-filter-item-font-size: 16px;
+    --cards-header-filter-item-font-weight: 400px;
+    --cards-header-filter-item-icon-div-size: 28px;
+    --cards-header-filter-item-icon-div-border-radius: 14px;
+
+    --opportunity-filter-chip-bg: var(--color-midnight);
+    --opportunity-filter-chip-avatar-size: 28px;
+    --opportunity-filter-chip-x-hover-bg: rgba(255, 255, 255, 0.15);
+    --opportunity-filter-chip-default-avatar-bg: var(--color-blue-50);
+    --opportunity-filter-chip-default-avatar-icon-color: var(--color-midnight);
+
+    --volunteer-profile-container-width: 1260px;
+    --volunteer-profile-container-gap: 24px;
+    --volunteer-profile-back-link-gap: 0.5rem;
+    --volunteer-profile-back-link-font-size: 20px;
+    --volunteer-profile-back-link-transition: color 0.2s;
+    --volunteer-profile-section-card-border-radius: 16px;
+    --volunteer-profile-loading-error-wrapper-padding: 2rem;
+    --volunteer-profile-section-card-padding: 24px;
+    --volunteer-profile-section-card-gap: 8px;
+    --volunteer-profile-section-card-icon-size: 40px;
+    --volunteer-profile-section-card-header-height: 56px;
+    --volunteer-profile-section-card-header-info-gap: 24px;
+    --volunteer-profile-section-card-header-button-height: 56px;
+    --volunteer-profile-section-card-header-button-textFontSize: 20px;
+    --volunteer-profile-section-card-header-button-padding: 16px 24px;
+    --volunteer-profile-section-card-header-button-border: 2px solid var(--color-aubergine);
+
+    --volunteer-profile-opportunities-container-gap: 8px;
+    --volunteer-profile-opportunities-tabs-margin-top: 16px;
+    --volunteer-profile-opportunities-tabs-gap: 24px;
+    --volunteer-profile-opportunities-tabs-border-bottom: 1px solid var(--color-blue-50);
+    --volunteer-profile-opportunities-tab-heading-margin: 0;
+    --volunteer-profile-opportunities-tab-heading-padding: 16px;
+    --volunteer-profile-opportunities-tab-heading-border-bottom: 2px solid currentColor;
+    --volunteer-profile-opportunities-tab-heading-gap: 6px;
+    --volunteer-profile-opportunities-tab-count-badge-min-width: 18px;
+    --volunteer-profile-opportunities-tab-count-badge-height: 18px;
+    --volunteer-profile-opportunities-tab-count-badge-padding: 0 5px;
+    --volunteer-profile-opportunities-tab-count-badge-border-radius: 9px;
+    --volunteer-profile-opportunities-tab-count-badge-background: var(--color-papaya);
+    --volunteer-profile-opportunities-tab-count-badge-color: var(--color-white);
+    --volunteer-profile-opportunities-tab-count-badge-font-size: 11px;
+    --volunteer-profile-opportunities-tab-count-badge-font-weight: var(--font-weight-semibold);
+    --volunteer-profile-opportunities-tab-count-badge-line-height: 1;
+    --volunteer-profile-opportunities-accordion-container-padding: 24px;
+    --volunteer-profile-opportunities-accordion-container-border-radius: 24px;
+    --volunteer-profile-opportunities-accordion-container-border: 1px solid var(--color-blue-50);
+    --volunteer-profile-opportunities-accordion-container-gap: 24px;
+    --volunteer-profile-opportunities-accordion-header-info-gap: 8px;
+    --volunteer-profile-opportunities-accordion-header-avatar-name-gap: 16px;
+    --volunteer-profile-opportunities-accordion-header-buttons-gap: 24px;
+    --volunteer-profile-opportunities-accordion-opp-detail-bold-font: 600;
+    --volunteer-profile-opportunities-accordion-opp-detail-mid-font: 550;
+    --volunteer-profile-opportunities-accordion-opp-detail-light-font: 400;
+    --volunteer-profile-opportunities-accordion-actions-container-gap: 16px;
+    --volunteer-profile-opportunities-accordion-actions-button-height: 56px;
+    --volunteer-profile-opportunities-accordion-actions-button-textFontSize: 24px;
+    --volunteer-profile-opportunities-accordion-actions-button-border: 2px solid var(--color-aubergine);
+    --volunteer-profile-opportunities-accordion-info-section-icon-size: 20px;
+    --volunteer-profile-opportunities-accordion-split-container-gap: 24px;
+    --volunteer-profile-opportunities-accordion-detail-section-gap: 8px;
+    --volunteer-profile-opportunities-accordion-detail-header-gap: 8px;
+    --volunteer-profile-opportunities-accordion-language-row-gap: 8px;
+    --opportunity-volunteers-avatar-size: 40px;
+    --opportunity-volunteers-avatar-border-radius: 50%;
+  }
+}
+
+:root {
+  /* EditModeWrapper */
+  --editableField-editModeWrapper-width: var(--percent-100);
+
+  /* FieldWrapper */
+  --editableField-fieldWrapper-display: flex;
+  --editableField-fieldWrapper-borderBottom: none;
+  --editableField-fieldWrapper-padding: 1rem 0;
+  --editableField-fieldWrapper-padding-error: var(--spacing-16) 0 0 0;
+  --editableField-fieldWrapper-fontSize: var(--font-size-lg);
+  --editableField-fieldWrapper-width: var(--percent-100);
+  --editableField-fieldWrapper-alignItems: center;
+  --editableField-fieldWrapper-gap: var(--spacing-32);
+  --editableField-fieldWrapper-label-fontWeight: var(--font-weight-bold);
+  --editableField-fieldWrapper-label-fontSize: var(--font-size-lg);
+  --editableField-fieldWrapper-label-width: 240px;
+  --editableField-fieldWrapper-label-flexShrink: 0;
+  --editableField-fieldWrapper-span-flex: 1;
+  --editableField-fieldWrapper-input-borderRadius: var(--border-radius-small);
+  --editableField-fieldWrapper-input-width: var(--percent-100);
+  --editableField-fieldWrapper-input-padding: var(--spacing-16);
+  --editableField-fieldWrapper-input-paddingRight: var(--spacing-48);
+  --editableField-fieldWrapper-input-border: var(--border-width-thin) solid var(--color-grey-200);
+  --editableField-fieldWrapper-input-flex: 1;
+  --editableField-fieldWrapper-input-minWidth: 0;
+  --editableField-fieldWrapper-textarea-minHeight: 80px;
+
+  /* Shared focus/error borders */
+  --editableField-border-error: var(--border-width-medium) solid var(--color-red-600);
+  --editableField-border-focus: var(--border-width-medium) solid var(--color-green-200);
+  --editableField-focus-outline: none;
+
+  /* InputWrapper */
+  --editableField-inputWrapper-position: relative;
+  --editableField-inputWrapper-display: flex;
+  --editableField-inputWrapper-alignItems: center;
+  --editableField-inputWrapper-flex: 1;
+  --editableField-inputWrapper-width: var(--percent-100);
+  --editableField-inputWrapper-input-flex: 1;
+  --editableField-inputWrapper-input-minWidth: 0;
+  --editableField-inputWrapper-input-width: var(--percent-100);
+
+  /* ClearButton */
+  --editableField-clearButton-position: absolute;
+  --editableField-clearButton-right: var(--spacing-12);
+  --editableField-clearButton-background: none;
+  --editableField-clearButton-border: none;
+  --editableField-clearButton-padding: var(--spacing-4);
+  --editableField-clearButton-display: flex;
+  --editableField-clearButton-alignItems: center;
+  --editableField-clearButton-justifyContent: center;
+  --editableField-clearButton-color: var(--color-grey-400);
+  --editableField-clearButton-transition: color 0.2s;
+  --editableField-clearButton-hover-color: var(--color-midnight);
+
+  /* DropdownWrapper */
+  --editableField-dropdownWrapper-position: relative;
+  --editableField-dropdownWrapper-width: var(--percent-100);
+  --editableField-dropdownWrapper-flex: 1;
+
+  /* DropdownButton */
+  --editableField-dropdownButton-border: var(--border-width-thin) solid var(--color-grey-200);
+  --editableField-dropdownButton-padding: var(--spacing-16);
+  --editableField-dropdownButton-borderRadius: var(--border-radius-small);
+  --editableField-dropdownButton-cursor: pointer;
+  --editableField-dropdownButton-color: var(--color-midnight);
+  --editableField-dropdownButton-display: flex;
+  --editableField-dropdownButton-justifyContent: space-between;
+  --editableField-dropdownButton-alignItems: center;
+  --editableField-dropdownButton-userSelect: none;
+  --editableField-dropdownButton-transition: border 0.2s ease;
+
+  /* Arrow */
+  --editableField-arrow-transition: 0.2s;
+  --editableField-arrow-transform: rotate(0deg);
+  --editableField-arrow-open-transform: rotate(180deg);
+
+  /* DropdownList */
+  --editableField-dropdownList-position: absolute;
+  --editableField-dropdownList-top: 110%;
+  --editableField-dropdownList-left: 0;
+  --editableField-dropdownList-width: var(--percent-100);
+  --editableField-dropdownList-background: var(--color-white);
+  --editableField-dropdownList-border: var(--border-width-thin) solid var(--color-grey-200);
+  --editableField-dropdownList-borderRadius: var(--border-radius-small);
+  --editableField-dropdownList-padding: var(--spacing-16);
+  --editableField-dropdownList-zIndex: 20;
+  --editableField-dropdownList-boxShadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  --editableField-dropdownList-display: flex;
+  --editableField-dropdownList-flexDirection: column;
+  --editableField-dropdownList-alignItems: stretch;
+  --editableField-dropdownList-gap: var(--spacing-4);
+  --editableField-dropdownList-maxHeight: 240px;
+  --editableField-dropdownList-overflowY: auto;
+
+  /* OptionRow */
+  --editableField-optionRow-display: flex;
+  --editableField-optionRow-alignItems: center;
+  --editableField-optionRow-justifyContent: flex-start;
+  --editableField-optionRow-padding: var(--spacing-8) var(--spacing-12);
+  --editableField-optionRow-cursor: pointer;
+  --editableField-optionRow-userSelect: none;
+  --editableField-optionRow-width: var(--percent-100);
+  --editableField-optionRow-borderRadius: 6px;
+  --editableField-optionRow-transition: var(--transition-background);
+  --editableField-optionRow-gap: var(--spacing-12);
+  --editableField-optionRow-selectedBg: var(--color-orchid-subtle);
+  --editableField-optionRow-hover-bg: var(--color-orchid-light);
+
+  /* OptionRow checkbox */
+  --editableField-optionRow-checkbox-size: var(--spacing-20);
+  --editableField-optionRow-checkbox-cursor: pointer;
+  --editableField-optionRow-checkbox-margin: 0;
+  --editableField-optionRow-checkbox-flex: 0 0 auto;
+  --editableField-optionRow-checkbox-accentColor: var(--color-green-500);
+
+  /* OptionRow radio */
+  --editableField-optionRow-radio-appearance: none;
+  --editableField-optionRow-radio-size: var(--spacing-20);
+  --editableField-optionRow-radio-border: var(--border-width-medium) solid var(--color-grey-400);
+  --editableField-optionRow-radio-borderRadius: var(--percent-50);
+  --editableField-optionRow-radio-margin: 0;
+  --editableField-optionRow-radio-flex: 0 0 auto;
+  --editableField-optionRow-radio-checked-bg: var(--color-green-200);
+  --editableField-optionRow-radio-checked-borderColor: var(--color-green-200);
+  --editableField-optionRow-radio-checkmark-width: 5px;
+  --editableField-optionRow-radio-checkmark-height: 10px;
+  --editableField-optionRow-radio-checkmark-border: solid var(--color-blue-700);
+  --editableField-optionRow-radio-checkmark-borderWidth: 0 var(--border-width-medium) var(--border-width-medium) 0;
+  --editableField-optionRow-radio-checkmark-transform: translate(-50%, -60%) rotate(45deg);
+
+  /* Text */
+  --editableField-text-flex: 1;
+  --editableField-text-whiteSpace: normal;
+  --editableField-text-overflowWrap: break-word;
+  --editableField-text-wordBreak: break-word;
+  --editableField-text-cursor: pointer;
+  --editableField-text-fontSize: var(--font-size-sm);
+  --editableField-text-color: var(--color-midnight);
+
+  /* Error */
+  --editableField-error-color: var(--color-red-600);
+  --editableField-error-paddingLeft: 1rem;
+  --editableField-errorMessage-paddingLeft: 252px;
+}

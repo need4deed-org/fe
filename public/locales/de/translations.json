@@ -1,0 +1,1602 @@
+{
+  "homepage": {
+    "heroSection": {
+      "menuItems": {
+        "about": "ÜBER UNS",
+        "volunteeringOpportunities": "EHRENAMTSANGEBOTE",
+        "events": "VERANSTALTUNGEN"
+      },
+      "content": {
+        "heroText": "Ehrenamtliche Unterstützung für Geflüchtete",
+        "heroSupportingText": "Wir verbinden Freiwillige mit Gemeinschaftsunterkünften in Berlin",
+        "buttonJoinVolunteer": "Jetzt sich engagieren",
+        "buttonJoinRefugeeCenter": "Unterstützung als Unterkunft beantragen"
+      }
+    },
+    "footer": {
+      "about": "ÜBER",
+      "resources": "RESSOURCEN",
+      "faq": "HGF",
+      "legalNotice": "Rechtlicher Hinweis",
+      "privacy": "Datenschutz",
+      "vpa": "Freiwilligenvereinbarung",
+      "contact": "Kontakt"
+    },
+    "volunteeringCategories": {
+      "header": "Wie kannst Du Dich engagieren?",
+      "headerParagraph": "Wir bieten verschiedene Arten von ehrenamtlichen Tätigkeiten an, entweder regelmäßig oder gelegentlich.",
+      "card": {
+        "germanLanguageSupport": "Deutsche Unterstützung",
+        "germanLanguageSupportInfo": "Sprichst Du fließend Deutsch? Unterstütze Geflüchtete, indem du in Sprachcafés unterrichtest oder Nachhilfe gibst – privat oder in Gruppen.",
+        "childcare": "Kinderbetreuung",
+        "childcareInfo": "Hilf Kindern in Unterkünften – bei der Betreuung am Tag oder den Hausaufgaben. Erfahrung mit Kindern ist ein Plus!",
+        "skillsBasedVolunteering": "Ehrenamt mit Fachkenntnissen",
+        "skillsBasedVolunteeringInfo": "Nutze deine Fähigkeiten – z. B. Fahrradreparatur, Gartenarbeit oder Musik.",
+        "events": "Veranstaltungen",
+        "eventsInfo": "Manche Events brauchen extra Hilfe - Festivals, Ausflüge, Gartenarbeit oder Eintichtung von Kleiderkammer.",
+        "sportsActivities": "Allgemeines Engagement",
+        "sportsActivitiesInfo": "Unterstütze mit Kleiderkammer, Tandem oder Sportangebote für Kinder, Jugendliche oder Erwachsene in Unterkünften.",
+        "accompanyARefugee": "Begleitung",
+        "accompanyARefugeeInfo": "Sprichst Du fließend Deutsch und eine weitere Sprache? Begleite Geflüchtete zu Ämtern, Ärzt*innen oder anderen Terminen."
+      },
+      "footerButton": "Siehe Ehrenamtsangebote"
+    }
+  },
+  "form": {
+    "error": {
+      "required": "Dieses Feld ist erforderlich",
+      "postcode": "Bitte nur die PLZ eintragen (keine Buchstaben, nur Zahlen)",
+      "email": "Muss eine gültige E-Mail-Adresse sein",
+      "badEmail": "Keine gültige Betreiber E-Mail",
+      "location": "Bitte wähle mindestens einen Standort aus",
+      "availability": "Bitte wähle mindestens einen Zeitraum aus",
+      "badTime": "Falsches Datums- oder Zeitformat.",
+      "labelErrors": "Fehler",
+      "activity": "Bitte wähle mindestens eine Aktivität aus",
+      "language": "Bitte wähle mindestens eine Sprache aus",
+      "number": "Bitte gib eine Nummer ein"
+    },
+    "button": {
+      "more": "mehr...",
+      "submit": "Senden"
+    },
+    "schedule": {
+      "0": "Andere",
+      "1": "Mo",
+      "2": "Di",
+      "3": "Mi",
+      "4": "Do",
+      "5": "Fr",
+      "6": "Sa",
+      "7": "So",
+      "weekdays": "Gelegentlich wochentags",
+      "weekends": "Gelegentlich wochenends"
+    },
+    "becomeVolunteer": {
+      "header": "Werde Freiwillige*r bei",
+      "thankYou": {
+        "header": "Danke für Dein Interesse an der Freiwilligenarbeit mit Geflüchteten :-)",
+        "para": "Wir melden uns in den nächsten Tagen mit den nächsten Schritten bei Dir!"
+      },
+      "somethingWrong": {
+        "header": "Da ist etwas schief gelaufen! ",
+        "para": "Bitte überprüfe alle Pflichtfelder und versuche es erneut."
+      },
+      "thanks": "Danke, dass Du Dich für ehrenamtliches Engagement entschieden hast.",
+      "reset": "Zurücksetzen",
+      "modal": {
+        "continue": "Zur Registrierung",
+        "already": "Schon als Freiwillige*r registriert?\nKopiere dies:",
+        "copied": "Kopiert",
+        "email": "Und sende es per E-Mail an:",
+        "number": "Oder via WhatsApp/Telegram an:"
+      },
+      "fields": {
+        "name": {
+          "label": "Name"
+        },
+        "email": {
+          "label": "E-Mail",
+          "error": ""
+        },
+        "phone": {
+          "label": "Telefonnummer oder Telegram-Handle",
+          "error": "Muss eine Telefonnummer sein"
+        },
+        "postcode": {
+          "label": "PLZ (Berlin) deines Standorts",
+          "error": ""
+        },
+        "locations": {
+          "header": "Bevorzugte Bezirke* (Berlin)",
+          "para": "*Denke daran, dass die meisten Unterkünfte außerhalb des Rings liegen!",
+          "error": "",
+          "helpText": "Falls wir keine perfekte Möglichkeit finden, schicken wir Dir die Möglichkeiten, die auch auf deinem Standort basieren!",
+          "helpTitle": ""
+        },
+        "availability": {
+          "header": "Verfügbarkeit",
+          "para": "*Denke daran, dass die meisten Möglichkeiten auf die Arbeitszeiten von 9-17 Uhr begrenzt sind, zumindest am Anfang!",
+          "error": "",
+          "helpText": "Die Verfügbarkeiten von Mo-So beziehen sich auf regelmäßig wiederkehrende Freiwilligenarbeit. Wenn die Zeiträume auf bestimmte Zeiträume begrenzt sind oder erklärt werden müssen, schreibe bitte im letzten Abschnitt in die Kommentare.",
+          "helpTitle": ""
+        },
+        "languages": {
+          "header": "Sprachen",
+          "headerWithoutAsterick": "Sprachen",
+          "para": "*Wenn Du Deine Sprache nicht findest, wähle bitte \"Andere\" und gib Deine bevorzugte Sprache im Kommentarfeld unten an",
+          "addLanguage": "Sprache hinzufügen",
+          "chooseLanguage": "Sprache auswählen",
+          "chooseLevel": "Niveau auswählen",
+          "removeLanguage": "Entfernen",
+          "language": "Sprache",
+          "level": "Niveau",
+          "languagesNative": {
+            "header": "Muttersprache",
+            "error": ""
+          },
+          "languagesFluent": {
+            "header": "Fließend",
+            "error": "Bitte wähle mindestens eine Sprache aus"
+          },
+          "languagesIntermediate": {
+            "header": "Mittelstufe"
+          },
+          "singleLevelError": "Bitte wähle nur auf einer Ebene eine Sprache aus",
+          "helpText": "Fließend bedeutet, dass Du denkst, dass Du bei Übersetzungen zwischen Sprachen unterstützen kannst, falls es nötig ist. Diese Sprachen sind an den Bedürfnissen von Geflüchteten orientiert. Wenn die Sprache, die Du als Muttersprache oder fließend beherrschst, nicht hier aufgelistet ist, füge sie bitte im letzten Kommentarfeld hinzu!",
+          "helpTitle": ""
+        },
+        "activities": {
+          "header": "Bevorzugte Aktivitäten",
+          "error": "Bitte wähle mindestens eine Aktivität aus",
+          "helpText": "Dies sind die häufigsten Bedürfnisse, die freiwillige Unterstützung erfordern. Manchmal können sie sich ändern, sobald Du mit der Freiwilligenarbeit beginnst.",
+          "helpTitle": ""
+        },
+        "skills": {
+          "header": "Zusätzliche Fähigkeiten oder Erfahrungen",
+          "helpText": "Alles, was Du aus deiner Erfahrung, deinen Fähigkeiten oder deinem Fachwissen teilen kannst, kann nützlich sein, aber keine Sorge, es ist keine Voraussetzung für Freiwilligenarbeit!",
+          "helpTitle": ""
+        },
+        "certOfGoodConduct": {
+          "header": "Führungszeugnis",
+          "error": "Bitte wähle mindestens eine Option aus",
+          "why": "Warum brauche ich das?",
+          "true": "Ich habe eines",
+          "false": "Muss beantragt werden",
+          "helpText": "",
+          "helpTitle": ""
+        },
+        "certMeaslesVaccination": {
+          "header": "Masernimpfnachweis",
+          "error": "Bitte wähle mindestens eine Option aus",
+          "true": "Ich habe einen",
+          "false": "Muss nachgewiesen werden",
+          "helpText": "",
+          "helpTitle": ""
+        },
+        "leadFrom": {
+          "header": "Woher hast Du von uns erfahren?",
+          "helpText": "",
+          "helpTitle": ""
+        },
+        "comments": {
+          "label": "Kommentare (andere Sprachen, Zeiten, Orte, Aktivitäten usw.)",
+          "helpText": "",
+          "helpTitle": ""
+        },
+        "consent": {
+          "header": "Hiermit stimme ich zu:",
+          "and": "und",
+          "label": "",
+          "helpText": "",
+          "helpTitle": ""
+        }
+      }
+    },
+    "addOpportunity": {
+      "header": "Bedarf an Freiwilligenarbeit",
+      "thankYou": {
+        "header": "Vielen Dank für das Ausfüllen des Antragsformulars zur freiwilligen Unterstützung der Unterkunft!",
+        "para": "Wir sollten uns in den nächsten 3 Arbeitstagen bei Dir melden. Sollte dies nicht der Fall sein, wende Dich bitte an contact@need4deed.org"
+      },
+      "wentWrong": {
+        "header": "Entschuldigung, auf unserer Seite ist etwas schief gelaufen :-(",
+        "para": "Bitte nütze zunächst diese Google-Formulare:",
+        "volunteeringLink": "Freizeit",
+        "accompanyingLink": "Begleitung"
+      },
+      "temporaryDown": {
+        "header": "Entschuldigung, auf unserer Seite ist etwas schiefgelaufen. Bitte wende Dich an contact@need4deed.org.",
+        "para": ""
+      },
+      "bottomMsg": "Bei Problemen oder Fragen wende Dich bitte an: contact@need4deed.org",
+      "fields": {
+        "title": {
+          "label": "Was wird gebraucht?",
+          "example": "z.B. \"Begleitung zur Augenklinik\", \"Basteln & Malen\"",
+          "errorTooLong": "Bitte kürze den Titel auf 128 Zeichen"
+        },
+        "consent": {
+          "header": "",
+          "agree": "Hiermit stimme ich zu:",
+          "and": "und"
+        },
+        "contactGroup": {
+          "label": "Kontaktinformationen der Einrichtung",
+          "info": "Nur das Sozialteam oder die Ehrenamtskoordinator*innen dürfen dieses Formular ausfüllen.",
+          "email": {
+            "label": "E-Mail",
+            "info": "Nur E-Mail-Adresse des folgenden Betreibers: lfg-b, berliner-stadtmission, awo-mitte, prisod-wohnen, albatrosggmbh, gu-oberhafen, heroeurope, tamaja-gu, volkssolidaritaet, unionhilfswerk, cjd, centro-hotels, stephanus, city54, milaa-berlin, drk-mueggelspree, ejf, diakonie-stadtmitte, tamaja, pgssoziales, caritas-berlin, stk118."
+          },
+          "fullName": {
+            "label": "Name",
+            "info": "Name der*des Ehrenamtskoordinator*in oder Sozialarbeiter*in"
+          },
+          "address": {
+            "label": "Anschrift",
+            "info": "der Unterkunft"
+          },
+          "postcode": {
+            "label": "PLZ",
+            "info": "der Unterkunft"
+          },
+          "phone": {
+            "label": "Telefonnummer"
+          }
+        },
+        "opportunityType": {
+          "header": "Art des Bedarfs",
+          "volunteering": "Freizeit",
+          "accompanying": "Begleitung",
+          "helpText": "Es gibt zwei Arten von Unterstützung: Freiwilliges Engagement bei verschiedenen Aktivitäten (meist Freizeitaktivitäten) und Begleitung zu Terminen.",
+          "helpTitle": ""
+        },
+        "aaGroup": {
+          "label": "",
+          "activities": {
+            "header": "Aktivitäten"
+          },
+          "translatedInto": {
+            "header": "Sprache, in die übersetzt werden soll:",
+            "noTranslation": "Keine Sprachmittlung (Wegebegleitung)",
+            "englishOk": "Deutsch oder Englisch",
+            "deutsche": "Nur Deutsch",
+            "helpText": "Bitte wähle die Sprache aus, in die übersetzt werden soll (wenn Englisch in Ordnung ist, wähle bitte Englisch und Deutsch aus - das kann bei der Suche nach Freiwilligen helfen!). Falls keine Übersetzung benötigt wird, wähle bitte die Option Wegebegleitung."
+          },
+          "languagesTranslation": {
+            "header": "Sprachen, die Geflüchtete sprechen",
+            "helpText": "Bitte wählen die während des Termins benötigten Sprachen aus."
+          },
+          "dateTime": {
+            "label": "Termin Datum und Uhrzeit",
+            "tooClose": "Der Termin muss frühestens nach 7 Werktagen stattfinden."
+          },
+          "address": {
+            "label": "Terminanschrift"
+          },
+          "postcode": {
+            "label": "Termin PLZ"
+          },
+          "refugeeName": {
+            "label": "Name der*des Geflüchteten"
+          },
+          "refugeeNumber": {
+            "label": "Telefonnummer der*des Geflüchteten"
+          },
+          "information": {
+            "label": "Gib Informationen über die Aufgabe, die von den Freiwilligen erwartet wird"
+          }
+        },
+        "voGroup": {
+          "label": "",
+          "locations": {
+            "header": "Bezirke"
+          },
+          "activities": {
+            "header": "Aktivitäten"
+          },
+          "schedule": {
+            "header": "Zeitplan",
+            "helpText": "Bitte wähle Zeitfenster für die Freiwilligenarbeit aus.",
+            "or": "oder",
+            "oneTimeLabel": "Einmaliges Veranstaltungsdatum",
+            "error": "Veranstaltungsdatum oder Zeitplan erforderlich",
+            "errorBoth": "Bitte wähle entweder den Zeitplan oder das Veranstaltungsdatum aus"
+          },
+          "skills": {
+            "header": "Fähigkeiten",
+            "helpText": "Bitte wähle die für die Freiwilligenarbeit benötigten Fähigkeiten aus."
+          },
+          "languagesRefugee": {
+            "header": "Kommunikation ist möglich mit",
+            "helpText": "Bitte wähle die während der Freiwilligenarbeit benötigten Sprachen aus."
+          },
+          "numberVolunteers": {
+            "label": "Wie viele Freiwillige werden benötigt",
+            "error": "Bitte gib eine Zahl ein"
+          },
+          "information": {
+            "label": "Gib Informationen über die Aufgabe, die von den Freiwilligen erwartet wird"
+          }
+        }
+      }
+    }
+  },
+  "dashboard": {
+    "common": {
+      "datePrefix": {
+        "appliedOn": "Beworben am",
+        "matchedOn": "Zugeordnet am",
+        "activeSince": "Aktiv seit",
+        "pastSince": "Vergangen seit"
+      }
+    },
+    "volunteers": {
+      "header": "Freiwilligenverzeichnis",
+      "tabs": {
+        "tab1": "TABELLE",
+        "tab2": "KARTE"
+      },
+      "filters": {
+        "accompanying": "Begleitung",
+        "accompanyingDesc": "Nur Freiwillige anzeigen, die bereit sind, Bewohner zu einzelnen Terminen zu begleiten",
+        "district": "Bezirk",
+        "languages": "Sprachen",
+        "engagement": {
+          "header": "Engagement",
+          "active": "Aktiv",
+          "inactive": "Inaktiv",
+          "new": "Neu",
+          "available": "Verfügbar",
+          "temporarilyUnavailable": "Vorübergehend nicht verfügbar",
+          "unresponsive": "Reagiert nicht"
+        },
+        "preferredAv": {
+          "header": "Bevorzugte Verfügbarkeit",
+          "days": {
+            "header": "Tage",
+            "Monday": "Mo",
+            "Tuesday": "Di",
+            "Wednesday": "Mi",
+            "Thursday": "Do",
+            "Friday": "Fr",
+            "Saturday": "Sa",
+            "Sunday": "So"
+          },
+          "times": {
+            "header": "Zeiten",
+            "08-11": "08-11",
+            "11-14": "11-14",
+            "14-17": "14-17",
+            "17-20": "17-20"
+          },
+          "occasional": {
+            "header": "Gelegentlich",
+            "weekdays": "Wochentage",
+            "weekends": "Wochenenden"
+          }
+        }
+      },
+      "volunteers": "Freiwillige",
+      "languages": "Sprachen",
+      "activities": "Aktivitäten",
+      "skillsExperience": "Fähigkeiten & Erfahrungen",
+      "preferredAvailability": "Bevorzugte Verfügbarkeit",
+      "preferredDistricts": "Bevorzugte Bezirke",
+      "langProficiency": {
+        "beginner": "Anfänger",
+        "intermediate": "Mittelstufe",
+        "advanced": "Fortgeschritten",
+        "fluent": "Fließend",
+        "native": "Muttersprache"
+      }
+    },
+    "home": {
+      "sidebar": {
+        "home": "Startseite",
+        "volunteers": "Freiwillige",
+        "opportunities": "Möglichkeiten",
+        "agents": "Akteure",
+        "racs": "RACs",
+        "posts": "Beiträge",
+        "calendar": "Kalender",
+        "profile": "Profil"
+      }
+    },
+    "found": "gefunden",
+    "searchPlaceHolder": "Freiwillige suchen",
+    "sortBy": {
+      "sortBy": "Sortieren nach",
+      "newToOld": "Neueste zuerst",
+      "oldToNew": "Älteste zuerst"
+    },
+    "heroSection": {
+      "heroText": "Bedarfsorientierte freiwillige Unterstützung für Geflüchtete in Berlin",
+      "heroSupportingText": "Wir vermitteln Freiwillige an Flüchtlingsunterkünfte in Not",
+      "buttonJoinVolunteer": "Jetzt sich engagieren",
+      "buttonJoinRefugeeCenter": "Als Flüchtlingsunterkunft beitreten"
+    },
+    "header": {
+      "button": {
+        "login": "Anmelden",
+        "joinVolunteer": "Jetzt sich engagieren"
+      }
+    },
+    "login": {
+      "login": "Anmelden",
+      "email": "Email",
+      "password": "Passwort",
+      "rememberMe": "Angemeldet bleiben",
+      "forgotPassword": "Passwort vergessen",
+      "emailMissing": "E-Mail fehlt.",
+      "emailMissingAtChar": "Die E-Mail-Adresse muss ein '@'-Zeichen enthalten.",
+      "passwordMissing": "Passwort fehlt.",
+      "successMessage": "Anmeldung erfolgreich"
+    },
+    "filters": {
+      "button": "FILTER",
+      "closeFilters": "FILTER SCLIEẞEN",
+      "clearAll": "Filter löschen"
+    },
+    "volunteerProfile": {
+      "backToDashboard": "Zurück zum Dashboard",
+      "volunteersProfile": "Profil des Freiwilligen",
+      "contactDetailsTitle": "Kontaktdaten",
+      "volunteerProfile": "Freiwilligenprofil",
+      "opportunities": "Möglichkeiten",
+      "coordinatorComments": "Kommentare der Koordination",
+      "documents": "Dokumente",
+      "activityLog": "Aktivitätsprotokoll",
+      "editButtonName": "Bearbeiten",
+      "findOppButtonName": "Möglichkeit finden",
+      "suggestButtonName": "Vorschlagen",
+      "suggestDialog": {
+        "title": "Diesem Freiwilligen vorschlagen?",
+        "messageMid": "wird benachrichtigt, dass Sie",
+        "messageEnd": "vorgeschlagen haben. Es erscheint in seinem / ihrem Profil unter \"ausstehenden\" Möglichkeiten.",
+        "confirm": "Vorschlagen",
+        "cancel": "Abbrechen",
+        "success": "Vorschlag erfolgreich gesendet"
+      },
+      "activities": "Aktivitäten",
+      "volunteerHeader": {
+        "statusUpdateSuccess": "Status erfolgreich aktualisiert",
+        "modalData": {
+          "title": "Engagement-Status ändern",
+          "options": {
+            "unresponsive": "Nicht ansprechbar",
+            "description": "Freiwillige(r) reagiert nicht auf Nachrichten oder Anrufe.",
+            "temporarily_unavailable": "Vorübergehend nicht verfügbar",
+            "description2": "Der/Die Freiwillige ist vorübergehend nicht für Einsätze verfügbar.",
+            "inactive": "Inaktiv",
+            "description3": "Der/Die Freiwillige ist nicht mehr im Programm aktiv.",
+            "dateReturn": "Rückkehrdatum",
+            "dateReturnPlaceHolder": "Rückkehrdatum auswählen (optional)",
+            "dateReturnRequired": "Rückkehrdatum ist erforderlich für vorübergehend nicht verfügbar Status"
+          },
+          "cancel": "Abbrechen",
+          "save": "Speichern"
+        },
+        "notSet": "Nicht festgelegt",
+        "change_status": "Als suchend markieren",
+        "until": "bis",
+        "volunteer_since": "Freiwillige*r seit",
+        "engagementStatus_title": "Engagement-Status",
+        "engagementStatus_options": {
+          "new": "Neu",
+          "new_description": "Wir haben nicht mit ihm gesprochen",
+          "active": "Aktiv",
+          "active_description": "Aktiv",
+          "available": "Verfügbar",
+          "available_description": "Wir haben mit ihr gesprochen, sie kann freiwillig arbeiten",
+          "tempUnavailable": "Vorübergehend nicht verfügbar",
+          "tempUnavailable_description": "Wir wissen, dass die Person in der nächsten Zeit nicht aktiv sein kann",
+          "inactive": "Inaktiv",
+          "inactive_description": "Diese*r Freiwillige kann nicht mehr freiwillig arbeiten",
+          "unresponsive": "Nicht erreichbar",
+          "unresponsive_description": "Hat nach mehreren Versuchen nie geantwortet"
+        },
+        "volunteerType_title": "Freiwilligen-Typ",
+        "volunteerType_options": {
+          "accompanying": "Begleitend",
+          "regular": "Regelmäßig",
+          "events": "Veranstaltungen",
+          "regular-accompanying": "Regelmäßig + Begleitend",
+          "general": "Allgemein",
+          "event": "Veranstaltung",
+          "festival": "Festival",
+          "weekend-only": "Nur Wochenende"
+        },
+        "matchStatus_title": "Zuweisungs-Status",
+        "matchStatus_options": {
+          "noMatches": "Keine Zuweisungen",
+          "pendingMatch": "Zuweisung ausstehend",
+          "matched": "Zugewiesen",
+          "needsRematch": "Neu-Zuweisung erforderlich"
+        },
+        "communication_title": "Kommunikation",
+        "communication_options": {
+          "called": "Angerufen",
+          "emailSent": "E-Mail gesendet",
+          "briefed": "Briefing erfolgt",
+          "triedToCall": "Versucht anzurufen",
+          "notResponding": "Keine Reaktion"
+        },
+        "appreciation_title": "Anerkennung",
+        "appreciation_options": {
+          "tshirt": "T-Shirt",
+          "benefitCard": "Vorteilskarte",
+          "toteBag": "Stofftasche"
+        },
+        "certificateGC_title": "GC-Zertifikat",
+        "certificateGC_options": {
+          "uploaded": "Hochgeladen",
+          "missing": "Fehlend"
+        }
+      },
+      "opportunitiesSec": {
+        "tabs": {
+          "opp-pending": "Ausstehend",
+          "opp-matched": "Zugeordnet",
+          "opp-active": "Aktiv",
+          "opp-past": "Vergangen"
+        },
+        "match": "Match",
+        "notAMatch": "Kein Match",
+        "markAsActive": "Als aktiv markieren",
+        "markAsPast": "Als vergangen markieren",
+        "matchSuccess": "Zugeordnet",
+        "notAMatchSuccess": "Entfernt",
+        "markAsActiveSuccess": "Als aktiv markiert",
+        "markAsPastSuccess": "Als vergangen markiert",
+        "emptyState": "Noch keine Einträge in dieser Kategorie"
+      },
+      "contactDetails": {
+        "title": "Kontaktdaten",
+        "edit": "Bearbeiten",
+        "phone": "Telefonnummer",
+        "email": "E-Mail",
+        "address": "Adresse",
+        "preferredCommunicationType": {
+          "label": "Kontaktmöglichkeiten",
+          "whatsapp": "WhatsApp",
+          "telegram": "Telegram",
+          "mobilePhone": "Mobiltelefon",
+          "email": "E-Mail",
+          "called": "Angerufen",
+          "email-sent": "E-Mail gesendet",
+          "briefed": "Briefing erfolgt",
+          "tried-call": "Versucht anzurufen",
+          "not-responding": "Keine Reaktion"
+        },
+        "notProvided": "Nicht angegeben",
+        "cancel": "Abbrechen",
+        "saveChanges": "Änderungen speichern",
+        "saveSuccess": "Kontaktdaten erfolgreich aktualisiert",
+        "validation": {
+          "phoneRequired": "Telefonnummer ist erforderlich",
+          "phoneInvalid": "Telefonnummer muss mit + beginnen und nur Ziffern und Leerzeichen enthalten",
+          "emailRequired": "E-Mail ist erforderlich",
+          "emailInvalid": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+          "addressRequired": "Adresse ist erforderlich",
+          "preferredCommunicationTypeRequired": "Bitte wählen Sie mindestens eine Kontaktmöglichkeit aus"
+        }
+      },
+      "profileSection": {
+        "title": "Freiwilligenprofil",
+        "edit": "Bearbeiten",
+        "languages": "Sprachen",
+        "availability": "Verfügbarkeit",
+        "districts": "Bezirke",
+        "volunteerType": "Freiwilligen-Typ",
+        "activities": "Aktivitäten",
+        "skills": "Fähigkeiten & Erfahrungen",
+        "cancel": "Abbrechen",
+        "saveChanges": "Änderungen speichern",
+        "saveSuccess": "Profil erfolgreich aktualisiert",
+        "validation": {
+          "languageRequired": "Wähle eine Sprache aus",
+          "levelRequired": "Wähle ein Niveau aus",
+          "availabilityRequired": "Bitte wähle mindestens eine Verfügbarkeit aus",
+          "districtsRequired": "Bitte wähle mindestens einen Bezirk aus",
+          "volunteerTypeRequired": "Freiwilligen-Typ ist erforderlich",
+          "activitiesRequired": "Bitte wähle mindestens eine Aktivität aus",
+          "skillsRequired": "Fähigkeiten sind erforderlich"
+        }
+      }
+    },
+    "agents": {
+      "agents": "RAC-Verzeichnis",
+      "tabs": {
+        "tab1": "Liste",
+        "tab2": "Karten",
+        "tab3": "Karte"
+      },
+      "status": {
+        "new": "Neu",
+        "searching": "Suchend",
+        "active": "Aktiv",
+        "past": "Vergangen"
+      },
+      "type": {
+        "accompanying": "Begleitend",
+        "regular": "Regulär",
+        "events": "Veranstaltungen",
+        "regular-accompanying": "Regulär + Begleitend"
+      },
+      "card": {
+        "mainCommunication": "Hauptkommunikation",
+        "residentsSpeak": "Bewohner sprechen",
+        "schedule": "Zeitplan",
+        "search": "Suche"
+      },
+      "filters": {
+        "status": {
+          "header": "Status",
+          "new": "Neu",
+          "inactive": "Inaktiv",
+          "active": "Aktiv",
+          "unresponsive": "Reagiert nicht"
+        },
+        "volunteerSearch": {
+          "header": "Freiwilligensuche",
+          "searching": "Suchend",
+          "volunteers-found": "Besetzt",
+          "not-needed": "Nicht benötigt"
+        }
+      },
+      "accompanyingTranslation": {
+        "en": "Deutsch, Englisch",
+        "de": "Deutsch",
+        "no": "Keine Übersetzung erforderlich"
+      },
+      "defaultMainCommunication": "Englisch, Deutsch",
+      "otherCategory": "Allgemeine Freiwilligenarbeit",
+      "goToProfile": "Zum Profil",
+      "mainCommunication": "Hauptkommunikation",
+      "translationTo": "Übersetzung nach",
+      "residentsSpeak": "Bewohner sprechen",
+      "languages": "Sprachen",
+      "schedule": "Zeitplan",
+      "district": "Stadtviertel",
+      "dateOfAppointment": "Termindatum",
+      "description": "Beschreibung"
+    },
+    "opportunities": {
+      "opportunities": "Möglichkeiten",
+      "tabs": {
+        "tab1": "Liste",
+        "tab2": "Karten",
+        "tab3": "Karte"
+      },
+      "status": {
+        "opp-new": "Neu",
+        "opp-searching": "Suche läuft",
+        "opp-active": "Aktiv",
+        "opp-past": "Vergangen"
+      },
+      "type": {
+        "accompanying": "Begleitung",
+        "regular": "Regelmäßig",
+        "events": "Veranstaltungen",
+        "regular-accompanying": "Regelmäßig + Begleitung"
+      },
+      "card": {
+        "mainCommunication": "Hauptkommunikation",
+        "residentsSpeak": "Bewohner sprechen",
+        "schedule": "Zeitplan",
+        "search": "Suchen"
+      },
+      "filters": {
+        "status": {
+          "header": "Status",
+          "new": "Neu",
+          "searching": "Suche läuft",
+          "active": "Aktiv",
+          "past": "Vergangen"
+        }
+      },
+      "accompanyingTranslation": {
+        "en": "Deutsch, Englisch",
+        "de": "Deutsch",
+        "no": "Sprachmittlung ist nicht nötig"
+      },
+      "defaultMainCommunication": "Englisch, Deutsch",
+      "otherCategory": "Allgemeines Engagement",
+      "goToProfile": "Zum Profil",
+      "mainCommunication": "Hauptkommunikation",
+      "translationTo": "Übersetzung nach",
+      "residentsSpeak": "Bewohnende sprechen",
+      "languages": "Sprachen",
+      "schedule": "Zeitplan",
+      "district": "Bezirk",
+      "dateOfAppointment": "Datum des Termins",
+      "description": "Beschreibung"
+    },
+    "documentSection": {
+      "title": "Dokumente",
+      "typeOfDocument": "Dokumenttyp",
+      "status": "Status",
+      "uploadedOn": "Hochgeladen am",
+      "actions": "Aktionen",
+      "uploaded": "Hochgeladen",
+      "missing": "Fehlend",
+      "documentNames": {
+        "measlesVaccination": "Masernimpfung",
+        "applicationCertificateGoodConduct": "Antrag auf Führungszeugnis",
+        "certificateGoodConduct": "Führungszeugnis",
+        "passport": "Reisepass / Ausweis"
+      },
+      "tooltips": {
+        "upload": "Hochladen",
+        "reUpload": "Erneut hochladen",
+        "preview": "Vorschau",
+        "download": "Herunterladen",
+        "delete": "Löschen",
+        "uploadUnavailable": "Hochladen nicht verfügbar",
+        "previewUnavailable": "Vorschau nicht verfügbar",
+        "downloadUnavailable": "Download nicht verfügbar",
+        "deleteUnavailable": "Löschen nicht verfügbar"
+      },
+      "deleteDialog": {
+        "title": "Dokument löschen?",
+        "message": "\"{{documentName}}\" wird gelöscht.",
+        "cancel": "Abbrechen",
+        "delete": "Löschen"
+      },
+      "uploadDialog": {
+        "title": "Dokument hochladen",
+        "documentType": "{{documentName}}",
+        "dragDropText": "Datei hier ablegen oder klicken zum Durchsuchen",
+        "dragDropHint": "Unterstützte Formate: PDF, JPG, PNG (max. 10 MB)",
+        "selectedFile": "Ausgewählte Datei:",
+        "cancel": "Abbrechen",
+        "upload": "Hochladen",
+        "uploading": "Wird hochgeladen..."
+      }
+    },
+    "commentsSection": {
+      "placeholder": "Kommentar",
+      "addComment": "Kommentar hinzufügen",
+      "menuAction": "Kommentaroptionen",
+      "commentAdded": "Kommentar erfolgreich hinzugefügt",
+      "editComment": "Kommentar bearbeiten",
+      "deleteComment": "Kommentar löschen",
+      "commentDeleted": "Kommentar erfolgreich gelöscht",
+      "commentUpdated": "Kommentar erfolgreich aktualisiert",
+      "saveEdit": "Speichern",
+      "cancelEdit": "Abbrechen",
+      "deleteDialog": {
+        "title": "Kommentar löschen?",
+        "message": "{{authorName}}s Kommentar wird unwiderruflich gelöscht.",
+        "cancel": "Abbrechen",
+        "delete": "Löschen"
+      }
+    },
+    "appreciationSection": {
+      "title": "Anerkennung",
+      "addNew": "+ Anerkennung hinzufügen",
+      "emptyState": "Dieser Freiwillige hat noch keine Anerkennung erhalten",
+      "typeOfAppreciation": "Art der Anerkennung",
+      "typeOfAppreciationRequired": "Art der Anerkennung*",
+      "status": "Status",
+      "receivedOn": "Erhalten am",
+      "statusReceived": "Erhalten",
+      "statusDueTo": "Fällig am",
+      "typeOptions": {
+        "tshirt": "T-Shirt",
+        "toteBag": "Stofftasche",
+        "benefitCard": "Vorteilskarte"
+      },
+      "addAppreciation": "Anerkennung hinzufügen",
+      "editAppreciation": "Anerkennung bearbeiten",
+      "dueDateRequired": "Fälligkeitsdatum*",
+      "deliveryDate": "Lieferdatum (optional)",
+      "didVolunteerReceive": "Hat der Freiwillige es erhalten?*",
+      "volunteerReceivedIt": "Der Freiwillige hat es erhalten",
+      "needToGiveIt": "Muss dem Freiwilligen gegeben werden",
+      "receivedOnRequired": "Erhalten am*",
+      "today": "heute",
+      "cancel": "Abbrechen",
+      "save": "Speichern",
+      "appreciationAdded": "Anerkennung erfolgreich hinzugefügt",
+      "appreciationUpdated": "Anerkennung erfolgreich aktualisiert",
+      "appreciationDeleted": "Anerkennung erfolgreich gelöscht",
+      "deleteConfirmTitle": "Anerkennung löschen?",
+      "deleteConfirmText": "\"{{entryType}}\" Anerkennungseintrag wird dauerhaft gelöscht."
+    },
+    "agentProfile": {
+      "agentProfile": "Profil des Agenten",
+      "registeredSince": "Registriert seit",
+      "engagementStatus": "Engagement-Status",
+      "serviceType": "Dienstleistungsart",
+      "volunteerSearch": "Freiwilligensuche",
+      "trustLevel": "Reaktionsfähigkeit",
+      "changeStatus": "Status ändern",
+      "district": "Bezirk",
+      "status": {
+        "engagement": {
+          "new": "Neu",
+          "active": "Aktiv",
+          "unresponsive": "Nicht erreichbar",
+          "inactive": "Inaktiv"
+        },
+        "volunteerSearch": {
+          "notNeeded": "Nicht benötigt",
+          "filled": "Besetzt",
+          "searching": "Suchend"
+        },
+        "serviceType": {
+          "childcare": "Kinderbetreuung",
+          "welfare": "Wohlfahrt",
+          "consultation": "Beratung",
+          "voluntarySupport": "Ehrenamtliche Unterstützung",
+          "tandem": "Tandem",
+          "sport": "Sport",
+          "tutoring": "Nachhilfe",
+          "refugeeAccommodation": "Unterkunft für geflüchteten",
+          "jobCoaching": "Job-Coaching",
+          "youth": "Jugend"
+        },
+        "trustLevel": {
+          "unknown": "Unbekannt",
+          "low": "Niedrig",
+          "high": "Hoch"
+        }
+      },
+      "modalData": {
+        "title": "Engagement-Status ändern",
+        "options": {
+          "unresponsive": "Nicht erreichbar",
+          "unresponsive_description": "Dieser Agent antwortet nicht.",
+          "inactive": "Inaktiv",
+          "inactive_description": "Dieser Agent arbeitet nicht mehr mit der Organisation zusammen."
+        },
+        "cancel": "Abbrechen",
+        "save": "Speichern"
+      },
+      "statusUpdateSuccess": "Agent-Status erfolgreich aktualisiert",
+      "contactDetails": {
+        "title": "Kontaktdaten",
+        "fullName": "Name",
+        "firstName": "Vorname",
+        "middleName": "Zweitname",
+        "lastName": "Nachname",
+        "email": "E-Mail",
+        "mobile": "Mobiltelefon",
+        "landline": "Festnetz",
+        "saveSuccess": "Kontaktdaten erfolgreich aktualisiert",
+        "roles": {
+          "label": "Rolle",
+          "social-worker": "Sozialarbeiter",
+          "volunteer-coordinator": "Ehrenamtskoordinator",
+          "manager": "Leitung",
+          "project-coordinator": "Projektkoordinator",
+          "coordination": "Koordination",
+          "psychologist": "Psychologe",
+          "project-staff": "Projektmitarbeiter",
+          "childcare-worker": "Kinderbetreuer",
+          "other": "Sonstiges"
+        },
+        "cancel": "Abbrechen",
+        "saveChanges": "Änderungen speichern",
+        "edit": "Bearbeiten",
+        "validation": {
+          "nameRequired": "Name ist erforderlich",
+          "addressRequired": "Adresse ist erforderlich",
+          "districtRequired": "Bezirk ist erforderlich",
+          "mobileRequired": "Mobilnummer ist erforderlich",
+          "mobileInvalid": "Die Mobilnummer muss mit + beginnen und darf nur Ziffern und Leerzeichen enthalten",
+          "emailRequired": "E-Mail ist erforderlich",
+          "emailInvalid": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+          "roleRequired": "Rolle ist erforderlich",
+          "fullNameRequired": "Vollständiger Name ist erforderlich",
+          "fullNameInvalid": "Bitte geben Sie einen gültigen Namen ein",
+          "landlineInvalid": "Die Festnetznummer muss mit + beginnen und darf nur Ziffern und Leerzeichen enthalten"
+        }
+      },
+      "organisationDetails": {
+        "title": "Organisationsdetails",
+        "edit": "Bearbeiten",
+        "about": "Über uns",
+        "website": "Webseite",
+        "address": "Adresse",
+        "organisationType": "Art der Organisation",
+        "operator": "Träger",
+        "services": "Leistungen",
+        "clientLanguages": "Sprachen der Klient:innen",
+        "cancel": "Abbrechen",
+        "saveChanges": "Änderungen speichern",
+        "validation": {
+          "required": "Dieses Feld ist erforderlich",
+          "websiteInvalid": "Webseite muss mit http:// oder https:// beginnen",
+          "clientLanguagesRequired": "Mindestens eine Sprache ist erforderlich"
+        }
+      },
+      "opportunitiesSec": {
+        "postOpportunity": "Möglichkeit posten",
+        "tabs": {
+          "lookingForVolunteers": "Suche nach Freiwilligen",
+          "active": "Aktiv",
+          "past": "Vergangen"
+        }
+      }
+    },
+    "opportunityProfile": {
+      "opportunityProfile": "Profil der Möglichkeit",
+      "postedOn": "Veröffentlicht am",
+      "currentStatus": "Aktueller Status",
+      "matchingStatus": "Matching-Status",
+      "status": {
+        "new": "Neu",
+        "active": "Aktiv",
+        "past": "Vergangen",
+        "searching": "Suchend"
+      },
+      "matchStatus": {
+        "matched": "Gematcht",
+        "needRematch": "Neues Matching erforderlich",
+        "unmatched": "Nicht gematcht"
+      },
+      "statusUpdateSuccess": "Status der Möglichkeit erfolgreich aktualisiert",
+      "contactDetailsTitle": "Kontaktdaten",
+      "editButtonName": "Bearbeiten",
+      "contactDetails": {
+        "name": "Name",
+        "phone": "Telefon",
+        "email": "E-Mail",
+        "waysToContact": {
+          "label": "Kontaktmöglichkeiten",
+          "whatsapp": "WhatsApp",
+          "telegram": "Telegram",
+          "mobilePhone": "Mobiltelefon",
+          "email": "E-Mail"
+        },
+        "cancel": "Abbrechen",
+        "saveChanges": "Änderungen speichern",
+        "saveSuccess": "Kontaktdaten erfolgreich aktualisiert",
+        "validation": {
+          "nameRequired": "Name ist erforderlich",
+          "phoneRequired": "Telefon ist erforderlich",
+          "phoneInvalid": "Telefon muss mit + beginnen und nur Ziffern/Leerzeichen enthalten",
+          "emailRequired": "E-Mail ist erforderlich",
+          "emailInvalid": "Ungültige E-Mail",
+          "waysToContactRequired": "Wählen Sie mindestens eine Kontaktmöglichkeit"
+        }
+      },
+      "racTitle": "Geflüchtetenunterkunft",
+      "rac": {
+        "name": "Name",
+        "address": "Adresse",
+        "district": "Bezirk",
+        "cancel": "Abbrechen",
+        "saveChanges": "Änderungen speichern",
+        "validation": {
+          "nameRequired": "Name ist erforderlich",
+          "addressRequired": "Adresse ist erforderlich",
+          "districtRequired": "Bezirk ist erforderlich"
+        }
+      },
+      "accompanyingDetailsTitle": "Begleitdetails",
+      "accompanyingDetails": {
+        "appointmentAddress": "Terminadresse",
+        "appointmentDate": "Termindatum",
+        "appointmentTime": "Terminzeit",
+        "refugeeNumber": "Geflüchtetennummer",
+        "refugeeName": "Name des Geflüchteten",
+        "languageToTranslate": "Zu übersetzende Sprache",
+        "cancel": "Abbrechen",
+        "saveChanges": "Änderungen speichern",
+        "saveSuccess": "Begleitdetails erfolgreich aktualisiert",
+        "notAccompanyingMessage": "Diese Möglichkeit ist nicht als Begleitung markiert. Ändern Sie diesen Status in der oberen Karte, wenn Sie die Begleitinformationen ausfüllen müssen (Terminadresse, Angaben zu Geflüchteten usw.).",
+        "validation": {
+          "invalidTimeFormat": "Ungültiges Zeitformat (verwenden Sie HH:MM)"
+        }
+      },
+      "volunteersSec": {
+        "title": "Freiwillige",
+        "findVolunteers": "Freiwillige finden",
+        "suggestButtonName": "Vorschlagen",
+        "suggestDialog": {
+          "title": "Für diese Möglichkeit vorschlagen?",
+          "messageStart": "Der Verantwortliche von",
+          "messageMid": "wird benachrichtigt, dass Sie",
+          "messageEnd": "vorgeschlagen haben. Es erscheint in seinem / ihrem Profil unter \"ausstehenden\" Freiwilligen.",
+          "confirm": "Vorschlagen",
+          "cancel": "Abbrechen",
+          "success": "Vorschlag erfolgreich gesendet"
+        },
+        "appliedOn": "Beworben am",
+        "tabs": {
+          "opp-pending": "Ausstehend",
+          "opp-matched": "Zugeordnet",
+          "opp-active": "Aktiv",
+          "opp-past": "Vergangen"
+        },
+        "emptyState": "Noch keine Freiwilligen in dieser Kategorie",
+        "statusUpdateSuccess": "Freiwilligen-Status erfolgreich aktualisiert",
+        "removeSuccess": "Freiwilliger erfolgreich entfernt"
+      },
+      "opportunityDetails": {
+        "title": "Details der Möglichkeit",
+        "description": "Beschreibung",
+        "mainCommunication": "Hauptkommunikation",
+        "residentsSpeak": "Bewohner sprechen",
+        "schedule": "Zeitplan",
+        "numberOfVolunteers": "Anzahl der Freiwilligen",
+        "activities": "Aktivitäten",
+        "skills": "Fähigkeiten & Erfahrung",
+        "descriptionHint": "Max. {{max}} Zeichen",
+        "cancel": "Abbrechen",
+        "saveChanges": "Änderungen speichern",
+        "validation": {
+          "descriptionRequired": "Beschreibung ist erforderlich",
+          "descriptionTooLong": "Beschreibung ist zu lang",
+          "numberOfVolunteersRequired": "Anzahl der Freiwilligen muss mindestens 1 sein",
+          "languageRequired": "Mindestens eine Sprache ist erforderlich",
+          "availabilityRequired": "Mindestens ein Zeitfenster muss ausgewählt werden",
+          "activitiesRequired": "Mindestens eine Aktivität ist erforderlich",
+          "skillsRequired": "Mindestens eine Fähigkeit ist erforderlich"
+        }
+      }
+    },
+    "racTitle": "Geflüchtetenunterkunft",
+    "rac": {
+      "name": "Name",
+      "address": "Adresse",
+      "district": "Bezirk",
+      "cancel": "Abbrechen",
+      "saveChanges": "Änderungen speichern",
+      "editButtonName": "Bearbeiten"
+    },
+    "communicationSection": {
+      "title": "Kommunikationsverfolgung",
+      "addNew": "+ Kontakt registrieren",
+      "emptyState": "Noch keine Kommunikation aufgezeichnet",
+      "registerContact": "Kontakt registrieren",
+      "date": "Datum",
+      "type": "Typ",
+      "contactMethod": "Kontaktmethode",
+      "notes": "Notizen",
+      "actions": "Aktionen",
+      "typeOfContact": "Art des Kontakts",
+      "contactTypes": {
+        "called": "Angerufen",
+        "triedToCall": "Versuch anzurufen",
+        "textedOrEmailed": "SMS oder E-Mail gesendet",
+        "other": "Sonstiges"
+      },
+      "dateOfContact": "Datum des Kontakts",
+      "contactDate": "Kontaktdatum",
+      "contactDateRequired": "Kontaktdatum*",
+      "whatPlatform": "Welche Plattform haben Sie verwendet?",
+      "howDidYouSend": "Wie haben Sie Ihre Nachricht gesendet?",
+      "contactMethodLabel": "Kontaktmethode",
+      "contactMethodRequired": "Kontaktmethode*",
+      "communicationTypeRequired": "Kommunikationstyp*",
+      "communicationTypes": {
+        "briefedVolunteer": "Briefing erfolgt (begleitende*r Freiwillige*r)",
+        "firstInquiry": "Erste Anfrage gesendet",
+        "opportunityList": "Möglichkeitenliste gesendet",
+        "statusUpdate": "Statusaktualisierung",
+        "postMatchFollowUp": "Nachverfolgung nach Vermittlung"
+      },
+      "platformOptions": {
+        "phoneNumber": "Telefonnummer",
+        "telegram": "Telegram",
+        "whatsapp": "Whatsapp",
+        "signal": "Signal",
+        "email": "E-Mail",
+        "sms": "SMS",
+        "voicenote": "Sprachnachricht"
+      },
+      "notesPlaceholder": "Fügen Sie Notizen zu dieser Kommunikation hinzu...",
+      "cancel": "Abbrechen",
+      "save": "Speichern",
+      "delete": "Löschen",
+      "communicationAdded": "Kommunikation erfolgreich hinzugefügt",
+      "communicationUpdated": "Kommunikation erfolgreich aktualisiert",
+      "communicationDeleted": "Kommunikation erfolgreich gelöscht",
+      "deleteConfirmTitle": "Eintrag löschen?",
+      "deleteConfirmText": "\"{{entryType}}\" Kommunikationseintrag wird dauerhaft gelöscht.",
+      "statusChange": "Statusänderung",
+      "followUp": "Nachverfolgung",
+      "inquiry": "Anfrage",
+      "other": "Sonstiges",
+      "email": "E-Mail",
+      "phone": "Telefon",
+      "inPerson": "Persönlich",
+      "message": "Nachricht",
+      "today": "heute",
+      "futureDateError": "Datum darf nicht in der Zukunft liegen",
+      "contactTypeRequired": "Kontaktart ist erforderlich",
+      "deletePermissionError": "Sie haben keine Berechtigung, die Kommunikation mit der ID: {{id}} zu löschen."
+    }
+  },
+  "aboutus": {
+    "aboutusHeading": "Über das Projekt",
+    "aboutusSubheading": "Die Zahl der Menschen, die weltweit vor Konflikten, Verfolgung und Menschenrechtsverletzungen fliehen, war noch nie so hoch wie heute. Need4Deed will die Inklusion und Integration von Geflüchteten in Berlin durch zivilgesellschaftliches Engagement fördern, indem es den Zugang zu ehrenamtlichen Engagement erleichtert. Unser Ziel ist es, einen nachhaltigen und skalierbaren Mechanismus für diesen Zweck aufzubauen, indem wir Freiwillige mit Geflüchteten, die in Berliner Gemeinschaftsunterkünften leben, auf der Grundlage ihrer spezifischen Bedürfnisse zusammenbringen.",
+    "values": {
+      "valuesHeading": "Unsere Werte",
+      "equalOpportunityHeading": "Chancengleichheit",
+      "equalOpportunitySubheading": "Menschen, die unter bedürftigen Lebensbedingungen leben, sollten gleiche Chancen erhalten. Dazu gehören auch unterversorgte Personen und Gruppen, die von Zwangsmigration betroffen sind.",
+      "responsibilityHeading": "Verantwortung",
+      "responsibilitySubheading": "Sowohl die Länder (der Staat) als auch die Zivilgesellschaft tragen Verantwortung für ihre unterversorgten Gemeinschaften, einschließlich der von erzwungener Migration Betroffenen.",
+      "migranToMigranSupportHeading": "Unterstützung von Migrant*innen zu Migrant*innen",
+      "migranToMigranSupportSubheading": "Insbesondere Gruppen und Einzelpersonen, die eine erzwungene Migration hinter sich haben, können am besten von anderen Personen mit Migrationshintergrund in ihrem Integrationsprozess verstanden und unterstützt werden, so dass sie gleiche Chancen erhalten und schließlich selbst von der Gesellschaft profitieren.",
+      "activeParticipationHeading": "Aktive Beteiligung",
+      "activeParticipationSubheading": "Eine Unterstützungsstruktur von Migrant*innen für Migrant*innen neben der Unterstützung von Nicht-Migrant*innen eine wichtige soziale Rolle in Gesellschaften spielen kann, indem es einen schnelleren Integrationsprozess und eine aktive Beteiligung der unterstützten Gemeinschaften ermöglicht.",
+      "technologyHeading": "Technologie",
+      "technologySubheading": "Der Einsatz von Technologie zur Unterstützung unterversorgter Gemeinschaften ist ein entscheidender Wert, um das Geben und Nehmen von Unterstützung integrativer, zugänglicher und skalierbarer zu machen."
+    }
+  },
+  "faqs": {
+    "faqs": "HGFs",
+    "title": "Häufig gestellte Fragen",
+    "first_steps_question": "Was sind die ersten Schritte, um Freiwilliger zu werden?",
+    "first_steps_answer": "Beginnen Sie mit dem Ausfüllen des Freiwilligenantragsformulars auf der Need4Deed-Website.",
+    "after_form_question": "Was passiert, nachdem ich das Formular ausgefüllt habe?",
+    "after_form_answer": "Nachdem wir Ihre Präferenzen und Standorte haben, suchen wir nach einer passenden Möglichkeit für Sie und kontaktieren Sie in den nächsten Tagen.",
+    "find_opportunities_question": "Wie finde ich verfügbare Freiwilligenmöglichkeiten?",
+    "find_opportunities_answer": "Sehen Sie auf der Seite 'Möglichkeiten' auf der Need4Deed-Website nach aktuellen Freiwilligenrollen.",
+    "volunteer_roles_question": "Welche Arten von Freiwilligenrollen werden angeboten?",
+    "volunteer_roles_answer": "Die Rollen umfassen Kinderbetreuung, Sprachcafés, Übersetzungsdienste und Unterstützung bei offiziellen Terminen und sportlichen Aktivitäten.",
+    "special_skills_question": "Brauche ich spezielle Fähigkeiten, um mich freiwillig zu engagieren?",
+    "special_skills_answer": "Viele Rollen stehen allen Freiwilligen offen, obwohl für bestimmte Positionen spezielle Fähigkeiten erforderlich sein können.",
+    "volunteering_time_question": "Wie viel Zeit nimmt das Freiwilligenengagement in Anspruch?",
+    "volunteering_time_answer": "Regelmäßiges Freiwilligenengagement erfordert normalerweise etwa 2 Stunden pro Woche oder zweimal im Monat. Unregelmäßiges Freiwilligenengagement kann stattfinden, wann immer Sie Zeit haben, insbesondere bei Veranstaltungen oder Aufgaben wie Übersetzungen bei Arztterminen.",
+    "age_requirements_question": "Gibt es Altersanforderungen für Freiwillige?",
+    "age_requirements_answer": "Die Altersanforderungen können variieren, aber die meisten Orte verlangen, dass die Person über 18 Jahre alt ist. Bitte überprüfen Sie die spezifischen Anforderungen in den Möglichkeiten.",
+    "voluntea_gatherings_question": "Was kann ich bei den VolunTea-Treffen erwarten?",
+    "voluntea_gatherings_answer": "Die VolunTea-Treffen umfasst die Mission von Need4Deed, Freiwilligenrollen und Unterstützung bei der Suche nach geeigneten Unterkünften für Geflüchtete.",
+    "training_question": "Gibt es eine spezielle Schulung?",
+    "training_answer": "Alle paar Monate werden Schulungen angeboten, insbesondere für diejenigen, die Übersetzungsunterstützung leisten.",
+    "group_volunteering_question": "Kann ich mit einer Gruppe oder Organisation freiwillig arbeiten?",
+    "group_volunteering_answer": "Ja, Gruppenfreiwilligenarbeit wird gefördert, insbesondere für diejenigen, die Unterkünfte für Geflüchtete unterstützen."
+  },
+  "legal": {
+    "legalHeading": "Legal",
+    "impressum": "Impressum",
+    "guidelines": "Need4Deed Leitlinien",
+    "cookies": "Cookies",
+    "notice": {
+      "header": "Impressum",
+      "contacts": {
+        "tel": "Telefon",
+        "fax": "Telefax",
+        "email": "E-mail",
+        "responsible": "Verantwortlich: Geschäftsführerin"
+      },
+      "registration": "Registergericht",
+      "court": "Amtsgericht Charlottenburg",
+      "disclaimer": "Haftungsausschluss",
+      "liability": {
+        "header": "Haftung für Inhalte und Links",
+        "body": "Die Inhalte dieser Website wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen. Als Anbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf dieser Seite nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG ist VIA als Anbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend entfernen. Sollten Verweise ins Leere führen oder keine aktuellen Informationen mehr bieten, bitten wir um Mitteilung. Gleichfalls bitten wir um Ihren Hinweis zu Seiten, auf die ein Verweis gelegt werden sollte. Wir übernehmen keine Verantwortung für den Inhalt und die Aktualität fremder Links."
+      },
+      "photoCredit": {
+        "header": "Bildnachweis",
+        "owner": "Inhaber der Logos",
+        "clubDialog": "Bei allen anderen verwendeten Bildern und Logos ist Club Dialog e.V. Urheber und damit Inhaber der ausschließlichen Nutzungsrechte."
+      },
+      "dataProtectionLink": "Hier geht es zu unserer Datenschutzerklärung",
+      "dataProtectionOfficer": "Datenschutzbeauftragter"
+    },
+    "dataPrivacy": {
+      "header": "Datenschutzerklärung",
+      "intro1": "Jegliche Erhebung, Verwendung, Speicherung, Löschung oder sonstige Nutzung (nachfolgend „Verarbeitung“) von Daten dient ausschließlich der Erbringung unserer Dienstleistungen. Unsere Dienste sind mit dem Ziel gestaltet worden, so wenig personenbezogene Daten wie möglich zu verwenden. Dabei werden unter “personenbezogenen Daten” (nachfolgend auch „Daten“ genannt) alle Einzelangaben über persönliche oder sachliche Verhältnisse einer bestimmten oder bestimmbaren natürlichen Person (sog. „betroffene Person“) verstanden.",
+      "intro2": "Die folgenden Ausführungen zum Datenschutz beschreiben, welche Arten von personenbezogenen Daten beim Aufruf unseres Internetangebotes verarbeitet werden, was mit diesen personenbezogenen Daten geschieht und wie Sie einer Datenverarbeitung gegebenenfalls widersprechen können.",
+      "generalInfo": {
+        "header": "Allgemeines zur Datenverarbeitung auf dieser Webseite",
+        "responsible": {
+          "header": "Verantwortlicher",
+          "title": "Verantwortlicher im Sinne der EU-Datenschutz-Grundverordnung (DSGVO) ist",
+          "address": "Anschrift",
+          "tel": "Telefon",
+          "email": "E-mail",
+          "homepage": "Homepage"
+        },
+        "officer": {
+          "header": "Beauftragter für Datenschutz",
+          "title": "Der Datenschutzbeauftragte ist",
+          "from": "von der",
+          "emailText": "Bei Fragen zum Datenschutz können Sie die WS Datenschutz GmbH unter folgender E-Mail-Adresse erreichen"
+        },
+        "protection": {
+          "header": "Schutz Ihrer Daten",
+          "para1": "Wir haben technische und organisatorische Maßnahmen getroffen, die sicherstellen, dass die Vorschriften der DSGVO sowohl von uns als auch von externen Dienstleistern, die für uns arbeiten, beachtet werden.",
+          "para2": "Wenn wir zur Erbringung unserer Dienstleistungen mit anderen Unternehmen, wie etwa E-Mail- und Server-Anbietern, zusammenarbeiten, geschieht dies nur nach einem umfangreichen Auswahlverfahren. Bei diesem Auswahlverfahren wird jeder einzelne Dienstleister auf seine Eignung in Zusammenhang mit technischen und organisatorischen Fähigkeiten im Datenschutz hin sorgfältig ausgewählt. Dieses Auswahlverfahren wird schriftlich dokumentiert und ein Vertrag gem. Art. 28 Abs. 3 DSGVO über die Verarbeitung von personenbezogenen Daten im Auftrag (AV-Vertrag) nur dann geschlossen, wenn er den Anforderungen des Art. 28 DSGVO entspricht.",
+          "para3": "Ihre Angaben werden auf besonders geschützten Servern gespeichert. Der Zugriff darauf ist nur wenigen besonders befugten Personen möglich.",
+          "para4": "Unsere Webseite ist SSL/TLS verschlüsselt, was Sie am „https://“ am Anfang der URL erkennen können. Sofern personenbezogene Daten bei der E-Mail-Kommunikation involviert sind, erfolgt der E-Mail-Versand von unserer Seite aus verschlüsselt. Wir nutzen hierfür ebenfalls das integrierte SSL-Zertifikat."
+        },
+        "deletion": {
+          "header": "Löschung der personenbezogenen Daten",
+          "para": "Wir verarbeiten die personenbezogenen Daten nur so lange, wie es notwendig ist. Sobald der Zweck der Datenverarbeitung erfüllt ist, findet nach den Maßstäben des hiesigen Löschkonzepts eine Sperrung und Löschung statt, es sei denn, dass gesetzliche Vorschriften einer Löschung entgegenstehen."
+        }
+      },
+      "dataProcessing": {
+        "header": "Datenverarbeitung auf dieser Webseite und Erstellung von Logfiles",
+        "description": {
+          "header": "Beschreibung und Umfang der Datenverarbeitung",
+          "para1": "Wenn Sie unsere Webseite besuchen, speichern unsere Webserver temporär jeden Zugriff in einer Protokolldatei. Dabei werden folgende personenbezogene Daten erfasst und bis zur automatisierten Löschung gespeichert:",
+          "para2": "Wir nutzen als Hostinganbieter den Dienstleister All-inkl.com. All-inkl.com setzt Cookies. Diese helfen dabei unsere Webseite nutzbar zu machen, indem sie Grundfunktionen, wie die Seitennavigation und den Zugriff, auf der Webseite ermöglichen. Die Datenverarbeitung wird durchgeführt von:",
+          "para3": "Weitere Informationen können Sie der Datenschutzerklärung von all-inkl.com entnehmen:"
+        },
+        "basis": {
+          "header": "Rechtsgrundlage für die Datenverarbeitung",
+          "para": "Die Verarbeitung dieser Daten erfolgt auf Grundlage des Art. 6 Abs. 1 S.1 lit. f) DSGVO. Unser berechtigtes Interesse beruht darauf, Ihnen unsere Webseite zugänglich zu machen."
+        },
+        "purpose": {
+          "header": "Zweck der Datenverarbeitung",
+          "para": "Die Datenverarbeitung erfolgt zu dem Zweck, die Nutzung der Webseite zu ermöglichen (Verbindungsaufbau). Sie dient der Systemsicherheit, der technischen Administration der Netzinfrastruktur sowie der Optimierung des Internetangebotes. Die IP-Adresse wird nur bei Angriffen auf unsere Netzinfrastruktur bzw. die Netzinfrastruktur unseres Internetproviders ausgewertet."
+        },
+        "duration": {
+          "header": "Dauer der Datenspeicherung",
+          "para": "Die personenbezogenen Daten werden gelöscht, sobald sie zu den oben genannten Zwecken nicht mehr erforderlich sind. Dies ist der Fall, wenn Sie die Webseite schließen. Unser Hosting-Anbieter verwendet die Daten gegebenenfalls für statistische Erhebungen. Hierfür werden die Daten jedoch anonymisiert. Eine Löschung der Daten findet bei unserem Hosting-Anbieter nach 7 Tagen statt."
+        },
+        "possibility": {
+          "header": "Beseitigungsmöglichkeit durch die betroffene Person",
+          "para": "Die Webseite kann nur angezeigt werden, wenn die beschriebenen Daten verarbeitet werden. Einen Widerspruch gegen die weitere Verarbeitung der Daten machen Sie bitte bei unserem Datenschutzbeauftragten oder beim Hostinganbieter geltend."
+        }
+      },
+      "font": {
+        "header": "Font Awesome",
+        "description": {
+          "header": "Beschreibung und Umfang der Datenverarbeitung",
+          "para1": "Diese Webseite verwendet das Produkt Font Awesome von Fonticons, Inc. zur einheitlichen Darstellung von Schriftarten.",
+          "para2": "Die Datenverarbeitung für den europäischen Wirtschaftsraum und für die Schweiz wird durchgeführt von:",
+          "para3": "Für die Interpräsenz verwenden wir Schriftarten bzw. Icons, die von Fonticons, Inc. bereitgestellt werden. Sobald Sie unsere Seite aufrufen, werden die benötigten Web Fonts bzw. Icons in Ihrem Browsercache geladen, um Texte, Schriftarten und Icons korrekt darzustellen. Zu diesem Zweck muss der von Ihnen verwendete Browser Verbindung zu den Servern von Fonticons aufnehmen. Hierdurch erlangt Fonticons Kenntnis darüber, dass über Ihre IP-Adresse unsere Webseite aufgerufen wurde und welche Karte angezeigt wurde.",
+          "para4": "Nach eigener Aussage respektiert Font Awesome die Datenschutzrechte gemäß der Verordnung (EU) 2016/679, der Datenschutzverordnung (DSGVO) der Europäischen Union.",
+          "para51": "Die Nutzungsbedingungen von Fonticons finden Sie unter ",
+          "para52": " sowie die Datenschutzerklärung unter: "
+        },
+        "basis": {
+          "header": "Rechtsgrundlage für die Datenverarbeitung",
+          "para": "Die Rechtsgrundlage für die Verwendung von Font Awesome beruht auf Art. 6 Abs. 1 S. 1 lit. a) DSGVO."
+        },
+        "purpose": {
+          "header": "Zweck der Datenverarbeitung",
+          "para": "Zweck der Datenverarbeitung ist die einheitliche Darstellung der Schriften und Icons auf unserer Webseite."
+        },
+        "duration": {
+          "header": "Dauer der Datenspeicherung",
+          "para": "Die Daten werden gelöscht, sobald sie für den Zweck der Datenverarbeitung nicht mehr benötigt werden, es sei denn, dass gesetzliche Vorschriften dem entgegenstehen."
+        },
+        "possibility": {
+          "header": "Beseitigungsmöglichkeit durch die betroffene Person",
+          "para1": "Sie können Ihren Browser so einstellen, dass die Schriften nicht von den Fonticon-Servern geladen werden. Falls Ihr Browser Font Awesome nicht unterstützt oder Sie den Zugriff auf die Fonticon-Server unterbinden, wird der Text in der Standardschrift des Systems angezeigt.",
+          "para21": "Sie können datenschutzbezogene Fragen, Beschwerden und Anfragen an Font Awesome unter ",
+          "para22": " senden."
+        }
+      },
+      "transfer": {
+        "header": "Datentransfer in ein Drittland",
+        "para1": "Damit wir unsere Leistungen erbringen können, bedienen wir uns der Unterstützung von Diensteanbietern aus dem europäischen Raum als auch aus Drittstaaten. Um den Schutz Ihrer personenbezogenen Daten auch im Fall der Datenübermittlung in ein Drittland sicherzustellen, schließen wir mit jedem der sorgfältig ausgewählten Diensteanbieter spezielle Auftragsverarbeitungsverträge. Alle von uns genutzten Diensteanbieter verfügen über hinreichende Nachweise, dass Sie die Datensicherheit über geeignete technische und organisatorische Maßnahmen sicherstellen. Unsere Diensteanbieter aus Drittländern befinden sich entweder in Ländern, die über ein von der EU-Kommission anerkanntes, angemessenes Datenschutzniveau verfügen (Art. 45 DSGVO) oder haben geeignete Garantien vorgesehen (Art. 46 DSGVO).",
+        "bold1": "Angemessenes Schutzniveau: ",
+        "bold1Text": "Der Anbieter stammt aus einem Land, dessen angemessenes Datenschutzniveau von der EU-Kommission anerkannt wurde.  Nähere Informationen finden Sie unter: ",
+        "bold2": "EU-Standardvertragsklauseln: ",
+        "bold2Text": "Unser Anbieter hat sich den EU-Standardvertragsklauseln unterworfen, um einen sicheren Datentransfer zu gewährleisten. Nähere Informationen hierzu finden Sie unter: ",
+        "bold3": "Binding Corporate Rules: ",
+        "bold3Text": " Die DSGVO sieht mit Art. 47 die Möglichkeit vor, den Datenschutz beim Datentransfer in einen Drittstaat über verbindliche interne Datenschutzvorschriften zu gewährleisten. Diese werden von den zuständigen Aufsichtsbehörden im Rahmen des Kohärenzverfahrens nach Art. 63 DSGVO geprüft und abgenommen.",
+        "bold4": "Einwilligung: ",
+        "bold4Text": "Außerdem findet ein Datentransfer in ein Drittland ohne angemessenes Schutzniveau nur dann statt, wenn Sie uns gem. Art. 49 Abs. 1 lit. a) DSGVO hierfür Ihre Einwilligung erteilt haben oder eine andere Ausnahme nach Art. 49 DSGVO für die Datenübermittlung einschlägig ist."
+      },
+      "rights": {
+        "header": "Ihre Rechte",
+        "para": "Sie haben gegenüber uns folgende Rechte hinsichtlich der Sie betreffenden personenbezogenen Daten:",
+        "revoke": {
+          "header": "Recht auf Widerruf der Einwilligung (vgl. Art. 7 DSGVO)",
+          "para": "Falls Sie eine Einwilligung zur Verarbeitung Ihrer Daten erteilt haben, können Sie diese jederzeit widerrufen. Ein solcher Widerruf beeinflusst die Zulässigkeit der Verarbeitung Ihrer personenbezogenen Daten für die Zukunft, nachdem Sie ihn gegenüber uns ausgesprochen haben. Er kann (fern-)mündlich oder schriftlich per Post oder E-Mail an uns erfolgen."
+        },
+        "information": {
+          "header": "Recht auf Auskunft (vgl. Art. 15 DSGVO)",
+          "para": "Im Falle eines Auskunftsersuchens müssen Sie hinreichende Angaben zu Ihrer Identität machen und einen Nachweis erbringen, dass es sich um Ihre Informationen handelt. Die Auskunft betrifft folgende Informationen:",
+          "bullet1": "die Zwecke, zu denen die personenbezogenen Daten verarbeitet werden;",
+          "bullet2": "die Kategorien von personenbezogenen Daten, welche verarbeitet werden;",
+          "bullet3": "die Empfänger bzw. die Kategorien von Empfängern, gegenüber denen die Sie betreffenden personenbezogenen Daten offengelegt wurden oder noch offengelegt werden;",
+          "bullet4": "die geplante Dauer der Speicherung der Sie betreffenden personenbezogenen Daten oder, falls konkrete Angaben hierzu nicht möglich sind, Kriterien für die Festlegung der Speicherdauer;",
+          "bullet5": "das Bestehen eines Rechts auf Berichtigung oder Löschung der Sie betreffenden personenbezogenen Daten, eines Rechts auf Einschränkung der Verarbeitung durch den Verantwortlichen oder eines Widerspruchsrechts gegen diese Verarbeitung;",
+          "bullet6": "das Bestehen eines Beschwerderechts bei einer Aufsichtsbehörde;",
+          "bullet7": "alle verfügbaren Informationen über die Herkunft der Daten, wenn die personenbezogenen Daten nicht bei der betroffenen Person erhoben werden;",
+          "bullet8": "das Bestehen einer automatisierten Entscheidungsfindung einschließlich Profiling gemäß Art. 22 Abs. 1 und 4 DSGVO und – zumindest in diesen Fällen – aussagekräftige Informationen über die involvierte Logik sowie die Tragweite und die angestrebten Auswirkungen einer derartigen Verarbeitung für die betroffene Person."
+        },
+        "correction": {
+          "header": "Recht auf Berichtigung oder Löschung (vgl. Art. 16, 17 DSGVO)",
+          "para1": "Sie haben ein Recht auf Berichtigung und/oder Vervollständigung gegenüber uns als Verantwortlichem, sofern die verarbeiteten personenbezogenen Daten, die Sie betreffen, unrichtig oder unvollständig sind. Der Verantwortliche hat die Berichtigung unverzüglich vorzunehmen.",
+          "para2": "Zudem können Sie die Löschung der Sie betreffenden personenbezogenen Daten verlangen, sofern einer der folgenden Gründe auf Sie zutrifft:",
+          "bullet1": "Die Sie betreffenden personenbezogenen Daten sind für die Zwecke, für die sie erhoben oder auf sonstige Weise verarbeitet wurden, nicht mehr notwendig.",
+          "bullet2": "Sie widerrufen Ihre Einwilligung, auf die sich die Verarbeitung gem. Art. 6 Abs. 1 S.1 lit. a) oder Art. 9 Abs. 2 lit. a) DSGVO stützte, und es fehlt an einer anderweitigen Rechtsgrundlage für die Verarbeitung.",
+          "bullet3": "Sie legen gem. Art. 21 Abs. 1 DSGVO Widerspruch gegen die Verarbeitung ein und es liegen keine vorrangigen berechtigten Gründe für die Verarbeitung vor, oder Sie legen gem. Art. 21 Abs. 2 DSGVO Widerspruch gegen die Verarbeitung ein.",
+          "bullet4": "Die Sie betreffenden personenbezogenen Daten wurden unrechtmäßig verarbeitet.",
+          "bullet5": "Die Löschung der Sie betreffenden personenbezogenen Daten ist zur Erfüllung einer rechtlichen Verpflichtung nach dem Unionsrecht oder dem Recht der Mitgliedstaaten erforderlich, dem der Verantwortliche unterliegt.",
+          "bullet6": "Die Sie betreffenden personenbezogenen Daten wurden in Bezug auf angebotene Dienste der Informationsgesellschaft gemäß Art. 8 Abs. 1 DSGVO erhoben.",
+          "para3": "Haben wir die Sie betreffenden personenbezogenen Daten öffentlich gemacht und sind wir gem. Art. 17 Abs. 1 DSGVO zu deren Löschung verpflichtet, so treffen wir alle zumutbaren Maßnahmen auch andere für die Datenverarbeitung Verantwortliche darüber zu informieren, dass Sie die Löschung aller Links zu diesen personenbezogenen Daten oder von Kopien oder Replikationen dieser personenbezogenen Daten verlangt haben.",
+          "para41": "Das Recht auf Löschung",
+          "para42": " besteht nicht, ",
+          "para43": "soweit die Verarbeitung erforderlich ist:",
+          "bullet7": "zur Ausübung des Rechts auf freie Meinungsäußerung und Information;",
+          "bullet8": "zur Erfüllung einer rechtlichen Verpflichtung, die die Verarbeitung nach dem Recht der Union oder der Mitgliedstaaten, dem der Verantwortliche unterliegt, erfordert, oder zur Wahrnehmung einer Aufgabe, die im öffentlichen Interesse liegt oder in Ausübung öffentlicher Gewalt erfolgt, die dem Verantwortlichen übertragen wurde;",
+          "bullet9": "aus Gründen des öffentlichen Interesses im Bereich der öffentlichen Gesundheit gemäß Art. 9 Abs. 2 lit. h und i sowie Art. 9 Abs. 3 DSGVO;",
+          "bullet10": "für im öffentlichen Interesse liegende Archivzwecke, wissenschaftliche oder historische Forschungszwecke oder für statistische Zwecke gem. Art. 89 Abs. 1 DSGVO, soweit das oben genannte Recht voraussichtlich die Verwirklichung der Ziele dieser Verarbeitung unmöglich macht oder ernsthaft beeinträchtigt, oder",
+          "bullet11": "zur Geltendmachung, Ausübung oder Verteidigung von Rechtsansprüchen."
+        },
+        "restriction": {
+          "header": "Recht auf Einschränkung der Verarbeitung (vgl. Art. 18 DSGVO)",
+          "para1": "Unter den folgenden Voraussetzungen können Sie die Einschränkung der Verarbeitung der Sie betreffenden personenbezogenen Daten von uns verlangen:",
+          "bullet1": "wenn Sie die Richtigkeit, der Sie betreffenden personenbezogenen für eine Dauer bestreiten, die es uns ermöglicht, die Richtigkeit Ihrer personenbezogenen Daten zu überprüfen;",
+          "bullet2": "die Verarbeitung unrechtmäßig ist und Sie die Löschung der personenbezogenen Daten ablehnen und stattdessen die Einschränkung der Nutzung der personenbezogenen Daten verlangen;",
+          "bullet3": "wir die personenbezogenen Daten für die Zwecke der Verarbeitung nicht länger benötigen, Sie diese jedoch zur Geltendmachung, Ausübung oder Verteidigung von Rechtsansprüchen benötigen, oder",
+          "bullet4": "wenn Sie Widerspruch gegen die Verarbeitung gemäß Art. 21 Abs. 1 DSGVO eingelegt haben und noch nicht feststeht, ob unsere berechtigten Gründe gegenüber Ihren Gründen überwiegen.",
+          "para2": "Wurde die Verarbeitung der Sie betreffenden personenbezogenen Daten eingeschränkt, dürfen diese Daten – von ihrer Speicherung abgesehen – nur mit Ihrer Einwilligung oder zur Geltendmachung, Ausübung oder Verteidigung von Rechtsansprüchen oder zum Schutz der Rechte einer anderen natürlichen oder juristischen Person oder aus Gründen eines wichtigen öffentlichen Interesses der Union oder eines Mitgliedstaats verarbeitet werden.",
+          "para3": "Wurde die Einschränkung der Verarbeitung nach den o.g. Voraussetzungen eingeschränkt, werden Sie von uns unterrichtet, bevor die Einschränkung aufgehoben wird."
+        },
+        "information2": {
+          "header": "Recht auf Unterrichtung (vgl. Art. 19 DSGVO)",
+          "para1": "Haben Sie uns gegenüber Ihr Recht auf Berichtigung, Löschung oder Einschränkung der Datenverarbeitung geltend gemacht, sind wir verpflichtet, allen Empfängern Ihrer personenbezogenen Daten die Berichtigung, Löschung oder Einschränkung der Datenverarbeitung mitzuteilen. Dies gilt nur insoweit, wie sich diese Mitteilung nicht als unmöglich erweist oder mit einem unverhältnismäßigen Aufwand verbunden wäre.",
+          "para2": "Sie haben das Recht zu erfahren, welche Empfänger Ihre Daten erhalten haben."
+        },
+        "portability": {
+          "header": "Recht auf Datenübertragbarkeit (vgl. Art. 20 DSGVO)",
+          "para1": "Sie haben das Recht, Ihre personenbezogenen Daten in einem gängigen, maschinenlesbaren Format von uns zu erhalten, um sie ggf. an einen anderen Verantwortlichen weiterleiten zu lassen, sofern",
+          "bullet1": "die Verarbeitung auf einer Einwilligung gemäß Art. 6 Abs. 1 S.1 lit. a) DSGVO oder Art. 9 Abs. 2 lit. a) DSGVO oder auf einem Vertrag gemäß Art. 6 Abs. 1 S. 1 lit. b) DSGVO beruht und",
+          "bullet2": "die Verarbeitung mithilfe automatisierter Verfahren erfolgt.",
+          "para2": "Bei der Ausübung Ihres Rechts auf Datenübertragbarkeit haben Sie das Recht, zu erwirken, dass die personenbezogenen Daten direkt von uns einem anderen Verantwortlichen übermittelt werden, soweit dies technisch machbar ist.",
+          "para3": "Das Recht auf Datenübertragbarkeit gilt nicht für eine Verarbeitung personenbezogener Daten, die für die Wahrnehmung einer Aufgabe erforderlich ist, die im öffentlichen Interesse liegt oder in Ausübung öffentlicher Gewalt erfolgt, die uns übertragen wurde."
+        },
+        "object": {
+          "header": "Recht auf Widerspruch gegen die Verarbeitung (vgl. Art. 21 DSGVO)",
+          "para1": "Soweit wir die Verarbeitung Ihrer personenbezogenen Daten auf ein berechtigtes Interesse (gem. Art. 6 Abs. 1 S. 1 lit. f) DSGVO) unsererseits stützen, können Sie Widerspruch gegen die Verarbeitung einlegen. Gleiches gilt, sollten wir die Datenverarbeitung auf Art. 6 Abs. 1 S. 1 lit. e) DSGVO stützen.",
+          "para2": "Bei Ausübung eines solchen Widerspruchs bitten wir um Darlegung der Gründe, weshalb wir Ihre personenbezogenen Daten nicht wie von uns durchgeführt verarbeiten sollten. Im Falle Ihres begründeten Widerspruchs prüfen wir die Sachlage und werden entweder die Datenverarbeitung einstellen bzw. anpassen oder Ihnen unsere zwingenden schutzwürdigen Gründe aufzeigen, aufgrund derer wir die Verarbeitung fortführen."
+        },
+        "complain": {
+          "header": "Recht auf Beschwerde bei der zuständigen Aufsichtsbehörde (vgl. Art. 77 DSGVO)",
+          "para1": "Unbeschadet eines anderweitigen verwaltungsrechtlichen oder gerichtlichen Rechtsbehelfs steht Ihnen das Recht auf Beschwerde bei einer Aufsichtsbehörde, insbesondere in dem Mitgliedstaat ihres Aufenthaltsorts, ihres Arbeitsplatzes oder des Orts des mutmaßlichen Verstoßes, zu, wenn Sie der Ansicht sind, dass die Verarbeitung der Sie betreffenden personenbezogenen Daten gegen die DSGVO verstößt.",
+          "para2": "Die Aufsichtsbehörde, bei der die Beschwerde eingereicht wurde, unterrichtet Sie über den Stand und die Ergebnisse der Beschwerde einschließlich der Möglichkeit eines gerichtlichen Rechtsbehelfs nach Art. 78 DSGVO."
+        }
+      },
+      "excercise": {
+        "header": "Wie Sie diese Rechte wahrnehmen",
+        "para1": "Zur Wahrnehmung dieser Rechte wenden Sie sich bitte an unseren Datenschutzbeauftragten:",
+        "para2": "oder per Post:"
+      },
+      "change": {
+        "header": "Änderungsvorbehalt",
+        "para1": "Wir behalten uns vor, diese Datenschutzerklärung unter Beachtung der gesetzlichen Bestimmungen zu ändern.",
+        "para2": "Stand September 2022"
+      },
+      "cookies": {
+        "header": "Einsatz von Cookies",
+        "description": {
+          "header": "Beschreibung und Umfang der Datenverarbeitung",
+          "para1": "Unsere Webseite verwendet Cookies. Diese werden bei Ihrer Nutzung unserer Webseite auf Ihrem Rechner gespeichert. Cookies sind kleine Textdateien, die auf Ihrer Festplatte, dem von Ihnen verwendeten Browser zugeordnet, gespeichert werden und durch welche uns bzw. der Stelle, die das Cookie setzt, bestimmte Informationen zufließen. Cookies können keine Programme ausführen oder Viren auf Ihren Computer übertragen. Sie werden von uns dazu verwendet, um in anonymisierter oder pseudonymisierter Form die Nutzung von unserer Webseite zu analysieren und Ihnen interessante Angebote auf dieser Webseite zu präsentieren. Auf diese Weise können verschiedene Daten übermittelt werden:",
+          "bullet1": "Häufigkeit der Webseitenbesuche",
+          "bullet2": "Welche Funktionen der Webseite von Ihnen in Anspruch genommen werden",
+          "bullet3": "Verwendete Suchbegriffe",
+          "bullet4": "Ihre Cookie-Einstellung",
+          "bullet5": "Ihre Spracheinstellung",
+          "para2": "Beim Aufruf der Webseite wird über ein Cookiebanner über die Verwendung von Cookies informiert und auf die Datenschutzerklärung verwiesen."
+        },
+        "basis": {
+          "header": "Rechtsgrundlage für die Datenverarbeitung",
+          "para1": "Die Rechtsgrundlage für die Verarbeitung von Daten durch Cookies, die nicht allein der Funktionalität unserer Webseite dienen, ist Art. 6 Abs. 1 S. 1 lit. a) DSGVO.",
+          "para2": "Die Rechtsgrundlage für die Datenverarbeitung für Cookies, die allein der Funktionalität dieser Webseite dienen, ist Art. 6 Abs. 1 S.1 lit. f) DSGVO."
+        },
+        "purpose": {
+          "header": "Zweck der Datenverarbeitung",
+          "para": "Unser berechtigtes Interesse ergibt sich aus der Gewährleistung eines reibungslosen Verbindungsaufbaus sowie einer komfortablen Nutzung unserer Webseite als auch aus Gründen der Auswertung der Systemsicherheit und Stabilität. Die Datenverarbeitung findet zudem statt, um eine statistische Auswertung der Webseitennutzung zu ermöglichen."
+        },
+        "duration": {
+          "header": "Dauer der Datenspeicherung",
+          "para": "Es gibt zwei Arten von Cookies. Beide werden auf dieser Webseite eingesetzt:",
+          "bullet1": "Transiente Cookies (dazu a)",
+          "bullet2": "Persistente Cookies (dazu b)",
+          "numbered1": "a) Transiente Cookies, sie werden automatisiert gelöscht, wenn Sie den Browser schließen. Dazu zählen insbesondere Session-Cookies. Diese speichern eine sogenannte Session-ID, mit welcher sich verschiedene Anfragen Ihres Browsers der gemeinsamen Sitzung zuordnen lassen. Dadurch kann Ihr Rechner wiedererkannt werden, wenn Sie auf unsere Webseite zurückkehren. Die Session-Cookies werden gelöscht, wenn Sie sich ausloggen oder den Browser schließen.",
+          "numbered2": "b) Persistente Cookies, diese werden automatisiert nach einer vorgegebenen Dauer gelöscht, die sich je nach Cookie unterscheiden kann."
+        },
+        "possibility": {
+          "header": "Beseitigungsmöglichkeit durch die betroffene Person",
+          "para1": "Sie haben jederzeit die Möglichkeit die Einwilligung in die Datenverarbeitung durch Cookies, die nicht allein der Funktionalität der Webseite dienen, zu widerrufen. Zudem setzen wir Cookies erst, nachdem Sie beim Aufrufen der Seite dem Setzen von Cookies zugestimmt haben. Auf diese Weise können Sie die Datenverarbeitung über Cookies auf unserer Webseite verhindern.",
+          "para2": "Sie können ebenfalls die Cookies in den Sicherheitseinstellungen Ihres Browsers jederzeit löschen. Wir weisen Sie darauf hin, dass Sie eventuell nicht alle Funktionen dieser Webseite nutzen können. Auch kann das Setzen von Cookies durch entsprechende Einstellungen in Ihrem Internetbrowsers jederzeit verhindert werden."
+        }
+      },
+      "contact": {
+        "header": "Datenverarbeitung auf dieser Webseite und Erstellung von Logfiles",
+        "description": {
+          "header": "Beschreibung und Umfang der Datenverarbeitung",
+          "para1": "Über unsere Webseite ist es möglich, über E-Mail an info@club-dialog.de, Kontakt zu uns aufzunehmen. Hierfür werden verschiedene Daten für die Beantwortung der Anfrage erforderlich, die zur Bearbeitung automatisch gespeichert werden.",
+          "para2": "Eine Weitergabe der Daten an Dritte erfolgt nicht."
+        },
+        "basis": {
+          "header": "Rechtsgrundlage für die Datenverarbeitung",
+          "para": "Die hier verwendete Rechtsgrundlage ist Art. 6 Abs. 1 S.1 lit. b) DSGVO."
+        },
+        "purpose": {
+          "header": "Zweck der Datenverarbeitung",
+          "para": "Wir verarbeiten Ihre Daten ausschließlich, um Ihre Kontaktanfrage zu bearbeiten."
+        },
+        "duration": {
+          "header": "Dauer der Datenspeicherung",
+          "para": "hre Daten werden von uns gelöscht, sobald der Zweck der Datenverarbeitung erfüllt wurde, überwiegend umgehend nach der Beantwortung der Anfrage. In seltenen Fällen kann es allerdings vorkommen, dass wir Ihre Daten für einen längeren Zeitraum aufbewahren. Dies kann sich aus gesetzlichen, behördlichen oder vertraglichen Pflichten ergeben."
+        },
+        "possibility": {
+          "header": "Beseitigungsmöglichkeit durch die betroffene Person",
+          "para": "Sie können jederzeit mit uns Kontakt aufnehmen und einer weiteren Verarbeitung Ihrer Daten widersprechen. In diesem Fall können wir die Kommunikation mit Ihnen leider nicht fortführen. Alle personenbezogenen Daten, die im Zuge der Kontaktaufnahme von uns verarbeitet wurden, werden in diesem Fall gelöscht, es sei denn, es stehen der Löschung gesetzliche Pflichten zur Aufbewahrung Ihrer Daten entgegen."
+        }
+      },
+      "social": {
+        "header": "Social Media-Links",
+        "para1": "Wir haben auf unseren Diensten Social Media-Plattformen über Links eingebunden, die dazu führen, dass die Social Media-Anbieter ggf. Daten von Ihnen erhalten. Sofern Sie auf den Social Media-Link klicken, wird die Webseite des jeweiligen Social Media-Anbieters aufgerufen. Durch den Aufruf der Webseite des jeweiligen Social Media-Anbieters über unsere Dienste werden dem jeweiligen Social Media-Anbieters die jeweiligen Bezugsdaten übermittelt. Der Social Media-Anbieter erhält dadurch die Information, dass Sie uns besucht haben.",
+        "para2": "Hinweis zur Datenverarbeitung in den USA:",
+        "para3": "Wenn Sie auf einen Social Media-Link klicken, werden möglicherweise Daten von Ihnen durch den jeweiligen Anbieter in den USA verarbeitet. Der Datenschutzstandard in den USA ist nach Ansicht des EuGHs unzureichend und es besteht die Gefahr, dass Ihre Daten durch die US-Behörden zu Kontroll- und Überwachungszwecken, möglicherweise auch ohne Rechtsbehelfsmöglichkeiten, verarbeitet werden. Sofern Sie nicht auf die Links der Social media-Anbieter klicken, findet eine Datenübermittlung nicht statt.",
+        "para4": "Weitere Informationen zur Datenverarbeitung durch die Social Media-Anbieter finden Sie hier:"
+      },
+      "trackers": {
+        "header": "Tracker und Analysetools",
+        "para": "Zur stetigen Verbesserung unseres Webseiten-Angebots nutzen wir folgende Analysetools. Welche Daten hierbei jeweils verarbeitet werden und wie Sie die jeweiligen Dienstleister erreichen können, erfahren Sie im Folgenden:",
+        "google": {
+          "header": "Google Analytics",
+          "description": {
+            "header": "Beschreibung und Umfang der Datenverarbeitung",
+            "para1": "Unser Internetangebot nutzt Google Analytics. Dies ist ein Dienst zur Analyse von Zugriffen auf Webseiten der Google LLC. („Google“) und ermöglicht uns die Verbesserung unseres Internetangebotes. Die Datenverarbeitung für den europäischen Wirtschaftsraum und für die Schweiz wird durchgeführt von: Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland.",
+            "para2": "Durch Cookies wird uns die Analyse Ihrer Nutzung unseres Internetangebotes ermöglicht. Die mittels eines Cookies erhobenen Informationen sind:",
+            "bullet1": "IP-Adresse,",
+            "bullet2": "Zugriffszeitpunkt,",
+            "bullet3": "Zugriffsdauer",
+            "para3": "und werden an einen Server von Google in den USA übertragen und dort gespeichert. Die Auswertung Ihrer Aktivitäten auf unserem Internetangebot wird uns in Form von Berichten übermittelt. Google gibt die erhobenen Informationen gegebenenfalls an Dritte weiter, sofern dies gesetzlich vorgeschrieben ist oder soweit Dritte diese Daten im Auftrag von Google verarbeiten. Die Google Trackingcodes unseres Internetangebotes verwenden die Funktion „_anonymizeIp()“, somit werden IP-Adressen nur gekürzt weiterverarbeitet, um eine gegebenenfalls mögliche direkte Personenbeziehbarkeit mit Ihnen auszuschließen.",
+            "para41": "Unter ",
+            "para42": " sowie unter ",
+            "para43": " finden Sie nähere Informationen zu den Nutzungsbedingungen und dem Datenschutz von Google Analytics."
+          },
+          "basis": {
+            "header": "Rechtsgrundlage für die Datenverarbeitung",
+            "para": "Die Rechtsgrundlage für die Verarbeitung der personenbezogenen Daten ist Ihre Einwilligung gemäß Art. 6 Abs. 1 S.1 lit. a) DSGVO."
+          },
+          "purpose": {
+            "header": "Zweck der Datenverarbeitung",
+            "para": "Die Verarbeitung Ihrer personenbezogenen Daten ermöglicht uns eine Analyse Ihres Surfverhaltens. Wir sind in durch die Auswertung der gewonnen Daten in der Lage, Informationen über die Nutzung der einzelnen Komponenten unserer Webseite zusammenzustellen. Dies hilft uns dabei unsere Webseite und deren Nutzerfreundlichkeit stetig zu verbessern."
+          },
+          "duration": {
+            "header": "Dauer der Datenspeicherung",
+            "para": "Die Daten werden 14 nach Ihrem [letzten] Besuch auf unserer Webseite gelöscht."
+          },
+          "possibility": {
+            "header": "Beseitigungsmöglichkeit durch die betroffene Person",
+            "para": "Sie haben jederzeit die Möglichkeit eine erteilte Einwilligung in die Datenverarbeitung mit Wirkung für die Zukunft zu widerrufen. Bitte kontaktieren Sie hierfür unseren Datenschutzbeauftragten. Sie können die Installation der Cookies von Google Analytics auch durch eine entsprechende Einstellung Ihrer Browser Software selbst unterbinden. In diesem Fall kann es allerdings vorkommen, dass Sie nicht sämtliche Funktionen unseres Internetangebotes voll umfänglich nutzen können. Auch durch Browsererweiterungen z.B. http://tools.google.com/dlpage/gaoptout?hl=de kann Google Analytics deaktiviert und kontrolliert werden."
+          }
+        }
+      },
+      "tools": {
+        "header": "Weitere Tools von Drittanbietern",
+        "para": "Des Weiteren nutzen wir Drittanbieter, die uns bei der Seitendarstellung und der Funktionalität der Webseite helfen. Diese sind im Folgenden aufgeführt:",
+        "google": {
+          "header": "Google Maps",
+          "description": {
+            "header": "Beschreibung und Umfang der Datenverarbeitung",
+            "para1": "Diese Webseite verwendet das Produkt Google Maps von Google LLC. Die Datenverarbeitung für den europäischen Wirtschaftsraum und für die Schweiz wird durchgeführt von: Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland.",
+            "para2": "Beim Aufruf einer Seite lädt Ihr Browser die benötigten Geo-Informationen in ihren Browsercache, um die Karte korrekt anzuzeigen. Zu diesem Zweck muss der von Ihnen verwendete Browser Verbindung zu den Servern von Google aufnehmen. Hierdurch erlangt Google Kenntnis darüber, dass über Ihre IP-Adresse unsere Webseite aufgerufen wurde und welche Karte angezeigt wurde. Die Nutzungsbedingungen von Google Maps finden sie unter "
+          },
+          "basis": {
+            "header": "Rechtsgrundlage für die Datenverarbeitung",
+            "para": "Die Rechtsgrundlage ist Ihre Einwilligung gemäß Art. 6 Abs. 1 S. 1 lit. a) DSGVO."
+          },
+          "purpose": {
+            "header": "Zweck der Datenverarbeitung",
+            "para": "Die Nutzung von Google Maps erleichtert es Ihnen, unseren Standort zu finden, und mit ihm in unterschiedlicher Weise, z.B. durch Routenplanung, zu interagieren."
+          },
+          "duration": {
+            "header": "Dauer der Datenspeicherung",
+            "para": "Die Daten werden gelöscht, sobald sie für den Zweck der Datenverarbeitung nicht mehr benötigt werden, es sei denn, dass gesetzliche, behördliche oder vertragliche Vorschriften einer Löschung entgegenstehen."
+          },
+          "possibility": {
+            "header": "Beseitigungsmöglichkeit durch die betroffene Person",
+            "para1": "Sie haben jederzeit die Möglichkeit eine erteilte Einwilligung in die Datenverarbeitung zu widerrufen. Hierfür wenden Sie sich bitte an unseren Datenschutzbeauftragten.",
+            "para2": "Sofern Sie auf die Verwendung von Google Maps verzichten möchten, können Teile unserer Webseite nicht genutzt werden."
+          }
+        },
+        "font": {
+          "header": "Font Awesome",
+          "description": {
+            "header": "Beschreibung und Umfang der Datenverarbeitung",
+            "para1": "Diese Webseite verwendet das Produkt Font Awesome von Fonticons, Inc. zur einheitlichen Darstellung von Schriftarten.",
+            "para2": "Die Datenverarbeitung für den europäischen Wirtschaftsraum und für die Schweiz wird durchgeführt von:",
+            "para3": "Für die Interpräsenz verwenden wir Schriftarten bzw. Icons, die von Fonticons, Inc. bereitgestellt werden. Sobald Sie unsere Seite aufrufen, werden die benötigten Web Fonts bzw. Icons in Ihrem Browsercache geladen, um Texte, Schriftarten und Icons korrekt darzustellen. Zu diesem Zweck muss der von Ihnen verwendete Browser Verbindung zu den Servern von Fonticons aufnehmen. Hierdurch erlangt Fonticons Kenntnis darüber, dass über Ihre IP-Adresse unsere Webseite aufgerufen wurde und welche Karte angezeigt wurde.",
+            "para4": "Nach eigener Aussage respektiert Font Awesome die Datenschutzrechte gemäß der Verordnung (EU) 2016/679, der Datenschutzverordnung (DSGVO) der Europäischen Union.",
+            "para51": "Die Nutzungsbedingungen von Fonticons finden Sie unter ",
+            "para52": " sowie die Datenschutzerklärung unter: "
+          },
+          "basis": {
+            "header": "Rechtsgrundlage für die Datenverarbeitung",
+            "para": "Die Rechtsgrundlage für die Verwendung von Font Awesome beruht auf Art. 6 Abs. 1 S. 1 lit. a) DSGVO."
+          },
+          "purpose": {
+            "header": "Zweck der Datenverarbeitung",
+            "para": "Zweck der Datenverarbeitung ist die einheitliche Darstellung der Schriften und Icons auf unserer Webseite."
+          },
+          "duration": {
+            "header": "Dauer der Datenspeicherung",
+            "para": "Die Daten werden gelöscht, sobald sie für den Zweck der Datenverarbeitung nicht mehr benötigt werden, es sei denn, dass gesetzliche Vorschriften dem entgegenstehen."
+          },
+          "possibility": {
+            "header": "Beseitigungsmöglichkeit durch die betroffene Person",
+            "para1": "Sie können Ihren Browser so einstellen, dass die Schriften nicht von den Fonticon-Servern geladen werden. Falls Ihr Browser Font Awesome nicht unterstützt oder Sie den Zugriff auf die Fonticon-Server unterbinden, wird der Text in der Standardschrift des Systems angezeigt.",
+            "para21": "Sie können datenschutzbezogene Fragen, Beschwerden und Anfragen an Font Awesome unter ",
+            "para22": " senden."
+          }
+        }
+      }
+    },
+    "agreement": {
+      "header": "Vereinbarung zur Ehrenamtlichen Teilnahme",
+      "para1": "Diese Vereinbarung tritt erst in Kraft, wenn Sie mit der ehrenamtlichen Arbeit mit Geflüchteten beginnen.",
+      "para2": "Durch Bestätigung Ihrer Teilnahme stimmen Sie den folgenden Bedingungen für das Projekt Need4Deed (nachfolgend „Projektvermittler“ genannt) zu:",
+      "numbered1": "Umfang der Ehrenamtlichen Tätigkeit:",
+      "bullet11": "Als Ehrenamtliche/r werden Sie unter Anleitung des Projektvermittlers an verschiedenen Aktivitäten teilnehmen, einschließlich:",
+      "subBullet111": "Direkte Kommunikation mit Geflüchteten oder über Sozialarbeiter und Ehrenamtskoordinatoren.",
+      "subBullet112": "Unterstützung bei niedrigschwelligen Dolmetschaufgaben für Geflüchtete bei Arztterminen und Behördengängen.",
+      "subBullet113": "Unterstützung in Gemeinschaftsunterkünften bei Aktivitäten wie Kinderbetreuung, Sport, Übersetzungen, Gartenarbeit und anderen Freizeitaktivitäten, die durch den Ehrenamtskoordinator der Unterkunft organisiert werden.",
+      "numbered2": "Art der Vereinbarung:",
+      "bullet21": "Ihre Teilnahme erfolgt vollständig freiwillig und unentgeltlich. Diese Vereinbarung begründet kein Arbeitsverhältnis und schafft keinen Anspruch auf eine zukünftige Anstellung.",
+      "numbered3": "Art der Vereinbarung:",
+      "bullet31": "Ihre Teilnahme erfolgt vollständig freiwillig und unentgeltlich. Diese Vereinbarung begründet kein Arbeitsverhältnis und schafft keinen Anspruch auf eine zukünftige Anstellung.",
+      "bullet32": "Die Einsatzzeiten werden in gegenseitigem Einvernehmen festgelegt. Bei Verhinderung informieren Sie bitte den Projektvermittler rechtzeitig.",
+      "numbered4": "Haftung und Versicherung:",
+      "bullet41": "Sie haften nur für Schäden, die durch vorsätzliches oder grob fahrlässiges Verhalten entstehen.",
+      "bullet42": "Der Projektvermittler übernimmt keine Haftung für Ihre ehrenamtliche Tätigkeit. Die Versicherungs- und sonstigen rechtlichen Verantwortlichkeiten richten sich nach den vertraglichen Regelungen oder dem gesetzlichen Schutz der Gemeinschaftsunterkunft, in der die von Ihnen unterstützten Geflüchteten leben.",
+      "numbered5": "Verschwiegenheit und Datenschutz:",
+      "bullet51": "Sie verpflichten sich, über alle vertraulichen Informationen, die Sie im Rahmen Ihrer Tätigkeit erfahren, Stillschweigen zu bewahren.",
+      "numbered6": "Beendigung:",
+      "bullet61": "Beide Parteien können diese Vereinbarung mit einer Frist von vier Wochen kündigen. Im beiderseitigen Einvernehmen kann diese Frist verkürzt werden.",
+      "numbered7": "Aufwandsentschädigung:",
+      "bullet71": "Sie haben Anspruch auf Erstattung von notwendigen Auslagen, die im Rahmen Ihrer Tätigkeit entstehen, sofern dies vorher mit dem Projektvermittler vereinbart wurde.",
+      "numbered8": "Sonstiges:",
+      "bullet81": "Sollte eine Bestimmung dieser Vereinbarung unwirksam sein, bleibt die Wirksamkeit der übrigen Bestimmungen unberührt."
+    }
+  },
+  "message": {
+    "successful": "Erfolgreich",
+    "errorGeneric": "Etwas ist schief gelaufen!",
+    "validationFailed": "Validierung fehlgeschlagen",
+    "uploadSuccess": "Dokument erfolgreich hochgeladen!",
+    "deleteSuccess": "Dokument erfolgreich gelöscht!",
+    "uploadError": "Hochladen fehlgeschlagen. Bitte versuchen Sie es erneut.",
+    "deleteError": "Löschen fehlgeschlagen. Bitte versuchen Sie es erneut.",
+    "previewError": "Vorschau fehlgeschlagen. Bitte versuchen Sie es erneut."
+  },
+  "languageNames": {
+    "german": "Deutsch",
+    "english": "Englisch",
+    "arabic": "Arabisch",
+    "farsi/dari": "Farsi/Dari",
+    "farsi": "Farsi",
+    "dari": "Dari",
+    "turkish": "Türkisch",
+    "russian": "Russisch",
+    "ukrainian": "Ukrainisch",
+    "french": "Französisch",
+    "kurmanji": "Kurmanci",
+    "sorani": "Sorani",
+    "armenian": "Armenisch",
+    "belarusian": "Weißrussisch",
+    "chechen": "Tschetschenisch",
+    "chinese": "Chinesisch",
+    "czech": "Tschechisch",
+    "dutch": "Niederländisch",
+    "georgian": "Georgisch",
+    "greek": "Griechisch",
+    "hebrew": "Hebräisch",
+    "hindi": "Hindi",
+    "italian": "Italienisch",
+    "pashto": "Paschtu",
+    "polish": "Polnisch",
+    "punjabi": "Punjabi",
+    "romanes": "Romanes",
+    "romanian": "Rumänisch",
+    "serbian": "Serbisch",
+    "somali": "Somali",
+    "spanish": "Spanisch",
+    "swedish": "Schwedisch",
+    "urdu": "Urdu",
+    "vietnamese": "Vietnamesisch",
+    "other": "Andere"
+  }
+}

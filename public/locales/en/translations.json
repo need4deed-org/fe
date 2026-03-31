@@ -1,0 +1,1234 @@
+{
+  "homepage": {
+    "heroSection": {
+      "menuItems": {
+        "about": "ABOUT",
+        "volunteeringOpportunities": "VOLUNTEERING OPPORTUNITIES",
+        "events": "EVENTS"
+      },
+      "content": {
+        "heroText": "Voluntary support for refugees",
+        "heroSupportingText": "We connect volunteers to accommodation centers in Berlin",
+        "buttonJoinVolunteer": "Join as a volunteer",
+        "buttonJoinRefugeeCenter": "Join as an accommodation centre"
+      }
+    },
+    "footer": {
+      "about": "ABOUT",
+      "resources": "RESOURCES",
+      "faq": "FAQ",
+      "legalNotice": "Legal notice",
+      "vpa": "Volunteer Participation Agreement",
+      "privacy": "Privacy",
+      "contact": "Contact",
+      "legal": {
+        "legalHeading": "Legal",
+        "impressum": "Legal notice",
+        "dataPrivacy": "Privacy",
+        "agreement": "Voluntary Participation Agreement",
+        "guidelines": "Need4Deed Guidelines",
+        "cookies": "Cookies"
+      }
+    },
+    "volunteeringCategories": {
+      "header": "Ways you can volunteer",
+      "headerParagraph": "We offer various types of volunteer opportunities with refugee accommodation centers, either on a continuous or occasional basis.",
+      "card": {
+        "germanLanguageSupport": "German Language Support",
+        "germanLanguageSupportInfo": "Fluent in German? Support refugees by teaching german at language cafes and tutoring privately or in groups.",
+        "childcare": "Childcare",
+        "childcareInfo": "We are looking for volunteers to support children in refugee accommodation centers by assisting in daycare or helping with homework. Experience with children is a plus!",
+        "skillsBasedVolunteering": "Skills Based Volunteering",
+        "skillsBasedVolunteeringInfo": "Some opportunities may offer a chance to use your special expertise, such as bike repair, gardening, musical skills, or organizational savvy.",
+        "events": "Events",
+        "eventsInfo": "Occasionally events require unique support from volunteers. These might be festivals, dinners, outings, cultural activities, a day of setting up a clothes sorting station, gardening, or a workshop.",
+        "sportsActivities": "General Volunteering",
+        "sportsActivitiesInfo": "We are always looking for volunteers either for tandem, clothes sorting or to help organize sports activities for children, teenagers or adults in accommodation centers.",
+        "accompanyARefugee": "Accompany",
+        "accompanyARefugeeInfo": "Fluent in German and a second language? Support individuals in dealing with bureaucracy at appointments - going with them to the doctor, Job Centre or otherwise."
+      },
+      "footerButton": "See volunteering opportunities"
+    }
+  },
+  "form": {
+    "error": {
+      "required": "This field is required",
+      "postcode": "Must be a valid postcode of Berlin",
+      "email": "Must be a valid email",
+      "badEmail": "Bad email",
+      "location": "Please pick at least one location",
+      "availability": "Please pick at least one time slot",
+      "badTime": "Bad date or time format",
+      "labelErrors": "Errors",
+      "number": "Please enter a number",
+      "activity": "Please pick at least one activity",
+      "language": "Please pick at least one language"
+    },
+    "button": {
+      "more": "more...",
+      "submit": "Submit"
+    },
+    "schedule": {
+      "1": "Mon",
+      "2": "Tue",
+      "3": "Wed",
+      "4": "Thu",
+      "5": "Fri",
+      "6": "Sat",
+      "7": "Sun",
+      "0": "Other",
+      "weekdays": "Occasionally weekdays",
+      "weekends": "Occasionally Weekends"
+    },
+    "becomeVolunteer": {
+      "header": "Become a Volunteer with",
+      "thankYou": {
+        "header": "Thanks for your interest in volunteering with refugees :-)",
+        "para": "We will get back to you in the coming days with the next steps!"
+      },
+      "somethingWrong": {
+        "header": "Something went wrong!",
+        "para": "Please check all mandatory fields and try to submit once more."
+      },
+      "thanks": "Thank you for choosing",
+      "reset": "Reset",
+      "modal": {
+        "continue": "Click here to register",
+        "already": "Already registered as a volunteer?\nCopy this:",
+        "copied": "Copied",
+        "email": "And email it to:",
+        "number": "Or via WhatsApp/Telegram at"
+      },
+      "fields": {
+        "name": {
+          "label": "Name"
+        },
+        "email": {
+          "label": "E-mail"
+        },
+        "phone": {
+          "label": "Phone Number or Telegram Handle"
+        },
+        "postcode": {
+          "label": "PLZ (Berlin) of your location"
+        },
+        "locations": {
+          "header": "Preferred districts* (Berlin)",
+          "para": "*keep in mind that most accommodation centers are outside the ring!",
+          "helpText": "In case we cant find a perfect match we might send you offers that are also based on your location!",
+          "helpTitle": ""
+        },
+        "availability": {
+          "header": "Availability",
+          "para": "*keep in mind that most opportunities are limited to the 9-17 working hours, at least for the beginning!",
+          "helpText": "The Mon-Sun availabilities refer to regularly repeating volunteering. If the time frames are limited to some periods or need explaining, please write in the comments at the last section",
+          "helpTitle": ""
+        },
+        "languages": {
+          "header": "Languages*",
+          "headerWithoutAsterick": "Languages",
+          "para": "*if you can't find your language, please select \"Other\" and indicate your preferable language in comments section bellow",
+          "addLanguage": "Add language",
+          "chooseLanguage": "Choose a language",
+          "chooseLevel": "Choose a level",
+          "removeLanguage": "Remove",
+          "language": "Language",
+          "level": "Level",
+          "languagesNative": {
+            "header": "Native"
+          },
+          "languagesFluent": {
+            "header": "Fluent",
+            "error": "Please pick at least one language"
+          },
+          "languagesIntermediate": {
+            "header": "Intermediate"
+          },
+          "singleLevelError": "Please pick a language at one level only",
+          "helpText": "Fluent means you think you can support it in case some translations between languages are needed\nThese languages are oriented by the needs of refugees, if the language you are native or fluent at is not here, please add it in the last comment section!",
+          "helpTitle": ""
+        },
+        "activities": {
+          "header": "Preferred Activities",
+          "error": "Please pick at least one activity",
+          "helpText": "These are the most common needs that require voluntary support. Sometimes they can change once you started volunteering.",
+          "helpTitle": ""
+        },
+        "skills": {
+          "header": "Additional skills or experience",
+          "helpText": "Anything you feel that you can share from your experience, abilities or expertise can  be useful to know, but don't worry, its not a must for volunteering!",
+          "helpTitle": ""
+        },
+        "certOfGoodConduct": {
+          "header": "Certificate of Good Conduct (Erweitertes Führungszeungnis)",
+          "why": "Why do I need this?",
+          "true": "I have one",
+          "false": " Need to apply",
+          "helpText": "",
+          "helpTitle": ""
+        },
+        "certMeaslesVaccination": {
+          "header": "Certificate of Measles Vaccination",
+          "true": "I have one",
+          "false": "Need to prove it",
+          "helpText": "",
+          "helpTitle": ""
+        },
+        "leadFrom": {
+          "header": "Where did you hear about us?",
+          "helpText": "",
+          "helpTitle": ""
+        },
+        "comments": {
+          "label": "Comments (other languages, times, locations, activities, etc.)",
+          "helpText": "",
+          "helpTitle": ""
+        },
+        "consent": {
+          "header": "I hereby agree to the:",
+          "and": "and",
+          "label": "",
+          "helpText": "",
+          "helpTitle": ""
+        }
+      }
+    },
+    "addOpportunity": {
+      "header": "Need For Volunteer Work",
+      "thankYou": {
+        "header": "Thanks for filling in an opportunity helping refugees",
+        "para": "We will get back to you in the coming days with the next steps!"
+      },
+      "wentWrong": {
+        "header": "Sorry something went wrong on our side :-(",
+        "para": "For now, please apply using these Google Forms:",
+        "volunteeringLink": "Regular volunteering",
+        "accompanyingLink": "Accompanying"
+      },
+      "temporaryDown": {
+        "header": "We apologize, but something went wrong on our site. Please contact contact@need4deed.org.",
+        "para": ""
+      },
+      "bottomMsg": "For assistance with any problems or queries, please reach out to: contact@need4deed.org",
+      "fields": {
+        "title": {
+          "label": "What help is needed in short",
+          "example": "E.g. \"Accompanying to the eye clinic\" or \"Crafts & painting\"",
+          "errorTooLong": "Please shorten the title to 128 chars"
+        },
+        "consent": {
+          "header": "",
+          "agree": "I hereby agree to the:",
+          "and": "and"
+        },
+        "contactGroup": {
+          "label": "Contact information",
+          "info": "Only the social team or volunteer coordinators may fill out this form.",
+          "email": {
+            "label": "E-mail",
+            "info": "only an official email address of the institution can be used"
+          },
+          "fullName": {
+            "label": "Name",
+            "info": "of the volunteer coordinator or social worker"
+          },
+          "address": {
+            "label": "Street address",
+            "info": "of the accommodation centre"
+          },
+          "postcode": {
+            "label": "PLZ",
+            "info": "of the accommodation centre"
+          },
+          "phone": {
+            "label": "Phone number"
+          }
+        },
+        "opportunityType": {
+          "header": "Type Of Opportunity",
+          "volunteering": "Volunteering Opportunity",
+          "accompanying": "Accompanying Appointment",
+          "helpText": "There are two ways of helping: Volunteering doing various activities and Accompanying to appointments essentially providing translation",
+          "helpTitle": ""
+        },
+        "aaGroup": {
+          "label": "",
+          "activities": {
+            "header": "Activities"
+          },
+          "translatedInto": {
+            "header": "Language to be translated into:",
+            "noTranslation": "No translation",
+            "englishOk": "English is OK",
+            "deutsche": "German",
+            "helpText": "Please pick to what language translation is needed."
+          },
+          "languagesTranslation": {
+            "header": "Languages for translation",
+            "helpText": "Please pick languages needed during appointment."
+          },
+          "dateTime": {
+            "label": "Appointment date and time (YYYY-MM-DD HH:MM)",
+            "tooClose": "The appointment must take place after 7 working days at the earliest."
+          },
+          "address": {
+            "label": "Appointment Address"
+          },
+          "postcode": {
+            "label": "PLZ"
+          },
+          "refugeeName": {
+            "label": "Name Of Refugee"
+          },
+          "refugeeNumber": {
+            "label": "Phone Number Of Refugee"
+          },
+          "information": {
+            "label": "Provide information about the task the volunteers are expected to perform"
+          }
+        },
+        "voGroup": {
+          "label": "",
+          "activities": {
+            "header": "Activities"
+          },
+          "locations": {
+            "header": "Locations"
+          },
+          "schedule": {
+            "header": "Schedule",
+            "helpText": "Please pick time slots or one-time event date for volunteering.",
+            "or": "or",
+            "oneTimeLabel": "Event date (YYYY-MM-DD HH:MM)",
+            "error": "Event date or schedule is required.",
+            "errorBoth": "Please select either schedule or event date."
+          },
+          "skills": {
+            "header": "Skills",
+            "helpText": "Please pick skills that are needed for volunteering."
+          },
+          "languagesRefugee": {
+            "header": "Languages that refugees speak",
+            "helpText": "Please pick languages needed during volunteering."
+          },
+          "numberVolunteers": {
+            "label": "How many volunteers are needed",
+            "error": "Please enter a number"
+          },
+          "information": {
+            "label": "Provide information about the task the volunteers are expected to perform"
+          }
+        }
+      }
+    }
+  },
+  "dashboard": {
+    "common": {
+      "datePrefix": {
+        "appliedOn": "Applied on",
+        "matchedOn": "Matched on",
+        "activeSince": "Active since",
+        "pastSince": "Past since"
+      }
+    },
+    "volunteers": {
+      "header": "Volunteer Directory",
+      "tabs": {
+        "tab1": "TABLE VIEW",
+        "tab2": "MAP VIEW"
+      },
+      "filters": {
+        "accompanying": "Accompanying",
+        "accompanyingDesc": "Only show volunteers that are open to bring residents to individual appointments",
+        "district": "District",
+        "languages": "Languages",
+        "engagement": {
+          "header": "Engagement",
+          "active": "Active",
+          "inactive": "Inactive",
+          "new": "New",
+          "available": "Available",
+          "temporarilyUnavailable": "Temporarily Unavailable",
+          "unresponsive": "Unresponsive"
+        },
+        "preferredAv": {
+          "header": "Preferred Availability",
+          "days": {
+            "header": "Days",
+            "Monday": "Mon",
+            "Tuesday": "Tue",
+            "Wednesday": "Wed",
+            "Thursday": "Thu",
+            "Friday": "Fr",
+            "Saturday": "Sat",
+            "Sunday": "Sun"
+          },
+          "times": {
+            "header": "Times",
+            "08-11": "08-11",
+            "11-14": "11-14",
+            "14-17": "14-17",
+            "17-20": "17-20"
+          },
+          "occasional": {
+            "header": "Occasional",
+            "weekdays": "Weekdays",
+            "weekends": "Weekends"
+          }
+        }
+      },
+      "volunteers": "Volunteers",
+      "languages": "Languages",
+      "activities": "Activities",
+      "skillsExperience": "Skills & Experience",
+      "preferredAvailability": "Preferred Availability",
+      "preferredDistricts": "Preferred Districts",
+      "langProficiency": {
+        "beginner": "Beginner",
+        "intermediate": "Intermediate",
+        "advanced": "Advanced",
+        "fluent": "Fluent",
+        "native": "Native"
+      }
+    },
+    "home": {
+      "sidebar": {
+        "home": "Home",
+        "volunteers": "Volunteers",
+        "opportunities": "Opportunities",
+        "agents": "Agents",
+        "racs": "RAC's",
+        "posts": "Posts",
+        "calendar": "Calendar",
+        "profile": "Profile"
+      }
+    },
+    "found": "found",
+    "searchPlaceHolder": "Search volunteers",
+    "sortBy": {
+      "sortBy": "SortBy",
+      "newToOld": "Newest to Oldest",
+      "oldToNew": "Oldest to Newest"
+    },
+    "heroSection": {
+      "heroText": "Need-based voluntary support for refugees in Berlin",
+      "heroSupportingText": "We connect volunteers to refugees accommodation centers in need",
+      "buttonJoinVolunteer": "Join as a volunteer",
+      "buttonJoinRefugeeCenter": "Join as a refugee centre"
+    },
+    "header": {
+      "button": {
+        "login": "Log in",
+        "joinVolunteer": "Join as a volunteer"
+      }
+    },
+    "login": {
+      "login": "Log in",
+      "email": "Email",
+      "password": "Password",
+      "rememberMe": "Remember Me",
+      "forgotPassword": "Forgot Password",
+      "emailMissing": "Email's missing.",
+      "emailMissingAtChar": "Email must contain an '@' character.",
+      "passwordMissing": "Password's missing.",
+      "successMessage": "Login successful"
+    },
+    "filters": {
+      "button": "FILTERS",
+      "closeFilters": "CLOSE FILTERS",
+      "clearAll": "Clear all"
+    },
+    "volunteerProfile": {
+      "backToDashboard": "Back to Dashboard",
+      "volunteersProfile": "Volunteer’s profile",
+      "contactDetailsTitle": "Contact Details",
+      "volunteerProfile": "Volunteer Profile",
+      "opportunities": "Opportunities",
+      "coordinatorComments": "Coordinator Comments",
+      "documents": "Documents",
+      "activityLog": "Activity Log",
+      "editButtonName": "Edit",
+      "findOppButtonName": "Find Opportunity",
+      "suggestButtonName": "Suggest",
+      "suggestDialog": {
+        "title": "Suggest to this volunteer?",
+        "messageMid": "will be notified that you suggested",
+        "messageEnd": "to them. It will appear in their profile under \"pending\" opportunities.",
+        "confirm": "Suggest",
+        "cancel": "Cancel",
+        "success": "Suggestion sent successfully"
+      },
+      "activities": "Activities",
+      "volunteerHeader": {
+        "statusUpdateSuccess": "Status updated successfully",
+        "modalData": {
+          "title": "Change engagement status",
+          "options": {
+            "unresponsive": "Unresponsive",
+            "description": "Volunteer is not responding to messages or calls.",
+            "temporarily_unavailable": "Temporarily unavailable",
+            "description2": "The volunteer is temporarily unavailable for assignments.",
+            "inactive": "Inactive",
+            "description3": "The volunteer is no longer active in the program.",
+            "dateReturn": "Return date",
+            "dateReturnPlaceHolder": "Select return date (optional)"
+          },
+          "cancel": "Cancel",
+          "save": "Save"
+        },
+        "notSet": "Not set",
+        "change_status": "Mark as searching",
+        "until": "until",
+        "volunteer_since": "Volunteer since",
+        "engagementStatus_title": "Engagement status",
+        "engagementStatus_options": {
+          "new": "New",
+          "new_description": "We did not talk to him",
+          "active": "Active",
+          "active_description": "Active",
+          "available": "Available",
+          "available_description": "We talked to her, she can volunteer",
+          "tempUnavailable": "Temporarily unavailable",
+          "tempUnavailable_description": "We know that the person cannot be active in the next x time",
+          "inactive": "Inactive",
+          "inactive_description": "This volunteer can't volunteer anymore",
+          "unresponsive": "Unresponsive",
+          "unresponsive_description": "Never replied after few times"
+        },
+        "volunteerType_title": "Volunteer type",
+        "volunteerType_options": {
+          "accompanying": "Accompanying",
+          "regular": "Regular",
+          "events": "Events",
+          "regular-accompanying": "Regular + Accompanying",
+          "general": "General",
+          "event": "Event",
+          "festival": "Festival",
+          "weekend-only": "Weekend Only"
+        },
+        "matchStatus_title": "Matching status",
+        "matchStatus_options": {
+          "noMatches": "No matches",
+          "pendingMatch": "Pending match",
+          "matched": "Matched",
+          "needsRematch": "Needs rematch"
+        },
+        "communication_title": "Communication",
+        "communication_options": {
+          "called": "Called",
+          "emailSent": "Email sent",
+          "briefed": "Briefed",
+          "triedToCall": "Tried to call",
+          "notResponding": "Not responding"
+        },
+        "appreciation_title": "Appreciation",
+        "appreciation_options": {
+          "tshirt": "T-shirt",
+          "benefitCard": "Benefit card",
+          "toteBag": "Tote bag"
+        },
+        "certificateGC_title": "Certificate of GC",
+        "certificateGC_options": {
+          "uploaded": "Uploaded",
+          "missing": "Missing"
+        }
+      },
+      "opportunitiesSec": {
+        "tabs": {
+          "opp-pending": "Pending",
+          "opp-matched": "Matched",
+          "opp-active": "Active",
+          "opp-past": "Past"
+        },
+        "match": "Match",
+        "notAMatch": "Not a match",
+        "markAsActive": "Mark as active",
+        "markAsPast": "Mark as past",
+        "matchSuccess": "Matched",
+        "notAMatchSuccess": "Removed",
+        "markAsActiveSuccess": "Marked as active",
+        "markAsPastSuccess": "Marked as past",
+        "emptyState": "No items in this category yet"
+      },
+      "contactDetails": {
+        "title": "Contact details",
+        "edit": "Edit",
+        "phone": "Phone number",
+        "email": "Email",
+        "address": "Address",
+        "preferredCommunicationType": {
+          "label": "Ways to contact",
+          "whatsapp": "WhatsApp",
+          "telegram": "Telegram",
+          "mobilePhone": "Mobile Phone",
+          "email": "Email",
+          "called": "Called",
+          "email-sent": "Email sent",
+          "briefed": "Briefed",
+          "tried-call": "Tried to call",
+          "not-responding": "Not responding"
+        },
+        "notProvided": "Not provided",
+        "cancel": "Cancel",
+        "saveChanges": "Save changes",
+        "saveSuccess": "Contact details updated successfully",
+        "validation": {
+          "phoneRequired": "Phone number is required",
+          "phoneInvalid": "Phone number must start with + and contain only digits and spaces",
+          "emailRequired": "Email is required",
+          "emailInvalid": "Please enter a valid email address",
+          "addressRequired": "Address is required",
+          "preferredCommunicationTypeRequired": "Please select at least one way to contact"
+        }
+      },
+      "profileSection": {
+        "title": "Volunteer profile",
+        "edit": "Edit",
+        "languages": "Languages",
+        "availability": "Availability",
+        "districts": "Districts",
+        "volunteerType": "Volunteer type",
+        "activities": "Activities",
+        "skills": "Skills & experience",
+        "cancel": "Cancel",
+        "saveChanges": "Save changes",
+        "saveSuccess": "Profile updated successfully",
+        "validation": {
+          "languageRequired": "Choose a language",
+          "levelRequired": "Choose a level",
+          "availabilityRequired": "Please select your availability",
+          "districtsRequired": "Please select at least one district",
+          "volunteerTypeRequired": "Please select a volunteer type",
+          "activitiesRequired": "Please select at least one activity",
+          "skillsRequired": "Please select at least one skill"
+        }
+      }
+    },
+    "documentSection": {
+      "title": "Documents",
+      "typeOfDocument": "Type of document",
+      "status": "Status",
+      "uploadedOn": "Uploaded on",
+      "actions": "Actions",
+      "uploaded": "Uploaded",
+      "missing": "Missing",
+      "documentNames": {
+        "measlesVaccination": "Measles vaccination",
+        "applicationCertificateGoodConduct": "Application for certificate of good conduct",
+        "certificateGoodConduct": "Certificate of good conduct",
+        "passport": "Passport / ID"
+      },
+      "tooltips": {
+        "upload": "Upload",
+        "reUpload": "Re-upload",
+        "preview": "Preview",
+        "download": "Download",
+        "delete": "Delete",
+        "uploadUnavailable": "Upload unavailable",
+        "previewUnavailable": "Preview unavailable",
+        "downloadUnavailable": "Download unavailable",
+        "deleteUnavailable": "Delete unavailable"
+      },
+      "deleteDialog": {
+        "title": "Delete document?",
+        "message": "\"{{documentName}}\" document will be deleted.",
+        "cancel": "Cancel",
+        "delete": "Delete"
+      },
+      "uploadDialog": {
+        "title": "Upload document",
+        "documentType": "{{documentName}}",
+        "dragDropText": "Drop file here or click to browse",
+        "dragDropHint": "Supported formats: PDF, JPG, PNG (max 10 MB)",
+        "selectedFile": "Selected file:",
+        "cancel": "Cancel",
+        "upload": "Upload",
+        "uploading": "Uploading..."
+      }
+    },
+    "agents": {
+      "agents": "RAC Directory",
+      "tabs": {
+        "tab1": "List",
+        "tab2": "Cards",
+        "tab3": "Map"
+      },
+      "status": {
+        "new": "New",
+        "searching": "Searching",
+        "active": "Active",
+        "past": "Past"
+      },
+      "type": {
+        "accompanying": "Accompanying",
+        "regular": "Regular",
+        "events": "Events",
+        "regular-accompanying": "Regular + Accompanying"
+      },
+      "card": {
+        "mainCommunication": "Main communication",
+        "residentsSpeak": "Residents speak",
+        "schedule": "Schedule",
+        "search": "Search"
+      },
+      "filters": {
+        "status": {
+          "header": "Status",
+          "new": "New",
+          "inactive": "Inactive",
+          "active": "Active",
+          "unresponsive": "Unresponsive"
+        },
+        "volunteerSearch": {
+          "header": "Volunteer Search",
+          "searching": "Searching",
+          "volunteers-found": "Filled",
+          "not-needed": "Not needed"
+        }
+      },
+      "accompanyingTranslation": {
+        "en": "German, English",
+        "de": "German",
+        "no": "No Translation needed"
+      },
+      "defaultMainCommunication": "English, German",
+      "otherCategory": "General Volunteering",
+      "goToProfile": "Go to Profile",
+      "mainCommunication": "Main communication",
+      "translationTo": "Translation to",
+      "residentsSpeak": "Residents speak",
+      "languages": "Languages",
+      "schedule": "Schedule",
+      "district": "District",
+      "dateOfAppointment": "Date Of Appointment",
+      "description": "Description"
+    },
+    "opportunities": {
+      "opportunities": "Opportunities",
+      "tabs": {
+        "tab1": "List",
+        "tab2": "Cards",
+        "tab3": "Map"
+      },
+      "status": {
+        "opp-new": "New",
+        "opp-searching": "Searching",
+        "opp-active": "Active",
+        "opp-past": "Past"
+      },
+      "type": {
+        "accompanying": "Accompanying",
+        "regular": "Regular",
+        "events": "Events",
+        "regular-accompanying": "Regular + Accompanying"
+      },
+      "card": {
+        "mainCommunication": "Main communication",
+        "residentsSpeak": "Residents speak",
+        "schedule": "Schedule",
+        "search": "Search"
+      },
+      "filters": {
+        "status": {
+          "header": "Status",
+          "new": "New",
+          "searching": "Searching",
+          "active": "Active",
+          "past": "Past"
+        }
+      },
+      "accompanyingTranslation": {
+        "en": "German, English",
+        "de": "German",
+        "no": "No Translation needed"
+      },
+      "defaultMainCommunication": "English, German",
+      "otherCategory": "General Volunteering",
+      "goToProfile": "Go to Profile",
+      "mainCommunication": "Main communication",
+      "translationTo": "Translation to",
+      "residentsSpeak": "Residents speak",
+      "languages": "Languages",
+      "schedule": "Schedule",
+      "district": "District",
+      "dateOfAppointment": "Date Of Appointment",
+      "description": "Description"
+    },
+    "commentsSection": {
+      "placeholder": "Comment",
+      "addComment": "Add comment",
+      "menuAction": "Comment options",
+      "commentAdded": "Comment added successfully",
+      "editComment": "Edit comment",
+      "deleteComment": "Delete comment",
+      "commentDeleted": "Comment deleted successfully",
+      "commentUpdated": "Comment updated successfully",
+      "saveEdit": "Save",
+      "cancelEdit": "Cancel",
+      "deleteDialog": {
+        "title": "Delete comment?",
+        "message": "{{authorName}}'s comment will be permanently deleted.",
+        "cancel": "Cancel",
+        "delete": "Delete"
+      }
+    },
+    "appreciationSection": {
+      "title": "Appreciation",
+      "addNew": "+ Add appreciation",
+      "emptyState": "This volunteer hasn't received any appreciation yet",
+      "typeOfAppreciation": "Type of appreciation",
+      "typeOfAppreciationRequired": "Type of appreciation*",
+      "status": "Status",
+      "receivedOn": "Received on",
+      "statusReceived": "Received",
+      "statusDueTo": "Due on",
+      "typeOptions": {
+        "tshirt": "T-shirt",
+        "toteBag": "Tote bag",
+        "benefitCard": "Benefit card"
+      },
+      "addAppreciation": "Add appreciation",
+      "editAppreciation": "Edit appreciation",
+      "dueDateRequired": "Due date*",
+      "deliveryDate": "Delivery date (optional)",
+      "didVolunteerReceive": "Did the volunteer receive it?*",
+      "volunteerReceivedIt": "The volunteer received it",
+      "needToGiveIt": "Need to give it to the volunteer",
+      "receivedOnRequired": "Received on*",
+      "today": "today",
+      "cancel": "Cancel",
+      "save": "Save",
+      "appreciationAdded": "Appreciation added successfully",
+      "appreciationUpdated": "Appreciation updated successfully",
+      "appreciationDeleted": "Appreciation deleted successfully",
+      "deleteConfirmTitle": "Delete appreciation?",
+      "deleteConfirmText": "\"{{entryType}}\" appreciation entry will be permanently deleted."
+    },
+    "agentProfile": {
+      "agentProfile": "Agent's profile",
+      "registeredSince": "Registered since",
+      "engagementStatus": "Engagement status",
+      "serviceType": "Service Type",
+      "volunteerSearch": "Volunteer search",
+      "trustLevel": "Responsiveness",
+      "changeStatus": "Change status",
+      "district": "District",
+      "status": {
+        "engagement": {
+          "new": "New",
+          "active": "Active",
+          "unresponsive": "Unresponsive",
+          "inactive": "Inactive"
+        },
+        "volunteerSearch": {
+          "notNeeded": "Not needed",
+          "filled": "Filled",
+          "searching": "Searching"
+        },
+        "serviceType": {
+          "childcare": "Childcare",
+          "welfare": "Welfare",
+          "consultation": "Consultation",
+          "voluntarySupport": "Voluntary support",
+          "tandem": "Tandem",
+          "sport": "Sport",
+          "tutoring": "Tutoring",
+          "refugeeAccommodation": "Refugee-accommodation",
+          "jobCoaching": "Job-coaching",
+          "youth": "Youth"
+        },
+        "trustLevel": {
+          "unknown": "Unknown",
+          "low": "Low",
+          "high": "High"
+        }
+      },
+      "modalData": {
+        "title": "Change engagement status",
+        "options": {
+          "unresponsive": "Unresponsive",
+          "unresponsive_description": "This agent does not respond.",
+          "inactive": "Inactive",
+          "inactive_description": "This agent does not work with the organization anymore."
+        },
+        "cancel": "Cancel",
+        "save": "Save"
+      },
+      "statusUpdateSuccess": "Agent status updated successfully",
+      "contactDetails": {
+        "title": "Contact details",
+        "fullName": "Name",
+        "firstName": "First Name",
+        "middleName": "Middle Name",
+        "lastName": "Last Name",
+        "email": "E-mail",
+        "mobile": "Mobile",
+        "landline": "Landline",
+        "saveSuccess": "Contact details updated successfully",
+        "roles": {
+          "label": "Role",
+          "social-worker": "Social worker",
+          "volunteer-coordinator": "Volunteer coordinator",
+          "manager": "Manager",
+          "project-coordinator": "Project coordinator",
+          "coordination": "Coordination",
+          "psychologist": "Psychologist",
+          "project-staff": "Project staff",
+          "childcare-worker": "Childcare worker",
+          "other": "Other"
+        },
+        "cancel": "Cancel",
+        "saveChanges": "Save changes",
+        "edit": "Edit",
+        "validation": {
+          "nameRequired": "Name is required",
+          "addressRequired": "Address is required",
+          "districtRequired": "District is required",
+          "mobileRequired": "Mobile number is required",
+          "mobileInvalid": "Mobile number must start with + and contain only digits and spaces",
+          "emailRequired": "Email is required",
+          "emailInvalid": "Please enter a valid email address",
+          "roleRequired": "Role is required",
+          "fullNameRequired": "Name is required",
+          "fullNameInvalid": "Please enter a valid name",
+          "landlineInvalid": "Landline number must start with + and contain only digits and spaces"
+        }
+      },
+      "organisationDetails": {
+        "title": "Organisation details",
+        "edit": "Edit",
+        "about": "About",
+        "website": "Website",
+        "address": "Address",
+        "organisationType": "Type of organisation",
+        "operator": "Operator / Träger",
+        "services": "Leistungen",
+        "clientLanguages": "Client languages",
+        "cancel": "Cancel",
+        "saveChanges": "Save changes",
+        "validation": {
+          "required": "This field is required",
+          "websiteInvalid": "Website must start with http:// or https://",
+          "clientLanguagesRequired": "At least one language is required"
+        }
+      },
+      "opportunitiesSec": {
+        "postOpportunity": "Post opportunity",
+        "tabs": {
+          "lookingForVolunteers": "Looking for volunteers",
+          "active": "Active",
+          "past": "Past"
+        }
+      }
+    },
+    "opportunityProfile": {
+      "opportunityProfile": "Opportunity's profile",
+      "postedOn": "Posted on",
+      "currentStatus": "Current status",
+      "matchingStatus": "Matching status",
+      "status": {
+        "new": "New",
+        "active": "Active",
+        "past": "Past",
+        "searching": "Searching"
+      },
+      "matchStatus": {
+        "matched": "Matched",
+        "needRematch": "Need rematch",
+        "unmatched": "Unmatched"
+      },
+      "statusUpdateSuccess": "Opportunity status updated successfully",
+      "contactDetailsTitle": "Contact details",
+      "editButtonName": "Edit",
+      "contactDetails": {
+        "name": "Name",
+        "phone": "Phone",
+        "email": "Email",
+        "waysToContact": {
+          "label": "Ways to contact",
+          "whatsapp": "WhatsApp",
+          "telegram": "Telegram",
+          "mobilePhone": "Mobile Phone",
+          "email": "Email"
+        },
+        "cancel": "Cancel",
+        "saveChanges": "Save changes",
+        "saveSuccess": "Contact details updated successfully",
+        "validation": {
+          "nameRequired": "Name is required",
+          "phoneRequired": "Phone is required",
+          "phoneInvalid": "Phone must start with + and contain only digits/spaces",
+          "emailRequired": "Email is required",
+          "emailInvalid": "Invalid email",
+          "waysToContactRequired": "Select at least one way to contact"
+        }
+      },
+      "racTitle": "Refugee accommodation centre",
+      "rac": {
+        "name": "Name",
+        "address": "Address",
+        "district": "District",
+        "cancel": "Cancel",
+        "saveChanges": "Save changes",
+        "validation": {
+          "nameRequired": "Name is required",
+          "addressRequired": "Address is required",
+          "districtRequired": "District is required"
+        }
+      },
+      "accompanyingDetailsTitle": "Accompanying details",
+      "accompanyingDetails": {
+        "appointmentAddress": "Appointment address",
+        "appointmentDate": "Appointment date",
+        "appointmentTime": "Appointment time",
+        "refugeeNumber": "Refugee number",
+        "refugeeName": "Refugee name",
+        "languageToTranslate": "Language to translate",
+        "cancel": "Cancel",
+        "saveChanges": "Save changes",
+        "saveSuccess": "Accompanying details updated successfully",
+        "notAccompanyingMessage": "This opportunity is not marked as accompanying. Change this status in the top card if you need to fill out the accompanying information (appointment address, refugee details, etc.).",
+        "validation": {
+          "invalidTimeFormat": "Invalid time format (use HH:MM)"
+        }
+      },
+      "volunteersSec": {
+        "title": "Volunteers",
+        "findVolunteers": "Find volunteers",
+        "suggestButtonName": "Suggest",
+        "suggestDialog": {
+          "title": "Suggest for this opportunity?",
+          "messageStart": "The responsible of",
+          "messageMid": "will be notified that you suggested",
+          "messageEnd": "to them. It will appear in their profile under \"pending\" volunteers.",
+          "confirm": "Suggest",
+          "cancel": "Cancel",
+          "success": "Suggestion sent successfully"
+        },
+        "appliedOn": "Applied on",
+        "tabs": {
+          "opp-pending": "Pending",
+          "opp-matched": "Matched",
+          "opp-active": "Active",
+          "opp-past": "Past"
+        },
+        "emptyState": "No volunteers in this category yet",
+        "statusUpdateSuccess": "Volunteer status updated successfully",
+        "removeSuccess": "Volunteer removed successfully"
+      },
+      "opportunityDetails": {
+        "title": "Opportunity details",
+        "description": "Description",
+        "mainCommunication": "Main communication",
+        "residentsSpeak": "Residents speak",
+        "schedule": "Schedule",
+        "numberOfVolunteers": "Number of volunteers",
+        "activities": "Activities",
+        "skills": "Skills & experience",
+        "descriptionHint": "Max. {{max}} characters",
+        "cancel": "Cancel",
+        "saveChanges": "Save changes",
+        "validation": {
+          "descriptionRequired": "Description is required",
+          "descriptionTooLong": "Description is too long",
+          "numberOfVolunteersRequired": "Number of volunteers must be at least 1",
+          "languageRequired": "At least one language is required",
+          "availabilityRequired": "At least one time slot must be selected",
+          "activitiesRequired": "At least one activity is required",
+          "skillsRequired": "At least one skill is required"
+        }
+      }
+    },
+    "racTitle": "Refugee accommodation centre",
+    "rac": {
+      "name": "Name",
+      "address": "Address",
+      "district": "District",
+      "cancel": "Cancel",
+      "saveChanges": "Save changes",
+      "editButtonName": "Edit"
+    },
+    "communicationSection": {
+      "title": "Communication Tracker",
+      "addNew": "+ Register contact",
+      "emptyState": "No communications recorded yet",
+      "registerContact": "Register contact",
+      "date": "Date",
+      "type": "Type",
+      "contactMethod": "Contact method",
+      "notes": "Notes",
+      "actions": "Actions",
+      "typeOfContact": "Type of contact",
+      "contactTypes": {
+        "called": "Called",
+        "triedToCall": "Tried to call",
+        "textedOrEmailed": "Texted or emailed",
+        "other": "Other"
+      },
+      "dateOfContact": "Date of contact",
+      "contactDate": "Contact date",
+      "contactDateRequired": "Contact date*",
+      "whatPlatform": "What platform did you use?",
+      "howDidYouSend": "How did you send your message?",
+      "contactMethodLabel": "Contact method",
+      "contactMethodRequired": "Contact method*",
+      "communicationTypeRequired": "Communication type*",
+      "communicationTypes": {
+        "briefedVolunteer": "Briefed (accompanying volunteer)",
+        "firstInquiry": "First inquiry sent",
+        "opportunityList": "Opportunity list sent",
+        "statusUpdate": "Status update",
+        "postMatchFollowUp": "Post-match follow-up"
+      },
+      "platformOptions": {
+        "phoneNumber": "Phone number",
+        "telegram": "Telegram",
+        "whatsapp": "Whatsapp",
+        "signal": "Signal",
+        "email": "E-mail",
+        "sms": "SMS",
+        "voicenote": "Voicenote"
+      },
+      "notesPlaceholder": "Add notes about this communication...",
+      "cancel": "Cancel",
+      "save": "Save",
+      "delete": "Delete",
+      "communicationAdded": "Communication added successfully",
+      "communicationUpdated": "Communication updated successfully",
+      "communicationDeleted": "Communication deleted successfully",
+      "deleteConfirmTitle": "Delete entry?",
+      "deleteConfirmText": "\"{{entryType}}\" communication entry will be permanently deleted.",
+      "statusChange": "Status change",
+      "followUp": "Follow-up",
+      "inquiry": "Inquiry",
+      "other": "Other",
+      "email": "Email",
+      "phone": "Phone",
+      "inPerson": "In person",
+      "message": "Message",
+      "today": "today",
+      "futureDateError": "Date cannot be in the future",
+      "contactTypeRequired": "Contact type is required",
+      "deletePermissionError": "You do not have permission to delete communication with id: {{id}}."
+    }
+  },
+  "aboutus": {
+    "aboutusHeading": "About the project",
+    "aboutusSubheading": "The number of people fleeing conflict zones, persecution and human rights violations worldwide has never been as high as it is today. Need4Deed is set to promote the inclusion and integration of refugees in Berlin through the actions of civil society by making volunteering more accessible. We aim to build a sustainable and scalable mechanism for this purpose by connecting volunteers with refugees that are living in accommodation centers in Berlin based on their specific needs.",
+    "values": {
+      "valuesHeading": "Our values",
+      "equalOpportunityHeading": "Equal opportunities",
+      "equalOpportunitySubheading": "People living under destitute life conditions should be given equal opportunities. The latter includes underserved individuals and groups affected by forced migration.",
+      "responsibilityHeading": "Responsibility",
+      "responsibilitySubheading": "Both countries (the state) and civil society, have responsibility towards its underserved communities including those affected by forced migration.",
+      "migranToMigranSupportHeading": "Migrant-to-migrant support",
+      "migranToMigranSupportSubheading": "In particular, groups and individuals who have undergone forced migration could be best understood and supported by others with migration background in the course of their integration process, so that they receive equal opportunities and eventually benefit society themselves.",
+      "activeParticipationHeading": "Active participation",
+      "activeParticipationSubheading": "A migrant-to-migrant support alongside non-migrant support, can both play a key social role by facilitating a more rapid integration process and active participation of the supported communities.",
+      "technologyHeading": "Technology",
+      "technologySubheading": "Applying technology in the effort to support underserved communities is a key value to make support giving and receiving more inclusive, accessible and scalable."
+    }
+  },
+  "faqs": {
+    "faqs": "FAQs",
+    "title": "Frequently Asked Questions",
+    "first_steps_question": "What are the first steps to become a volunteer?",
+    "first_steps_answer": "Begin by completing the volunteer application form on the Need4Deed website.",
+    "after_form_question": "What happens after I fill out the form?",
+    "after_form_answer": "After we have your preferences and locations we start searching for a suitable opportunity for you and contact you in the next days.",
+    "find_opportunities_question": "How do I find available volunteer opportunities?",
+    "find_opportunities_answer": "Check the 'Opportunities' page on the Need4Deed website for current volunteer roles.",
+    "volunteer_roles_question": "What types of volunteer roles are offered?",
+    "volunteer_roles_answer": "Roles include child care, language cafés, translation services, and support with official appointments and sports activities.",
+    "special_skills_question": "Do I need any special skills to volunteer?",
+    "special_skills_answer": "Many roles are open to all volunteers, although specific skills may be required for certain positions.",
+    "volunteering_time_question": "How long does volunteering take?",
+    "volunteering_time_answer": "Regular volunteering usually requires a commitment of about 2 hours a week or twice a month. Irregular volunteering can happen whenever you have time, especially for events or tasks like translations at doctors' appointments.",
+    "age_requirements_question": "Are there age requirements for volunteers?",
+    "age_requirements_answer": "Age requirements may vary but most places require the person to be over 18; please check the opportunity listings for specifics.",
+    "voluntea_gatherings_question": "What can I expect during the VolunTea gatherings?",
+    "voluntea_gatherings_answer": "VolunTea orientation covers Need4Deed's mission, volunteer roles, and assisting in finding the suitable refugee accommodation centers.",
+    "training_question": "Is there a special training?",
+    "training_answer": "Every few months training are offered, especially for those supporting with translations.",
+    "group_volunteering_question": "Can I volunteer with a group or organisation?",
+    "group_volunteering_answer": "Yes, group volunteering is encouraged, especially for those supporting refugee accommodation centers."
+  },
+  "legal": {
+    "legalHeading": "Legal",
+    "impressum": "Imprint",
+    "dataPrivacy": "Privacy Policy",
+    "agreement": "Volunteer Participation Agreement",
+    "guidelines": "Need4Deed Guidelines",
+    "cookies": "Cookies",
+    "notice": {
+      "header": "Legal Notice",
+      "contacts": {
+        "tel": "Telephone",
+        "fax": "Fax",
+        "email": "Email",
+        "responsible": "Responsible: Managing Director"
+      },
+      "registration": "Registration Court",
+      "court": "District Court Charlottenburg",
+      "disclaimer": "Disclaimer",
+      "liability": {
+        "header": "Liability for Content and Links",
+        "body": "The contents of this website were created with the greatest care. However, we cannot guarantee the accuracy, completeness, and timeliness of the content. As a provider, we are responsible for our own content on this page in accordance with Section 7 (1) TMG under general laws. According to Sections 8 to 10 TMG, VIA as a provider is not obligated to monitor transmitted or stored third-party information or to investigate circumstances that indicate illegal activity. Obligations to remove or block the use of information under general laws remain unaffected. However, liability in this regard is only possible from the moment of knowledge of a specific legal violation. Upon notification of such violations, we will remove this content immediately. Should links lead to nowhere or no longer provide current information, we ask for notification. Likewise, we ask for your notice regarding pages to which a link should be placed. We assume no responsibility for the content and timeliness of third-party links."
+      },
+      "photoCredit": {
+        "header": "Photo Credits",
+        "owner": "Logo Owner",
+        "clubDialog": "For all other images and logos used, Club Dialog e.V. is the author and thus the holder of the exclusive usage rights."
+      },
+      "dataProtectionLink": "Click here for our Privacy Policy",
+      "dataProtectionOfficer": "Data Protection Officer"
+    },
+    "message": {
+      "successful": "Successful",
+      "errorGeneric": "Something went wrong!",
+      "validationFailed": "Validation failed",
+      "uploadSuccess": "Document uploaded successfully!",
+      "deleteSuccess": "Document deleted successfully!",
+      "uploadError": "Upload failed. Please try again.",
+      "deleteError": "Delete failed. Please try again.",
+      "previewError": "Preview failed. Please try again."
+    }
+  },
+  "languageNames": {
+    "german": "German",
+    "english": "English",
+    "arabic": "Arabic",
+    "farsi/dari": "Farsi/Dari",
+    "farsi": "Farsi",
+    "dari": "Dari",
+    "turkish": "Turkish",
+    "russian": "Russian",
+    "ukrainian": "Ukrainian",
+    "french": "French",
+    "kurmanji": "Kurmanji",
+    "sorani": "Sorani",
+    "armenian": "Armenian",
+    "belarusian": "Belarusian",
+    "chechen": "Chechen",
+    "chinese": "Chinese",
+    "czech": "Czech",
+    "dutch": "Dutch",
+    "georgian": "Georgian",
+    "greek": "Greek",
+    "hebrew": "Hebrew",
+    "hindi": "Hindi",
+    "italian": "Italian",
+    "pashto": "Pashto",
+    "polish": "Polish",
+    "punjabi": "Punjabi",
+    "romanes": "Romanes",
+    "romanian": "Romanian",
+    "serbian": "Serbian",
+    "somali": "Somali",
+    "spanish": "Spanish",
+    "swedish": "Swedish",
+    "urdu": "Urdu",
+    "vietnamese": "Vietnamese",
+    "other": "Other"
+  }
+}

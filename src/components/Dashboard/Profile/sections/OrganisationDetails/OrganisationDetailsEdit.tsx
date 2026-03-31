@@ -1,0 +1,151 @@
+import Button from "@/components/core/button/Button/Button";
+import { ErrorMessage } from "@/components/core/common";
+import { EditableField } from "@/components/EditableField/EditableField";
+import { LanguageFields } from "@/components/forms/LanguageFields";
+import { Option } from "need4deed-sdk";
+import { Controller, useFormContext } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import { FormButtonRow, FormDetails } from "../shared/styles";
+import { OrganisationDetailsFormData } from "./organisationDetailsSchema";
+
+const i18nPrefix = "dashboard.agentProfile.organisationDetails";
+
+type Props = {
+  languagesForForm: Option[];
+  onCancel: () => void;
+  onSubmit: () => void;
+};
+
+export const OrganisationDetailsEdit = ({ languagesForForm, onCancel, onSubmit }: Props) => {
+  const { t } = useTranslation();
+  const {
+    control,
+    formState: { errors, isDirty, isValid },
+  } = useFormContext<OrganisationDetailsFormData>();
+
+  return (
+    <>
+      <FormDetails data-testid="organisation-details-edit">
+        <Controller
+          name="about"
+          control={control}
+          render={({ field }) => (
+            <EditableField
+              mode="edit"
+              type="text"
+              label={t(`${i18nPrefix}.about`)}
+              value={field.value}
+              setValue={field.onChange}
+              errorMessage={errors.about?.message}
+            />
+          )}
+        />
+        <Controller
+          name="website"
+          control={control}
+          render={({ field }) => (
+            <EditableField
+              mode="edit"
+              type="text"
+              label={t(`${i18nPrefix}.website`)}
+              value={field.value}
+              setValue={field.onChange}
+              errorMessage={errors.website?.message}
+            />
+          )}
+        />
+        <Controller
+          name="address"
+          control={control}
+          render={({ field }) => (
+            <EditableField
+              mode="edit"
+              type="text"
+              label={t(`${i18nPrefix}.address`)}
+              value={field.value}
+              setValue={field.onChange}
+              errorMessage={errors.address?.message}
+            />
+          )}
+        />
+        <Controller
+          name="organizationType"
+          control={control}
+          render={({ field }) => (
+            <EditableField
+              mode="edit"
+              type="text"
+              label={t(`${i18nPrefix}.organisationType`)}
+              value={field.value}
+              setValue={field.onChange}
+              errorMessage={errors.organizationType?.message}
+            />
+          )}
+        />
+        <Controller
+          name="operator"
+          control={control}
+          render={({ field }) => (
+            <EditableField
+              mode="edit"
+              type="text"
+              label={t(`${i18nPrefix}.operator`)}
+              value={field.value}
+              setValue={field.onChange}
+              errorMessage={errors.operator?.message}
+            />
+          )}
+        />
+        <Controller
+          name="services"
+          control={control}
+          render={({ field }) => (
+            <EditableField
+              mode="edit"
+              type="text"
+              label={t(`${i18nPrefix}.services`)}
+              value={field.value}
+              setValue={field.onChange}
+              errorMessage={errors.services?.message}
+            />
+          )}
+        />
+        <Controller
+          name="clientLanguages"
+          control={control}
+          render={({ field }) => (
+            <>
+              <LanguageFields
+                languages={field.value}
+                onChange={field.onChange}
+                t={t}
+                availableLanguages={languagesForForm}
+                showLevel={false}
+              />
+              {errors.clientLanguages?.message && <ErrorMessage message={errors.clientLanguages.message} />}
+            </>
+          )}
+        />
+      </FormDetails>
+
+      <FormButtonRow>
+        <Button
+          text={t(`${i18nPrefix}.cancel`)}
+          onClick={onCancel}
+          width="auto"
+          padding="var(--volunteer-profile-section-card-header-button-padding)"
+          backgroundcolor="var(--color-white)"
+          textColor="var(--color-aubergine)"
+          border="var(--volunteer-profile-section-card-header-button-border)"
+        />
+        <Button
+          text={t(`${i18nPrefix}.saveChanges`)}
+          onClick={onSubmit}
+          width="auto"
+          padding="var(--volunteer-profile-section-card-header-button-padding)"
+          disabled={!isDirty || !isValid}
+        />
+      </FormButtonRow>
+    </>
+  );
+};
