@@ -27,7 +27,6 @@ export default function useTestimonials(language: Lang): [Testimonial[], boolean
   });
 
   if (isError) {
-    // eslint-disable-next-line no-console
     console.error("Error fetching testimonials");
   }
 
