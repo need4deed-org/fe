@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { Lang, Testimonial } from "need4deed-sdk";
-
-import { urlApiTestimonial } from "../../config/constants";
+import { cloudfrontDataURL } from "../../config/constants";
 import { fetchFn } from "./utils";
 
 const staleTime = 1000 * 60 * 60 * 24; // 1d
@@ -16,7 +15,7 @@ export default function useTestimonials(language: Lang): [Testimonial[], boolean
     queryKey: ["testimonials", language],
     queryFn: () =>
       fetchFn<Testimonial[]>({
-        url: `${urlApiTestimonial}?language=${language}`,
+        url: `${cloudfrontDataURL}/${language}/testimonials.json`,
         fnDTO: (data) =>
           data.map((testimonial) => ({
             ...testimonial,

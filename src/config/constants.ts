@@ -18,9 +18,7 @@ export const apiPathOpportunityVolunteer = `/${apiPrefix}/opportunity-volunteer`
 export const apiPathMe = `/${apiPrefix}/user/me`;
 export const apiPathPerson = `/${apiPrefix}/person/`;
 export const apiPathOrganization = `/${apiPrefix}/organization/`;
-// export const urlApiTestimonial = `${urlApi}/testimonial/`;
-export const urlApiTestimonial = "https://api.need4deed.org/api/testimonial/"; //temporary
-
+export const cloudfrontDataURL = process.env.NEXT_PUBLIC_CLOUDFRONT_DATA_URL;
 export const cacheTTL = 1000 * 60 * 5; // 5 minutes
 
 export enum ScreenTypes {
