@@ -536,10 +536,10 @@
       },
       "opportunitiesSec": {
         "tabs": {
-          "pending": "Ausstehend",
-          "matched": "Zugeordnet",
-          "active": "Aktiv",
-          "past": "Vergangen"
+          "opp-pending": "Ausstehend",
+          "opp-matched": "Zugeordnet",
+          "opp-active": "Aktiv",
+          "opp-past": "Vergangen"
         },
         "match": "Match",
         "notAMatch": "Kein Match",
@@ -604,6 +604,63 @@
           "skillsRequired": "Fähigkeiten sind erforderlich"
         }
       }
+    },
+    "agents": {
+      "agents": "RAC-Verzeichnis",
+      "tabs": {
+        "tab1": "Liste",
+        "tab2": "Karten",
+        "tab3": "Karte"
+      },
+      "status": {
+        "new": "Neu",
+        "searching": "Suchend",
+        "active": "Aktiv",
+        "past": "Vergangen"
+      },
+      "type": {
+        "accompanying": "Begleitend",
+        "regular": "Regulär",
+        "events": "Veranstaltungen",
+        "regular-accompanying": "Regulär + Begleitend"
+      },
+      "card": {
+        "mainCommunication": "Hauptkommunikation",
+        "residentsSpeak": "Bewohner sprechen",
+        "schedule": "Zeitplan",
+        "search": "Suche"
+      },
+      "filters": {
+        "status": {
+          "header": "Status",
+          "new": "Neu",
+          "inactive": "Inaktiv",
+          "active": "Aktiv",
+          "unresponsive": "Reagiert nicht"
+        },
+        "volunteerSearch": {
+          "header": "Freiwilligensuche",
+          "searching": "Suchend",
+          "volunteers-found": "Besetzt",
+          "not-needed": "Nicht benötigt"
+        }
+      },
+      "accompanyingTranslation": {
+        "en": "Deutsch, Englisch",
+        "de": "Deutsch",
+        "no": "Keine Übersetzung erforderlich"
+      },
+      "defaultMainCommunication": "Englisch, Deutsch",
+      "otherCategory": "Allgemeine Freiwilligenarbeit",
+      "goToProfile": "Zum Profil",
+      "mainCommunication": "Hauptkommunikation",
+      "translationTo": "Übersetzung nach",
+      "residentsSpeak": "Bewohner sprechen",
+      "languages": "Sprachen",
+      "schedule": "Zeitplan",
+      "district": "Stadtviertel",
+      "dateOfAppointment": "Termindatum",
+      "description": "Beschreibung"
     },
     "opportunities": {
       "opportunities": "Möglichkeiten",
@@ -754,7 +811,7 @@
       "engagementStatus": "Engagement-Status",
       "serviceType": "Dienstleistungsart",
       "volunteerSearch": "Freiwilligensuche",
-      "trustLevel": "Vertrauensstufe",
+      "trustLevel": "Reaktionsfähigkeit",
       "changeStatus": "Status ändern",
       "district": "Bezirk",
       "status": {
@@ -811,11 +868,15 @@
         "saveSuccess": "Kontaktdaten erfolgreich aktualisiert",
         "roles": {
           "label": "Rolle",
-          "management": "Geschäftsführung",
-          "volunteer_coordinator": "Freiwilligenkoordinator/in",
-          "social_work": "Sozialarbeit",
-          "childcare": "Kinderbetreuung",
-          "coordination": "Koordination"
+          "social-worker": "Sozialarbeiter",
+          "volunteer-coordinator": "Ehrenamtskoordinator",
+          "manager": "Leitung",
+          "project-coordinator": "Projektkoordinator",
+          "coordination": "Koordination",
+          "psychologist": "Psychologe",
+          "project-staff": "Projektmitarbeiter",
+          "childcare-worker": "Kinderbetreuer",
+          "other": "Sonstiges"
         },
         "cancel": "Abbrechen",
         "saveChanges": "Änderungen speichern",
@@ -947,10 +1008,10 @@
         },
         "appliedOn": "Beworben am",
         "tabs": {
-          "pending": "Ausstehend",
-          "matched": "Zugeordnet",
-          "active": "Aktiv",
-          "past": "Vergangen"
+          "opp-pending": "Ausstehend",
+          "opp-matched": "Zugeordnet",
+          "opp-active": "Aktiv",
+          "opp-past": "Vergangen"
         },
         "emptyState": "Noch keine Freiwilligen in dieser Kategorie",
         "statusUpdateSuccess": "Freiwilligen-Status erfolgreich aktualisiert",

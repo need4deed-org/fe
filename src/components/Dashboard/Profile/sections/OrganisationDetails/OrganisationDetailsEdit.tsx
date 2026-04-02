@@ -69,7 +69,7 @@ export const OrganisationDetailsEdit = ({ languagesForForm, onCancel, onSubmit }
           )}
         />
         <Controller
-          name="organisationType"
+          name="organizationType"
           control={control}
           render={({ field }) => (
             <EditableField
@@ -78,7 +78,7 @@ export const OrganisationDetailsEdit = ({ languagesForForm, onCancel, onSubmit }
               label={t(`${i18nPrefix}.organisationType`)}
               value={field.value}
               setValue={field.onChange}
-              errorMessage={errors.organisationType?.message}
+              errorMessage={errors.organizationType?.message}
             />
           )}
         />
@@ -122,9 +122,7 @@ export const OrganisationDetailsEdit = ({ languagesForForm, onCancel, onSubmit }
                 availableLanguages={languagesForForm}
                 showLevel={false}
               />
-              {errors.clientLanguages?.message && (
-                <ErrorMessage message={errors.clientLanguages.message} />
-              )}
+              {errors.clientLanguages?.message && <ErrorMessage message={errors.clientLanguages.message} />}
             </>
           )}
         />

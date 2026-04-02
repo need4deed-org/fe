@@ -26,7 +26,7 @@ export const createAgentDialogOptions = (t: TFunction) => {
 
 export const createVolunteerSearchLabelMap = (t: TFunction): Record<AgentVolunteerSearch, string> => ({
   [AgentVolunteerSearch.NOT_NEEDED]: t("dashboard.agentProfile.status.volunteerSearch.notNeeded"),
-  [AgentVolunteerSearch.FILLED]: t("dashboard.agentProfile.status.volunteerSearch.filled"),
+  [AgentVolunteerSearch.VOLUNTEERS_FOUND]: t("dashboard.agentProfile.status.volunteerSearch.filled"),
   [AgentVolunteerSearch.SEARCHING]: t("dashboard.agentProfile.status.volunteerSearch.searching"),
 });
 

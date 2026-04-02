@@ -1,5 +1,5 @@
 import { Lang } from "need4deed-sdk";
-
+export { AgentRoleType as AgentRoles } from "need4deed-sdk";
 export const tokenKey = "token";
 
 export const apiPrefix = "api";
@@ -16,6 +16,7 @@ export const apiPathOption = `/${apiPrefix}/option`;
 export const apiPathOpportunityVolunteer = `/${apiPrefix}/opportunity-volunteer`;
 export const apiPathMe = `/${apiPrefix}/user/me`;
 export const apiPathPerson = `/${apiPrefix}/person/`;
+export const apiPathOrganization = `/${apiPrefix}/organization/`;
 
 export const cacheTTL = 1000 * 60 * 5; // 5 minutes
 
@@ -58,14 +59,6 @@ export enum DashboardRoutes {
   Posts = "/dashboard/posts",
   Calendar = "/dashboard/calendar",
   Profile = "/dashboard/profile",
-}
-
-export enum AgentRoles {
-  MANAGEMENT = "management",
-  VOLUNTEER_COORDINATOR = "volunteer_coordinator",
-  SOCIAL_WORK = "social_work",
-  CHILDCARE = "childcare",
-  COORDINATION = "coordination",
 }
 
 export const questionMark = "?";

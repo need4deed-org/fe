@@ -43,7 +43,7 @@ export const OrganisationDetailsDisplay = ({ rawClientLanguages }: Props) => {
         mode="display"
         type="text"
         label={t(`${i18nPrefix}.organisationType`)}
-        value={values.organisationType}
+        value={values.organizationType}
         setValue={() => {}}
       />
       <EditableField
