@@ -3,7 +3,7 @@ export { AgentRoleType as AgentRoles } from "need4deed-sdk";
 export const tokenKey = "token";
 
 export const apiPrefix = "api";
-export const apiPathVolunteer = `/${apiPrefix}/volunteer/`;
+export const apiPathVolunteer = `/${apiPrefix}/volunteer`;
 export const apiPathComment = `/${apiPrefix}/comment`;
 export const apiPathCommunication = `/${apiPrefix}/communication`;
 export const apiPathAppreciation = `/${apiPrefix}/appreciation`;
