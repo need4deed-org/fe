@@ -1,7 +1,7 @@
 "use client";
 import { useForm } from "@tanstack/react-form";
 import { validate as validateEmail } from "email-validator";
-import { Lang, VolunteerFormData } from "need4deed-sdk";
+import { Lang } from "need4deed-sdk";
 import Image from "next/image";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -20,6 +20,7 @@ import { AvailabilityGrid } from "../AvailabilityGrid";
 import FieldInfo from "../FieldInfo";
 import HeaderWithHelp from "../HeaderWithHelp";
 import style from "../index.module.css";
+import { LanguageFields } from "../LanguageFields";
 import MultipleCheckBoxInputsWithMore from "../MultipleCheckBoxInputsWithMore";
 import MultipleRadioInputsWithMore from "../MultipleRadioInputsWithMore";
 import SimpleInputField from "../SimpleInputField";
@@ -31,9 +32,9 @@ import {
   isTimeSlotSelected,
   isValidPLZ,
   parseFormStateDTOVolunteer,
+  VolunteerDTO,
 } from "../utils";
 import { VolunteerData } from "./dataStructure";
-import { LanguageFields } from "../LanguageFields";
 
 const thankYou = "form.becomeVolunteer.thankYou";
 const somethingWrong = "form.becomeVolunteer.somethingWrong";
@@ -46,8 +47,8 @@ export default function BecomeVolunteer() {
   const opportunityParams = useSearchParams();
   const language = i18n.language as Lang;
 
-  const { postRequest } = usePostRequest<VolunteerFormData, Record<string, string | string[]>>({
-    url: apiPathVolunteer,
+  const { postRequest } = usePostRequest<VolunteerDTO, Record<string, string | string[]>>({
+    url: `${apiPathVolunteer}/legacy`,
   });
 
   const opportunity: OpportunityInfo = {
@@ -481,3 +482,216 @@ export default function BecomeVolunteer() {
     </div>
   );
 }
+
+export const raw = {
+  opportunityId: "",
+  name: "Good Samaritan",
+  email: "gs@need4deed.org",
+  phone: "420-024",
+  postcode: "12345",
+  locations: [
+    { id: "Mitte", title: { de: "Mitte", en: "Mitte" }, selected: false },
+    { id: "Moabit", title: { de: "Moabit", en: "Moabit" }, selected: true },
+    { id: "Wedding", title: { de: "Wedding", en: "Wedding" }, selected: true },
+    { id: "Friedrichshain", title: { de: "Friedrichshain", en: "Friedrichshain" }, selected: false },
+    { id: "Kreuzberg", title: { de: "Kreuzberg", en: "Kreuzberg" }, selected: false },
+    { id: "Pankow", title: { de: "Pankow", en: "Pankow" }, selected: false },
+    { id: "Prenzlauer Berg", title: { de: "Prenzlauer Berg", en: "Prenzlauer Berg" }, selected: true },
+    { id: "Weißensee", title: { de: "Weißensee", en: "Weißensee" }, selected: false },
+    { id: "Charlottenburg", title: { de: "Charlottenburg", en: "Charlottenburg" }, selected: false },
+    { id: "Wilmersdorf", title: { de: "Wilmersdorf", en: "Wilmersdorf" }, selected: false },
+    { id: "Spandau", title: { de: "Spandau", en: "Spandau" }, selected: false },
+    { id: "Steglitz", title: { de: "Steglitz", en: "Steglitz" }, selected: false },
+    { id: "Zehlendorf", title: { de: "Zehlendorf", en: "Zehlendorf" }, selected: false },
+    { id: "Tempelhof", title: { de: "Tempelhof", en: "Tempelhof" }, selected: false },
+    { id: "Schöneberg", title: { de: "Schöneberg", en: "Schöneberg" }, selected: false },
+    { id: "Neukölln", title: { de: "Neukölln", en: "Neukölln" }, selected: false },
+    { id: "Treptow", title: { de: "Treptow", en: "Treptow" }, selected: false },
+    { id: "Köpenick", title: { de: "Köpenick", en: "Köpenick" }, selected: false },
+    { id: "Marzahn", title: { de: "Marzahn", en: "Marzahn" }, selected: false },
+    { id: "Hellersdorf", title: { de: "Hellersdorf", en: "Hellersdorf" }, selected: false },
+    { id: "Lichtenberg", title: { de: "Lichtenberg", en: "Lichtenberg" }, selected: false },
+    { id: "Reinickendorf", title: { de: "Reinickendorf", en: "Reinickendorf" }, selected: false },
+    { id: "Tegel", title: { de: "Tegel", en: "Tegel" }, selected: false },
+    { id: "Rudow", title: { de: "Rudow", en: "Rudow" }, selected: false },
+    { id: "Remotely", title: { de: "Remotely", en: "Remotely" }, selected: false },
+  ],
+  availability: [
+    {
+      weekday: 1,
+      timeSlots: [
+        { id: "08-11", title: { en: "08-11", de: "08-11" }, selected: true },
+        { id: "11-14", title: { en: "11-14", de: "11-14" }, selected: false },
+        { id: "14-17", title: { en: "14-17", de: "14-17" }, selected: false },
+        { id: "17-20", title: { en: "17-20", de: "17-20" }, selected: false },
+      ],
+    },
+    {
+      weekday: 2,
+      timeSlots: [
+        { id: "08-11", title: { en: "08-11", de: "08-11" }, selected: false },
+        { id: "11-14", title: { en: "11-14", de: "11-14" }, selected: false },
+        { id: "14-17", title: { en: "14-17", de: "14-17" }, selected: false },
+        { id: "17-20", title: { en: "17-20", de: "17-20" }, selected: false },
+      ],
+    },
+    {
+      weekday: 3,
+      timeSlots: [
+        { id: "08-11", title: { en: "08-11", de: "08-11" }, selected: true },
+        { id: "11-14", title: { en: "11-14", de: "11-14" }, selected: true },
+        { id: "14-17", title: { en: "14-17", de: "14-17" }, selected: true },
+        { id: "17-20", title: { en: "17-20", de: "17-20" }, selected: true },
+      ],
+    },
+    {
+      weekday: 4,
+      timeSlots: [
+        { id: "08-11", title: { en: "08-11", de: "08-11" }, selected: false },
+        { id: "11-14", title: { en: "11-14", de: "11-14" }, selected: false },
+        { id: "14-17", title: { en: "14-17", de: "14-17" }, selected: false },
+        { id: "17-20", title: { en: "17-20", de: "17-20" }, selected: false },
+      ],
+    },
+    {
+      weekday: 5,
+      timeSlots: [
+        { id: "08-11", title: { en: "08-11", de: "08-11" }, selected: false },
+        { id: "11-14", title: { en: "11-14", de: "11-14" }, selected: true },
+        { id: "14-17", title: { en: "14-17", de: "14-17" }, selected: true },
+        { id: "17-20", title: { en: "17-20", de: "17-20" }, selected: false },
+      ],
+    },
+    {
+      weekday: 6,
+      timeSlots: [
+        { id: "08-11", title: { en: "08-11", de: "08-11" }, selected: false },
+        { id: "11-14", title: { en: "11-14", de: "11-14" }, selected: false },
+        { id: "14-17", title: { en: "14-17", de: "14-17" }, selected: false },
+        { id: "17-20", title: { en: "17-20", de: "17-20" }, selected: false },
+      ],
+    },
+    {
+      weekday: 7,
+      timeSlots: [
+        { id: "08-11", title: { en: "08-11", de: "08-11" }, selected: false },
+        { id: "11-14", title: { en: "11-14", de: "11-14" }, selected: false },
+        { id: "14-17", title: { en: "14-17", de: "14-17" }, selected: false },
+        { id: "17-20", title: { en: "17-20", de: "17-20" }, selected: false },
+      ],
+    },
+    {
+      weekday: 0,
+      timeSlots: [
+        { id: "weekdays", title: { en: "weekdays", de: "wochentage" }, selected: false },
+        { id: "weekends", title: { en: "weekends", de: "wocheenden" }, selected: true },
+      ],
+    },
+  ],
+  languages: [
+    { id: 1, language: "de", level: "native" },
+    { id: 2, language: "en", level: "fluent" },
+    { id: 3, language: "ar", level: "fluent" },
+    { id: 4, language: "fa", level: "intermediate" },
+  ],
+  activities: [
+    { id: "Daycare", title: { en: "Daycare", de: "Kinderbetreuung" }, selected: false },
+    { id: "Sports", title: { en: "Sports", de: "Sport" }, selected: true },
+    { id: "Language café", title: { en: "German language Cafe", de: "Sprachcafé" }, selected: true },
+    {
+      id: "Translation",
+      title: { en: "Translation at Accommodation Centers", de: "Sprachmittlung in Unterkünften" },
+      selected: false,
+    },
+    { id: "Fillout German forms", title: { en: "Fillout German forms", de: "Ausfüllhilfe" }, selected: false },
+    { id: "Arts", title: { en: "Arts & Crafts", de: "Basteln" }, selected: true },
+    { id: "Gardening", title: { en: "Gardening", de: "Gartenarbeit" }, selected: false },
+    {
+      id: "One-day",
+      title: {
+        en: "One-day Volunteering (e.g. Festivals, Cleanups)",
+        de: "Eintägiges Engagement (z. B. Feier, Aufräumaktionen)",
+      },
+      selected: false,
+    },
+    { id: "Playing", title: { en: "Playing board games", de: "Brettspiele spielen" }, selected: false },
+    { id: "Reading", title: { en: "Reading books for children", de: "Bücher vorlesen für Kinder" }, selected: false },
+    { id: "Activities-women", title: { en: "Activities for women", de: "Aktivitäten für Frauen*" }, selected: false },
+    { id: "Activities-men", title: { en: "Activities for men", de: "Aktivitäten für Männer*" }, selected: false },
+    { id: "Tutoring", title: { en: "Assist with homework", de: "Nachhilfe" }, selected: false },
+    { id: "Clothing Sorting", title: { en: "Sorting clothing", de: "Kleiderkammer" }, selected: false },
+    { id: "Excursions", title: { en: "Organizing excursions", de: "Ausflüge organisieren" }, selected: false },
+    { id: "Miscellaneous", title: { en: "Miscellaneous", de: "Sonstiges" }, selected: false },
+    { id: "Mentorship", title: { en: "Mentorship", de: "Mentoren" }, selected: false },
+    {
+      id: "Accompanying to government appointments",
+      title: { en: "Accompanying to government appointments", de: "Begleitung: Termine bei Behörden* " },
+      selected: false,
+    },
+    {
+      id: "Apartment viewing accompanying",
+      title: { en: "Apartment viewing accompanying", de: "Begleitung: Wohnungsbesichtigungen" },
+      selected: false,
+    },
+    {
+      id: "Schools meetings ccompanying",
+      title: { en: "Schools meetings ccompanying", de: "Begleitung: Termine in Schulen und Kitas" },
+      selected: false,
+    },
+    { id: "Accompanying", title: { en: "Accompanying", de: "Wegbegleitung" }, selected: false },
+    {
+      id: "Accompanying to doctors'",
+      title: { en: "Accompanying to doctors' ", de: "Begleitung: Arzttermine" },
+      selected: false,
+    },
+  ],
+  skills: [
+    { id: "Woodworking", title: { en: "Woodworking", de: "Holzverarbeitung" }, selected: false },
+    { id: "Drawing", title: { en: "Drawing", de: "Zeichnen" }, selected: false },
+    { id: "Painting", title: { en: "Painting", de: "Malen" }, selected: true },
+    { id: "Sewing", title: { en: "Sewing", de: "Nähen" }, selected: true },
+    { id: "Knitting", title: { en: "Knitting", de: "Stricken" }, selected: true },
+    { id: "Repairs", title: { en: "Repairs", de: "Reparaturen" }, selected: false },
+    { id: "Cooking", title: { en: "Cooking", de: "Kochen" }, selected: false },
+    { id: "Teaching", title: { en: "Teaching", de: "Lehren" }, selected: false },
+    { id: "Programming", title: { en: "Programming", de: "Programmieren" }, selected: false },
+    { id: "Public speaking", title: { en: "Public speaking", de: "Öffentliches Sprechen" }, selected: false },
+    { id: "Gardening", title: { en: "Gardening", de: "Gartenarbeit" }, selected: false },
+    { id: "Landscaping", title: { en: "Landscaping", de: "Landschaftsgestaltung" }, selected: false },
+    { id: "Carpentry", title: { en: "Carpentry", de: "Tischlerei" }, selected: false },
+    { id: "Decorating", title: { en: "Decorating", de: "Dekorieren" }, selected: false },
+    { id: "Bike", title: { en: "Bike repairs", de: "Fahrradreparaturen" }, selected: false },
+    { id: "Photography", title: { en: "Photography", de: "Fotografie" }, selected: false },
+    { id: "Videography", title: { en: "Videography", de: "Videografie" }, selected: false },
+    { id: "Makeup", title: { en: "Makeup", de: "Make-up" }, selected: false },
+    { id: "Copywriting", title: { en: "Copywriting", de: "Kreatives Schreiben" }, selected: false },
+    { id: "Yoga", title: { en: "Yoga", de: "Yoga" }, selected: false },
+    { id: "Fitness", title: { en: "Fitness", de: "Fitness" }, selected: false },
+    { id: "Football", title: { en: "Football", de: "Fußball" }, selected: false },
+    { id: "Basketball", title: { en: "Basketball", de: "Basketball" }, selected: false },
+    { id: "Dance", title: { en: "Dance", de: "Tanzen" }, selected: false },
+    { id: "Chess", title: { en: "Chess", de: "Schach" }, selected: false },
+    { id: "Management", title: { en: "Management", de: "Management" }, selected: false },
+    { id: "SMM", title: { en: "SMM", de: "Social-Media-Management (SMM)" }, selected: false },
+    { id: "Mediation", title: { en: "Mediation", de: "Mediation" }, selected: false },
+    { id: "Event", title: { en: "Event planning", de: "Veranstaltungsplanung" }, selected: false },
+    { id: "Coaching", title: { en: "Coaching", de: "Coaching" }, selected: false },
+    { id: "Guitar", title: { en: "Guitar", de: "Gitarre" }, selected: false },
+    { id: "Piano", title: { en: "Piano", de: "Klavier" }, selected: false },
+    { id: "Singing", title: { en: "Singing", de: "Singen" }, selected: false },
+  ],
+  certOfGoodConduct: true,
+  certMeaslesVaccination: true,
+  leadFrom: [
+    { id: "platform", title: { en: "Volunteering platform", de: "Plattform für Freiwilligenarbeit" }, selected: false },
+    { id: "media", title: { en: "Social media", de: "Soziale Medien" }, selected: true },
+    { id: "newsletter", title: { en: "A newsletter", de: "Ein Newsletter" }, selected: true },
+    { id: "search", title: { en: "Web search", de: "Websuche" }, selected: false },
+    { id: "Friends", title: { en: "Friends", de: "Freunde" }, selected: false },
+    { id: "fair", title: { en: "Volunteer fair", de: "Freiwilligenmesse" }, selected: false },
+    { id: "Flyer", title: { en: "Flyer/Poster", de: "Flyer/Plakat" }, selected: false },
+  ],
+  comments: "Test volunteer form raw state data",
+  consent: true,
+  language: "de",
+};
