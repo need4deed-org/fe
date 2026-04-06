@@ -1,3 +1,4 @@
+import { Landing } from "@/components/Dashboard/Landing";
 import Link from "next/link";
 import styles from "./page.module.css";
 
@@ -19,6 +20,8 @@ export default function Home() {
           <Link href="/forms/opportunity" className={styles.secondary}>
             Opportunity form
           </Link>
+          {/* Reders Landing Layout */}
+          <Landing />
         </div>
       </main>
       <footer className={styles.footer}>FOOTER</footer>
