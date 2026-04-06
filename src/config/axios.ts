@@ -67,7 +67,12 @@ axios.interceptors.response.use(
     } catch (refreshError: unknown) {
       // If refresh fails, process queue with error and redirect to login
       processQueue(refreshError, null);
-      toast.error("Session expired. Please log in again.");
+
+      // Only redirect if we aren't already on the login page to avoid loops
+      if (window.location.pathname !== "/login") {
+        toast.error("Session expired. Please log in again.");
+        window.location.href = "/login";
+      }
 
       // Redirect to login page
       window.location.href = "/login";
