@@ -535,10 +535,10 @@
       },
       "opportunitiesSec": {
         "tabs": {
-          "pending": "Pending",
-          "matched": "Matched",
-          "active": "Active",
-          "past": "Past"
+          "opp-pending": "Pending",
+          "opp-matched": "Matched",
+          "opp-active": "Active",
+          "opp-past": "Past"
         },
         "match": "Match",
         "notAMatch": "Not a match",
@@ -646,6 +646,63 @@
         "uploading": "Uploading..."
       }
     },
+    "agents": {
+      "agents": "RAC Directory",
+      "tabs": {
+        "tab1": "List",
+        "tab2": "Cards",
+        "tab3": "Map"
+      },
+      "status": {
+        "opp-new": "New",
+        "opp-searching": "Searching",
+        "opp-active": "Active",
+        "opp-past": "Past"
+      },
+      "type": {
+        "accompanying": "Accompanying",
+        "regular": "Regular",
+        "events": "Events",
+        "regular-accompanying": "Regular + Accompanying"
+      },
+      "card": {
+        "mainCommunication": "Main communication",
+        "residentsSpeak": "Residents speak",
+        "schedule": "Schedule",
+        "search": "Search"
+      },
+      "filters": {
+        "status": {
+          "header": "Status",
+          "new": "New",
+          "inactive": "Inactive",
+          "active": "Active",
+          "unresponsive": "Unresponsive"
+        },
+        "volunteerSearch": {
+          "header": "Volunteer Search",
+          "searching": "Searching",
+          "volunteers-found": "Filled",
+          "not-needed": "Not needed"
+        }
+      },
+      "accompanyingTranslation": {
+        "en": "German, English",
+        "de": "German",
+        "no": "No Translation needed"
+      },
+      "defaultMainCommunication": "English, German",
+      "otherCategory": "General Volunteering",
+      "goToProfile": "Go to Profile",
+      "mainCommunication": "Main communication",
+      "translationTo": "Translation to",
+      "residentsSpeak": "Residents speak",
+      "languages": "Languages",
+      "schedule": "Schedule",
+      "district": "District",
+      "dateOfAppointment": "Date Of Appointment",
+      "description": "Description"
+    },
     "opportunities": {
       "opportunities": "Opportunities",
       "tabs": {
@@ -654,10 +711,10 @@
         "tab3": "Map"
       },
       "status": {
-        "new": "New",
-        "searching": "Searching",
-        "active": "Active",
-        "past": "Past"
+        "opp-new": "New",
+        "opp-searching": "Searching",
+        "opp-active": "Active",
+        "opp-past": "Past"
       },
       "type": {
         "accompanying": "Accompanying",
@@ -753,7 +810,7 @@
       "engagementStatus": "Engagement status",
       "serviceType": "Service Type",
       "volunteerSearch": "Volunteer search",
-      "trustLevel": "Trust level",
+      "trustLevel": "Responsiveness",
       "changeStatus": "Change status",
       "district": "District",
       "status": {
@@ -810,11 +867,15 @@
         "saveSuccess": "Contact details updated successfully",
         "roles": {
           "label": "Role",
-          "management": "Management",
-          "volunteer_coordinator": "Volunteer coordinator",
-          "social_work": "Social work",
-          "childcare": "Childcare",
-          "coordination": "Coordination"
+          "social-worker": "Social worker",
+          "volunteer-coordinator": "Volunteer coordinator",
+          "manager": "Manager",
+          "project-coordinator": "Project coordinator",
+          "coordination": "Coordination",
+          "psychologist": "Psychologist",
+          "project-staff": "Project staff",
+          "childcare-worker": "Childcare worker",
+          "other": "Other"
         },
         "cancel": "Cancel",
         "saveChanges": "Save changes",
@@ -946,10 +1007,10 @@
         },
         "appliedOn": "Applied on",
         "tabs": {
-          "pending": "Pending",
-          "matched": "Matched",
-          "active": "Active",
-          "past": "Past"
+          "opp-pending": "Pending",
+          "opp-matched": "Matched",
+          "opp-active": "Active",
+          "opp-past": "Past"
         },
         "emptyState": "No volunteers in this category yet",
         "statusUpdateSuccess": "Volunteer status updated successfully",

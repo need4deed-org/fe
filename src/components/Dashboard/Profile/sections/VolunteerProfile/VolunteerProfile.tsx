@@ -6,6 +6,8 @@ import { ApiVolunteerGet, Lang, VolunteerStateTypeType } from "need4deed-sdk";
 import { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { EditableSectionProps, EditableSectionRef } from "../shared/types";
+import { useEditingChangeNotifier } from "../shared/useEditingChangeNotifier";
 import { formToApiAvailability } from "./availabilityUtils";
 import { DisplayFields } from "./DisplayFields";
 import {
@@ -26,8 +28,6 @@ import {
   transformLanguagesToApi,
 } from "./transformers";
 import { createVolunteerProfileSchema, VolunteerProfileFormData } from "./volunteerProfileSchema";
-import { EditableSectionProps, EditableSectionRef } from "../shared/types";
-import { useEditingChangeNotifier } from "../shared/useEditingChangeNotifier";
 
 type Props = {
   volunteer: ApiVolunteerGet;

@@ -1,6 +1,13 @@
 import { BaseCard } from "@/components/styled/container";
 import styled from "styled-components";
 
+export const AgentsContainer = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--dashboard-volunteers-container-gap);
+`;
+
 export const AgentCardListContainer = styled.div`
   display: flex;
   justify-content: left;

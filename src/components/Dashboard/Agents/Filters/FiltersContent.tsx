@@ -1,0 +1,25 @@
+import { useTranslation } from "react-i18next";
+import { AgentCardsFilter } from "./types";
+import AccordionFilter from "../../common/CardsFilter/AccordionFilter";
+import { SetFilter } from "../../common/CardsFilter/types";
+import { createAgentFilterItems } from "./helpers";
+import { FiltersContentContainer } from "./styles";
+
+type Props = {
+  filter: AgentCardsFilter;
+  setFilter: SetFilter<AgentCardsFilter>;
+};
+
+export default function FiltersContent({ setFilter, filter }: Props) {
+  const { t } = useTranslation();
+
+  const { districtFilters, statusFilters, volunteerSearchFilters } = createAgentFilterItems(filter, setFilter, t);
+
+  return (
+    <FiltersContentContainer data-testid="agent-filters-content">
+      <AccordionFilter header={t("dashboard.agents.filters.status.header")} items={statusFilters} />
+      <AccordionFilter header={t("dashboard.agents.filters.volunteerSearch.header")} items={volunteerSearchFilters} />
+      <AccordionFilter header={t("dashboard.volunteers.filters.district")} items={districtFilters} />
+    </FiltersContentContainer>
+  );
+}
