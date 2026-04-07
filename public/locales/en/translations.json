@@ -535,10 +535,10 @@
       },
       "opportunitiesSec": {
         "tabs": {
-          "pending": "Pending",
-          "matched": "Matched",
-          "active": "Active",
-          "past": "Past"
+          "opp-pending": "Pending",
+          "opp-matched": "Matched",
+          "opp-active": "Active",
+          "opp-past": "Past"
         },
         "match": "Match",
         "notAMatch": "Not a match",
@@ -654,10 +654,10 @@
         "tab3": "Map"
       },
       "status": {
-        "new": "New",
-        "searching": "Searching",
-        "active": "Active",
-        "past": "Past"
+        "opp-new": "New",
+        "opp-searching": "Searching",
+        "opp-active": "Active",
+        "opp-past": "Past"
       },
       "type": {
         "accompanying": "Accompanying",
@@ -687,16 +687,16 @@
         },
         "engagementStatus": {
           "header": "Status",
-          "new": "New",
-          "inactive": "Inactive",
-          "active": "Active",
-          "unresponsive": "Unresponsive"
+          "agent-new": "New",
+          "agent-inactive": "Inactive",
+          "agent-active": "Active",
+          "agent-unresponsive": "Unresponsive"
         },
         "volunteerSearch": {
           "header": "Volunteer Search",
-          "searching": "Searching",
-          "volunteers-found": "Filled",
-          "not-needed": "Not needed"
+          "agent-searching": "Searching",
+          "agent-volunteers-found": "Filled",
+          "agent-not-needed": "Not needed"
         },
         "district": {
           "header": "District"
@@ -740,10 +740,10 @@
         "tab3": "Map"
       },
       "status": {
-        "new": "New",
-        "searching": "Searching",
-        "active": "Active",
-        "past": "Past"
+        "opp-new": "New",
+        "opp-searching": "Searching",
+        "opp-active": "Active",
+        "opp-past": "Past"
       },
       "type": {
         "accompanying": "Accompanying",
@@ -839,7 +839,7 @@
       "engagementStatus": "Engagement status",
       "serviceType": "Service Type",
       "volunteerSearch": "Volunteer search",
-      "trustLevel": "Trust level",
+      "trustLevel": "Responsiveness",
       "changeStatus": "Change status",
       "district": "District",
       "type": "Type",
@@ -897,11 +897,15 @@
         "saveSuccess": "Contact details updated successfully",
         "roles": {
           "label": "Role",
-          "management": "Management",
-          "volunteer_coordinator": "Volunteer coordinator",
-          "social_work": "Social work",
-          "childcare": "Childcare",
-          "coordination": "Coordination"
+          "social-worker": "Social worker",
+          "volunteer-coordinator": "Volunteer coordinator",
+          "manager": "Manager",
+          "project-coordinator": "Project coordinator",
+          "coordination": "Coordination",
+          "psychologist": "Psychologist",
+          "project-staff": "Project staff",
+          "childcare-worker": "Childcare worker",
+          "other": "Other"
         },
         "cancel": "Cancel",
         "saveChanges": "Save changes",
@@ -1033,10 +1037,10 @@
         },
         "appliedOn": "Applied on",
         "tabs": {
-          "pending": "Pending",
-          "matched": "Matched",
-          "active": "Active",
-          "past": "Past"
+          "opp-pending": "Pending",
+          "opp-matched": "Matched",
+          "opp-active": "Active",
+          "opp-past": "Past"
         },
         "emptyState": "No volunteers in this category yet",
         "statusUpdateSuccess": "Volunteer status updated successfully",

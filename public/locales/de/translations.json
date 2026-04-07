@@ -435,7 +435,7 @@
     },
     "filters": {
       "button": "FILTER",
-      "closeFilters": "FILTER SCLIEẞEN",
+      "closeFilters": "FILTER SCHLIEẞEN",
       "clearAll": "Filter löschen"
     },
     "volunteerProfile": {
@@ -536,10 +536,10 @@
       },
       "opportunitiesSec": {
         "tabs": {
-          "pending": "Ausstehend",
-          "matched": "Zugeordnet",
-          "active": "Aktiv",
-          "past": "Vergangen"
+          "opp-pending": "Ausstehend",
+          "opp-matched": "Zugeordnet",
+          "opp-active": "Aktiv",
+          "opp-past": "Vergangen"
         },
         "match": "Match",
         "notAMatch": "Kein Match",
@@ -646,16 +646,16 @@
         },
         "engagementStatus": {
           "header": "Status",
-          "new": "Neu",
-          "inactive": "Inaktiv",
-          "active": "Aktiv",
-          "unresponsive": "Reagiert nicht"
+          "agent-new": "Neu",
+          "agent-inactive": "Inaktiv",
+          "agent-active": "Aktiv",
+          "agent-unresponsive": "Reagiert nicht"
         },
         "volunteerSearch": {
           "header": "Freiwilligensuche",
-          "searching": "Suchend",
-          "volunteers-found": "Besetzt",
-          "not-needed": "Nicht benötigt"
+          "agent-searching": "Suchend",
+          "agent-volunteers-found": "Besetzt",
+          "agent-not-needed": "Nicht benötigt"
         },
         "district": {
           "header": "Bezirk"
@@ -699,10 +699,10 @@
         "tab3": "Karte"
       },
       "status": {
-        "new": "Neu",
-        "searching": "Suche läuft",
-        "active": "Aktiv",
-        "past": "Vergangen"
+        "opp-new": "Neu",
+        "opp-searching": "Suche läuft",
+        "opp-active": "Aktiv",
+        "opp-past": "Vergangen"
       },
       "type": {
         "accompanying": "Begleitung",
@@ -840,7 +840,7 @@
       "engagementStatus": "Engagement-Status",
       "serviceType": "Dienstleistungsart",
       "volunteerSearch": "Freiwilligensuche",
-      "trustLevel": "Vertrauensstufe",
+      "trustLevel": "Reaktionsfähigkeit",
       "changeStatus": "Status ändern",
       "district": "Bezirk",
       "type": "Typ",
@@ -898,11 +898,15 @@
         "saveSuccess": "Kontaktdaten erfolgreich aktualisiert",
         "roles": {
           "label": "Rolle",
-          "management": "Geschäftsführung",
-          "volunteer_coordinator": "Freiwilligenkoordinator/in",
-          "social_work": "Sozialarbeit",
-          "childcare": "Kinderbetreuung",
-          "coordination": "Koordination"
+          "social-worker": "Sozialarbeiter",
+          "volunteer-coordinator": "Ehrenamtskoordinator",
+          "manager": "Leitung",
+          "project-coordinator": "Projektkoordinator",
+          "coordination": "Koordination",
+          "psychologist": "Psychologe",
+          "project-staff": "Projektmitarbeiter",
+          "childcare-worker": "Kinderbetreuer",
+          "other": "Sonstiges"
         },
         "cancel": "Abbrechen",
         "saveChanges": "Änderungen speichern",
@@ -1034,10 +1038,10 @@
         },
         "appliedOn": "Beworben am",
         "tabs": {
-          "pending": "Ausstehend",
-          "matched": "Zugeordnet",
-          "active": "Aktiv",
-          "past": "Vergangen"
+          "opp-pending": "Ausstehend",
+          "opp-matched": "Zugeordnet",
+          "opp-active": "Aktiv",
+          "opp-past": "Vergangen"
         },
         "emptyState": "Noch keine Freiwilligen in dieser Kategorie",
         "statusUpdateSuccess": "Freiwilligen-Status erfolgreich aktualisiert",

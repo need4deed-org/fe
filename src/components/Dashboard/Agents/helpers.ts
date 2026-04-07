@@ -1,28 +1,37 @@
 import {
   AgentVolunteerSearchType,
-  OptionById,
+  ApiAgentGetList,
+  AgentServiceType,
   ApiOptionLists,
+  AgentTrustType,
+  ApiAgentGet,
+  OptionById,
   QueryParamsKeys,
   AgentType,
-  ApiAgentGetList,
 } from "need4deed-sdk";
 
 import { ReadonlyURLSearchParams } from "next/navigation";
 import { AgentCardsFilter } from "./Filters/types";
 
-export function getNormalizedAgent(agent: ApiAgentGetList): Omit<
-  ApiAgentGetList,
-  "district" | "volunteerSearch" | "type"
+type AgentListItem = ApiAgentGetList & Partial<ApiAgentGet>;
+
+export function getNormalizedAgent(agent: AgentListItem): Omit<
+  AgentListItem,
+  "district" | "volunteerSearch" | "type" | "trustLevel" | "serviceType"
 > & {
   district: OptionById | undefined;
   volunteerSearch: AgentVolunteerSearchType;
   type: AgentType;
+  trustLevel: AgentTrustType;
+  serviceType: AgentServiceType[] | undefined;
 } {
   return {
     ...agent,
     type: agent.type,
     district: agent.district,
     volunteerSearch: agent.volunteerSearch,
+    trustLevel: agent.trustLevel ? agent.trustLevel : AgentTrustType.UNKNOWN,
+    serviceType: agent.serviceType,
   };
 }
 
