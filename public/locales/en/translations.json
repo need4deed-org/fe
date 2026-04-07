@@ -729,12 +729,19 @@
         "search": "Search"
       },
       "filters": {
+        "type": {
+          "header": "Type",
+          "accompanying": "Accompanying",
+          "regular": "Regular",
+          "events": "Events",
+          "regular-accompanying": "Regular + Accompanying"
+        },
         "status": {
           "header": "Status",
-          "new": "New",
-          "searching": "Searching",
-          "active": "Active",
-          "past": "Past"
+          "opp-new": "New",
+          "opp-searching": "Searching",
+          "opp-active": "Active",
+          "opp-past": "Past"
         }
       },
       "accompanyingTranslation": {
