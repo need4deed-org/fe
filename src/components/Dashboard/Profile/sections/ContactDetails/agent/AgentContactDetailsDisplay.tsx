@@ -1,9 +1,9 @@
 import { EditableField } from "@/components/EditableField/EditableField";
+import { AgentRoles } from "@/config/constants";
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { FieldWrapper, FormDetails } from "../../shared/styles";
 import { AgentContactDetailsFormData } from "./agentContactDetailsSchema";
-import { AgentRoles } from "@/config/constants";
 
 type Props = {
   keysToLabels: (keys: AgentRoles[]) => string[];
@@ -30,7 +30,7 @@ export const AgentContactDetailsDisplay = ({ keysToLabels }: Props) => {
         mode="display"
         type="checkbox-list"
         label={t("dashboard.agentProfile.contactDetails.roles.label")}
-        value={values.role ? keysToLabels(values?.role) : []}
+        value={values.role ? keysToLabels([values?.role]) : []}
         setValue={() => {}}
       />
       <EditableField
