@@ -2,7 +2,7 @@ import { Lang } from "need4deed-sdk";
 import { PaginatedCards } from "../core/paginatedCards";
 import TestimonialCard from "./TestimonialCard";
 import { ScreenTypes } from "@/config/constants";
-import fetchTestimonials from "./testimonials";
+import fetchTestimonials from "./utils";
 
 const cardsPerPageMap = {
   [ScreenTypes.MOBILE]: 1,
