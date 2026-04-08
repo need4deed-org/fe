@@ -174,3 +174,13 @@ export const BaseFooterContainer = styled.div.attrs<ContainerProps>((props) => (
   align-items: center;
   justify-content: var(--homepage-section-container-footer-justify-content);
 `;
+
+export const ActivitiesContainer = styled.div.attrs<ContainerProps>((props) => ({
+  id: props.id,
+}))<ContainerProps>`
+  display: flex;
+  width: fit-content;
+  justify-content: left;
+  flex-wrap: wrap;
+  gap: var(--activities-container-gap);
+`;

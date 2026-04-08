@@ -22,6 +22,10 @@
       "vpa": "Freiwilligenvereinbarung",
       "contact": "Kontakt"
     },
+    "testimonials": {
+      "header": "ERFAHRUNGSBERICHTE",
+      "headerParagraph": "Was Freiwillige und Unterkünfte sagen"
+    },
     "volunteeringCategories": {
       "header": "Wie kannst Du Dich engagieren?",
       "headerParagraph": "Wir bieten verschiedene Arten von ehrenamtlichen Tätigkeiten an, entweder regelmäßig oder gelegentlich.",

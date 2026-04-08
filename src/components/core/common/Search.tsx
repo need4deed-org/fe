@@ -1,3 +1,4 @@
+"use client";
 import { MagnifyingGlassIcon } from "@phosphor-icons/react";
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
