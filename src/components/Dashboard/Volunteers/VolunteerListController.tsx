@@ -7,7 +7,7 @@ import { CardsFilter } from "./Filters/types";
 import { serializeFilters } from "./helpers";
 import { VolunteerCardList } from "./VolunteerCardList"; // We will modify this component
 
-const columns = 4;
+const columns = 3;
 const rows = 3;
 const limit = columns * rows;
 
