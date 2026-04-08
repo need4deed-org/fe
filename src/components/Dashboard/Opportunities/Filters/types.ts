@@ -6,6 +6,7 @@ export interface OpportunityCardsFilter {
   [QueryParamsKeys.DISTRICT]: SelectionMap;
   [QueryParamsKeys.LANGUAGE]: SelectionMap;
   status: SelectionMap;
+  type: SelectionMap;
 }
 
 export type OpportunityCardFilterKeys = keyof OpportunityCardsFilter;

@@ -1,4 +1,4 @@
-import { OpportunityStatusType, QueryParamsKeys } from "need4deed-sdk";
+import { OpportunityStatusType, OpportunityType, QueryParamsKeys } from "need4deed-sdk";
 import { OpportunityCardsFilter } from "./types";
 
 export const defaultOpportunityCardsFilter: OpportunityCardsFilter = {
@@ -10,5 +10,10 @@ export const defaultOpportunityCardsFilter: OpportunityCardsFilter = {
     [OpportunityStatusType.SEARCHING]: false,
     [OpportunityStatusType.ACTIVE]: false,
     [OpportunityStatusType.PAST]: false,
+  },
+  type: {
+    [OpportunityType.ACCOMPANYING]: false,
+    [OpportunityType.EVENTS]: false,
+    [OpportunityType.REGULAR]: false,
   },
 };

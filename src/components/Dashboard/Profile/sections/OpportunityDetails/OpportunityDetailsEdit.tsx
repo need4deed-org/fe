@@ -4,7 +4,11 @@ import { EditableField } from "@/components/EditableField/EditableField";
 import { AvailabilityGrid } from "@/components/forms/AvailabilityGrid/AvailabilityGrid";
 import { LanguageFields } from "@/components/forms/LanguageFields";
 import { apiToFormAvailability } from "@/components/Dashboard/Profile/sections/VolunteerProfile/availabilityUtils";
-import { useApiActivities, useApiLanguages, useApiSkills } from "@/components/Dashboard/Profile/sections/VolunteerProfile/hooks";
+import {
+  useApiActivities,
+  useApiLanguages,
+  useApiSkills,
+} from "@/components/Dashboard/Profile/sections/VolunteerProfile/hooks";
 import { createMapping } from "@/components/Dashboard/Profile/sections/VolunteerProfile/mappingUtils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { MAX_DESCRIPTION_LENGTH } from "@/config/constants";
@@ -54,8 +58,8 @@ export function OpportunityDetailsEdit({ opportunity, onCancel }: Props) {
     defaultValues: {
       description: opp.description ?? "",
       numberOfVolunteers: String(opp.numberOfVolunteers ?? ""),
-      mainCommunication: languagesToFormValues(generalLangs),
-      residentsSpeak: languagesToFormValues(recipientLangs),
+      mainCommunication: languagesToFormValues(generalLangs, t),
+      residentsSpeak: languagesToFormValues(recipientLangs, t),
       availability: apiToFormAvailability(opp.availability),
       activities: opp.activities.map((a) => String(a.id)),
       skills: opp.skills.map((s) => String(s.id)),
