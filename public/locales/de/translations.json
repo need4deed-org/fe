@@ -717,12 +717,19 @@
         "search": "Suchen"
       },
       "filters": {
+        "type": {
+          "header": "Typ",
+          "accompanying": "Begleitend",
+          "regular": "Regulär",
+          "events": "Veranstaltungen",
+          "regular-accompanying": "Regulär + Begleitend"
+        },
         "status": {
           "header": "Status",
-          "new": "Neu",
-          "searching": "Suche läuft",
-          "active": "Aktiv",
-          "past": "Vergangen"
+          "opp-new": "Neu",
+          "opp-searching": "Suche läuft",
+          "opp-active": "Aktiv",
+          "opp-past": "Vergangen"
         }
       },
       "accompanyingTranslation": {
