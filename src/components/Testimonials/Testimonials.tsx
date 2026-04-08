@@ -11,7 +11,12 @@ const cardsPerPageMap = {
 };
 
 export default async function Testimonials({ lang }: { lang: Lang }) {
-  const testimonials = await fetchTestimonials(lang);
+  let testimonials = [];
+  try {
+    testimonials = await fetchTestimonials(lang);
+  } catch {
+    return null;
+  }
 
   const cards = testimonials.map((t) => <TestimonialCard {...t} key={t.name} />);
 
