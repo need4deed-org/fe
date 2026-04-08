@@ -1,3 +1,4 @@
+"use client";
 import { Testimonial } from "need4deed-sdk";
 import styled from "styled-components";
 

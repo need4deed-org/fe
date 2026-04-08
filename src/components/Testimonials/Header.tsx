@@ -1,4 +1,4 @@
-'use client";';
+"use client";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import { Heading1, Heading4 } from "../styled/text";

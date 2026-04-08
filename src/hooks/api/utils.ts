@@ -1,4 +1,4 @@
-export async function fetchFn<R, D = R>({
+export function fetchFn<R, D = R>({
   url,
   options,
   fnDTO,
