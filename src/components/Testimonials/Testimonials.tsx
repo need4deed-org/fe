@@ -1,8 +1,8 @@
 import { Lang } from "need4deed-sdk";
 import { PaginatedCards } from "../core/paginatedCards";
 import TestimonialCard from "./TestimonialCard";
-import fetchTestimonials from "@/hooks/api/testimonials";
 import { ScreenTypes } from "@/config/constants";
+import fetchTestimonials from "./testimonials";
 
 const cardsPerPageMap = {
   [ScreenTypes.MOBILE]: 1,
@@ -14,7 +14,8 @@ export default async function Testimonials({ lang }: { lang: Lang }) {
   let testimonials = [];
   try {
     testimonials = await fetchTestimonials(lang);
-  } catch {
+  } catch (error: unknown) {
+    console.error(error);
     return null;
   }
 
