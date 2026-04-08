@@ -1,7 +1,6 @@
 "use client";
 
 import { ReactNode, useState } from "react";
-
 import { ArrowButtons } from "./ArrowButtons";
 import { colorMap } from "../../svg/utils";
 import { PaginationIndicators } from "./PaginationIndicators";
@@ -12,13 +11,15 @@ import {
   VisibleCardsContainer,
 } from "@/components/styled/container";
 import { useSwipe } from "@/hooks";
+import { useScreenType } from "@/context/DeviceContext";
+import { ScreenTypes } from "@/config/constants";
 
 interface Props {
   cards: ReactNode[];
   arrowButtonColor: keyof typeof colorMap;
   bottomIndicatorColor: keyof typeof colorMap;
   bottomCurrentIndicatorColor: keyof typeof colorMap;
-  cardsPerPage?: number;
+  cardsPerPageMap?: Record<ScreenTypes, number>;
   isOverlayingCards?: boolean;
 }
 
@@ -27,14 +28,16 @@ export function PaginatedCards({
   arrowButtonColor,
   bottomIndicatorColor,
   bottomCurrentIndicatorColor,
-  cardsPerPage = 1,
+  cardsPerPageMap,
   isOverlayingCards = false,
 }: Props) {
   const [currentPage, setCurrentPage] = useState(0);
+  const screenType = useScreenType();
+  const resolvedCardsPerPage = cardsPerPageMap?.[screenType] || 1;
 
-  const totalPages = Math.ceil(cards.length / cardsPerPage) - (isOverlayingCards ? 1 : 0);
-  const startIndex = currentPage * cardsPerPage;
-  const endIndex = startIndex + cardsPerPage;
+  const totalPages = Math.ceil(cards.length / resolvedCardsPerPage) - (isOverlayingCards ? 1 : 0);
+  const startIndex = currentPage * resolvedCardsPerPage;
+  const endIndex = startIndex + resolvedCardsPerPage;
   const visibleCards = cards.slice(startIndex, endIndex);
 
   const nextCardElement = cards[endIndex];
