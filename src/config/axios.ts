@@ -1,6 +1,6 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-import { apiPathAuthRefresh, apiPathMe } from "./constants";
+import { apiPathAuthRefresh } from "./constants";
 
 let isRefreshing = false;
 let failedQueue: { resolve: (value?: unknown) => void; reject: (reason?: unknown) => void }[] = [];
@@ -29,7 +29,6 @@ axios.interceptors.response.use(
     if (
       error.response?.status !== 401 ||
       originalRequest.url.includes(apiPathAuthRefresh) ||
-      originalRequest.url.includes(apiPathMe) ||
       originalRequest._retry ||
       !originalRequest.url
     ) {
@@ -69,13 +68,10 @@ axios.interceptors.response.use(
       processQueue(refreshError, null);
 
       // Only redirect if we aren't already on the login page to avoid loops
-      if (window.location.pathname !== "/login") {
+      if (!window.location.pathname.includes("login")) {
         toast.error("Session expired. Please log in again.");
         window.location.href = "/login";
       }
-
-      // Redirect to login page
-      window.location.href = "/login";
 
       return Promise.reject(refreshError);
     } finally {
