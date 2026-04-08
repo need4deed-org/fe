@@ -37,15 +37,16 @@ export function VolunteerListController({
   if (opportunityId) {
     serializedFilter.set("opportunity", opportunityId);
   }
+  const params = {
+    limit: limit,
+    page: currentPage,
+    sortOrder,
+    filter: serializedFilter,
+  };
   const { data, count } = useGetQuery<ApiVolunteerGetList[]>({
     queryKey: ["volunteers"],
     apiPath: apiPathVolunteer,
-    params: {
-      limit: limit,
-      page: currentPage,
-      sortOrder,
-      filter: serializedFilter,
-    },
+    params,
     staleTime: cacheTTL,
   });
   const volunteers = data || [];
