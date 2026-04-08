@@ -25,7 +25,18 @@ export function extractOptionTitles(items: OptionById[], lang: Lang): string[] {
     .filter(Boolean);
 }
 
-export function languagesToFormValues(langs: ApiLanguage[]): LanguageObject[] {
+export function languagesToFormValues(langs: ApiLanguage[], t: TFunction): LanguageObject[] {
   if (langs.length === 0) return [{ id: 1, language: "", level: "" }];
-  return langs.map((lang, index) => ({ id: index + 1, language: String(lang.id), level: "" as const }));
+
+  return langs.map((lang, index) => {
+    const key = `languageNames.${lang.title.toLowerCase()}`;
+    const translated = t(key);
+    const hasTranslation = translated !== key;
+
+    return {
+      id: index + 1,
+      language: hasTranslation ? translated : lang.title,
+      level: "" as const,
+    };
+  });
 }
