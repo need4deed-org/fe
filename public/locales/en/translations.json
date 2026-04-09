@@ -678,16 +678,16 @@
       "filters": {
         "status": {
           "header": "Status",
-          "new": "New",
-          "inactive": "Inactive",
-          "active": "Active",
-          "unresponsive": "Unresponsive"
+          "agent-new": "New",
+          "agent-inactive": "Inactive",
+          "agent-active": "Active",
+          "agent-unresponsive": "Unresponsive"
         },
         "volunteerSearch": {
           "header": "Volunteer Search",
-          "searching": "Searching",
-          "volunteers-found": "Filled",
-          "not-needed": "Not needed"
+          "agent-searching": "Searching",
+          "agent-volunteers-found": "Filled",
+          "agent-not-needed": "Not needed"
         }
       },
       "accompanyingTranslation": {

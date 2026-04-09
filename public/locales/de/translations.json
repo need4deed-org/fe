@@ -637,16 +637,16 @@
       "filters": {
         "status": {
           "header": "Status",
-          "new": "Neu",
-          "inactive": "Inaktiv",
-          "active": "Aktiv",
-          "unresponsive": "Reagiert nicht"
+          "agent-new": "Neu",
+          "agent-inactive": "Inaktiv",
+          "agent-active": "Aktiv",
+          "agent-unresponsive": "Reagiert nicht"
         },
         "volunteerSearch": {
           "header": "Freiwilligensuche",
-          "searching": "Suchend",
-          "volunteers-found": "Besetzt",
-          "not-needed": "Nicht benötigt"
+          "agent-searching": "Suchend",
+          "agent-volunteers-found": "Besetzt",
+          "agent-not-needed": "Nicht benötigt"
         }
       },
       "accompanyingTranslation": {

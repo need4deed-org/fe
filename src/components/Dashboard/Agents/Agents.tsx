@@ -1,22 +1,22 @@
 "use client";
 
 import { DashboardLayout } from "@/components/Layout";
-import { apiPathOption, questionMark } from "@/config/constants";
-import { useGetQuery } from "@/hooks";
-import { ApiOptionLists, EntityTableName, SortOrder } from "need4deed-sdk";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import Filters from "../common/CardsFilter/Filters";
-import { createFilterFromOption, getClearFilter } from "../common/CardsFilter/helpers";
-import CardsHeader from "../common/CardsHeader/CardsHeader";
 import { AgentListController } from "./AgentListController";
-import { defaultAgentCardsFilter } from "./Filters/constants";
-import FiltersContent from "./Filters/FiltersContent";
-import { createSelectedAgentFiltersAsFlatArray } from "./Filters/helpers";
-import { AgentCardsFilter } from "./Filters/types";
-import { serializeAgentFilters } from "./helpers";
 import { AgentsContainer } from "./styles";
+import CardsHeader from "../common/CardsHeader/CardsHeader";
+import { useTranslation } from "react-i18next";
+import { useEffect, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { ApiOptionLists, EntityTableName, SortOrder } from "need4deed-sdk";
+import { useGetQuery } from "@/hooks";
+import { apiPathOption, questionMark } from "@/config/constants";
+import { AgentCardsFilter } from "./Filters/types";
+import { createSelectedAgentFiltersAsFlatArray } from "./Filters/helpers";
+import { defaultAgentCardsFilter } from "./Filters/constants";
+import { createFilterFromOption, getClearFilter } from "../common/CardsFilter/helpers";
+import { serializeAgentFilters } from "./helpers";
+import Filters from "../common/CardsFilter/Filters";
+import FiltersContent from "./Filters/FiltersContent";
 
 export const Agents = () => {
   const { t } = useTranslation();
@@ -49,7 +49,7 @@ export const Agents = () => {
   };
 
   const handleClearAllFilters = () => {
-    const cleared = getClearFilter(cardsFilter) as unknown as AgentCardsFilter;
+    const cleared = getClearFilter<AgentCardsFilter>(cardsFilter);
     setCardsFilter(cleared);
     router.push(pathname + questionMark + serializeAgentFilters(cleared, searchParams));
   };
