@@ -1,3 +1,4 @@
+"use client";
 import { MagnifyingGlassIcon } from "@phosphor-icons/react";
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
@@ -44,7 +45,7 @@ export function Search({
   onInputChange,
   width,
   backgroundColor,
-  debounceTime = 1000,
+  debounceTime = 500,
 }: Props) {
   const [inputValue, setInputValue] = useState(value);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -75,8 +76,8 @@ export function Search({
   };
 
   useEffect(() => {
-    if (value !== inputValue) setInputValue(value);
-  }, [inputValue, value]);
+    setInputValue(value);
+  }, [value]);
 
   // Cleanup the timeout when the component unmounts
   useEffect(() => {

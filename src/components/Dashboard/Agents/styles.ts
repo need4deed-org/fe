@@ -1,12 +1,20 @@
 import { BaseCard } from "@/components/styled/container";
 import styled from "styled-components";
 
+export const AgentsContainer = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--dashboard-volunteers-container-gap);
+`;
+
 export const AgentCardListContainer = styled.div`
   display: flex;
   justify-content: left;
 `;
 
 export const Card = styled(BaseCard)`
+  background-color: var(--color-orchid-subtle);
   background-color: var(--color-orchid-subtle);
   width: var(--dashboard-agents-card-width);
   height: var(--dashboard-agents-card-height);

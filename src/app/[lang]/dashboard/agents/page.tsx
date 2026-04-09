@@ -1,5 +1,5 @@
 import { Agents } from "@/components/Dashboard";
 
-export default function VolunteersPage() {
+export default function AgentsPage() {
   return <Agents />;
 }

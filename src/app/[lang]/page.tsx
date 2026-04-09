@@ -1,8 +1,11 @@
 import { Landing } from "@/components/Dashboard/Landing";
 import Link from "next/link";
 import styles from "./page.module.css";
+import { TestimonialsSection } from "@/components/Testimonials";
+import { Lang } from "need4deed-sdk";
 
-export default function Home() {
+export default async function Home({ params }: { params: Promise<{ lang: Lang }> }) {
+  const lang = (await params).lang;
   return (
     <div className={styles.page}>
       <header>HEADER</header>
@@ -24,6 +27,7 @@ export default function Home() {
           <Landing />
         </div>
       </main>
+      <TestimonialsSection lang={lang as Lang} />
       <footer className={styles.footer}>FOOTER</footer>
     </div>
   );

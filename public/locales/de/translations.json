@@ -22,6 +22,10 @@
       "vpa": "Freiwilligenvereinbarung",
       "contact": "Kontakt"
     },
+    "testimonials": {
+      "header": "ERFAHRUNGSBERICHTE",
+      "headerParagraph": "Was Freiwillige und Unterkünfte sagen"
+    },
     "volunteeringCategories": {
       "header": "Wie kannst Du Dich engagieren?",
       "headerParagraph": "Wir bieten verschiedene Arten von ehrenamtlichen Tätigkeiten an, entweder regelmäßig oder gelegentlich.",
@@ -435,7 +439,7 @@
     },
     "filters": {
       "button": "FILTER",
-      "closeFilters": "FILTER SCLIEẞEN",
+      "closeFilters": "FILTER SCHLIEẞEN",
       "clearAll": "Filter löschen"
     },
     "volunteerProfile": {
@@ -536,10 +540,10 @@
       },
       "opportunitiesSec": {
         "tabs": {
-          "pending": "Ausstehend",
-          "matched": "Zugeordnet",
-          "active": "Aktiv",
-          "past": "Vergangen"
+          "opp-pending": "Ausstehend",
+          "opp-matched": "Zugeordnet",
+          "opp-active": "Aktiv",
+          "opp-past": "Vergangen"
         },
         "match": "Match",
         "notAMatch": "Kein Match",
@@ -605,6 +609,92 @@
         }
       }
     },
+    "agents": {
+      "agents": "RAC-Verzeichnis",
+      "tabs": {
+        "tab1": "Liste",
+        "tab2": "Karten",
+        "tab3": "Karte"
+      },
+      "status": {
+        "new": "Neu",
+        "searching": "Suchend",
+        "active": "Aktiv",
+        "past": "Vergangen"
+      },
+      "type": {
+        "accompanying": "Begleitend",
+        "regular": "Regulär",
+        "events": "Veranstaltungen",
+        "regular-accompanying": "Regulär + Begleitend"
+      },
+      "card": {
+        "mainCommunication": "Hauptkommunikation",
+        "residentsSpeak": "Bewohner sprechen",
+        "schedule": "Zeitplan",
+        "search": "Suche"
+      },
+      "filters": {
+        "type": {
+          "header": "Typ",
+          "ae": "AE",
+          "gu1": "GU1",
+          "gu2": "GU2",
+          "gu2+": "GU2+",
+          "gu3": "GU3",
+          "nu": "NU",
+          "asog": "ASOG",
+          "counseling-center": "Beratungsstelle",
+          "tandem": "Tandem",
+          "multiple-social-support": "Mehrfach-Sozialberatung"
+        },
+        "engagementStatus": {
+          "header": "Status",
+          "agent-new": "Neu",
+          "agent-inactive": "Inaktiv",
+          "agent-active": "Aktiv",
+          "agent-unresponsive": "Reagiert nicht"
+        },
+        "volunteerSearch": {
+          "header": "Freiwilligensuche",
+          "agent-searching": "Suchend",
+          "agent-volunteers-found": "Besetzt",
+          "agent-not-needed": "Nicht benötigt"
+        },
+        "district": {
+          "header": "Bezirk"
+        },
+        "services": {
+          "header": "Leistungen",
+          "childcare": "Kinderbetreuung",
+          "consultation": "Beratung",
+          "job-coaching": "Job-Coaching",
+          "refugee-accommodation": "Flüchtlingsunterkunft",
+          "sport": "Sport",
+          "tandem": "Tandem",
+          "tutoring": "Nachhilfe",
+          "voluntary-support": "Ehrenamtliche Unterstützung",
+          "welfare": "Wohlfahrt",
+          "youth": "Jugend"
+        }
+      },
+      "accompanyingTranslation": {
+        "en": "Deutsch, Englisch",
+        "de": "Deutsch",
+        "no": "Keine Übersetzung erforderlich"
+      },
+      "defaultMainCommunication": "Englisch, Deutsch",
+      "otherCategory": "Allgemeine Freiwilligenarbeit",
+      "goToProfile": "Zum Profil",
+      "mainCommunication": "Hauptkommunikation",
+      "translationTo": "Übersetzung nach",
+      "residentsSpeak": "Bewohner sprechen",
+      "languages": "Sprachen",
+      "schedule": "Zeitplan",
+      "district": "Stadtviertel",
+      "dateOfAppointment": "Termindatum",
+      "description": "Beschreibung"
+    },
     "opportunities": {
       "opportunities": "Möglichkeiten",
       "tabs": {
@@ -613,10 +703,10 @@
         "tab3": "Karte"
       },
       "status": {
-        "new": "Neu",
-        "searching": "Suche läuft",
-        "active": "Aktiv",
-        "past": "Vergangen"
+        "opp-new": "Neu",
+        "opp-searching": "Suche läuft",
+        "opp-active": "Aktiv",
+        "opp-past": "Vergangen"
       },
       "type": {
         "accompanying": "Begleitung",
@@ -631,12 +721,19 @@
         "search": "Suchen"
       },
       "filters": {
+        "type": {
+          "header": "Typ",
+          "accompanying": "Begleitend",
+          "regular": "Regulär",
+          "events": "Veranstaltungen",
+          "regular-accompanying": "Regulär + Begleitend"
+        },
         "status": {
           "header": "Status",
-          "new": "Neu",
-          "searching": "Suche läuft",
-          "active": "Aktiv",
-          "past": "Vergangen"
+          "opp-new": "Neu",
+          "opp-searching": "Suche läuft",
+          "opp-active": "Aktiv",
+          "opp-past": "Vergangen"
         }
       },
       "accompanyingTranslation": {
@@ -757,6 +854,7 @@
       "trustLevel": "Reaktionsfähigkeit",
       "changeStatus": "Status ändern",
       "district": "Bezirk",
+      "type": "Typ",
       "status": {
         "engagement": {
           "new": "Neu",
@@ -811,11 +909,15 @@
         "saveSuccess": "Kontaktdaten erfolgreich aktualisiert",
         "roles": {
           "label": "Rolle",
-          "management": "Geschäftsführung",
-          "volunteer_coordinator": "Freiwilligenkoordinator/in",
-          "social_work": "Sozialarbeit",
-          "childcare": "Kinderbetreuung",
-          "coordination": "Koordination"
+          "social-worker": "Sozialarbeiter",
+          "volunteer-coordinator": "Ehrenamtskoordinator",
+          "manager": "Leitung",
+          "project-coordinator": "Projektkoordinator",
+          "coordination": "Koordination",
+          "psychologist": "Psychologe",
+          "project-staff": "Projektmitarbeiter",
+          "childcare-worker": "Kinderbetreuer",
+          "other": "Sonstiges"
         },
         "cancel": "Abbrechen",
         "saveChanges": "Änderungen speichern",
@@ -947,10 +1049,10 @@
         },
         "appliedOn": "Beworben am",
         "tabs": {
-          "pending": "Ausstehend",
-          "matched": "Zugeordnet",
-          "active": "Aktiv",
-          "past": "Vergangen"
+          "opp-pending": "Ausstehend",
+          "opp-matched": "Zugeordnet",
+          "opp-active": "Aktiv",
+          "opp-past": "Vergangen"
         },
         "emptyState": "Noch keine Freiwilligen in dieser Kategorie",
         "statusUpdateSuccess": "Freiwilligen-Status erfolgreich aktualisiert",

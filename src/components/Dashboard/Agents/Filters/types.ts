@@ -1,12 +1,13 @@
 import { QueryParamsKeys } from "need4deed-sdk";
 import { SelectionMap } from "../../common/CardsFilter/types";
 
-export interface OpportunityCardsFilter {
+export interface AgentCardsFilter {
   [QueryParamsKeys.SEARCH]: string;
   [QueryParamsKeys.DISTRICT]: SelectionMap;
-  [QueryParamsKeys.LANGUAGE]: SelectionMap;
-  status: SelectionMap;
   type: SelectionMap;
+  volunteerSearch: SelectionMap;
+  engagementStatus: SelectionMap;
+  services: SelectionMap;
 }
 
-export type OpportunityCardFilterKeys = keyof OpportunityCardsFilter;
+export type AgentCardFilterKeys = keyof AgentCardsFilter;

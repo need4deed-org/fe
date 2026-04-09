@@ -1,6 +1,6 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-import { apiPathAuthRefresh } from "./constants";
+import { apiPathAuthRefresh, apiPathMe } from "./constants";
 
 let isRefreshing = false;
 let failedQueue: { resolve: (value?: unknown) => void; reject: (reason?: unknown) => void }[] = [];
@@ -29,6 +29,7 @@ axios.interceptors.response.use(
     if (
       error.response?.status !== 401 ||
       originalRequest.url.includes(apiPathAuthRefresh) ||
+      originalRequest.url.includes(apiPathMe) ||
       originalRequest._retry ||
       !originalRequest.url
     ) {

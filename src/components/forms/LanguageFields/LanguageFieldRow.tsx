@@ -22,11 +22,11 @@ type Props = {
 
 const languageLevels: LanguageLevel[] = [LanguageLevel.NATIVE, LanguageLevel.FLUENT, LanguageLevel.INTERMEDIATE];
 
-const levelToI18nKey: Record<LanguageLevel, string> = {
+const levelToI18nKey: LanguageLevel = {
   [LanguageLevel.NATIVE]: "languagesNative",
   [LanguageLevel.FLUENT]: "languagesFluent",
   [LanguageLevel.INTERMEDIATE]: "languagesIntermediate",
-};
+} as unknown as LanguageLevel;
 
 export function LanguageFieldRow({
   language,
@@ -42,7 +42,6 @@ export function LanguageFieldRow({
   const { i18n } = useTranslation();
   const fallbackLanguages = useList(ListsOfOptions.LANGUAGES);
   const availableLanguages = providedLanguages || fallbackLanguages;
-
   return (
     <div
       className={showLevel ? style["form-languages-grid"] : style["form-languages-grid-no-level"]}
@@ -58,11 +57,17 @@ export function LanguageFieldRow({
           <option value="" disabled hidden>
             {t("form.becomeVolunteer.fields.languages.chooseLanguage")}
           </option>
+          <option key={language.id} value={language.language}>
+            {language.language}
+          </option>
           {availableLanguages.map((item) => (
             <option
               key={item.id}
-              value={String(item.id)}
-              disabled={disabledLanguages.includes(String(item.id)) && language.language !== String(item.id)}
+              value={item.title[i18n.language as Lang]}
+              disabled={
+                (disabledLanguages.includes(String(item.id)) && language.language !== String(item.id)) ||
+                disabledLanguages.includes(item.title[i18n.language as Lang] as string)
+              }
             >
               {item.title[i18n.language as Lang]}
             </option>
@@ -82,7 +87,7 @@ export function LanguageFieldRow({
             </option>
             {languageLevels.map((level) => (
               <option key={level} value={level}>
-                {t(`form.becomeVolunteer.fields.languages.${levelToI18nKey[level]}.header`)}
+                {t(`form.becomeVolunteer.fields.languages.${levelToI18nKey[level as unknown as number]}.header`)}
               </option>
             ))}
           </select>
