@@ -1,36 +1,36 @@
 import {
-  AgentEngagementStatusType,
+  AgentVolunteerSearchType,
   ApiAgentGetList,
   AgentServiceType,
   ApiOptionLists,
   AgentTrustType,
-  AgentVolunteerSearchType,
   ApiAgentGet,
   OptionById,
   QueryParamsKeys,
+  AgentType,
 } from "need4deed-sdk";
 
 import { ReadonlyURLSearchParams } from "next/navigation";
 import { AgentCardsFilter } from "./Filters/types";
 
-type AgentListItem = ApiAgentGetList & ApiAgentGet;
+type AgentListItem = ApiAgentGetList & Partial<ApiAgentGet>;
 
 export function getNormalizedAgent(agent: AgentListItem): Omit<
   AgentListItem,
-  "district" | "statusEngagement" | "volunteerSearch" | "serviceType"
+  "district" | "volunteerSearch" | "type" | "trustLevel" | "serviceType"
 > & {
   district: OptionById | undefined;
-  statusEngagement: AgentEngagementStatusType;
   volunteerSearch: AgentVolunteerSearchType;
+  type: AgentType;
   trustLevel: AgentTrustType;
   serviceType: AgentServiceType[] | undefined;
 } {
   return {
     ...agent,
+    type: agent.type,
     district: agent.district,
-    statusEngagement: agent.statusEngagement,
     volunteerSearch: agent.volunteerSearch,
-    trustLevel: agent.trustLevel,
+    trustLevel: agent.trustLevel ? agent.trustLevel : AgentTrustType.UNKNOWN,
     serviceType: agent.serviceType,
   };
 }
@@ -60,10 +60,10 @@ export function serializeAgentFilters(
     }
   });
 
-  params.delete("status");
-  Object.entries(filter.status).forEach(([key, value]) => {
+  params.delete("type");
+  Object.entries(filter.type).forEach(([key, value]) => {
     if (value === true) {
-      params.append("status", key);
+      params.append("type", key);
     }
   });
 
@@ -71,6 +71,20 @@ export function serializeAgentFilters(
   Object.entries(filter.volunteerSearch).forEach(([key, value]) => {
     if (value === true) {
       params.append("volunteerSearch", key);
+    }
+  });
+
+  params.delete("engagementStatus");
+  Object.entries(filter.engagementStatus).forEach(([key, value]) => {
+    if (value === true) {
+      params.append("engagementStatus", key);
+    }
+  });
+
+  params.delete("services");
+  Object.entries(filter.services).forEach(([key, value]) => {
+    if (value === true) {
+      params.append("services", key);
     }
   });
 
@@ -91,14 +105,24 @@ export function deserializeAgentFilters(
     if (newFilter.district[d] !== undefined) newFilter.district[d] = true;
   });
 
-  const queryStatus = searchParams.getAll("status");
-  queryStatus.forEach((s) => {
-    if (newFilter.status[s] !== undefined) newFilter.status[s] = true;
+  const queryType = searchParams.getAll("type");
+  queryType.forEach((s) => {
+    if (newFilter.type[s] !== undefined) newFilter.type[s] = true;
   });
 
   const queryVolunteerSearch = searchParams.getAll("volunteerSearch");
   queryVolunteerSearch.forEach((s) => {
     if (newFilter.volunteerSearch[s] !== undefined) newFilter.volunteerSearch[s] = true;
+  });
+
+  const queryEngagementStatus = searchParams.getAll("engagementStatus");
+  queryEngagementStatus.forEach((s) => {
+    if (newFilter.engagementStatus[s] !== undefined) newFilter.engagementStatus[s] = true;
+  });
+
+  const queryServices = searchParams.getAll("services");
+  queryServices.forEach((s) => {
+    if (newFilter.services[s] !== undefined) newFilter.services[s] = true;
   });
 
   return newFilter;

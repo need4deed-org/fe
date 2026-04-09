@@ -15,6 +15,7 @@ export const AgentCardListContainer = styled.div`
 
 export const Card = styled(BaseCard)`
   background-color: var(--color-orchid-subtle);
+  background-color: var(--color-orchid-subtle);
   width: var(--dashboard-agents-card-width);
   height: var(--dashboard-agents-card-height);
   gap: var(--dashboard-agents-card-gap);
