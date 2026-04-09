@@ -22,6 +22,10 @@
       "vpa": "Freiwilligenvereinbarung",
       "contact": "Kontakt"
     },
+    "testimonials": {
+      "header": "ERFAHRUNGSBERICHTE",
+      "headerParagraph": "Was Freiwillige und Unterkünfte sagen"
+    },
     "volunteeringCategories": {
       "header": "Wie kannst Du Dich engagieren?",
       "headerParagraph": "Wir bieten verschiedene Arten von ehrenamtlichen Tätigkeiten an, entweder regelmäßig oder gelegentlich.",
@@ -717,12 +721,19 @@
         "search": "Suchen"
       },
       "filters": {
+        "type": {
+          "header": "Typ",
+          "accompanying": "Begleitend",
+          "regular": "Regulär",
+          "events": "Veranstaltungen",
+          "regular-accompanying": "Regulär + Begleitend"
+        },
         "status": {
           "header": "Status",
-          "new": "Neu",
-          "searching": "Suche läuft",
-          "active": "Aktiv",
-          "past": "Vergangen"
+          "opp-new": "Neu",
+          "opp-searching": "Suche läuft",
+          "opp-active": "Aktiv",
+          "opp-past": "Vergangen"
         }
       },
       "accompanyingTranslation": {

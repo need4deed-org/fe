@@ -1,6 +1,7 @@
 import { Lang } from "need4deed-sdk";
 export { AgentRoleType as AgentRoles } from "need4deed-sdk";
 export const tokenKey = "token";
+export const urlApi = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000/api";
 
 export const apiPrefix = "api";
 export const apiPathVolunteer = `/${apiPrefix}/volunteer/`;
@@ -17,7 +18,7 @@ export const apiPathOpportunityVolunteer = `/${apiPrefix}/opportunity-volunteer`
 export const apiPathMe = `/${apiPrefix}/user/me`;
 export const apiPathPerson = `/${apiPrefix}/person/`;
 export const apiPathOrganization = `/${apiPrefix}/organization/`;
-
+export const cloudfrontDataURL = process.env.NEXT_PUBLIC_CLOUDFRONT_DATA_URL;
 export const cacheTTL = 1000 * 60 * 5; // 5 minutes
 
 export enum ScreenTypes {

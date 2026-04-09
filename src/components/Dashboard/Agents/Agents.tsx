@@ -46,7 +46,7 @@ export const Agents = () => {
   };
 
   const handleClearAllFilters = () => {
-    const cleared = getClearFilter(cardsFilter) as unknown as AgentCardsFilter;
+    const cleared = getClearFilter<AgentCardsFilter>(cardsFilter);
     setCardsFilter(cleared);
     router.push(pathname + questionMark + serializeAgentFilters(cleared, searchParams));
   };
