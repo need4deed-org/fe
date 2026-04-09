@@ -1,100 +1,201 @@
 import { TFunction } from "i18next";
 import {
-  ApiLanguage,
-  LangProficiency,
+  Lang,
   OccasionalType,
   OpportunityType,
   Option,
   OptionId,
   TimeSlot as SdkTimeSlot,
   TranslatedIntoType,
-  VolunteerFormData,
 } from "need4deed-sdk";
 
-import { getDateLocalTooUTC, parseYesNo, range } from "@/utils";
+import { range } from "@/utils";
 import { maxPLZBerlin, maxPLZGermany, minPLZBerlin, minPLZGermany } from "../../config/constants";
-import { OpportunityData, OpportunityParsedData } from "./AddOpportunity/dataStructure";
+import { OpportunityData } from "./AddOpportunity/dataStructure";
 import { VolunteerData } from "./BecomeVolunteer/dataStructure";
 import { Availability, AvailabilitySlot, Selected, TypePLZ } from "./types";
-
-function getSelectedTimeslots(state: Availability): [number, OptionId][] {
-  return state.reduce((result: [number, OptionId][], day) => {
-    day.timeSlots
-      .filter(({ selected }) => selected)
-      .forEach(({ id }) => {
-        const numDay = day.weekday;
-        result.push([numDay, id]);
-      });
-    return result;
-  }, []);
-}
 
 export function getSelectedIds(state: Selected[]): OptionId[] {
   return state.filter(({ selected }) => selected).map(({ id }) => id);
 }
 
-export function parseFormStateDTOVolunteer(value: VolunteerData): VolunteerFormData {
-  const data = {} as VolunteerFormData;
-  data.opportunityId = value.opportunityId ? +value.opportunityId : undefined;
-  data.fullName = value.name;
-  data.email = value.email;
-  data.phone = value.phone;
-  data.postcode = Number(value.postcode);
-  data.districts = getSelectedIds(value.locations);
-  data.activities = getSelectedIds(value.activities);
-  data.skills = getSelectedIds(value.skills);
-  data.leadFrom = getSelectedIds(value.leadFrom);
-  data.schedule = getSelectedTimeslots(value.availability);
-
-  // Languages with proficiency levels
-  const levelToProficiency: Record<string, LangProficiency> = {
-    native: LangProficiency.NATIVE,
-    fluent: LangProficiency.FLUENT,
-    intermediate: LangProficiency.INTERMEDIATE,
-  };
-
-  data.languages = value.languages
-    .filter((lang) => lang.language)
-    .map((lang) => ({
-      title: lang.language,
-      proficiency: levelToProficiency[lang.level] || LangProficiency.INTERMEDIATE,
-    })) as ApiLanguage[];
-
-  data.goodConductCertificate = parseYesNo(value.certOfGoodConduct);
-  data.measlesVaccination = parseYesNo(value.certMeaslesVaccination);
-  data.comments = value.comments;
-
-  return data;
+export interface VolunteerDTO {
+  origin_opportunity: string | null;
+  full_name: string;
+  email: string;
+  phone: string;
+  postal_code: number | null;
+  preferred_berlin_locations: OptionId[];
+  native_languages: OptionId[];
+  fluent_languages: OptionId[];
+  intermediate_languages: OptionId[];
+  schedule: [number, OptionId][];
+  activities: OptionId[];
+  skills: OptionId[];
+  comments: string | null;
+  good_conduct_certificate: "Yes" | "No";
+  if_measles_vaccination?: boolean;
+  lead_from: string;
+  language: Lang | null;
 }
 
-export function parseFormStateDTOOpportunity(value: OpportunityData) {
-  const data = {} as OpportunityParsedData;
-  data.title = value.title;
-  data.opportunity_type = value.opportunityType || OpportunityType.REGULAR;
-  data.vo_information = value.voInformation;
-  data.accomp_address = value.aaAddress;
-  data.accomp_postcode = value.aaPostcode;
-  data.accomp_datetime = getDateLocalTooUTC(
-    value.opportunityType === OpportunityType.ACCOMPANYING ? value.dateTime : value.onetimeDateTime,
-  );
-  data.accomp_name = value.refugeeName;
-  data.accomp_phone = value.refugeeNumber;
-  data.accomp_information = value.aaInformation;
-  data.accomp_translation = value.translatedInto;
-  data.rac_email = value.email;
-  data.rac_full_name = value.fullName;
-  data.rac_phone = value.racPhone;
-  data.rac_address = value.racAddress;
-  data.rac_plz = value.racPostcode;
-  data.volunteers_number = parseInt(value.numberVolunteers, 10);
-  data.berlin_locations = getSelectedIds(value.locations);
-  data.languages = value.translatedInto !== TranslatedIntoType.NO_TRANSLATION ? getSelectedIds(value.languages) : [];
-  data.activities = getSelectedIds([...value.activities, ...value.activitiesAccompanying]);
-  data.skills = getSelectedIds(value.skills);
-  data.timeslots = getSelectedTimeslots(value.schedule);
-  data.language = value.language;
+export function parseFormStateDTOVolunteer(form: VolunteerData): VolunteerDTO {
+  // Locations: collect selected ids
+  const preferred_berlin_locations = form.locations.filter((l) => l.selected).map((l) => l.id);
 
-  return data;
+  // Schedule: flatten availability into [weekday, timeSlotId] pairs
+  // weekday 0 is the "occasional" row (weekdays/weekends)
+  const schedule = form.availability.flatMap(({ weekday, timeSlots }) =>
+    timeSlots
+      .filter((ts) => ts.selected)
+      .map((ts) => {
+        // Capitalize occasional slot ids to match API ("weekdays" → "Weekdays")
+        const slotId = weekday === 0 ? ts.id.charAt(0).toUpperCase() + ts.id.slice(1) : ts.id;
+        return [weekday, slotId];
+      }),
+  ) as [number, OptionId][];
+
+  // Languages: group by level
+  const native_languages = form.languages.filter((l) => l.level === "native").map((l) => l.language);
+  const fluent_languages = form.languages.filter((l) => l.level === "fluent").map((l) => l.language);
+  const intermediate_languages = form.languages.filter((l) => l.level === "intermediate").map((l) => l.language);
+
+  // Activities: selected ids
+  const activities = form.activities.filter((a) => a.selected).map((a) => a.id);
+
+  // Skills: selected ids
+  const skills = form.skills.filter((s) => s.selected).map((s) => s.id);
+
+  // Lead from: comma-separated string of selected ids
+  const lead_from = form.leadFrom
+    .filter((l) => l.selected)
+    .map((l) => l.id)
+    .join(", ");
+
+  return {
+    origin_opportunity: form.opportunityId || null,
+    full_name: form.name,
+    email: form.email,
+    phone: form.phone,
+    postal_code: form.postcode ? Number(form.postcode) : null,
+    preferred_berlin_locations,
+    schedule,
+    native_languages,
+    fluent_languages,
+    intermediate_languages,
+    activities,
+    skills,
+    good_conduct_certificate: form.certOfGoodConduct ? "Yes" : "No",
+    if_measles_vaccination: form.certMeaslesVaccination,
+    lead_from,
+    comments: form.comments ?? null,
+    language: form.language ?? null,
+  };
+}
+
+export interface OpportunityDTO {
+  title: string;
+  opportunity_type?: OpportunityType;
+  rac_email: string | null;
+  rac_full_name: string | null;
+  rac_phone: string | null;
+  rac_address: string | null;
+  rac_plz: string | null;
+  accomp_address: string | null;
+  accomp_postcode: string | null;
+  accomp_datetime: string | null;
+  accomp_name: string | null;
+  accomp_phone: string | null;
+  accomp_information: string | null;
+  accomp_translation: TranslatedIntoType | null;
+  volunteers_number: number | null;
+  berlin_locations: OptionId[];
+  languages: OptionId[];
+  activities: OptionId[];
+  skills: OptionId[];
+  vo_information: string | null;
+  timeslots: (string | number)[][];
+  language: Lang | null;
+}
+
+export function parseFormStateDTOOpportunity(form: OpportunityData): OpportunityDTO {
+  const TRANSLATION_TYPE_MAP = {
+    englishOk: "englishOk",
+    needTranslation: "englishOk",
+    noTranslation: "noTranslation",
+    deutsche: "deutsche",
+  };
+
+  const isAccompanying = form.opportunityType === "accompanying";
+
+  // Locations
+  const berlin_locations = form.locations.filter((l) => l.selected).map((l) => l.id);
+
+  // Schedule: flatten into [weekday, slotId] pairs
+  const timeslots = (form.schedule ?? []).flatMap(({ weekday, timeSlots }) =>
+    timeSlots
+      .filter((ts) => ts.selected)
+      .map((ts) => {
+        const slotId = weekday === 0 ? ts.id.charAt(0).toUpperCase() + ts.id.slice(1) : ts.id;
+        return [weekday, slotId];
+      }),
+  );
+
+  // Languages: flat list of selected ids
+  const languages = form.languages.filter((l) => l.selected).map((l) => l.id);
+
+  // Activities: merge regular + accompanying lists, collect selected ids
+  const activities = [...(form.activities ?? []), ...(form.activitiesAccompanying ?? [])]
+    .filter((a) => a.selected)
+    .map((a) => a.id);
+
+  // Skills
+  const skills = form.skills.filter((s) => s.selected).map((s) => s.id);
+
+  // Accompanying-specific fields
+  const accomp_address = isAccompanying ? form.aaAddress || null : null;
+  const accomp_postcode = isAccompanying ? form.aaPostcode || null : null;
+  const accomp_datetime = isAccompanying ? (form.dateTime ? new Date(form.dateTime).toISOString() : null) : null;
+  const accomp_name = isAccompanying ? form.refugeeName || null : null;
+  const accomp_phone = isAccompanying ? form.refugeeNumber || null : null;
+  const accomp_information = isAccompanying ? form.aaInformation || null : null;
+  const accomp_translation = isAccompanying
+    ? form.translatedInto
+      ? ((TRANSLATION_TYPE_MAP[form.translatedInto as `${TranslatedIntoType}`] ?? null) as TranslatedIntoType)
+      : null
+    : null;
+
+  return {
+    title: form.title,
+    opportunity_type: form.opportunityType,
+    vo_information: form.voInformation || null,
+
+    // Accompanying fields (null for regular opportunities)
+    accomp_address,
+    accomp_postcode,
+    accomp_datetime,
+    accomp_name,
+    accomp_phone,
+    accomp_information,
+    accomp_translation,
+
+    // RAC (Refugee Accommodation Center) contact
+    rac_email: form.email || null,
+    rac_full_name: form.fullName || null,
+    rac_phone: form.racPhone || null,
+    rac_address: form.racAddress || null,
+    rac_plz: form.racPostcode || null,
+
+    volunteers_number: form.numberVolunteers ? Number(form.numberVolunteers) : null,
+
+    berlin_locations,
+    languages,
+    activities,
+    skills,
+    timeslots,
+
+    language: form.language ?? null,
+  };
 }
 
 export function isValidPLZ(code: string, scope: TypePLZ = TypePLZ.BERLIN) {

@@ -7,7 +7,7 @@ import { CardsFilter } from "./Filters/types";
 import { serializeFilters } from "./helpers";
 import { VolunteerCardList } from "./VolunteerCardList"; // We will modify this component
 
-const columns = 4;
+const columns = 3;
 const rows = 3;
 const limit = columns * rows;
 
@@ -37,15 +37,16 @@ export function VolunteerListController({
   if (opportunityId) {
     serializedFilter.set("opportunity", opportunityId);
   }
+  const params = {
+    limit: limit,
+    page: currentPage,
+    sortOrder,
+    filter: serializedFilter,
+  };
   const { data, count } = useGetQuery<ApiVolunteerGetList[]>({
     queryKey: ["volunteers"],
     apiPath: apiPathVolunteer,
-    params: {
-      limit: limit,
-      page: currentPage,
-      sortOrder,
-      filter: serializedFilter,
-    },
+    params,
     staleTime: cacheTTL,
   });
   const volunteers = data || [];

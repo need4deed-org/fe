@@ -8,7 +8,7 @@ export type VolunteerStatusUpdateData = Pick<ApiVolunteerGet, "statusEngagement"
 
 export const useUpdateVolunteerStatus = (volunteerId: number) => {
   return useMutationQuery<VolunteerStatusUpdateData, { message: string; data: ApiVolunteerGet }>({
-    apiPath: `${apiPathVolunteer}${volunteerId}`,
+    apiPath: `${apiPathVolunteer}/${volunteerId}`,
     method: "patch",
     successMessage: "dashboard.volunteerProfile.volunteerHeader.statusUpdateSuccess",
     queryKeyToInvalidate: ["volunteer", String(volunteerId)],

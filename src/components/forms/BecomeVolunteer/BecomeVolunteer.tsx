@@ -1,7 +1,7 @@
 "use client";
 import { useForm } from "@tanstack/react-form";
 import { validate as validateEmail } from "email-validator";
-import { Lang, VolunteerFormData } from "need4deed-sdk";
+import { Lang } from "need4deed-sdk";
 import Image from "next/image";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -20,6 +20,7 @@ import { AvailabilityGrid } from "../AvailabilityGrid";
 import FieldInfo from "../FieldInfo";
 import HeaderWithHelp from "../HeaderWithHelp";
 import style from "../index.module.css";
+import { LanguageFields } from "../LanguageFields";
 import MultipleCheckBoxInputsWithMore from "../MultipleCheckBoxInputsWithMore";
 import MultipleRadioInputsWithMore from "../MultipleRadioInputsWithMore";
 import SimpleInputField from "../SimpleInputField";
@@ -31,9 +32,9 @@ import {
   isTimeSlotSelected,
   isValidPLZ,
   parseFormStateDTOVolunteer,
+  VolunteerDTO,
 } from "../utils";
 import { VolunteerData } from "./dataStructure";
-import { LanguageFields } from "../LanguageFields";
 
 const thankYou = "form.becomeVolunteer.thankYou";
 const somethingWrong = "form.becomeVolunteer.somethingWrong";
@@ -46,8 +47,8 @@ export default function BecomeVolunteer() {
   const opportunityParams = useSearchParams();
   const language = i18n.language as Lang;
 
-  const { postRequest } = usePostRequest<VolunteerFormData, Record<string, string | string[]>>({
-    url: apiPathVolunteer,
+  const { postRequest } = usePostRequest<VolunteerDTO, Record<string, string | string[]>>({
+    url: `${apiPathVolunteer}/legacy`,
   });
 
   const opportunity: OpportunityInfo = {
