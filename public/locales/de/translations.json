@@ -635,7 +635,20 @@
         "search": "Suche"
       },
       "filters": {
-        "status": {
+        "type": {
+          "header": "Typ",
+          "ae": "AE",
+          "gu1": "GU1",
+          "gu2": "GU2",
+          "gu2+": "GU2+",
+          "gu3": "GU3",
+          "nu": "NU",
+          "asog": "ASOG",
+          "counseling-center": "Beratungsstelle",
+          "tandem": "Tandem",
+          "multiple-social-support": "Mehrfach-Sozialberatung"
+        },
+        "engagementStatus": {
           "header": "Status",
           "agent-new": "Neu",
           "agent-inactive": "Inaktiv",
@@ -647,6 +660,22 @@
           "agent-searching": "Suchend",
           "agent-volunteers-found": "Besetzt",
           "agent-not-needed": "Nicht benötigt"
+        },
+        "district": {
+          "header": "Bezirk"
+        },
+        "services": {
+          "header": "Leistungen",
+          "childcare": "Kinderbetreuung",
+          "consultation": "Beratung",
+          "job-coaching": "Job-Coaching",
+          "refugee-accommodation": "Flüchtlingsunterkunft",
+          "sport": "Sport",
+          "tandem": "Tandem",
+          "tutoring": "Nachhilfe",
+          "voluntary-support": "Ehrenamtliche Unterstützung",
+          "welfare": "Wohlfahrt",
+          "youth": "Jugend"
         }
       },
       "accompanyingTranslation": {
@@ -825,6 +854,7 @@
       "trustLevel": "Reaktionsfähigkeit",
       "changeStatus": "Status ändern",
       "district": "Bezirk",
+      "type": "Typ",
       "status": {
         "engagement": {
           "new": "Neu",

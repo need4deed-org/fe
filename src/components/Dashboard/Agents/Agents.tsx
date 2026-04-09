@@ -23,16 +23,13 @@ export const Agents = () => {
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [sortOrder, setSortOrder] = useState(SortOrder.NewToOld);
+  const [numOfAgents, setNumOfAgents] = useState(0);
   const [cardsFilter, setCardsFilter] = useState(defaultAgentCardsFilter);
   const { data: apiFilterOptions } = useGetQuery<ApiOptionLists>({ queryKey: ["options"], apiPath: apiPathOption });
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
-  const tabs = [
-    t("dashboard.opportunities.tabs.tab1"),
-    t("dashboard.opportunities.tabs.tab2"),
-    t("dashboard.opportunities.tabs.tab3"),
-  ];
+  const tabs = [t("dashboard.agents.tabs.tab1"), t("dashboard.agents.tabs.tab2"), t("dashboard.agents.tabs.tab3")];
 
   const handleSearchInputChange = (searchInput: string) => {
     handleFilterUpdate((prev) => ({ ...prev, search: searchInput }));
@@ -75,8 +72,7 @@ export const Agents = () => {
 
         <CardsHeader
           header={t("dashboard.agents.agents")}
-          // TODO, will use numOfOpps state when implement API call
-          resultCounter={0}
+          resultCounter={numOfAgents}
           resultText={t("dashboard.home.sidebar.racs")}
           tabs={tabs}
           selectedTabIndex={selectedTabIndex}
@@ -90,7 +86,13 @@ export const Agents = () => {
           activeFilters={activeFilters}
           onClearAllFilters={handleClearAllFilters}
         />
-        <AgentListController />
+        <AgentListController
+          setNumOfAgents={setNumOfAgents}
+          sortOrder={sortOrder}
+          isFiltersOpen={isFiltersOpen}
+          filter={cardsFilter}
+          apiFilterOptions={apiFilterOptions}
+        />
       </AgentsContainer>
     </DashboardLayout>
   );

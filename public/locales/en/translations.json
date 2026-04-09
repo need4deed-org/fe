@@ -676,7 +676,20 @@
         "search": "Search"
       },
       "filters": {
-        "status": {
+        "type": {
+          "header": "Type",
+          "ae": "AE",
+          "gu1": "GU1",
+          "gu2": "GU2",
+          "gu2+": "GU2+",
+          "gu3": "GU3",
+          "nu": "NU",
+          "asog": "ASOG",
+          "counseling-center": "Counseling-center",
+          "tandem": "Tandem",
+          "multiple-social-support": "Multiple-social-support"
+        },
+        "engagementStatus": {
           "header": "Status",
           "agent-new": "New",
           "agent-inactive": "Inactive",
@@ -688,6 +701,22 @@
           "agent-searching": "Searching",
           "agent-volunteers-found": "Filled",
           "agent-not-needed": "Not needed"
+        },
+        "district": {
+          "header": "District"
+        },
+        "services": {
+          "header": "Services",
+          "childcare": "Childcare",
+          "consultation": "Consultation",
+          "job-coaching": "Job-coaching",
+          "refugee-accommodation": "Refugee Accommodation",
+          "sport": "Sport",
+          "tandem": "Tandem",
+          "tutoring": "Tutoring",
+          "voluntary-support": "Voluntary-support",
+          "welfare": "Welfare",
+          "youth": "Youth"
         }
       },
       "accompanyingTranslation": {
@@ -824,6 +853,7 @@
       "trustLevel": "Responsiveness",
       "changeStatus": "Change status",
       "district": "District",
+      "type": "Type",
       "status": {
         "engagement": {
           "new": "New",
