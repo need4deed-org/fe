@@ -1,7 +1,8 @@
-import { Lang } from "need4deed-sdk";
+import { ScreenTypes } from "@/config/constants";
+import { tryCatch } from "@/utils";
+import { Lang, Testimonial } from "need4deed-sdk";
 import { PaginatedCards } from "../core/paginatedCards";
 import TestimonialCard from "./TestimonialCard";
-import { ScreenTypes } from "@/config/constants";
 import fetchTestimonials from "./utils";
 
 const cardsPerPageMap = {
@@ -11,15 +12,13 @@ const cardsPerPageMap = {
 };
 
 export default async function Testimonials({ lang }: { lang: Lang }) {
-  let testimonials = [];
-  try {
-    testimonials = await fetchTestimonials(lang);
-  } catch (error: unknown) {
+  const [testimonials, error] = await tryCatch(fetchTestimonials(lang));
+  if (error) {
     console.error(error);
     return null;
   }
 
-  const cards = testimonials.map((t) => <TestimonialCard {...t} key={t.name} />);
+  const cards = testimonials.map((t: Testimonial) => <TestimonialCard {...t} key={t.name} />);
 
   return (
     <PaginatedCards
