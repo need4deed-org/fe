@@ -115,6 +115,7 @@ export interface OpportunityDTO {
   skills: OptionId[];
   vo_information: string | null;
   timeslots: (string | number)[][];
+  onetime_date_time?: string;
   language: Lang | null;
 }
 
@@ -193,6 +194,7 @@ export function parseFormStateDTOOpportunity(form: OpportunityData): Opportunity
     activities,
     skills,
     timeslots,
+    onetime_date_time: form.onetimeDateTime,
 
     language: form.language ?? null,
   };
