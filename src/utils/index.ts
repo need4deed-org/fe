@@ -55,7 +55,7 @@ export function fetchFn<R, D = R>({
   return fetch(url, { ...defaultOptions, ...options })
     .then((response) => {
       if (response.ok) return response.json();
-      throw new Error(response.statusText);
+      throw new Error(`${url}: ${response.statusText}`);
     })
     .then((data) => {
       return fnDTO ? fnDTO(data) : data;
@@ -93,4 +93,21 @@ export function formatDateTime(input: string | Date | undefined): string | undef
   };
 
   return date.toLocaleString("en-US", options);
+}
+
+/**
+ * Wraps an asynchronous Promise and converts its outcome into a Result<T, E> type.
+ * A successful Promise resolves to [value, null].
+ * A rejected Promise is caught and resolves to [null, error].
+ *
+ * @param promise The Promise to execute.
+ * @returns A Promise that resolves to a Result tuple.
+ */
+export async function tryCatch<T, E = Error>(promise: Promise<T>): Promise<Result<T, E>> {
+  try {
+    const result = await promise;
+    return [result, null] as const;
+  } catch (error) {
+    return [null, error as E] as const;
+  }
 }
