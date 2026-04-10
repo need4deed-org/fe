@@ -43,6 +43,13 @@ export function serializeOpportunityFilters(
     }
   });
 
+  params.delete("type");
+  Object.entries(filter.type).forEach(([key, value]) => {
+    if (value === true) {
+      params.append("type", key);
+    }
+  });
+
   return asString ? params.toString() : params;
 }
 
@@ -68,6 +75,11 @@ export function deserializeOpportunityFilters(
   const queryStatus = searchParams.getAll("status");
   queryStatus.forEach((s) => {
     if (newFilter.status[s] !== undefined) newFilter.status[s] = true;
+  });
+
+  const queryType = searchParams.getAll("type");
+  queryType.forEach((s) => {
+    if (newFilter.type[s] !== undefined) newFilter.type[s] = true;
   });
 
   return newFilter;

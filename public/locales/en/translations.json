@@ -30,6 +30,10 @@
         "cookies": "Cookies"
       }
     },
+    "testimonials": {
+      "header": "TESTIMONIALS",
+      "headerParagraph": "What Volunteers & Coordinators Say"
+    },
     "volunteeringCategories": {
       "header": "Ways you can volunteer",
       "headerParagraph": "We offer various types of volunteer opportunities with refugee accommodation centers, either on a continuous or occasional basis.",
@@ -672,18 +676,47 @@
         "search": "Search"
       },
       "filters": {
-        "status": {
+        "type": {
+          "header": "Type",
+          "ae": "AE",
+          "gu1": "GU1",
+          "gu2": "GU2",
+          "gu2+": "GU2+",
+          "gu3": "GU3",
+          "nu": "NU",
+          "asog": "ASOG",
+          "counseling-center": "Counseling-center",
+          "tandem": "Tandem",
+          "multiple-social-support": "Multiple-social-support"
+        },
+        "engagementStatus": {
           "header": "Status",
-          "new": "New",
-          "inactive": "Inactive",
-          "active": "Active",
-          "unresponsive": "Unresponsive"
+          "agent-new": "New",
+          "agent-inactive": "Inactive",
+          "agent-active": "Active",
+          "agent-unresponsive": "Unresponsive"
         },
         "volunteerSearch": {
           "header": "Volunteer Search",
-          "searching": "Searching",
-          "volunteers-found": "Filled",
-          "not-needed": "Not needed"
+          "agent-searching": "Searching",
+          "agent-volunteers-found": "Filled",
+          "agent-not-needed": "Not needed"
+        },
+        "district": {
+          "header": "District"
+        },
+        "services": {
+          "header": "Services",
+          "childcare": "Childcare",
+          "consultation": "Consultation",
+          "job-coaching": "Job-coaching",
+          "refugee-accommodation": "Refugee Accommodation",
+          "sport": "Sport",
+          "tandem": "Tandem",
+          "tutoring": "Tutoring",
+          "voluntary-support": "Voluntary-support",
+          "welfare": "Welfare",
+          "youth": "Youth"
         }
       },
       "accompanyingTranslation": {
@@ -729,12 +762,19 @@
         "search": "Search"
       },
       "filters": {
+        "type": {
+          "header": "Type",
+          "accompanying": "Accompanying",
+          "regular": "Regular",
+          "events": "Events",
+          "regular-accompanying": "Regular + Accompanying"
+        },
         "status": {
           "header": "Status",
-          "new": "New",
-          "searching": "Searching",
-          "active": "Active",
-          "past": "Past"
+          "opp-new": "New",
+          "opp-searching": "Searching",
+          "opp-active": "Active",
+          "opp-past": "Past"
         }
       },
       "accompanyingTranslation": {
@@ -813,6 +853,7 @@
       "trustLevel": "Responsiveness",
       "changeStatus": "Change status",
       "district": "District",
+      "type": "Type",
       "status": {
         "engagement": {
           "new": "New",
