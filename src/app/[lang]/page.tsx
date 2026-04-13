@@ -1,4 +1,4 @@
-import { Landing } from "@/components/Dashboard/Landing";
+import { Landing } from "@/components/Website/Landing";
 import Link from "next/link";
 import styles from "./page.module.css";
 
