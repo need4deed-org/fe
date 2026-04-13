@@ -76,7 +76,7 @@ git clone https://github.com/need4deed-org/sdk.git
 
 ### 2. Keep SDK in Sync
 
-We **don’t fetch the SDK from npm** — we link it locally.
+We **don’t fetch the SDK** — we link it locally.
 
 1. Pull the latest SDK changes:
 
