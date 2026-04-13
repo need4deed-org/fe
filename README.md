@@ -89,7 +89,7 @@ We **don’t fetch the SDK from npm** — we link it locally.
 
    ```bash
    cd ../fe
-   npm install ../sdk
+   yarn install ../sdk
    ```
 
 3. Make sure all repos (`fe`, `be`, `sdk`) are checked out to the same branch name for consistency.
