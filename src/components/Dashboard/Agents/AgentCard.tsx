@@ -2,40 +2,38 @@
 
 import { MapPinIcon } from "@phosphor-icons/react";
 import { AgentTrustLevel } from "@/components/Dashboard/Profile/types/agent";
-import { ApiAgentGet } from "need4deed-sdk";
+import { ApiAgentGetList } from "need4deed-sdk";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
-
 import { IconDiv } from "@/components/styled/container";
-
 import {
   createTrustLevelLabelMap,
   TRUST_LEVEL_OPTIONS,
 } from "@/components/Dashboard/Profile/sections/ProfileHeader/agent/constants";
 import { TrustLevelDropdown } from "@/components/Dashboard/Profile/sections/ProfileHeader/agent/TrustLevelDropdown";
-import { Heading2, Heading4, Paragraph } from "@/components/styled/text";
+import { Heading4, Paragraph } from "@/components/styled/text";
 import { useUpdateAgentStatus } from "@/hooks";
 import { getNormalizedAgent } from "./helpers";
-import { createEngagementStatusLabelMap, createServiceTypeMap, createVolunteerSearchMap } from "./icon";
+import { createAgentTypeMap, createServiceTypeMap, createVolunteerSearchMap } from "./icon";
 import { StatusBadge } from "../common/StatusBadge";
 import { Card, CardDetailsInfo, CardHeader, CardHeaderInfo, DistrictContainer, DistrictDiv } from "./styles";
 
 interface Props {
-  agent: ApiAgentGet;
+  agent: ApiAgentGetList;
 }
 
 export const AgentCard = ({ agent }: Props) => {
   const { t, i18n } = useTranslation();
   const router = useRouter();
 
-  const { id, title, district, statusEngagement, volunteerSearch, serviceType } = getNormalizedAgent(agent);
+  const { id, title, district, volunteerSearch, serviceType, type, trustLevel } = getNormalizedAgent(agent);
 
   const { mutate: patchAgent } = useUpdateAgentStatus(agent.id);
 
-  const engagementStatusLabels = createEngagementStatusLabelMap(t);
   const volunteerSearchLabels = createVolunteerSearchMap(t);
   const trustLevelLabels = createTrustLevelLabelMap(t);
   const serviceTypeLabels = createServiceTypeMap(t);
+  const agentTypeLabels = createAgentTypeMap(t);
 
   const handleCardClick = () => {
     if (!id) return;
@@ -47,17 +45,16 @@ export const AgentCard = ({ agent }: Props) => {
     if (id == null) return;
     patchAgent({ trustLevel: next });
   };
-
   return (
     <Card onClick={handleCardClick}>
       <CardHeader>
         <CardHeaderInfo>
-          <Heading2>{title}</Heading2>
+          <Heading4>{title}</Heading4>
         </CardHeaderInfo>
       </CardHeader>
       <CardDetailsInfo>
-        <Heading4>{t("dashboard.agentProfile.engagementStatus")}</Heading4>
-        <StatusBadge status={agent?.statusEngagement} label={engagementStatusLabels[statusEngagement]} />
+        <Heading4>{t("dashboard.agentProfile.type")}</Heading4>
+        <Paragraph> {agentTypeLabels[type]}</Paragraph>
       </CardDetailsInfo>
       <CardDetailsInfo>
         <Heading4>{t("dashboard.agentProfile.volunteerSearch")}</Heading4>
@@ -66,7 +63,7 @@ export const AgentCard = ({ agent }: Props) => {
       <CardDetailsInfo onClick={(e) => e.stopPropagation()} onKeyDown={(e) => e.stopPropagation()} role="presentation">
         <Heading4>{t("dashboard.agentProfile.trustLevel")}</Heading4>
         <TrustLevelDropdown
-          value={agent.trustLevel as unknown as AgentTrustLevel}
+          value={trustLevel}
           options={TRUST_LEVEL_OPTIONS}
           labels={trustLevelLabels}
           onChange={handleTrustLevelChange}
@@ -85,9 +82,8 @@ export const AgentCard = ({ agent }: Props) => {
           <IconDiv size="var(--dashboard-agents-card-detail-icon-size)">
             <MapPinIcon weight="fill" />
           </IconDiv>
-          <Heading4 margin={0}>{t("dashboard.agentProfile.district")}</Heading4>
+          <Paragraph>{district?.title?.[i18n.language as "en" | "de"]}</Paragraph>
         </DistrictDiv>
-        <Paragraph>{district?.title?.[i18n.language as "en" | "de"]}</Paragraph>
       </DistrictContainer>
     </Card>
   );

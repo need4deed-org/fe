@@ -1,8 +1,8 @@
-import { DocumentType } from "need4deed-sdk";
-import axios from "axios";
-import { useTranslation } from "react-i18next";
-import { useMutationQuery } from "@/hooks/useMutationQuery";
 import { apiPathVolunteer } from "@/config/constants";
+import { useMutationQuery } from "@/hooks/useMutationQuery";
+import axios from "axios";
+import { DocumentType } from "need4deed-sdk";
+import { useTranslation } from "react-i18next";
 
 type UploadMetaResponse = {
   url: string;
@@ -26,7 +26,7 @@ const getUploadMeta = async (
   originalName: string,
   type: DocumentType,
 ): Promise<UploadMetaResponse> => {
-  const response = await axios.get(`${apiPathVolunteer}${volunteerId}/doc/upload-meta`, {
+  const response = await axios.get(`${apiPathVolunteer}/${volunteerId}/doc/upload-meta`, {
     params: { mimeType, originalName, type },
   });
   return response.data;
@@ -45,7 +45,7 @@ const uploadToS3 = async (url: string, fields: Record<string, string>, file: Fil
 };
 
 const deleteDocumentApi = async (volunteerId: number, documentType: DocumentType): Promise<void> => {
-  await axios.delete(`${apiPathVolunteer}${volunteerId}/doc/${documentType}`);
+  await axios.delete(`${apiPathVolunteer}/${volunteerId}/doc/${documentType}`);
 };
 
 export const useUploadDocument = (volunteerId: number, onSuccess?: () => void) => {

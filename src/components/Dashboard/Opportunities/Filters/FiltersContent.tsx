@@ -13,10 +13,15 @@ type Props = {
 export default function FiltersContent({ setFilter, filter }: Props) {
   const { t } = useTranslation();
 
-  const { districtFilters, languageFilters, statusFilters } = createOpportunityFilterItems(filter, setFilter, t);
+  const { districtFilters, languageFilters, statusFilters, typeFilters } = createOpportunityFilterItems(
+    filter,
+    setFilter,
+    t,
+  );
 
   return (
     <FiltersContentContainer data-testid="opportunity-filters-content">
+      <AccordionFilter header={t("dashboard.opportunities.filters.type.header")} items={typeFilters} />
       <AccordionFilter header={t("dashboard.opportunities.filters.status.header")} items={statusFilters} />
       <AccordionFilter header={t("dashboard.volunteers.filters.district")} items={districtFilters} />
       <AccordionFilter header={t("dashboard.volunteers.filters.languages")} items={languageFilters} />

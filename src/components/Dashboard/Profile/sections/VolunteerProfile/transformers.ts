@@ -1,12 +1,10 @@
-import { LanguageLevel } from "@/types";
-import { VolunteerStateTypeType } from "need4deed-sdk";
 import { TFunction } from "i18next";
-import { ApiVolunteerGet } from "need4deed-sdk";
-import { Mapping } from "./mappingUtils";
-import { formatActivities, formatDistricts, formatLanguages, formatSkills, getVolunteerTypeLabel } from "./formatters";
+import { ApiLanguage, ApiVolunteerGet, VolunteerStateTypeType } from "need4deed-sdk";
 import { apiToFormAvailability } from "./availabilityUtils";
-import { VolunteerProfileFormData } from "./volunteerProfileSchema";
 import { LEVEL_TO_PROFICIENCY } from "./constants";
+import { formatActivities, formatDistricts, formatLanguages, formatSkills, getVolunteerTypeLabel } from "./formatters";
+import { Mapping } from "./mappingUtils";
+import { VolunteerProfileFormData } from "./volunteerProfileSchema";
 
 export function createFormDefaultValues(
   volunteer: ApiVolunteerGet,
@@ -27,10 +25,13 @@ export function createFormDefaultValues(
 }
 
 export function createLabelToVolunteerTypeMap(t: TFunction): Record<string, VolunteerStateTypeType> {
-  return Object.values(VolunteerStateTypeType).reduce((acc, type) => {
-    acc[t(`dashboard.volunteerProfile.volunteerHeader.volunteerType_options.${type}`)] = type;
-    return acc;
-  }, {} as Record<string, VolunteerStateTypeType>);
+  return Object.values(VolunteerStateTypeType).reduce(
+    (acc, type) => {
+      acc[t(`dashboard.volunteerProfile.volunteerHeader.volunteerType_options.${type}`)] = type;
+      return acc;
+    },
+    {} as Record<string, VolunteerStateTypeType>,
+  );
 }
 
 export function mapToApiItems(ids: string[], mapping: { idToTitle: Record<number, string> }) {
@@ -45,9 +46,12 @@ export function mapToApiItems(ids: string[], mapping: { idToTitle: Record<number
 export function transformLanguagesToApi(languages: VolunteerProfileFormData["languages"], languageMapping: Mapping) {
   return languages
     .filter((lang) => lang.language && lang.level)
-    .map((lang) => ({
-      id: parseInt(lang.language, 10),
-      title: languageMapping.idToTitle[parseInt(lang.language, 10)] || "",
-      proficiency: LEVEL_TO_PROFICIENCY[lang.level as LanguageLevel],
-    }));
+    .map(
+      (lang) =>
+        ({
+          id: parseInt(lang.language, 10),
+          title: languageMapping.idToTitle[parseInt(lang.language, 10)] || "",
+          proficiency: LEVEL_TO_PROFICIENCY[lang.level as unknown as number],
+        }) as ApiLanguage,
+    );
 }

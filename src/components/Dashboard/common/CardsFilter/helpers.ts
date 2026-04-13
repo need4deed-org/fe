@@ -1,7 +1,7 @@
 import { ApiOptionLists } from "need4deed-sdk";
 import { SelectionMap, SetFilter } from "./types";
 
-export const getClearFilter = (filter: object) => {
+export const getClearFilter = <T>(filter: object): T => {
   const newFilter: Record<string, string | boolean | object> = {};
 
   for (const [key, val] of Object.entries(filter)) {
@@ -11,7 +11,7 @@ export const getClearFilter = (filter: object) => {
     else throw new Error("Unsupported type to clear the filter");
   }
 
-  return newFilter;
+  return newFilter as T;
 };
 
 /**

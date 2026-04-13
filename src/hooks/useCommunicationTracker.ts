@@ -1,12 +1,12 @@
-import { apiPathVolunteer, apiPathAgent, apiPathCommunication } from "@/config/constants";
 import { EntityType } from "@/components/Dashboard/Profile/types";
+import { apiPathAgent, apiPathCommunication, apiPathVolunteer } from "@/config/constants";
 import { useGetQuery } from "@/hooks/useGetQuery";
 import { useMutationQuery } from "@/hooks/useMutationQuery";
-import { ApiCommunicationGet, ApiVolunteerCommunicationPost, ApiVolunteerCommunicationPatch } from "need4deed-sdk";
 import axios from "axios";
+import { ApiCommunicationGet, ApiVolunteerCommunicationPatch, ApiVolunteerCommunicationPost } from "need4deed-sdk";
 
 const entityApiPathMap: Record<string, string> = {
-  volunteer: apiPathVolunteer,
+  volunteer: `${apiPathVolunteer}/`,
   agent: `${apiPathAgent}/`,
 };
 
@@ -19,14 +19,20 @@ export const useCommunicationTracker = (entityId: number, entityType: EntityType
     apiPath: `${basePath}${entityId}/communication`,
   });
 
-  const { mutate: createCommunication, isPending: isCreating } = useMutationQuery<ApiVolunteerCommunicationPost, unknown>({
+  const { mutate: createCommunication, isPending: isCreating } = useMutationQuery<
+    ApiVolunteerCommunicationPost,
+    unknown
+  >({
     apiPath: `${basePath}${entityId}/communication`,
     method: "post",
     successMessage: "dashboard.communicationSection.communicationAdded",
     queryKeyToInvalidate: queryKey,
   });
 
-  const { mutate: updateCommunication, isPending: isUpdating } = useMutationQuery<{ id: number; data: ApiVolunteerCommunicationPatch }, unknown>({
+  const { mutate: updateCommunication, isPending: isUpdating } = useMutationQuery<
+    { id: number; data: ApiVolunteerCommunicationPatch },
+    unknown
+  >({
     mutationFn: ({ id, data }) => axios.patch(`${apiPathCommunication}/${id}`, data).then((res) => res.data),
     successMessage: "dashboard.communicationSection.communicationUpdated",
     queryKeyToInvalidate: queryKey,

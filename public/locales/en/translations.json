@@ -30,6 +30,10 @@
         "cookies": "Cookies"
       }
     },
+    "testimonials": {
+      "header": "TESTIMONIALS",
+      "headerParagraph": "What Volunteers & Coordinators Say"
+    },
     "volunteeringCategories": {
       "header": "Ways you can volunteer",
       "headerParagraph": "We offer various types of volunteer opportunities with refugee accommodation centers, either on a continuous or occasional basis.",
@@ -535,10 +539,10 @@
       },
       "opportunitiesSec": {
         "tabs": {
-          "pending": "Pending",
-          "matched": "Matched",
-          "active": "Active",
-          "past": "Past"
+          "opp-pending": "Pending",
+          "opp-matched": "Matched",
+          "opp-active": "Active",
+          "opp-past": "Past"
         },
         "match": "Match",
         "notAMatch": "Not a match",
@@ -646,18 +650,18 @@
         "uploading": "Uploading..."
       }
     },
-    "opportunities": {
-      "opportunities": "Opportunities",
+    "agents": {
+      "agents": "RAC Directory",
       "tabs": {
         "tab1": "List",
         "tab2": "Cards",
         "tab3": "Map"
       },
       "status": {
-        "new": "New",
-        "searching": "Searching",
-        "active": "Active",
-        "past": "Past"
+        "opp-new": "New",
+        "opp-searching": "Searching",
+        "opp-active": "Active",
+        "opp-past": "Past"
       },
       "type": {
         "accompanying": "Accompanying",
@@ -672,12 +676,105 @@
         "search": "Search"
       },
       "filters": {
+        "type": {
+          "header": "Type",
+          "ae": "AE",
+          "gu1": "GU1",
+          "gu2": "GU2",
+          "gu2+": "GU2+",
+          "gu3": "GU3",
+          "nu": "NU",
+          "asog": "ASOG",
+          "counseling-center": "Counseling-center",
+          "tandem": "Tandem",
+          "multiple-social-support": "Multiple-social-support"
+        },
+        "engagementStatus": {
+          "header": "Status",
+          "agent-new": "New",
+          "agent-inactive": "Inactive",
+          "agent-active": "Active",
+          "agent-unresponsive": "Unresponsive"
+        },
+        "volunteerSearch": {
+          "header": "Volunteer Search",
+          "agent-searching": "Searching",
+          "agent-volunteers-found": "Filled",
+          "agent-not-needed": "Not needed"
+        },
+        "district": {
+          "header": "District"
+        },
+        "services": {
+          "header": "Services",
+          "childcare": "Childcare",
+          "consultation": "Consultation",
+          "job-coaching": "Job-coaching",
+          "refugee-accommodation": "Refugee Accommodation",
+          "sport": "Sport",
+          "tandem": "Tandem",
+          "tutoring": "Tutoring",
+          "voluntary-support": "Voluntary-support",
+          "welfare": "Welfare",
+          "youth": "Youth"
+        }
+      },
+      "accompanyingTranslation": {
+        "en": "German, English",
+        "de": "German",
+        "no": "No Translation needed"
+      },
+      "defaultMainCommunication": "English, German",
+      "otherCategory": "General Volunteering",
+      "goToProfile": "Go to Profile",
+      "mainCommunication": "Main communication",
+      "translationTo": "Translation to",
+      "residentsSpeak": "Residents speak",
+      "languages": "Languages",
+      "schedule": "Schedule",
+      "district": "District",
+      "dateOfAppointment": "Date Of Appointment",
+      "description": "Description"
+    },
+    "opportunities": {
+      "opportunities": "Opportunities",
+      "tabs": {
+        "tab1": "List",
+        "tab2": "Cards",
+        "tab3": "Map"
+      },
+      "status": {
+        "opp-new": "New",
+        "opp-searching": "Searching",
+        "opp-active": "Active",
+        "opp-past": "Past"
+      },
+      "type": {
+        "accompanying": "Accompanying",
+        "regular": "Regular",
+        "events": "Events",
+        "regular-accompanying": "Regular + Accompanying"
+      },
+      "card": {
+        "mainCommunication": "Main communication",
+        "residentsSpeak": "Residents speak",
+        "schedule": "Schedule",
+        "search": "Search"
+      },
+      "filters": {
+        "type": {
+          "header": "Type",
+          "accompanying": "Accompanying",
+          "regular": "Regular",
+          "events": "Events",
+          "regular-accompanying": "Regular + Accompanying"
+        },
         "status": {
           "header": "Status",
-          "new": "New",
-          "searching": "Searching",
-          "active": "Active",
-          "past": "Past"
+          "opp-new": "New",
+          "opp-searching": "Searching",
+          "opp-active": "Active",
+          "opp-past": "Past"
         }
       },
       "accompanyingTranslation": {
@@ -756,6 +853,7 @@
       "trustLevel": "Responsiveness",
       "changeStatus": "Change status",
       "district": "District",
+      "type": "Type",
       "status": {
         "engagement": {
           "new": "New",
@@ -810,11 +908,15 @@
         "saveSuccess": "Contact details updated successfully",
         "roles": {
           "label": "Role",
-          "management": "Management",
-          "volunteer_coordinator": "Volunteer coordinator",
-          "social_work": "Social work",
-          "childcare": "Childcare",
-          "coordination": "Coordination"
+          "social-worker": "Social worker",
+          "volunteer-coordinator": "Volunteer coordinator",
+          "manager": "Manager",
+          "project-coordinator": "Project coordinator",
+          "coordination": "Coordination",
+          "psychologist": "Psychologist",
+          "project-staff": "Project staff",
+          "childcare-worker": "Childcare worker",
+          "other": "Other"
         },
         "cancel": "Cancel",
         "saveChanges": "Save changes",
@@ -946,10 +1048,10 @@
         },
         "appliedOn": "Applied on",
         "tabs": {
-          "pending": "Pending",
-          "matched": "Matched",
-          "active": "Active",
-          "past": "Past"
+          "opp-pending": "Pending",
+          "opp-matched": "Matched",
+          "opp-active": "Active",
+          "opp-past": "Past"
         },
         "emptyState": "No volunteers in this category yet",
         "statusUpdateSuccess": "Volunteer status updated successfully",

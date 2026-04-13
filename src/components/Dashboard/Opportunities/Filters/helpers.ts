@@ -27,7 +27,11 @@ export const createOpportunityFilterItems = (
     t(`dashboard.opportunities.filters.status.${key}`),
   );
 
-  return { districtFilters, languageFilters, statusFilters };
+  const typeFilters = generateNestedFilterControlItems(filter.type, setFilter, "type", (key) =>
+    t(`dashboard.opportunities.filters.type.${key}`),
+  );
+
+  return { districtFilters, languageFilters, statusFilters, typeFilters };
 };
 
 export const createSelectedOpportunityFiltersAsFlatArray = (
@@ -35,6 +39,10 @@ export const createSelectedOpportunityFiltersAsFlatArray = (
   setFilter: SetFilter<OpportunityCardsFilter>,
   t: TFunction,
 ) => {
-  const { districtFilters, languageFilters, statusFilters } = createOpportunityFilterItems(filter, setFilter, t);
-  return [...districtFilters, ...languageFilters, ...statusFilters].filter((f) => f.checked);
+  const { districtFilters, languageFilters, statusFilters, typeFilters } = createOpportunityFilterItems(
+    filter,
+    setFilter,
+    t,
+  );
+  return [...districtFilters, ...languageFilters, ...statusFilters, ...typeFilters].filter((f) => f.checked);
 };
