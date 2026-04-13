@@ -1,10 +1,10 @@
-import { ApiAgentGet } from "need4deed-sdk";
+import { ApiAgentGetList } from "need4deed-sdk";
 import { PaginatedGrid } from "@/components/core/paginatedGrid";
 import { AgentCard } from "./AgentCard";
 import { AgentCardListContainer } from "./styles";
 
 type Props = {
-  agents: ApiAgentGet[];
+  agents: ApiAgentGetList[];
   count: number;
   columns: number;
   rows: number;

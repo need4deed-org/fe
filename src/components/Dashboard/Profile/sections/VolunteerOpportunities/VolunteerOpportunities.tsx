@@ -20,7 +20,7 @@ export default function VolunteerOpportunities({ volunteerId }: { volunteerId: I
 
   const { data, isLoading } = useGetQuery<ApiOpportunityVolunteerGet[]>({
     queryKey,
-    apiPath: `${apiPathVolunteer}${volunteerId}/opportunity-linked`,
+    apiPath: `${apiPathVolunteer}/${volunteerId}/opportunity-linked`,
     staleTime: cacheTTL,
     enabled: !!volunteerId,
   });

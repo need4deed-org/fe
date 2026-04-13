@@ -11,7 +11,7 @@ type Props = {
 export const VolunteerProfileController = ({ entityId }: Props) => {
   const { data, isLoading, isError, error } = useGetQuery<ApiVolunteerGet>({
     queryKey: ["volunteer", entityId],
-    apiPath: `${apiPathVolunteer}${entityId}`,
+    apiPath: `${apiPathVolunteer}/${entityId}`,
     staleTime: cacheTTL,
   });
 

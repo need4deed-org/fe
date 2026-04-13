@@ -29,10 +29,11 @@ import {
   isSelected,
   isTimeSlotSelected,
   isValidPLZ,
+  OpportunityDTO,
   parseFormStateDTOOpportunity,
 } from "../utils";
 import { validateRACEmail } from "../validators";
-import { OpportunityData, OpportunityParsedData } from "./dataStructure";
+import { OpportunityData } from "./dataStructure";
 import ErrorAnnouncement from "./ErrorAnnouncement";
 
 const thankYou = "form.addOpportunity.thankYou";
@@ -59,8 +60,8 @@ export default function AddOpportunity() {
     parsedOpportunity[mappedParam] = queryParams.get(queryParam) || "";
   });
 
-  const { postRequest } = usePostRequest<OpportunityParsedData, Record<string, string | string[]>>({
-    url: apiPathOpportunity,
+  const { postRequest } = usePostRequest<OpportunityDTO, Record<string, string | string[]>>({
+    url: `${apiPathOpportunity}/legacy`,
   });
 
   const formOpportunity = useForm({
