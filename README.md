@@ -65,6 +65,9 @@ parent/
 └── sdk/        # Shared TypeScript SDK
 ```
 
+NEXT_PUBLIC_CLOUDFRONT_URL=https://d2nwrdddg8skub.cloudfront.net/images
+NEXT_PUBLIC_CLOUDFRONT_DATA_URL=https://d2nwrdddg8skub.cloudfront.net/data
+
 ### 1. Clone All Repositories
 
 Make sure you have all three repos cloned in the same parent directory:
