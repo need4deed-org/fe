@@ -165,10 +165,4 @@ We welcome all contributions — from bug fixes to feature development.
 By contributing, you agree that your contributions are licensed under our
 [Commons Clause + MIT License](LICENSE).
 
----
-
-Would you like me to:
-
-* make this version ready for **direct commit to your `fe` repo**,
-  or
-* create a **shorter variant** for `backend` and `sdk` too (so all repos stay consistent)?
+--- 
