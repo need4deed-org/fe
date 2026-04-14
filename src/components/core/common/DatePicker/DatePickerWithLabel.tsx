@@ -79,7 +79,15 @@ export function DatePickerWithLabel({
   }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+    const digits = e.target.value.replace(/\D/g, "").slice(0, 8);
+
+    let value = digits;
+    if (digits.length > 4) {
+      value = `${digits.slice(0, 2)}.${digits.slice(2, 4)}.${digits.slice(4)}`;
+    } else if (digits.length > 2) {
+      value = `${digits.slice(0, 2)}.${digits.slice(2)}`;
+    }
+
     setInputValue(value);
 
     const dateRegex = /^\d{1,2}\.\d{1,2}\.\d{4}$/;
