@@ -1064,6 +1064,8 @@
         "mainCommunication": "Hauptkommunikation",
         "residentsSpeak": "Bewohner sprechen",
         "schedule": "Zeitplan",
+        "eventDate": "Veranstaltungsdatum",
+        "eventTime": "Veranstaltungszeit",
         "numberOfVolunteers": "Anzahl der Freiwilligen",
         "activities": "Aktivitäten",
         "skills": "Fähigkeiten & Erfahrung",
