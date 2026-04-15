@@ -423,7 +423,8 @@
     "header": {
       "button": {
         "login": "Anmelden",
-        "joinVolunteer": "Jetzt sich engagieren"
+        "joinVolunteer": "Jetzt sich engagieren",
+        "dashboard": "Dashboard"
       }
     },
     "login": {
