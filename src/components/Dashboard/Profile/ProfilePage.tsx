@@ -7,19 +7,12 @@ import { BackLink, PageContainer } from "./styles";
 import { ProfileEntityProps } from "./types";
 
 const ProfilePage = (props: ProfileEntityProps) => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const { sections, heading, header } = useProfileSections(props);
-
-  const backHref =
-    "volunteer" in props
-      ? `/${i18n.language}/dashboard/volunteers`
-      : "opportunity" in props
-        ? `/${i18n.language}/dashboard/opportunities`
-        : `/${i18n.language}/dashboard/agents`;
 
   return (
     <PageContainer>
-      <BackLink href={backHref}>
+      <BackLink href=".">
         <ArrowLeftIcon size={24} />
         {t("dashboard.volunteerProfile.backToDashboard")}
       </BackLink>
