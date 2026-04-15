@@ -10,9 +10,16 @@ const ProfilePage = (props: ProfileEntityProps) => {
   const { t, i18n } = useTranslation();
   const { sections, heading, header } = useProfileSections(props);
 
+  const backHref =
+    "volunteer" in props
+      ? `/${i18n.language}/dashboard/volunteers`
+      : "opportunity" in props
+        ? `/${i18n.language}/dashboard/opportunities`
+        : `/${i18n.language}/dashboard/agents`;
+
   return (
     <PageContainer>
-      <BackLink href={`/${i18n.language}/dashboard`}>
+      <BackLink href={backHref}>
         <ArrowLeftIcon size={24} />
         {t("dashboard.volunteerProfile.backToDashboard")}
       </BackLink>
