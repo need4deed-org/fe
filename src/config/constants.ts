@@ -52,7 +52,7 @@ export const defaultAvatarURL = "head-silhouette.webp";
 export const defaultAvatarVolunteerProfile = "all_genders_avatar.png";
 
 export enum DashboardRoutes {
-  Home = "/dashboard/home",
+  Home = "/dashboard",
   Volunteers = "/dashboard/volunteers",
   Opportunities = "/dashboard/opportunities",
   Agents = "/dashboard/agents",
