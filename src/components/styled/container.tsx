@@ -51,8 +51,15 @@ export const IconDiv = styled.div<IconDiVProps>`
 `;
 
 export const DashboardBaseContainer = styled.div`
-  margin: 0 auto; // Center it horizontally
-  width: var(--dashboard-base-container-width);
+  /* Ensure content is never hidden under the fixed left navigation bar.
+     On wide viewports the content stays centred; on narrower ones the left
+     margin is clamped to the sidebar width so the two never overlap. */
+  margin-left: max(
+    var(--dashboard-navigation-bar-container-width),
+    calc((100% - var(--dashboard-base-container-width)) / 2)
+  );
+  margin-right: auto;
+  max-width: var(--dashboard-base-container-width);
   padding-top: var(--dashboard-base-container-padding-top);
   padding-bottom: var(--dashboard-base-container-padding-bottom);
 `;
