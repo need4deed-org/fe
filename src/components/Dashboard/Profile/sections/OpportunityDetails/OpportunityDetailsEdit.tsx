@@ -65,7 +65,7 @@ export function OpportunityDetailsEdit({ opportunity, onCancel }: Props) {
       numberOfVolunteers: String(opp.numberOfVolunteers ?? ""),
       mainCommunication: languagesToFormValues(generalLangs, t),
       residentsSpeak: languagesToFormValues(recipientLangs, t),
-      availability: isEventType ? null : apiToFormAvailability(opp.availability),
+      availability: isEventType ? undefined : apiToFormAvailability(opp.availability),
       eventDate: null,
       eventTime: "",
       activities: opp.activities.map((a) => String(a.id)),
