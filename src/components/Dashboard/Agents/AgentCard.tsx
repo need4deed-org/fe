@@ -58,7 +58,7 @@ export const AgentCard = ({ agent }: Props) => {
       </CardDetailsInfo>
       <CardDetailsInfo>
         <Heading4>{t("dashboard.agentProfile.volunteerSearch")}</Heading4>
-        <StatusBadge status={agent?.volunteerSearch} label={volunteerSearchLabels[volunteerSearch]} />
+        <StatusBadge status={volunteerSearch} label={volunteerSearchLabels[volunteerSearch]} />
       </CardDetailsInfo>
       <CardDetailsInfo onClick={(e) => e.stopPropagation()} onKeyDown={(e) => e.stopPropagation()} role="presentation">
         <Heading4>{t("dashboard.agentProfile.trustLevel")}</Heading4>
