@@ -979,6 +979,26 @@
         "unmatched": "Unmatched"
       },
       "statusUpdateSuccess": "Opportunity status updated successfully",
+      "change_status": "Change status",
+      "statusModal": {
+        "title": "Change opportunity status",
+        "save": "Save",
+        "cancel": "Cancel",
+        "options": {
+          "new": "New",
+          "new_description": "This opportunity has just been created.",
+          "searching": "Searching",
+          "searching_description": "We are searching for a volunteer for this opportunity.",
+          "cancelledByUs": "Cancelled by us",
+          "cancelledByUs_description": "This opportunity was cancelled by Need4Deed.",
+          "cancelledByNGO": "Cancelled by NGO",
+          "cancelledByNGO_description": "This opportunity was cancelled by the NGO.",
+          "matchedNotNeeded": "Matched - not needed",
+          "matchedNotNeeded_description": "A volunteer was matched but is no longer needed.",
+          "matchedVolunteerNoShow": "Matched - volunteer no show",
+          "matchedVolunteerNoShow_description": "A volunteer was matched but did not show up."
+        }
+      },
       "contactDetailsTitle": "Contact details",
       "editButtonName": "Edit",
       "contactDetails": {

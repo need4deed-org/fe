@@ -15,6 +15,7 @@ import {
   SparkleIcon,
   StopCircleIcon,
   UsersIcon,
+  XCircleIcon,
 } from "@phosphor-icons/react";
 import {
   AgentEngagementStatusType,
@@ -25,6 +26,7 @@ import {
   VolunteerStateTypeType,
 } from "need4deed-sdk";
 import type React from "react";
+import { OpportunityManualStatusType } from "../sections/ProfileHeader/opportunity/constants";
 import { AgentEngagementStatus, AgentTrustLevel, AgentVolunteerSearch } from "../types";
 
 export type StatusValue =
@@ -35,7 +37,8 @@ export type StatusValue =
   | OpportunityMatchStatus
   | AgentEngagementStatus
   | AgentVolunteerSearch
-  | AgentTrustLevel;
+  | AgentTrustLevel
+  | OpportunityManualStatusType;
 
 export const statusColorMap: Record<StatusValue, string> = {
   [VolunteerStateEngagementType.ACTIVE]: "var(--color-green-100)",
@@ -60,6 +63,10 @@ export const statusColorMap: Record<StatusValue, string> = {
   [OpportunityStatusType.NEW]: "var(--color-violet-100)",
   [OpportunityStatusType.ACTIVE]: "var(--color-green-50)",
   [OpportunityStatusType.PAST]: "var(--color-grey-50)",
+  [OpportunityManualStatusType.CANCELLED_BY_US]: "var(--color-red-50)",
+  [OpportunityManualStatusType.CANCELLED_BY_NGO]: "var(--color-red-50)",
+  [OpportunityManualStatusType.MATCHED_NOT_NEEDED]: "var(--color-grey-50)",
+  [OpportunityManualStatusType.MATCHED_VOLUNTEER_NO_SHOW]: "var(--color-grey-50)",
   [AgentVolunteerSearch.NOT_NEEDED]: "var(--color-grey-50)",
   [AgentVolunteerSearch.VOLUNTEERS_FOUND]: "var(--color-green-100)",
   [AgentVolunteerSearch.SEARCHING]: "var(--color-red-50)",
@@ -97,6 +104,10 @@ export const statusIconMap: Record<StatusValue, IconComponent> = {
   [OpportunityStatusType.ACTIVE]: ChartLineIcon,
   [OpportunityStatusType.SEARCHING]: HourglassIcon,
   [OpportunityStatusType.PAST]: StopCircleIcon,
+  [OpportunityManualStatusType.CANCELLED_BY_US]: XCircleIcon,
+  [OpportunityManualStatusType.CANCELLED_BY_NGO]: XCircleIcon,
+  [OpportunityManualStatusType.MATCHED_NOT_NEEDED]: ProhibitInsetIcon,
+  [OpportunityManualStatusType.MATCHED_VOLUNTEER_NO_SHOW]: ProhibitInsetIcon,
   [AgentVolunteerSearch.NOT_NEEDED]: HandPalmIcon,
   [AgentVolunteerSearch.VOLUNTEERS_FOUND]: CheckCircleIcon,
   [AgentVolunteerSearch.SEARCHING]: BinocularsIcon,

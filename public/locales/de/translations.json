@@ -980,6 +980,26 @@
         "unmatched": "Nicht gematcht"
       },
       "statusUpdateSuccess": "Status der Möglichkeit erfolgreich aktualisiert",
+      "change_status": "Status ändern",
+      "statusModal": {
+        "title": "Opportunitätsstatus ändern",
+        "save": "Speichern",
+        "cancel": "Abbrechen",
+        "options": {
+          "new": "Neu",
+          "new_description": "Diese Möglichkeit wurde gerade erstellt.",
+          "searching": "Suchend",
+          "searching_description": "Wir suchen einen Freiwilligen für diese Möglichkeit.",
+          "cancelledByUs": "Von uns abgesagt",
+          "cancelledByUs_description": "Diese Möglichkeit wurde von Need4Deed abgesagt.",
+          "cancelledByNGO": "Von der NGO abgesagt",
+          "cancelledByNGO_description": "Diese Möglichkeit wurde von der NGO abgesagt.",
+          "matchedNotNeeded": "Gematcht - nicht benötigt",
+          "matchedNotNeeded_description": "Ein Freiwilliger wurde gematcht, wird aber nicht mehr benötigt.",
+          "matchedVolunteerNoShow": "Gematcht - Freiwilliger nicht erschienen",
+          "matchedVolunteerNoShow_description": "Ein Freiwilliger wurde gematcht, ist aber nicht erschienen."
+        }
+      },
       "contactDetailsTitle": "Kontaktdaten",
       "editButtonName": "Bearbeiten",
       "contactDetails": {
