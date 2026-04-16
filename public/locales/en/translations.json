@@ -986,15 +986,15 @@
         "cancel": "Cancel",
         "options": {
           "new": "New",
-          "new_description": "This opportunity has just been created.",
+          "new_description": "The opportunity was not validated yet.",
           "searching": "Searching",
-          "searching_description": "We are searching for a volunteer for this opportunity.",
+          "searching_description": "The opportunity was validated, it can be searched for.",
           "cancelledByUs": "Cancelled by us",
-          "cancelledByUs_description": "This opportunity was cancelled by Need4Deed.",
+          "cancelledByUs_description": "The opportunity was cancelled - no volunteer found.",
           "cancelledByNGO": "Cancelled by NGO",
-          "cancelledByNGO_description": "This opportunity was cancelled by the NGO.",
+          "cancelledByNGO_description": "The opportunity was cancelled - by NGO.",
           "matchedNotNeeded": "Matched - not needed",
-          "matchedNotNeeded_description": "A volunteer was matched but is no longer needed.",
+          "matchedNotNeeded_description": "A volunteer was matched but at the last minute not needed.",
           "matchedVolunteerNoShow": "Matched - volunteer no show",
           "matchedVolunteerNoShow_description": "A volunteer was matched but did not show up."
         }
