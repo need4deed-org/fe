@@ -47,7 +47,7 @@ export const createOpportunityDetailsSchema = (t: (key: string) => string) =>
     eventDate: z.date().nullable().optional(),
     eventTime: z.string().optional(),
     activities: z.array(z.string()).min(1, t(`${i18nPrefix}.activitiesRequired`)),
-    skills: z.array(z.string()).min(1, t(`${i18nPrefix}.skillsRequired`)),
+    skills: z.array(z.string()),
   });
 
 export type OpportunityDetailsFormData = z.infer<ReturnType<typeof createOpportunityDetailsSchema>>;
