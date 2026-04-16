@@ -1083,6 +1083,8 @@
         "mainCommunication": "Main communication",
         "residentsSpeak": "Residents speak",
         "schedule": "Schedule",
+        "eventDate": "Event date",
+        "eventTime": "Event time",
         "numberOfVolunteers": "Number of volunteers",
         "activities": "Activities",
         "skills": "Skills & experience",
