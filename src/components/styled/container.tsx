@@ -53,9 +53,10 @@ export const IconDiv = styled.div<IconDiVProps>`
 export const DashboardBaseContainer = styled.div`
   /* Ensure content is never hidden under the fixed left navigation bar.
      On wide viewports the content stays centred; on narrower ones the left
-     margin is clamped to the sidebar width so the two never overlap. */
+     margin is clamped to the sidebar width (+ 16px breathing room matching
+     the nav bar's own horizontal padding) so the two never overlap. */
   margin-left: max(
-    var(--dashboard-navigation-bar-container-width),
+    calc(var(--dashboard-navigation-bar-container-width) + 16px),
     calc((100% - var(--dashboard-base-container-width)) / 2)
   );
   margin-right: auto;
