@@ -4,7 +4,7 @@ import { PageLayout } from "@/components/Layout";
 
 export default function VolunteerPage() {
   return (
-    <PageLayout background="var(--color-white)">
+    <PageLayout background="var(--color-white)" isPublicPage>
       <BecomeVolunteer />;
     </PageLayout>
   );

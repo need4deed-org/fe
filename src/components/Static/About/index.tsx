@@ -19,7 +19,7 @@ function AboutUs() {
   `;
 
   return (
-    <PageLayout background="var(--color-orchid)">
+    <PageLayout background="var(--color-orchid)" isPublicPage>
       <AboutUsContainer>
         <h2>{t("aboutus.aboutusHeading")}</h2>
         <p>{t("aboutus.aboutusSubheading")}</p>

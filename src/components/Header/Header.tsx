@@ -37,6 +37,7 @@ interface Props {
   padding?: string;
   menuItemColor: string;
   burgerMenuItemColor?: string;
+  isPublicPage: boolean;
 }
 
 export function Header({
@@ -46,10 +47,11 @@ export function Header({
   padding,
   menuItemColor,
   burgerMenuItemColor = "var(--color-midnight)",
+  isPublicPage,
 }: Props) {
   const { t } = useTranslation();
   const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState<boolean>(false);
-  const user = useCurrentUser();
+  const user = useCurrentUser(!isPublicPage);
 
   const menuItems: MenuItemType[] = [
     [t("homepage.heroSection.menuItems.about"), `/${Subpage.ABOUT}`],

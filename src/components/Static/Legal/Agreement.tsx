@@ -33,7 +33,7 @@ export default function Agreement() {
   `;
 
   return (
-    <PageLayout background="var(--color-orchid)">
+    <PageLayout background="var(--color-orchid)" isPublicPage>
       <AgreementContainer>
         <h2>{t("legal.agreement.header")}</h2>
         <p>{t("legal.agreement.para1")}</p>

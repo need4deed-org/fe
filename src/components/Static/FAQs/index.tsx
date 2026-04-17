@@ -69,7 +69,7 @@ function FAQs() {
   ];
 
   return (
-    <PageLayout background="var(--color-orchid)">
+    <PageLayout background="var(--color-orchid)" isPublicPage>
       <div className="n4d-container">
         <FAQsTitle>{t("faqs.title")}</FAQsTitle>
         {faqs.map((faq) => (
