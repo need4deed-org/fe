@@ -1,9 +1,9 @@
 import { ScreenTypes } from "@/config/constants";
-import { tryCatch } from "@/utils";
-import { Lang, Testimonial } from "need4deed-sdk";
+import { Lang } from "need4deed-sdk";
 import { PaginatedCards } from "../core/paginatedCards";
 import TestimonialCard from "./TestimonialCard";
 import fetchTestimonials from "./utils";
+import { useQuery } from "@tanstack/react-query";
 
 const cardsPerPageMap = {
   [ScreenTypes.MOBILE]: 1,
@@ -11,14 +11,21 @@ const cardsPerPageMap = {
   [ScreenTypes.DESKTOP]: 3,
 };
 
-export default async function Testimonials({ lang }: { lang: Lang }) {
-  const [testimonials, error] = await tryCatch(fetchTestimonials(lang));
-  if (error) {
-    console.error(error);
-    return null;
-  }
+export default function Testimonials({ lang }: { lang: Lang }) {
+  const {
+    data: testimonials,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["testimonials", lang],
+    queryFn: () => fetchTestimonials(lang),
+    staleTime: 1000 * 60 * 60,
+  });
 
-  const cards = testimonials.map((t: Testimonial) => <TestimonialCard {...t} key={t.name} />);
+  if (isLoading) return <div>Loading...</div>;
+  if (error || !testimonials) return null;
+
+  const cards = testimonials.map((t) => <TestimonialCard {...t} key={t.name} />);
 
   return (
     <PaginatedCards
