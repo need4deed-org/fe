@@ -4,6 +4,7 @@ import { PaginatedCards } from "../core/paginatedCards";
 import TestimonialCard from "./TestimonialCard";
 import fetchTestimonials from "./utils";
 import { useQuery } from "@tanstack/react-query";
+import { twoDays } from "../../config/constants";
 
 const cardsPerPageMap = {
   [ScreenTypes.MOBILE]: 1,
@@ -19,7 +20,7 @@ export default function Testimonials({ lang }: { lang: Lang }) {
   } = useQuery({
     queryKey: ["testimonials", lang],
     queryFn: () => fetchTestimonials(lang),
-    staleTime: 1000 * 60 * 60,
+    staleTime: twoDays,
   });
 
   if (isLoading) return <div>Loading...</div>;
