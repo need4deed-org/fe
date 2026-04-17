@@ -10,13 +10,13 @@ const LoginRegisterContainer = styled.div`
 `;
 
 export function LoginRegister() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const router = useRouter();
 
   return (
     <LoginRegisterContainer>
       <Button
-        onClick={() => router.push("/login")}
+        onClick={() => router.push(`/${i18n.language}/login`)}
         text={t("dashboard.header.button.login")}
         height="var(--layout-static-page-header-button-height)"
         textFontSize="var(--layout-static-page-header-button-text-font-size)"
@@ -26,7 +26,7 @@ export function LoginRegister() {
       />
 
       <Button
-        onClick={() => {}}
+        onClick={() => router.push(`/${i18n.language}/forms/volunteer`)}
         text={t("dashboard.header.button.joinVolunteer")}
         height="var(--layout-static-page-header-button-height)"
         textFontSize="var(--layout-static-page-header-button-text-font-size)"
