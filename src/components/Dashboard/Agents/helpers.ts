@@ -29,7 +29,7 @@ export function getNormalizedAgent(agent: AgentListItem): Omit<
     ...agent,
     type: agent.type,
     district: agent.district,
-    volunteerSearch: agent.volunteerSearch,
+    volunteerSearch: agent.volunteerSearch ?? AgentVolunteerSearchType.NOT_NEEDED,
     trustLevel: agent.trustLevel ? agent.trustLevel : AgentTrustType.UNKNOWN,
     serviceType: agent.serviceType,
   };
