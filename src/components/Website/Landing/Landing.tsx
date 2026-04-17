@@ -26,7 +26,6 @@ export function Landing({ lang }: { lang: Lang }) {
         height="var(--layout-static-page-header-height)"
         padding="var(--layout-static-page-header-padding)"
         menuItemColor="var(--color-midnight)"
-        isPublicPage
       />
       <Hero />
       <VolunteeringCategoriesSection />

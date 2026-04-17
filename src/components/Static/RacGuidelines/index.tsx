@@ -160,7 +160,7 @@ function RacGuidelines() {
   const { t } = useTranslation();
 
   return (
-    <PageLayout background="var(--color-magnolia)" isPublicPage>
+    <PageLayout background="var(--color-magnolia)">
       <Container>
         <Heading>{t("racGuidelines.heading")}</Heading>
 

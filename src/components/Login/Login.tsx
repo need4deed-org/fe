@@ -43,7 +43,7 @@ export function Login() {
   const { t } = useTranslation();
 
   return (
-    <PageLayout background="var(--color-white)" isPublicPage>
+    <PageLayout background="var(--color-white)">
       <LoginContainer>
         <LoginSubContainer>
           <LoginContentContainer>

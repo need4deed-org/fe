@@ -8,7 +8,7 @@ interface Props {
 }
 export function DashboardLayout({ children, background }: Props) {
   return (
-    <PageLayout background={background || "var(--color-white)"} isPublicPage={false}>
+    <PageLayout background={background || "var(--color-white)"}>
       <NavigationBar />
       <DashboardBaseContainer>{children}</DashboardBaseContainer>
     </PageLayout>

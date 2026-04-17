@@ -12,7 +12,6 @@ import { FooterPartnersSection } from "@/components/FooterPartners";
 interface Props {
   children: ReactNode;
   background?: string;
-  isPublicPage: boolean;
 }
 
 interface PageContentHeaderContainerProps {
@@ -34,7 +33,7 @@ const PageContentHeaderContainer = styled.div<PageContentHeaderContainerProps>`
   padding-top: var(--layout-static-page-header-height);
 `;
 
-export function PageLayout({ children, background, isPublicPage = false }: Props) {
+export function PageLayout({ children, background }: Props) {
   const screenType = useScreenType();
   const isBurgerMenu = screenType !== ScreenTypes.DESKTOP;
 
@@ -47,7 +46,6 @@ export function PageLayout({ children, background, isPublicPage = false }: Props
           height="var(--layout-static-page-header-height)"
           padding="var(--layout-static-page-header-padding)"
           menuItemColor="var(--color-midnight)"
-          isPublicPage={isPublicPage}
         />
         {children}
       </PageContentHeaderContainer>
