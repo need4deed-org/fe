@@ -980,6 +980,26 @@
         "unmatched": "Nicht gematcht"
       },
       "statusUpdateSuccess": "Status der Möglichkeit erfolgreich aktualisiert",
+      "change_status": "Status ändern",
+      "statusModal": {
+        "title": "Opportunitätsstatus ändern",
+        "save": "Speichern",
+        "cancel": "Abbrechen",
+        "options": {
+          "new": "Neu",
+          "new_description": "Die Möglichkeit wurde noch nicht validiert.",
+          "searching": "Suchend",
+          "searching_description": "Die Möglichkeit wurde validiert, es kann nach ihr gesucht werden.",
+          "cancelledByUs": "Von uns abgesagt",
+          "cancelledByUs_description": "Die Möglichkeit wurde abgesagt - kein Freiwilliger gefunden.",
+          "cancelledByNGO": "Von der NGO abgesagt",
+          "cancelledByNGO_description": "Die Möglichkeit wurde von der NGO abgesagt.",
+          "matchedNotNeeded": "Gematcht - nicht benötigt",
+          "matchedNotNeeded_description": "Ein Freiwilliger wurde gematcht, wird aber in letzter Minute nicht mehr benötigt.",
+          "matchedVolunteerNoShow": "Gematcht - Freiwilliger nicht erschienen",
+          "matchedVolunteerNoShow_description": "Ein Freiwilliger wurde gematcht, ist aber nicht erschienen."
+        }
+      },
       "contactDetailsTitle": "Kontaktdaten",
       "editButtonName": "Bearbeiten",
       "contactDetails": {

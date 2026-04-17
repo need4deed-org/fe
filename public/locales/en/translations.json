@@ -979,6 +979,26 @@
         "unmatched": "Unmatched"
       },
       "statusUpdateSuccess": "Opportunity status updated successfully",
+      "change_status": "Change status",
+      "statusModal": {
+        "title": "Change opportunity status",
+        "save": "Save",
+        "cancel": "Cancel",
+        "options": {
+          "new": "New",
+          "new_description": "The opportunity was not validated yet.",
+          "searching": "Searching",
+          "searching_description": "The opportunity was validated, it can be searched for.",
+          "cancelledByUs": "Cancelled by us",
+          "cancelledByUs_description": "The opportunity was cancelled - no volunteer found.",
+          "cancelledByNGO": "Cancelled by NGO",
+          "cancelledByNGO_description": "The opportunity was cancelled - by NGO.",
+          "matchedNotNeeded": "Matched - not needed",
+          "matchedNotNeeded_description": "A volunteer was matched but at the last minute not needed.",
+          "matchedVolunteerNoShow": "Matched - volunteer no show",
+          "matchedVolunteerNoShow_description": "A volunteer was matched but did not show up."
+        }
+      },
       "contactDetailsTitle": "Contact details",
       "editButtonName": "Edit",
       "contactDetails": {
