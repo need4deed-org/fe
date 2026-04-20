@@ -1020,6 +1020,7 @@
       "accompanyingDetailsTitle": "Accompanying details",
       "accompanyingDetails": {
         "appointmentAddress": "Appointment address",
+        "appointmentPostcode": "Appointment postcode",
         "appointmentDate": "Appointment date",
         "appointmentTime": "Appointment time",
         "refugeeNumber": "Refugee number",

@@ -61,6 +61,21 @@ export const AccompanyingDetailsEdit = ({
         />
 
         <Controller
+          name="appointmentPostcode"
+          control={control}
+          render={({ field }: { field: ControllerRenderProps<AccompanyingDetailsFormData, "appointmentPostcode"> }) => (
+            <EditableField
+              mode="edit"
+              type="text"
+              label={t("dashboard.opportunityProfile.accompanyingDetails.appointmentPostcode")}
+              value={field.value || ""}
+              setValue={field.onChange}
+              errorMessage={errors.appointmentPostcode?.message}
+            />
+          )}
+        />
+
+        <Controller
           name="appointmentDate"
           control={control}
           render={({ field }: { field: ControllerRenderProps<AccompanyingDetailsFormData, "appointmentDate"> }) => (
@@ -98,9 +113,7 @@ export const AccompanyingDetailsEdit = ({
                 />
                 {errors.appointmentTime && (
                   <ErrorText>
-                    {t(
-                      `dashboard.opportunityProfile.accompanyingDetails.validation.${errors.appointmentTime.message}`,
-                    )}
+                    {t(`dashboard.opportunityProfile.accompanyingDetails.validation.${errors.appointmentTime.message}`)}
                   </ErrorText>
                 )}
               </TimeInputWrapper>
