@@ -58,16 +58,13 @@ export function LanguageFieldRow({
             {t("form.becomeVolunteer.fields.languages.chooseLanguage")}
           </option>
           <option key={language.id} value={language.language}>
-            {language.language}
+            {availableLanguages.find((item) => String(item.id) === language.language)?.title[i18n.language as Lang] ?? language.language}
           </option>
           {availableLanguages.map((item) => (
             <option
               key={item.id}
               value={String(item.id)}
-              disabled={
-                (disabledLanguages.includes(String(item.id)) && language.language !== String(item.id)) ||
-                disabledLanguages.includes(item.title[i18n.language as Lang] as string)
-              }
+              disabled={disabledLanguages.includes(String(item.id)) && language.language !== String(item.id)}
             >
               {item.title[i18n.language as Lang]}
             </option>
