@@ -10,6 +10,8 @@ export type DocumentRow = {
   nameKey: string;
   isUploaded: boolean;
   document?: ApiDocumentGet;
+  isReceived: boolean;
+  receivedAt: Date | null;
 };
 
 const DOCUMENT_NAME_KEYS: Record<DocumentType, string> = {
@@ -41,17 +43,21 @@ export const extractDocumentUrl = (url: string): string | null => {
 };
 
 export const enrichDocuments = (
-  fetchedDocuments: ApiDocumentGet[]
+  fetchedDocuments: ApiDocumentGet[],
+  receivedState: Record<string, { isReceived: boolean; receivedAt: Date | null }>,
 ): DocumentRow[] => {
   const allTypes = Object.keys(DOCUMENT_NAME_KEYS) as DocumentType[];
 
   return allTypes.map((type) => {
     const document = fetchedDocuments.find((doc) => doc.type === type);
+    const received = receivedState[type] ?? { isReceived: false, receivedAt: null };
     return {
       type,
       nameKey: DOCUMENT_NAME_KEYS[type],
       isUploaded: !!document,
       document,
+      isReceived: received.isReceived,
+      receivedAt: received.receivedAt,
     };
   });
 };

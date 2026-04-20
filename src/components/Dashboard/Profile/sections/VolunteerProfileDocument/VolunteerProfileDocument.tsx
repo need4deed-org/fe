@@ -32,10 +32,30 @@ export function VolunteerProfileDocument({ volunteer }: Props) {
   } = useDialogState();
 
   const [documentUrl, setDocumentUrl] = useState<string | null>(null);
+  const [receivedState, setReceivedState] = useState<Record<string, { isReceived: boolean; receivedAt: Date | null }>>(
+    {},
+  );
 
   const { data: fetchedDocuments, isLoading, isError } = useVolunteerDocuments(volunteer.id);
 
-  const documentRows = useMemo(() => (fetchedDocuments ? enrichDocuments(fetchedDocuments) : []), [fetchedDocuments]);
+  const documentRows = useMemo(
+    () => (fetchedDocuments ? enrichDocuments(fetchedDocuments, receivedState) : []),
+    [fetchedDocuments, receivedState],
+  );
+
+  const handleToggleReceived = (type: string) => {
+    setReceivedState((prev) => {
+      const current = prev[type] ?? { isReceived: false, receivedAt: null };
+      const isReceived = !current.isReceived;
+      return {
+        ...prev,
+        [type]: {
+          isReceived,
+          receivedAt: isReceived ? new Date() : null,
+        },
+      };
+    });
+  };
 
   const uploadMutation = useUploadDocument(volunteer.id, () => closeDialog("upload"));
   const deleteMutation = useDeleteDocument(volunteer.id, () => {
@@ -103,6 +123,9 @@ export function VolunteerProfileDocument({ volunteer }: Props) {
           <Table>
             <TableHeader>
               <HeaderCell>{t("dashboard.documentSection.typeOfDocument")}</HeaderCell>
+              <HeaderCell $width="120px" $noWrap>
+                {t("dashboard.documentSection.received")}
+              </HeaderCell>
               <HeaderCell $width="180px">{t("dashboard.documentSection.status")}</HeaderCell>
               <HeaderCell $width="152px" $noWrap>
                 {t("dashboard.documentSection.uploadedOn")}
@@ -122,6 +145,7 @@ export function VolunteerProfileDocument({ volunteer }: Props) {
                 onPreview={() => handlePreview(row)}
                 onDownload={() => handleDownload(row)}
                 onDelete={() => openDialog("delete", row)}
+                onToggleReceived={() => handleToggleReceived(row.type)}
               />
             ))}
           </Table>

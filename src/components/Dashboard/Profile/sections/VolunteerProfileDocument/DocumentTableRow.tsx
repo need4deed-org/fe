@@ -2,7 +2,7 @@ import { EmptyPlaceholder } from "@/components/core/common/EmptyPlaceholder";
 import { DownloadSimple, Eye, Trash, UploadSimple } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
 import { ActionButtonWithTooltip } from "./ActionButtonWithTooltip";
-import { ActionCell, Cell, StatusBadge, TableRow } from "./styles";
+import { ActionCell, Cell, ReceivedCell, ReceivedCheckbox, StatusBadge, TableRow } from "./styles";
 import { DocumentRow } from "./utils";
 
 type Props = {
@@ -12,6 +12,7 @@ type Props = {
   onPreview: () => void;
   onDownload: () => void;
   onDelete: () => void;
+  onToggleReceived: () => void;
 };
 
 export function DocumentTableRow({
@@ -21,28 +22,42 @@ export function DocumentTableRow({
   onPreview,
   onDownload,
   onDelete,
+  onToggleReceived,
 }: Props) {
   const { t } = useTranslation();
-  const { nameKey, isUploaded, document } = documentRow;
+  const { nameKey, isUploaded, isReceived, receivedAt, document } = documentRow;
 
   return (
     <TableRow $isLast={isLast}>
       <Cell>{t(`dashboard.documentSection.documentNames.${nameKey}`)}</Cell>
+      <ReceivedCell>
+        <ReceivedCheckbox
+          checked={isReceived}
+          onChange={onToggleReceived}
+          aria-label={t("dashboard.documentSection.received")}
+        />
+      </ReceivedCell>
       <Cell $width="180px" $align="center">
-        <StatusBadge $status={isUploaded ? "uploaded" : "missing"}>
-          {isUploaded
-            ? t("dashboard.documentSection.uploaded")
-            : t("dashboard.documentSection.missing")}
+        <StatusBadge $status={isUploaded || isReceived ? "uploaded" : "missing"}>
+          {isUploaded || isReceived ? t("dashboard.documentSection.uploaded") : t("dashboard.documentSection.missing")}
         </StatusBadge>
       </Cell>
       <Cell $width="152px" $noWrap>
-        {document?.createdAt
-          ? new Date(document.createdAt).toLocaleDateString("de-DE", {
-              day: "2-digit",
-              month: "2-digit",
-              year: "numeric",
-            })
-          : <EmptyPlaceholder />}
+        {document?.createdAt ? (
+          new Date(document.createdAt).toLocaleDateString("de-DE", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+          })
+        ) : isReceived && receivedAt ? (
+          receivedAt.toLocaleDateString("de-DE", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+          })
+        ) : (
+          <EmptyPlaceholder />
+        )}
       </Cell>
       <ActionCell>
         <ActionButtonWithTooltip
