@@ -1034,6 +1034,7 @@
       "accompanyingDetails": {
         "appointmentAddress": "Terminadresse",
         "appointmentPostcode": "Terminpostleitzahl",
+        "appointmentDistrict": "Terminbezirk",
         "appointmentDate": "Termindatum",
         "appointmentTime": "Terminzeit",
         "refugeeNumber": "Geflüchtetennummer",

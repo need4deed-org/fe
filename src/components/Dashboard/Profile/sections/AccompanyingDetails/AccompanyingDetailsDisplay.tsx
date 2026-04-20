@@ -31,6 +31,14 @@ export const AccompanyingDetailsDisplay = ({ values, languageLabel }: Props) => 
         setValue={() => {}}
       />
 
+      <EditableField
+        mode="display"
+        type="text"
+        label={t("dashboard.opportunityProfile.accompanyingDetails.appointmentDistrict")}
+        value={values.appointmentDistrict || ""}
+        setValue={() => {}}
+      />
+
       <DateFieldRow data-testid="appointment-date-field">
         <label>{t("dashboard.opportunityProfile.accompanyingDetails.appointmentDate")}</label>
         <span>{values.appointmentDate ? format(values.appointmentDate, "dd.MM.yyyy") : EMPTY_PLACEHOLDER_VALUE}</span>

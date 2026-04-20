@@ -1033,6 +1033,7 @@
       "accompanyingDetails": {
         "appointmentAddress": "Appointment address",
         "appointmentPostcode": "Appointment postcode",
+        "appointmentDistrict": "Appointment district",
         "appointmentDate": "Appointment date",
         "appointmentTime": "Appointment time",
         "refugeeNumber": "Refugee number",

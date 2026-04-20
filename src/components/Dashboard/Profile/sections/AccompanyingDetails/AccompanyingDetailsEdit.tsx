@@ -82,6 +82,21 @@ export const AccompanyingDetailsEdit = ({
         />
 
         <Controller
+          name="appointmentDistrict"
+          control={control}
+          render={({ field }: { field: ControllerRenderProps<AccompanyingDetailsFormData, "appointmentDistrict"> }) => (
+            <EditableField
+              mode="edit"
+              type="text"
+              label={t("dashboard.opportunityProfile.accompanyingDetails.appointmentDistrict")}
+              value={field.value || ""}
+              setValue={field.onChange}
+              errorMessage={errors.appointmentDistrict?.message}
+            />
+          )}
+        />
+
+        <Controller
           name="appointmentDate"
           control={control}
           render={({ field }: { field: ControllerRenderProps<AccompanyingDetailsFormData, "appointmentDate"> }) => (
