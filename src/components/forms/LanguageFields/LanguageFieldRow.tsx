@@ -63,7 +63,7 @@ export function LanguageFieldRow({
           {availableLanguages.map((item) => (
             <option
               key={item.id}
-              value={item.title[i18n.language as Lang]}
+              value={String(item.id)}
               disabled={
                 (disabledLanguages.includes(String(item.id)) && language.language !== String(item.id)) ||
                 disabledLanguages.includes(item.title[i18n.language as Lang] as string)
