@@ -423,7 +423,8 @@
     "header": {
       "button": {
         "login": "Log in",
-        "joinVolunteer": "Join as a volunteer"
+        "joinVolunteer": "Join as a volunteer",
+        "dashboard": "Dashboard"
       }
     },
     "login": {
