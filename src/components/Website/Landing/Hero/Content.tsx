@@ -4,9 +4,7 @@ import { useRouter } from "next/navigation";
 import styled from "styled-components";
 
 import { Button } from "../../../core/button";
-import { ATag } from "../../../styled/tags";
 import { CustomHeading } from "../../../styled/text";
-import { Subpage } from "@/types";
 
 const ContentDiv = styled.div`
   display: flex;
@@ -35,7 +33,7 @@ const HeroButtonsContainer = styled.div`
 `;
 
 export default function HeroContent() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const router = useRouter();
 
   return (
@@ -66,14 +64,13 @@ export default function HeroContent() {
           <Button
             backgroundcolor="var(--color-orchid-light)"
             textColor="var(--color-midnight)"
-            onClick={() => {
-              router.push(`/${Subpage.VOLUNTEER_FORM}`);
-            }}
+            onClick={() => router.push(`/${i18n.language}/forms/volunteer`)}
             text={t("dashboard.heroSection.buttonJoinVolunteer")}
           />
-          <ATag href="#rac-section-container">
-            <Button onClick={() => {}} text={t("dashboard.heroSection.buttonJoinRefugeeCenter")} />
-          </ATag>
+          <Button
+            onClick={() => router.push(`/${i18n.language}/forms/opportunity`)}
+            text={t("dashboard.heroSection.buttonJoinRefugeeCenter")}
+          />
         </HeroButtonsContainer>
       </ContentContainer>
     </ContentDiv>

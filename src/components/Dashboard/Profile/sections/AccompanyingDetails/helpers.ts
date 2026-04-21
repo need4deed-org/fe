@@ -42,5 +42,5 @@ export const getInitialFormValues = (
   appointmentTime: parseTime(details?.appointmentTime),
   refugeeNumber: details?.refugeeNumber || "",
   refugeeName: details?.refugeeName || "",
-  languageToTranslate: details?.languageToTranslate || "",
+  languageToTranslate: details?.languageToTranslate?.toString() ?? "",
 });

@@ -1,3 +1,5 @@
-export default function DashboardLandingPage() {
-  return <div>Welcome to your Dashboard!</div>;
+import { DashboardHome } from "@/components/Dashboard";
+
+export default function DashboardPage() {
+  return <DashboardHome />;
 }
