@@ -48,6 +48,20 @@ const deleteDocumentApi = async (volunteerId: number, documentType: DocumentType
   await axios.delete(`${apiPathVolunteer}/${volunteerId}/doc/${documentType}`);
 };
 
+type MarkReceivedPayload = {
+  volunteerId: number;
+  documentType: DocumentType;
+  received: boolean;
+};
+
+const markDocumentReceivedApi = async (
+  volunteerId: number,
+  documentType: DocumentType,
+  received: boolean,
+): Promise<void> => {
+  await axios.patch(`${apiPathVolunteer}/${volunteerId}/doc/${documentType}/received`, { received });
+};
+
 export const useUploadDocument = (volunteerId: number, onSuccess?: () => void) => {
   const { t } = useTranslation();
 
@@ -72,5 +86,12 @@ export const useDeleteDocument = (volunteerId: number, onSuccess?: () => void) =
     successMessage: t("message.deleteSuccess"),
     queryKeyToInvalidate: ["volunteerDocuments", volunteerId.toString()],
     onSuccessCallback: onSuccess,
+  });
+};
+
+export const useMarkDocumentReceived = (volunteerId: number) => {
+  return useMutationQuery<MarkReceivedPayload, void>({
+    mutationFn: ({ documentType, received }) => markDocumentReceivedApi(volunteerId, documentType, received),
+    queryKeyToInvalidate: ["volunteerDocuments", volunteerId.toString()],
   });
 };

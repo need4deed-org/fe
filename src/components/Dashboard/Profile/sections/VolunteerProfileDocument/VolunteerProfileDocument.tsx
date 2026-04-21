@@ -1,6 +1,6 @@
 "use client";
 import { useVolunteerDocuments } from "@/hooks/useVolunteerDocuments";
-import { ApiVolunteerGet } from "need4deed-sdk";
+import { ApiVolunteerGet, DocumentType } from "need4deed-sdk";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
@@ -11,7 +11,7 @@ import { DocumentTableRow } from "./DocumentTableRow";
 import { ACTION_COLUMN_WIDTH, DocumentTableContainer, HeaderCell, Table, TableHeader } from "./styles";
 import { UploadDocumentDialog } from "./UploadDocumentDialog";
 import { useDialogState } from "./useDialogState";
-import { useDeleteDocument, useUploadDocument } from "./useDocumentOperations";
+import { useDeleteDocument, useMarkDocumentReceived, useUploadDocument } from "./useDocumentOperations";
 import { DocumentRow, enrichDocuments, extractDocumentUrl } from "./utils";
 
 type Props = {
@@ -43,10 +43,11 @@ export function VolunteerProfileDocument({ volunteer }: Props) {
     [fetchedDocuments, receivedState],
   );
 
-  const handleToggleReceived = (type: string) => {
+  const handleToggleReceived = (type: DocumentType) => {
     setReceivedState((prev) => {
       const current = prev[type] ?? { isReceived: false, receivedAt: null };
       const isReceived = !current.isReceived;
+      receivedMutation.mutate({ volunteerId: volunteer.id, documentType: type, received: isReceived });
       return {
         ...prev,
         [type]: {
@@ -62,6 +63,7 @@ export function VolunteerProfileDocument({ volunteer }: Props) {
     closeDialog("delete");
     closeDialog("preview");
   });
+  const receivedMutation = useMarkDocumentReceived(volunteer.id);
 
   const handleConfirmDelete = () => {
     if (deleteDialogDocument) {
