@@ -20,3 +20,11 @@ export function capitalizeFirstLetter(str: string): string {
 export const isValidLanguage = (language: string) => {
   return supportedLangs.includes(language);
 };
+
+export const getCookie = (name: string): string | undefined => {
+  if (typeof document === "undefined") return undefined;
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop()?.split(";").shift();
+  return undefined;
+};

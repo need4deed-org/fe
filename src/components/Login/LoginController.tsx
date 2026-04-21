@@ -4,6 +4,7 @@ import { UserRole } from "need4deed-sdk";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { LoginForm } from "./LoginForm";
+import { LOGGED_IN_COOKIE } from "@/config/constants";
 
 export function LoginController() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -18,5 +19,12 @@ export function LoginController() {
     router.push(path);
   }, [user, language, router]);
 
-  return <LoginForm onLoginSuccess={() => setIsLoggedIn(true)} />;
+  return (
+    <LoginForm
+      onLoginSuccess={() => {
+        document.cookie = LOGGED_IN_COOKIE;
+        setIsLoggedIn(true);
+      }}
+    />
+  );
 }
