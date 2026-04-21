@@ -30,7 +30,7 @@ export const AgentContactDetails = forwardRef<ContactDetailsRef, Props>(function
   ref,
 ) {
   const { t } = useTranslation();
-  const { mutate: updateAgent, isPending } = useUpdateAgentContact(String(agent?.representative?.id));
+  const { mutate: updateAgent, isPending } = useUpdateAgentContact(String(agent?.representatives?.[0]?.id));
   const [isEditing, setIsEditing] = useState(false);
 
   useEditingChangeNotifier(isEditing, onEditingChange);
@@ -42,7 +42,7 @@ export const AgentContactDetails = forwardRef<ContactDetailsRef, Props>(function
 
   const schema = createAgentContactDetailsSchema(t);
 
-  const initialFormValues = agent?.representative;
+  const initialFormValues = agent?.representatives?.[0];
 
   const methods = useForm<AgentContactDetailsFormData>({
     resolver: zodResolver(schema),
