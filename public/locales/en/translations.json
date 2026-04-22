@@ -252,6 +252,8 @@
           "header": "Type Of Opportunity",
           "volunteering": "Volunteering Opportunity",
           "accompanying": "Accompanying Appointment",
+          "regular": "Regular",
+          "events": "Events",
           "helpText": "There are two ways of helping: Volunteering doing various activities and Accompanying to appointments essentially providing translation",
           "helpTitle": ""
         },
