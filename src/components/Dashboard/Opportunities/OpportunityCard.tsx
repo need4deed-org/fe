@@ -17,13 +17,8 @@ import {
 } from "./OpportunityCard.helpers";
 import { Card, LanguageRow, StatusDiv, StatusTagsDiv, TagDiv, TitleParagraph } from "./styles";
 
-// accompanyingDetails will be added to ApiVolunteerOpportunityGetList in a future SDK update
-type OpportunityWithAccompanyingDetails = ApiVolunteerOpportunityGetList & {
-  accompanyingDetails?: { appointmentDate?: string; appointmentTime?: string };
-};
-
 type Props = {
-  opportunity: OpportunityWithAccompanyingDetails;
+  opportunity: ApiVolunteerOpportunityGetList;
   volunteerId?: string;
 };
 
