@@ -8,6 +8,8 @@ import { useTranslation } from "react-i18next";
 import { FormContainer } from "../shared/styles";
 import { EditableSectionProps, EditableSectionRef } from "../shared/types";
 import { useEditingChangeNotifier } from "../shared/useEditingChangeNotifier";
+import { useApiDistricts } from "../VolunteerProfile/hooks";
+import { createMapping } from "../VolunteerProfile/mappingUtils";
 import { RefugeeAccommodationCentreDisplay } from "./RefugeeAccommodationCentreDisplay";
 import { RefugeeAccommodationCentreEdit } from "./RefugeeAccommodationCentreEdit";
 import {
@@ -28,6 +30,9 @@ export const RefugeeAccommodationCentre = forwardRef<EditableSectionRef, Props>(
   const [isEditing, setIsEditing] = useState(false);
 
   useEditingChangeNotifier(isEditing, onEditingChange);
+
+  const { data: apiDistricts = [] } = useApiDistricts();
+  const districtMapping = useMemo(() => createMapping(apiDistricts), [apiDistricts]);
 
   const schema = createRefugeeAccommodationCentreSchema(t);
 
@@ -61,11 +66,13 @@ export const RefugeeAccommodationCentre = forwardRef<EditableSectionRef, Props>(
   };
 
   const onSubmit = (values: RefugeeAccommodationCentreFormData) => {
+    const districtId = districtMapping.titleToId[values.district];
     updateAgent(
       {
         agent: {
           name: values.name,
           address: values.address,
+          ...(districtId && { district: districtId }),
         },
       },
       { onSuccess: () => setIsEditing(false) },
@@ -85,6 +92,7 @@ export const RefugeeAccommodationCentre = forwardRef<EditableSectionRef, Props>(
             onCancel={handleCancel}
             onSubmit={handleSubmit(onSubmit)}
             isPending={isPending}
+            districts={apiDistricts.map((d) => d.title)}
           />
         ) : (
           <RefugeeAccommodationCentreDisplay />
