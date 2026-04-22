@@ -8,11 +8,22 @@ import CardDetail from "../Volunteers/CardDetail";
 import { CardParagraph } from "../Volunteers/VolunteerCard";
 import { IconName } from "../Volunteers/icon";
 import { getLanguagesByPurpose, getOptionTitles } from "./helpers";
-import { formatAvailability, statusColorMap, statusIconMap, volunteerTypeIconMap } from "./OpportunityCard.helpers";
+import {
+  formatAccompanyingDate,
+  formatAvailability,
+  statusColorMap,
+  statusIconMap,
+  volunteerTypeIconMap,
+} from "./OpportunityCard.helpers";
 import { Card, LanguageRow, StatusDiv, StatusTagsDiv, TagDiv, TitleParagraph } from "./styles";
 
+// accompanyingDetails will be added to ApiVolunteerOpportunityGetList in a future SDK update
+type OpportunityWithAccompanyingDetails = ApiVolunteerOpportunityGetList & {
+  accompanyingDetails?: { appointmentDate?: string; appointmentTime?: string };
+};
+
 type Props = {
-  opportunity: ApiVolunteerOpportunityGetList;
+  opportunity: OpportunityWithAccompanyingDetails;
   volunteerId?: string;
 };
 
@@ -20,14 +31,29 @@ export function OpportunityCard({ opportunity, volunteerId }: Props) {
   const { t, i18n } = useTranslation();
   const router = useRouter();
 
-  const { id, title, volunteerType, statusOpportunity, languages, activities, location, availability } = opportunity;
+  const {
+    id,
+    title,
+    volunteerType,
+    statusOpportunity,
+    languages,
+    activities,
+    location,
+    availability,
+    accompanyingDetails,
+  } = opportunity;
 
   const mainCommunication = getLanguagesByPurpose(languages, LangPurpose.GENERAL);
   const recipientLanguage = getLanguagesByPurpose(languages, LangPurpose.RECIPIENT);
   const activityTitles = getOptionTitles(activities);
   const locationTitles = getOptionTitles(location);
 
-  const scheduleText = availability?.length > 0 ? formatAvailability(availability) : null;
+  const isAccompanying = volunteerType === ProfileVolunteeringType.ACCOMPANYING;
+  const scheduleText = isAccompanying
+    ? formatAccompanyingDate(accompanyingDetails)
+    : availability?.length > 0
+      ? formatAvailability(availability)
+      : null;
 
   const handleCardClick = () => {
     if (!id) return;
