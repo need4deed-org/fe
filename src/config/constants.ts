@@ -33,6 +33,7 @@ export const screenSizeThresholds = {
 };
 
 export const eightDays = 1000 * 60 * 60 * 24 * 8;
+export const twoDays = 1000 * 60 * 60 * 24 * 2;
 
 export const phoneRegEx = /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/;
 
@@ -52,7 +53,7 @@ export const defaultAvatarURL = "head-silhouette.webp";
 export const defaultAvatarVolunteerProfile = "all_genders_avatar.png";
 
 export enum DashboardRoutes {
-  Home = "/dashboard/home",
+  Home = "/dashboard",
   Volunteers = "/dashboard/volunteers",
   Opportunities = "/dashboard/opportunities",
   Agents = "/dashboard/agents",
@@ -71,3 +72,5 @@ export const EMPTY_PLACEHOLDER_VALUE = "–";
 export const MAX_DESCRIPTION_LENGTH = 500;
 
 export const PHONE_NUMBER_REGEX = /^\+[0-9\s]+$/;
+
+export const LOGGED_IN_COOKIE = "is_logged_in=true; path=/; max-age=6000; SameSite=Lax; Secure";

@@ -7,13 +7,9 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 First, run the development server:
 
 ```bash
-npm run dev
-# or
+
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
@@ -80,7 +76,7 @@ git clone https://github.com/need4deed-org/sdk.git
 
 ### 2. Keep SDK in Sync
 
-We **don’t fetch the SDK from npm** — we link it locally.
+We **don’t fetch the SDK** — we link it locally.
 
 1. Pull the latest SDK changes:
 
@@ -93,7 +89,7 @@ We **don’t fetch the SDK from npm** — we link it locally.
 
    ```bash
    cd ../fe
-   npm install ../sdk
+   yarn install ../sdk
    ```
 
 3. Make sure all repos (`fe`, `be`, `sdk`) are checked out to the same branch name for consistency.
@@ -169,10 +165,4 @@ We welcome all contributions — from bug fixes to feature development.
 By contributing, you agree that your contributions are licensed under our
 [Commons Clause + MIT License](LICENSE).
 
----
-
-Would you like me to:
-
-* make this version ready for **direct commit to your `fe` repo**,
-  or
-* create a **shorter variant** for `backend` and `sdk` too (so all repos stay consistent)?
+--- 

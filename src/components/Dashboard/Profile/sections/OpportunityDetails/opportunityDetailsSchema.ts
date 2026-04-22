@@ -12,17 +12,15 @@ const languageObjectSchema = z.object({
 });
 
 const languagesValidator = (t: (key: string) => string) =>
-  z
-    .array(languageObjectSchema)
-    .superRefine((languages, ctx) => {
-      const hasCompleteRow = languages.some((lang) => lang.language !== "");
-      if (!hasCompleteRow) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: t(`${i18nPrefix}.languageRequired`),
-        });
-      }
-    });
+  z.array(languageObjectSchema).superRefine((languages, ctx) => {
+    const hasCompleteRow = languages.some((lang) => lang.language !== "");
+    if (!hasCompleteRow) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: t(`${i18nPrefix}.languageRequired`),
+      });
+    }
+  });
 
 export const createOpportunityDetailsSchema = (t: (key: string) => string) =>
   z.object({
@@ -30,28 +28,26 @@ export const createOpportunityDetailsSchema = (t: (key: string) => string) =>
       .string()
       .min(1, t(`${i18nPrefix}.descriptionRequired`))
       .max(MAX_DESCRIPTION_LENGTH, t(`${i18nPrefix}.descriptionTooLong`)),
-    numberOfVolunteers: z
-      .string()
-      .refine((val) => val !== "" && val !== "0", {
-        message: t(`${i18nPrefix}.numberOfVolunteersRequired`),
-      }),
+    numberOfVolunteers: z.string().refine((val) => val !== "" && val !== "0", {
+      message: t(`${i18nPrefix}.numberOfVolunteersRequired`),
+    }),
     mainCommunication: languagesValidator(t),
     residentsSpeak: languagesValidator(t),
-    availability: z.custom<Availability>(
-      (data) => {
-        if (!Array.isArray(data)) return false;
-        return data.some((day) =>
-          day.timeSlots.some((slot: { selected: boolean }) => slot.selected),
-        );
-      },
-      t(`${i18nPrefix}.availabilityRequired`),
-    ),
-    activities: z
-      .array(z.string())
-      .min(1, t(`${i18nPrefix}.activitiesRequired`)),
-    skills: z
-      .array(z.string())
-      .min(1, t(`${i18nPrefix}.skillsRequired`)),
+    availability: z
+      .custom<Availability>(
+        (data) => {
+          if (data === null || data === undefined) return true;
+          if (!Array.isArray(data)) return false;
+          return data.some((day) => day.timeSlots.some((slot: { selected: boolean }) => slot.selected));
+        },
+        t(`${i18nPrefix}.availabilityRequired`),
+      )
+      .nullable()
+      .optional(),
+    eventDate: z.date().nullable().optional(),
+    eventTime: z.string().optional(),
+    activities: z.array(z.string()).min(1, t(`${i18nPrefix}.activitiesRequired`)),
+    skills: z.array(z.string()),
   });
 
 export type OpportunityDetailsFormData = z.infer<ReturnType<typeof createOpportunityDetailsSchema>>;

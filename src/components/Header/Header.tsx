@@ -10,6 +10,8 @@ import BurgerMenuItems from "./BurgerMenuItems";
 import LoginRegister from "./LoginRegister";
 import MenuItems from "./MenuItems";
 import UserProfile from "./UserProfile";
+import MenuItem from "./MenuItem";
+import Link from "next/link";
 
 interface HeaderContainerProps {
   height?: string;
@@ -47,7 +49,7 @@ export function Header({
   menuItemColor,
   burgerMenuItemColor = "var(--color-midnight)",
 }: Props) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState<boolean>(false);
   const user = useCurrentUser();
 
@@ -77,6 +79,11 @@ export function Header({
         <MenuItems items={menuItems} menuItemColor={menuItemColor} />
       )}
 
+      {user && (
+        <Link href={`/${i18n.language}/dashboard/home`} style={{ textDecoration: "none" }}>
+          <MenuItem text={t("dashboard.header.button.dashboard")} color={menuItemColor} />
+        </Link>
+      )}
       {user ? <UserProfile /> : <LoginRegister />}
     </HeaderContainer>
   );

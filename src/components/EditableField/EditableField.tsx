@@ -535,7 +535,9 @@ export const EditableField = forwardRef(function EditableField<T extends string 
                         value={option}
                         checked={isSelected}
                         onChange={() => {
-                          // Handled by parent OptionRow onClick
+                          if (type === "checkbox-list") {
+                            handleCheckboxChange(option);
+                          }
                         }}
                         onClick={(e) => e.stopPropagation()}
                       />

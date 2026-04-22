@@ -4,9 +4,10 @@ import { userAgent } from "next/server";
 import { supportedLangs } from "./config/constants";
 import { Lang } from "need4deed-sdk";
 
-const DEFAULT_LOCALE = Lang.DE;
+const DEFAULT_LOCALE = Lang.EN;
 const DEFAULT_DEVICE_TYPE = "desktop";
 const DEVICE_HEADER_NAME = "x-device-type";
+const LANG_COOKIE = "preferred-lang";
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -14,6 +15,10 @@ export function middleware(request: NextRequest) {
   const localePrefixRegex = /^\/([a-z]{2})(?:\/|$)/i;
   const match = pathname.match(localePrefixRegex);
   const currentLocale = match ? match[1] : null;
+
+  // Use cookie-saved language preference, fall back to DEFAULT_LOCALE
+  const cookieLang = request.cookies.get(LANG_COOKIE)?.value;
+  const preferredLocale = cookieLang && supportedLangs.includes(cookieLang) ? cookieLang : DEFAULT_LOCALE;
 
   let redirectNeeded = false;
   let newPathname = pathname;
@@ -24,21 +29,31 @@ export function middleware(request: NextRequest) {
     if (!isSupportedLocale) {
       const pathWithoutLocalePrefix = pathname.substring(currentLocale.length + 1);
 
-      newPathname = `/${DEFAULT_LOCALE}${pathWithoutLocalePrefix}`;
+      newPathname = `/${preferredLocale}${pathWithoutLocalePrefix}`;
       redirectNeeded = true;
     }
   } else {
-    newPathname = `/${DEFAULT_LOCALE}${pathname}`;
+    newPathname = `/${preferredLocale}${pathname}`;
     redirectNeeded = true;
   }
 
   if (redirectNeeded) {
     const url = request.nextUrl.clone();
     url.pathname = newPathname;
-    return NextResponse.redirect(url);
+    const redirectResponse = NextResponse.redirect(url);
+    return redirectResponse;
   }
 
   const response = NextResponse.next();
+
+  // Persist the current locale in a cookie so bare URLs respect the user's choice
+  if (currentLocale && supportedLangs.includes(currentLocale)) {
+    response.cookies.set(LANG_COOKIE, currentLocale, {
+      path: "/",
+      maxAge: 60 * 60 * 24 * 365, // 1 year
+      sameSite: "lax",
+    });
+  }
 
   const { device } = userAgent({ headers: request.headers });
 
