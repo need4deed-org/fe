@@ -1,4 +1,12 @@
-import { ApiLanguage, ApiOptionLists, LangPurpose, OptionById, QueryParamsKeys } from "need4deed-sdk";
+import {
+  ActivityAPI,
+  ApiLanguage,
+  ApiOptionLists,
+  LangPurpose,
+  OptionById,
+  OptionItem,
+  QueryParamsKeys,
+} from "need4deed-sdk";
 import { ReadonlyURLSearchParams } from "next/navigation";
 import { OpportunityCardsFilter } from "./Filters/types";
 
@@ -96,4 +104,10 @@ export function getLanguagesByPurpose(languages: ApiLanguage[] | undefined, purp
 export function getOptionTitles(items: OptionById[] | undefined): string[] {
   if (!items || !Array.isArray(items)) return [];
   return items.map((item) => (typeof item.title === "string" ? item.title : "")).filter(Boolean);
+}
+
+export function getActivityTitles(activities: OptionById[], activityList: OptionItem[] | undefined): string[] {
+  if (!activities?.length || !activityList?.length) return [];
+  const activityMap = new Map(activityList.map((item) => [item.id, item.title]));
+  return activities.map((act) => activityMap.get(Number(act.id))).filter((title): title is string => Boolean(title));
 }
