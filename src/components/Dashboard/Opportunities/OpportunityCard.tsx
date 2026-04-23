@@ -56,7 +56,7 @@ export function OpportunityCard({ opportunity, volunteerId, activitiesList }: Pr
     const params = volunteerId ? `?volunteer=${volunteerId}` : "";
     router.push(`/${i18n.language}/dashboard/opportunities/${id}${params}`);
   };
-  console.log(opportunity);
+
   return (
     <Card onClick={handleCardClick} data-testid="opportunity-card">
       <StatusTagsDiv>
