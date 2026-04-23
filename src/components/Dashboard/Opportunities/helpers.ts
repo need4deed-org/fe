@@ -1,4 +1,12 @@
-import { ApiLanguage, ApiOptionLists, LangPurpose, OptionById, OptionItem, QueryParamsKeys } from "need4deed-sdk";
+import {
+  ApiLanguage,
+  ApiOptionLists,
+  EntityTableName,
+  LangPurpose,
+  OptionById,
+  OptionItem,
+  QueryParamsKeys,
+} from "need4deed-sdk";
 import { ReadonlyURLSearchParams } from "next/navigation";
 import { OpportunityCardsFilter } from "./Filters/types";
 
@@ -50,6 +58,15 @@ export function serializeOpportunityFilters(
     }
   });
 
+  params.delete(EntityTableName.ACTIVITY);
+  Object.entries(filter.activity).forEach(([key, value]) => {
+    if (value === true) {
+      const paramValue =
+        (options?.serializeToIDs && options.apiFilterOptions?.activity?.find((d) => d.title === key)?.id) || key;
+      params.append(EntityTableName.ACTIVITY, String(paramValue));
+    }
+  });
+
   return asString ? params.toString() : params;
 }
 
@@ -80,6 +97,11 @@ export function deserializeOpportunityFilters(
   const queryType = searchParams.getAll("type");
   queryType.forEach((s) => {
     if (newFilter.type[s] !== undefined) newFilter.type[s] = true;
+  });
+
+  const queryActivities = searchParams.getAll(EntityTableName.ACTIVITY);
+  queryActivities.forEach((l) => {
+    if (newFilter.activity[l] !== undefined) newFilter.activity[l] = true;
   });
 
   return newFilter;

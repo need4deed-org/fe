@@ -1,4 +1,4 @@
-import { OpportunityStatusType, OpportunityType, QueryParamsKeys } from "need4deed-sdk";
+import { EntityTableName, OpportunityStatusType, OpportunityType, QueryParamsKeys } from "need4deed-sdk";
 import { OpportunityCardsFilter } from "./types";
 
 export const defaultOpportunityCardsFilter: OpportunityCardsFilter = {
@@ -16,4 +16,5 @@ export const defaultOpportunityCardsFilter: OpportunityCardsFilter = {
     [OpportunityType.EVENTS]: false,
     [OpportunityType.REGULAR]: false,
   },
+  [EntityTableName.ACTIVITY]: {},
 };
