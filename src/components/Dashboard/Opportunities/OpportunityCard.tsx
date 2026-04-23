@@ -8,7 +8,13 @@ import CardDetail from "../Volunteers/CardDetail";
 import { CardParagraph } from "../Volunteers/VolunteerCard";
 import { IconName } from "../Volunteers/icon";
 import { getLanguagesByPurpose, getOptionTitles } from "./helpers";
-import { formatAvailability, statusColorMap, statusIconMap, volunteerTypeIconMap } from "./OpportunityCard.helpers";
+import {
+  formatAccompanyingDate,
+  formatAvailability,
+  statusColorMap,
+  statusIconMap,
+  volunteerTypeIconMap,
+} from "./OpportunityCard.helpers";
 import { Card, LanguageRow, StatusDiv, StatusTagsDiv, TagDiv, TitleParagraph } from "./styles";
 
 type Props = {
@@ -20,14 +26,29 @@ export function OpportunityCard({ opportunity, volunteerId }: Props) {
   const { t, i18n } = useTranslation();
   const router = useRouter();
 
-  const { id, title, volunteerType, statusOpportunity, languages, activities, location, availability } = opportunity;
+  const {
+    id,
+    title,
+    volunteerType,
+    statusOpportunity,
+    languages,
+    activities,
+    location,
+    availability,
+    accompanyingDetails,
+  } = opportunity;
 
   const mainCommunication = getLanguagesByPurpose(languages, LangPurpose.GENERAL);
   const recipientLanguage = getLanguagesByPurpose(languages, LangPurpose.RECIPIENT);
   const activityTitles = getOptionTitles(activities);
   const locationTitles = getOptionTitles(location);
 
-  const scheduleText = availability?.length > 0 ? formatAvailability(availability) : null;
+  const isAccompanying = volunteerType === ProfileVolunteeringType.ACCOMPANYING;
+  const scheduleText = isAccompanying
+    ? formatAccompanyingDate(accompanyingDetails)
+    : availability?.length > 0
+      ? formatAvailability(availability)
+      : null;
 
   const handleCardClick = () => {
     if (!id) return;

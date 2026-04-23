@@ -9,6 +9,14 @@ export function formatAvailability(availability: ApiVolunteerOpportunityGetList[
   return parts.join(", ");
 }
 
+export function formatAccompanyingDate(details?: {
+  appointmentDate?: string;
+  appointmentTime?: string;
+}): string | null {
+  if (!details?.appointmentDate) return null;
+  return [details.appointmentDate, details.appointmentTime].filter(Boolean).join(" ");
+}
+
 export const statusColorMap: Record<OpportunityStatusType, string> = {
   [OpportunityStatusType.NEW]: "var(--color-red-500)",
   [OpportunityStatusType.SEARCHING]: "var(--color-orange-500, var(--color-red-500))",
