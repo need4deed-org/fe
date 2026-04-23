@@ -81,27 +81,27 @@ export function deserializeOpportunityFilters(
 
   const queryDistricts = searchParams.getAll(QueryParamsKeys.DISTRICT);
   queryDistricts.forEach((d) => {
-    if (newFilter.district[d] !== undefined) newFilter.district[d] = true;
+    newFilter.district[d] = true;
   });
 
   const queryLanguages = searchParams.getAll(QueryParamsKeys.LANGUAGE);
   queryLanguages.forEach((l) => {
-    if (newFilter.language[l] !== undefined) newFilter.language[l] = true;
+    newFilter.language[l] = true;
   });
 
   const queryStatus = searchParams.getAll("status");
   queryStatus.forEach((s) => {
-    if (newFilter.status[s] !== undefined) newFilter.status[s] = true;
+    newFilter.status[s] = true;
   });
 
   const queryType = searchParams.getAll("type");
   queryType.forEach((s) => {
-    if (newFilter.type[s] !== undefined) newFilter.type[s] = true;
+    newFilter.type[s] = true;
   });
 
   const queryActivities = searchParams.getAll(EntityTableName.ACTIVITY);
   queryActivities.forEach((l) => {
-    if (newFilter.activity[l] !== undefined) newFilter.activity[l] = true;
+    newFilter.activity[l] = true;
   });
 
   return newFilter;
@@ -122,6 +122,6 @@ export function getOptionTitles(items: OptionById[] | undefined): string[] {
 
 export function getActivityTitles(activities: OptionById[], activityList: OptionItem[] | undefined): string[] {
   if (!activities?.length || !activityList?.length) return [];
-  const activityMap = new Map(activityList.map((item) => [item.id, item.title]));
-  return activities.map((act) => activityMap.get(Number(act.id))).filter((title): title is string => Boolean(title));
+  const activityMap = new Map(activityList.map((item) => [String(item.id), item.title]));
+  return activities.map((act) => activityMap.get(String(act.id))).filter((title): title is string => Boolean(title));
 }
