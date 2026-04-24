@@ -9,9 +9,10 @@ type Props = {
   onCancel: () => void;
   onSubmit: () => void;
   isPending: boolean;
+  districts: string[];
 };
 
-export const RefugeeAccommodationCentreEdit = ({ onCancel, onSubmit, isPending }: Props) => {
+export const RefugeeAccommodationCentreEdit = ({ onCancel, onSubmit, isPending, districts }: Props) => {
   const { t } = useTranslation();
   const {
     control,
@@ -57,10 +58,11 @@ export const RefugeeAccommodationCentreEdit = ({ onCancel, onSubmit, isPending }
           render={({ field }) => (
             <EditableField
               mode="edit"
-              type="text"
+              type="radio-list"
               label={t("dashboard.opportunityProfile.rac.district")}
               value={field.value}
               setValue={field.onChange}
+              options={districts}
               errorMessage={errors.district?.message}
             />
           )}
