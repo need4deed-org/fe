@@ -50,6 +50,7 @@ export type LanguageObject = {
   id: number;
   language: string;
   level: LanguageLevel | "";
+  purpose?: import("need4deed-sdk").LangPurpose;
 };
 
 export type FooterLink = [string, string];
