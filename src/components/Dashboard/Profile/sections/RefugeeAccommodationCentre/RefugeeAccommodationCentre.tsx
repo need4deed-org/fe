@@ -72,7 +72,7 @@ export const RefugeeAccommodationCentre = forwardRef<EditableSectionRef, Props>(
         agent: {
           name: values.name,
           address: values.address,
-          ...(districtId && { district: districtId }),
+          ...(districtId !== undefined && { district: districtId }),
         },
       },
       { onSuccess: () => setIsEditing(false) },
