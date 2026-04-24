@@ -1025,6 +1025,7 @@
       "accompanyingDetailsTitle": "Begleitdetails",
       "accompanyingDetails": {
         "appointmentAddress": "Terminadresse",
+        "appointmentPostcode": "Terminpostleitzahl",
         "appointmentDate": "Termindatum",
         "appointmentTime": "Terminzeit",
         "refugeeNumber": "Geflüchtetennummer",
