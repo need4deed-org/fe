@@ -1029,6 +1029,7 @@
         "refugeeNumber": "Geflüchtetennummer",
         "refugeeName": "Name des Geflüchteten",
         "languageToTranslate": "Zu übersetzende Sprache",
+        "refugeeLanguage": "Flüchtlingssprache",
         "cancel": "Abbrechen",
         "saveChanges": "Änderungen speichern",
         "saveSuccess": "Begleitdetails erfolgreich aktualisiert",

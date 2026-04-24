@@ -51,11 +51,10 @@ export const AccompanyingDetailsDisplay = ({ values, languageLabel }: Props) => 
 
       <EditableField
         mode="display"
-        type="radio-list"
-        label={t("dashboard.opportunityProfile.accompanyingDetails.languageToTranslate")}
+        type="text"
+        label={t("dashboard.opportunityProfile.accompanyingDetails.refugeeLanguage")}
         value={languageLabel}
         setValue={() => {}}
-        options={[]}
       />
     </Details>
   );

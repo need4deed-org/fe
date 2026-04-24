@@ -98,9 +98,7 @@ export const AccompanyingDetailsEdit = ({
                 />
                 {errors.appointmentTime && (
                   <ErrorText>
-                    {t(
-                      `dashboard.opportunityProfile.accompanyingDetails.validation.${errors.appointmentTime.message}`,
-                    )}
+                    {t(`dashboard.opportunityProfile.accompanyingDetails.validation.${errors.appointmentTime.message}`)}
                   </ErrorText>
                 )}
               </TimeInputWrapper>
@@ -139,20 +137,24 @@ export const AccompanyingDetailsEdit = ({
         />
 
         <Controller
-          name="languageToTranslate"
+          name="languagesToTranslate"
           control={control}
-          render={({ field }: { field: ControllerRenderProps<AccompanyingDetailsFormData, "languageToTranslate"> }) => (
+          render={({
+            field,
+          }: {
+            field: ControllerRenderProps<AccompanyingDetailsFormData, "languagesToTranslate">;
+          }) => (
             <EditableField
               mode="edit"
-              type="radio-list"
-              label={t("dashboard.opportunityProfile.accompanyingDetails.languageToTranslate")}
-              value={keyToLabel[field.value || ""] || field.value || ""}
+              type="checkbox-list"
+              label={t("dashboard.opportunityProfile.accompanyingDetails.refugeeLanguage")}
+              value={(field.value ?? []).map((id) => keyToLabel[id] || id)}
               setValue={(value) => {
-                const label = Array.isArray(value) ? value[0] : value;
-                field.onChange(labelToKey[label] || label);
+                const labels = Array.isArray(value) ? value : [value];
+                field.onChange(labels.map((label) => labelToKey[label] || label));
               }}
               options={languageOptions}
-              errorMessage={errors.languageToTranslate?.message}
+              errorMessage={errors.languagesToTranslate?.message}
             />
           )}
         />

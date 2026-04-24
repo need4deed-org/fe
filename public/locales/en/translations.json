@@ -1028,6 +1028,7 @@
         "refugeeNumber": "Refugee number",
         "refugeeName": "Refugee name",
         "languageToTranslate": "Language to translate",
+        "refugeeLanguage": "Refugee language",
         "cancel": "Cancel",
         "saveChanges": "Save changes",
         "saveSuccess": "Accompanying details updated successfully",
