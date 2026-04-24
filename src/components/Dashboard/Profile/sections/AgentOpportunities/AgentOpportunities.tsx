@@ -39,7 +39,7 @@ export const AgentOpportunities = ({ agentId }: Props) => {
                 {opp.title}
               </Heading4>
             }
-            subtitle={t(`dashboard.opportunities.status.${opp.statusOpportunity}`)}
+            subtitle={opp.statusOpportunity ? t(`dashboard.opportunities.status.${opp.statusOpportunity}`) : "-"}
             onGoToProfile={() => router.push(`/${i18n.language}/dashboard/opportunities/${opp.id}`)}
           />
         ))
