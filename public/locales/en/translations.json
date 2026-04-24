@@ -1033,6 +1033,13 @@
         "refugeeName": "Refugee name",
         "languageToTranslate": "Language to translate",
         "refugeeLanguage": "Refugee language",
+        "appointmentLanguage": "Appointment language",
+        "appointmentLanguageOptions": {
+          "german": "German",
+          "english": "English",
+          "englishGerman": "English/German",
+          "noTranslation": "No translation needed"
+        },
         "cancel": "Cancel",
         "saveChanges": "Save changes",
         "saveSuccess": "Accompanying details updated successfully",

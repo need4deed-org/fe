@@ -45,4 +45,6 @@ export const getInitialFormValues = (
   refugeeNumber: details?.refugeeNumber || "",
   refugeeName: details?.refugeeName || "",
   languagesToTranslate: details?.languageToTranslate !== undefined ? [details.languageToTranslate.toString()] : [],
+  appointmentLanguage:
+    (details as ApiOpportunityAccompanyingDetails & { appointmentLanguage?: string })?.appointmentLanguage || "",
 });

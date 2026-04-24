@@ -20,6 +20,9 @@ type Props = {
   languageOptions: string[];
   keyToLabel: Record<string, string>;
   labelToKey: Record<string, string>;
+  appointmentLanguageOptions: string[];
+  appointmentLanguageKeyToLabel: Record<string, string>;
+  appointmentLanguageLabelToKey: Record<string, string>;
   onCancel: () => void;
   onSubmit: () => void;
   isPending: boolean;
@@ -31,6 +34,9 @@ export const AccompanyingDetailsEdit = ({
   languageOptions,
   keyToLabel,
   labelToKey,
+  appointmentLanguageOptions,
+  appointmentLanguageKeyToLabel,
+  appointmentLanguageLabelToKey,
   onCancel,
   onSubmit,
   isPending,
@@ -170,6 +176,25 @@ export const AccompanyingDetailsEdit = ({
               }}
               options={languageOptions}
               errorMessage={errors.languagesToTranslate?.message}
+            />
+          )}
+        />
+
+        <Controller
+          name="appointmentLanguage"
+          control={control}
+          render={({ field }: { field: ControllerRenderProps<AccompanyingDetailsFormData, "appointmentLanguage"> }) => (
+            <EditableField
+              mode="edit"
+              type="radio-list"
+              label={t("dashboard.opportunityProfile.accompanyingDetails.appointmentLanguage")}
+              value={appointmentLanguageKeyToLabel[field.value || ""] || field.value || ""}
+              setValue={(value) => {
+                const label = Array.isArray(value) ? value[0] : value;
+                field.onChange(appointmentLanguageLabelToKey[label] || label);
+              }}
+              options={appointmentLanguageOptions}
+              errorMessage={errors.appointmentLanguage?.message}
             />
           )}
         />
