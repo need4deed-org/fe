@@ -72,7 +72,8 @@ export function Opportunities() {
     setCardsFilter((prev) => {
       const district = createFilterFromOption(apiFilterOptions, EntityTableName.DISTRICT);
       const language = createFilterFromOption(apiFilterOptions, EntityTableName.LANGUAGE);
-      return { ...prev, district, language };
+      const activity = createFilterFromOption(apiFilterOptions, EntityTableName.ACTIVITY);
+      return { ...prev, district, language, activity };
     });
   }, [apiFilterOptions]);
 

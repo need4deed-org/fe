@@ -222,7 +222,7 @@ export default function AddOpportunity() {
               </HeaderWithHelp>
               <div className={style["form-chip-list"]}>
                 <MultipleRadioInputsWithMore
-                  items={Object.values(OpportunityType)}
+                  items={[OpportunityType.ACCOMPANYING, OpportunityType.REGULAR]}
                   copyPath="form.addOpportunity.fields.opportunityType."
                   field={field}
                 />

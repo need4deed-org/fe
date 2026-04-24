@@ -1,4 +1,4 @@
-import { QueryParamsKeys } from "need4deed-sdk";
+import { EntityTableName, QueryParamsKeys } from "need4deed-sdk";
 import { SelectionMap } from "../../common/CardsFilter/types";
 
 export interface OpportunityCardsFilter {
@@ -7,6 +7,7 @@ export interface OpportunityCardsFilter {
   [QueryParamsKeys.LANGUAGE]: SelectionMap;
   status: SelectionMap;
   type: SelectionMap;
+  [EntityTableName.ACTIVITY]: SelectionMap;
 }
 
 export type OpportunityCardFilterKeys = keyof OpportunityCardsFilter;
