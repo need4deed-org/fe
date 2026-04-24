@@ -129,7 +129,7 @@ export function serializeFilters(
   return asString ? params.toString() : params;
 }
 
-export function deserializeFilters(filter: CardsFilter, searchParams: ReadonlyURLSearchParams) {
+export function deserializeVolunteerFilters(filter: CardsFilter, searchParams: ReadonlyURLSearchParams) {
   const newFilter: CardsFilter = structuredClone(filter);
 
   const search = searchParams.get(QueryParamsKeys.SEARCH);

@@ -14,7 +14,7 @@ import { AgentCardsFilter } from "./Filters/types";
 import { createSelectedAgentFiltersAsFlatArray } from "./Filters/helpers";
 import { defaultAgentCardsFilter } from "./Filters/constants";
 import { createFilterFromOption, getClearFilter } from "../common/CardsFilter/helpers";
-import { serializeAgentFilters } from "./helpers";
+import { deserializeAgentFilters, serializeAgentFilters } from "./helpers";
 import Filters from "../common/CardsFilter/Filters";
 import FiltersContent from "./Filters/FiltersContent";
 
@@ -55,10 +55,14 @@ export const Agents = () => {
     if (!apiFilterOptions) return;
 
     setCardsFilter((prev) => {
-      const district = createFilterFromOption(apiFilterOptions, EntityTableName.DISTRICT);
-      return { ...prev, district };
+      const baseFilters = {
+        ...prev,
+        district: createFilterFromOption(apiFilterOptions, EntityTableName.DISTRICT),
+      };
+
+      return deserializeAgentFilters(baseFilters, searchParams);
     });
-  }, [apiFilterOptions]);
+  }, [apiFilterOptions, searchParams]);
 
   const activeFilters = createSelectedAgentFiltersAsFlatArray(cardsFilter, setCardsFilter, t);
   return (

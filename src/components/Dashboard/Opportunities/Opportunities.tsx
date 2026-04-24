@@ -14,7 +14,7 @@ import { defaultOpportunityCardsFilter } from "./Filters/constants";
 import FiltersContent from "./Filters/FiltersContent";
 import { OpportunityCardsFilter } from "./Filters/types";
 import { createSelectedOpportunityFiltersAsFlatArray } from "./Filters/helpers";
-import { serializeOpportunityFilters } from "./helpers";
+import { deserializeOpportunityFilters, serializeOpportunityFilters } from "./helpers";
 import { OpportunityListController } from "./OpportunityListController";
 import { OpportunitiesContainer } from "./styles";
 
@@ -70,15 +70,18 @@ export function Opportunities() {
     if (!apiFilterOptions) return;
 
     setCardsFilter((prev) => {
-      const district = createFilterFromOption(apiFilterOptions, EntityTableName.DISTRICT);
-      const language = createFilterFromOption(apiFilterOptions, EntityTableName.LANGUAGE);
-      const activity = createFilterFromOption(apiFilterOptions, EntityTableName.ACTIVITY);
-      return { ...prev, district, language, activity };
+      const baseFilters = {
+        ...prev,
+        district: createFilterFromOption(apiFilterOptions, EntityTableName.DISTRICT),
+        language: createFilterFromOption(apiFilterOptions, EntityTableName.LANGUAGE),
+        activity: createFilterFromOption(apiFilterOptions, EntityTableName.ACTIVITY),
+      };
+
+      return deserializeOpportunityFilters(baseFilters, searchParams);
     });
-  }, [apiFilterOptions]);
+  }, [apiFilterOptions, searchParams]);
 
   const activeFilters = createSelectedOpportunityFiltersAsFlatArray(cardsFilter, setCardsFilter, t);
-
   return (
     <DashboardLayout>
       <OpportunitiesContainer data-testid="opportunities-container">
