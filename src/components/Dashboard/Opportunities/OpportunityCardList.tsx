@@ -1,9 +1,10 @@
-import { ApiVolunteerOpportunityGetList } from "need4deed-sdk";
+import { ApiVolunteerOpportunityGetList, OptionItem } from "need4deed-sdk";
 import { PaginatedGrid } from "@/components/core/paginatedGrid";
 import { OpportunityCard } from "./OpportunityCard";
 import { OpportunityCardListContainer } from "./styles";
 
 type Props = {
+  activitiesList?: OptionItem[];
   opportunities: ApiVolunteerOpportunityGetList[];
   count: number;
   columns: number;
@@ -21,9 +22,10 @@ export function OpportunityCardList({
   currentPage,
   setCurrentPage,
   volunteerId,
+  activitiesList,
 }: Props) {
   const items = opportunities.map((opp) => (
-    <OpportunityCard key={opp.id} opportunity={opp} volunteerId={volunteerId} />
+    <OpportunityCard key={opp.id} opportunity={opp} volunteerId={volunteerId} activitiesList={activitiesList} />
   ));
 
   return (

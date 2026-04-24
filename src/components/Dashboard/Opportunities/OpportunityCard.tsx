@@ -1,4 +1,4 @@
-import { ApiVolunteerOpportunityGetList, LangPurpose, ProfileVolunteeringType } from "need4deed-sdk";
+import { ApiVolunteerOpportunityGetList, LangPurpose, OptionItem, ProfileVolunteeringType } from "need4deed-sdk";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 
@@ -7,7 +7,7 @@ import { Paragraph } from "@/components/styled/text";
 import CardDetail from "../Volunteers/CardDetail";
 import { CardParagraph } from "../Volunteers/VolunteerCard";
 import { IconName } from "../Volunteers/icon";
-import { getLanguagesByPurpose, getOptionTitles } from "./helpers";
+import { getActivityTitles, getLanguagesByPurpose, getOptionTitles } from "./helpers";
 import {
   formatAccompanyingDate,
   formatAvailability,
@@ -20,9 +20,10 @@ import { Card, LanguageRow, StatusDiv, StatusTagsDiv, TagDiv, TitleParagraph } f
 type Props = {
   opportunity: ApiVolunteerOpportunityGetList;
   volunteerId?: string;
+  activitiesList?: OptionItem[];
 };
 
-export function OpportunityCard({ opportunity, volunteerId }: Props) {
+export function OpportunityCard({ opportunity, volunteerId, activitiesList }: Props) {
   const { t, i18n } = useTranslation();
   const router = useRouter();
 
@@ -40,8 +41,8 @@ export function OpportunityCard({ opportunity, volunteerId }: Props) {
 
   const mainCommunication = getLanguagesByPurpose(languages, LangPurpose.GENERAL);
   const recipientLanguage = getLanguagesByPurpose(languages, LangPurpose.RECIPIENT);
-  const activityTitles = getOptionTitles(activities);
   const locationTitles = getOptionTitles(location);
+  const activityTitles = getActivityTitles(activities, activitiesList);
 
   const isAccompanying = volunteerType === ProfileVolunteeringType.ACCOMPANYING;
   const scheduleText = isAccompanying
@@ -103,9 +104,11 @@ export function OpportunityCard({ opportunity, volunteerId }: Props) {
         )}
       </CardDetail>
 
-      <CardDetail header={t("dashboard.volunteers.activities")} iconName={IconName.ShootingStar}>
-        <Tags tags={activityTitles} />
-      </CardDetail>
+      {activityTitles.length > 0 && (
+        <CardDetail header={t("dashboard.volunteers.activities")} iconName={IconName.ShootingStar}>
+          <Tags tags={activityTitles} />
+        </CardDetail>
+      )}
 
       <CardDetail header={t("dashboard.opportunities.dateOfAppointment")} iconName={IconName.CalendarDots}>
         {scheduleText && <CardParagraph text={scheduleText} />}
