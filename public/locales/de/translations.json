@@ -348,6 +348,7 @@
         "accompanyingDesc": "Nur Freiwillige anzeigen, die bereit sind, Bewohner zu einzelnen Terminen zu begleiten",
         "district": "Bezirk",
         "languages": "Sprachen",
+        "activities": "Aktivitäten",
         "engagement": {
           "header": "Engagement",
           "active": "Aktiv",
@@ -1024,6 +1025,7 @@
       "accompanyingDetailsTitle": "Begleitdetails",
       "accompanyingDetails": {
         "appointmentAddress": "Terminadresse",
+        "appointmentPostcode": "Terminpostleitzahl",
         "appointmentDate": "Termindatum",
         "appointmentTime": "Terminzeit",
         "refugeeNumber": "Geflüchtetennummer",

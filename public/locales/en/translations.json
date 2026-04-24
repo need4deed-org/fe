@@ -348,6 +348,7 @@
         "accompanyingDesc": "Only show volunteers that are open to bring residents to individual appointments",
         "district": "District",
         "languages": "Languages",
+        "activities": "Activities",
         "engagement": {
           "header": "Engagement",
           "active": "Active",
@@ -1023,6 +1024,7 @@
       "accompanyingDetailsTitle": "Accompanying details",
       "accompanyingDetails": {
         "appointmentAddress": "Appointment address",
+        "appointmentPostcode": "Appointment postcode",
         "appointmentDate": "Appointment date",
         "appointmentTime": "Appointment time",
         "refugeeNumber": "Refugee number",

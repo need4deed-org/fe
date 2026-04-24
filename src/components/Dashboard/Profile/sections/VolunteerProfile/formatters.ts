@@ -31,6 +31,7 @@ export function formatLanguages(
       id: lang.id,
       language: String(dbId),
       level: proficiencyToLevel[lang.proficiency?.toLowerCase() || "native"] || LanguageLevel.NATIVE,
+      purpose: lang.purpose,
     };
   });
 }
