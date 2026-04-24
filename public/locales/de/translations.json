@@ -252,6 +252,8 @@
           "header": "Art des Bedarfs",
           "volunteering": "Freizeit",
           "accompanying": "Begleitung",
+          "regular": "Regelmäßig",
+          "events": "Veranstaltung",
           "helpText": "Es gibt zwei Arten von Unterstützung: Freiwilliges Engagement bei verschiedenen Aktivitäten (meist Freizeitaktivitäten) und Begleitung zu Terminen.",
           "helpTitle": ""
         },
@@ -346,6 +348,7 @@
         "accompanyingDesc": "Nur Freiwillige anzeigen, die bereit sind, Bewohner zu einzelnen Terminen zu begleiten",
         "district": "Bezirk",
         "languages": "Sprachen",
+        "activities": "Aktivitäten",
         "engagement": {
           "header": "Engagement",
           "active": "Aktiv",
@@ -423,7 +426,8 @@
     "header": {
       "button": {
         "login": "Anmelden",
-        "joinVolunteer": "Jetzt sich engagieren"
+        "joinVolunteer": "Jetzt sich engagieren",
+        "dashboard": "Dashboard"
       }
     },
     "login": {
