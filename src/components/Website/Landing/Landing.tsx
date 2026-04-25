@@ -19,7 +19,7 @@ export function Landing({ lang }: { lang: Lang }) {
   const screenType = useScreenType();
   const isBurgerMenu = screenType === ScreenTypes.MOBILE;
   return (
-    <AppContainer id="app-container">
+    <AppContainer id="app-container" style={{ paddingTop: "80px" }}>
       <Header
         logo={<N4DLogo />}
         isBurgerMenu={isBurgerMenu}
