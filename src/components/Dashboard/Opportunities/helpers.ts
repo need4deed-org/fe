@@ -83,7 +83,6 @@ export function deserializeOpportunityFilters(
   queryDistricts.forEach((d) => {
     newFilter.district[d] = true;
   });
-
   const queryLanguages = searchParams.getAll(QueryParamsKeys.LANGUAGE);
   queryLanguages.forEach((l) => {
     newFilter.language[l] = true;
