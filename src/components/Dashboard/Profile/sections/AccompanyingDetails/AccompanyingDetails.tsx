@@ -77,7 +77,7 @@ export const AccompanyingDetails = forwardRef<EditableSectionRef, Props>(functio
           appointmentTime: values.appointmentTime || undefined,
           refugeeNumber: values.refugeeNumber,
           refugeeName: values.refugeeName,
-          languagesToTranslate: values.languageToTranslate ? [values.languageToTranslate] : [],
+          languagesToTranslate: values.languagesToTranslate ?? [],
         },
       },
       {
@@ -104,7 +104,7 @@ export const AccompanyingDetails = forwardRef<EditableSectionRef, Props>(functio
     );
   }
 
-  const languageLabel = keyToLabel[formValues.languageToTranslate || ""] || formValues.languageToTranslate || "";
+  const languageLabel = (formValues.languagesToTranslate ?? []).map((id) => keyToLabel[id] || id).join(", ");
 
   return (
     <FormProvider {...methods}>

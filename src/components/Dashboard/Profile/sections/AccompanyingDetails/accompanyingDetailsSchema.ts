@@ -14,7 +14,7 @@ export const accompanyingDetailsSchema = z.object({
     }),
   refugeeNumber: z.string().optional(),
   refugeeName: z.string().optional(),
-  languageToTranslate: z.string().optional(),
+  languagesToTranslate: z.array(z.string()).optional(),
 });
 
 export type AccompanyingDetailsFormData = z.infer<typeof accompanyingDetailsSchema>;
