@@ -40,7 +40,8 @@ const TagsWrapper = styled.div`
 `;
 
 type Props = {
-  languages: string;
+  mainCommunication: string;
+  languagesToTranslate: string;
   availability: string;
   districts: string;
   volunteerType: string;
@@ -51,7 +52,8 @@ type Props = {
 };
 
 export function DisplayFields({
-  languages,
+  mainCommunication,
+  languagesToTranslate,
   availability,
   districts,
   volunteerType,
@@ -63,8 +65,13 @@ export function DisplayFields({
   return (
     <>
       <FieldRow>
-        <FieldLabel>{t("dashboard.volunteerProfile.profileSection.languages")}</FieldLabel>
-        <FieldValue>{languages}</FieldValue>
+        <FieldLabel>{t("dashboard.volunteerProfile.profileSection.mainCommunication")}</FieldLabel>
+        <FieldValue>{mainCommunication}</FieldValue>
+      </FieldRow>
+
+      <FieldRow>
+        <FieldLabel>{t("dashboard.volunteerProfile.profileSection.languagesToTranslate")}</FieldLabel>
+        <FieldValue>{languagesToTranslate}</FieldValue>
       </FieldRow>
 
       <FieldRow>

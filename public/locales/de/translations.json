@@ -594,6 +594,8 @@
         "title": "Freiwilligenprofil",
         "edit": "Bearbeiten",
         "languages": "Sprachen",
+        "mainCommunication": "Hauptkommunikation",
+        "languagesToTranslate": "Sprache zum Übersetzen",
         "availability": "Verfügbarkeit",
         "districts": "Bezirke",
         "volunteerType": "Freiwilligen-Typ",
