@@ -34,6 +34,17 @@ export const parseTime = (time: Date | string | undefined): string => {
   return time.toTimeString().slice(0, 5);
 };
 
+// Converts a UTC HH:mm string from the API to the browser's local time for display only.
+// Do NOT use this for form state — it would cause the time to shift on every save.
+export const formatTimeForDisplay = (time: string | undefined): string => {
+  if (!time) return "";
+  const [h, m] = time.split(":").map(Number);
+  if (isNaN(h) || isNaN(m)) return time;
+  const d = new Date();
+  d.setUTCHours(h, m, 0, 0);
+  return `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
+};
+
 export const getInitialFormValues = (
   details: ApiOpportunityAccompanyingDetails | undefined,
 ): AccompanyingDetailsFormData => ({
@@ -46,7 +57,5 @@ export const getInitialFormValues = (
   appointmentTime: parseTime(details?.appointmentTime),
   refugeeNumber: details?.refugeeNumber || "",
   refugeeName: details?.refugeeName || "",
-  languagesToTranslate: details?.languageToTranslate !== undefined ? [details.languageToTranslate.toString()] : [],
-  appointmentLanguage:
-    (details as ApiOpportunityAccompanyingDetails & { appointmentLanguage?: string })?.appointmentLanguage || "",
+  languageToTranslate: details?.languageToTranslate?.toString() ?? "",
 });

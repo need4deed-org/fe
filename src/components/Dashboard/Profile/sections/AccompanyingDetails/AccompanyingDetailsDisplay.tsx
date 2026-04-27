@@ -3,6 +3,7 @@ import { EMPTY_PLACEHOLDER_VALUE } from "@/config/constants";
 import { format } from "date-fns";
 import { useTranslation } from "react-i18next";
 import { AccompanyingDetailsFormData } from "./accompanyingDetailsSchema";
+import { formatTimeForDisplay } from "./helpers";
 import { DateFieldRow, Details } from "./styles";
 
 type Props = {
@@ -48,7 +49,7 @@ export const AccompanyingDetailsDisplay = ({ values, languageLabel, districtLabe
 
       <DateFieldRow data-testid="appointment-time-field">
         <label>{t("dashboard.opportunityProfile.accompanyingDetails.appointmentTime")}</label>
-        <span>{values.appointmentTime || EMPTY_PLACEHOLDER_VALUE}</span>
+        <span>{formatTimeForDisplay(values.appointmentTime) || EMPTY_PLACEHOLDER_VALUE}</span>
       </DateFieldRow>
 
       <EditableField
