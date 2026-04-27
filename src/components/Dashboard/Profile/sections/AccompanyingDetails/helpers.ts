@@ -38,9 +38,11 @@ export const getInitialFormValues = (
   details: ApiOpportunityAccompanyingDetails | undefined,
 ): AccompanyingDetailsFormData => ({
   appointmentAddress: details?.appointmentAddress || "",
+  appointmentPostcode:
+    (details as ApiOpportunityAccompanyingDetails & { appointmentPostcode?: string })?.appointmentPostcode || "",
   appointmentDate: parseDate(details?.appointmentDate),
   appointmentTime: parseTime(details?.appointmentTime),
   refugeeNumber: details?.refugeeNumber || "",
   refugeeName: details?.refugeeName || "",
-  languageToTranslate: details?.languageToTranslate?.toString() ?? "",
+  languagesToTranslate: details?.languageToTranslate !== undefined ? [details.languageToTranslate.toString()] : [],
 });

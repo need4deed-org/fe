@@ -80,10 +80,14 @@ export function serializeFilters(
   params.delete(QueryParamsKeys.DISTRICT);
   Object.entries(filter.district).forEach(([key, value]) => {
     if (value === true) {
-      const paramValue =
-        (options?.serializeToIDs && options.apiFilterOptions?.district?.find((d) => d.title === key)?.id) || key;
-
-      params.append(QueryParamsKeys.DISTRICT, String(paramValue));
+      if (options?.serializeToIDs && options.apiFilterOptions) {
+        const districtId = options.apiFilterOptions.district?.find((d) => d.title === key)?.id;
+        if (districtId !== undefined) {
+          params.append(QueryParamsKeys.DISTRICT, String(districtId));
+        }
+      } else {
+        params.append(QueryParamsKeys.DISTRICT, key);
+      }
     }
   });
 
@@ -91,10 +95,14 @@ export function serializeFilters(
   params.delete(QueryParamsKeys.LANGUAGE);
   Object.entries(filter.language).forEach(([key, value]) => {
     if (value === true) {
-      const paramValue =
-        (options?.serializeToIDs && options.apiFilterOptions?.language?.find((d) => d.title === key)?.id) || key;
-
-      params.append(QueryParamsKeys.LANGUAGE, String(paramValue));
+      if (options?.serializeToIDs && options.apiFilterOptions) {
+        const languageId = options.apiFilterOptions.language?.find((d) => d.title === key)?.id;
+        if (languageId !== undefined) {
+          params.append(QueryParamsKeys.LANGUAGE, String(languageId));
+        }
+      } else {
+        params.append(QueryParamsKeys.LANGUAGE, key);
+      }
     }
   });
 
@@ -121,7 +129,7 @@ export function serializeFilters(
   return asString ? params.toString() : params;
 }
 
-export function deserializeFilters(filter: CardsFilter, searchParams: ReadonlyURLSearchParams) {
+export function deserializeVolunteerFilters(filter: CardsFilter, searchParams: ReadonlyURLSearchParams) {
   const newFilter: CardsFilter = structuredClone(filter);
 
   const search = searchParams.get(QueryParamsKeys.SEARCH);

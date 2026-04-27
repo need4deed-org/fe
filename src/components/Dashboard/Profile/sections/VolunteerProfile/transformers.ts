@@ -1,5 +1,5 @@
 import { TFunction } from "i18next";
-import { ApiLanguage, ApiVolunteerGet, VolunteerStateTypeType } from "need4deed-sdk";
+import { ApiLanguage, ApiVolunteerGet, LangPurpose, VolunteerStateTypeType } from "need4deed-sdk";
 import { apiToFormAvailability } from "./availabilityUtils";
 import { LEVEL_TO_PROFICIENCY } from "./constants";
 import { formatActivities, formatDistricts, formatLanguages, formatSkills, getVolunteerTypeLabel } from "./formatters";
@@ -52,6 +52,7 @@ export function transformLanguagesToApi(languages: VolunteerProfileFormData["lan
           id: parseInt(lang.language, 10),
           title: languageMapping.idToTitle[parseInt(lang.language, 10)] || "",
           proficiency: LEVEL_TO_PROFICIENCY[lang.level as unknown as number],
+          purpose: lang.purpose ?? LangPurpose.GENERAL,
         }) as ApiLanguage,
     );
 }
