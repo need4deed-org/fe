@@ -8,8 +8,8 @@ import { Heading4 } from "@/components/styled/text";
 export function NewestOpportunities() {
   const { t } = useTranslation();
   const { data: apiFilterOptions } = useGetQuery<ApiOptionLists>({ queryKey: ["options"], apiPath: apiPathOption });
-  const { data: opportunities } = useGetQuery<ApiVolunteerOpportunityGetList[]>({
-    queryKey: ["opportunities"],
+  const { data: opportunities, isLoading } = useGetQuery<ApiVolunteerOpportunityGetList[]>({
+    queryKey: ["opportunities", "newest"],
     apiPath: `${apiPathOpportunity}/`,
     params: {
       limit: 2,
@@ -21,8 +21,8 @@ export function NewestOpportunities() {
   });
   const activitiesList = apiFilterOptions?.activity;
 
-  if (opportunities?.length === 0) {
-    <Heading4>{t("dashboard.home.content.loading")}</Heading4>;
+  if (isLoading) {
+    return <Heading4>{t("dashboard.home.content.loading")}</Heading4>;
   }
 
   return opportunities?.map((opp) => (

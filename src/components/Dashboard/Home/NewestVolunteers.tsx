@@ -7,8 +7,8 @@ import { useTranslation } from "react-i18next";
 
 export function NewestVolunteers() {
   const { t } = useTranslation();
-  const { data: volunteers } = useGetQuery<ApiVolunteerGetList[]>({
-    queryKey: ["volunteers"],
+  const { data: volunteers, isLoading } = useGetQuery<ApiVolunteerGetList[]>({
+    queryKey: ["volunteers", "newest"],
     apiPath: `${apiPathVolunteer}/`,
     params: {
       limit: 2,
@@ -19,8 +19,8 @@ export function NewestVolunteers() {
     staleTime: cacheTTL,
   });
 
-  if (volunteers?.length === 0) {
-    <Heading4>{t("dashboard.home.content.loading")}</Heading4>;
+  if (isLoading) {
+    return <Heading4>{t("dashboard.home.content.loading")}</Heading4>;
   }
 
   return volunteers?.map((vol) => <VolunteerCard key={vol.id} volunteer={vol} />);

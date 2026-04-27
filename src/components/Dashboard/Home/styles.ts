@@ -11,6 +11,7 @@ export const DashboardContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: var(--dashboard-home-container-gap);
+  min-height: var(--dashboard-home-container-min-height);
 `;
 
 export const DashboardCardContainer = styled.div`
