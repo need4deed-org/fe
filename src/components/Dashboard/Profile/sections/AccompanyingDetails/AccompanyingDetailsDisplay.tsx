@@ -78,6 +78,20 @@ export const AccompanyingDetailsDisplay = ({ values, languageLabel, districtLabe
 
       <EditableField
         mode="display"
+        type="text"
+        label={t("dashboard.opportunityProfile.accompanyingDetails.languageToTranslate")}
+        value={
+          values.appointmentLanguage
+            ? t(
+                `dashboard.opportunityProfile.accompanyingDetails.appointmentLanguageOptions.${values.appointmentLanguage}`,
+              )
+            : ""
+        }
+        setValue={() => {}}
+      />
+
+      <EditableField
+        mode="display"
         type="radio-list"
         label={t("dashboard.opportunityProfile.accompanyingDetails.appointmentLanguage")}
         value={

@@ -158,17 +158,10 @@ export const VolunteerProfile = forwardRef<VolunteerProfileRef, Props>(function 
           />
         ) : (
           <DisplayFields
-            mainCommunication={formatLanguagesForDisplay(
+            languages={formatLanguagesForDisplay(
               volunteer.languages,
               languageMapping.idToTitle,
               t,
-              LangPurpose.GENERAL,
-            )}
-            languagesToTranslate={formatLanguagesForDisplay(
-              volunteer.languages,
-              languageMapping.idToTitle,
-              t,
-              LangPurpose.TRANSLATION,
             )}
             availability={formatAvailability(volunteer.availability, t)}
             districts={formatLocationsForDisplay(volunteer.locations)}
