@@ -770,6 +770,12 @@
         "opp-active": "Active",
         "opp-past": "Past"
       },
+      "matchStatus": {
+        "vol-no-matches": "No matches",
+        "vol-pending-match": "Pending match",
+        "vol-matched": "Matched",
+        "vol-past": "Past"
+      },
       "type": {
         "accompanying": "Accompanying",
         "regular": "Regular",
@@ -1025,11 +1031,11 @@
         "searching": "Searching"
       },
       "matchStatus": {
+        "noMatches": "No matches",
+        "pendingMatch": "Pending match",
         "matched": "Matched",
         "needRematch": "Need rematch",
         "unmatched": "Unmatched",
-        "noMatches": "No matches",
-        "pendingMatch": "Pending match",
         "past": "Past"
       },
       "statusUpdateSuccess": "Opportunity status updated successfully",

@@ -11,6 +11,8 @@ import { getActivityTitles, getLanguagesByPurpose, getOptionTitles } from "./hel
 import {
   formatAccompanyingDate,
   formatAvailability,
+  matchStatusColorMap,
+  matchStatusIconMap,
   statusColorMap,
   statusIconMap,
   volunteerTypeIconMap,
@@ -37,8 +39,11 @@ export function OpportunityCard({ opportunity, volunteerId, activitiesList }: Pr
     location,
     availability,
     accompanyingDetails,
+    statusMatch,
+    // TODO: remove statusMatch cast once SDK PR #89 adds OpportunityMatchStatusType
   } = opportunity as ApiVolunteerOpportunityGetList & {
     accompanyingDetails?: { appointmentDate?: string; appointmentTime?: string };
+    statusMatch?: string;
   };
 
   const mainCommunication = getLanguagesByPurpose(languages, LangPurpose.GENERAL);
@@ -72,6 +77,19 @@ export function OpportunityCard({ opportunity, volunteerId, activitiesList }: Pr
               color={statusColorMap[statusOpportunity]}
             >
               {t(`dashboard.opportunities.status.${statusOpportunity}`)}
+            </Paragraph>
+          </StatusDiv>
+        )}
+        {statusMatch && (
+          <StatusDiv>
+            {matchStatusIconMap[statusMatch]}
+            <Paragraph
+              fontWeight="var(--dashboard-volunteers-card-status-fontWeight)"
+              fontSize="var(--dashboard-volunteers-card-status-fontSize)"
+              lineheight="var(--dashboard-volunteers-card-status-lineHeight)"
+              color={matchStatusColorMap[statusMatch]}
+            >
+              {t(`dashboard.opportunities.matchStatus.${statusMatch}`)}
             </Paragraph>
           </StatusDiv>
         )}

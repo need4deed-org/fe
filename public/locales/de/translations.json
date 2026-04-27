@@ -727,6 +727,12 @@
         "opp-active": "Aktiv",
         "opp-past": "Vergangen"
       },
+      "matchStatus": {
+        "vol-no-matches": "Keine Zuweisungen",
+        "vol-pending-match": "Zuordnung ausstehend",
+        "vol-matched": "Zugeordnet",
+        "vol-past": "Vergangen"
+      },
       "type": {
         "accompanying": "Begleitung",
         "regular": "Regelmäßig",
@@ -1026,11 +1032,11 @@
         "searching": "Suchend"
       },
       "matchStatus": {
+        "noMatches": "Keine Zuweisungen",
+        "pendingMatch": "Zuweisung ausstehend",
         "matched": "Gematcht",
         "needRematch": "Neues Matching erforderlich",
         "unmatched": "Nicht gematcht",
-        "noMatches": "Keine Zuweisungen",
-        "pendingMatch": "Zuweisung ausstehend",
         "past": "Vergangen"
       },
       "statusUpdateSuccess": "Status der Möglichkeit erfolgreich aktualisiert",

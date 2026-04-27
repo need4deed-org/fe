@@ -1,9 +1,11 @@
 "use client";
+import { matchStatusColorMap, matchStatusIconMap } from "@/components/Dashboard/Opportunities/OpportunityCard.helpers";
 import { EMPTY_PLACEHOLDER_VALUE } from "@/config/constants";
 import { formatDateTime } from "@/utils";
 import { ShootingStarIcon } from "@phosphor-icons/react";
 import { ApiOpportunityGet } from "need4deed-sdk";
 import { useTranslation } from "react-i18next";
+import styled from "styled-components";
 import { createVolunteerTypeLabelMap, EditButton, HeaderCard, IconContainer, StatusRowField } from "../common";
 import { ChangeOpportunityStatusDialog } from "./ChangeOpportunityStatusDialog";
 import { createOpportunityMatchLabelMap, createOpportunityStatusLabelMap } from "./constants";
@@ -13,12 +15,30 @@ type Props = {
   opportunity: ApiOpportunityGet;
 };
 
+const MatchStatusBadge = styled.div<{ $color: string }>`
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-4);
+  padding: var(--spacing-12);
+  border-radius: var(--border-radius-xs);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-24);
+  letter-spacing: var(--letter-spacing-tight);
+  width: fit-content;
+  background-color: var(--color-grey-50);
+  color: ${({ $color }) => $color};
+`;
+
 export const OpportunityHeader = ({ opportunity }: Props) => {
   const { t } = useTranslation();
   const dialog = useOpportunityStatusDialog(opportunity);
   const statusLabelMap = createOpportunityStatusLabelMap(t);
   const volunteerTypeLabelMap = createVolunteerTypeLabelMap(t);
   const matchLabelMap = createOpportunityMatchLabelMap(t);
+
+  // TODO: remove cast once SDK PR #89 adds OpportunityMatchStatusType to ApiOpportunityGet
+  const { statusMatch } = opportunity as ApiOpportunityGet & { statusMatch?: string };
 
   const postedDate = opportunity.createdAt ? formatDateTime(opportunity.createdAt) : EMPTY_PLACEHOLDER_VALUE;
   const subtitle = `${t("dashboard.opportunityProfile.postedOn")} ${postedDate}`;
@@ -40,6 +60,18 @@ export const OpportunityHeader = ({ opportunity }: Props) => {
         status={dialog.selected}
         label={statusLabelMap[dialog.selected]}
         action={<EditButton onClick={dialog.openDialog}>{t("dashboard.opportunityProfile.change_status")}</EditButton>}
+      />
+
+      <StatusRowField
+        title={t("dashboard.opportunityProfile.matchingStatus")}
+        extra={
+          statusMatch ? (
+            <MatchStatusBadge $color={matchStatusColorMap[statusMatch] ?? "var(--color-blue-700)"}>
+              {matchStatusIconMap[statusMatch]}
+              <span>{t(`dashboard.opportunities.matchStatus.${statusMatch}`)}</span>
+            </MatchStatusBadge>
+          ) : undefined
+        }
       />
 
       <StatusRowField
