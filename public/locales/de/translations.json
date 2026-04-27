@@ -1068,6 +1068,7 @@
       },
       "opportunityDetails": {
         "title": "Details der Möglichkeit",
+        "opportunityName": "Name",
         "description": "Beschreibung",
         "mainCommunication": "Hauptkommunikation",
         "residentsSpeak": "Bewohner sprechen",
@@ -1080,7 +1081,9 @@
         "descriptionHint": "Max. {{max}} Zeichen",
         "cancel": "Abbrechen",
         "saveChanges": "Änderungen speichern",
+        "saveSuccess": "Möglichkeit erfolgreich aktualisiert",
         "validation": {
+          "opportunityNameRequired": "Name ist erforderlich",
           "descriptionRequired": "Beschreibung ist erforderlich",
           "descriptionTooLong": "Beschreibung ist zu lang",
           "numberOfVolunteersRequired": "Anzahl der Freiwilligen muss mindestens 1 sein",

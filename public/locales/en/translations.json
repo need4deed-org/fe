@@ -1067,6 +1067,7 @@
       },
       "opportunityDetails": {
         "title": "Opportunity details",
+        "opportunityName": "Name",
         "description": "Description",
         "mainCommunication": "Main communication",
         "residentsSpeak": "Residents speak",
@@ -1079,7 +1080,9 @@
         "descriptionHint": "Max. {{max}} characters",
         "cancel": "Cancel",
         "saveChanges": "Save changes",
+        "saveSuccess": "Opportunity updated successfully",
         "validation": {
+          "opportunityNameRequired": "Name is required",
           "descriptionRequired": "Description is required",
           "descriptionTooLong": "Description is too long",
           "numberOfVolunteersRequired": "Number of volunteers must be at least 1",

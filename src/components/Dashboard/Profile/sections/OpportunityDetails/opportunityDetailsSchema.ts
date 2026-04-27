@@ -24,6 +24,7 @@ const languagesValidator = (t: (key: string) => string) =>
 
 export const createOpportunityDetailsSchema = (t: (key: string) => string) =>
   z.object({
+    title: z.string().min(1, t(`${i18nPrefix}.opportunityNameRequired`)),
     description: z
       .string()
       .min(1, t(`${i18nPrefix}.descriptionRequired`))

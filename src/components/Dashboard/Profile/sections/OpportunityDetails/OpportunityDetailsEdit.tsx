@@ -11,6 +11,7 @@ import {
   useApiSkills,
 } from "@/components/Dashboard/Profile/sections/VolunteerProfile/hooks";
 import { createMapping } from "@/components/Dashboard/Profile/sections/VolunteerProfile/mappingUtils";
+import { useUpdateOpportunityTitle } from "@/hooks/useUpdateOpportunityTitle";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { MAX_DESCRIPTION_LENGTH } from "@/config/constants";
 import { de, enUS } from "date-fns/locale";
@@ -36,6 +37,7 @@ export function OpportunityDetailsEdit({ opportunity, onCancel }: Props) {
   const prefix = "dashboard.opportunityProfile.opportunityDetails";
 
   const isEventType = opp.volunteerType === VolunteerStateTypeType.EVENTS;
+  const { mutate: updateTitle } = useUpdateOpportunityTitle(opp.id);
 
   const { data: apiLanguages = [] } = useApiLanguages();
   const { data: apiActivities = [] } = useApiActivities();
@@ -61,6 +63,7 @@ export function OpportunityDetailsEdit({ opportunity, onCancel }: Props) {
     resolver: zodResolver(schema),
     mode: "onChange",
     defaultValues: {
+      title: opp.title ?? "",
       description: opp.description ?? "",
       numberOfVolunteers: String(opp.numberOfVolunteers ?? ""),
       mainCommunication: languagesToFormValues(generalLangs, t),
@@ -78,14 +81,31 @@ export function OpportunityDetailsEdit({ opportunity, onCancel }: Props) {
     onCancel();
   };
 
-  const onSubmit = () => {
-    // Mutations will be added later
+  const onSubmit = (data: OpportunityDetailsFormData) => {
+    if (data.title !== opp.title) {
+      updateTitle({ title: data.title });
+    }
     onCancel();
   };
 
   return (
     <>
       <FormDetails>
+        <Controller
+          name="title"
+          control={control}
+          render={({ field }) => (
+            <EditableField
+              mode="edit"
+              type="text"
+              label={t(`${prefix}.opportunityName`)}
+              value={field.value}
+              setValue={field.onChange}
+              errorMessage={errors.title?.message}
+            />
+          )}
+        />
+
         <Controller
           name="description"
           control={control}
