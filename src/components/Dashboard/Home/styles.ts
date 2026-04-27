@@ -1,0 +1,19 @@
+import styled from "styled-components";
+
+export const HomeContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  padding: var(--dashboard-home-container-padding);
+  gap: var(--dashboard-home-container-gap);
+`;
+
+export const DashboardContentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: var(--dashboard-home-container-gap);
+`;
+
+export const DashboardCardContainer = styled.div`
+  display: flex;
+  gap: var(--dashboard-home-container-gap);
+`;
