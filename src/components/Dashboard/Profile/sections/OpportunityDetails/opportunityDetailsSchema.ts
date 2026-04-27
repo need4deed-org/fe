@@ -34,17 +34,7 @@ export const createOpportunityDetailsSchema = (t: (key: string) => string) =>
     }),
     mainCommunication: languagesValidator(t),
     residentsSpeak: languagesValidator(t),
-    availability: z
-      .custom<Availability>(
-        (data) => {
-          if (data === null || data === undefined) return true;
-          if (!Array.isArray(data)) return false;
-          return data.some((day) => day.timeSlots.some((slot: { selected: boolean }) => slot.selected));
-        },
-        t(`${i18nPrefix}.availabilityRequired`),
-      )
-      .nullable()
-      .optional(),
+    availability: z.custom<Availability>().nullable().optional(),
     eventDate: z.date().nullable().optional(),
     eventTime: z.string().optional(),
     activities: z.array(z.string()).min(1, t(`${i18nPrefix}.activitiesRequired`)),
