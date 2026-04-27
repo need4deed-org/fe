@@ -11,6 +11,7 @@ import { EditableSectionProps, EditableSectionRef } from "../shared/types";
 import { useEditingChangeNotifier } from "../shared/useEditingChangeNotifier";
 import { AccompanyingDetailsDisplay } from "./AccompanyingDetailsDisplay";
 import { AccompanyingDetailsEdit } from "./AccompanyingDetailsEdit";
+import { AppointmentLanguages } from "@/config/constants";
 import { getInitialFormValues, getMinAppointmentDate, isAccompanyingType } from "./helpers";
 import { AccompanyingDetailsFormData, accompanyingDetailsSchema } from "./accompanyingDetailsSchema";
 import { Container, NotAccompanyingMessage } from "./styles";
@@ -41,6 +42,16 @@ export const AccompanyingDetails = forwardRef<EditableSectionRef, Props>(functio
     keyToLabel[String(lang.id)] = lang.title;
     labelToKey[lang.title] = String(lang.id);
   });
+
+  const appointmentLanguageKeys = Object.values(AppointmentLanguages);
+  const appointmentLanguageKeyToLabel: Record<string, string> = {};
+  const appointmentLanguageLabelToKey: Record<string, string> = {};
+  appointmentLanguageKeys.forEach((key) => {
+    const label = t(`dashboard.opportunityProfile.accompanyingDetails.appointmentLanguageOptions.${key}`);
+    appointmentLanguageKeyToLabel[key] = label;
+    appointmentLanguageLabelToKey[label] = key;
+  });
+  const appointmentLanguageOptions = appointmentLanguageKeys.map((key) => appointmentLanguageKeyToLabel[key]);
 
   const initialFormValues = getInitialFormValues(opportunity.accompanyingDetails);
 
@@ -78,6 +89,7 @@ export const AccompanyingDetails = forwardRef<EditableSectionRef, Props>(functio
           refugeeNumber: values.refugeeNumber,
           refugeeName: values.refugeeName,
           languagesToTranslate: values.languagesToTranslate ?? [],
+          appointmentLanguage: values.appointmentLanguage || undefined,
         },
       },
       {
@@ -115,6 +127,9 @@ export const AccompanyingDetails = forwardRef<EditableSectionRef, Props>(functio
             languageOptions={languageOptions}
             keyToLabel={keyToLabel}
             labelToKey={labelToKey}
+            appointmentLanguageOptions={appointmentLanguageOptions}
+            appointmentLanguageKeyToLabel={appointmentLanguageKeyToLabel}
+            appointmentLanguageLabelToKey={appointmentLanguageLabelToKey}
             onCancel={handleCancel}
             onSubmit={handleSubmit(onSubmit)}
             isPending={isPending}

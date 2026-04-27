@@ -10,6 +10,7 @@ export type OpportunityAccompanyingDetailsUpdateData = {
     refugeeNumber?: string;
     refugeeName?: string;
     languagesToTranslate?: string[];
+    appointmentLanguage?: string;
   };
 };
 

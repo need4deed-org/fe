@@ -1034,6 +1034,13 @@
         "refugeeName": "Name des Geflüchteten",
         "languageToTranslate": "Zu übersetzende Sprache",
         "refugeeLanguage": "Flüchtlingssprache",
+        "appointmentLanguage": "Terminsprache",
+        "appointmentLanguageOptions": {
+          "german": "Deutsch",
+          "english": "Englisch",
+          "englishGerman": "Englisch/Deutsch",
+          "noTranslation": "Keine Übersetzung erforderlich"
+        },
         "cancel": "Abbrechen",
         "saveChanges": "Änderungen speichern",
         "saveSuccess": "Begleitdetails erfolgreich aktualisiert",

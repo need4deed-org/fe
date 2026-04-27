@@ -64,6 +64,21 @@ export const AccompanyingDetailsDisplay = ({ values, languageLabel }: Props) => 
         value={languageLabel}
         setValue={() => {}}
       />
+
+      <EditableField
+        mode="display"
+        type="radio-list"
+        label={t("dashboard.opportunityProfile.accompanyingDetails.appointmentLanguage")}
+        value={
+          values.appointmentLanguage
+            ? t(
+                `dashboard.opportunityProfile.accompanyingDetails.appointmentLanguageOptions.${values.appointmentLanguage}`,
+              )
+            : ""
+        }
+        setValue={() => {}}
+        options={[]}
+      />
     </Details>
   );
 };
