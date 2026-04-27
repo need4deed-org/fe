@@ -24,7 +24,7 @@ export const OrganisationDetails = forwardRef<EditableSectionRef, Props>(functio
 ) {
   const { t, i18n } = useTranslation();
   const [isEditing, setIsEditing] = useState(false);
-  const { mutate: updateOrganization /*, isPending */ } = useUpdateOrganization(String(agent?.operator));
+  const { mutate: updateOrganization /*, isPending */ } = useUpdateOrganization(String(agent?.id));
 
   useEditingChangeNotifier(isEditing, onEditingChange);
   const { data: apiLanguages } = useApiLanguages();
@@ -56,12 +56,15 @@ export const OrganisationDetails = forwardRef<EditableSectionRef, Props>(functio
   };
 
   const onSubmit = (values: OrganisationDetailsFormData) => {
-    updateOrganization(values as unknown as ApiAgentProfileGet, {
-      onSuccess: () => {
-        reset(values);
-        setIsEditing(false);
+    updateOrganization(
+      { about: values.about, website: values.website },
+      {
+        onSuccess: () => {
+          reset(values);
+          setIsEditing(false);
+        },
       },
-    });
+    );
   };
 
   return (

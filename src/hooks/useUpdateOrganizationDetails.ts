@@ -1,14 +1,16 @@
 import { ApiAgentProfileGet } from "@/components/Dashboard/Profile/types";
-import { apiPathOrganization } from "@/config/constants";
+import { apiPathAgent } from "@/config/constants";
 import { useMutationQuery } from "@/hooks";
-import { ApiRepresentativeGet } from "need4deed-sdk";
-import { DeepPartial } from "ts-type-safe";
+import { ApiAgentPatch } from "need4deed-sdk";
 
-export const useUpdateOrganization = (organizationId: string) => {
-  return useMutationQuery<DeepPartial<ApiRepresentativeGet>, ApiAgentProfileGet>({
-    apiPath: `${apiPathOrganization}${organizationId}`,
+// Patches agent-level org details (about, website) via the agent endpoint.
+// Note: address and district require the organization's numeric ID which is not
+// currently exposed in the agent API response — those fields need a BE change.
+export const useUpdateOrganization = (agentId: string) => {
+  return useMutationQuery<Pick<ApiAgentPatch, "about" | "website">, ApiAgentProfileGet>({
+    apiPath: `${apiPathAgent}/${agentId}`,
     method: "patch",
-    successMessage: "__dashboard.agentProfile.contactDetails.saveSuccess",
-    queryKeyToInvalidate: ["organization", organizationId],
+    successMessage: "dashboard.agentProfile.organisationDetails.saveSuccess",
+    queryKeyToInvalidate: ["agent", agentId],
   });
 };
