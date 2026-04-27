@@ -48,6 +48,7 @@ type Props = {
   volunteerTypeStatus: StatusValue | undefined;
   activities: string[];
   skills: string[];
+  infoAbout: string;
   t: (key: string) => string;
 };
 
@@ -60,6 +61,7 @@ export function DisplayFields({
   volunteerTypeStatus,
   activities,
   skills,
+  infoAbout,
   t,
 }: Props) {
   return (
@@ -119,6 +121,11 @@ export function DisplayFields({
             <EmptyPlaceholder />
           )}
         </FieldValue>
+      </FieldRow>
+
+      <FieldRow>
+        <FieldLabel>{t("dashboard.volunteerProfile.profileSection.comments")}</FieldLabel>
+        <FieldValue>{infoAbout || <EmptyPlaceholder />}</FieldValue>
       </FieldRow>
     </>
   );

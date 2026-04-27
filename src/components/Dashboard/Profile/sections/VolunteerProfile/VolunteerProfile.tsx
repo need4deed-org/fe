@@ -169,6 +169,7 @@ export const VolunteerProfile = forwardRef<VolunteerProfileRef, Props>(function 
             volunteerTypeStatus={volunteer.statusType}
             activities={extractTitles(volunteer.activities)}
             skills={extractTitles(volunteer.skills)}
+            infoAbout={volunteer.infoAbout || ""}
             t={t}
           />
         )}
