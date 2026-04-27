@@ -1,4 +1,5 @@
 import { ConfettiIcon, PersonSimpleWalkIcon, ShootingStarIcon, TranslateIcon } from "@phosphor-icons/react";
+import { format } from "date-fns";
 import { ApiVolunteerOpportunityGetList, OpportunityStatusType, ProfileVolunteeringType } from "need4deed-sdk";
 import { JSX } from "react";
 
@@ -7,6 +8,30 @@ export function formatAvailability(availability: ApiVolunteerOpportunityGetList[
   if (!first) return "";
   const parts = [first.day, first.daytime].filter(Boolean);
   return parts.join(", ");
+}
+
+export function formatAccompanyingDate(details?: {
+  appointmentDate?: string;
+  appointmentTime?: string;
+}): string | null {
+  if (!details?.appointmentDate) return null;
+
+  const date = new Date(details.appointmentDate);
+  const formattedDate = isNaN(date.getTime()) ? details.appointmentDate : format(date, "dd.MM.yyyy");
+
+  let formattedTime: string | null = null;
+  if (details.appointmentTime) {
+    const [h, m] = details.appointmentTime.split(":").map(Number);
+    if (!isNaN(h) && !isNaN(m)) {
+      const d = new Date();
+      d.setUTCHours(h, m, 0, 0);
+      formattedTime = d.toTimeString().slice(0, 5);
+    } else {
+      formattedTime = details.appointmentTime;
+    }
+  }
+
+  return [formattedDate, formattedTime].filter(Boolean).join(" ");
 }
 
 export const statusColorMap: Record<OpportunityStatusType, string> = {
