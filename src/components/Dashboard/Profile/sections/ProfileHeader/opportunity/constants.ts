@@ -10,6 +10,8 @@ export enum OpportunityManualStatusType {
 export const SDK_TO_MANUAL: Partial<Record<OpportunityStatusType, OpportunityManualStatusType>> = {
   [OpportunityStatusType.NEW]: OpportunityManualStatusType.NEW,
   [OpportunityStatusType.SEARCHING]: OpportunityManualStatusType.SEARCHING,
+  [OpportunityStatusType.ACTIVE]: OpportunityManualStatusType.SEARCHING,
+  [OpportunityStatusType.PAST]: OpportunityManualStatusType.INACTIVE,
 };
 
 export const MANUAL_TO_SDK: Partial<Record<OpportunityManualStatusType, OpportunityStatusType>> = {
