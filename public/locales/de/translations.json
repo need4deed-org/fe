@@ -1073,6 +1073,7 @@
         "descriptionHint": "Max. {{max}} Zeichen",
         "cancel": "Abbrechen",
         "saveChanges": "Änderungen speichern",
+        "saveSuccess": "Opportunity-Details erfolgreich aktualisiert",
         "validation": {
           "descriptionRequired": "Beschreibung ist erforderlich",
           "descriptionTooLong": "Beschreibung ist zu lang",

@@ -1072,6 +1072,7 @@
         "descriptionHint": "Max. {{max}} characters",
         "cancel": "Cancel",
         "saveChanges": "Save changes",
+        "saveSuccess": "Opportunity details updated successfully",
         "validation": {
           "descriptionRequired": "Description is required",
           "descriptionTooLong": "Description is too long",
