@@ -59,7 +59,7 @@ const markDocumentReceivedApi = async (
   documentType: DocumentType,
   received: boolean,
 ): Promise<void> => {
-  await axios.patch(`${apiPathVolunteer}/${volunteerId}/doc/${documentType}/received`, { received });
+  await axios.patch(`${apiPathVolunteer}/${volunteerId}/doc/${documentType}`, { received });
 };
 
 export const useUploadDocument = (volunteerId: number, onSuccess?: () => void) => {

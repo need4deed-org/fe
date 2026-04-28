@@ -32,30 +32,13 @@ export function VolunteerProfileDocument({ volunteer }: Props) {
   } = useDialogState();
 
   const [documentUrl, setDocumentUrl] = useState<string | null>(null);
-  const [receivedState, setReceivedState] = useState<Record<string, { isReceived: boolean; receivedAt: Date | null }>>(
-    {},
-  );
 
   const { data: fetchedDocuments, isLoading, isError } = useVolunteerDocuments(volunteer.id);
 
-  const documentRows = useMemo(
-    () => (fetchedDocuments ? enrichDocuments(fetchedDocuments, receivedState) : []),
-    [fetchedDocuments, receivedState],
-  );
+  const documentRows = useMemo(() => (fetchedDocuments ? enrichDocuments(fetchedDocuments) : []), [fetchedDocuments]);
 
-  const handleToggleReceived = (type: DocumentType) => {
-    setReceivedState((prev) => {
-      const current = prev[type] ?? { isReceived: false, receivedAt: null };
-      const isReceived = !current.isReceived;
-      receivedMutation.mutate({ volunteerId: volunteer.id, documentType: type, received: isReceived });
-      return {
-        ...prev,
-        [type]: {
-          isReceived,
-          receivedAt: isReceived ? new Date() : null,
-        },
-      };
-    });
+  const handleToggleReceived = (type: DocumentType, currentIsReceived: boolean) => {
+    receivedMutation.mutate({ volunteerId: volunteer.id, documentType: type, received: !currentIsReceived });
   };
 
   const uploadMutation = useUploadDocument(volunteer.id, () => closeDialog("upload"));
@@ -147,7 +130,7 @@ export function VolunteerProfileDocument({ volunteer }: Props) {
                 onPreview={() => handlePreview(row)}
                 onDownload={() => handleDownload(row)}
                 onDelete={() => openDialog("delete", row)}
-                onToggleReceived={() => handleToggleReceived(row.type)}
+                onToggleReceived={() => handleToggleReceived(row.type, row.isReceived)}
               />
             ))}
           </Table>
