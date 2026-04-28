@@ -39,13 +39,25 @@ export const OpportunityContactDetails = forwardRef<EditableSectionRef, Props>(f
 
   const schema = createOpportunityContactDetailsSchema(t);
 
-  const initialFormValues = useMemo(
-    () => ({
-      ...opportunity.contact,
-      waysToContact: Array.isArray(opportunity.contact.waysToContact) ? opportunity.contact.waysToContact : [],
-    }),
-    [opportunity.contact],
-  );
+  const initialFormValues = useMemo(() => {
+    const raw = opportunity.contact.waysToContact;
+    const validTypes = new Set<string>(COMMUNICATION_TYPES);
+
+    const waysToContact: PreferredCommunicationType[] = Array.isArray(raw)
+      ? raw.filter((v): v is PreferredCommunicationType => validTypes.has(v))
+      : typeof raw === "string" && validTypes.has(raw)
+        ? [raw as PreferredCommunicationType]
+        : [];
+
+    // Fields are listed explicitly to stay in sync with OpportunityContactDetailsFormData.
+    // If the schema adds or removes fields, update this object accordingly.
+    return {
+      name: opportunity.contact.name ?? "",
+      phone: opportunity.contact.phone ?? "",
+      email: opportunity.contact.email ?? "",
+      waysToContact,
+    };
+  }, [opportunity.contact]);
 
   const methods = useForm<OpportunityContactDetailsFormData>({
     resolver: zodResolver(schema),
