@@ -5,6 +5,7 @@ const timeRegex = /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/;
 export const accompanyingDetailsSchema = z.object({
   appointmentAddress: z.string().optional(),
   appointmentPostcode: z.string().optional(),
+  appointmentDistrict: z.string().optional(),
   appointmentDate: z.date().nullable().optional(),
   appointmentTime: z
     .string()
