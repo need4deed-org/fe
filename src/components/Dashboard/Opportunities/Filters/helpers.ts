@@ -20,7 +20,11 @@ export const createOpportunityFilterItems = (
     filter[QueryParamsKeys.LANGUAGE],
     setFilter,
     QueryParamsKeys.LANGUAGE,
-    (key) => key,
+    (key) => {
+      const translationKey = `languageNames.${key.toLowerCase()}`;
+      const translated = t(translationKey);
+      return translated !== translationKey ? translated : key;
+    },
   );
 
   const statusFilters = generateNestedFilterControlItems(filter.status, setFilter, "status", (key) =>
