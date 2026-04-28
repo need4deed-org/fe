@@ -606,6 +606,7 @@
         "volunteerType": "Volunteer type",
         "activities": "Activities",
         "skills": "Skills & experience",
+        "comments": "Comments",
         "cancel": "Cancel",
         "saveChanges": "Save changes",
         "saveSuccess": "Profile updated successfully",
