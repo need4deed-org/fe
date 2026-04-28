@@ -740,6 +740,9 @@
           "opp-searching": "Suche läuft",
           "opp-active": "Aktiv",
           "opp-past": "Vergangen"
+        },
+        "schedule": {
+          "header": "Zeitplan"
         }
       },
       "accompanyingTranslation": {

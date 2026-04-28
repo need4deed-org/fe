@@ -8,6 +8,7 @@ import {
   QueryParamsKeys,
 } from "need4deed-sdk";
 import { ReadonlyURLSearchParams } from "next/navigation";
+import { AvailabilityKeys, AvailabilitySubKeys, SEPARATOR } from "./Filters/constants";
 import { OpportunityCardsFilter } from "./Filters/types";
 
 interface SerializeFiltersOptions {
@@ -67,6 +68,16 @@ export function serializeOpportunityFilters(
     }
   });
 
+  params.delete(QueryParamsKeys.AVAILABILITY);
+  Object.entries(filter.availability).forEach(([key, subSlot]) => {
+    const availabilityKey = key as AvailabilityKeys;
+    Object.entries(subSlot).forEach(([slot, value]) => {
+      if (value) {
+        params.append(QueryParamsKeys.AVAILABILITY, `${availabilityKey}${SEPARATOR}${slot}`);
+      }
+    });
+  });
+
   return asString ? params.toString() : params;
 }
 
@@ -101,6 +112,17 @@ export function deserializeOpportunityFilters(
   const queryActivities = searchParams.getAll(EntityTableName.ACTIVITY);
   queryActivities.forEach((l) => {
     newFilter.activity[l] = true;
+  });
+
+  const queryAvailability = searchParams.getAll(QueryParamsKeys.AVAILABILITY);
+  queryAvailability.forEach((item) => {
+    const [firstKey, secondKey] = item.split(SEPARATOR);
+    const avKey = firstKey as AvailabilityKeys;
+    const avSubKey = secondKey as AvailabilitySubKeys;
+    const subFilter = newFilter.availability[avKey] as Record<AvailabilitySubKeys, boolean>;
+    if (subFilter && subFilter[avSubKey] !== undefined) {
+      subFilter[avSubKey] = true;
+    }
   });
 
   return newFilter;

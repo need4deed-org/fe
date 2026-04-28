@@ -781,6 +781,9 @@
           "opp-searching": "Searching",
           "opp-active": "Active",
           "opp-past": "Past"
+        },
+        "schedule": {
+          "header": "Schedule"
         }
       },
       "accompanyingTranslation": {
