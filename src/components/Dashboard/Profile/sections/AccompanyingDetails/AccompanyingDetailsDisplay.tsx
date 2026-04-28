@@ -1,5 +1,6 @@
 import { EditableField } from "@/components/EditableField/EditableField";
 import { EMPTY_PLACEHOLDER_VALUE } from "@/config/constants";
+import { utcHhmmToLocal } from "@/utils";
 import { format } from "date-fns";
 import { useTranslation } from "react-i18next";
 import { AccompanyingDetailsFormData } from "./accompanyingDetailsSchema";
@@ -30,7 +31,7 @@ export const AccompanyingDetailsDisplay = ({ values, languageLabel }: Props) => 
 
       <DateFieldRow data-testid="appointment-time-field">
         <label>{t("dashboard.opportunityProfile.accompanyingDetails.appointmentTime")}</label>
-        <span>{values.appointmentTime || EMPTY_PLACEHOLDER_VALUE}</span>
+        <span>{values.appointmentTime ? utcHhmmToLocal(values.appointmentTime) : EMPTY_PLACEHOLDER_VALUE}</span>
       </DateFieldRow>
 
       <EditableField

@@ -3,6 +3,18 @@ export * from "./helpers";
 import { cloudfrontURL } from "@/config/constants";
 import { DocumentStatusType } from "need4deed-sdk";
 
+/**
+ * Converts a UTC "HH:mm" string to the browser's local time "HH:mm" string.
+ * Returns the original value unchanged if it cannot be parsed.
+ */
+export function utcHhmmToLocal(hhmm: string): string {
+  const [h, m] = hhmm.split(":").map(Number);
+  if (isNaN(h) || isNaN(m)) return hhmm;
+  const d = new Date();
+  d.setUTCHours(h, m, 0, 0);
+  return String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0");
+}
+
 export function getDateLocalTooUTC(dateStr: string | undefined) {
   if (!dateStr) return undefined;
 

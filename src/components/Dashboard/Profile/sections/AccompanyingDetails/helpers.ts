@@ -30,16 +30,8 @@ export const parseDate = (date: Date | string | undefined): Date | null => {
 
 export const parseTime = (time: Date | string | undefined): string => {
   if (!time) return "";
-  if (typeof time === "string") {
-    const [h, m] = time.split(":").map(Number);
-    if (!isNaN(h) && !isNaN(m)) {
-      const d = new Date();
-      d.setUTCHours(h, m, 0, 0);
-      return d.toTimeString().slice(0, 5);
-    }
-    return time;
-  }
-  return time.toTimeString().slice(0, 5);
+  if (typeof time === "string") return time;
+  return String(time.getHours()).padStart(2, "0") + ":" + String(time.getMinutes()).padStart(2, "0");
 };
 
 export const getInitialFormValues = (
