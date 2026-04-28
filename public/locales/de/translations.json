@@ -770,6 +770,8 @@
       "typeOfDocument": "Dokumenttyp",
       "status": "Status",
       "uploadedOn": "Hochgeladen am",
+      "received": "Erhalten",
+      "receivedOn": "Erhalten am",
       "actions": "Aktionen",
       "uploaded": "Hochgeladen",
       "missing": "Fehlend",

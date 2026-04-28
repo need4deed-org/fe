@@ -155,3 +155,19 @@ export const ActionCell = styled(Cell).attrs<{ $width?: string; $align?: string 
 }))`
   padding: var(--document-section-action-cell-padding);
 `;
+
+export const ReceivedCell = styled(Cell)`
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 120px;
+  flex: none;
+`;
+
+export const ReceivedCheckbox = styled.input.attrs({ type: "checkbox" })`
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--color-aubergine);
+`;

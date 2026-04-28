@@ -625,6 +625,8 @@
       "typeOfDocument": "Type of document",
       "status": "Status",
       "uploadedOn": "Uploaded on",
+      "received": "Received",
+      "receivedOn": "Received on",
       "actions": "Actions",
       "uploaded": "Uploaded",
       "missing": "Missing",
