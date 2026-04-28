@@ -1027,6 +1027,7 @@
       "status": {
         "new": "New",
         "active": "Active",
+        "inactive": "Inactive",
         "past": "Past",
         "searching": "Searching"
       },

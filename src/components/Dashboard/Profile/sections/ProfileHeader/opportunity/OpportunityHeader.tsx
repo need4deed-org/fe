@@ -1,5 +1,6 @@
 "use client";
 import { matchStatusColorMap, matchStatusIconMap } from "@/components/Dashboard/Opportunities/OpportunityCard.helpers";
+import { EmptyPlaceholder } from "@/components/core/common/EmptyPlaceholder";
 import { EMPTY_PLACEHOLDER_VALUE } from "@/config/constants";
 import { formatDateTime } from "@/utils";
 import { ShootingStarIcon } from "@phosphor-icons/react";
@@ -70,7 +71,9 @@ export const OpportunityHeader = ({ opportunity }: Props) => {
               {matchStatusIconMap[statusMatch]}
               <span>{t(`dashboard.opportunities.matchStatus.${statusMatch}`)}</span>
             </MatchStatusBadge>
-          ) : undefined
+          ) : (
+            <EmptyPlaceholder />
+          )
         }
       />
 
