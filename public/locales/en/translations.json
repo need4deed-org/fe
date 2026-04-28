@@ -991,6 +991,20 @@
         "unmatched": "Unmatched"
       },
       "statusUpdateSuccess": "Opportunity status updated successfully",
+      "change_status": "Change status",
+      "statusModal": {
+        "title": "Change opportunity status",
+        "save": "Save",
+        "cancel": "Cancel",
+        "options": {
+          "new": "New / Needs validation",
+          "new_description": "The opportunity was not validated yet.",
+          "searching": "Validated",
+          "searching_description": "The opportunity was validated, it can be searched for.",
+          "inactive": "Inactive",
+          "inactive_description": "The opportunity is no longer active."
+        }
+      },
       "contactDetailsTitle": "Contact details",
       "editButtonName": "Edit",
       "contactDetails": {

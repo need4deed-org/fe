@@ -1,37 +1,26 @@
 "use client";
 import { EMPTY_PLACEHOLDER_VALUE } from "@/config/constants";
-import { useUpdateOpportunityStatus } from "@/hooks/useUpdateOpportunityStatus";
 import { formatDateTime } from "@/utils";
 import { ShootingStarIcon } from "@phosphor-icons/react";
-import { ApiOpportunityGet, OpportunityStatusType } from "need4deed-sdk";
+import { ApiOpportunityGet } from "need4deed-sdk";
 import { useTranslation } from "react-i18next";
 import { createVolunteerTypeLabelMap, EditButton, HeaderCard, IconContainer, StatusRowField } from "../common";
+import { ChangeOpportunityStatusDialog } from "./ChangeOpportunityStatusDialog";
+import { createOpportunityStatusLabelMap } from "./constants";
+import { useOpportunityStatusDialog } from "./useOpportunityStatusDialog";
 
 type Props = {
   opportunity: ApiOpportunityGet;
 };
 
-const createStatusLabelMap = (t: (key: string) => string): Record<OpportunityStatusType, string> => ({
-  [OpportunityStatusType.NEW]: t("dashboard.opportunityProfile.status.new"),
-  [OpportunityStatusType.ACTIVE]: t("dashboard.opportunityProfile.status.active"),
-  [OpportunityStatusType.PAST]: t("dashboard.opportunityProfile.status.past"),
-  [OpportunityStatusType.SEARCHING]: t("dashboard.opportunityProfile.status.searching"),
-});
-
 export const OpportunityHeader = ({ opportunity }: Props) => {
   const { t } = useTranslation();
-  const { mutate: updateStatus } = useUpdateOpportunityStatus(opportunity.id);
-
-  const statusLabels = createStatusLabelMap(t);
+  const dialog = useOpportunityStatusDialog(opportunity);
+  const statusLabelMap = createOpportunityStatusLabelMap(t);
   const volunteerTypeLabelMap = createVolunteerTypeLabelMap(t);
 
   const postedDate = opportunity.createdAt ? formatDateTime(opportunity.createdAt) : EMPTY_PLACEHOLDER_VALUE;
   const subtitle = `${t("dashboard.opportunityProfile.postedOn")} ${postedDate}`;
-  const isButtonDisabled = opportunity.statusOpportunity !== OpportunityStatusType.NEW;
-
-  const handleStatusChange = () => {
-    updateStatus({ statusOpportunity: OpportunityStatusType.SEARCHING });
-  };
 
   return (
     <HeaderCard
@@ -43,16 +32,13 @@ export const OpportunityHeader = ({ opportunity }: Props) => {
       }
       title={opportunity.title}
       subtitle={subtitle}
+      after={<ChangeOpportunityStatusDialog dialog={dialog} />}
     >
       <StatusRowField
         title={t("dashboard.opportunityProfile.currentStatus")}
-        status={opportunity.statusOpportunity}
-        label={statusLabels[opportunity.statusOpportunity]}
-        action={
-          <EditButton onClick={handleStatusChange} disabled={isButtonDisabled}>
-            {t("dashboard.volunteerProfile.volunteerHeader.change_status")}
-          </EditButton>
-        }
+        status={dialog.selected}
+        label={statusLabelMap[dialog.selected]}
+        action={<EditButton onClick={dialog.openDialog}>{t("dashboard.opportunityProfile.change_status")}</EditButton>}
       />
 
       <StatusRowField

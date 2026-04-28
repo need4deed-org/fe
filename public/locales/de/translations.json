@@ -992,6 +992,20 @@
         "unmatched": "Nicht gematcht"
       },
       "statusUpdateSuccess": "Status der Möglichkeit erfolgreich aktualisiert",
+      "change_status": "Status ändern",
+      "statusModal": {
+        "title": "Opportunitätsstatus ändern",
+        "save": "Speichern",
+        "cancel": "Abbrechen",
+        "options": {
+          "new": "Neu / Validierung erforderlich",
+          "new_description": "Die Möglichkeit wurde noch nicht validiert.",
+          "searching": "Validiert",
+          "searching_description": "Die Möglichkeit wurde validiert, es kann nach ihr gesucht werden.",
+          "inactive": "Inaktiv",
+          "inactive_description": "Die Möglichkeit ist nicht mehr aktiv."
+        }
+      },
       "contactDetailsTitle": "Kontaktdaten",
       "editButtonName": "Bearbeiten",
       "contactDetails": {

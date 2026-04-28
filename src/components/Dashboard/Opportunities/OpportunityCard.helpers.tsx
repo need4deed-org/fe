@@ -21,6 +21,7 @@ export const statusColorMap: Record<OpportunityStatusType, string> = {
   [OpportunityStatusType.NEW]: "var(--color-red-500)",
   [OpportunityStatusType.SEARCHING]: "var(--color-orange-500, var(--color-red-500))",
   [OpportunityStatusType.ACTIVE]: "var(--color-green-700)",
+  [OpportunityStatusType.INACTIVE]: "var(--color-grey-700)",
   [OpportunityStatusType.PAST]: "var(--color-grey-700)",
 };
 
@@ -30,6 +31,9 @@ export const statusIconMap: Record<OpportunityStatusType, JSX.Element> = {
     <ShootingStarIcon size={18} color={statusColorMap[OpportunityStatusType.SEARCHING]} />
   ),
   [OpportunityStatusType.ACTIVE]: <ShootingStarIcon size={18} color={statusColorMap[OpportunityStatusType.ACTIVE]} />,
+  [OpportunityStatusType.INACTIVE]: (
+    <ShootingStarIcon size={18} color={statusColorMap[OpportunityStatusType.INACTIVE]} />
+  ),
   [OpportunityStatusType.PAST]: <ShootingStarIcon size={18} color={statusColorMap[OpportunityStatusType.PAST]} />,
 };
 
