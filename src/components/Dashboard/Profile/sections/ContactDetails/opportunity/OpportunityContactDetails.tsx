@@ -41,11 +41,16 @@ export const OpportunityContactDetails = forwardRef<EditableSectionRef, Props>(f
 
   const initialFormValues = useMemo(() => {
     const raw = opportunity.contact.waysToContact;
+    const validTypes = new Set<string>(COMMUNICATION_TYPES);
+
     const waysToContact: PreferredCommunicationType[] = Array.isArray(raw)
-      ? raw
-      : typeof raw === "string" && raw
+      ? raw.filter((v): v is PreferredCommunicationType => validTypes.has(v))
+      : typeof raw === "string" && validTypes.has(raw)
         ? [raw as PreferredCommunicationType]
         : [];
+
+    // Fields are listed explicitly to stay in sync with OpportunityContactDetailsFormData.
+    // If the schema adds or removes fields, update this object accordingly.
     return {
       name: opportunity.contact.name ?? "",
       phone: opportunity.contact.phone ?? "",
