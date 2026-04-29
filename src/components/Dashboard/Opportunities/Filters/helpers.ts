@@ -54,9 +54,9 @@ export const createAvailabilityFilterItems = (
   const { days, times, occasional } = availability;
 
   const createAvailabilityGroup = <K extends keyof ScheduleFilter, T extends SelectionMap>(labelKey: K, obj: T) => ({
-    label: t(`dashboard.volunteers.filters.preferredAv.${labelKey}.header`),
+    label: t(`dashboard.opportunities.filters.preferredAv.${labelKey}.header`),
     items: Object.keys(obj).map((key) => ({
-      label: t(`dashboard.volunteers.filters.preferredAv.${labelKey}.${key}`),
+      label: t(`dashboard.opportunities.filters.preferredAv.${labelKey}.${key}`),
       checked: obj[key],
       onChange: (checked: boolean) => {
         const updated = { ...obj, [key]: checked };

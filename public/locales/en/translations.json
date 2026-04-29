@@ -784,6 +784,30 @@
         },
         "schedule": {
           "header": "Schedule"
+        },
+        "preferredAv": {
+          "days": {
+            "header": "Days",
+            "Monday": "Mon",
+            "Tuesday": "Tue",
+            "Wednesday": "Wed",
+            "Thursday": "Thu",
+            "Friday": "Fr",
+            "Saturday": "Sat",
+            "Sunday": "Sun"
+          },
+          "times": {
+            "header": "Times",
+            "08-11": "08-11",
+            "11-14": "11-14",
+            "14-17": "14-17",
+            "17-20": "17-20"
+          },
+          "occasional": {
+            "header": "Occasional",
+            "weekdays": "Weekdays",
+            "weekends": "Weekends"
+          }
         }
       },
       "accompanyingTranslation": {
