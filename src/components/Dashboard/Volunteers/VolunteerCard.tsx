@@ -1,5 +1,10 @@
-import { CheckIcon, FlagIcon, HourglassIcon, SealCheckIcon, SparkleIcon } from "@phosphor-icons/react";
-import { ApiVolunteerGetList, VolunteerStateEngagementType } from "need4deed-sdk";
+import { CheckCircleIcon, CheckIcon, FlagIcon, HourglassIcon, SealCheckIcon, SparkleIcon } from "@phosphor-icons/react";
+import {
+  ApiVolunteerGetList,
+  VolunteerStateCommunicationType,
+  VolunteerStateEngagementType,
+  VolunteerStateTypeType,
+} from "need4deed-sdk";
 import { useRouter } from "next/navigation";
 import { JSX } from "react";
 import { useTranslation } from "react-i18next";
@@ -11,6 +16,7 @@ import { CirclePic } from "@/components/styled/img";
 import { Paragraph } from "@/components/styled/text";
 import { defaultAvatarURL } from "@/config/constants";
 import { getImageUrl } from "@/utils";
+import { isBriefedAccompanying } from "../Profile/sections/ProfileHeader/common";
 import { formatAvailabilityItem } from "../Profile/sections/VolunteerProfile/formatters";
 import CardDetail from "./CardDetail";
 import { getNormalizedVolunteer, groupLanguagesByProficiency } from "./helpers";
@@ -27,6 +33,12 @@ export function VolunteerCard({ volunteer, opportunityId }: Props) {
 
   const { id, name, languages, activities, skills, locations, availability, avatarUrl, statusEngagement, statusType } =
     getNormalizedVolunteer(volunteer);
+
+  // TODO: remove cast once SDK adds statusCommunication to ApiVolunteerGetList
+  const { statusCommunication } = volunteer as ApiVolunteerGetList & {
+    statusCommunication?: VolunteerStateCommunicationType;
+  };
+  const showBriefedCheck = isBriefedAccompanying(statusType as VolunteerStateTypeType, statusCommunication);
 
   const groupedLanguages = groupLanguagesByProficiency(languages);
 
@@ -71,6 +83,7 @@ export function VolunteerCard({ volunteer, opportunityId }: Props) {
                   {statusType.toUpperCase()}
                 </Paragraph>
                 <SparkleIcon size={18} color="var(--color-midnight)" />
+                {showBriefedCheck && <CheckCircleIcon size={18} color="var(--color-green-700)" weight="fill" />}
               </TagDiv>
             </>
           )}
