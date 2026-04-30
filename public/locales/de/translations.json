@@ -990,6 +990,7 @@
         "clientLanguages": "Sprachen der Klient:innen",
         "cancel": "Abbrechen",
         "saveChanges": "Änderungen speichern",
+        "saveSuccess": "Organisationsdetails erfolgreich aktualisiert",
         "validation": {
           "required": "Dieses Feld ist erforderlich",
           "websiteInvalid": "Webseite muss mit http:// oder https:// beginnen",
