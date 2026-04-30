@@ -5,11 +5,14 @@ import { ApiOpportunityGet } from "need4deed-sdk";
 export type OpportunityAccompanyingDetailsUpdateData = {
   accompanyingDetails: {
     appointmentAddress?: string;
+    appointmentPostcode?: string;
+    appointmentDistrict?: string;
     appointmentDate?: string;
     appointmentTime?: string;
     refugeeNumber?: string;
     refugeeName?: string;
     languagesToTranslate?: string[];
+    appointmentLanguage?: string;
   };
 };
 

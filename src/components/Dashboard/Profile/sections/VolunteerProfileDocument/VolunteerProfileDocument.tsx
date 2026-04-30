@@ -1,6 +1,6 @@
 "use client";
 import { useVolunteerDocuments } from "@/hooks/useVolunteerDocuments";
-import { ApiVolunteerGet } from "need4deed-sdk";
+import { ApiVolunteerGet, DocumentType } from "need4deed-sdk";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
@@ -11,7 +11,7 @@ import { DocumentTableRow } from "./DocumentTableRow";
 import { ACTION_COLUMN_WIDTH, DocumentTableContainer, HeaderCell, Table, TableHeader } from "./styles";
 import { UploadDocumentDialog } from "./UploadDocumentDialog";
 import { useDialogState } from "./useDialogState";
-import { useDeleteDocument, useUploadDocument } from "./useDocumentOperations";
+import { useDeleteDocument, useMarkDocumentReceived, useUploadDocument } from "./useDocumentOperations";
 import { DocumentRow, enrichDocuments, extractDocumentUrl } from "./utils";
 
 type Props = {
@@ -37,11 +37,16 @@ export function VolunteerProfileDocument({ volunteer }: Props) {
 
   const documentRows = useMemo(() => (fetchedDocuments ? enrichDocuments(fetchedDocuments) : []), [fetchedDocuments]);
 
+  const handleToggleReceived = (type: DocumentType, currentIsReceived: boolean) => {
+    receivedMutation.mutate({ volunteerId: volunteer.id, documentType: type, received: !currentIsReceived });
+  };
+
   const uploadMutation = useUploadDocument(volunteer.id, () => closeDialog("upload"));
   const deleteMutation = useDeleteDocument(volunteer.id, () => {
     closeDialog("delete");
     closeDialog("preview");
   });
+  const receivedMutation = useMarkDocumentReceived(volunteer.id);
 
   const handleConfirmDelete = () => {
     if (deleteDialogDocument) {
@@ -103,6 +108,9 @@ export function VolunteerProfileDocument({ volunteer }: Props) {
           <Table>
             <TableHeader>
               <HeaderCell>{t("dashboard.documentSection.typeOfDocument")}</HeaderCell>
+              <HeaderCell $width="120px" $noWrap>
+                {t("dashboard.documentSection.received")}
+              </HeaderCell>
               <HeaderCell $width="180px">{t("dashboard.documentSection.status")}</HeaderCell>
               <HeaderCell $width="152px" $noWrap>
                 {t("dashboard.documentSection.uploadedOn")}
@@ -122,6 +130,7 @@ export function VolunteerProfileDocument({ volunteer }: Props) {
                 onPreview={() => handlePreview(row)}
                 onDownload={() => handleDownload(row)}
                 onDelete={() => openDialog("delete", row)}
+                onToggleReceived={() => handleToggleReceived(row.type, row.isReceived)}
               />
             ))}
           </Table>

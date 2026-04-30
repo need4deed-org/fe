@@ -61,7 +61,7 @@ export const useAgentProfileSections = (agent: ApiAgentProfileGet | undefined) =
       iconName: IconName.ShootingStar,
       title: t("dashboard.volunteerProfile.opportunities"),
       headerButtonName: t("dashboard.agentProfile.opportunitiesSec.postOpportunity"),
-      subComponent: <AgentOpportunities />,
+      subComponent: <AgentOpportunities agentId={agent.id} />,
     },
     {
       iconName: IconName.ChatsTeardrop,

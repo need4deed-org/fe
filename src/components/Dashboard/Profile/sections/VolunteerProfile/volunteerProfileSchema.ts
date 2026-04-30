@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { Availability } from "@/components/forms/types";
 import { LanguageLevel, LanguageObject } from "@/types";
+import { LangPurpose } from "need4deed-sdk";
 
 export const createVolunteerProfileSchema = (t: (key: string) => string) => {
   return z.object({
@@ -10,6 +11,7 @@ export const createVolunteerProfileSchema = (t: (key: string) => string) => {
           id: z.number(),
           language: z.string(),
           level: z.union([z.enum(LanguageLevel), z.literal("")]),
+          purpose: z.nativeEnum(LangPurpose).optional(),
         }) satisfies z.ZodType<LanguageObject>,
       )
       .min(1, t("dashboard.volunteerProfile.profileSection.validation.languageRequired"))

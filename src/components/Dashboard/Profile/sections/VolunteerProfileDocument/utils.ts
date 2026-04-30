@@ -1,6 +1,12 @@
 import { ApiDocumentGet, DocumentType } from "need4deed-sdk";
 
-export type EnrichedDocument = ApiDocumentGet & {
+// TODO: remove cast once SDK is updated to include received and receivedOn (added by BE PR #417)
+export type ApiDocumentGetWithReceived = ApiDocumentGet & {
+  received?: boolean;
+  receivedOn?: string;
+};
+
+export type EnrichedDocument = ApiDocumentGetWithReceived & {
   nameKey: string;
   isUploaded: boolean;
 };
@@ -9,7 +15,9 @@ export type DocumentRow = {
   type: DocumentType;
   nameKey: string;
   isUploaded: boolean;
-  document?: ApiDocumentGet;
+  document?: ApiDocumentGetWithReceived;
+  isReceived: boolean;
+  receivedAt: Date | null;
 };
 
 const DOCUMENT_NAME_KEYS: Record<DocumentType, string> = {
@@ -40,18 +48,19 @@ export const extractDocumentUrl = (url: string): string | null => {
   }
 };
 
-export const enrichDocuments = (
-  fetchedDocuments: ApiDocumentGet[]
-): DocumentRow[] => {
+export const enrichDocuments = (fetchedDocuments: ApiDocumentGet[]): DocumentRow[] => {
   const allTypes = Object.keys(DOCUMENT_NAME_KEYS) as DocumentType[];
 
   return allTypes.map((type) => {
-    const document = fetchedDocuments.find((doc) => doc.type === type);
+    // TODO: remove cast once SDK is updated to include received and receivedOn (added by BE PR #417)
+    const document = fetchedDocuments.find((doc) => doc.type === type) as ApiDocumentGetWithReceived | undefined;
     return {
       type,
       nameKey: DOCUMENT_NAME_KEYS[type],
       isUploaded: !!document,
       document,
+      isReceived: document?.received ?? false,
+      receivedAt: document?.receivedOn ? new Date(document.receivedOn) : null,
     };
   });
 };

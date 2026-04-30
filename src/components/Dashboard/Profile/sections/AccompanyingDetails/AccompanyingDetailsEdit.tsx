@@ -20,6 +20,12 @@ type Props = {
   languageOptions: string[];
   keyToLabel: Record<string, string>;
   labelToKey: Record<string, string>;
+  appointmentLanguageOptions: string[];
+  appointmentLanguageKeyToLabel: Record<string, string>;
+  appointmentLanguageLabelToKey: Record<string, string>;
+  districtOptions: string[];
+  districtKeyToLabel: Record<string, string>;
+  districtLabelToKey: Record<string, string>;
   onCancel: () => void;
   onSubmit: () => void;
   isPending: boolean;
@@ -31,6 +37,12 @@ export const AccompanyingDetailsEdit = ({
   languageOptions,
   keyToLabel,
   labelToKey,
+  appointmentLanguageOptions,
+  appointmentLanguageKeyToLabel,
+  appointmentLanguageLabelToKey,
+  districtOptions,
+  districtKeyToLabel,
+  districtLabelToKey,
   onCancel,
   onSubmit,
   isPending,
@@ -56,6 +68,40 @@ export const AccompanyingDetailsEdit = ({
               value={field.value || ""}
               setValue={field.onChange}
               errorMessage={errors.appointmentAddress?.message}
+            />
+          )}
+        />
+
+        <Controller
+          name="appointmentPostcode"
+          control={control}
+          render={({ field }: { field: ControllerRenderProps<AccompanyingDetailsFormData, "appointmentPostcode"> }) => (
+            <EditableField
+              mode="edit"
+              type="text"
+              label={t("dashboard.opportunityProfile.accompanyingDetails.appointmentPostcode")}
+              value={field.value || ""}
+              setValue={field.onChange}
+              errorMessage={errors.appointmentPostcode?.message}
+            />
+          )}
+        />
+
+        <Controller
+          name="appointmentDistrict"
+          control={control}
+          render={({ field }: { field: ControllerRenderProps<AccompanyingDetailsFormData, "appointmentDistrict"> }) => (
+            <EditableField
+              mode="edit"
+              type="radio-list"
+              label={t("dashboard.opportunityProfile.accompanyingDetails.appointmentDistrict")}
+              value={districtKeyToLabel[field.value || ""] || field.value || ""}
+              setValue={(value) => {
+                const label = Array.isArray(value) ? value[0] : value;
+                field.onChange(districtLabelToKey[label] || label);
+              }}
+              options={districtOptions}
+              errorMessage={errors.appointmentDistrict?.message}
             />
           )}
         />
@@ -98,9 +144,7 @@ export const AccompanyingDetailsEdit = ({
                 />
                 {errors.appointmentTime && (
                   <ErrorText>
-                    {t(
-                      `dashboard.opportunityProfile.accompanyingDetails.validation.${errors.appointmentTime.message}`,
-                    )}
+                    {t(`dashboard.opportunityProfile.accompanyingDetails.validation.${errors.appointmentTime.message}`)}
                   </ErrorText>
                 )}
               </TimeInputWrapper>
@@ -139,20 +183,43 @@ export const AccompanyingDetailsEdit = ({
         />
 
         <Controller
-          name="languageToTranslate"
+          name="languagesToTranslate"
           control={control}
-          render={({ field }: { field: ControllerRenderProps<AccompanyingDetailsFormData, "languageToTranslate"> }) => (
+          render={({
+            field,
+          }: {
+            field: ControllerRenderProps<AccompanyingDetailsFormData, "languagesToTranslate">;
+          }) => (
+            <EditableField
+              mode="edit"
+              type="checkbox-list"
+              label={t("dashboard.opportunityProfile.accompanyingDetails.refugeeLanguage")}
+              value={(field.value ?? []).map((id) => keyToLabel[id] || id)}
+              setValue={(value) => {
+                const labels = Array.isArray(value) ? value : [value];
+                field.onChange(labels.map((label) => labelToKey[label] || label));
+              }}
+              options={languageOptions}
+              errorMessage={errors.languagesToTranslate?.message}
+            />
+          )}
+        />
+
+        <Controller
+          name="appointmentLanguage"
+          control={control}
+          render={({ field }: { field: ControllerRenderProps<AccompanyingDetailsFormData, "appointmentLanguage"> }) => (
             <EditableField
               mode="edit"
               type="radio-list"
-              label={t("dashboard.opportunityProfile.accompanyingDetails.languageToTranslate")}
-              value={keyToLabel[field.value || ""] || field.value || ""}
+              label={t("dashboard.opportunityProfile.accompanyingDetails.appointmentLanguage")}
+              value={appointmentLanguageKeyToLabel[field.value || ""] || field.value || ""}
               setValue={(value) => {
                 const label = Array.isArray(value) ? value[0] : value;
-                field.onChange(labelToKey[label] || label);
+                field.onChange(appointmentLanguageLabelToKey[label] || label);
               }}
-              options={languageOptions}
-              errorMessage={errors.languageToTranslate?.message}
+              options={appointmentLanguageOptions}
+              errorMessage={errors.appointmentLanguage?.message}
             />
           )}
         />

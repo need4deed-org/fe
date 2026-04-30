@@ -8,9 +8,10 @@ import { DateFieldRow, Details } from "./styles";
 type Props = {
   values: AccompanyingDetailsFormData;
   languageLabel: string;
+  districtLabel: string;
 };
 
-export const AccompanyingDetailsDisplay = ({ values, languageLabel }: Props) => {
+export const AccompanyingDetailsDisplay = ({ values, languageLabel, districtLabel }: Props) => {
   const { t } = useTranslation();
 
   return (
@@ -21,6 +22,23 @@ export const AccompanyingDetailsDisplay = ({ values, languageLabel }: Props) => 
         label={t("dashboard.opportunityProfile.accompanyingDetails.appointmentAddress")}
         value={values.appointmentAddress || ""}
         setValue={() => {}}
+      />
+
+      <EditableField
+        mode="display"
+        type="text"
+        label={t("dashboard.opportunityProfile.accompanyingDetails.appointmentPostcode")}
+        value={values.appointmentPostcode || ""}
+        setValue={() => {}}
+      />
+
+      <EditableField
+        mode="display"
+        type="radio-list"
+        label={t("dashboard.opportunityProfile.accompanyingDetails.appointmentDistrict")}
+        value={districtLabel}
+        setValue={() => {}}
+        options={[]}
       />
 
       <DateFieldRow data-testid="appointment-date-field">
@@ -51,9 +69,23 @@ export const AccompanyingDetailsDisplay = ({ values, languageLabel }: Props) => 
 
       <EditableField
         mode="display"
-        type="radio-list"
-        label={t("dashboard.opportunityProfile.accompanyingDetails.languageToTranslate")}
+        type="text"
+        label={t("dashboard.opportunityProfile.accompanyingDetails.refugeeLanguage")}
         value={languageLabel}
+        setValue={() => {}}
+      />
+
+      <EditableField
+        mode="display"
+        type="radio-list"
+        label={t("dashboard.opportunityProfile.accompanyingDetails.appointmentLanguage")}
+        value={
+          values.appointmentLanguage
+            ? t(
+                `dashboard.opportunityProfile.accompanyingDetails.appointmentLanguageOptions.${values.appointmentLanguage}`,
+              )
+            : ""
+        }
         setValue={() => {}}
         options={[]}
       />

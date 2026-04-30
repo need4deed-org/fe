@@ -1,7 +1,7 @@
 import { TFunction } from "i18next";
 import { generateNestedFilterControlItems } from "../../common/CardsFilter/helpers";
 import { SetFilter } from "../../common/CardsFilter/types";
-import { QueryParamsKeys } from "need4deed-sdk";
+import { EntityTableName, QueryParamsKeys } from "need4deed-sdk";
 import { OpportunityCardsFilter } from "./types";
 
 export const createOpportunityFilterItems = (
@@ -20,7 +20,11 @@ export const createOpportunityFilterItems = (
     filter[QueryParamsKeys.LANGUAGE],
     setFilter,
     QueryParamsKeys.LANGUAGE,
-    (key) => key,
+    (key) => {
+      const translationKey = `languageNames.${key.toLowerCase()}`;
+      const translated = t(translationKey);
+      return translated !== translationKey ? translated : key;
+    },
   );
 
   const statusFilters = generateNestedFilterControlItems(filter.status, setFilter, "status", (key) =>
@@ -31,7 +35,14 @@ export const createOpportunityFilterItems = (
     t(`dashboard.opportunities.filters.type.${key}`),
   );
 
-  return { districtFilters, languageFilters, statusFilters, typeFilters };
+  const activityFilters = generateNestedFilterControlItems(
+    filter[EntityTableName.ACTIVITY],
+    setFilter,
+    EntityTableName.ACTIVITY,
+    (key) => key,
+  );
+
+  return { districtFilters, languageFilters, statusFilters, typeFilters, activityFilters };
 };
 
 export const createSelectedOpportunityFiltersAsFlatArray = (
@@ -39,10 +50,9 @@ export const createSelectedOpportunityFiltersAsFlatArray = (
   setFilter: SetFilter<OpportunityCardsFilter>,
   t: TFunction,
 ) => {
-  const { districtFilters, languageFilters, statusFilters, typeFilters } = createOpportunityFilterItems(
-    filter,
-    setFilter,
-    t,
+  const { districtFilters, languageFilters, statusFilters, typeFilters, activityFilters } =
+    createOpportunityFilterItems(filter, setFilter, t);
+  return [...districtFilters, ...languageFilters, ...statusFilters, ...typeFilters, ...activityFilters].filter(
+    (f) => f.checked,
   );
-  return [...districtFilters, ...languageFilters, ...statusFilters, ...typeFilters].filter((f) => f.checked);
 };

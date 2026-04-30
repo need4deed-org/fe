@@ -1,32 +1,49 @@
-import { OpportunityVolunteerStatusType } from "need4deed-sdk";
+import { Heading4 } from "@/components/styled/text";
+import { apiPathAgent, cacheTTL } from "@/config/constants";
+import { useGetQuery } from "@/hooks/useGetQuery";
+import { ApiOpportunityGetList, Id } from "need4deed-sdk";
+import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
+import { Accordion } from "../shared/Accordion";
 import { SectionEmptyState } from "../shared/styles";
-import { Tabs } from "../shared/Tabs";
-import { useTabTransitions } from "../shared/useTabTransitions";
 import { AgentOpportunitiesContainer } from "./styles";
 
-const tabsKeys = ["lookingForVolunteers", "active", "past"] as const;
+type Props = { agentId: Id };
 
-const agentTabStatusOrder: OpportunityVolunteerStatusType[] = [
-  OpportunityVolunteerStatusType.PENDING,
-  OpportunityVolunteerStatusType.ACTIVE,
-  OpportunityVolunteerStatusType.PAST,
-];
+export const AgentOpportunities = ({ agentId }: Props) => {
+  const { t, i18n } = useTranslation();
+  const router = useRouter();
 
-export const AgentOpportunities = () => {
-  const { t } = useTranslation();
+  const { data, isLoading } = useGetQuery<ApiOpportunityGetList[]>({
+    queryKey: ["agent-opportunities", String(agentId)],
+    apiPath: `${apiPathAgent}/${agentId}/opportunity-linked`,
+    staleTime: cacheTTL,
+    enabled: !!agentId,
+    addLang: false,
+  });
 
-  const { selectedTabIndex, setSelectedTabIndex, tabCounts } = useTabTransitions([], agentTabStatusOrder);
+  const opportunities = data ?? [];
 
-  const tabs = tabsKeys.map((key, index) => ({
-    label: t(`dashboard.agentProfile.opportunitiesSec.tabs.${key}`),
-    count: tabCounts[index],
-  }));
+  if (isLoading) return <AgentOpportunitiesContainer data-testid="agent-opportunities" />;
 
   return (
     <AgentOpportunitiesContainer data-testid="agent-opportunities">
-      <Tabs tabs={tabs} selectedTabIndex={selectedTabIndex} setSelectedTabIndex={setSelectedTabIndex} />
-      <SectionEmptyState>{t("dashboard.volunteerProfile.opportunitiesSec.emptyState")}</SectionEmptyState>
+      {opportunities.length === 0 ? (
+        <SectionEmptyState>{t("dashboard.volunteerProfile.opportunitiesSec.emptyState")}</SectionEmptyState>
+      ) : (
+        opportunities.map((opp) => (
+          <Accordion
+            key={String(opp.id)}
+            headerLeft={
+              <Heading4 margin={0} color="var(--color-midnight)">
+                {opp.title}
+              </Heading4>
+            }
+            subtitle={opp.statusOpportunity ? t(`dashboard.opportunities.status.${opp.statusOpportunity}`) : "-"}
+            onGoToProfile={() => router.push(`/${i18n.language}/dashboard/opportunities/${opp.id}`)}
+          />
+        ))
+      )}
     </AgentOpportunitiesContainer>
   );
 };

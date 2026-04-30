@@ -1,4 +1,12 @@
-import { ApiLanguage, ApiOptionLists, LangPurpose, OptionById, QueryParamsKeys } from "need4deed-sdk";
+import {
+  ApiLanguage,
+  ApiOptionLists,
+  EntityTableName,
+  LangPurpose,
+  OptionById,
+  OptionItem,
+  QueryParamsKeys,
+} from "need4deed-sdk";
 import { ReadonlyURLSearchParams } from "next/navigation";
 import { OpportunityCardsFilter } from "./Filters/types";
 
@@ -50,6 +58,15 @@ export function serializeOpportunityFilters(
     }
   });
 
+  params.delete(EntityTableName.ACTIVITY);
+  Object.entries(filter.activity).forEach(([key, value]) => {
+    if (value === true) {
+      const paramValue =
+        (options?.serializeToIDs && options.apiFilterOptions?.activity?.find((d) => d.title === key)?.id) || key;
+      params.append(EntityTableName.ACTIVITY, String(paramValue));
+    }
+  });
+
   return asString ? params.toString() : params;
 }
 
@@ -64,22 +81,26 @@ export function deserializeOpportunityFilters(
 
   const queryDistricts = searchParams.getAll(QueryParamsKeys.DISTRICT);
   queryDistricts.forEach((d) => {
-    if (newFilter.district[d] !== undefined) newFilter.district[d] = true;
+    newFilter.district[d] = true;
   });
-
   const queryLanguages = searchParams.getAll(QueryParamsKeys.LANGUAGE);
   queryLanguages.forEach((l) => {
-    if (newFilter.language[l] !== undefined) newFilter.language[l] = true;
+    newFilter.language[l] = true;
   });
 
   const queryStatus = searchParams.getAll("status");
   queryStatus.forEach((s) => {
-    if (newFilter.status[s] !== undefined) newFilter.status[s] = true;
+    newFilter.status[s] = true;
   });
 
   const queryType = searchParams.getAll("type");
   queryType.forEach((s) => {
-    if (newFilter.type[s] !== undefined) newFilter.type[s] = true;
+    newFilter.type[s] = true;
+  });
+
+  const queryActivities = searchParams.getAll(EntityTableName.ACTIVITY);
+  queryActivities.forEach((l) => {
+    newFilter.activity[l] = true;
   });
 
   return newFilter;
@@ -96,4 +117,10 @@ export function getLanguagesByPurpose(languages: ApiLanguage[] | undefined, purp
 export function getOptionTitles(items: OptionById[] | undefined): string[] {
   if (!items || !Array.isArray(items)) return [];
   return items.map((item) => (typeof item.title === "string" ? item.title : "")).filter(Boolean);
+}
+
+export function getActivityTitles(activities: OptionById[], activityList: OptionItem[] | undefined): string[] {
+  if (!activities?.length || !activityList?.length) return [];
+  const activityMap = new Map(activityList.map((item) => [String(item.id), item.title]));
+  return activities.map((act) => activityMap.get(String(act.id))).filter((title): title is string => Boolean(title));
 }
