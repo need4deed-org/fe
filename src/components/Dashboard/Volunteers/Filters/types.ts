@@ -1,5 +1,7 @@
-import { ByDay, OccasionalType, QueryParamsKeys, TimeSlot } from "need4deed-sdk";
-import { SelectionMap } from "../../common/CardsFilter/types";
+import { QueryParamsKeys } from "need4deed-sdk";
+import { ScheduleFilter, SelectionMap } from "../../common/CardsFilter/types";
+
+export type Availability = ScheduleFilter;
 
 export interface CardsFilter {
   [QueryParamsKeys.SEARCH]: string;
@@ -8,12 +10,6 @@ export interface CardsFilter {
   [QueryParamsKeys.AVAILABILITY]: Availability;
   [QueryParamsKeys.DISTRICT]: SelectionMap;
   [QueryParamsKeys.LANGUAGE]: SelectionMap;
-}
-
-export interface Availability {
-  times: Record<TimeSlot, boolean>;
-  days: Record<ByDay, boolean>;
-  occasional: Record<OccasionalType, boolean>;
 }
 
 export type CardFilterKeys = keyof CardsFilter;

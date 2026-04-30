@@ -1,4 +1,12 @@
-import { EntityTableName, OpportunityStatusType, OpportunityType, QueryParamsKeys } from "need4deed-sdk";
+import {
+  ByDay,
+  EntityTableName,
+  OccasionalType,
+  OpportunityStatusType,
+  OpportunityType,
+  QueryParamsKeys,
+  TimeSlot,
+} from "need4deed-sdk";
 import { OpportunityCardsFilter } from "./types";
 
 export const defaultOpportunityCardsFilter: OpportunityCardsFilter = {
@@ -17,4 +25,29 @@ export const defaultOpportunityCardsFilter: OpportunityCardsFilter = {
     [OpportunityType.REGULAR]: false,
   },
   [EntityTableName.ACTIVITY]: {},
+  [QueryParamsKeys.AVAILABILITY]: {
+    times: {
+      [TimeSlot.morning]: false,
+      [TimeSlot.noon]: false,
+      [TimeSlot.afternoon]: false,
+      [TimeSlot.evening]: false,
+    },
+    days: {
+      [ByDay.MO]: false,
+      [ByDay.TU]: false,
+      [ByDay.WE]: false,
+      [ByDay.TH]: false,
+      [ByDay.FR]: false,
+      [ByDay.SA]: false,
+      [ByDay.SU]: false,
+    },
+    occasional: {
+      [OccasionalType.WEEKDAYS]: false,
+      [OccasionalType.WEEKENDS]: false,
+    },
+  },
 };
+
+export const SEPARATOR = "~";
+export type AvailabilityKeys = keyof OpportunityCardsFilter["availability"];
+export type AvailabilitySubKeys = TimeSlot | ByDay | OccasionalType;
