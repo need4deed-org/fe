@@ -40,10 +40,8 @@ export function OpportunityCard({ opportunity, volunteerId, activitiesList }: Pr
     availability,
     accompanyingDetails,
     statusMatch,
-    // TODO: remove statusMatch cast once SDK PR #89 adds OpportunityMatchStatusType
   } = opportunity as ApiVolunteerOpportunityGetList & {
     accompanyingDetails?: { appointmentDate?: string; appointmentTime?: string };
-    statusMatch?: string;
   };
 
   const mainCommunication = getLanguagesByPurpose(languages, LangPurpose.GENERAL);
