@@ -789,6 +789,7 @@
           "opp-new": "New",
           "opp-searching": "Searching",
           "opp-active": "Active",
+          "opp-inactive": "Inactive",
           "opp-past": "Past"
         },
         "schedule": {
