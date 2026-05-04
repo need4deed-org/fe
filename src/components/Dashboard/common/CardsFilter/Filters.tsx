@@ -18,9 +18,9 @@ export default function Filters({ isFiltersOpen, setIsFiltersOpen, filtersConten
 }
 
 const FiltersContainer = styled.div`
-  position: absolute;
-  right: 0;
   width: var(--filters-container-width);
+  flex-shrink: 0;
+  align-self: flex-start;
   background: var(--color-pink-50);
   border-bottom-left-radius: var(--filters-container-border-radius);
 `;

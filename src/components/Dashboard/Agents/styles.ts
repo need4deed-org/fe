@@ -2,9 +2,15 @@ import { BaseCard } from "@/components/styled/container";
 import styled from "styled-components";
 
 export const AgentsContainer = styled.div`
-  position: relative;
   display: flex;
   flex-direction: column;
+  gap: var(--dashboard-volunteers-container-gap);
+`;
+
+export const ContentRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
   gap: var(--dashboard-volunteers-container-gap);
 `;
 

@@ -16,7 +16,7 @@ import { OpportunityCardsFilter } from "./Filters/types";
 import { createSelectedOpportunityFiltersAsFlatArray } from "./Filters/helpers";
 import { deserializeOpportunityFilters, serializeOpportunityFilters } from "./helpers";
 import { OpportunityListController } from "./OpportunityListController";
-import { OpportunitiesContainer } from "./styles";
+import { ContentRow, OpportunitiesContainer } from "./styles";
 
 export function Opportunities() {
   const { t } = useTranslation();
@@ -85,12 +85,6 @@ export function Opportunities() {
   return (
     <DashboardLayout>
       <OpportunitiesContainer data-testid="opportunities-container">
-        <Filters
-          isFiltersOpen={isFiltersOpen}
-          setIsFiltersOpen={setIsFiltersOpen}
-          filtersContent={<FiltersContent setFilter={handleFilterUpdate} filter={cardsFilter} />}
-        />
-
         <CardsHeader
           header={t("dashboard.opportunities.opportunities")}
           resultCounter={numOfOpps}
@@ -109,14 +103,21 @@ export function Opportunities() {
           entityFilter={volunteerFilter ? { ...volunteerFilter, onRemove: handleRemoveVolunteerFilter } : undefined}
         />
 
-        <OpportunityListController
-          setNumOfOpps={setNumOfOpps}
-          sortOrder={sortOrder}
-          isFiltersOpen={isFiltersOpen}
-          filter={cardsFilter}
-          apiFilterOptions={apiFilterOptions}
-          volunteerId={volunteerId}
-        />
+        <ContentRow>
+          <OpportunityListController
+            setNumOfOpps={setNumOfOpps}
+            sortOrder={sortOrder}
+            isFiltersOpen={isFiltersOpen}
+            filter={cardsFilter}
+            apiFilterOptions={apiFilterOptions}
+            volunteerId={volunteerId}
+          />
+          <Filters
+            isFiltersOpen={isFiltersOpen}
+            setIsFiltersOpen={setIsFiltersOpen}
+            filtersContent={<FiltersContent setFilter={handleFilterUpdate} filter={cardsFilter} />}
+          />
+        </ContentRow>
       </OpportunitiesContainer>
     </DashboardLayout>
   );
