@@ -1,3 +1,4 @@
+import { CheckCircleIcon } from "@phosphor-icons/react";
 import { EmptyPlaceholder } from "@/components/core/common/EmptyPlaceholder";
 import { Tags } from "@/components/core/common/Tags";
 import styled from "styled-components";
@@ -39,6 +40,12 @@ const TagsWrapper = styled.div`
   gap: var(--spacing-8);
 `;
 
+const BadgeWithCheck = styled.div`
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+`;
+
 type Props = {
   mainCommunication: string;
   languagesToTranslate: string;
@@ -46,6 +53,7 @@ type Props = {
   districts: string;
   volunteerType: string;
   volunteerTypeStatus: StatusValue | undefined;
+  showBriefedCheck?: boolean;
   activities: string[];
   skills: string[];
   comments: string | undefined;
@@ -59,6 +67,7 @@ export function DisplayFields({
   districts,
   volunteerType,
   volunteerTypeStatus,
+  showBriefedCheck,
   activities,
   skills,
   comments,
@@ -90,7 +99,10 @@ export function DisplayFields({
         <FieldLabel>{t("dashboard.volunteerProfile.profileSection.volunteerType")}</FieldLabel>
         <FieldValue>
           {volunteerType && volunteerTypeStatus ? (
-            <ProfileStatusBadge status={volunteerTypeStatus} label={volunteerType} />
+            <BadgeWithCheck>
+              <ProfileStatusBadge status={volunteerTypeStatus} label={volunteerType} />
+              {showBriefedCheck && <CheckCircleIcon size={20} color="var(--color-green-700)" weight="fill" />}
+            </BadgeWithCheck>
           ) : (
             <EmptyPlaceholder />
           )}

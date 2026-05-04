@@ -1,5 +1,15 @@
 import { TFunction } from "i18next";
-import { VolunteerStateTypeType } from "need4deed-sdk";
+import { VolunteerStateCommunicationType, VolunteerStateTypeType } from "need4deed-sdk";
+
+const ACCOMPANYING_TYPES = [VolunteerStateTypeType.ACCOMPANYING, VolunteerStateTypeType.REGULAR_ACCOMPANYING];
+
+export const isBriefedAccompanying = (
+  statusType: VolunteerStateTypeType | undefined,
+  statusCommunication: VolunteerStateCommunicationType | undefined,
+): boolean =>
+  !!statusType &&
+  ACCOMPANYING_TYPES.includes(statusType) &&
+  statusCommunication === VolunteerStateCommunicationType.BRIEFED;
 
 export const createVolunteerTypeLabelMap = (t: TFunction): Record<VolunteerStateTypeType, string> => ({
   [VolunteerStateTypeType.ACCOMPANYING]: t(

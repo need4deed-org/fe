@@ -1,9 +1,16 @@
+import { CheckCircleIcon } from "@phosphor-icons/react";
 import { Heading4 } from "@/components/styled/text";
 import { defaultAvatarVolunteerProfile } from "@/config/constants";
 import { getImageUrl } from "@/utils";
-import { ApiVolunteerOpportunityGet, OpportunityVolunteerStatusType } from "need4deed-sdk";
+import {
+  ApiVolunteerOpportunityGet,
+  OpportunityVolunteerStatusType,
+  VolunteerStateCommunicationType,
+  VolunteerStateTypeType,
+} from "need4deed-sdk";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
+import { isBriefedAccompanying } from "../ProfileHeader/common";
 import StatusBadge from "../../common/StatusBadge";
 import { Accordion } from "../shared/Accordion";
 import { getDatePrefixKey } from "../shared/getDatePrefixKey";
@@ -31,6 +38,15 @@ export const AccordionVolunteer = ({
   const router = useRouter();
   const { volunteerId, name, avatarUrl, engagement, volunteeringType } = volunteer;
 
+  // TODO: remove cast once SDK adds statusCommunication to ApiVolunteerOpportunityGet
+  const { statusCommunication } = volunteer as ApiVolunteerOpportunityGet & {
+    statusCommunication?: VolunteerStateCommunicationType;
+  };
+  const showBriefedCheck = isBriefedAccompanying(
+    volunteeringType as unknown as VolunteerStateTypeType,
+    statusCommunication,
+  );
+
   const handleGoToProfile = () => {
     router.push(`/${i18n.language}/dashboard/volunteers/${volunteerId}`);
   };
@@ -45,6 +61,7 @@ export const AccordionVolunteer = ({
       </Heading4>
       <StatusBadge status={engagement} />
       <StatusBadge status={volunteeringType} />
+      {showBriefedCheck && <CheckCircleIcon size={20} color="var(--color-green-700)" weight="fill" />}
     </>
   );
 

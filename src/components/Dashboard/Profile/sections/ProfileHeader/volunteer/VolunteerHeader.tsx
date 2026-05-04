@@ -1,6 +1,7 @@
 "use client";
 import { defaultAvatarVolunteerProfile, EMPTY_PLACEHOLDER_VALUE } from "@/config/constants";
 import { formatDateTime, getImageUrl } from "@/utils";
+import { CheckCircleIcon } from "@phosphor-icons/react";
 import { ApiVolunteerGet, VolunteerStateEngagementType } from "need4deed-sdk";
 import Image from "next/image";
 import { useTranslation } from "react-i18next";
@@ -9,6 +10,7 @@ import {
   createVolunteerTypeLabelMap,
   EditButton,
   HeaderCard,
+  isBriefedAccompanying,
   ReturnDateText,
   StatusRowField,
 } from "../common";
@@ -27,6 +29,7 @@ export const VolunteerHeader = ({ volunteer }: Props) => {
   const engagementLabelMap = createEngagementLabelMap(t);
   const matchLabelMap = createMatchLabelMap(t);
   const volunteerTypeLabelMap = createVolunteerTypeLabelMap(t);
+  const showBriefedCheck = isBriefedAccompanying(volunteer.statusType, volunteer.statusCommunication);
 
   const fullName = `${volunteer.person.firstName} ${volunteer.person.lastName}`;
   const avatarUrl = getImageUrl(volunteer.person.avatarUrl || defaultAvatarVolunteerProfile);
@@ -73,6 +76,9 @@ export const VolunteerHeader = ({ volunteer }: Props) => {
         title={t("dashboard.volunteerProfile.volunteerHeader.volunteerType_title")}
         status={volunteer.statusType}
         label={volunteer.statusType ? volunteerTypeLabelMap[volunteer.statusType] : undefined}
+        extra={
+          showBriefedCheck ? <CheckCircleIcon size={20} color="var(--color-green-700)" weight="fill" /> : undefined
+        }
       />
     </HeaderCard>
   );
