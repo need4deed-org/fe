@@ -1,6 +1,7 @@
 import { ConfettiIcon, PersonSimpleWalkIcon, ShootingStarIcon, TranslateIcon } from "@phosphor-icons/react";
 import { format } from "date-fns";
 import { ApiVolunteerOpportunityGetList, OpportunityStatusType, ProfileVolunteeringType } from "need4deed-sdk";
+import { utcHhmmToLocal } from "@/utils";
 import { JSX } from "react";
 
 export function formatAvailability(availability: ApiVolunteerOpportunityGetList["availability"]): string {
@@ -18,18 +19,7 @@ export function formatAccompanyingDate(details?: {
 
   const date = new Date(details.appointmentDate);
   const formattedDate = isNaN(date.getTime()) ? details.appointmentDate : format(date, "dd.MM.yyyy");
-
-  let formattedTime: string | null = null;
-  if (details.appointmentTime) {
-    const [h, m] = details.appointmentTime.split(":").map(Number);
-    if (!isNaN(h) && !isNaN(m)) {
-      const d = new Date();
-      d.setUTCHours(h, m, 0, 0);
-      formattedTime = `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
-    } else {
-      formattedTime = details.appointmentTime;
-    }
-  }
+  const formattedTime = details.appointmentTime ? utcHhmmToLocal(details.appointmentTime) : null;
 
   return [formattedDate, formattedTime].filter(Boolean).join(" ");
 }
