@@ -30,7 +30,7 @@ export const AgentContactDetails = forwardRef<ContactDetailsRef, Props>(function
   ref,
 ) {
   const { t } = useTranslation();
-  const { mutate: updateAgent, isPending } = useUpdateAgentContact(String(agent?.representative?.id));
+  const { mutate: updateAgent, isPending } = useUpdateAgentContact(String(agent?.representative?.id), String(agent?.id));
   const [isEditing, setIsEditing] = useState(false);
 
   useEditingChangeNotifier(isEditing, onEditingChange);

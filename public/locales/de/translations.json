@@ -399,6 +399,12 @@
       }
     },
     "home": {
+      "content": {
+        "header": "Dashboard Startseite",
+        "newOpportunities": "Neueste Möglichkeiten",
+        "newVolunteers": "Neueste Freiwillige",
+        "loading": "Wird geladen..."
+      },
       "sidebar": {
         "home": "Startseite",
         "volunteers": "Freiwillige",
@@ -601,6 +607,7 @@
         "volunteerType": "Freiwilligen-Typ",
         "activities": "Aktivitäten",
         "skills": "Fähigkeiten & Erfahrungen",
+        "comments": "Kommentare",
         "cancel": "Abbrechen",
         "saveChanges": "Änderungen speichern",
         "saveSuccess": "Profil erfolgreich aktualisiert",
@@ -791,6 +798,8 @@
       "typeOfDocument": "Dokumenttyp",
       "status": "Status",
       "uploadedOn": "Hochgeladen am",
+      "received": "Erhalten",
+      "receivedOn": "Erhalten am",
       "actions": "Aktionen",
       "uploaded": "Hochgeladen",
       "missing": "Fehlend",
@@ -981,6 +990,7 @@
         "clientLanguages": "Sprachen der Klient:innen",
         "cancel": "Abbrechen",
         "saveChanges": "Änderungen speichern",
+        "saveSuccess": "Organisationsdetails erfolgreich aktualisiert",
         "validation": {
           "required": "Dieses Feld ist erforderlich",
           "websiteInvalid": "Webseite muss mit http:// oder https:// beginnen",
@@ -1013,6 +1023,20 @@
         "unmatched": "Nicht gematcht"
       },
       "statusUpdateSuccess": "Status der Möglichkeit erfolgreich aktualisiert",
+      "change_status": "Status ändern",
+      "statusModal": {
+        "title": "Opportunitätsstatus ändern",
+        "save": "Speichern",
+        "cancel": "Abbrechen",
+        "options": {
+          "new": "Neu / Validierung erforderlich",
+          "new_description": "Die Möglichkeit wurde noch nicht validiert.",
+          "searching": "Validiert",
+          "searching_description": "Die Möglichkeit wurde validiert, es kann nach ihr gesucht werden.",
+          "inactive": "Inaktiv",
+          "inactive_description": "Die Möglichkeit ist nicht mehr aktiv."
+        }
+      },
       "contactDetailsTitle": "Kontaktdaten",
       "editButtonName": "Bearbeiten",
       "contactDetails": {
@@ -1055,6 +1079,7 @@
       "accompanyingDetails": {
         "appointmentAddress": "Terminadresse",
         "appointmentPostcode": "Terminpostleitzahl",
+        "appointmentDistrict": "Terminbezirk",
         "appointmentDate": "Termindatum",
         "appointmentTime": "Terminzeit",
         "refugeeNumber": "Geflüchtetennummer",
@@ -1682,6 +1707,7 @@
     "farsi/dari": "Farsi/Dari",
     "farsi": "Farsi",
     "dari": "Dari",
+    "persian": "Farsi/Dari",
     "turkish": "Türkisch",
     "russian": "Russisch",
     "ukrainian": "Ukrainisch",

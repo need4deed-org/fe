@@ -40,6 +40,8 @@ export const getInitialFormValues = (
   appointmentAddress: details?.appointmentAddress || "",
   appointmentPostcode:
     (details as ApiOpportunityAccompanyingDetails & { appointmentPostcode?: string })?.appointmentPostcode || "",
+  appointmentDistrict:
+    (details as ApiOpportunityAccompanyingDetails & { appointmentDistrict?: string })?.appointmentDistrict || "",
   appointmentDate: parseDate(details?.appointmentDate),
   appointmentTime: parseTime(details?.appointmentTime),
   refugeeNumber: details?.refugeeNumber || "",

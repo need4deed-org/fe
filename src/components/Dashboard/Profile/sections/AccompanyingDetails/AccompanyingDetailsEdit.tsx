@@ -23,6 +23,9 @@ type Props = {
   appointmentLanguageOptions: string[];
   appointmentLanguageKeyToLabel: Record<string, string>;
   appointmentLanguageLabelToKey: Record<string, string>;
+  districtOptions: string[];
+  districtKeyToLabel: Record<string, string>;
+  districtLabelToKey: Record<string, string>;
   onCancel: () => void;
   onSubmit: () => void;
   isPending: boolean;
@@ -37,6 +40,9 @@ export const AccompanyingDetailsEdit = ({
   appointmentLanguageOptions,
   appointmentLanguageKeyToLabel,
   appointmentLanguageLabelToKey,
+  districtOptions,
+  districtKeyToLabel,
+  districtLabelToKey,
   onCancel,
   onSubmit,
   isPending,
@@ -77,6 +83,25 @@ export const AccompanyingDetailsEdit = ({
               value={field.value || ""}
               setValue={field.onChange}
               errorMessage={errors.appointmentPostcode?.message}
+            />
+          )}
+        />
+
+        <Controller
+          name="appointmentDistrict"
+          control={control}
+          render={({ field }: { field: ControllerRenderProps<AccompanyingDetailsFormData, "appointmentDistrict"> }) => (
+            <EditableField
+              mode="edit"
+              type="radio-list"
+              label={t("dashboard.opportunityProfile.accompanyingDetails.appointmentDistrict")}
+              value={districtKeyToLabel[field.value || ""] || field.value || ""}
+              setValue={(value) => {
+                const label = Array.isArray(value) ? value[0] : value;
+                field.onChange(districtLabelToKey[label] || label);
+              }}
+              options={districtOptions}
+              errorMessage={errors.appointmentDistrict?.message}
             />
           )}
         />

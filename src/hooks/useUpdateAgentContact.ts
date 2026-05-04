@@ -4,11 +4,11 @@ import { useMutationQuery } from "@/hooks";
 import { ApiRepresentativeGet } from "need4deed-sdk";
 import { DeepPartial } from "ts-type-safe";
 
-export const useUpdateAgentContact = (personId: string) => {
+export const useUpdateAgentContact = (personId: string, agentId: string) => {
   return useMutationQuery<DeepPartial<ApiRepresentativeGet>, ApiAgentProfileGet>({
     apiPath: `${apiPathPerson}${personId}`,
     method: "patch",
     successMessage: "dashboard.agentProfile.contactDetails.saveSuccess",
-    queryKeyToInvalidate: ["agent", personId],
+    queryKeyToInvalidate: ["agent", agentId],
   });
 };
