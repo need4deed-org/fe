@@ -2,7 +2,7 @@
 import { EMPTY_PLACEHOLDER_VALUE } from "@/config/constants";
 import { formatDateTime } from "@/utils";
 import { ShootingStarIcon } from "@phosphor-icons/react";
-import { ApiOpportunityGet } from "need4deed-sdk";
+import { ApiOpportunityGet, VolunteerStateMatchType } from "need4deed-sdk";
 import { useTranslation } from "react-i18next";
 import { createVolunteerTypeLabelMap, EditButton, HeaderCard, IconContainer, StatusRowField } from "../common";
 import { ChangeOpportunityStatusDialog } from "./ChangeOpportunityStatusDialog";
@@ -10,8 +10,10 @@ import { createMatchLabelMap } from "../volunteer/constants";
 import { createOpportunityStatusLabelMap } from "./constants";
 import { useOpportunityStatusDialog } from "./useOpportunityStatusDialog";
 
+type OpportunityWithMatch = ApiOpportunityGet & { statusMatch?: VolunteerStateMatchType };
+
 type Props = {
-  opportunity: ApiOpportunityGet;
+  opportunity: OpportunityWithMatch;
 };
 
 export const OpportunityHeader = ({ opportunity }: Props) => {
