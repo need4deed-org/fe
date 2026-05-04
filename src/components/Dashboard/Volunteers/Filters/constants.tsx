@@ -10,7 +10,7 @@ export const defaultVolunteerCardsFilter: CardsFilter = {
     new: false,
     active: false,
     available: false,
-    temporarilyUnavailable: false,
+    "temp-unavailable": false,
     inactive: false,
     unresponsive: false,
   },

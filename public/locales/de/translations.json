@@ -356,6 +356,7 @@
           "new": "Neu",
           "available": "Verfügbar",
           "temporarilyUnavailable": "Vorübergehend nicht verfügbar",
+          "temp-unavailable": "Vorübergehend nicht verfügbar",
           "unresponsive": "Reagiert nicht"
         },
         "preferredAv": {

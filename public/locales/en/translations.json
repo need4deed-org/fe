@@ -356,6 +356,7 @@
           "new": "New",
           "available": "Available",
           "temporarilyUnavailable": "Temporarily Unavailable",
+          "temp-unavailable": "Temporarily Unavailable",
           "unresponsive": "Unresponsive"
         },
         "preferredAv": {
