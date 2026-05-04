@@ -141,14 +141,17 @@ export default function BecomeVolunteer() {
           name="email"
           FieldTag={formVolunteer.Field}
           label={t("form.becomeVolunteer.fields.email.label")}
-          onChangeValidator={({ value }) => {
-            if (!value) {
-              return t("form.error.required");
-            }
-            if (!validateEmail(value as string)) {
-              return t("form.error.email");
-            }
-            return undefined;
+          validators={{
+            onChange: ({ value }) => {
+              if (!value) return t("form.error.required");
+              if (!validateEmail(value as string)) return t("form.error.email");
+              return undefined;
+            },
+            onSubmit: ({ value }) => {
+              if (!value) return t("form.error.required");
+              if (!validateEmail(value as string)) return t("form.error.email");
+              return undefined;
+            },
           }}
         />
         <SimpleInputField<VolunteerData>
