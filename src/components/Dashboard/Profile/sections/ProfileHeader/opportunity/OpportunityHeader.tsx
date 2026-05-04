@@ -38,7 +38,7 @@ export const OpportunityHeader = ({ opportunity }: Props) => {
   const volunteerTypeLabelMap = createVolunteerTypeLabelMap(t);
   const matchLabelMap = createOpportunityMatchLabelMap(t);
 
-  const { statusMatch } = opportunity;
+  const { statusMatch } = opportunity as ApiOpportunityGet & { statusMatch?: string };
 
   const postedDate = opportunity.createdAt ? formatDateTime(opportunity.createdAt) : EMPTY_PLACEHOLDER_VALUE;
   const subtitle = `${t("dashboard.opportunityProfile.postedOn")} ${postedDate}`;

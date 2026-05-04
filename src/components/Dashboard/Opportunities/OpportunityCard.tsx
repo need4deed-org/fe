@@ -42,6 +42,7 @@ export function OpportunityCard({ opportunity, volunteerId, activitiesList }: Pr
     statusMatch,
   } = opportunity as ApiVolunteerOpportunityGetList & {
     accompanyingDetails?: { appointmentDate?: string; appointmentTime?: string };
+    statusMatch?: string;
   };
 
   const mainCommunication = getLanguagesByPurpose(languages, LangPurpose.GENERAL);
