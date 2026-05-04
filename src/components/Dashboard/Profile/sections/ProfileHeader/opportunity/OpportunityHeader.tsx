@@ -2,15 +2,18 @@
 import { EMPTY_PLACEHOLDER_VALUE } from "@/config/constants";
 import { formatDateTime } from "@/utils";
 import { ShootingStarIcon } from "@phosphor-icons/react";
-import { ApiOpportunityGet } from "need4deed-sdk";
+import { ApiOpportunityGet, VolunteerStateMatchType } from "need4deed-sdk";
 import { useTranslation } from "react-i18next";
 import { createVolunteerTypeLabelMap, EditButton, HeaderCard, IconContainer, StatusRowField } from "../common";
 import { ChangeOpportunityStatusDialog } from "./ChangeOpportunityStatusDialog";
+import { createMatchLabelMap } from "../volunteer/constants";
 import { createOpportunityStatusLabelMap } from "./constants";
 import { useOpportunityStatusDialog } from "./useOpportunityStatusDialog";
 
+type OpportunityWithMatch = ApiOpportunityGet & { statusMatch?: VolunteerStateMatchType };
+
 type Props = {
-  opportunity: ApiOpportunityGet;
+  opportunity: OpportunityWithMatch;
 };
 
 export const OpportunityHeader = ({ opportunity }: Props) => {
@@ -18,6 +21,7 @@ export const OpportunityHeader = ({ opportunity }: Props) => {
   const dialog = useOpportunityStatusDialog(opportunity);
   const statusLabelMap = createOpportunityStatusLabelMap(t);
   const volunteerTypeLabelMap = createVolunteerTypeLabelMap(t);
+  const matchLabelMap = createMatchLabelMap(t);
 
   const postedDate = opportunity.createdAt ? formatDateTime(opportunity.createdAt) : EMPTY_PLACEHOLDER_VALUE;
   const subtitle = `${t("dashboard.opportunityProfile.postedOn")} ${postedDate}`;
@@ -45,6 +49,12 @@ export const OpportunityHeader = ({ opportunity }: Props) => {
         title={t("dashboard.volunteerProfile.volunteerHeader.volunteerType_title")}
         status={opportunity.volunteerType}
         label={opportunity.volunteerType ? volunteerTypeLabelMap[opportunity.volunteerType] : undefined}
+      />
+
+      <StatusRowField
+        title={t("dashboard.volunteerProfile.volunteerHeader.matchStatus_title")}
+        status={opportunity.statusMatch}
+        label={opportunity.statusMatch ? matchLabelMap[opportunity.statusMatch] : undefined}
       />
     </HeaderCard>
   );
