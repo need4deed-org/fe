@@ -56,7 +56,7 @@ export const statusIconMap: Record<OpportunityStatusType, JSX.Element> = {
 // TODO: replace string with OpportunityMatchStatusType once SDK PR #89 is merged
 export const matchStatusColorMap: Record<string, string> = {
   "vol-no-matches": "var(--color-grey-700)",
-  "vol-pending-match": "var(--color-orange-500, var(--color-red-500))",
+  "vol-pending-match": "var(--color-orange-500)",
   "vol-matched": "var(--color-green-700)",
   "vol-past": "var(--color-grey-700)",
 };
