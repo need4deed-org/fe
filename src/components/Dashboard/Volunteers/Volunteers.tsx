@@ -84,12 +84,6 @@ export function Volunteers() {
   return (
     <DashboardLayout>
       <VolunteersContainer>
-        <Filters
-          isFiltersOpen={isFiltersOpen}
-          setIsFiltersOpen={setIsFiltersOpen}
-          filtersContent={<FiltersContent setFilter={handleFilterUpdate} filter={cardsFilter} />}
-        />
-
         <CardsHeader
           header={t("dashboard.volunteers.volunteers")}
           resultCounter={numOfVols}
@@ -108,14 +102,21 @@ export function Volunteers() {
             opportunityFilter ? { ...opportunityFilter, onRemove: handleRemoveOpportunityFilter } : undefined
           }
         />
-        <VolunteerListController
-          setNumOfVols={setNumOfVols}
-          sortOrder={sortOrder}
-          isFiltersOpen={isFiltersOpen}
-          filter={cardsFilter}
-          apiFilterOptions={apiFilterOptions}
-          opportunityId={opportunityId}
-        />
+        <ContentRow>
+          <VolunteerListController
+            setNumOfVols={setNumOfVols}
+            sortOrder={sortOrder}
+            isFiltersOpen={isFiltersOpen}
+            filter={cardsFilter}
+            apiFilterOptions={apiFilterOptions}
+            opportunityId={opportunityId}
+          />
+          <Filters
+            isFiltersOpen={isFiltersOpen}
+            setIsFiltersOpen={setIsFiltersOpen}
+            filtersContent={<FiltersContent setFilter={handleFilterUpdate} filter={cardsFilter} />}
+          />
+        </ContentRow>
       </VolunteersContainer>
     </DashboardLayout>
   );
@@ -126,8 +127,14 @@ export default Volunteers;
 /** Styles */
 
 const VolunteersContainer = styled.div`
-  position: relative;
   display: flex;
   flex-direction: column;
+  gap: var(--dashboard-volunteers-container-gap);
+`;
+
+const ContentRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
   gap: var(--dashboard-volunteers-container-gap);
 `;

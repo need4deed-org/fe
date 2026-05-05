@@ -4,18 +4,23 @@ import { DatePickerWithLabel } from "@/components/core/common/DatePicker";
 import { EditableField } from "@/components/EditableField/EditableField";
 import { AvailabilityGrid } from "@/components/forms/AvailabilityGrid/AvailabilityGrid";
 import { LanguageFields } from "@/components/forms/LanguageFields";
-import { apiToFormAvailability } from "@/components/Dashboard/Profile/sections/VolunteerProfile/availabilityUtils";
 import {
+  apiToFormAvailability,
+  formToApiAvailability,
+} from "@/components/Dashboard/Profile/sections/VolunteerProfile/availabilityUtils";
+import {
+  ApiLanguageOption,
   useApiActivities,
   useApiLanguages,
   useApiSkills,
 } from "@/components/Dashboard/Profile/sections/VolunteerProfile/hooks";
 import { createMapping } from "@/components/Dashboard/Profile/sections/VolunteerProfile/mappingUtils";
-import { useUpdateOpportunityTitle } from "@/hooks/useUpdateOpportunityTitle";
+import { useUpdateOpportunityDetails } from "@/hooks/useUpdateOpportunityDetails";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { MAX_DESCRIPTION_LENGTH } from "@/config/constants";
 import { de, enUS } from "date-fns/locale";
-import { ApiOpportunityGet, Lang, LangPurpose, VolunteerStateTypeType } from "need4deed-sdk";
+import { TFunction } from "i18next";
+import { ApiOpportunityGet, Lang, LangPurpose, OptionItem, VolunteerStateTypeType } from "need4deed-sdk";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { FormButtonRow, FormDetails } from "../shared/styles";
@@ -23,6 +28,29 @@ import { languagesToFormValues } from "./formatters";
 import { createOpportunityDetailsSchema, OpportunityDetailsFormData } from "./opportunityDetailsSchema";
 import { DateFieldRow, DatePickerContainer, ErrorText, FieldGroup, TimeInput, TimeInputWrapper } from "./styles";
 import { OpportunityWithDetails } from "./types";
+
+function toLangOptionItems(formLangs: { language: string }[], apiLanguages: ApiLanguageOption[], t: TFunction): OptionItem[] {
+  return formLangs.flatMap(({ language }) => {
+    if (!language) return [];
+    const found = apiLanguages.find((a) => {
+      if (a.title === language || a.title.toLowerCase() === language.toLowerCase()) return true;
+      // languagesToFormValues stores translated names; reverse the lookup to match them
+      const key = `languageNames.${a.title.toLowerCase()}`;
+      const translated = t(key);
+      return translated !== key && translated === language;
+    });
+    return found ? [{ id: found.id, title: found.title }] : [];
+  });
+}
+
+function toOptionItems(ids: string[], apiItems: ApiLanguageOption[]): OptionItem[] {
+  const map = new Map(apiItems.map((i) => [i.id, i.title]));
+  return ids.flatMap((id) => {
+    const numId = Number(id);
+    const title = map.get(numId);
+    return title ? [{ id: numId, title }] : [];
+  });
+}
 
 type Props = {
   opportunity: ApiOpportunityGet;
@@ -37,8 +65,8 @@ export function OpportunityDetailsEdit({ opportunity, onCancel }: Props) {
   const prefix = "dashboard.opportunityProfile.opportunityDetails";
 
   const isEventType = opp.volunteerType === VolunteerStateTypeType.EVENTS;
-  const { mutate: updateTitle } = useUpdateOpportunityTitle(opp.id);
 
+  const { mutate: updateOpportunityDetails } = useUpdateOpportunityDetails(opp.id);
   const { data: apiLanguages = [] } = useApiLanguages();
   const { data: apiActivities = [] } = useApiActivities();
   const { data: apiSkills = [] } = useApiSkills();
@@ -63,7 +91,6 @@ export function OpportunityDetailsEdit({ opportunity, onCancel }: Props) {
     resolver: zodResolver(schema),
     mode: "onChange",
     defaultValues: {
-      title: opp.title ?? "",
       description: opp.description ?? "",
       numberOfVolunteers: String(opp.numberOfVolunteers ?? ""),
       mainCommunication: languagesToFormValues(generalLangs, t),
@@ -81,31 +108,24 @@ export function OpportunityDetailsEdit({ opportunity, onCancel }: Props) {
     onCancel();
   };
 
-  const onSubmit = (data: OpportunityDetailsFormData) => {
-    if (data.title !== opp.title) {
-      updateTitle({ title: data.title });
-    }
-    onCancel();
+  const onSubmit = (values: OpportunityDetailsFormData) => {
+    updateOpportunityDetails(
+      {
+        description: values.description,
+        numberVolunteers: Number(values.numberOfVolunteers),
+        languagesMain: toLangOptionItems(values.mainCommunication, apiLanguages, t),
+        languagesResidents: toLangOptionItems(values.residentsSpeak, apiLanguages, t),
+        activities: toOptionItems(values.activities, apiActivities),
+        skills: toOptionItems(values.skills, apiSkills),
+        schedule: values.availability ? formToApiAvailability(values.availability) : undefined,
+      },
+      { onSuccess: onCancel },
+    );
   };
 
   return (
     <>
       <FormDetails>
-        <Controller
-          name="title"
-          control={control}
-          render={({ field }) => (
-            <EditableField
-              mode="edit"
-              type="text"
-              label={t(`${prefix}.opportunityName`)}
-              value={field.value}
-              setValue={field.onChange}
-              errorMessage={errors.title?.message}
-            />
-          )}
-        />
-
         <Controller
           name="description"
           control={control}

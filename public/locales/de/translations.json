@@ -746,6 +746,7 @@
           "opp-new": "Neu",
           "opp-searching": "Suche läuft",
           "opp-active": "Aktiv",
+          "opp-inactive": "Inaktiv",
           "opp-past": "Vergangen"
         },
         "schedule": {
@@ -990,6 +991,7 @@
         "clientLanguages": "Sprachen der Klient:innen",
         "cancel": "Abbrechen",
         "saveChanges": "Änderungen speichern",
+        "saveSuccess": "Organisationsdetails erfolgreich aktualisiert",
         "validation": {
           "required": "Dieses Feld ist erforderlich",
           "websiteInvalid": "Webseite muss mit http:// oder https:// beginnen",
