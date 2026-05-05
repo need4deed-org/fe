@@ -141,8 +141,18 @@ export function getOptionTitles(items: OptionById[] | undefined): string[] {
   return items.map((item) => (typeof item.title === "string" ? item.title : "")).filter(Boolean);
 }
 
+function cleanActivityTitle(title: string): string {
+  return title
+    .replace(/^Begleitung:\s*/i, "")
+    .replace(/\*\s*$/, "")
+    .trim();
+}
+
 export function getActivityTitles(activities: OptionById[], activityList: OptionItem[] | undefined): string[] {
   if (!activities?.length || !activityList?.length) return [];
   const activityMap = new Map(activityList.map((item) => [String(item.id), item.title]));
-  return activities.map((act) => activityMap.get(String(act.id))).filter((title): title is string => Boolean(title));
+  return activities
+    .map((act) => activityMap.get(String(act.id)))
+    .filter((title): title is string => Boolean(title))
+    .map(cleanActivityTitle);
 }
