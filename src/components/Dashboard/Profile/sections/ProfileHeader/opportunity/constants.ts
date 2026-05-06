@@ -1,6 +1,8 @@
 import { TFunction } from "i18next";
 import { OpportunityMatchStatusType, OpportunityStatusType } from "need4deed-sdk";
 
+export type { OpportunityMatchStatusType };
+
 export enum OpportunityManualStatusType {
   NEW = "opp-new",
   SEARCHING = "opp-searching",
