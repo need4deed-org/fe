@@ -948,6 +948,7 @@
         "email": "E-mail",
         "mobile": "Mobile",
         "landline": "Landline",
+        "address": "Address",
         "saveSuccess": "Contact details updated successfully",
         "roles": {
           "label": "Role",
