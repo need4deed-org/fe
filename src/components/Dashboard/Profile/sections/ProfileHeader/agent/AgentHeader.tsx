@@ -2,6 +2,7 @@
 import { EMPTY_PLACEHOLDER_VALUE } from "@/config/constants";
 import { formatDateTime } from "@/utils";
 import { HouseIcon } from "@phosphor-icons/react";
+import { Lang } from "need4deed-sdk";
 import { useTranslation } from "react-i18next";
 import { useUpdateAgentStatus } from "@/hooks";
 import { AgentTrustLevel, ApiAgentProfileGet } from "../../../types/agent";
@@ -21,7 +22,7 @@ type Props = {
 };
 
 export const AgentHeader = ({ agent }: Props) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const dialog = useAgentEngagementStatusDialog(agent);
   const { mutate: patchAgent } = useUpdateAgentStatus(agent.id);
 
@@ -70,6 +71,18 @@ export const AgentHeader = ({ agent }: Props) => {
             labels={trustLevelLabels}
             onChange={handleTrustLevelChange}
           />
+        }
+      />
+
+      <StatusRowField
+        title={t("dashboard.agentProfile.district")}
+        showIcon={false}
+        extra={
+          agent.district?.title ? (
+            <span>
+              {agent.district.title[i18n.language as Lang] ?? agent.district.title.en ?? EMPTY_PLACEHOLDER_VALUE}
+            </span>
+          ) : undefined
         }
       />
     </HeaderCard>
