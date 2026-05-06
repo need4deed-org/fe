@@ -526,7 +526,8 @@
           "noMatches": "Keine Zuweisungen",
           "pendingMatch": "Zuweisung ausstehend",
           "matched": "Zugewiesen",
-          "needsRematch": "Neu-Zuweisung erforderlich"
+          "needsRematch": "Neu-Zuweisung erforderlich",
+          "past": "Abgeschlossen"
         },
         "communication_title": "Kommunikation",
         "communication_options": {
@@ -1021,7 +1022,10 @@
       "matchStatus": {
         "matched": "Gematcht",
         "needRematch": "Neues Matching erforderlich",
-        "unmatched": "Nicht gematcht"
+        "unmatched": "Nicht gematcht",
+        "noMatches": "Keine Zuweisungen",
+        "pendingMatch": "Zuweisung ausstehend",
+        "past": "Abgeschlossen"
       },
       "statusUpdateSuccess": "Status der Möglichkeit erfolgreich aktualisiert",
       "change_status": "Status ändern",
