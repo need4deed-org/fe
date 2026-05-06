@@ -19,6 +19,7 @@ import {
 import {
   AgentEngagementStatusType,
   OpportunityMatchStatus,
+  OpportunityMatchStatusType,
   OpportunityStatusType,
   VolunteerStateEngagementType,
   VolunteerStateMatchType,
@@ -34,6 +35,7 @@ export type StatusValue =
   | VolunteerStateMatchType
   | OpportunityStatusType
   | OpportunityMatchStatus
+  | OpportunityMatchStatusType
   | AgentEngagementStatus
   | AgentVolunteerSearch
   | AgentTrustLevel
@@ -73,6 +75,12 @@ export const statusColorMap: Record<StatusValue, string> = {
     [VolunteerStateMatchType.MATCHED, "var(--color-green-100)"],
     [VolunteerStateMatchType.NEEDS_REMATCH, "var(--color-red-50)"],
     [VolunteerStateMatchType.PAST, "var(--color-grey-50)"],
+    [OpportunityMatchStatusType.NO_MATCHES, "var(--color-grey-50)"],
+    [OpportunityMatchStatusType.PENDING_MATCH, "var(--color-violet-100)"],
+    [OpportunityMatchStatusType.MATCHED, "var(--color-green-100)"],
+    [OpportunityMatchStatusType.NEEDS_REMATCH, "var(--color-red-50)"],
+    [OpportunityMatchStatusType.UNMATCHED, "var(--color-grey-50)"],
+    [OpportunityMatchStatusType.PAST, "var(--color-grey-50)"],
     [VolunteerStateTypeType.ACCOMPANYING, "var(--color-blue-500)"],
     [VolunteerStateTypeType.EVENTS, "var(--color-blue-500)"],
     [VolunteerStateTypeType.REGULAR, "var(--color-blue-500)"],
@@ -119,6 +127,12 @@ export const statusIconMap: Record<StatusValue, IconComponent> = {
     [VolunteerStateMatchType.MATCHED, CheckCircleIcon],
     [VolunteerStateMatchType.NEEDS_REMATCH, ArrowsClockwiseIcon],
     [VolunteerStateMatchType.PAST, StopCircleIcon],
+    [OpportunityMatchStatusType.NO_MATCHES, ProhibitInsetIcon],
+    [OpportunityMatchStatusType.PENDING_MATCH, HourglassIcon],
+    [OpportunityMatchStatusType.MATCHED, CheckCircleIcon],
+    [OpportunityMatchStatusType.NEEDS_REMATCH, ArrowsClockwiseIcon],
+    [OpportunityMatchStatusType.UNMATCHED, ProhibitInsetIcon],
+    [OpportunityMatchStatusType.PAST, StopCircleIcon],
     [VolunteerStateTypeType.ACCOMPANYING, UsersIcon],
     [VolunteerStateTypeType.EVENTS, UsersIcon],
     [VolunteerStateTypeType.REGULAR, UsersIcon],
