@@ -1,15 +1,7 @@
 import { TFunction } from "i18next";
-import { OpportunityStatusType } from "need4deed-sdk";
+import { OpportunityMatchStatusType, OpportunityStatusType } from "need4deed-sdk";
 
-// Local extended enum — SDK OpportunityMatchStatus does not yet include NO_MATCHES or PAST
-export enum OpportunityMatchStatusType {
-  NO_MATCHES = "opp-no-matches",
-  PENDING_MATCH = "opp-pending-match",
-  MATCHED = "opp-matched",
-  NEEDS_REMATCH = "opp-needs-rematch",
-  UNMATCHED = "opp-unmatched",
-  PAST = "opp-past",
-}
+export type { OpportunityMatchStatusType };
 
 export enum OpportunityManualStatusType {
   NEW = "opp-new",

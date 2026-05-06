@@ -6,18 +6,11 @@ import { ApiOpportunityGet } from "need4deed-sdk";
 import { useTranslation } from "react-i18next";
 import { createVolunteerTypeLabelMap, EditButton, HeaderCard, IconContainer, StatusRowField } from "../common";
 import { ChangeOpportunityStatusDialog } from "./ChangeOpportunityStatusDialog";
-import {
-  createOpportunityMatchLabelMap,
-  createOpportunityStatusLabelMap,
-  OpportunityMatchStatusType,
-} from "./constants";
+import { createOpportunityMatchLabelMap, createOpportunityStatusLabelMap } from "./constants";
 import { useOpportunityStatusDialog } from "./useOpportunityStatusDialog";
 
-// statusMatch is not yet in the SDK type — extend locally until the SDK adds it
-type OpportunityWithMatchStatus = ApiOpportunityGet & { statusMatch?: OpportunityMatchStatusType };
-
 type Props = {
-  opportunity: OpportunityWithMatchStatus;
+  opportunity: ApiOpportunityGet;
 };
 
 export const OpportunityHeader = ({ opportunity }: Props) => {
