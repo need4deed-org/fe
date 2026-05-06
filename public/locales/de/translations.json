@@ -421,7 +421,9 @@
     "sortBy": {
       "sortBy": "Sortieren nach",
       "newToOld": "Neueste zuerst",
-      "oldToNew": "Älteste zuerst"
+      "oldToNew": "Älteste zuerst",
+      "appointmentProximal": "Event: Nächste zuerst",
+      "appointmentDistant": "Event: Späteste zuerst"
     },
     "heroSection": {
       "heroText": "Bedarfsorientierte freiwillige Unterstützung für Geflüchtete in Berlin",
@@ -526,7 +528,8 @@
           "noMatches": "Keine Zuweisungen",
           "pendingMatch": "Zuweisung ausstehend",
           "matched": "Zugewiesen",
-          "needsRematch": "Neu-Zuweisung erforderlich"
+          "needsRematch": "Neu-Zuweisung erforderlich",
+          "past": "Vergangen"
         },
         "communication_title": "Kommunikation",
         "communication_options": {

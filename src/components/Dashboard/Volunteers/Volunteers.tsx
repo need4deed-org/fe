@@ -42,8 +42,8 @@ export function Volunteers() {
     handleFilterUpdate((prev) => ({ ...prev, [QueryParamsKeys.SEARCH]: searchInput }));
   };
 
-  const handleSortChange = (sortOrder: SortOrder) => {
-    setSortOrder(sortOrder);
+  const handleSortChange = (sortOrder: string) => {
+    setSortOrder(sortOrder as SortOrder);
   };
 
   const handleFilterUpdate = (newFilter: CardsFilter | ((prev: CardsFilter) => CardsFilter)) => {
