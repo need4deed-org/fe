@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 
 import { apiPathVolunteer, cacheTTL } from "@/config/constants";
 import { useGetQuery } from "@/hooks";
 import { ApiOptionLists, ApiVolunteerGetList, SortOrder } from "need4deed-sdk";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { CardsFilter } from "./Filters/types";
 import { serializeFilters } from "./helpers";
 import { VolunteerCardList } from "./VolunteerCardList"; // We will modify this component
@@ -28,7 +29,21 @@ export function VolunteerListController({
   apiFilterOptions,
   opportunityId,
 }: VolunteerListControllerProps) {
-  const [currentPage, setCurrentPage] = useState(1);
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const currentPage = Number(searchParams.get("page")) || 1;
+
+  const setCurrentPage = useCallback(
+    (page: number) => {
+      const params = new URLSearchParams(searchParams);
+      params.set("page", String(page));
+      router.replace(pathname + "?" + params.toString());
+    },
+    [router, pathname, searchParams],
+  );
+
   const serializedFilter = serializeFilters(filter, undefined, false, {
     serializeToIDs: true,
     apiFilterOptions,

@@ -1,8 +1,9 @@
 import { ApiAgentGetList, ApiOptionLists, SortOrder } from "need4deed-sdk";
 import { AgentCardList } from "./AgentCardList";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import { useGetQuery } from "@/hooks";
 import { apiPathAgent, cacheTTL } from "@/config/constants";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { serializeAgentFilters } from "./helpers";
 import { AgentCardsFilter } from "./Filters/types";
 
@@ -20,7 +21,20 @@ type Props = {
 };
 
 export const AgentListController = ({ setNumOfAgents, sortOrder, isFiltersOpen, filter, apiFilterOptions }: Props) => {
-  const [currentPage, setCurrentPage] = useState(1);
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const currentPage = Number(searchParams.get("page")) || 1;
+
+  const setCurrentPage = useCallback(
+    (page: number) => {
+      const params = new URLSearchParams(searchParams);
+      params.set("page", String(page));
+      router.replace(pathname + "?" + params.toString());
+    },
+    [router, pathname, searchParams],
+  );
 
   const serializedFilter = new URLSearchParams(
     serializeAgentFilters(filter, undefined, false, {
