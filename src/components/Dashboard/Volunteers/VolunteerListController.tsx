@@ -6,10 +6,12 @@ import { ApiOptionLists, ApiVolunteerGetList, SortOrder } from "need4deed-sdk";
 import { CardsFilter } from "./Filters/types";
 import { serializeFilters } from "./helpers";
 import { VolunteerCardList } from "./VolunteerCardList"; // We will modify this component
+import { VolunteerTableList } from "./VolunteerTableList";
 
 const columns = 3;
 const rows = 3;
 const limit = columns * rows;
+const LIST_TAB_INDEX = 0;
 
 interface VolunteerListControllerProps {
   setNumOfVols: (numOfVols: number) => void;
@@ -18,6 +20,7 @@ interface VolunteerListControllerProps {
   filter: CardsFilter;
   apiFilterOptions?: ApiOptionLists;
   opportunityId?: string;
+  selectedTabIndex: number;
 }
 
 export function VolunteerListController({
@@ -27,6 +30,7 @@ export function VolunteerListController({
   filter,
   apiFilterOptions,
   opportunityId,
+  selectedTabIndex,
 }: VolunteerListControllerProps) {
   const { currentPage, setCurrentPage } = usePageParam();
   const serializedFilter = serializeFilters(filter, undefined, false, {
@@ -51,9 +55,24 @@ export function VolunteerListController({
   });
   const volunteers = data || [];
 
+  const isListView = selectedTabIndex === LIST_TAB_INDEX;
+
   useEffect(() => {
     setNumOfVols(count);
   }, [count, setNumOfVols]);
+
+  if (isListView) {
+    return (
+      <VolunteerTableList
+        volunteers={volunteers}
+        count={count}
+        itemsPerPage={limit}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        opportunityId={opportunityId}
+      />
+    );
+  }
 
   return (
     <VolunteerCardList

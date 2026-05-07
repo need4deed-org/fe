@@ -342,9 +342,18 @@
     },
     "volunteers": {
       "header": "Volunteer Directory",
+      "table": {
+        "name": "Name",
+        "type": "Type",
+        "engagementStatus": "Engagement Status",
+        "matchingStatus": "Matching Status",
+        "language": "Language",
+        "district": "District",
+        "email": "Email"
+      },
       "tabs": {
-        "tab1": "TABLE VIEW",
-        "tab2": "MAP VIEW"
+        "tab1": "List",
+        "tab2": "Cards"
       },
       "filters": {
         "accompanying": "Accompanying",

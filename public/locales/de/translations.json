@@ -342,9 +342,18 @@
     },
     "volunteers": {
       "header": "Freiwilligenverzeichnis",
+      "table": {
+        "name": "Name",
+        "type": "Typ",
+        "engagementStatus": "Engagementstatus",
+        "matchingStatus": "Matching-Status",
+        "language": "Sprache",
+        "district": "Bezirk",
+        "email": "E-Mail"
+      },
       "tabs": {
-        "tab1": "TABELLE",
-        "tab2": "KARTE"
+        "tab1": "Liste",
+        "tab2": "Karten"
       },
       "filters": {
         "accompanying": "Begleitung",
