@@ -196,6 +196,10 @@ html {
   --comments-menu-item-font-weight: var(--font-weight-regular);
   --comments-menu-item-danger-font-weight: var(--font-weight-semi-bold);
 
+  /* user tags */
+  --tag-shadow: 0 0 0 2px var(--color-violet-100);
+  --tag-text-stroke: 0.5px var(--color-midnight);
+
   /* icon */
   --icon-color: var(--color-papaya);
   --icon-size-24: 24px;

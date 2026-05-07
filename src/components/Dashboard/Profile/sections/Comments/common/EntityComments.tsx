@@ -11,7 +11,8 @@ import { DeleteCommentDialog } from "./DeleteCommentDialog";
 import { useCommentDelete } from "./hooks/useCommentDelete";
 import { useCommentEdit } from "./hooks/useCommentEdit";
 import { useCommentMenu } from "./hooks/useCommentMenu";
-import { AddCommentButton, Container, NewCommentSection, TextArea } from "./styles";
+import { AddCommentButton, Container, NewCommentSection, TagOverlay, TextArea } from "./styles";
+import { useCommentTag } from "./hooks/useCommentTag";
 
 type Props = {
   entityId: Id;
@@ -28,6 +29,7 @@ export function EntityComments({ entityId, entityType, comments, testId }: Props
   const edit = useCommentEdit();
   const deleteState = useCommentDelete();
   const menu = useCommentMenu();
+  const { renderHighlightedText } = useCommentTag();
 
   const { mutate: updateComment, isPending: isUpdating } = useUpdateComment(
     entityId,
@@ -124,6 +126,7 @@ export function EntityComments({ entityId, entityType, comments, testId }: Props
       ))}
 
       <NewCommentSection>
+        <TagOverlay>{renderHighlightedText(newCommentText)}</TagOverlay>
         <TextArea
           placeholder={t("dashboard.commentsSection.placeholder")}
           value={newCommentText}

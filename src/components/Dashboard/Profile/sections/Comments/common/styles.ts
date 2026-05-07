@@ -64,6 +64,18 @@ export const CommentText = styled.div`
   color: var(--color-midnight);
   align-self: stretch;
   white-space: pre-wrap;
+
+  .tag {
+    color: var(--color-midnight);
+    font-weight: bold;
+    background: var(--color-violet-100);
+    text-decoration: none;
+    box-shadow: var(--tag-shadow);
+    border-radius: var(--border-radius-xs);
+    &:hover {
+      opacity: 0.8;
+    }
+  }
 `;
 
 export const MenuAction = styled.button`
@@ -84,6 +96,7 @@ export const MenuAction = styled.button`
 `;
 
 export const NewCommentSection = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -94,7 +107,7 @@ export const NewCommentSection = styled.div`
 `;
 
 export const TextArea = styled.textarea`
-  box-sizing: border-box;
+  position: relative;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -102,7 +115,9 @@ export const TextArea = styled.textarea`
   gap: var(--spacing-8);
   width: 100%;
   min-height: 112px;
-  background: var(--color-white);
+  background: transparent;
+  color: transparent;
+  caret-color: var(--color-midnight);
   border: var(--border-width-thin) solid var(--color-grey-200);
   border-radius: var(--border-radius-small);
   font-style: normal;
@@ -110,9 +125,9 @@ export const TextArea = styled.textarea`
   font-size: var(--text-p-font-size);
   line-height: var(--text-p-line-height);
   letter-spacing: var(--letter-spacing-tight);
-  color: var(--color-midnight);
   resize: vertical;
   align-self: stretch;
+  z-index: 2;
 
   &::placeholder {
     color: var(--color-grey-500);
@@ -223,5 +238,35 @@ export const EditSaveButton = styled.button`
 
   &:hover:not(:disabled) {
     background: var(--color-aubergine-light);
+  }
+`;
+
+export const TagOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: var(--spacing-16);
+  font-size: var(--text-p-font-size);
+  line-height: var(--text-p-line-height);
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  color: var(--color-midnight);
+  z-index: 1;
+  pointer-events: none;
+  user-selects: none;
+  font-style: normal;
+  font-weight: var(--font-weight-regular);
+  letter-spacing: var(--letter-spacing-tight);
+
+  .tag {
+    color: var(--color-midnight);
+    background: var(--color-violet-100);
+    text-decoration: none;
+    padding: 0;
+    margin: 0;
+    border: none;
+    -webkit-text-stroke: var(--tag-text-stroke);
+    box-shadow: var(--tag-shadow);
+    border-radius: var(--border-radius-xs);
   }
 `;
