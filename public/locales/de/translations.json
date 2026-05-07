@@ -351,12 +351,12 @@
         "activities": "Aktivitäten",
         "engagement": {
           "header": "Engagement",
-          "active": "Aktiv",
-          "inactive": "Inaktiv",
-          "new": "Neu",
-          "available": "Verfügbar",
-          "temporarilyUnavailable": "Vorübergehend nicht verfügbar",
-          "unresponsive": "Reagiert nicht"
+          "vol-active": "Aktiv",
+          "vol-inactive": "Inaktiv",
+          "vol-new": "Neu",
+          "vol-available": "Verfügbar",
+          "vol-temp-unavailable": "Vorübergehend nicht verfügbar",
+          "vol-unresponsive": "Reagiert nicht"
         },
         "preferredAv": {
           "header": "Bevorzugte Verfügbarkeit",

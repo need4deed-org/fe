@@ -351,12 +351,12 @@
         "activities": "Activities",
         "engagement": {
           "header": "Engagement",
-          "active": "Active",
-          "inactive": "Inactive",
-          "new": "New",
-          "available": "Available",
-          "temporarilyUnavailable": "Temporarily Unavailable",
-          "unresponsive": "Unresponsive"
+          "vol-active": "Active",
+          "vol-inactive": "Inactive",
+          "vol-new": "New",
+          "vol-available": "Available",
+          "vol-temp-unavailable": "Temporarily Unavailable",
+          "vol-unresponsive": "Unresponsive"
         },
         "preferredAv": {
           "header": "Preferred Availability",
