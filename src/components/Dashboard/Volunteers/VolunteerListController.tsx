@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import { apiPathVolunteer, cacheTTL } from "@/config/constants";
-import { useGetQuery } from "@/hooks";
+import { useGetQuery, usePageParam } from "@/hooks";
 import { ApiOptionLists, ApiVolunteerGetList, SortOrder } from "need4deed-sdk";
 import { CardsFilter } from "./Filters/types";
 import { serializeFilters } from "./helpers";
@@ -28,7 +28,7 @@ export function VolunteerListController({
   apiFilterOptions,
   opportunityId,
 }: VolunteerListControllerProps) {
-  const [currentPage, setCurrentPage] = useState(1);
+  const { currentPage, setCurrentPage } = usePageParam();
   const serializedFilter = serializeFilters(filter, undefined, false, {
     serializeToIDs: true,
     apiFilterOptions,

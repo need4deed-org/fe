@@ -1,7 +1,7 @@
 import { ApiAgentGetList, ApiOptionLists, SortOrder } from "need4deed-sdk";
 import { AgentCardList } from "./AgentCardList";
-import { useEffect, useState } from "react";
-import { useGetQuery } from "@/hooks";
+import { useEffect } from "react";
+import { useGetQuery, usePageParam } from "@/hooks";
 import { apiPathAgent, cacheTTL } from "@/config/constants";
 import { serializeAgentFilters } from "./helpers";
 import { AgentCardsFilter } from "./Filters/types";
@@ -20,7 +20,7 @@ type Props = {
 };
 
 export const AgentListController = ({ setNumOfAgents, sortOrder, isFiltersOpen, filter, apiFilterOptions }: Props) => {
-  const [currentPage, setCurrentPage] = useState(1);
+  const { currentPage, setCurrentPage } = usePageParam();
 
   const serializedFilter = new URLSearchParams(
     serializeAgentFilters(filter, undefined, false, {
