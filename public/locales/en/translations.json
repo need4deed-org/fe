@@ -421,7 +421,9 @@
     "sortBy": {
       "sortBy": "SortBy",
       "newToOld": "Newest to Oldest",
-      "oldToNew": "Oldest to Newest"
+      "oldToNew": "Oldest to Newest",
+      "appointmentProximal": "Event: Soonest First",
+      "appointmentDistant": "Event: Latest First"
     },
     "heroSection": {
       "heroText": "Need-based voluntary support for refugees in Berlin",
@@ -525,7 +527,8 @@
           "noMatches": "No matches",
           "pendingMatch": "Pending match",
           "matched": "Matched",
-          "needsRematch": "Needs rematch"
+          "needsRematch": "Needs rematch",
+          "past": "Past"
         },
         "communication_title": "Communication",
         "communication_options": {
