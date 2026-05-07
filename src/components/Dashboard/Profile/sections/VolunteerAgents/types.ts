@@ -12,12 +12,12 @@ export type MappedVolunteerAgent = ApiVolunteerGetList & {
 };
 
 export const createEngagementStatusLabelMap = (t: TFunction): Record<VolunteerStateEngagementType, string> => ({
-  [VolunteerStateEngagementType.NEW]: t("dashboard.volunteers.filters.engagement.new"),
-  [VolunteerStateEngagementType.ACTIVE]: t("dashboard.volunteers.filters.engagement.active"),
-  [VolunteerStateEngagementType.UNRESPONSIVE]: t("dashboard.volunteers.filters.engagement.unresponsive"),
-  [VolunteerStateEngagementType.INACTIVE]: t("dashboard.volunteers.filters.engagement.inactive"),
-  [VolunteerStateEngagementType.TEMP_UNAVAILABLE]: t("dashboard.volunteers.filters.engagement.temporarilyUnavailable"),
-  [VolunteerStateEngagementType.AVAILABLE]: t("dashboard.volunteers.filters.engagement.available"),
+  [VolunteerStateEngagementType.NEW]: t("dashboard.volunteers.filters.engagement.vol-new"),
+  [VolunteerStateEngagementType.ACTIVE]: t("dashboard.volunteers.filters.engagement.vol-active"),
+  [VolunteerStateEngagementType.UNRESPONSIVE]: t("dashboard.volunteers.filters.engagement.vol-unresponsive"),
+  [VolunteerStateEngagementType.INACTIVE]: t("dashboard.volunteers.filters.engagement.vol-inactive"),
+  [VolunteerStateEngagementType.TEMP_UNAVAILABLE]: t("dashboard.volunteers.filters.engagement.vol-temp-unavailable"),
+  [VolunteerStateEngagementType.AVAILABLE]: t("dashboard.volunteers.filters.engagement.vol-available"),
 });
 
 export const createStatusLabelMap = (t: TFunction): Record<VolunteerStateTypeType, string> => ({
