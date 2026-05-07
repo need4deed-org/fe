@@ -1028,7 +1028,10 @@
       "matchStatus": {
         "matched": "Gematcht",
         "needRematch": "Neues Matching erforderlich",
-        "unmatched": "Nicht gematcht"
+        "unmatched": "Nicht gematcht",
+        "noMatches": "Keine Zuweisungen",
+        "pendingMatch": "Zuweisung ausstehend",
+        "past": "Vergangen"
       },
       "statusUpdateSuccess": "Status der Möglichkeit erfolgreich aktualisiert",
       "change_status": "Status ändern",

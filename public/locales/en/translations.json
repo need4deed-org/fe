@@ -1027,7 +1027,10 @@
       "matchStatus": {
         "matched": "Matched",
         "needRematch": "Need rematch",
-        "unmatched": "Unmatched"
+        "unmatched": "Unmatched",
+        "noMatches": "No matches",
+        "pendingMatch": "Pending match",
+        "past": "Past"
       },
       "statusUpdateSuccess": "Opportunity status updated successfully",
       "change_status": "Change status",
