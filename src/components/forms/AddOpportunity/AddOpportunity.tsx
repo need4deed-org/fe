@@ -396,6 +396,35 @@ export default function AddOpportunity() {
                       return undefined;
                     }}
                   />
+                  <formOpportunity.Field
+                    name="locations"
+                    validators={{
+                      onBlur: ({ value }) => isSelected(value, t("form.error.location")),
+                    }}
+                  >
+                    {(field) => {
+                      return (
+                        <fieldset>
+                          <HeaderWithHelp
+                            className={style["form-chiplist-header-within-group"]}
+                            classNamePopup={style["form-help"]}
+                          >
+                            {t("form.addOpportunity.fields.aaGroup.locations.header")}
+                          </HeaderWithHelp>
+                          <WithParentRef
+                            className={`${style["form-chip-list"]} ${style["form-pick"]}`}
+                            onFocus={() => setTimeout(field.handleBlur, 0)}
+                          >
+                            <MultipleCheckBoxInputsWithMore<OpportunityData, "locations">
+                              FieldTag={formOpportunity.Field}
+                              field={field}
+                            />
+                            <FieldInfo field={field} />
+                          </WithParentRef>
+                        </fieldset>
+                      );
+                    }}
+                  </formOpportunity.Field>
                   <SimpleInputField<OpportunityData>
                     name="aaInformation"
                     FieldTag={formOpportunity.Field}

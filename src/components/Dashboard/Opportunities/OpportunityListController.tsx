@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { apiPathOpportunity, cacheTTL } from "@/config/constants";
-import { useGetQuery } from "@/hooks";
+import { useGetQuery, usePageParam } from "@/hooks";
 import { ApiVolunteerOpportunityGetList, ApiOptionLists, SortOrder } from "need4deed-sdk";
 import { OpportunityCardsFilter } from "./Filters/types";
 import { serializeOpportunityFilters } from "./helpers";
@@ -10,9 +10,33 @@ const columns = 3;
 const rows = 3;
 const limit = columns * rows;
 
+const APPOINTMENT_SORT_VALUES = ["appointment-proximal", "appointment-distant"] as const;
+type AppointmentSort = (typeof APPOINTMENT_SORT_VALUES)[number];
+
+function isAppointmentSort(sort: string): sort is AppointmentSort {
+  return (APPOINTMENT_SORT_VALUES as readonly string[]).includes(sort);
+}
+
+function sortByAppointmentDate(
+  opportunities: ApiVolunteerOpportunityGetList[],
+  sort: AppointmentSort,
+): ApiVolunteerOpportunityGetList[] {
+  return [...opportunities].sort((a, b) => {
+    const dateA = a.accompanyingDetails?.appointmentDate;
+    const dateB = b.accompanyingDetails?.appointmentDate;
+
+    if (!dateA && !dateB) return 0;
+    if (!dateA) return 1;
+    if (!dateB) return -1;
+
+    const diff = new Date(dateA).getTime() - new Date(dateB).getTime();
+    return sort === "appointment-proximal" ? diff : -diff;
+  });
+}
+
 type Props = {
   setNumOfOpps: (num: number) => void;
-  sortOrder: SortOrder;
+  sortOrder: string;
   isFiltersOpen: boolean;
   filter: OpportunityCardsFilter;
   apiFilterOptions?: ApiOptionLists;
@@ -27,7 +51,7 @@ export function OpportunityListController({
   apiFilterOptions,
   volunteerId,
 }: Props) {
-  const [currentPage, setCurrentPage] = useState(1);
+  const { currentPage, setCurrentPage } = usePageParam();
 
   const serializedFilter = serializeOpportunityFilters(filter, undefined, false, {
     serializeToIDs: true,
@@ -38,19 +62,24 @@ export function OpportunityListController({
     serializedFilter.set("volunteer", volunteerId);
   }
 
+  const backendSortOrder = isAppointmentSort(sortOrder) ? SortOrder.NewToOld : (sortOrder as SortOrder);
+
   const { data, count } = useGetQuery<ApiVolunteerOpportunityGetList[]>({
     queryKey: ["opportunities"],
     apiPath: `${apiPathOpportunity}/`,
     params: {
       limit,
       page: currentPage,
-      sortOrder,
+      sortOrder: backendSortOrder,
       filter: serializedFilter,
     },
     staleTime: cacheTTL,
   });
 
-  const opportunities: ApiVolunteerOpportunityGetList[] = data || [];
+  const rawOpportunities: ApiVolunteerOpportunityGetList[] = data || [];
+  const opportunities = isAppointmentSort(sortOrder)
+    ? sortByAppointmentDate(rawOpportunities, sortOrder)
+    : rawOpportunities;
 
   useEffect(() => {
     setNumOfOpps(count);

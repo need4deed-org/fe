@@ -291,6 +291,9 @@
           },
           "information": {
             "label": "Provide information about the task the volunteers are expected to perform"
+          },
+          "locations": {
+            "header": "Locations"
           }
         },
         "voGroup": {
@@ -351,12 +354,12 @@
         "activities": "Activities",
         "engagement": {
           "header": "Engagement",
-          "active": "Active",
-          "inactive": "Inactive",
-          "new": "New",
-          "available": "Available",
-          "temporarilyUnavailable": "Temporarily Unavailable",
-          "unresponsive": "Unresponsive"
+          "vol-active": "Active",
+          "vol-inactive": "Inactive",
+          "vol-new": "New",
+          "vol-available": "Available",
+          "vol-temp-unavailable": "Temporarily Unavailable",
+          "vol-unresponsive": "Unresponsive"
         },
         "preferredAv": {
           "header": "Preferred Availability",
@@ -421,7 +424,9 @@
     "sortBy": {
       "sortBy": "SortBy",
       "newToOld": "Newest to Oldest",
-      "oldToNew": "Oldest to Newest"
+      "oldToNew": "Oldest to Newest",
+      "appointmentProximal": "Event: Soonest First",
+      "appointmentDistant": "Event: Latest First"
     },
     "heroSection": {
       "heroText": "Need-based voluntary support for refugees in Berlin",
@@ -525,7 +530,8 @@
           "noMatches": "No matches",
           "pendingMatch": "Pending match",
           "matched": "Matched",
-          "needsRematch": "Needs rematch"
+          "needsRematch": "Needs rematch",
+          "past": "Past"
         },
         "communication_title": "Communication",
         "communication_options": {
@@ -948,6 +954,7 @@
         "email": "E-mail",
         "mobile": "Mobile",
         "landline": "Landline",
+        "address": "Address",
         "saveSuccess": "Contact details updated successfully",
         "roles": {
           "label": "Role",

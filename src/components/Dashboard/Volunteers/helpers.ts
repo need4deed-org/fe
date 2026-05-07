@@ -69,6 +69,7 @@ export function serializeFilters(
   options?: SerializeFiltersOptions,
 ) {
   const params = new URLSearchParams(searchParams);
+  params.delete("page");
 
   if (filter.search) params.set(QueryParamsKeys.SEARCH, filter.search);
   else params.delete(QueryParamsKeys.SEARCH);
@@ -107,10 +108,11 @@ export function serializeFilters(
   });
 
   // 2. Clear all existing 'engagement' params
+  // Strip the "vol-" prefix because the backend's engagementWorkaround re-adds it
   params.delete(QueryParamsKeys.ENGAGEMENT);
   Object.entries(filter.engagement).forEach(([key, value]) => {
     if (value === true) {
-      params.append(QueryParamsKeys.ENGAGEMENT, key);
+      params.append(QueryParamsKeys.ENGAGEMENT, key.replace(/^vol-/, ""));
     }
   });
 

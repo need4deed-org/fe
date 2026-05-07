@@ -2,7 +2,7 @@
 
 import { DashboardLayout } from "@/components/Layout";
 import { AgentListController } from "./AgentListController";
-import { AgentsContainer } from "./styles";
+import { AgentsContainer, ContentRow } from "./styles";
 import CardsHeader from "../common/CardsHeader/CardsHeader";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
@@ -35,8 +35,8 @@ export const Agents = () => {
     handleFilterUpdate((prev) => ({ ...prev, search: searchInput }));
   };
 
-  const handleSortChange = (order: SortOrder) => {
-    setSortOrder(order);
+  const handleSortChange = (order: string) => {
+    setSortOrder(order as SortOrder);
   };
 
   const handleFilterUpdate = (newFilter: AgentCardsFilter | ((prev: AgentCardsFilter) => AgentCardsFilter)) => {
@@ -68,12 +68,6 @@ export const Agents = () => {
   return (
     <DashboardLayout>
       <AgentsContainer data-testid="agents-container">
-        <Filters
-          isFiltersOpen={isFiltersOpen}
-          setIsFiltersOpen={setIsFiltersOpen}
-          filtersContent={<FiltersContent setFilter={handleFilterUpdate} filter={cardsFilter} />}
-        />
-
         <CardsHeader
           header={t("dashboard.agents.agents")}
           resultCounter={numOfAgents}
@@ -90,13 +84,20 @@ export const Agents = () => {
           activeFilters={activeFilters}
           onClearAllFilters={handleClearAllFilters}
         />
-        <AgentListController
-          setNumOfAgents={setNumOfAgents}
-          sortOrder={sortOrder}
-          isFiltersOpen={isFiltersOpen}
-          filter={cardsFilter}
-          apiFilterOptions={apiFilterOptions}
-        />
+        <ContentRow>
+          <AgentListController
+            setNumOfAgents={setNumOfAgents}
+            sortOrder={sortOrder}
+            isFiltersOpen={isFiltersOpen}
+            filter={cardsFilter}
+            apiFilterOptions={apiFilterOptions}
+          />
+          <Filters
+            isFiltersOpen={isFiltersOpen}
+            setIsFiltersOpen={setIsFiltersOpen}
+            filtersContent={<FiltersContent setFilter={handleFilterUpdate} filter={cardsFilter} />}
+          />
+        </ContentRow>
       </AgentsContainer>
     </DashboardLayout>
   );

@@ -291,6 +291,9 @@
           },
           "information": {
             "label": "Gib Informationen über die Aufgabe, die von den Freiwilligen erwartet wird"
+          },
+          "locations": {
+            "header": "Bezirke"
           }
         },
         "voGroup": {
@@ -351,12 +354,12 @@
         "activities": "Aktivitäten",
         "engagement": {
           "header": "Engagement",
-          "active": "Aktiv",
-          "inactive": "Inaktiv",
-          "new": "Neu",
-          "available": "Verfügbar",
-          "temporarilyUnavailable": "Vorübergehend nicht verfügbar",
-          "unresponsive": "Reagiert nicht"
+          "vol-active": "Aktiv",
+          "vol-inactive": "Inaktiv",
+          "vol-new": "Neu",
+          "vol-available": "Verfügbar",
+          "vol-temp-unavailable": "Vorübergehend nicht verfügbar",
+          "vol-unresponsive": "Reagiert nicht"
         },
         "preferredAv": {
           "header": "Bevorzugte Verfügbarkeit",
@@ -421,7 +424,9 @@
     "sortBy": {
       "sortBy": "Sortieren nach",
       "newToOld": "Neueste zuerst",
-      "oldToNew": "Älteste zuerst"
+      "oldToNew": "Älteste zuerst",
+      "appointmentProximal": "Event: Nächste zuerst",
+      "appointmentDistant": "Event: Späteste zuerst"
     },
     "heroSection": {
       "heroText": "Bedarfsorientierte freiwillige Unterstützung für Geflüchtete in Berlin",
@@ -526,7 +531,8 @@
           "noMatches": "Keine Zuweisungen",
           "pendingMatch": "Zuweisung ausstehend",
           "matched": "Zugewiesen",
-          "needsRematch": "Neu-Zuweisung erforderlich"
+          "needsRematch": "Neu-Zuweisung erforderlich",
+          "past": "Vergangen"
         },
         "communication_title": "Kommunikation",
         "communication_options": {
@@ -949,6 +955,7 @@
         "email": "E-Mail",
         "mobile": "Mobiltelefon",
         "landline": "Festnetz",
+        "address": "Adresse",
         "saveSuccess": "Kontaktdaten erfolgreich aktualisiert",
         "roles": {
           "label": "Rolle",

@@ -3,7 +3,7 @@ import { useApiDistricts, useApiLanguages } from "@/components/Dashboard/Profile
 import { useUpdateOpportunityAccompanyingDetails } from "@/hooks/useUpdateOpportunityAccompanyingDetails";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { de, enUS } from "date-fns/locale";
-import { ApiOpportunityGet } from "need4deed-sdk";
+import { ApiOpportunityGet, LangPurpose } from "need4deed-sdk";
 import { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -127,7 +127,11 @@ export const AccompanyingDetails = forwardRef<EditableSectionRef, Props>(functio
     );
   }
 
-  const languageLabel = (formValues.languagesToTranslate ?? []).map((id) => keyToLabel[id] || id).join(", ");
+  // Refugee language = the language the refugee speaks (LangPurpose.RECIPIENT on the opportunity)
+  const languageLabel = (opportunity.languages ?? [])
+    .filter((lang) => lang.purpose === LangPurpose.RECIPIENT)
+    .map((lang) => lang.title)
+    .join(", ");
   const districtLabel =
     districtKeyToLabel[formValues.appointmentDistrict || ""] || formValues.appointmentDistrict || "";
 
