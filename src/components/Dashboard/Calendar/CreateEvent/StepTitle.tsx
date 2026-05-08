@@ -24,7 +24,6 @@ export function StepTitle({ title, description, onChange, onNext, onCancel, isNe
       <Heading2>{t("dashboard.calendar.createForm.eventTitle")}</Heading2>
 
       <FieldGroup>
-        <Heading3>{t("dashboard.calendar.createForm.titleLabel")}</Heading3>
         <FieldLabel htmlFor="event-title">{t("dashboard.calendar.createForm.titleLabel")}</FieldLabel>
         <StyledInput
           id="event-title"

@@ -96,5 +96,5 @@ export const FieldRowLabel = styled.span`
   font-size: var(--font-size-md);
   font-weight: bold;
   color: var(--color-midnight);
-  min-width: 160px;
+  min-width: var(--create-event-field-label-min-width);
 `;

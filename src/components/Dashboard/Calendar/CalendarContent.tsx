@@ -219,8 +219,8 @@ const DayCell = styled.div<DayCellProps>`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: var(--spacing-40);
+  height: var(--spacing-40);
   margin: auto;
   border-radius: 50%;
   font-size: var(--font-size-xs);

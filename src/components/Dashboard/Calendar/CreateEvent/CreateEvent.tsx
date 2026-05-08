@@ -134,8 +134,8 @@ const ProgressBar = styled.div`
 
 const ProgressSegment = styled.div<{ $active: boolean }>`
   flex: 1;
-  height: 6px;
-  border-radius: 3px;
+  height: var(--create-event-progress-height);
+  border-radius: var(--create-event-progress-border-radius);
   background: ${({ $active }) => ($active ? "var(--color-midnight)" : "var(--color-orchid)")};
   transition: background 0.2s ease;
 `;
