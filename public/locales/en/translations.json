@@ -771,12 +771,12 @@
         "opp-past": "Past"
       },
       "matchStatus": {
-        "opp-vol-no-matches": "No matches",
-        "opp-vol-pending-match": "Pending match",
-        "opp-vol-matched": "Matched",
-        "opp-vol-needs-rematch": "Needs rematch",
-        "opp-vol-unmatched": "Unmatched",
-        "opp-vol-past": "Past"
+        "vol-no-matches": "No matches",
+        "vol-pending-match": "Pending match",
+        "vol-matched": "Matched",
+        "vol-needs-rematch": "Needs rematch",
+        "vol-unmatched": "Unmatched",
+        "vol-past": "Past"
       },
       "type": {
         "accompanying": "Accompanying",
