@@ -143,13 +143,11 @@ export const TextArea = styled.textarea`
 `;
 
 export const AddCommentButton = styled.button`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  align-self: end;
   padding: var(--spacing-16) var(--spacing-24);
   gap: var(--spacing-8);
   height: 56px;
+  aspect-ratio: 4/1;
   background: var(--color-aubergine);
   border-radius: var(--button-border-radius);
   border: none;
