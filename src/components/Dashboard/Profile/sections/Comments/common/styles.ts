@@ -68,9 +68,7 @@ export const CommentText = styled.div`
   .tag {
     color: var(--color-midnight);
     font-weight: bold;
-    background: var(--color-violet-100);
     text-decoration: none;
-    box-shadow: var(--tag-shadow);
     border-radius: var(--border-radius-xs);
     &:hover {
       opacity: 0.8;
@@ -267,13 +265,11 @@ export const TagOverlay = styled.div`
   overflow-y: hidden;
   .tag {
     color: var(--color-midnight);
-    background: var(--color-violet-100);
     text-decoration: none;
     padding: 0;
     margin: 0;
     border: none;
     -webkit-text-stroke: var(--tag-text-stroke);
-    box-shadow: var(--tag-shadow);
     border-radius: var(--border-radius-xs);
   }
 `;
