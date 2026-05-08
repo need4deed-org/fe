@@ -1,5 +1,7 @@
+"use client";
 import Button from "@/components/core/button/Button/Button";
 import { Heading2 } from "@/components/styled/text";
+import { useTranslation } from "react-i18next";
 import { EventFormData } from "./CreateEvent";
 import { ButtonRow, CharCount, FieldGroup, FieldLabel, HelperText, StyledInput } from "./styles";
 
@@ -12,11 +14,12 @@ interface Props {
   onChange: (fields: Partial<EventFormData>) => void;
   onNext: () => void;
   onBack: () => void;
-  t: (key: string) => string;
   isNextEnabled: boolean;
 }
 
-export function StepLocation({ street, houseNumber, postcode, onChange, onNext, onBack, t, isNextEnabled }: Props) {
+export function StepLocation({ street, houseNumber, postcode, onChange, onNext, onBack, isNextEnabled }: Props) {
+  const { t } = useTranslation();
+
   return (
     <>
       <Heading2>{t("dashboard.calendar.createForm.location")}</Heading2>

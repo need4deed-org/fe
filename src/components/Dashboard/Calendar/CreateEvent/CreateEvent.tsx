@@ -1,5 +1,5 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
@@ -23,8 +23,10 @@ export interface EventFormData {
 const TOTAL_STEPS = 3;
 
 export function CreateEvent() {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const prefilledDate = searchParams.get("date") ?? "";
 
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState<EventFormData>({
@@ -33,7 +35,7 @@ export function CreateEvent() {
     street: "",
     houseNumber: "",
     postcode: "",
-    date: "",
+    date: prefilledDate,
     time: "",
   });
 
@@ -49,9 +51,8 @@ export function CreateEvent() {
   };
   const handleCancel = () => router.push(`/${i18n.language}/dashboard/calendar`);
 
-  // TODO: wire up POST /event once BE #458 is ready
+  // TODO: call POST /event once BE #458 is ready
   const handleSubmit = async () => {
-    console.log("Submit event:", formData);
     router.push(`/${i18n.language}/dashboard/calendar`);
   };
 
@@ -84,7 +85,6 @@ export function CreateEvent() {
               onChange={update}
               onNext={handleNext}
               onCancel={handleCancel}
-              t={t}
               isNextEnabled={isNextEnabled()}
             />
           )}
@@ -96,7 +96,6 @@ export function CreateEvent() {
               onChange={update}
               onNext={handleNext}
               onBack={handleBack}
-              t={t}
               isNextEnabled={isNextEnabled()}
             />
           )}
@@ -107,7 +106,6 @@ export function CreateEvent() {
               onChange={update}
               onBack={handleBack}
               onSubmit={handleSubmit}
-              t={t}
               isSubmitEnabled={isNextEnabled()}
             />
           )}
@@ -122,7 +120,7 @@ const PageContent = styled.div`
   flex-direction: column;
   align-items: center;
   gap: var(--spacing-32);
-  padding: var(--spacing-48) var(--spacing-24) 100px;
+  padding: var(--spacing-48) var(--spacing-24) var(--spacing-48);
   width: 100%;
   box-sizing: border-box;
 `;

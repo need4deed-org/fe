@@ -135,7 +135,7 @@ const PageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: var(--spacing-24);
-  padding: var(--spacing-32) var(--spacing-48) 100px;
+  padding: var(--spacing-32) var(--spacing-48) var(--spacing-48);
   width: 100%;
   box-sizing: border-box;
 `;
@@ -161,7 +161,8 @@ const CalendarBox = styled.div`
   border-radius: var(--border-radius-large);
   padding: var(--spacing-24);
   background: var(--color-white);
-  width: 560px;
+  width: 100%;
+  max-width: 560px;
   margin: 0 auto;
 `;
 

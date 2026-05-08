@@ -1,5 +1,7 @@
+"use client";
 import Button from "@/components/core/button/Button/Button";
 import { Heading2 } from "@/components/styled/text";
+import { useTranslation } from "react-i18next";
 import { EventFormData } from "./CreateEvent";
 import { ButtonRow, FieldGroup, FieldRow, FieldRowLabel, StyledInput } from "./styles";
 
@@ -9,11 +11,12 @@ interface Props {
   onChange: (fields: Partial<EventFormData>) => void;
   onBack: () => void;
   onSubmit: () => void;
-  t: (key: string) => string;
   isSubmitEnabled: boolean;
 }
 
-export function StepDateTime({ date, time, onChange, onBack, onSubmit, t, isSubmitEnabled }: Props) {
+export function StepDateTime({ date, time, onChange, onBack, onSubmit, isSubmitEnabled }: Props) {
+  const { t } = useTranslation();
+
   return (
     <>
       <Heading2>{t("dashboard.calendar.createForm.dateTime")}</Heading2>

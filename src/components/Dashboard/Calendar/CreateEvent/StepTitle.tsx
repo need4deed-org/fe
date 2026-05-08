@@ -1,5 +1,7 @@
+"use client";
 import Button from "@/components/core/button/Button/Button";
 import { Heading2, Heading3 } from "@/components/styled/text";
+import { useTranslation } from "react-i18next";
 import { EventFormData } from "./CreateEvent";
 import { ButtonRow, CharCount, FieldGroup, FieldLabel, HelperText, StyledInput, StyledTextarea } from "./styles";
 
@@ -11,23 +13,25 @@ interface Props {
   onChange: (fields: Partial<EventFormData>) => void;
   onNext: () => void;
   onCancel: () => void;
-  t: (key: string) => string;
   isNextEnabled: boolean;
 }
 
-export function StepTitle({ title, description, onChange, onNext, onCancel, t, isNextEnabled }: Props) {
+export function StepTitle({ title, description, onChange, onNext, onCancel, isNextEnabled }: Props) {
+  const { t } = useTranslation();
+
   return (
     <>
       <Heading2>{t("dashboard.calendar.createForm.eventTitle")}</Heading2>
 
       <FieldGroup>
         <Heading3>{t("dashboard.calendar.createForm.titleLabel")}</Heading3>
-        <FieldLabel htmlFor="event-title">{t("dashboard.calendar.createForm.titlePlaceholder")}*</FieldLabel>
+        <FieldLabel htmlFor="event-title">{t("dashboard.calendar.createForm.titleLabel")}</FieldLabel>
         <StyledInput
           id="event-title"
           value={title}
           maxLength={TITLE_MAX}
           placeholder={t("dashboard.calendar.createForm.titlePlaceholder")}
+          aria-required="true"
           onChange={(e) => onChange({ title: e.target.value })}
         />
         <HelperText>{t("dashboard.calendar.createForm.titleHelper")}</HelperText>
