@@ -4,7 +4,7 @@ import { useCreateComment } from "@/hooks/useCreateComment";
 import { useDeleteComment } from "@/hooks/useDeleteComment";
 import { useUpdateComment } from "@/hooks/useUpdateComment";
 import { Id, TimedText } from "need4deed-sdk";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Comment } from "./Comment";
 import { DeleteCommentDialog } from "./DeleteCommentDialog";
@@ -25,6 +25,8 @@ export function EntityComments({ entityId, entityType, comments, testId }: Props
   const { t } = useTranslation();
   const { mutate: createComment, isPending: isCreating } = useCreateComment(entityId, entityType);
   const [newCommentText, setNewCommentText] = useState("");
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
 
   const edit = useCommentEdit();
   const deleteState = useCommentDelete();
@@ -61,6 +63,11 @@ export function EntityComments({ entityId, entityType, comments, testId }: Props
       e.preventDefault();
       handleAddComment();
     }
+  };
+
+  const handleScroll = () => {
+    if (!textAreaRef?.current || !overlayRef?.current) return;
+    overlayRef.current.style.transform = `translateY(-${textAreaRef.current.scrollTop}px)`;
   };
 
   const handleSaveEdit = () => {
@@ -126,23 +133,24 @@ export function EntityComments({ entityId, entityType, comments, testId }: Props
       ))}
 
       <NewCommentSection>
-        <TagOverlay>{renderHighlightedText(newCommentText)}</TagOverlay>
+        <TagOverlay ref={overlayRef}>{renderHighlightedText(newCommentText)}</TagOverlay>
         <TextArea
+          ref={textAreaRef}
           placeholder={t("dashboard.commentsSection.placeholder")}
           value={newCommentText}
           onChange={(e) => setNewCommentText(e.target.value)}
           onKeyPress={handleKeyPress}
           data-testid="comment-textarea"
+          onScroll={handleScroll}
         />
-        <AddCommentButton
-          onClick={handleAddComment}
-          disabled={!newCommentText.trim() || isCreating}
-          data-testid="add-comment-button"
-        >
-          {t("dashboard.commentsSection.addComment")}
-        </AddCommentButton>
       </NewCommentSection>
-
+      <AddCommentButton
+        onClick={handleAddComment}
+        disabled={!newCommentText.trim() || isCreating}
+        data-testid="add-comment-button"
+      >
+        {t("dashboard.commentsSection.addComment")}
+      </AddCommentButton>
       <DeleteCommentDialog
         isOpen={deleteState.deleteDialogOpen}
         authorName={deleteState.deleteAuthorName}
