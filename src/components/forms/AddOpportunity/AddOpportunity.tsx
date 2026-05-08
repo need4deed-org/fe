@@ -418,6 +418,7 @@ export default function AddOpportunity() {
                             <MultipleCheckBoxInputsWithMore<OpportunityData, "locations">
                               FieldTag={formOpportunity.Field}
                               field={field}
+                              isOneOption
                             />
                             <FieldInfo field={field} />
                           </WithParentRef>
@@ -464,6 +465,7 @@ export default function AddOpportunity() {
                             <MultipleCheckBoxInputsWithMore<OpportunityData, "locations">
                               FieldTag={formOpportunity.Field}
                               field={field}
+                              isOneOption
                             />
                             <FieldInfo field={field} />
                           </WithParentRef>
@@ -755,6 +757,7 @@ export default function AddOpportunity() {
                     {t("form.error.labelErrors")}: {errors}
                   </em>
                 ) : null}
+                <button onClick={() => console.log("here", state.values)}>here</button>
               </div>
             );
           }}
