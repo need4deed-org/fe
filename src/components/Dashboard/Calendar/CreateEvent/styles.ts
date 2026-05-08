@@ -7,17 +7,17 @@ export const FieldGroup = styled.div`
 `;
 
 export const FieldLabel = styled.label`
-  font-size: 14px;
-  font-weight: 600;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
   color: var(--color-midnight);
 `;
 
 export const StyledInput = styled.input`
   width: 100%;
-  border: 1.5px solid var(--color-grey-400);
-  border-radius: 8px;
-  padding: 12px 16px;
-  font-size: 16px;
+  border: var(--border-width-thin) solid var(--color-grey-400);
+  border-radius: var(--border-radius-small);
+  padding: var(--spacing-12) var(--spacing-16);
+  font-size: var(--font-size-sm);
   color: var(--color-midnight);
   background: var(--color-white);
   box-sizing: border-box;
@@ -40,10 +40,10 @@ export const StyledInput = styled.input`
 
 export const StyledTextarea = styled.textarea`
   width: 100%;
-  border: 1.5px solid var(--color-grey-400);
-  border-radius: 8px;
-  padding: 12px 16px;
-  font-size: 16px;
+  border: var(--border-width-thin) solid var(--color-grey-400);
+  border-radius: var(--border-radius-small);
+  padding: var(--spacing-12) var(--spacing-16);
+  font-size: var(--font-size-sm);
   color: var(--color-midnight);
   background: var(--color-white);
   resize: vertical;
@@ -61,13 +61,13 @@ export const StyledTextarea = styled.textarea`
 `;
 
 export const HelperText = styled.p`
-  font-size: 12px;
+  font-size: var(--font-size-xs);
   color: var(--color-grey-500);
   margin: 0;
 `;
 
 export const CharCount = styled.p`
-  font-size: 12px;
+  font-size: var(--font-size-xs);
   color: var(--color-grey-500);
   text-align: right;
   margin: 0;
@@ -85,7 +85,7 @@ export const FieldRow = styled.div`
   align-items: center;
   gap: var(--spacing-24);
   padding: var(--spacing-16) 0;
-  border-bottom: 1px solid var(--color-grey-200);
+  border-bottom: var(--border-width-thin) solid var(--color-grey-200);
 
   &:last-child {
     border-bottom: none;
@@ -93,7 +93,7 @@ export const FieldRow = styled.div`
 `;
 
 export const FieldRowLabel = styled.span`
-  font-size: 18px;
+  font-size: var(--font-size-md);
   font-weight: bold;
   color: var(--color-midnight);
   min-width: 160px;

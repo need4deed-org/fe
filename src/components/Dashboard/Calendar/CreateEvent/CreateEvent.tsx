@@ -49,6 +49,12 @@ export function CreateEvent() {
   };
   const handleCancel = () => router.push(`/${i18n.language}/dashboard/calendar`);
 
+  // TODO: wire up POST /event once BE #458 is ready
+  const handleSubmit = async () => {
+    console.log("Submit event:", formData);
+    router.push(`/${i18n.language}/dashboard/calendar`);
+  };
+
   const isNextEnabled = () => {
     if (step === 1) return formData.title.trim().length > 0;
     if (step === 2)
@@ -100,8 +106,9 @@ export function CreateEvent() {
               time={formData.time}
               onChange={update}
               onBack={handleBack}
+              onSubmit={handleSubmit}
               t={t}
-              isNextEnabled={isNextEnabled()}
+              isSubmitEnabled={isNextEnabled()}
             />
           )}
         </Card>
@@ -115,7 +122,7 @@ const PageContent = styled.div`
   flex-direction: column;
   align-items: center;
   gap: var(--spacing-32);
-  padding: 48px 24px 100px;
+  padding: var(--spacing-48) var(--spacing-24) 100px;
   width: 100%;
   box-sizing: border-box;
 `;
@@ -137,7 +144,7 @@ const ProgressSegment = styled.div<{ $active: boolean }>`
 
 const Card = styled.div`
   background: var(--color-white);
-  border-radius: var(--border-radius-lg, 16px);
+  border-radius: var(--border-radius-large);
   padding: var(--spacing-32);
   width: 100%;
   max-width: 800px;

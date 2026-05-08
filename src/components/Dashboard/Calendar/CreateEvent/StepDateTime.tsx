@@ -1,18 +1,19 @@
+import Button from "@/components/core/button/Button/Button";
 import { Heading2 } from "@/components/styled/text";
 import { EventFormData } from "./CreateEvent";
 import { ButtonRow, FieldGroup, FieldRow, FieldRowLabel, StyledInput } from "./styles";
-import { ActionButton } from "./ActionButton";
 
 interface Props {
   date: string;
   time: string;
   onChange: (fields: Partial<EventFormData>) => void;
   onBack: () => void;
+  onSubmit: () => void;
   t: (key: string) => string;
-  isNextEnabled: boolean;
+  isSubmitEnabled: boolean;
 }
 
-export function StepDateTime({ date, time, onChange, onBack, t, isNextEnabled }: Props) {
+export function StepDateTime({ date, time, onChange, onBack, onSubmit, t, isSubmitEnabled }: Props) {
   return (
     <>
       <Heading2>{t("dashboard.calendar.createForm.dateTime")}</Heading2>
@@ -30,12 +31,22 @@ export function StepDateTime({ date, time, onChange, onBack, t, isNextEnabled }:
       </FieldGroup>
 
       <ButtonRow>
-        <ActionButton variant="outline" onClick={onBack}>
-          {t("dashboard.calendar.createForm.back")}
-        </ActionButton>
-        <ActionButton variant="primary" onClick={() => {}} disabled={!isNextEnabled}>
-          {t("dashboard.calendar.createForm.submit")}
-        </ActionButton>
+        <Button
+          text={t("dashboard.calendar.createForm.back")}
+          onClick={onBack}
+          backgroundcolor="transparent"
+          border="var(--border-width-medium) solid var(--color-aubergine)"
+          textColor="var(--color-aubergine)"
+          width="auto"
+          padding="var(--button-padding)"
+        />
+        <Button
+          text={t("dashboard.calendar.createForm.submit")}
+          onClick={onSubmit}
+          disabled={!isSubmitEnabled}
+          width="auto"
+          padding="var(--button-padding)"
+        />
       </ButtonRow>
     </>
   );

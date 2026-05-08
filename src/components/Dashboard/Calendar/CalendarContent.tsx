@@ -8,7 +8,8 @@ import styled from "styled-components";
 import Button from "@/components/core/button/Button/Button";
 
 function buildCalendarCells(year: number, month: number): { day: number; currentMonth: boolean }[] {
-  const firstDow = new Date(year, month, 1).getDay();
+  const rawDow = new Date(year, month, 1).getDay(); // 0=Sunday
+  const firstDow = (rawDow + 6) % 7; // Monday=0, ..., Sunday=6
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const daysInPrev = new Date(year, month, 0).getDate();
 
@@ -30,7 +31,15 @@ function buildCalendarCells(year: number, month: number): { day: number; current
   return cells;
 }
 
-const DAY_LABELS = ["S", "M", "T", "W", "T", "F", "S"];
+function getDayLabels(locale: string): string[] {
+  const labels: string[] = [];
+  // Jan 1 2024 was a Monday — iterate Mon→Sun
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(2024, 0, 1 + i);
+    labels.push(d.toLocaleString(locale, { weekday: "narrow" }));
+  }
+  return labels;
+}
 
 export function CalendarContent() {
   const { t, i18n } = useTranslation();
@@ -44,6 +53,7 @@ export function CalendarContent() {
   const month = displayDate.getMonth();
 
   const monthLabel = displayDate.toLocaleString(i18n.language, { month: "long", year: "numeric" });
+  const dayLabels = getDayLabels(i18n.language);
   const cells = buildCalendarCells(year, month);
 
   const prevMonth = () => {
@@ -98,7 +108,7 @@ export function CalendarContent() {
           </CalendarHeader>
 
           <DaysGrid>
-            {DAY_LABELS.map((label, i) => (
+            {dayLabels.map((label, i) => (
               <DayHeader key={i}>{label}</DayHeader>
             ))}
 
@@ -125,7 +135,7 @@ const PageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: var(--spacing-24);
-  padding: 40px 48px 100px;
+  padding: var(--spacing-32) var(--spacing-48) 100px;
   width: 100%;
   box-sizing: border-box;
 `;
@@ -133,10 +143,9 @@ const PageWrapper = styled.div`
 const TopRow = styled.div`
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  gap: 110px;
+  justify-content: space-between;
   background: var(--color-white);
-  border-radius: var(--border-radius-lg, 16px);
+  border-radius: var(--border-radius-large);
   padding: var(--spacing-16) var(--spacing-24);
   width: 100%;
   box-sizing: border-box;
@@ -148,8 +157,8 @@ const CalendarCenter = styled.div`
 `;
 
 const CalendarBox = styled.div`
-  border: 2px solid var(--color-midnight);
-  border-radius: var(--border-radius-lg, 16px);
+  border: var(--border-width-medium) solid var(--color-midnight);
+  border-radius: var(--border-radius-large);
   padding: var(--spacing-24);
   background: var(--color-white);
   width: 560px;
@@ -178,7 +187,7 @@ const NavButton = styled.button`
 `;
 
 const MonthLabel = styled.span`
-  font-size: 20px;
+  font-size: var(--font-size-lg);
   font-weight: bold;
   color: var(--color-midnight);
   text-transform: capitalize;
@@ -187,13 +196,13 @@ const MonthLabel = styled.span`
 const DaysGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: var(--spacing-4, 4px);
+  gap: var(--spacing-4);
 `;
 
 const DayHeader = styled.div`
   text-align: center;
   font-weight: bold;
-  font-size: 14px;
+  font-size: var(--font-size-xs);
   color: var(--color-midnight);
   padding: var(--spacing-8) 0;
 `;
@@ -213,7 +222,7 @@ const DayCell = styled.div<DayCellProps>`
   height: 40px;
   margin: auto;
   border-radius: 50%;
-  font-size: 14px;
+  font-size: var(--font-size-xs);
   cursor: ${({ $clickable }) => ($clickable ? "pointer" : "default")};
   color: ${({ $isToday, $isSelected, $faded }) => {
     if ($isToday || $isSelected) return "var(--color-white)";

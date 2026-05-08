@@ -1,5 +1,5 @@
+import Button from "@/components/core/button/Button/Button";
 import { Heading2 } from "@/components/styled/text";
-import { ActionButton } from "./ActionButton";
 import { EventFormData } from "./CreateEvent";
 import { ButtonRow, CharCount, FieldGroup, FieldLabel, HelperText, StyledInput } from "./styles";
 
@@ -66,12 +66,22 @@ export function StepLocation({ street, houseNumber, postcode, onChange, onNext, 
       <HelperText>{t("dashboard.calendar.createForm.locationHelper")}</HelperText>
 
       <ButtonRow>
-        <ActionButton variant="outline" onClick={onBack}>
-          {t("dashboard.calendar.createForm.back")}
-        </ActionButton>
-        <ActionButton variant="primary" onClick={onNext} disabled={!isNextEnabled}>
-          {t("dashboard.calendar.createForm.next")}
-        </ActionButton>
+        <Button
+          text={t("dashboard.calendar.createForm.back")}
+          onClick={onBack}
+          backgroundcolor="transparent"
+          border="var(--border-width-medium) solid var(--color-aubergine)"
+          textColor="var(--color-aubergine)"
+          width="auto"
+          padding="var(--button-padding)"
+        />
+        <Button
+          text={t("dashboard.calendar.createForm.next")}
+          onClick={onNext}
+          disabled={!isNextEnabled}
+          width="auto"
+          padding="var(--button-padding)"
+        />
       </ButtonRow>
     </>
   );
