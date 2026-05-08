@@ -757,7 +757,6 @@ export default function AddOpportunity() {
                     {t("form.error.labelErrors")}: {errors}
                   </em>
                 ) : null}
-                <button onClick={() => console.log("here", state.values)}>here</button>
               </div>
             );
           }}
