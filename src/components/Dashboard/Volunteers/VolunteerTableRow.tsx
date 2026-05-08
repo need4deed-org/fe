@@ -4,8 +4,7 @@ import { ApiVolunteerGetList } from "need4deed-sdk";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-
-import {
+import type {
   createEngagementStatusLabelMap,
   createStatusLabelMap,
 } from "@/components/Dashboard/Profile/sections/VolunteerAgents/types";
@@ -35,7 +34,7 @@ export function VolunteerTableRow({ volunteer, isLast, engagementLabels, typeLab
       .join(", ") || "—";
   const districtText =
     locations
-      .map((location) => location.title)
+      .map((location) => (typeof location === "string" ? location : location?.title))
       .filter(Boolean)
       .join(", ") || "—";
 

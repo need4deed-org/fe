@@ -368,7 +368,13 @@
           "vol-new": "Neu",
           "vol-available": "Verfügbar",
           "vol-temp-unavailable": "Vorübergehend nicht verfügbar",
-          "vol-unresponsive": "Reagiert nicht"
+          "vol-unresponsive": "Reagiert nicht",
+          "active": "Aktiv",
+          "inactive": "Inaktiv",
+          "new": "Neu",
+          "available": "Verfügbar",
+          "temporarilyUnavailable": "Vorübergehend nicht verfügbar",
+          "unresponsive": "Reagiert nicht"
         },
         "preferredAv": {
           "header": "Bevorzugte Verfügbarkeit",
