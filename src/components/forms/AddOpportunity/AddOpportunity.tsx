@@ -429,6 +429,7 @@ export default function AddOpportunity() {
                             <MultipleCheckBoxInputsWithMore<OpportunityData, "locations">
                               FieldTag={formOpportunity.Field}
                               field={field}
+                              isOneOption
                             />
                             <FieldInfo field={field} />
                           </WithParentRef>
@@ -475,6 +476,7 @@ export default function AddOpportunity() {
                             <MultipleCheckBoxInputsWithMore<OpportunityData, "locations">
                               FieldTag={formOpportunity.Field}
                               field={field}
+                              isOneOption
                             />
                             <FieldInfo field={field} />
                           </WithParentRef>

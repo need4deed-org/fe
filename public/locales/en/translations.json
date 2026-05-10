@@ -1243,6 +1243,32 @@
       "futureDateError": "Date cannot be in the future",
       "contactTypeRequired": "Contact type is required",
       "deletePermissionError": "You do not have permission to delete communication with id: {{id}}."
+    },
+    "calendar": {
+      "createEvent": "Create an event",
+      "createForm": {
+        "eventTitle": "Event Title",
+        "titleLabel": "Title of the voluntary offer",
+        "titlePlaceholder": "Title",
+        "titleHelper": "e.g. \"Escort to the eye clinic\", \"Arts & Crafts\"",
+        "descriptionLabel": "Description",
+        "descriptionPlaceholder": "A short description of the event",
+        "location": "Location",
+        "street": "Street name",
+        "streetHelper": "e.g. \"Elsenstr.\"",
+        "houseNumber": "House number",
+        "houseNumberHelper": "e.g. \"87\"",
+        "postcode": "Postcode",
+        "postcodeHelper": "e.g. \"12435\"",
+        "dateTime": "Date & Time",
+        "date": "Event date",
+        "time": "Event time",
+        "cancel": "Cancel",
+        "back": "Back",
+        "next": "Next",
+        "submit": "Submit",
+        "locationHelper": "e.g. Elsenstr., No. 87, 12435"
+      }
     }
   },
   "aboutus": {
