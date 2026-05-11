@@ -601,7 +601,8 @@
           "email-sent": "Email sent",
           "briefed": "Briefed",
           "tried-call": "Tried to call",
-          "not-responding": "Not responding"
+          "not-responding": "Not responding",
+          "sms": "SMS"
         },
         "notProvided": "Not provided",
         "cancel": "Cancel",
