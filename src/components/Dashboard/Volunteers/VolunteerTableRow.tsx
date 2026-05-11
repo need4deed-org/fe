@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import type {
   createEngagementStatusLabelMap,
+  createMatchStatusLabelMap,
   createStatusLabelMap,
 } from "@/components/Dashboard/Profile/sections/VolunteerAgents/types";
 import { TableCell, TableRow } from "@/components/core/common/Table";
@@ -18,14 +19,15 @@ interface TableRowProps {
   isLast: boolean;
   engagementLabels: ReturnType<typeof createEngagementStatusLabelMap>;
   typeLabels: ReturnType<typeof createStatusLabelMap>;
+  matchLabels: ReturnType<typeof createMatchStatusLabelMap>;
   opportunityId?: string;
 }
 
-export function VolunteerTableRow({ volunteer, isLast, engagementLabels, typeLabels, opportunityId }: TableRowProps) {
+export function VolunteerTableRow({ volunteer, isLast, engagementLabels, typeLabels, matchLabels, opportunityId }: TableRowProps) {
   const { i18n } = useTranslation();
   const router = useRouter();
 
-  const { id, name, avatarUrl, statusEngagement, statusType, languages, locations } = volunteer;
+  const { id, name, avatarUrl, statusEngagement, statusType, statusMatch, languages, locations } = volunteer;
 
   const languageText =
     languages
@@ -57,7 +59,7 @@ export function VolunteerTableRow({ volunteer, isLast, engagementLabels, typeLab
         {statusEngagement ? engagementLabels[statusEngagement] : "—"}
       </TableCell>
       <TableCell $width="140px" data-testid={`volunteer-match-${id}`}>
-        —
+        {statusMatch ? matchLabels[statusMatch] : "—"}
       </TableCell>
       <TableCell $width="180px" data-testid={`volunteer-language-${id}`}>
         {languageText}
