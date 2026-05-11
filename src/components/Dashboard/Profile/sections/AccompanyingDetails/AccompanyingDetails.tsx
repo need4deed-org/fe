@@ -1,5 +1,5 @@
 "use client";
-import { useApiDistricts, useApiLanguages } from "@/components/Dashboard/Profile/sections/VolunteerProfile/hooks";
+import { useApiLanguages } from "@/components/Dashboard/Profile/sections/VolunteerProfile/hooks";
 import { useUpdateOpportunityAccompanyingDetails } from "@/hooks/useUpdateOpportunityAccompanyingDetails";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { de, enUS } from "date-fns/locale";
@@ -31,7 +31,6 @@ export const AccompanyingDetails = forwardRef<EditableSectionRef, Props>(functio
 
   useEditingChangeNotifier(isEditing, onEditingChange);
   const { data: apiLanguages } = useApiLanguages();
-  const { data: apiDistricts } = useApiDistricts();
   const showFullDetails = isAccompanyingType(opportunity.volunteerType);
   const minAppointmentDate = useMemo(() => getMinAppointmentDate(), []);
 
@@ -53,14 +52,6 @@ export const AccompanyingDetails = forwardRef<EditableSectionRef, Props>(functio
     appointmentLanguageLabelToKey[label] = key;
   });
   const appointmentLanguageOptions = appointmentLanguageKeys.map((key) => appointmentLanguageKeyToLabel[key]);
-
-  const districtKeyToLabel: Record<string, string> = {};
-  const districtLabelToKey: Record<string, string> = {};
-  apiDistricts.forEach((district) => {
-    districtKeyToLabel[String(district.id)] = district.title;
-    districtLabelToKey[district.title] = String(district.id);
-  });
-  const districtOptions = apiDistricts.map((district) => district.title);
 
   const initialFormValues = getInitialFormValues(opportunity.accompanyingDetails);
 
@@ -94,7 +85,6 @@ export const AccompanyingDetails = forwardRef<EditableSectionRef, Props>(functio
         accompanyingDetails: {
           appointmentAddress: values.appointmentAddress,
           appointmentPostcode: values.appointmentPostcode || undefined,
-          appointmentDistrict: values.appointmentDistrict || undefined,
           appointmentDate: values.appointmentDate ? values.appointmentDate.toISOString() : undefined,
           appointmentTime: values.appointmentTime || undefined,
           refugeeNumber: values.refugeeNumber,
@@ -132,8 +122,6 @@ export const AccompanyingDetails = forwardRef<EditableSectionRef, Props>(functio
     .filter((lang) => lang.purpose === LangPurpose.RECIPIENT)
     .map((lang) => lang.title)
     .join(", ");
-  const districtLabel =
-    districtKeyToLabel[formValues.appointmentDistrict || ""] || formValues.appointmentDistrict || "";
 
   return (
     <FormProvider {...methods}>
@@ -147,16 +135,13 @@ export const AccompanyingDetails = forwardRef<EditableSectionRef, Props>(functio
             appointmentLanguageOptions={appointmentLanguageOptions}
             appointmentLanguageKeyToLabel={appointmentLanguageKeyToLabel}
             appointmentLanguageLabelToKey={appointmentLanguageLabelToKey}
-            districtOptions={districtOptions}
-            districtKeyToLabel={districtKeyToLabel}
-            districtLabelToKey={districtLabelToKey}
             onCancel={handleCancel}
             onSubmit={handleSubmit(onSubmit)}
             isPending={isPending}
             minAppointmentDate={minAppointmentDate}
           />
         ) : (
-          <AccompanyingDetailsDisplay values={formValues} languageLabel={languageLabel} districtLabel={districtLabel} />
+          <AccompanyingDetailsDisplay values={formValues} languageLabel={languageLabel} />
         )}
       </Container>
     </FormProvider>
