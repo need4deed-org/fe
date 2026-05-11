@@ -5,7 +5,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   ApiVolunteerGet,
   Lang,
-  LangPurpose,
   VolunteerStateCommunicationType,
   VolunteerStateTypeType,
 } from "need4deed-sdk";
