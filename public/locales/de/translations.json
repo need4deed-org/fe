@@ -602,7 +602,8 @@
           "email-sent": "E-Mail gesendet",
           "briefed": "Briefing erfolgt",
           "tried-call": "Versucht anzurufen",
-          "not-responding": "Keine Reaktion"
+          "not-responding": "Keine Reaktion",
+          "sms": "SMS"
         },
         "notProvided": "Nicht angegeben",
         "cancel": "Abbrechen",
