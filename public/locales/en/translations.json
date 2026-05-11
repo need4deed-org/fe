@@ -342,9 +342,18 @@
     },
     "volunteers": {
       "header": "Volunteer Directory",
+      "table": {
+        "name": "Name",
+        "type": "Type",
+        "engagementStatus": "Engagement Status",
+        "matchingStatus": "Matching Status",
+        "language": "Language",
+        "district": "District",
+        "email": "Email"
+      },
       "tabs": {
-        "tab1": "TABLE VIEW",
-        "tab2": "MAP VIEW"
+        "tab1": "List",
+        "tab2": "Cards"
       },
       "filters": {
         "accompanying": "Accompanying",
@@ -359,7 +368,13 @@
           "vol-new": "New",
           "vol-available": "Available",
           "vol-temp-unavailable": "Temporarily Unavailable",
-          "vol-unresponsive": "Unresponsive"
+          "vol-unresponsive": "Unresponsive",
+          "active": "Active",
+          "inactive": "Inactive",
+          "new": "New",
+          "available": "Available",
+          "temporarilyUnavailable": "Temporarily Unavailable",
+          "unresponsive": "Unresponsive"
         },
         "preferredAv": {
           "header": "Preferred Availability",
