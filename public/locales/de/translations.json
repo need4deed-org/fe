@@ -1012,6 +1012,7 @@
       "postedOn": "Veröffentlicht am",
       "currentStatus": "Aktueller Status",
       "matchingStatus": "Matching-Status",
+      "agent": "Träger",
       "status": {
         "new": "Neu",
         "active": "Aktiv",

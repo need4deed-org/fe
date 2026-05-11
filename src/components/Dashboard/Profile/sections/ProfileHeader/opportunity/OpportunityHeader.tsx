@@ -3,7 +3,9 @@ import { EMPTY_PLACEHOLDER_VALUE } from "@/config/constants";
 import { formatDateTime } from "@/utils";
 import { ShootingStarIcon } from "@phosphor-icons/react";
 import { ApiOpportunityGet, VolunteerStateMatchType } from "need4deed-sdk";
+import Link from "next/link";
 import { useTranslation } from "react-i18next";
+import styled from "styled-components";
 import { createVolunteerTypeLabelMap, EditButton, HeaderCard, IconContainer, StatusRowField } from "../common";
 import { ChangeOpportunityStatusDialog } from "./ChangeOpportunityStatusDialog";
 import { createMatchLabelMap } from "../volunteer/constants";
@@ -16,8 +18,18 @@ type Props = {
   opportunity: OpportunityWithMatch;
 };
 
+const AgentLink = styled(Link)`
+  color: var(--color-blue-700);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
 export const OpportunityHeader = ({ opportunity }: Props) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const dialog = useOpportunityStatusDialog(opportunity);
   const statusLabelMap = createOpportunityStatusLabelMap(t);
   const volunteerTypeLabelMap = createVolunteerTypeLabelMap(t);
@@ -56,6 +68,17 @@ export const OpportunityHeader = ({ opportunity }: Props) => {
         status={opportunity.statusMatch}
         label={opportunity.statusMatch ? matchLabelMap[opportunity.statusMatch] : undefined}
       />
+
+      {opportunity.agent?.id && (
+        <StatusRowField
+          title={t("dashboard.opportunityProfile.agent")}
+          extra={
+            <AgentLink href={`/${i18n.language}/dashboard/agents/${opportunity.agent.id}`}>
+              {opportunity.agent.name}
+            </AgentLink>
+          }
+        />
+      )}
     </HeaderCard>
   );
 };
