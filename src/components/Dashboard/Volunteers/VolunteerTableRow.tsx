@@ -1,6 +1,6 @@
 "use client";
 
-import { ApiVolunteerGetList } from "need4deed-sdk";
+import type { ApiVolunteerGetList } from "need4deed-sdk";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
