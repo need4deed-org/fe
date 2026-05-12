@@ -11,7 +11,7 @@ export type OpportunityAccompanyingDetailsUpdateData = {
     appointmentTime?: string;
     refugeeNumber?: string;
     refugeeName?: string;
-    languagesToTranslate?: string[];
+    refugeeLanguage?: { id: string | number }[];
     appointmentLanguage?: string;
   };
 };
