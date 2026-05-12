@@ -48,6 +48,6 @@ export const getInitialFormValues = (
   appointmentTime: details?.appointmentTime ? utcHhmmToLocal(parseTime(details.appointmentTime)) : "",
   refugeeNumber: details?.refugeeNumber || "",
   refugeeName: details?.refugeeName || "",
-  languagesToTranslate: details?.refugeeLanguage?.map((lang) => String(lang.id)) ?? [],
-  appointmentLanguage: details?.appointmentLanguage || "",
+  refugeeLanguage: details?.refugeeLanguage?.map((lang) => String(lang.id)) ?? [],
+  appointmentLanguage: details?.appointmentLanguage ?? undefined,
 });

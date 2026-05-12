@@ -89,7 +89,7 @@ export const AccompanyingDetails = forwardRef<EditableSectionRef, Props>(functio
           appointmentTime: values.appointmentTime ? localHhmmToUtc(values.appointmentTime) : undefined,
           refugeeNumber: values.refugeeNumber,
           refugeeName: values.refugeeName,
-          refugeeLanguage: (values.languagesToTranslate ?? []).map((id) => ({ id })),
+          refugeeLanguage: (values.refugeeLanguage ?? []).map((id) => ({ id })),
           appointmentLanguage: values.appointmentLanguage || undefined,
         },
       },

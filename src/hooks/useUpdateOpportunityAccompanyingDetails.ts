@@ -1,6 +1,6 @@
 import { apiPathOpportunity } from "@/config/constants";
 import { useMutationQuery } from "@/hooks";
-import { ApiOpportunityGet } from "need4deed-sdk";
+import { ApiOpportunityGet, TranslatedIntoType } from "need4deed-sdk";
 
 export type OpportunityAccompanyingDetailsUpdateData = {
   accompanyingDetails: {
@@ -12,7 +12,7 @@ export type OpportunityAccompanyingDetailsUpdateData = {
     refugeeNumber?: string;
     refugeeName?: string;
     refugeeLanguage?: { id: string | number }[];
-    appointmentLanguage?: string;
+    appointmentLanguage?: TranslatedIntoType;
   };
 };
 
