@@ -8,6 +8,7 @@ import { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from "r
 import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { EditableSectionProps, EditableSectionRef } from "../shared/types";
+import { localHhmmToUtc } from "@/utils";
 import { useEditingChangeNotifier } from "../shared/useEditingChangeNotifier";
 import { AccompanyingDetailsDisplay } from "./AccompanyingDetailsDisplay";
 import { AccompanyingDetailsEdit } from "./AccompanyingDetailsEdit";
@@ -86,7 +87,7 @@ export const AccompanyingDetails = forwardRef<EditableSectionRef, Props>(functio
           appointmentAddress: values.appointmentAddress,
           appointmentPostcode: values.appointmentPostcode || undefined,
           appointmentDate: values.appointmentDate ? values.appointmentDate.toISOString() : undefined,
-          appointmentTime: values.appointmentTime || undefined,
+          appointmentTime: values.appointmentTime ? localHhmmToUtc(values.appointmentTime) : undefined,
           refugeeNumber: values.refugeeNumber,
           refugeeName: values.refugeeName,
           languagesToTranslate: values.languagesToTranslate ?? [],
