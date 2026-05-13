@@ -2,6 +2,7 @@ import { DotsThreeOutline } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
 import { CommentActionMenu } from "./CommentActionMenu";
 import { CommentText, MenuAction } from "./styles";
+import { useCommentTag } from "./hooks/useCommentTag";
 
 type MenuState = {
   isOpen: boolean;
@@ -21,10 +22,11 @@ type Props = {
 
 export function CommentDisplay({ commentId, content, menu }: Props) {
   const { t } = useTranslation();
+  const { renderHighlightedText } = useCommentTag();
 
   return (
     <>
-      <CommentText>{content}</CommentText>
+      <CommentText>{renderHighlightedText(content)}</CommentText>
       <MenuAction
         ref={menu.buttonRef}
         onClick={menu.onToggle}
