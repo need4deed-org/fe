@@ -13,6 +13,7 @@ import { useCommentEdit } from "./hooks/useCommentEdit";
 import { useCommentMenu } from "./hooks/useCommentMenu";
 import { AddCommentButton, Container, NewCommentSection, TagOverlay, TextArea } from "./styles";
 import { useCommentTag } from "./hooks/useCommentTag";
+import Autocomplete from "./Autocomplete";
 
 type Props = {
   entityId: Id;
@@ -31,7 +32,11 @@ export function EntityComments({ entityId, entityType, comments, testId }: Props
   const edit = useCommentEdit();
   const deleteState = useCommentDelete();
   const menu = useCommentMenu();
-  const { renderHighlightedText } = useCommentTag();
+  const { renderHighlightedText, showAutocomplete, setShowAutocomplete, handleTagAdd } = useCommentTag(
+    newCommentText,
+    setNewCommentText,
+    textAreaRef,
+  );
 
   const { mutate: updateComment, isPending: isUpdating } = useUpdateComment(
     entityId,
@@ -98,7 +103,6 @@ export function EntityComments({ entityId, entityType, comments, testId }: Props
     deleteState.openDeleteDialog(commentId, authorName);
     menu.closeMenu();
   };
-
   return (
     <Container data-testid={testId}>
       {sortedComments.map((comment) => (
@@ -131,9 +135,11 @@ export function EntityComments({ entityId, entityType, comments, testId }: Props
           }}
         />
       ))}
-
       <NewCommentSection>
-        <TagOverlay ref={overlayRef}>{renderHighlightedText(newCommentText)}</TagOverlay>
+        {showAutocomplete && (
+          <Autocomplete handleTagAdd={handleTagAdd} newCommentText={newCommentText} textAreaRef={textAreaRef} />
+        )}
+        <TagOverlay ref={overlayRef}>{renderHighlightedText()}</TagOverlay>
         <TextArea
           ref={textAreaRef}
           placeholder={t("dashboard.commentsSection.placeholder")}

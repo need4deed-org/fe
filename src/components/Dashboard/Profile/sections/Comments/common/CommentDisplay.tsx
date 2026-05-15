@@ -22,11 +22,11 @@ type Props = {
 
 export function CommentDisplay({ commentId, content, menu }: Props) {
   const { t } = useTranslation();
-  const { renderHighlightedText } = useCommentTag();
+  const { renderHighlightedText } = useCommentTag(content, () => null, null, [4, 6, 67]);
 
   return (
     <>
-      <CommentText>{renderHighlightedText(content)}</CommentText>
+      <CommentText>{renderHighlightedText()}</CommentText>
       <MenuAction
         ref={menu.buttonRef}
         onClick={menu.onToggle}

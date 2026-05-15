@@ -198,6 +198,8 @@ html {
 
   /* user tags */
   --tag-text-stroke: 0.5px var(--color-midnight);
+  --tag-autocomplete-padding: 5px;
+  --tag-autocomplete-font-size: 1.05rem;
 
   /* icon */
   --icon-color: var(--color-papaya);

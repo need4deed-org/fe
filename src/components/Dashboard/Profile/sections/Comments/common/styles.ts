@@ -100,7 +100,7 @@ export const NewCommentSection = styled.div`
   padding: 0;
   gap: var(--spacing-16);
   width: 100%;
-  height: 112px;
+  height: 200px;
   overflow-y: hidden;
   align-self: stretch;
   border: var(--border-width-thin) solid var(--color-grey-200);
@@ -271,5 +271,37 @@ export const TagOverlay = styled.div`
     border: none;
     -webkit-text-stroke: var(--tag-text-stroke);
     border-radius: var(--border-radius-xs);
+  }
+`;
+
+export const AutocompleteContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 130px;
+  position: absolute;
+  padding: 1rem;
+  border: var(--border-width-thin) solid var(--color-grey-200);
+  border-radius: var(--border-radius-xs);
+  background: white;
+  overflow-y: scroll;
+  z-index: 5;
+`;
+
+export const AutocompleteRow = styled.div<{ $isSelected?: boolean }>`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--tag-autocomplete-padding);
+  font-size: var(--tag-autocomplete-font-size);
+  cursor: pointer;
+  user-select: none;
+  width: 100%;
+  border-radius: var(--editableField-optionRow-borderRadius);
+  transition: background-color 0.2s ease;
+  gap: var(--editableField-optionRow-gap);
+  background-color: ${(props) => (props.$isSelected ? "var(--editableField-optionRow-selectedBg)" : "transparent")};
+
+  &:hover {
+    background-color: var(--color-orchid-light);
   }
 `;
