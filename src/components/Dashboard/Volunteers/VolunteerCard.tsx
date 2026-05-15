@@ -32,10 +32,16 @@ export function VolunteerCard({ volunteer, opportunityId }: Props) {
   const { t, i18n } = useTranslation();
   const router = useRouter();
 
-  const { id, name, languages, activities, skills, locations, availability, avatarUrl, statusEngagement, statusType, statusCommunication, statusMatch } =
+  const { id, name, languages, activities, skills, locations, availability, avatarUrl, statusEngagement, statusType } =
     getNormalizedVolunteer(volunteer);
 
-  const showBriefedCheck = isBriefedAccompanying(statusType as VolunteerStateTypeType, statusCommunication as VolunteerStateCommunicationType);
+  // Cast until SDK PR #99 adds statusCommunication and statusMatch to ApiVolunteerGetList
+  const { statusCommunication, statusMatch } = volunteer as ApiVolunteerGetList & {
+    statusCommunication?: VolunteerStateCommunicationType;
+    statusMatch?: VolunteerStateMatchType;
+  };
+
+  const showBriefedCheck = isBriefedAccompanying(statusType as VolunteerStateTypeType, statusCommunication);
 
   const groupedLanguages = groupLanguagesByProficiency(languages);
 
