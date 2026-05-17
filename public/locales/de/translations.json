@@ -1233,7 +1233,8 @@
         "signal": "Signal",
         "email": "E-Mail",
         "sms": "SMS",
-        "voicenote": "Sprachnachricht"
+        "voicenote": "Sprachnachricht",
+        "videoCall": "Videoanruf"
       },
       "notesPlaceholder": "Fügen Sie Notizen zu dieser Kommunikation hinzu...",
       "cancel": "Abbrechen",
