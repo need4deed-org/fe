@@ -24,7 +24,7 @@ export const OrganisationDetails = forwardRef<EditableSectionRef, Props>(functio
 ) {
   const { t, i18n } = useTranslation();
   const [isEditing, setIsEditing] = useState(false);
-  const { mutate: updateOrganization /*, isPending */ } = useUpdateOrganization(String(agent?.id));
+  const { mutate: updateOrganization } = useUpdateOrganization(String(agent?.id));
 
   useEditingChangeNotifier(isEditing, onEditingChange);
   const { data: apiLanguages } = useApiLanguages();
