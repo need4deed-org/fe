@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { PageLayout } from "@/components/Layout";
@@ -43,7 +43,7 @@ function DataPrivacy() {
             {t("legal.dataPrivacy.generalInfo.responsible.address")}
             {": "}
           </strong>
-          Lindower StraÃŸe 18, 13347 Berlin
+          Lindower Straße 18, 13347 Berlin
         </p>
         <p>
           <strong>
@@ -79,7 +79,7 @@ function DataPrivacy() {
           <strong>clubdialog@ws-datenschutz.de</strong>
         </p>
         <p>WS Datenschutz GmbH</p>
-        <p>DircksenstraÃŸe 51 </p>
+        <p>Dircksenstraße 51 </p>
         <p>D-10178 Berlin</p>
         <p>
           <a href="https://webersohnundscholtz.de">https://webersohnundscholtz.de</a>
@@ -95,7 +95,7 @@ function DataPrivacy() {
         <h6>{t("legal.dataPrivacy.dataProcessing.description.header")}</h6>
         <p>{t("legal.dataPrivacy.dataProcessing.description.para1")}</p>
         <p>{t("legal.dataPrivacy.dataProcessing.description.para2")}</p>
-        <p>ALL-INKL.COM â€“ Neue Medien MÃ¼nnich, HauptstraÃŸe 68, 02742 Friedersdorf, Deutschland.</p>
+        <p>ALL-INKL.COM – Neue Medien Münnich, Hauptstraße 68, 02742 Friedersdorf, Deutschland.</p>
         <p>
           {t("legal.dataPrivacy.dataProcessing.description.para3")}{" "}
           <strong>
@@ -376,7 +376,7 @@ function DataPrivacy() {
         </p>
         <p>{t("legal:dataPrivacy:excercise.para2")}</p>
         <p>WS Datenschutz GmbH</p>
-        <p>DircksenstraÃŸe 51</p>
+        <p>Dircksenstraße 51</p>
         <p>D-10178 Berlin</p>
 
         <h3>{t("legal.dataPrivacy.change.header")}</h3>
