@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { getActivityTitles, getLanguagesByPurpose } from "./helpers";
+import { truncateList } from "../Volunteers/helpers";
 import { TableCell, TableRow } from "@/components/core/common/Table";
 import { OPPORTUNITY_COL_WIDTHS } from "./opportunitiesTableColumns";
 import { formatAccompanyingDate, formatAvailability } from "./OpportunityCard.helpers";
@@ -56,34 +57,35 @@ export function OpportunityTableRow({ opportunity, isLast, activitiesList, distr
       <TitleCell $width={OPPORTUNITY_COL_WIDTHS.title} data-testid={`opportunity-title-${id}`}>
         {title}
       </TitleCell>
-      <TableCell $width={OPPORTUNITY_COL_WIDTHS.volunteerType} data-testid={`opportunity-volunteer-type-${id}`}>
+      <TableCell $width={OPPORTUNITY_COL_WIDTHS.volunteerType} $noWrap data-testid={`opportunity-volunteer-type-${id}`}>
         {t(`dashboard.opportunities.type.${volunteerType}`)}
       </TableCell>
-      <TableCell $width={OPPORTUNITY_COL_WIDTHS.statusOpportunity} data-testid={`opportunity-status-opportunity-${id}`}>
+      <TableCell $width={OPPORTUNITY_COL_WIDTHS.statusOpportunity} $noWrap data-testid={`opportunity-status-opportunity-${id}`}>
         {t(`dashboard.opportunities.status.${statusOpportunity}`)}
       </TableCell>
-      <TableCell $width={OPPORTUNITY_COL_WIDTHS.statusMatch} data-testid={`opportunity-status-match-${id}`}>
+      <TableCell $width={OPPORTUNITY_COL_WIDTHS.statusMatch} $noWrap data-testid={`opportunity-status-match-${id}`}>
         {t(`dashboard.opportunities.matchStatus.${statusMatch}`)}
       </TableCell>
-      <TableCell $width={OPPORTUNITY_COL_WIDTHS.languages} data-testid={`opportunity-languages-${id}`}>
+      <TableCell $width={OPPORTUNITY_COL_WIDTHS.languages} $noWrap data-testid={`opportunity-languages-${id}`}>
         {mainCommunication || "—"}
       </TableCell>
-      <TableCell $width={OPPORTUNITY_COL_WIDTHS.activities} data-testid={`opportunity-activities-${id}`}>
-        {activityTitles.join(", ") || "—"}
+      <TableCell $width={OPPORTUNITY_COL_WIDTHS.activities} $noWrap data-testid={`opportunity-activities-${id}`}>
+        {truncateList(activityTitles, 2) || "—"}
       </TableCell>
-      <TableCell $width={OPPORTUNITY_COL_WIDTHS.district} data-testid={`opportunity-district-${id}`}>
+      <TableCell $width={OPPORTUNITY_COL_WIDTHS.district} $noWrap data-testid={`opportunity-district-${id}`}>
         {districtTitle || "—"}
       </TableCell>
-      <TableCell $width={OPPORTUNITY_COL_WIDTHS.schedule} data-testid={`opportunity-schedule-${id}`}>
+      <TableCell $width={OPPORTUNITY_COL_WIDTHS.schedule} $noWrap data-testid={`opportunity-schedule-${id}`}>
         {scheduleText || "—"}
       </TableCell>
       <TableCell
         $width={OPPORTUNITY_COL_WIDTHS.numberOfVolunteers}
+        $noWrap
         data-testid={`opportunity-number-of-volunteers-${id}`}
       >
         {numberOfVolunteers ?? "—"}
       </TableCell>
-      <TableCell $width={OPPORTUNITY_COL_WIDTHS.agentTitle} data-testid={`opportunity-agent-${id}`}>
+      <TableCell $width={OPPORTUNITY_COL_WIDTHS.agentTitle} $noWrap data-testid={`opportunity-agent-${id}`}>
         {agentTitle || "—"}
       </TableCell>
     </ClickableRow>

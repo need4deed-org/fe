@@ -129,7 +129,7 @@ export function OpportunityCard({ opportunity, volunteerId, activitiesList, dist
 
       {activityTitles.length > 0 && (
         <CardDetail header={t("dashboard.volunteers.activities")} iconName={IconName.ShootingStar}>
-          <Tags tags={activityTitles} />
+          <Tags tags={activityTitles} max={2} />
         </CardDetail>
       )}
 
