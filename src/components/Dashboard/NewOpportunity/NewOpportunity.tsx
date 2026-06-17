@@ -538,21 +538,23 @@ export function NewOpportunity() {
         </ProfileContent>
       </Card>
 
-      {/* Opportunity Details section */}
-      <SectionCard
-        iconName={IconName.Wrench}
-        title={t("dashboard.opportunityProfile.opportunityDetails.title")}
-        subComponent={
-          <FormProvider {...detailsMethods}>
-            <OpportunityDetailsFields
-              isEvent={isEvent}
-              apiLanguages={apiLanguages}
-              apiActivities={apiActivities}
-              apiSkills={apiSkills}
-            />
-          </FormProvider>
-        }
-      />
+      {/* Opportunity Details section — hidden for ACCOMPANYING type */}
+      {!isAccompanying && (
+        <SectionCard
+          iconName={IconName.Wrench}
+          title={t("dashboard.opportunityProfile.opportunityDetails.title")}
+          subComponent={
+            <FormProvider {...detailsMethods}>
+              <OpportunityDetailsFields
+                isEvent={isEvent}
+                apiLanguages={apiLanguages}
+                apiActivities={apiActivities}
+                apiSkills={apiSkills}
+              />
+            </FormProvider>
+          }
+        />
+      )}
 
       {/* Accompanying Details section — only for ACCOMPANYING type */}
       {isAccompanying && (
