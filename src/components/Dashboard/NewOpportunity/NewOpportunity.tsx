@@ -104,9 +104,11 @@ export function NewOpportunity() {
 
   const handleSubmit = () => {
     if (!validate()) return;
+    // Don't create an unlinked opportunity: the agent must be loaded first.
+    if (!agent?.id) return;
     createOpportunity({
       title: title.trim(),
-      agent_id: agent?.id,
+      agent_id: agent.id,
       contact: {
         name: contactName.trim(),
         phone: contactPhone.trim(),
@@ -195,7 +197,7 @@ export function NewOpportunity() {
           backgroundcolor="var(--color-aubergine)"
           textColor="var(--color-white)"
           onClick={handleSubmit}
-          disabled={isPending}
+          disabled={isPending || agentLoading || !agent}
         />
       </Card>
     </Wrapper>
