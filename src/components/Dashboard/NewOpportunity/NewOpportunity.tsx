@@ -4,6 +4,7 @@ import { FormInput } from "@/components/core/common";
 import { apiPathOpportunity, DashboardRoutes } from "@/config/constants";
 import { useMutationQuery } from "@/hooks";
 import { useGetCurrentAgent } from "@/hooks/useGetCurrentAgent";
+import axios from "axios";
 import { ApiOpportunityGet } from "need4deed-sdk";
 import i18next from "i18next";
 import { useRouter } from "next/navigation";
@@ -24,14 +25,19 @@ import {
   Wrapper,
 } from "./styled";
 
-type CreateOpportunityBody = {
+type CreateOpportunityResponse = { message: string; data: ApiOpportunityGet };
+
+// The create endpoint (`OpportunityFormDataWithAgentSubmitter`) only accepts the
+// opportunity itself + `agent_id`; contact details are persisted via a follow-up
+// PATCH (`ApiOpportunityPatch.contact`) once we have the new opportunity id.
+type CreateOpportunityVariables = {
   title: string;
+  agent_id?: number;
   contact: {
     name: string;
     phone: string;
     email: string;
   };
-  agentId?: number;
 };
 
 export function NewOpportunity() {
@@ -58,9 +64,24 @@ export function NewOpportunity() {
     mutate: createOpportunity,
     isPending,
     error,
-  } = useMutationQuery<CreateOpportunityBody, { message: string; data: ApiOpportunityGet }>({
-    apiPath: `${apiPathOpportunity}/`,
-    method: "post",
+  } = useMutationQuery<CreateOpportunityVariables, CreateOpportunityResponse>({
+    mutationFn: async ({ title: oppTitle, agent_id, contact }) => {
+      const { data: created } = await axios.post<CreateOpportunityResponse>(`${apiPathOpportunity}/`, {
+        title: oppTitle,
+        agent_id,
+      });
+      const id = created?.data?.id;
+      if (id) {
+        // Contact is best-effort: the opportunity already exists and contact is
+        // editable on its profile, so a failed PATCH must not fail the create.
+        try {
+          await axios.patch(`${apiPathOpportunity}/${id}`, { contact });
+        } catch {
+          // swallow — agent can set contact from the opportunity profile
+        }
+      }
+      return created;
+    },
     onSuccessCallback: (response) => {
       const id = response?.data?.id;
       if (id) {
@@ -85,12 +106,12 @@ export function NewOpportunity() {
     if (!validate()) return;
     createOpportunity({
       title: title.trim(),
+      agent_id: agent?.id,
       contact: {
         name: contactName.trim(),
         phone: contactPhone.trim(),
         email: contactEmail.trim(),
       },
-      agentId: agent?.id,
     });
   };
 
