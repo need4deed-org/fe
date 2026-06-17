@@ -1,5 +1,5 @@
 import { fetchFn } from "@/hooks/api/utils";
-import { UserRole } from "need4deed-sdk";
+import { ApiUserGet, UserRole } from "need4deed-sdk";
 import { apiPathMe } from "@/config/constants";
 
 export interface ApiResponse<T> {
@@ -8,10 +8,10 @@ export interface ApiResponse<T> {
   count: number;
 }
 
-export const getServerUserRole = async (cookieHeader: string): Promise<UserRole | null> => {
+export const getServerUser = async (cookieHeader: string): Promise<ApiUserGet | null> => {
   try {
     const urlPath = apiPathMe.replace("/api/", "");
-    const response = await fetchFn<ApiResponse<{ role: UserRole }>>({
+    const response = await fetchFn<ApiResponse<ApiUserGet>>({
       url: `${process.env.URL_API}/${urlPath}`,
       options: {
         method: "GET",
@@ -19,7 +19,7 @@ export const getServerUserRole = async (cookieHeader: string): Promise<UserRole 
         cache: "no-store",
       },
     });
-    return response.data.role;
+    return response.data;
   } catch (error) {
     console.error("Failed to fetch server user role:", error);
     return null;

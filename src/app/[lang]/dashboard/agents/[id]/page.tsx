@@ -1,5 +1,6 @@
 import ProfileLayout from "@/components/Dashboard/Profile/ProfileLayout";
-import { getServerUserRole } from "@/hooks/api/getUserRole";
+import { getServerAgent } from "@/hooks/api/getAgent";
+import { getServerUser } from "@/hooks/api/getUser";
 import { RouteParams } from "@/types";
 import { UserRole } from "need4deed-sdk";
 import { cookies } from "next/headers";
@@ -10,9 +11,17 @@ export default async function DashboardAgentPage({ params }: RouteParams) {
 
   const cookieStore = await cookies();
   const cookieHeader = cookieStore.toString();
-  const userRole = await getServerUserRole(cookieHeader);
+  const user = await getServerUser(cookieHeader);
+  const agent = await getServerAgent(cookieHeader, id);
+  const userRole = user?.role;
+  const personId = user?.personId;
+  const matchedPersonId = personId === agent?.representative?.id;
 
-  if (!userRole || (userRole !== UserRole.COORDINATOR && userRole !== UserRole.ADMIN)) {
+  if (
+    !userRole ||
+    !personId ||
+    (userRole !== UserRole.COORDINATOR && userRole !== UserRole.ADMIN && !matchedPersonId)
+  ) {
     redirect(`/dashboard/agents`);
   }
   return <ProfileLayout entityId={id} entityType="agent" />;
