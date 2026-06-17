@@ -460,7 +460,16 @@ export function NewOpportunity() {
     appointmentLanguageKeyToLabel[key] = label;
     appointmentLanguageLabelToKey[label] = key;
   });
-  const minAppointmentDate = useMemo(() => new Date(), []);
+  const minAppointmentDate = useMemo(() => {
+    const d = new Date();
+    d.setDate(d.getDate() + 8);
+    return d;
+  }, []);
+  const maxAppointmentDate = useMemo(() => {
+    const d = new Date();
+    d.setDate(d.getDate() + 60);
+    return d;
+  }, []);
 
   const { mutate: createOpportunity, isPending } = useMutationQuery<OpportunityFormDataWithAgentSubmitter, unknown>({
     apiPath: `${apiPathOpportunity}/`,
@@ -575,6 +584,7 @@ export function NewOpportunity() {
                 onSubmit={() => {}}
                 isPending={false}
                 minAppointmentDate={minAppointmentDate}
+                maxAppointmentDate={maxAppointmentDate}
                 hideButtons
               />
             </FormProvider>

@@ -21,6 +21,7 @@ type Props = {
   locale?: Locale;
   allowFuture?: boolean;
   minDate?: Date;
+  maxDate?: Date;
   label?: string;
   showTodayIndicator?: boolean;
   todayText?: string;
@@ -32,6 +33,7 @@ export function DatePickerWithLabel({
   locale,
   allowFuture = false,
   minDate,
+  maxDate,
   label,
   showTodayIndicator = false,
   todayText = "today",
@@ -99,7 +101,8 @@ export function DatePickerWithLabel({
     const parsedDate = parse(value, "dd.MM.yyyy", new Date());
 
     const isAfterMinDate = !minDate || parsedDate >= minDate;
-    if (isValid(parsedDate) && parsedDate.getFullYear() >= MIN_YEAR && isAfterMinDate) {
+    const isBeforeMaxDate = !maxDate || parsedDate <= maxDate;
+    if (isValid(parsedDate) && parsedDate.getFullYear() >= MIN_YEAR && isAfterMinDate && isBeforeMaxDate) {
       onSelect(parsedDate);
     }
   };
@@ -147,9 +150,13 @@ export function DatePickerWithLabel({
           onMonthChange={setMonth}
           locale={locale}
           captionLayout="dropdown"
-          startMonth={new Date(MIN_YEAR, 0)}
-          endMonth={new Date(new Date().getFullYear() + 10, 11)}
-          disabled={allowFuture ? { before: minDate ?? new Date() } : { after: new Date() }}
+          startMonth={minDate ?? new Date(MIN_YEAR, 0)}
+          endMonth={maxDate ?? new Date(new Date().getFullYear() + 10, 11)}
+          disabled={
+            allowFuture
+              ? [{ before: minDate ?? new Date() }, ...(maxDate ? [{ after: maxDate }] : [])]
+              : { after: new Date() }
+          }
         />
       </DatePickerPopover>
     </DatePickerWrapper>

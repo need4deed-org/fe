@@ -27,6 +27,7 @@ type Props = {
   onSubmit: () => void;
   isPending: boolean;
   minAppointmentDate: Date;
+  maxAppointmentDate?: Date;
   hideButtons?: boolean;
 };
 
@@ -42,6 +43,7 @@ export const AccompanyingDetailsEdit = ({
   onSubmit,
   isPending,
   minAppointmentDate,
+  maxAppointmentDate,
   hideButtons = false,
 }: Props) => {
   const { t } = useTranslation();
@@ -96,6 +98,7 @@ export const AccompanyingDetailsEdit = ({
                   locale={locale}
                   allowFuture
                   minDate={minAppointmentDate}
+                  maxDate={maxAppointmentDate}
                 />
               </DatePickerContainer>
             </DateFieldRow>
