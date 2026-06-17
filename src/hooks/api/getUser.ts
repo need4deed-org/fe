@@ -1,5 +1,5 @@
 import { fetchFn } from "@/hooks/api/utils";
-import { ApiUserGet, UserRole } from "need4deed-sdk";
+import { ApiUserGet } from "need4deed-sdk";
 import { apiPathMe } from "@/config/constants";
 
 export interface ApiResponse<T> {

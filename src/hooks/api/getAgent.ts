@@ -1,6 +1,6 @@
 import { fetchFn } from "@/hooks/api/utils";
-import { ApiAgentGet, ApiUserGet, UserRole } from "need4deed-sdk";
-import { apiPathAgent, apiPathMe } from "@/config/constants";
+import { ApiAgentGet } from "need4deed-sdk";
+import { apiPathAgent } from "@/config/constants";
 
 export interface ApiResponse<T> {
   message: string;
