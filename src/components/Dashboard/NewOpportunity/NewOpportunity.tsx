@@ -601,7 +601,9 @@ export function NewOpportunity() {
           text={t("dashboard.newOpportunity.submit")}
           backgroundcolor="var(--color-aubergine)"
           textColor="var(--color-white)"
-          onClick={handleHeaderSubmit(onSubmit)}
+          onClick={handleHeaderSubmit(onSubmit, () => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          })}
           disabled={isPending}
         />
       </SaveRow>
