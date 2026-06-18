@@ -37,6 +37,7 @@ import { AvailabilityGrid } from "@/components/forms/AvailabilityGrid/Availabili
 import { LanguageFields } from "@/components/forms/LanguageFields";
 import { apiPathOpportunity, DashboardRoutes, MAX_DESCRIPTION_LENGTH } from "@/config/constants";
 import { useMutationQuery } from "@/hooks";
+import { useGetCurrentAgent } from "@/hooks/useGetCurrentAgent";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Heading2, Heading4 } from "@/components/styled/text";
 import { ShootingStarIcon, ArrowLeftIcon } from "@phosphor-icons/react";
@@ -129,6 +130,7 @@ function buildCreatePayload(
   apiSkills: ApiLanguageOption[],
   lang: string,
   t: TFunction,
+  agentId?: number,
 ): OpportunityFormDataWithAgentSubmitter {
   const isEvent = headerData.volunteerType === VolunteerStateTypeType.EVENTS;
   const isAccompanying = headerData.volunteerType === VolunteerStateTypeType.ACCOMPANYING;
@@ -140,7 +142,7 @@ function buildCreatePayload(
 
   const activities = toOptionItems(detailsData.activities, apiActivities).map((i) => String(i.id));
   const skills = toOptionItems(detailsData.skills, apiSkills).map((i) => String(i.id));
-  const timeslots = isEvent ? null : availabilityToTimeslots(detailsData.availability);
+  const timeslots = isEvent || isAccompanying ? null : availabilityToTimeslots(detailsData.availability);
 
   const onetime_date_time =
     isEvent && detailsData.eventDate
@@ -173,7 +175,7 @@ function buildCreatePayload(
     category: "",
     category_id: "",
     language: lang as `${Lang}`,
-    agent_id: null,
+    agent_id: agentId ?? null,
     submitted_by_id: null,
     last_edited_time_notion: null,
   };
@@ -392,6 +394,7 @@ export function NewOpportunity() {
   const router = useRouter();
   const volunteerTypeLabelMap = createVolunteerTypeLabelMap(t);
 
+  const { agentId } = useGetCurrentAgent();
   const { data: apiLanguages = [] } = useApiLanguages();
   const { data: apiActivities = [] } = useApiActivities();
   const { data: apiSkills = [] } = useApiSkills();
@@ -489,6 +492,7 @@ export function NewOpportunity() {
       apiSkills,
       lang,
       t,
+      agentId,
     );
     createOpportunity(payload);
   };
