@@ -487,7 +487,8 @@
       "button": {
         "login": "Anmelden",
         "joinVolunteer": "Jetzt sich engagieren",
-        "dashboard": "Dashboard"
+        "dashboard": "Dashboard",
+        "logout": "Abmelden"
       }
     },
     "login": {
