@@ -4,6 +4,10 @@ import { userAgent } from "next/server";
 import { supportedLangs } from "./config/constants";
 import { Lang } from "need4deed-sdk";
 
+const AUTH_HINT_COOKIE = "is_logged_in";
+const ACCESS_COOKIE = "access";
+const REFRESH_COOKIE = "refresh";
+
 const DEFAULT_LOCALE = Lang.EN;
 const DEFAULT_DEVICE_TYPE = "desktop";
 const DEVICE_HEADER_NAME = "x-device-type";
@@ -45,6 +49,22 @@ export function middleware(request: NextRequest) {
   }
 
   const response = NextResponse.next();
+
+  // Clear auth tokens when is_logged_in hint is absent but access token is still present.
+  // This prevents a logged-out user from bypassing auth by manually re-adding the hint cookie.
+  const cookieToken = request.cookies.get(ACCESS_COOKIE)?.value;
+  const cookieAuth = request.cookies.get(AUTH_HINT_COOKIE)?.value;
+  if (cookieToken && !cookieAuth) {
+    const isProd = process.env.NODE_ENV === "production";
+    const baseOptions = {
+      path: "/",
+      secure: true,
+      sameSite: "lax" as const,
+      domain: isProd ? "app.need4deed.org" : undefined,
+    };
+    response.cookies.delete({ name: ACCESS_COOKIE, ...baseOptions });
+    response.cookies.delete({ name: REFRESH_COOKIE, ...baseOptions });
+  }
 
   // Persist the current locale in a cookie so bare URLs respect the user's choice
   if (currentLocale && supportedLangs.includes(currentLocale)) {

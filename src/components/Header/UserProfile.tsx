@@ -1,8 +1,8 @@
 "use client";
 import { useClickOutside } from "@/hooks";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { clearAuthHint } from "@/utils/helpers";
 import { CaretDownIcon, CaretUpIcon, SignOutIcon } from "@phosphor-icons/react";
-import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
@@ -75,7 +75,6 @@ export function UserProfile() {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const user = useCurrentUser();
-  const router = useRouter();
   const { t, i18n } = useTranslation();
 
   useClickOutside(ref, () => setIsOpen(false));
@@ -83,8 +82,8 @@ export function UserProfile() {
   const userName = getInitials(user?.fullName) || user?.firstName?.[0]?.toUpperCase() || "";
 
   const handleLogout = () => {
-    document.cookie = "is_logged_in=; path=/; max-age=0; SameSite=Lax; Secure";
-    router.push(`/${i18n.language}/login`);
+    clearAuthHint();
+    window.location.href = `/${i18n.language}/login`;
   };
 
   return (
