@@ -1,6 +1,7 @@
 import { Availability } from "@/components/forms/types";
 import { MAX_DESCRIPTION_LENGTH } from "@/config/constants";
 import { LanguageLevel } from "@/types";
+import { VolunteerStateTypeType } from "need4deed-sdk";
 import { z } from "zod";
 
 const i18nPrefix = "dashboard.opportunityProfile.opportunityDetails.validation";
@@ -15,6 +16,7 @@ export const createOpportunityDetailsSchema = (t: (key: string) => string) =>
   z.object({
     description: z.string().max(MAX_DESCRIPTION_LENGTH, t(`${i18nPrefix}.descriptionTooLong`)),
     numberOfVolunteers: z.string(),
+    volunteerType: z.nativeEnum(VolunteerStateTypeType).optional(),
     mainCommunication: z.array(languageObjectSchema),
     residentsSpeak: z.array(languageObjectSchema),
     availability: z.custom<Availability>().nullable().optional(),

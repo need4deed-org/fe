@@ -1233,6 +1233,12 @@
         "numberOfVolunteers": "Number of volunteers",
         "activities": "Activities",
         "skills": "Skills & experience",
+        "opportunityType": "Opportunity type",
+        "opportunityTypes": {
+          "accompanying": "Accompanying appointment",
+          "regular": "Regular volunteering",
+          "events": "Events"
+        },
         "descriptionHint": "Max. {{max}} characters",
         "cancel": "Cancel",
         "saveChanges": "Save changes",

@@ -1245,6 +1245,12 @@
         "numberOfVolunteers": "Anzahl der Ehrenamtlichen",
         "activities": "Aktivitäten",
         "skills": "Fähigkeiten & Erfahrung",
+        "opportunityType": "Art der Tätigkeit",
+        "opportunityTypes": {
+          "accompanying": "Begleitender Termin",
+          "regular": "Regelmäßiges Ehrenamt",
+          "events": "Veranstaltungen"
+        },
         "descriptionHint": "Max. {{max}} Zeichen",
         "cancel": "Abbrechen",
         "saveChanges": "Änderungen speichern",

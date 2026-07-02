@@ -49,6 +49,14 @@ export function OpportunityDetailsDisplay({ opportunity }: Props) {
       <EditableField
         mode="display"
         type="text"
+        label={t(`${prefix}.opportunityType`)}
+        value={opp.volunteerType ? t(`${prefix}.opportunityTypes.${opp.volunteerType}`) : ""}
+        setValue={() => {}}
+      />
+
+      <EditableField
+        mode="display"
+        type="text"
         label={t(`${prefix}.mainCommunication`)}
         value={mainCommunication}
         setValue={() => {}}
