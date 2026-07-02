@@ -432,9 +432,9 @@ export default function BecomeVolunteer() {
                   <label htmlFor="consent">{getTickMark(!!fieldConsent.state.value)}</label>
                   <span>
                     {t("form.becomeVolunteer.fields.consent.header")}{" "}
-                    <a href={`/${Subpage.DATA_PROTECTION}/${lng}`}>{t("homepage.footer.legal.dataPrivacy")}</a>{" "}
+                    <a href={`/${lng}/${Subpage.DATA_PRIVACY}`}>{t("homepage.footer.legal.dataPrivacy")}</a>{" "}
                     {t("form.becomeVolunteer.fields.consent.and")}{" "}
-                    <a href={`/${Subpage.AGREEMENT}/${lng}`}>{t("homepage.footer.legal.agreement")}</a>
+                    <a href={`/${lng}/${Subpage.AGREEMENT}`}>{t("homepage.footer.legal.agreement")}</a>
                   </span>
                 </div>
                 <FieldInfo field={fieldConsent} />
