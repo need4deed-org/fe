@@ -985,6 +985,26 @@
       "deleteConfirmTitle": "Anerkennung löschen?",
       "deleteConfirmText": "\"{{entryType}}\" Anerkennungseintrag wird dauerhaft gelöscht."
     },
+    "activityLog": {
+      "date": "Datum",
+      "hours": "Stunden",
+      "total": "Gesamt",
+      "hoursValue": "{{hours}} Stunden",
+      "addEntry": "Eintrag hinzufügen",
+      "editEntry": "Eintrag bearbeiten",
+      "deleteEntry": "Eintrag löschen",
+      "datePlaceholder": "Datum des Einsatzes",
+      "hoursPlaceholder": "z. B. 2,5",
+      "hoursInvalid": "Bitte Stunden größer als 0 eingeben",
+      "cancel": "Abbrechen",
+      "save": "Speichern",
+      "emptyState": "Für dieses Match wurden noch keine Stunden erfasst",
+      "entryAdded": "Eintrag erfolgreich hinzugefügt",
+      "entryUpdated": "Eintrag erfolgreich aktualisiert",
+      "entryDeleted": "Eintrag erfolgreich gelöscht",
+      "deleteConfirmTitle": "Eintrag löschen?",
+      "deleteConfirmText": "Der Eintrag vom {{date}} wird dauerhaft gelöscht."
+    },
     "profile": {
       "loading": "Profil wird geladen...",
       "notSetUp": "Ihr Organisationsprofil ist noch nicht eingerichtet — bitte schließen Sie die Registrierung ab."
@@ -1206,7 +1226,13 @@
         "saveSuccess": "Details zur Begleitung erfolgreich aktualisiert",
         "notAccompanyingMessage": "Diese ehrenamtliche Tätigkeit ist nicht als Begleitung markiert. Ändern Sie diesen Status in der oberen Karte, wenn Sie die Begleitinformationen ausfüllen müssen (Terminadresse, Angaben zu Geflüchteten usw.).",
         "validation": {
-          "invalidTimeFormat": "Ungültiges Zeitformat (verwenden Sie HH:MM)"
+          "invalidTimeFormat": "Ungültiges Zeitformat (verwenden Sie HH:MM)",
+          "addressRequired": "Terminadresse ist erforderlich",
+          "postcodeRequired": "Terminpostleitzahl ist erforderlich",
+          "dateRequired": "Termindatum ist erforderlich",
+          "timeRequired": "Terminzeit ist erforderlich",
+          "nameRequired": "Name des Geflüchteten ist erforderlich",
+          "appointmentLanguageRequired": "Terminsprache ist erforderlich"
         }
       },
       "volunteersSec": {
