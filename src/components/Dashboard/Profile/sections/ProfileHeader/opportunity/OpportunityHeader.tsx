@@ -14,8 +14,10 @@ import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { createVolunteerTypeLabelMap, EditButton, HeaderCard, IconContainer, StatusRowField } from "../common";
 import { ChangeOpportunityStatusDialog } from "./ChangeOpportunityStatusDialog";
+import { ChangeOpportunityTypeDialog } from "./ChangeOpportunityTypeDialog";
 import { createOpportunityStatusLabelMap } from "./constants";
 import { useOpportunityStatusDialog } from "./useOpportunityStatusDialog";
+import { useOpportunityTypeDialog } from "./useOpportunityTypeDialog";
 import { useAuth } from "@/hooks/useAuth";
 
 type Props = {
@@ -26,6 +28,7 @@ export const OpportunityHeader = ({ opportunity }: Props) => {
   const { isAuthorized } = useAuth();
   const { t, i18n } = useTranslation();
   const dialog = useOpportunityStatusDialog(opportunity);
+  const typeDialog = useOpportunityTypeDialog(opportunity);
   const statusLabelMap = createOpportunityStatusLabelMap(t);
   const volunteerTypeLabelMap = createVolunteerTypeLabelMap(t);
   const { statusMatch } = opportunity as ApiOpportunityGet & { statusMatch?: string };
@@ -43,7 +46,12 @@ export const OpportunityHeader = ({ opportunity }: Props) => {
       }
       title={opportunity.title}
       subtitle={subtitle}
-      after={<ChangeOpportunityStatusDialog dialog={dialog} />}
+      after={
+        <>
+          <ChangeOpportunityStatusDialog dialog={dialog} />
+          <ChangeOpportunityTypeDialog dialog={typeDialog} />
+        </>
+      }
     >
       <StatusRowField
         title={t("dashboard.opportunityProfile.currentStatus")}
@@ -76,6 +84,11 @@ export const OpportunityHeader = ({ opportunity }: Props) => {
         title={t("dashboard.volunteerProfile.volunteerHeader.volunteerType_title")}
         status={opportunity.volunteerType}
         label={opportunity.volunteerType ? volunteerTypeLabelMap[opportunity.volunteerType] : undefined}
+        action={
+          isAuthorized && (
+            <EditButton onClick={typeDialog.openDialog}>{t("dashboard.opportunityProfile.change_type")}</EditButton>
+          )
+        }
       />
 
       {(opportunity.agent as typeof opportunity.agent & { id?: number })?.id && (

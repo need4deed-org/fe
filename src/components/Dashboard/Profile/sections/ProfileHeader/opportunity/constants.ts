@@ -1,5 +1,5 @@
 import { TFunction } from "i18next";
-import { OpportunityStatusType } from "need4deed-sdk";
+import { OpportunityStatusType, OpportunityType } from "need4deed-sdk";
 import { OpportunityMatchStatusType } from "@/components/Dashboard/Opportunities/OpportunityCard.helpers";
 
 export type { OpportunityMatchStatusType };
@@ -34,6 +34,12 @@ export const createOpportunityStatusLabelMap = (t: TFunction): Record<Opportunit
   [OpportunityManualStatusType.SEARCHING]: t("dashboard.opportunityProfile.statusModal.options.searching"),
   [OpportunityManualStatusType.INACTIVE]: t("dashboard.opportunityProfile.statusModal.options.inactive"),
 });
+
+export const TYPE_DESCRIPTION_KEYS: Record<OpportunityType, string> = {
+  [OpportunityType.ACCOMPANYING]: "accompanying_description",
+  [OpportunityType.REGULAR]: "regular_description",
+  [OpportunityType.EVENTS]: "events_description",
+};
 
 export const createOpportunityMatchLabelMap = (t: TFunction): Record<OpportunityMatchStatusType, string> => ({
   [OpportunityMatchStatusType.NO_MATCHES]: t("dashboard.opportunityProfile.matchStatus.noMatches"),

@@ -1155,6 +1155,18 @@
           "inactive_description": "The opportunity is no longer active."
         }
       },
+      "typeUpdateSuccess": "Opportunity type updated successfully",
+      "change_type": "Change type",
+      "typeModal": {
+        "title": "Change opportunity type",
+        "save": "Save",
+        "cancel": "Cancel",
+        "options": {
+          "accompanying_description": "The volunteer accompanies a person to an appointment. You'll need to add accompanying details (contact, appointment address) after saving.",
+          "regular_description": "Regular, ongoing volunteering with a weekly schedule. If this opportunity currently has accompanying details, they will no longer be used.",
+          "events_description": "A one-off event with a fixed date and time. If this opportunity currently has accompanying details, they will no longer be used."
+        }
+      },
       "contactDetailsTitle": "Contact details",
       "editButtonName": "Edit",
       "contactDetails": {
@@ -1259,12 +1271,6 @@
         "numberOfVolunteers": "Number of volunteers",
         "activities": "Activities",
         "skills": "Skills & experience",
-        "opportunityType": "Opportunity type",
-        "opportunityTypes": {
-          "accompanying": "Accompanying appointment",
-          "regular": "Regular volunteering",
-          "events": "Events"
-        },
         "descriptionHint": "Max. {{max}} characters",
         "cancel": "Cancel",
         "saveChanges": "Save changes",

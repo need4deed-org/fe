@@ -76,18 +76,6 @@ export function OpportunityDetailsEdit({ opportunity, onCancel }: Props) {
 
   const isEventType = opp.volunteerType === VolunteerStateTypeType.EVENTS;
 
-  const opportunityTypeOptions = [
-    VolunteerStateTypeType.ACCOMPANYING,
-    VolunteerStateTypeType.REGULAR,
-    VolunteerStateTypeType.EVENTS,
-  ] as const;
-  type OpportunityTypeOption = (typeof opportunityTypeOptions)[number];
-
-  const typeToLabel = (type: OpportunityTypeOption) =>
-    t(`${prefix}.opportunityTypes.${type}`);
-  const labelToType = (label: string): OpportunityTypeOption | undefined =>
-    opportunityTypeOptions.find((o) => typeToLabel(o) === label);
-
   const { mutate: updateOpportunityDetails } = useUpdateOpportunityDetails(opp.id);
   const { data: apiLanguages = [] } = useApiLanguages();
   const { data: apiActivities = [] } = useApiActivities();
@@ -121,7 +109,6 @@ export function OpportunityDetailsEdit({ opportunity, onCancel }: Props) {
     defaultValues: {
       description: opp.description ?? "",
       numberOfVolunteers: String(opp.numberOfVolunteers ?? ""),
-      volunteerType: opp.volunteerType as OpportunityTypeOption | undefined,
       mainCommunication: languagesToFormValues(generalLangs, t),
       residentsSpeak: languagesToFormValues(residentsLangs, t),
       availability: isEventType ? undefined : apiToFormAvailability(opp.availability),
@@ -142,7 +129,6 @@ export function OpportunityDetailsEdit({ opportunity, onCancel }: Props) {
       {
         description: values.description,
         numberVolunteers: Number(values.numberOfVolunteers),
-        volunteerType: values.volunteerType,
         languagesMain: toLangOptionItems(values.mainCommunication, apiLanguages, t),
         languagesResidents: toLangOptionItems(values.residentsSpeak, apiLanguages, t),
         activities: toOptionItems(values.activities, apiActivities),
@@ -156,24 +142,6 @@ export function OpportunityDetailsEdit({ opportunity, onCancel }: Props) {
   return (
     <>
       <FormDetails>
-        <Controller
-          name="volunteerType"
-          control={control}
-          render={({ field }) => (
-            <EditableField
-              mode="edit"
-              type="radio-list"
-              label={t(`${prefix}.opportunityType`)}
-              value={field.value ? typeToLabel(field.value as OpportunityTypeOption) : ""}
-              setValue={(label) => {
-                const type = labelToType(label as string);
-                if (type) field.onChange(type);
-              }}
-              options={opportunityTypeOptions.map(typeToLabel)}
-            />
-          )}
-        />
-
         <Controller
           name="description"
           control={control}

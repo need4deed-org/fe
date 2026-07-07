@@ -1167,6 +1167,18 @@
           "inactive_description": "Diese ehrenamtliche Tätigkeit ist nicht mehr aktuell."
         }
       },
+      "typeUpdateSuccess": "Art der ehrenamtlichen Tätigkeit erfolgreich aktualisiert",
+      "change_type": "Art ändern",
+      "typeModal": {
+        "title": "Art der ehrenamtlichen Tätigkeit ändern",
+        "save": "Speichern",
+        "cancel": "Abbrechen",
+        "options": {
+          "accompanying_description": "Der/die Ehrenamtliche begleitet eine Person zu einem Termin. Nach dem Speichern müssen die Begleitdetails (Kontakt, Terminadresse) ergänzt werden.",
+          "regular_description": "Regelmäßige, laufende ehrenamtliche Tätigkeit mit wöchentlichem Zeitplan. Vorhandene Begleitdetails werden dann nicht mehr verwendet.",
+          "events_description": "Eine einmalige Veranstaltung mit festem Datum und Uhrzeit. Vorhandene Begleitdetails werden dann nicht mehr verwendet."
+        }
+      },
       "contactDetailsTitle": "Kontaktdaten",
       "editButtonName": "Bearbeiten",
       "contactDetails": {
@@ -1271,12 +1283,6 @@
         "numberOfVolunteers": "Anzahl der Ehrenamtlichen",
         "activities": "Aktivitäten",
         "skills": "Fähigkeiten & Erfahrung",
-        "opportunityType": "Art der Tätigkeit",
-        "opportunityTypes": {
-          "accompanying": "Begleitender Termin",
-          "regular": "Regelmäßiges Ehrenamt",
-          "events": "Veranstaltungen"
-        },
         "descriptionHint": "Max. {{max}} Zeichen",
         "cancel": "Abbrechen",
         "saveChanges": "Änderungen speichern",
