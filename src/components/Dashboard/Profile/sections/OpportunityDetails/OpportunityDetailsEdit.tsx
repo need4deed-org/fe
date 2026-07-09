@@ -102,12 +102,12 @@ export function OpportunityDetailsEdit({ opportunity, onCancel }: Props) {
     control,
     handleSubmit,
     reset,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm<OpportunityDetailsFormData>({
     resolver: zodResolver(schema),
     mode: "onChange",
     defaultValues: {
-      title: opp.title ?? "",
+      title: opp.title,
       description: opp.description ?? "",
       numberOfVolunteers: String(opp.numberOfVolunteers ?? ""),
       mainCommunication: languagesToFormValues(generalLangs, t),
@@ -347,7 +347,7 @@ export function OpportunityDetailsEdit({ opportunity, onCancel }: Props) {
           onClick={handleSubmit(onSubmit)}
           width="auto"
           padding="var(--volunteer-profile-section-card-header-button-padding)"
-          disabled={!isValid}
+          disabled={Object.keys(errors).length > 0}
         />
       </FormButtonRow>
     </>
