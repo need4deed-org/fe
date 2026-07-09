@@ -74,13 +74,7 @@ export function VolunteerTableRow({
   const profileUrl = id ? `/${i18n.language}/dashboard/volunteers/${id}${params}` : "";
 
   return (
-    <ClickableRow
-      as={Link}
-      href={profileUrl}
-      $isLast={isLast}
-      data-testid={`volunteer-row-${id}`}
-      style={{ display: "flex", textDecoration: "none", color: "inherit" }}
-    >
+    <ClickableRow as={Link} href={profileUrl} $isLast={isLast} data-testid={`volunteer-row-${id}`}>
       <TableCell $width={VOLUNTEER_COL_WIDTHS.name} data-testid={`volunteer-name-${id}`}>
         <CirclePic src={getImageUrl(avatarUrl || defaultAvatarURL)} size="32px" />
         <TruncatedText>{getFirstName(name)}</TruncatedText>

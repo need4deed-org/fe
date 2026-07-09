@@ -27,13 +27,7 @@ export function AgentTableRow({ agent, isLast, typeLabels, searchLabels, distric
   const profileUrl = id ? `/${i18n.language}/dashboard/agents/${id}` : "";
 
   return (
-    <ClickableRow
-      as={Link}
-      href={profileUrl}
-      $isLast={isLast}
-      data-testid={`agent-row-${id}`}
-      style={{ display: "flex", textDecoration: "none", color: "inherit" }}
-    >
+    <ClickableRow as={Link} href={profileUrl} $isLast={isLast} data-testid={`agent-row-${id}`}>
       <TableCell $width={AGENT_COL_WIDTHS.title} data-testid={`agent-title-${id}`}>
         {title}
       </TableCell>

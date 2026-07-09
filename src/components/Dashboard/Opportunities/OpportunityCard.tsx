@@ -60,12 +60,7 @@ export function OpportunityCard({ opportunity, volunteerId, activitiesList, dist
   const profileUrl = id ? `/${i18n.language}/dashboard/opportunities/${id}${params}` : "";
 
   return (
-    <Card
-      as={Link}
-      href={profileUrl}
-      data-testid="opportunity-card"
-      style={{ display: "flex", textDecoration: "none", color: "inherit" }}
-    >
+    <Card as={Link} href={profileUrl} data-testid="opportunity-card">
       <StatusTagsDiv>
         {statusOpportunity && (
           <StatusDiv>
