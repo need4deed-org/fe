@@ -55,13 +55,7 @@ export function OpportunityTableRow({ opportunity, isLast, districtsList }: Tabl
   const profileUrl = id ? `/${i18n.language}/dashboard/opportunities/${id}` : "";
 
   return (
-    <ClickableRow
-      as={Link}
-      href={profileUrl}
-      $isLast={isLast}
-      data-testid={`opportunity-row-${id}`}
-      style={{ display: "flex", textDecoration: "none", color: "inherit" }}
-    >
+    <ClickableRow as={Link} href={profileUrl} $isLast={isLast} data-testid={`opportunity-row-${id}`}>
       <TableCell $width={OPPORTUNITY_COL_WIDTHS.title} data-testid={`opportunity-title-${id}`}>
         <WrappedText>{title}</WrappedText>
       </TableCell>
