@@ -74,7 +74,6 @@ export function ProfileCompletion() {
 
   const { matched, selectedAgent, showBanner, confirmMatch, dismissMatch } = useAgentAddressLookup(
     formData.addressStreet,
-    formData.addressPostcode,
     token,
     (m) => update({ addressStreet: m.title }),
   );
