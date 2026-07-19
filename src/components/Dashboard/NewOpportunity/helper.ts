@@ -1,7 +1,7 @@
 import { ApiLanguageOption } from "@/components/Dashboard/Profile/sections/VolunteerProfile/hooks";
 import { TFunction } from "i18next";
 import { OptionItem, TranslatedIntoType, Lang, VolunteerStateTypeType } from "need4deed-sdk";
-import { HeaderFormData } from "./NewOpportunity";
+import { HeaderFormData } from "./headerSchema";
 import { OpportunityDetailsFormData } from "@/components/Dashboard/Profile/sections/OpportunityDetails/opportunityDetailsSchema";
 import { AccompanyingDetailsFormData } from "../Profile/sections/AccompanyingDetails/createAccompanyingDetailsSchema";
 
