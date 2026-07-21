@@ -36,18 +36,33 @@ export const createOpportunityDetailsSchema = (
       const selected = langs.filter(({ language }) => !!language);
       if (selected.length === 0) return; // nothing picked — always valid
 
-      const resolved = selected.map(
-        ({ language }) => resolveFormLanguageToOption(language, mainCommunicationLanguageOptions, t)?.title,
+      const resolved = selected.map(({ language }) =>
+        resolveFormLanguageToOption(language, mainCommunicationLanguageOptions, t),
       );
       // A row that fails to resolve is a legacy/out-of-set language (saved
       // before this restriction existed, or no longer offered) — that must
-      // be flagged, not silently dropped from the title set below, or it
-      // would incorrectly read as "none selected" and pass validation.
-      const hasUnresolved = resolved.some((title) => !title);
-      const titles = new Set(resolved.filter((title): title is string => !!title).map((title) => title.toLowerCase()));
-      const isGermanOnly = titles.size === 1 && titles.has("german");
-      const isGermanAndEnglish = titles.size === 2 && titles.has("german") && titles.has("english");
-      if (hasUnresolved || !(isGermanOnly || isGermanAndEnglish)) {
+      // be flagged, not silently dropped below, or it would incorrectly
+      // read as "none selected" and pass validation.
+      const hasUnresolved = resolved.some((option) => !option);
+
+      // `title` is translated into whatever language the option list was
+      // fetched in (German by default), so it's never the literal English
+      // word "german"/"english" — match on isoCode instead, falling back to
+      // both spellings only for callers/tests that don't supply isoCode.
+      const toLangCode = (option: MainCommunicationLanguageOption): "de" | "en" | null => {
+        if (option.isoCode === "de") return "de";
+        if (option.isoCode === "en") return "en";
+        const title = option.title.toLowerCase();
+        if (["german", "deutsch"].includes(title)) return "de";
+        if (["english", "englisch"].includes(title)) return "en";
+        return null;
+      };
+      const codes = new Set(
+        resolved.filter((option): option is MainCommunicationLanguageOption => !!option).map(toLangCode),
+      );
+      const isGermanOnly = codes.size === 1 && codes.has("de");
+      const isGermanAndEnglish = codes.size === 2 && codes.has("de") && codes.has("en");
+      if (hasUnresolved || codes.has(null) || !(isGermanOnly || isGermanAndEnglish)) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
           message: t(`${i18nPrefix}.mainCommunicationInvalid`),
