@@ -28,8 +28,8 @@ function toLangCode(option: MainCommunicationLanguageOption): "de" | "en" | null
   return null;
 }
 
-// The org's main communication language is German, with English as the only
-// secondary option — unlike "Residents speak", which allows any language.
+// The main-communication dropdown only offers German/English — no
+// restriction on which of the two (or both) is picked.
 export function getMainCommunicationLanguageOptions<T extends MainCommunicationLanguageOption>(apiLanguages: T[]): T[] {
   return apiLanguages.filter((l) => toLangCode(l) !== null);
 }
@@ -49,17 +49,15 @@ export const createOpportunityDetailsSchema = (
       const resolved = selected.map(({ language }) =>
         resolveFormLanguageToOption(language, mainCommunicationLanguageOptions, t),
       );
-      // A row that fails to resolve is a legacy/out-of-set language (saved
-      // before this restriction existed, or no longer offered) — that must
-      // be flagged, not silently dropped below, or it would incorrectly
-      // read as "none selected" and pass validation.
+      // No restriction on German vs. English vs. both — either works. A row
+      // that fails to resolve is a legacy/out-of-set language (saved before
+      // the dropdown was restricted to German/English, or no longer
+      // offered) — that's still invalid, since only these two are offered.
       const hasUnresolved = resolved.some((option) => !option);
-      const codes = new Set(
-        resolved.filter((option): option is MainCommunicationLanguageOption => !!option).map(toLangCode),
-      );
-      const isGermanOnly = codes.size === 1 && codes.has("de");
-      const isGermanAndEnglish = codes.size === 2 && codes.has("de") && codes.has("en");
-      if (hasUnresolved || codes.has(null) || !(isGermanOnly || isGermanAndEnglish)) {
+      const hasOutOfSet = resolved
+        .filter((option): option is MainCommunicationLanguageOption => !!option)
+        .some((option) => toLangCode(option) === null);
+      if (hasUnresolved || hasOutOfSet) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
           message: t(`${i18nPrefix}.mainCommunicationInvalid`),
