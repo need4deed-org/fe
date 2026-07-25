@@ -1660,6 +1660,7 @@
       "title": "Finish setting up your account",
       "subtitle": "Tell us about your organisation.",
       "matchFound": "We found an organisation matching this address: {{name}}. Would you like to use it?",
+      "matchesFound": "We found {{count}} organisations matching this address. Select yours, or continue creating a new one.",
       "useThisOrg": "Yes, use this",
       "skip": "No, enter manually",
       "matched": "Organisation matched: {{name}}",

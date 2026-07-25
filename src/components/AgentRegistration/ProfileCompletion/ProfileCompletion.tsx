@@ -72,7 +72,7 @@ export function ProfileCompletion() {
     apiPath: apiPathOption,
   });
 
-  const { matched, selectedAgent, showBanner, confirmMatch, dismissMatch } = useAgentAddressLookup(
+  const { matches, selectedAgent, showBanner, selectMatch, dismissMatch } = useAgentAddressLookup(
     formData.addressStreet,
     formData.addressPostcode,
     token,
@@ -238,16 +238,37 @@ export function ProfileCompletion() {
                   placeHolder={t("agentRegistration.fields.addressStreet")}
                   errors={errors.addressStreet ? [errors.addressStreet] : []}
                 />
-                {showBanner && (
+                {showBanner && matches.length === 1 && (
                   <MatchBanner $matched={false}>
-                    <span>{t("agentRegistration.completion.matchFound", { name: matched!.title })}</span>
+                    <span>{t("agentRegistration.completion.matchFound", { name: matches[0].title })}</span>
                     <MatchActions>
-                      <SmallButton $primary onClick={confirmMatch}>
+                      <SmallButton $primary onClick={() => selectMatch(matches[0])}>
                         {t("agentRegistration.completion.useThisOrg")}
                       </SmallButton>
                       <SmallButton onClick={dismissMatch}>{t("agentRegistration.completion.skip")}</SmallButton>
                     </MatchActions>
                   </MatchBanner>
+                )}
+
+                {showBanner && matches.length > 1 && (
+                  <>
+                    <MatchBanner $matched={false}>
+                      <span>{t("agentRegistration.completion.matchesFound", { count: matches.length })}</span>
+                    </MatchBanner>
+                    {matches.map((agent) => (
+                      <MatchBanner key={agent.id} $matched={false}>
+                        <span>{agent.title}</span>
+                        <MatchActions>
+                          <SmallButton $primary onClick={() => selectMatch(agent)}>
+                            {t("agentRegistration.completion.useThisOrg")}
+                          </SmallButton>
+                        </MatchActions>
+                      </MatchBanner>
+                    ))}
+                    <MatchActions>
+                      <SmallButton onClick={dismissMatch}>{t("agentRegistration.completion.skip")}</SmallButton>
+                    </MatchActions>
+                  </>
                 )}
               </FieldWrapper>
               <AddressStep data={formData} onChange={update} errors={errors} optionLists={optionLists} hideStreet />

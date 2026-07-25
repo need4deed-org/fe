@@ -2039,6 +2039,7 @@
       "title": "Konto-Einrichtung abschließen",
       "subtitle": "Erzählen Sie uns von Ihrer Organisation.",
       "matchFound": "Wir haben eine Organisation gefunden, die zu dieser Adresse passt: {{name}}. Möchten Sie diese verwenden?",
+      "matchesFound": "Wir haben {{count}} Organisationen gefunden, die zu dieser Adresse passen. Wählen Sie Ihre aus oder erstellen Sie eine neue.",
       "useThisOrg": "Ja, diese verwenden",
       "skip": "Nein, manuell eingeben",
       "matched": "Organisation gefunden: {{name}}",
