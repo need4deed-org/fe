@@ -11,30 +11,27 @@ type AgentSearchMatch = { id: number; title: string };
 // (the COORDINATOR-only GET /agent is not available to a registrant).
 export function useAgentAddressLookup(
   addressStreet: string,
-  addressPostcode: string,
   token: string | null,
   onConfirm?: (matched: AgentSearchMatch) => void,
 ) {
   const [selectedAgent, setSelectedAgent] = useState<AgentSearchMatch | null>(null);
   const [dismissedAddress, setDismissedAddress] = useState<string | null>(null);
   const debouncedAddress = useDebounce(addressStreet.trim(), 400);
-  const debouncedPostcode = useDebounce(addressPostcode.trim(), 400);
 
-  const enabled = debouncedAddress.length >= 3 && !!debouncedPostcode && !!token;
+  const enabled = debouncedAddress.length >= 3 && !!token;
 
   const { data } = useGetQuery<AgentSearchMatch[]>({
-    queryKey: ["agent-register-search", debouncedAddress, debouncedPostcode],
+    queryKey: ["agent-register-search", debouncedAddress],
     apiPath: `${apiPathAgentRegister}/search?token=${encodeURIComponent(
       token ?? "",
-    )}&street=${encodeURIComponent(debouncedAddress)}&postcode=${encodeURIComponent(debouncedPostcode)}`,
+    )}&street=${encodeURIComponent(debouncedAddress)}`,
     staleTime: cacheTTL,
     enabled,
     addLang: false,
   });
 
-  // The API returns the decisive match (exact/legacy) first, followed by any
-  // other street-prefix candidates — but callers should not assume a single
-  // "the" match anymore, since more than one org can share a partial address.
+  // The API returns every matching candidate, not a single "the" match —
+  // more than one org can share a partial street.
   const matches = enabled ? (data ?? []) : [];
 
   const isDismissed = dismissedAddress === debouncedAddress;
