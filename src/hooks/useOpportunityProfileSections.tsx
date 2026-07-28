@@ -106,6 +106,21 @@ export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | u
   if (hasEditingRights) {
     sections.push(
       {
+        iconName: IconName.ChatsCircle,
+        title: t("dashboard.opportunityProfile.contactDetailsTitle"),
+        ...(!isContactEditing && {
+          headerButtonName: t("dashboard.opportunityProfile.editButtonName"),
+          onHeaderButtonClick: () => opportunityContactDetailsRef.current?.handleEditClick(),
+        }),
+        subComponent: (
+          <ContactDetails
+            ref={opportunityContactDetailsRef}
+            opportunity={opportunity}
+            onEditingChange={handleContactEditingChange}
+          />
+        ),
+      },
+      {
         iconName: IconName.Users,
         title: t("dashboard.opportunityProfile.accompanyingDetailsTitle"),
         ...(isAccompanyingType &&
@@ -144,21 +159,6 @@ export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | u
               />
             )}
           </>
-        ),
-      },
-      {
-        iconName: IconName.ChatsCircle,
-        title: t("dashboard.opportunityProfile.contactDetailsTitle"),
-        ...(!isContactEditing && {
-          headerButtonName: t("dashboard.opportunityProfile.editButtonName"),
-          onHeaderButtonClick: () => opportunityContactDetailsRef.current?.handleEditClick(),
-        }),
-        subComponent: (
-          <ContactDetails
-            ref={opportunityContactDetailsRef}
-            opportunity={opportunity}
-            onEditingChange={handleContactEditingChange}
-          />
         ),
       },
     );
