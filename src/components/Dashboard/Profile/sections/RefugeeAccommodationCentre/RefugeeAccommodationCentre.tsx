@@ -1,15 +1,13 @@
 "use client";
 import { useUpdateOpportunityAgent } from "@/hooks/useUpdateOpportunityAgent";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ApiOpportunityGet, Lang } from "need4deed-sdk";
+import { ApiOpportunityGet } from "need4deed-sdk";
 import { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { FormContainer } from "../shared/styles";
 import { EditableSectionProps, EditableSectionRef } from "../shared/types";
 import { useEditingChangeNotifier } from "../shared/useEditingChangeNotifier";
-import { useApiDistricts } from "../VolunteerProfile/hooks";
-import { createMapping } from "../VolunteerProfile/mappingUtils";
 import { RefugeeAccommodationCentreDisplay } from "./RefugeeAccommodationCentreDisplay";
 import { RefugeeAccommodationCentreEdit } from "./RefugeeAccommodationCentreEdit";
 import {
@@ -25,28 +23,21 @@ export const RefugeeAccommodationCentre = forwardRef<EditableSectionRef, Props>(
   { opportunity, onEditingChange },
   ref,
 ) {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const { mutate: updateAgent, isPending } = useUpdateOpportunityAgent(opportunity.id);
   const [isEditing, setIsEditing] = useState(false);
 
   useEditingChangeNotifier(isEditing, onEditingChange);
 
-  const { data: apiDistricts = [] } = useApiDistricts();
-  const districtMapping = useMemo(() => createMapping(apiDistricts), [apiDistricts]);
-
   const schema = createRefugeeAccommodationCentreSchema(t);
 
   const initialFormValues = useMemo((): RefugeeAccommodationCentreFormData => {
     const { agent } = opportunity;
-    const lang = i18n.language as Lang;
-    const districtTitle = agent.district?.title?.[lang] ?? agent.district?.title?.en ?? "";
 
     return {
       name: agent.name ?? "",
-      address: agent.address ?? "",
-      district: districtTitle,
     };
-  }, [opportunity, i18n.language]);
+  }, [opportunity]);
 
   const methods = useForm<RefugeeAccommodationCentreFormData>({
     resolver: zodResolver(schema),
@@ -66,13 +57,10 @@ export const RefugeeAccommodationCentre = forwardRef<EditableSectionRef, Props>(
   };
 
   const onSubmit = (values: RefugeeAccommodationCentreFormData) => {
-    const districtId = districtMapping.titleToId[values.district];
     updateAgent(
       {
         agent: {
           name: values.name,
-          address: values.address,
-          ...(districtId !== undefined && { district: districtId }),
         },
       },
       { onSuccess: () => setIsEditing(false) },
@@ -92,7 +80,6 @@ export const RefugeeAccommodationCentre = forwardRef<EditableSectionRef, Props>(
             onCancel={handleCancel}
             onSubmit={handleSubmit(onSubmit)}
             isPending={isPending}
-            districts={apiDistricts.map((d) => d.title)}
           />
         ) : (
           <RefugeeAccommodationCentreDisplay />

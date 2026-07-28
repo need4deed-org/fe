@@ -1,11 +1,9 @@
 import { apiPathOpportunity } from "@/config/constants";
 import { useMutationQuery } from "@/hooks";
-import { ApiOpportunityGet, OptionById } from "need4deed-sdk";
+import { ApiOpportunityGet } from "need4deed-sdk";
 
 type AgentUpdateData = {
   name?: string;
-  address?: string;
-  district?: OptionById["id"];
 };
 
 export type OpportunityAgentUpdateData = {

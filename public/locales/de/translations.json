@@ -1269,14 +1269,10 @@
       "racTitle": "Geflüchtetenunterkunft",
       "rac": {
         "name": "Name",
-        "address": "Adresse",
-        "district": "Bezirk",
         "cancel": "Abbrechen",
         "saveChanges": "Änderungen speichern",
         "validation": {
-          "nameRequired": "Name ist erforderlich",
-          "addressRequired": "Adresse ist erforderlich",
-          "districtRequired": "Bezirk ist erforderlich"
+          "nameRequired": "Name ist erforderlich"
         }
       },
       "accompanyingDetailsTitle": "Details zur Begleitung",

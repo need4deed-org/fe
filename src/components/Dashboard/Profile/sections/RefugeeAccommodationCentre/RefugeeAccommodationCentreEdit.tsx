@@ -9,10 +9,9 @@ type Props = {
   onCancel: () => void;
   onSubmit: () => void;
   isPending: boolean;
-  districts: string[];
 };
 
-export const RefugeeAccommodationCentreEdit = ({ onCancel, onSubmit, isPending, districts }: Props) => {
+export const RefugeeAccommodationCentreEdit = ({ onCancel, onSubmit, isPending }: Props) => {
   const { t } = useTranslation();
   const {
     control,
@@ -33,37 +32,6 @@ export const RefugeeAccommodationCentreEdit = ({ onCancel, onSubmit, isPending, 
               value={field.value}
               setValue={field.onChange}
               errorMessage={errors.name?.message}
-            />
-          )}
-        />
-
-        <Controller
-          name="address"
-          control={control}
-          render={({ field }) => (
-            <EditableField
-              mode="edit"
-              type="text"
-              label={t("dashboard.opportunityProfile.rac.address")}
-              value={field.value}
-              setValue={field.onChange}
-              errorMessage={errors.address?.message}
-            />
-          )}
-        />
-
-        <Controller
-          name="district"
-          control={control}
-          render={({ field }) => (
-            <EditableField
-              mode="edit"
-              type="radio-list"
-              label={t("dashboard.opportunityProfile.rac.district")}
-              value={field.value}
-              setValue={field.onChange}
-              options={districts}
-              errorMessage={errors.district?.message}
             />
           )}
         />

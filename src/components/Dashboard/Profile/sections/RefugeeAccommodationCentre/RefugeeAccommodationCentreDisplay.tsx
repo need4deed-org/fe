@@ -18,22 +18,6 @@ export const RefugeeAccommodationCentreDisplay = () => {
         value={values.name}
         setValue={() => {}}
       />
-
-      <EditableField
-        mode="display"
-        type="text"
-        label={t("dashboard.opportunityProfile.rac.address")}
-        value={values.address}
-        setValue={() => {}}
-      />
-
-      <EditableField
-        mode="display"
-        type="text"
-        label={t("dashboard.opportunityProfile.rac.district")}
-        value={values.district}
-        setValue={() => {}}
-      />
     </FormDetails>
   );
 };
