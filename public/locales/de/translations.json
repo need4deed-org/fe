@@ -1258,12 +1258,7 @@
         "saveChanges": "Änderungen speichern",
         "saveSuccess": "Kontaktdaten erfolgreich aktualisiert",
         "validation": {
-          "nameRequired": "Name ist erforderlich",
-          "phoneRequired": "Telefon ist erforderlich",
-          "phoneInvalid": "Telefon muss mit + beginnen und nur Ziffern/Leerzeichen enthalten",
-          "emailRequired": "E-Mail ist erforderlich",
-          "emailInvalid": "Ungültige E-Mail",
-          "waysToContactRequired": "Wählen Sie mindestens eine Kontaktmöglichkeit"
+          "nameRequired": "Name ist erforderlich"
         }
       },
       "racTitle": "Geflüchtetenunterkunft",

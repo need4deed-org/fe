@@ -6,9 +6,6 @@ export type OpportunityContactUpdateData = {
   contact: {
     id?: number;
     name?: string;
-    phone?: string;
-    email?: string;
-    waysToContact?: string[];
   };
 };
 

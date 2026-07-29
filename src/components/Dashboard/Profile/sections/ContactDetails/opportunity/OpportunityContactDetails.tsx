@@ -35,7 +35,7 @@ export const OpportunityContactDetails = forwardRef<EditableSectionRef, Props>(f
 
   const schema = createOpportunityContactDetailsSchema(t);
 
-  const { options, keysToLabels, labelsToKeys } = useEnumTranslation(
+  const { keysToLabels } = useEnumTranslation(
     WAYS_TO_CONTACT_TYPES,
     "dashboard.opportunityProfile.contactDetails.waysToContact",
   );
@@ -114,9 +114,6 @@ export const OpportunityContactDetails = forwardRef<EditableSectionRef, Props>(f
           contact: {
             id: contactFromApi.id,
             name: values.name,
-            phone: values.phone,
-            email: values.email,
-            waysToContact: values.waysToContact ?? [],
           },
         },
         { onSuccess },
@@ -143,9 +140,6 @@ export const OpportunityContactDetails = forwardRef<EditableSectionRef, Props>(f
       <FormContainer data-testid="opportunity-contact-details-container" $isEditing={isEditing}>
         {isEditing ? (
           <OpportunityContactDetailsEdit
-            options={options}
-            keysToLabels={keysToLabels}
-            labelsToKeys={labelsToKeys}
             onCancel={handleCancel}
             onSubmit={handleSubmit(onSubmit)}
             isPending={isUpdating || isCreating || isUpdatingComment}

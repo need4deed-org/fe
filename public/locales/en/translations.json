@@ -1246,12 +1246,7 @@
         "saveChanges": "Save changes",
         "saveSuccess": "Contact details updated successfully",
         "validation": {
-          "nameRequired": "Name is required",
-          "phoneRequired": "Phone is required",
-          "phoneInvalid": "Phone must start with + and contain only digits/spaces",
-          "emailRequired": "Email is required",
-          "emailInvalid": "Invalid email",
-          "waysToContactRequired": "Select at least one way to contact"
+          "nameRequired": "Name is required"
         }
       },
       "racTitle": "Refugee accommodation centre",
