@@ -9,9 +9,10 @@ type Props = {
   onCancel: () => void;
   onSubmit: () => void;
   isPending: boolean;
+  options: string[];
 };
 
-export const OpportunityContactDetailsEdit = ({ onCancel, onSubmit, isPending }: Props) => {
+export const OpportunityContactDetailsEdit = ({ onCancel, onSubmit, isPending, options }: Props) => {
   const { t } = useTranslation();
   const {
     control,
@@ -27,11 +28,12 @@ export const OpportunityContactDetailsEdit = ({ onCancel, onSubmit, isPending }:
           render={({ field }) => (
             <EditableField
               mode="edit"
-              type="text"
+              type="radio-list"
               label={t("dashboard.opportunityProfile.contactDetails.name")}
               value={field.value}
               setValue={field.onChange}
               errorMessage={errors.name?.message}
+              options={options}
             />
           )}
         />

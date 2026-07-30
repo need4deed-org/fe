@@ -4,8 +4,7 @@ import { ApiOpportunityGet } from "need4deed-sdk";
 
 export type OpportunityContactUpdateData = {
   contact: {
-    id?: number;
-    name?: string;
+    id: number;
   };
 };
 
