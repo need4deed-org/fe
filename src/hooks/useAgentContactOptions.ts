@@ -4,11 +4,11 @@ import { useGetQuery } from "@/hooks";
 import { ApiAgentGet, ApiOpportunityGet } from "need4deed-sdk";
 import { useMemo } from "react";
 
-export function useAgentContactOptions(opportunity: ApiOpportunityGet, isEditing: boolean) {
+export function useAgentContactOptions(opportunity: ApiOpportunityGet, isEnable: boolean) {
   const { data } = useGetQuery<ApiAgentGet>({
     apiPath: `${apiPathAgent}/${opportunity.agent.id}`,
     queryKey: ["agent", String(opportunity.agent.id)],
-    enabled: isEditing,
+    enabled: isEnable,
     staleTime: cacheTTL,
     addLang: false,
   });
