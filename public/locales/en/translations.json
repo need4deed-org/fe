@@ -1254,11 +1254,8 @@
       "racTitle": "Refugee accommodation centre",
       "rac": {
         "name": "Name",
-        "cancel": "Cancel",
-        "saveChanges": "Save changes",
-        "validation": {
-          "nameRequired": "Name is required"
-        }
+        "address": "Address",
+        "district": "District"
       },
       "accompanyingDetailsTitle": "Accompanying details",
       "accompanyingDetails": {

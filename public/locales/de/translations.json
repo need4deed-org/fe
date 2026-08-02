@@ -1266,11 +1266,8 @@
       "racTitle": "Geflüchtetenunterkunft",
       "rac": {
         "name": "Name",
-        "cancel": "Abbrechen",
-        "saveChanges": "Änderungen speichern",
-        "validation": {
-          "nameRequired": "Name ist erforderlich"
-        }
+        "address": "Adresse",
+        "district": "Bezirk"
       },
       "accompanyingDetailsTitle": "Details zur Begleitung",
       "accompanyingDetails": {
