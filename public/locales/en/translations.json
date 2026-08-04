@@ -1001,7 +1001,11 @@
       "typeOptions": {
         "tshirt": "T-shirt",
         "toteBag": "Tote bag",
-        "benefitCard": "Benefit card"
+        "benefitCard": "Benefit card",
+        "need4deedCertificate": "Need4Deed certificate",
+        "cap": "Cap",
+        "notebook": "Notebook",
+        "cityCertificate": "City certificate"
       },
       "addAppreciation": "Add appreciation",
       "editAppreciation": "Edit appreciation",

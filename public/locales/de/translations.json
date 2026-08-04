@@ -1013,7 +1013,11 @@
       "typeOptions": {
         "tshirt": "T-Shirt",
         "toteBag": "Stofftasche",
-        "benefitCard": "Vorteilskarte"
+        "benefitCard": "Vorteilskarte",
+        "need4deedCertificate": "Need4Deed-Zertifikat",
+        "cap": "Cap",
+        "notebook": "Notizbuch",
+        "cityCertificate": "Städtisches Zertifikat"
       },
       "addAppreciation": "Anerkennung hinzufügen",
       "editAppreciation": "Anerkennung bearbeiten",
