@@ -74,34 +74,25 @@ git clone https://github.com/need4deed-org/be.git
 git clone https://github.com/need4deed-org/sdk.git
 ```
 
-### 2. Keep SDK in Sync
+---
 
-We **don’t fetch the SDK** — we link it locally.
+## 🌐 Modifying API types
 
-1. Pull the latest SDK changes:
+The `sdk` repo contains the API types that are used by `be` and `fe`. These are published as an npm package `need4deed-sdk`. The following points must be considered before modifying these types.
 
-   ```bash
-   cd sdk
-   git pull origin <branch>
-   ```
+1. Modifying the API types in `sdk` must be followed by republishing the `need4deed-sdk` package to the npm registry.
+   https://www.npmjs.com/package/need4deed-sdk
 
-2. Build the sdk package by navigating to the sdk folder and then
+2. The `fe`, `be` and `sdk` should then be upgraded using the following command.
 
-   ```bash
-   cd ../sdk
-   yarn run build
-   ```
+```bash
+yarn upgrade need4deed-sdk --latest
+```
 
-3. Then in the FE:
+### 🚧 Avoid workarounds
 
-   ```bash
-   cd ../fe
-   yarn install ../sdk
-   ```
-
-4. Make sure all repos (`fe`, `be`, `sdk`) are checked out to the same branch name for consistency. Note that the sdk repo may not have the same branch name since the types don't change as frequently as the frontend and backend code.
-
-> 💡 If you see TypeScript errors, ensure your local SDK and backend are aligned and up to date.
+- Linking the `sdk` locally will result in updated package references in the `package.json` file which will diverge from the published stable version of the `need4deed-sdk` This may result in production failures and is best avoided.
+- Using local type definitions and other workarounds is not acceptable.
 
 ---
 
