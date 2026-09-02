@@ -45,7 +45,7 @@ export function AddressStep({ form, optionLists }: Props) {
 
       <form.Field
         name="locations"
-        validators={{ onChange: ({ value }) => (value.length === 0 ? t("form.error.required") : undefined) }}
+        // validators={{ onChange: ({ value }) => (value.length === 0 ? t("form.error.required") : undefined) }}
       >
         {(field) => (
           <FieldWrapper>
