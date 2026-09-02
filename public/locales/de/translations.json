@@ -2211,6 +2211,10 @@
     "submit": "Absenden",
     "alreadyUser": "Bereits registriert?",
     "loginLink": "In Ihrem Konto anmelden",
+    "completion": {
+      "title": "Schließen Sie die Einrichtung Ihres Kontos ab",
+      "subtitle": "Erzählen Sie uns etwas über sich"
+    },
     "steps": {
       "account": {
         "title": "Ihr Konto",
