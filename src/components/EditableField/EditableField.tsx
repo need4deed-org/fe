@@ -130,9 +130,9 @@ const Arrow = styled(IoIosArrowDown)`
   }
 `;
 
-const DropdownList = styled.div`
+const DropdownList = styled.div<{ $direction?: "up" | "down" }>`
   position: var(--editableField-dropdownList-position);
-  top: var(--editableField-dropdownList-top);
+  ${(props) => (props.$direction === "down" ? "top: 100%;" : "bottom: 100%;")};
   left: var(--editableField-dropdownList-left);
   width: var(--editableField-dropdownList-width);
   background: var(--editableField-dropdownList-background);
@@ -286,6 +286,7 @@ interface EditableFieldProps<T = string | number | string[]> {
   maxLength?: number;
   labels?: string[];
   displayValue?: string;
+  dropdownDirection?: "up" | "down";
 }
 
 export const EditableField = forwardRef(function EditableField<T extends string | number | string[]>(
@@ -304,6 +305,7 @@ export const EditableField = forwardRef(function EditableField<T extends string 
     maxLength,
     labels,
     displayValue,
+    dropdownDirection = "down",
   }: EditableFieldProps<T>,
   ref: React.Ref<EditableFieldRef<T>>,
 ) {
@@ -518,7 +520,7 @@ export const EditableField = forwardRef(function EditableField<T extends string 
             </DropdownButton>
 
             {open && (
-              <DropdownList>
+              <DropdownList $direction={dropdownDirection}>
                 {options.map((option, idx) => {
                   const isSelected =
                     type === "checkbox-list"

@@ -1863,12 +1863,34 @@
     "title": "Become a volunteer",
     "subtitle": "Create an account to start volunteering with refugees in Berlin.",
     "next": "Next",
+    "back": "Back",
+    "submit": "Submit",
     "alreadyUser": "Already registered?",
     "loginLink": "Login to your account",
+    "completion": {
+      "title": "Finish setting up your account",
+      "subtitle": "Tell us about your yourself"
+    },
     "steps": {
       "account": {
         "title": "Your account",
         "description": "Enter your personal details to create a login."
+      },
+      "availabilityInfo": {
+        "title": "Availability, activities & skills",
+        "description": "When are you available, what activities are you interested in and what skills do you have?"
+      },
+      "address": {
+        "title": "Location & languages",
+        "description": "Where is you located and what languages do you speak?"
+      },
+      "certificates": {
+        "title": "Final details",
+        "description": "Declare whether you have the following certificates along with how you heard of us"
+      },
+      "review": {
+        "title": "Review",
+        "description": "Please check your details before submitting."
       }
     },
     "fields": {
@@ -1883,10 +1905,15 @@
         "and": "and"
       }
     },
+    "success": {
+      "title": "Registration successful!",
+      "description": "Your account has been created. You will be redirected to the login page shortly."
+    },
     "errors": {
       "passwordTooShort": "Password must be at least 8 characters",
       "passwordMismatch": "Passwords do not match",
-      "phoneTooShort": "Phone number must be at least 7 characters"
+      "phoneTooShort": "Phone number must be at least 7 characters",
+      "missingToken": "Your registration link is invalid or has expired. Please use the link from your verification email."
     },
     "checkEmail": {
       "title": "Check your email",
