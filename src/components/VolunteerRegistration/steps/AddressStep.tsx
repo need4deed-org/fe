@@ -32,7 +32,7 @@ export function AddressStep({ form, optionLists }: Props) {
       >
         {(field) => (
           <FieldWrapper>
-            <FieldLabel>{t("form.becomeVolunteer.fields.postcode.label")}</FieldLabel>
+            <FieldLabel>{t("volunteerRegistration.fields.postcode")}</FieldLabel>
             <FormInput
               value={field.state.value || ""}
               onInputChange={(v) => field.handleChange(v)}
@@ -45,13 +45,11 @@ export function AddressStep({ form, optionLists }: Props) {
 
       <form.Field
         name="locations"
-        validators={{
-          onChange: ({ value }) => (value.length === 0 ? t("form.error.required") : undefined),
-        }}
+        validators={{ onChange: ({ value }) => (value.length === 0 ? t("form.error.required") : undefined) }}
       >
         {(field) => (
           <FieldWrapper>
-            <FieldLabel>{t("form.becomeVolunteer.fields.locations.header")}</FieldLabel>
+            <FieldLabel>{t("volunteerRegistration.fields.locations.header")}</FieldLabel>
             <EditableField
               mode="edit"
               type="checkbox-list"
@@ -76,7 +74,7 @@ export function AddressStep({ form, optionLists }: Props) {
       >
         {(field) => (
           <FieldWrapper>
-            <FieldLabel>{t("form.becomeVolunteer.fields.languages.headerWithoutAsterick")}</FieldLabel>
+            <FieldLabel>{t("volunteerRegistration.fields.languages.header")}</FieldLabel>
             <LanguageFields languages={field.state.value || []} t={t} onChange={(e) => field.handleChange(e)} />
             {field.state.meta.errors.length > 0 && (
               <ErrorMessage

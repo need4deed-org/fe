@@ -65,7 +65,7 @@ export function ProfileCompletion() {
   }, []);
 
   useEffect(() => {
-    if (!token) showSubmitError(t("agentRegistration.errors.missingToken"));
+    if (!token) showSubmitError(t("volunteerRegistration.errors.missingToken"));
   }, [token, t, showSubmitError]);
 
   const handleNext = async () => {

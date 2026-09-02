@@ -30,7 +30,7 @@ export function CertificateStep({ form, optionLists }: Props) {
       >
         {(field) => (
           <FieldWrapper>
-            <FieldLabel>{t("form.becomeVolunteer.fields.certOfGoodConduct.header")}</FieldLabel>
+            <FieldLabel>{t("volunteerRegistration.fields.certOfGoodConduct.header")}</FieldLabel>
             <EditableField
               mode="edit"
               type="radio-list"
@@ -59,15 +59,15 @@ export function CertificateStep({ form, optionLists }: Props) {
       >
         {(field) => (
           <FieldWrapper>
-            <FieldLabel>{t("form.becomeVolunteer.fields.certMeaslesVaccination.header")}</FieldLabel>
+            <FieldLabel>{t("volunteerRegistration.fields.certMeaslesVaccination.header")}</FieldLabel>
             <EditableField
               mode="edit"
               type="radio-list"
               value={field.state.value || ""}
               setValue={(value) => field.handleChange(value as string)}
               options={[
-                t("form.becomeVolunteer.fields.certMeaslesVaccination.true"),
-                t("form.becomeVolunteer.fields.certMeaslesVaccination.false"),
+                t("volunteerRegistration.fields.certMeaslesVaccination.true"),
+                t("volunteerRegistration.fields.certMeaslesVaccination.false"),
               ]}
               errorMessage={field.state.meta.errors.join(", ")}
             />
@@ -78,7 +78,7 @@ export function CertificateStep({ form, optionLists }: Props) {
       <form.Field name="leadFrom">
         {(field) => (
           <FieldWrapper>
-            <FieldLabel>{t("form.becomeVolunteer.fields.leadFrom.header")}</FieldLabel>
+            <FieldLabel>{t("volunteerRegistration.fields.leadFrom")}</FieldLabel>
             <EditableField
               mode="edit"
               type="checkbox-list"
@@ -98,7 +98,7 @@ export function CertificateStep({ form, optionLists }: Props) {
       <form.Field name="comments">
         {(field) => (
           <FieldWrapper>
-            <FieldLabel>{t("form.becomeVolunteer.fields.comments.label")}</FieldLabel>
+            <FieldLabel>{t("volunteerRegistration.fields.comments")}</FieldLabel>
             <FormInput value={field.state.value || ""} onInputChange={(v) => field.handleChange(v)} placeHolder="" />
             {field.state.meta.errors.length > 0 && <ErrorMessage message={field.state.meta.errors.join(", ")} />}
           </FieldWrapper>

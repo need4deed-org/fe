@@ -37,7 +37,7 @@ export function AvailabilityStep({ form, optionLists }: Props) {
       >
         {(field) => (
           <FieldWrapper>
-            <FieldLabel>{t("form.becomeVolunteer.fields.availability.header")}</FieldLabel>
+            <FieldLabel>{t("volunteerRegistration.fields.availability.header")}</FieldLabel>
             <AvailabilityGrid
               availability={field.state.value}
               onChange={(e) => field.handleChange(e)}
@@ -62,7 +62,7 @@ export function AvailabilityStep({ form, optionLists }: Props) {
       >
         {(field) => (
           <FieldWrapper>
-            <FieldLabel>{t("form.becomeVolunteer.fields.activities.header")}</FieldLabel>
+            <FieldLabel>{t("volunteerRegistration.fields.activities.header")}</FieldLabel>
             <EditableField
               mode="edit"
               type="checkbox-list"
@@ -82,7 +82,7 @@ export function AvailabilityStep({ form, optionLists }: Props) {
       <form.Field name="skills">
         {(field) => (
           <FieldWrapper>
-            <FieldLabel>{t("form.becomeVolunteer.fields.skills.header")}</FieldLabel>
+            <FieldLabel>{t("volunteerRegistration.fields.skills.header")}</FieldLabel>
             <EditableField
               mode="edit"
               type="checkbox-list"
