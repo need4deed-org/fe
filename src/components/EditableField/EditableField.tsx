@@ -132,7 +132,7 @@ const Arrow = styled(IoIosArrowDown)`
 
 const DropdownList = styled.div<{ $direction?: "up" | "down" }>`
   position: var(--editableField-dropdownList-position);
-  ${(props) => (props.$direction === "down" ? "top: 100%;" : "bottom: 100%;")};
+  ${(props) => (props.$direction === "down" ? "var(--editableField-dropdownList-top);" : "bottom: 100%;")};
   left: var(--editableField-dropdownList-left);
   width: var(--editableField-dropdownList-width);
   background: var(--editableField-dropdownList-background);

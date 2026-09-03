@@ -13,8 +13,8 @@ export interface ProfileCompletionData {
   activities: number[];
   skills: number[];
   leadFrom: number[];
-  goodConductCertificate: string;
-  measlesVaccination: string;
+  certOfGoodConduct: boolean | undefined;
+  certMeaslesVaccination: boolean | undefined;
   comments: string;
 }
 
@@ -26,8 +26,8 @@ export const defaultVolunteerRegistrationData: ProfileCompletionData = {
   activities: [],
   skills: [],
   leadFrom: [],
-  goodConductCertificate: "",
-  measlesVaccination: "",
+  certOfGoodConduct: undefined,
+  certMeaslesVaccination: undefined,
   comments: "",
 };
 

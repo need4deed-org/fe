@@ -19,13 +19,14 @@ export function CertificateStep({ form, optionLists }: Props) {
   const { t } = useTranslation();
   const leadFrom = optionLists?.lead_from ?? [];
   const leadFromMapping = createMapping(optionLists?.lead_from as ApiLanguageOption[]);
-
+  const certOfGoodConductCopyPath = "volunteerRegistration.fields.certOfGoodConduct.";
+  const certMeaslesVaccinationCopyPath = "volunteerRegistration.fields.certMeaslesVaccination.";
   return (
     <div>
       <form.Field
-        name="goodConductCertificate"
+        name="certOfGoodConduct"
         validators={{
-          onChange: ({ value }) => (!value ? t("form.error.required") : undefined),
+          onChange: ({ value }) => (value === undefined ? t("form.error.required") : undefined),
         }}
       >
         {(field) => (
@@ -34,17 +35,20 @@ export function CertificateStep({ form, optionLists }: Props) {
             <EditableField
               mode="edit"
               type="radio-list"
-              value={field.state.value || ""}
-              setValue={(value) => field.handleChange(value as string)}
-              options={[
-                t("form.becomeVolunteer.fields.certOfGoodConduct.true"),
-                t("form.becomeVolunteer.fields.certOfGoodConduct.false"),
-              ]}
+              value={field.state.value === undefined ? "" : String(field.state.value)}
+              setValue={(value) => field.handleChange(value === "true")}
+              options={["true", "false"]}
+              labels={[t(`${certOfGoodConductCopyPath}true`), t(`${certOfGoodConductCopyPath}false`)]}
+              displayValue={
+                field.state.value === undefined
+                  ? undefined
+                  : t(`${certOfGoodConductCopyPath}${String(field.state.value)}`)
+              }
               errorMessage={field.state.meta.errors.join(", ")}
             />
             <h6>
               <a href="https://www.berlin.de/laf/engagement/fuehrungszeugnis/" target="_blank" rel="noreferrer">
-                {t("form.becomeVolunteer.fields.certOfGoodConduct.why")}
+                {t("volunteerRegistration.fields.certOfGoodConduct.why")}
               </a>
             </h6>
           </FieldWrapper>
@@ -52,9 +56,9 @@ export function CertificateStep({ form, optionLists }: Props) {
       </form.Field>
 
       <form.Field
-        name="measlesVaccination"
+        name="certMeaslesVaccination"
         validators={{
-          onChange: ({ value }) => (!value ? t("form.error.required") : undefined),
+          onChange: ({ value }) => (value === undefined ? t("form.error.required") : undefined),
         }}
       >
         {(field) => (
@@ -63,12 +67,15 @@ export function CertificateStep({ form, optionLists }: Props) {
             <EditableField
               mode="edit"
               type="radio-list"
-              value={field.state.value || ""}
-              setValue={(value) => field.handleChange(value as string)}
-              options={[
-                t("volunteerRegistration.fields.certMeaslesVaccination.true"),
-                t("volunteerRegistration.fields.certMeaslesVaccination.false"),
-              ]}
+              value={field.state.value === undefined ? "" : String(field.state.value)}
+              setValue={(value) => field.handleChange(value === "true")}
+              options={["true", "false"]}
+              labels={[t(`${certMeaslesVaccinationCopyPath}true`), t(`${certMeaslesVaccinationCopyPath}false`)]}
+              displayValue={
+                field.state.value === undefined
+                  ? undefined
+                  : t(`${certMeaslesVaccinationCopyPath}${String(field.state.value)}`)
+              }
               errorMessage={field.state.meta.errors.join(", ")}
             />
           </FieldWrapper>
