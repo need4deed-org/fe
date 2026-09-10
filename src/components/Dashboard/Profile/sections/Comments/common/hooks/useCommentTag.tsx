@@ -1,7 +1,7 @@
 import { apiPathUser, cacheTTL, MAX_PAGE_LIMIT } from "@/config/constants";
 import { useGetQuery } from "@/hooks";
 import { ApiUserGet, SortOrder, UserRole } from "need4deed-sdk";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useMemo } from "react";
 
 // personId is not yet in ApiUserGet SDK type — cast until SDK is updated
 type ApiUserGetWithPersonId = ApiUserGet & { personId?: number };
@@ -18,7 +18,14 @@ export function useCommentTag(
   const [filteredListLength, setFilteredListLength] = useState(0);
   const [onSelectTrigger, setOnSelectTrigger] = useState<(() => void) | null>(null);
 
-  const { data: users } = useGetQuery<ApiUserGetWithPersonId[]>({
+  const enabled = !!setNewCommentText;
+  // Comments are only ever visible to coordinators and admins, so the
+  // default (comment-tagging) mode offers both roles, not coordinator alone.
+  // GET /user only takes a single `role` value, so admins are fetched via a
+  // second, separately-enabled query rather than widening the schema.
+  const isStaffMode = userRole === UserRole.COORDINATOR;
+
+  const { data: primaryUsers } = useGetQuery<ApiUserGetWithPersonId[]>({
     queryKey: ["users", userRole ?? "all"],
     apiPath: apiPathUser,
     params: {
@@ -27,8 +34,26 @@ export function useCommentTag(
       ...(userRole === null ? { limit: MAX_PAGE_LIMIT } : {}),
     },
     staleTime: cacheTTL,
-    enabled: !!setNewCommentText,
+    enabled,
   });
+
+  const { data: admins } = useGetQuery<ApiUserGetWithPersonId[]>({
+    queryKey: ["users", UserRole.ADMIN],
+    apiPath: apiPathUser,
+    params: {
+      sortOrder: SortOrder.NewToOld,
+      role: UserRole.ADMIN,
+      limit: MAX_PAGE_LIMIT,
+    },
+    staleTime: cacheTTL,
+    enabled: enabled && isStaffMode,
+  });
+
+  const users = useMemo(() => {
+    if (!isStaffMode) return primaryUsers;
+    if (!primaryUsers && !admins) return undefined;
+    return [...(primaryUsers ?? []), ...(admins ?? [])];
+  }, [primaryUsers, admins, isStaffMode]);
 
   useEffect(() => {
     setActiveRowIndex(0);
