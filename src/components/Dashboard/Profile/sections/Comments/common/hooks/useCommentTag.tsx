@@ -1,7 +1,7 @@
 import { apiPathUser, cacheTTL, MAX_PAGE_LIMIT } from "@/config/constants";
 import { useGetQuery } from "@/hooks";
 import { ApiUserGet, SortOrder, UserRole } from "need4deed-sdk";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useMemo } from "react";
 
 // personId is not yet in ApiUserGet SDK type — cast until SDK is updated
 type ApiUserGetWithPersonId = ApiUserGet & { personId?: number };
@@ -10,7 +10,13 @@ export function useCommentTag(
   value: string,
   setNewCommentText?: (text: string) => void,
   textAreaRef?: React.RefObject<HTMLTextAreaElement | null> | null,
-  userRole: UserRole | null = UserRole.COORDINATOR,
+  // undefined (the default, omitted by every comment call site) = the
+  // comment-tagging roles (coordinator + admin, the only roles that can see
+  // comments); null (PostComposer) = no role filter, tag anyone; an explicit
+  // UserRole = that role only. Kept distinct from UserRole.COORDINATOR so a
+  // future caller can request COORDINATOR alone without silently also
+  // getting ADMIN.
+  userRole?: UserRole | null,
 ) {
   const [tags, setTags] = useState<{ id: number; name: string; personId: number }[]>([]);
   const [showAutocomplete, setShowAutocomplete] = useState(false);
@@ -18,17 +24,48 @@ export function useCommentTag(
   const [filteredListLength, setFilteredListLength] = useState(0);
   const [onSelectTrigger, setOnSelectTrigger] = useState<(() => void) | null>(null);
 
-  const { data: users } = useGetQuery<ApiUserGetWithPersonId[]>({
-    queryKey: ["users", userRole ?? "all"],
+  const enabled = !!setNewCommentText;
+  const isStaffMode = userRole === undefined;
+  const primaryRole = isStaffMode ? UserRole.COORDINATOR : userRole;
+
+  const { data: primaryUsers, isLoading: isPrimaryLoading } = useGetQuery<ApiUserGetWithPersonId[]>({
+    queryKey: ["users", primaryRole ?? "all"],
     apiPath: apiPathUser,
     params: {
       sortOrder: SortOrder.NewToOld,
-      ...(userRole ? { role: userRole } : {}),
-      ...(userRole === null ? { limit: MAX_PAGE_LIMIT } : {}),
+      ...(primaryRole ? { role: primaryRole } : {}),
+      limit: MAX_PAGE_LIMIT,
     },
     staleTime: cacheTTL,
-    enabled: !!setNewCommentText,
+    enabled,
   });
+
+  // GET /user only takes a single `role` value, so staff mode fetches admins
+  // via a second, separately-enabled query rather than widening the schema.
+  const { data: admins, isLoading: isAdminsLoading } = useGetQuery<ApiUserGetWithPersonId[]>({
+    queryKey: ["users", UserRole.ADMIN],
+    apiPath: apiPathUser,
+    params: {
+      sortOrder: SortOrder.NewToOld,
+      role: UserRole.ADMIN,
+      limit: MAX_PAGE_LIMIT,
+    },
+    staleTime: cacheTTL,
+    enabled: enabled && isStaffMode,
+  });
+
+  // Wait for every query this mode depends on before exposing a merged
+  // list — otherwise a consumer (e.g. convertDbTextToEditable) can see a
+  // partial list as "loaded" and permanently rewrite a not-yet-loaded
+  // admin's tag to a fallback placeholder.
+  const isUsersLoading = isPrimaryLoading || (isStaffMode && isAdminsLoading);
+
+  const users = useMemo(() => {
+    if (!enabled) return undefined;
+    if (!isStaffMode) return primaryUsers;
+    if (isUsersLoading) return undefined;
+    return [...(primaryUsers ?? []), ...(admins ?? [])];
+  }, [enabled, primaryUsers, admins, isStaffMode, isUsersLoading]);
 
   useEffect(() => {
     setActiveRowIndex(0);
