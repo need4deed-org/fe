@@ -66,6 +66,16 @@ export function useCreatePost(onSuccess: () => void) {
   });
 }
 
+export function useTogglePostBookmark(postId: number, bookmarked: boolean) {
+  return useMutationQuery<void, unknown>({
+    apiPath: `${apiPathPost}/${postId}/bookmark`,
+    method: bookmarked ? "delete" : "post",
+    queryKeyToInvalidate: POSTS_QUERY_KEY,
+    awaitQueryInvalidation: true,
+    successMessage: bookmarked ? "dashboard.posts.bookmarkRemoved" : "dashboard.posts.bookmarkAdded",
+  });
+}
+
 export function useGetPostReplies(postId: number, enabled: boolean) {
   return useGetQuery<ApiPostReplyGet[]>({
     queryKey: postRepliesQueryKey(postId),
