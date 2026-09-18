@@ -36,7 +36,20 @@ export function useCalendar() {
       .filter((event) => new Date(event.date) < monthEnd && new Date(event.dateEnd ?? event.date) >= monthStart)
       .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
   }, [events, monthDate]);
-  const upcomingEvents = monthEvents.filter((event) => new Date(event.dateEnd ?? event.date) >= today);
+  const upcomingEvents = useMemo(
+    () =>
+      events
+        .filter((event) => event.active && new Date(event.dateEnd ?? event.date) >= today)
+        .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()),
+    [events, today],
+  );
+  const draftEvents = useMemo(
+    () =>
+      events
+        .filter((event) => !event.active && new Date(event.dateEnd ?? event.date) >= today)
+        .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()),
+    [events, today],
+  );
   const pastEvents = monthEvents
     .filter((event) => new Date(event.dateEnd ?? event.date) < today)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
@@ -70,6 +83,7 @@ export function useCalendar() {
   return {
     monthDate,
     monthEvents,
+    draftEvents,
     upcomingEvents,
     pastEvents,
     selectedDateKey,
