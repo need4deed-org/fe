@@ -3,7 +3,10 @@ import { Availability } from "@/components/forms/types";
 import { LanguageLevel, LanguageObject } from "@/types";
 import { LangPurpose } from "need4deed-sdk";
 
-export const createVolunteerProfileSchema = (t: (key: string) => string) => {
+// canEditVolunteerType: volunteer type is a coordinator decision. On a
+// volunteer's own profile it's hidden and not required, otherwise a
+// self-registered volunteer (no type yet) could never save (fe#1083).
+export const createVolunteerProfileSchema = (t: (key: string) => string, canEditVolunteerType = true) => {
   return z.object({
     languages: z
       .array(
@@ -50,7 +53,9 @@ export const createVolunteerProfileSchema = (t: (key: string) => string) => {
       return data.some((day) => day.timeSlots.some((slot: { selected: boolean }) => slot.selected));
     }, t("dashboard.volunteerProfile.profileSection.validation.availabilityRequired")),
     districts: z.array(z.string()).min(1, t("dashboard.volunteerProfile.profileSection.validation.districtsRequired")),
-    volunteerType: z.string().min(1, t("dashboard.volunteerProfile.profileSection.validation.volunteerTypeRequired")),
+    volunteerType: canEditVolunteerType
+      ? z.string().min(1, t("dashboard.volunteerProfile.profileSection.validation.volunteerTypeRequired"))
+      : z.string(),
     activities: z
       .array(z.string())
       .min(1, t("dashboard.volunteerProfile.profileSection.validation.activitiesRequired")),

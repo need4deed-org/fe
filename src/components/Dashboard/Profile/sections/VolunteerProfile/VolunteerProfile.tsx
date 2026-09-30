@@ -1,5 +1,6 @@
 "use client";
 import Button from "@/components/core/button/Button/Button";
+import { useAuth } from "@/hooks/useAuth";
 import { useUpdateVolunteerProfile } from "@/hooks/useUpdateVolunteerProfile";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ApiVolunteerGet, Lang, VolunteerStateCommunicationType, VolunteerStateTypeType } from "need4deed-sdk";
@@ -43,6 +44,8 @@ export const VolunteerProfile = forwardRef<VolunteerProfileRef, Props>(function 
   const { t, i18n } = useTranslation();
   const { mutate: updateProfile, isPending } = useUpdateVolunteerProfile(volunteer.id);
   const [isEditing, setIsEditing] = useState(false);
+  // Only coordinators/admins set the volunteer type (fe#1083).
+  const { isAuthorized: canEditVolunteerType } = useAuth();
 
   useEditingChangeNotifier(isEditing, onEditingChange);
 
@@ -65,7 +68,7 @@ export const VolunteerProfile = forwardRef<VolunteerProfileRef, Props>(function 
     [apiLanguages, i18n.language],
   );
 
-  const schema = useMemo(() => createVolunteerProfileSchema(t), [t]);
+  const schema = useMemo(() => createVolunteerProfileSchema(t, canEditVolunteerType), [t, canEditVolunteerType]);
 
   const { control, handleSubmit, reset, trigger, formState } = useForm<VolunteerProfileFormData>({
     resolver: zodResolver(schema),
@@ -122,7 +125,9 @@ export const VolunteerProfile = forwardRef<VolunteerProfileRef, Props>(function 
     updateProfile(
       {
         availability: formToApiAvailability(data.availability),
-        ...(statusType && Object.values(VolunteerStateTypeType).includes(statusType) && { statusType }),
+        ...(canEditVolunteerType &&
+          statusType &&
+          Object.values(VolunteerStateTypeType).includes(statusType) && { statusType }),
         languages: transformLanguagesToApi(data.languages, languageMapping),
         locations: mapToApiItems(data.districts, districtMapping),
         activities: mapToApiItems(data.activities, activityMapping),
@@ -149,6 +154,7 @@ export const VolunteerProfile = forwardRef<VolunteerProfileRef, Props>(function 
             skillMapping={skillMapping}
             languagesForForm={languagesForForm}
             trigger={trigger}
+            canEditVolunteerType={canEditVolunteerType}
           />
         ) : (
           <DisplayFields

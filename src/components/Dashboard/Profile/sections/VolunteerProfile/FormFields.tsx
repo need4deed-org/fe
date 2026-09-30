@@ -72,6 +72,7 @@ type Props = {
   skillMapping: Mapping;
   languagesForForm: Array<{ id: number | string; title: Record<Lang, string> }>;
   trigger: UseFormTrigger<VolunteerProfileFormData>;
+  canEditVolunteerType?: boolean;
 };
 
 export function FormFields({
@@ -87,6 +88,7 @@ export function FormFields({
   skillMapping,
   languagesForForm,
   trigger,
+  canEditVolunteerType = true,
 }: Props) {
   return (
     <>
@@ -150,23 +152,25 @@ export function FormFields({
         )}
       />
 
-      <Controller
-        name="volunteerType"
-        control={control}
-        render={({ field }: { field: ControllerRenderProps<VolunteerProfileFormData, "volunteerType"> }) => (
-          <EditableField
-            mode="edit"
-            type="radio-list"
-            label={t("dashboard.volunteerProfile.profileSection.volunteerType")}
-            value={field.value}
-            setValue={field.onChange}
-            options={Object.values(VolunteerStateTypeType)
-              .filter((type): type is VolunteerStateTypeType => type !== undefined)
-              .map((type) => t(`dashboard.volunteerProfile.volunteerHeader.volunteerType_options.${type}`))}
-            errorMessage={errors.volunteerType?.message}
-          />
-        )}
-      />
+      {canEditVolunteerType && (
+        <Controller
+          name="volunteerType"
+          control={control}
+          render={({ field }: { field: ControllerRenderProps<VolunteerProfileFormData, "volunteerType"> }) => (
+            <EditableField
+              mode="edit"
+              type="radio-list"
+              label={t("dashboard.volunteerProfile.profileSection.volunteerType")}
+              value={field.value}
+              setValue={field.onChange}
+              options={Object.values(VolunteerStateTypeType)
+                .filter((type): type is VolunteerStateTypeType => type !== undefined)
+                .map((type) => t(`dashboard.volunteerProfile.volunteerHeader.volunteerType_options.${type}`))}
+              errorMessage={errors.volunteerType?.message}
+            />
+          )}
+        />
+      )}
 
       <Controller
         name="activities"
