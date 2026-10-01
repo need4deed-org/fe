@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { MapView } from "../common/MapView/MapView";
 import { useEffect } from "react";
 import { MapContainer, PopupCardHeader, PopupLink } from "../common/MapView/styles";
@@ -14,7 +14,6 @@ type Props = {
 };
 
 export function AgentMapView({ markers, setNumOfVols }: Props) {
-  const [activeMarkerIndex, setActiveMarkerIndex] = useState<number | undefined>(undefined);
   const { t } = useTranslation();
 
   const renderPopupContent = (marker: EntityMarker) => {
@@ -39,12 +38,7 @@ export function AgentMapView({ markers, setNumOfVols }: Props) {
   }, [markers]);
   return (
     <MapContainer>
-      <MapView
-        markers={markers}
-        activeMarkerIndex={activeMarkerIndex}
-        setActiveMarkerIndex={setActiveMarkerIndex}
-        renderPopupContent={renderPopupContent}
-      />
+      <MapView markers={markers} renderPopupContent={renderPopupContent} />
     </MapContainer>
   );
 }
