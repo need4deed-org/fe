@@ -13,7 +13,8 @@ import { createOpportunityFilterItems } from "./Filters/helpers";
 import { useTranslation } from "react-i18next";
 import { LoadingOpportunityTableList } from "./LoadingOpportunityTableList";
 import { LoadingMapView } from "../common/MapView/LoadingMapView";
-import { createOpportunityMarkers } from "../common/MapView/helpers";
+import { createOpportunityMarkers, createSingleVolunteerMarker } from "../common/MapView/helpers";
+import { SingleFilter } from "../common/MapView/types";
 import { OpportunityMapView } from "./OpportunityMapView";
 
 type OpportunityWithAccompanying = ApiVolunteerOpportunityGetList & {
@@ -45,6 +46,7 @@ type Props = {
   apiFilterOptions?: ApiOptionLists;
   volunteerId?: string;
   viewMode: ViewMode;
+  volunteerFilter: SingleFilter | undefined;
 };
 
 export function OpportunityListController({
@@ -55,6 +57,7 @@ export function OpportunityListController({
   apiFilterOptions,
   volunteerId,
   viewMode,
+  volunteerFilter,
 }: Props) {
   const { currentPage, setCurrentPage } = usePageParam();
   const { t, i18n } = useTranslation();
@@ -101,10 +104,12 @@ export function OpportunityListController({
   }, [count, setNumOfOpps, viewMode]);
 
   const markers = useMemo(
-    () => createOpportunityMarkers(opportunities, t, i18n.language),
+    () => createOpportunityMarkers(opportunities, t, i18n.language, volunteerId),
     [opportunities, i18n.language],
   );
 
+  const volunteerMarker = createSingleVolunteerMarker(volunteerFilter, t, i18n.language);
+  console.log("vol marker", volunteerMarker);
   if (isLoading && isListView) return <LoadingOpportunityTableList dropdownFilters={dropdownFilters} />;
   if (isLoading && isMapView) return <LoadingMapView />;
   if (isLoading) return <DashboardListLoading />;
@@ -125,7 +130,7 @@ export function OpportunityListController({
   }
 
   if (isMapView) {
-    return <OpportunityMapView setNumOfOpps={setNumOfOpps} markers={markers} />;
+    return <OpportunityMapView setNumOfOpps={setNumOfOpps} markers={markers} volunteerMarker={volunteerMarker} />;
   }
 
   return (

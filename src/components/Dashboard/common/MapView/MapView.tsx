@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { LoadingMapView } from "./LoadingMapView";
-import { EntityMarker } from "./types";
+import { EntityMarker, SingleMarker } from "./types";
 
 interface Props {
   markers?: EntityMarker[];
@@ -10,6 +10,8 @@ interface Props {
   setActiveMarkerIndex: (num: number) => void;
   renderPopupContent: (marker: EntityMarker) => React.ReactNode;
   showOtherRacs?: boolean;
+  filterMarker?: SingleMarker | null;
+  renderSinglePopupContent?: (marker: SingleMarker) => React.ReactNode;
 }
 
 const MapCard = dynamic(() => import("./MapCard"), {
@@ -23,6 +25,8 @@ export const MapView = ({
   setActiveMarkerIndex,
   renderPopupContent,
   showOtherRacs = false,
+  filterMarker,
+  renderSinglePopupContent,
 }: Props) => {
   return (
     <MapCard
@@ -31,6 +35,8 @@ export const MapView = ({
       activeMarkerIndex={activeMarkerIndex}
       setActiveMarkerIndex={setActiveMarkerIndex}
       renderPopupContent={renderPopupContent}
+      filterMarker={filterMarker}
+      renderSinglePopupContent={renderSinglePopupContent}
     />
   );
 };

@@ -160,6 +160,7 @@ export function Opportunities() {
             apiFilterOptions={apiFilterOptions}
             volunteerId={volunteerId}
             viewMode={viewMode}
+            volunteerFilter={volunteerFilter}
           />
           <Filters
             isFiltersOpen={isFiltersOpen}
