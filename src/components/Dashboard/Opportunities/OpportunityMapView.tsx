@@ -37,10 +37,10 @@ export function OpportunityMapView({ markers, setNumOfOpps, volunteerMarker }: P
         <PopupLink href={child.link} key={child.title}>
           <PopupCardHeader>{child.title}</PopupCardHeader>
           <CardDetail header={t("dashboard.volunteers.preferredAvailability")} iconName={IconName.CalendarDots}>
-            <CardParagraph text={child.availability} />
+            <CardParagraph text={child.availability ?? ""} />
           </CardDetail>
           <CardDetail header={t("dashboard.volunteers.languages")} iconName={IconName.Translate}>
-            <CardParagraph text={child.language} />
+            <CardParagraph text={child.language ?? ""} />
           </CardDetail>
         </PopupLink>
       ));
