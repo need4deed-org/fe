@@ -12,11 +12,7 @@ import { MapOtherRacs } from "./MapOtherRacs";
 
 interface Props {
   markers?: EntityMarker[];
-  activeMarkerIndex?: number;
-  setActiveMarkerIndex: (num: number) => void;
   renderPopupContent: (marker: EntityMarker) => React.ReactNode;
-  showOtherRacs?: boolean;
-  filterCoordinates?: [lat: number, lon: number];
   filterMarker?: SingleMarker | null;
   renderSinglePopupContent?: (filter: SingleMarker) => React.ReactNode;
 }

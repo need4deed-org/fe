@@ -109,7 +109,7 @@ export function OpportunityListController({
   );
 
   const volunteerMarker = createSingleVolunteerMarker(volunteerFilter, t, i18n.language);
-  console.log("vol marker", volunteerMarker);
+
   if (isLoading && isListView) return <LoadingOpportunityTableList dropdownFilters={dropdownFilters} />;
   if (isLoading && isMapView) return <LoadingMapView />;
   if (isLoading) return <DashboardListLoading />;

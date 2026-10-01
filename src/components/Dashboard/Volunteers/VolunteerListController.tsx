@@ -124,14 +124,7 @@ export function VolunteerListController({
   }
 
   if (isMapView) {
-    return (
-      <VolunteerMapView
-        count={count}
-        setNumOfVols={setNumOfVols}
-        markers={markers}
-        opportunityMarker={opportunityMarker}
-      />
-    );
+    return <VolunteerMapView setNumOfVols={setNumOfVols} markers={markers} opportunityMarker={opportunityMarker} />;
   }
 
   return (
