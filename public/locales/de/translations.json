@@ -11,7 +11,7 @@
         "heroText": "Ehrenamtliche Unterstützung für Geflüchtete",
         "heroSupportingText": "Wir vermitteln Ehrenamtliche an Gemeinschaftsunterkünften in Berlin",
         "buttonJoinVolunteer": "Finde jetzt dein Ehrenamt",
-        "buttonJoinRefugeeCenter": "Unterstützung als Unterkunft beantragen"
+        "buttonJoinRefugeeCenter": "Für Einrichtungen"
       }
     },
     "footer": {
@@ -561,6 +561,7 @@
         "newTags": "Neueste Tags",
         "taggedComment": "{{user}} hat dich in {{entityType}}: {{entityTitle}} markiert",
         "noTaggedComments": "Du bist derzeit in keinen Kommentaren markiert",
+        "requestSuggestNotification": "{{user}} → {{entityTitle}}: {{text}}",
         "newOpportunities": "Neueste Ehrenamtsbedarfe",
         "newVolunteers": "Neueste Ehrenamtliche",
         "loading": "Wird geladen...",
@@ -684,7 +685,7 @@
       "heroText": "Bedarfsorientierte ehrenamtliche Unterstützung für Geflüchtete in Berlin",
       "heroSupportingText": "Wir vermitteln Ehrenamtliche an Flüchtlingsunterkünfte in Not",
       "buttonJoinVolunteer": "Finde jetzt dein Ehrenamt",
-      "buttonJoinRefugeeCenter": "Unterstützung als Unterkunft beantragen"
+      "buttonJoinRefugeeCenter": "Für Einrichtungen"
     },
     "header": {
       "button": {
@@ -735,6 +736,13 @@
       "editButtonName": "Bearbeiten",
       "findOppButtonName": "Ehrenamtliche Tätigkeiten finden",
       "suggestButtonName": "Vorschlagen",
+      "requestSuggest": {
+        "button": "Vorschlag anfragen",
+        "commentText": "Angefragt für {{opportunity}}",
+        "contactMissing": "Anfrage konnte nicht gesendet werden: need4deed-Kontakt nicht gefunden",
+        "success": "Anfrage gesendet",
+        "noOpportunities": "Du hast noch keine ehrenamtlichen Tätigkeiten"
+      },
       "suggestDialog": {
         "title": "Diesem*r Ehrenamtlichen vorschlagen?",
         "messageMid": "wird benachrichtigt, dass Sie",
@@ -1027,6 +1035,11 @@
         "cancel": "Abbrechen",
         "submit": "Erstellen",
         "success": "NGO erfolgreich erstellt",
+        "conflict": {
+          "title": "Eine NGO mit diesem Namen existiert bereits.",
+          "address": "An dieser Adresse gibt es bereits eine NGO.",
+          "open": "Bestehende NGO öffnen"
+        },
         "validation": {
           "titleRequired": "Name der Organisation ist erforderlich"
         }
@@ -1453,6 +1466,7 @@
       },
       "statusUpdateSuccess": "Status der ehrenamtlichen Tätigkeit erfolgreich aktualisiert",
       "change_status": "Status ändern",
+      "statusHelpAgent": "Nur need4deed kann eine Tätigkeit als „{{status}}“ markieren. Erst dann suchen wir aktiv nach Ehrenamtlichen.",
       "change_ngo": "Einrichtung/Projekt ändern",
       "typeUpdateSuccess": "Art der Tätigkeit erfolgreich aktualisiert",
       "change_type": "Typ ändern",
@@ -2321,7 +2335,7 @@
       "password": "Passwort",
       "confirmPassword": "Passwort bestätigen",
       "phone": "Telefonnummer",
-      "organizationName": "Name der Organisation",
+      "organizationName": "Einrichtung (GU/Projekt)",
       "organizationType": "Art der Organisation",
       "selectOrganizationType": "Typ auswählen…",
       "about": "Über Ihre Einrichtung",
@@ -2329,8 +2343,6 @@
       "website": "Website",
       "addressStreet": "Straße und Hausnummer",
       "addressPostcode": "Postleitzahl",
-      "district": "Bezirk",
-      "selectDistrict": "Bezirk auswählen…",
       "services": "Angebotene Leistungen",
       "clientLanguages": "Von Bewohnenden gesprochene Sprachen",
       "consent": {
@@ -2357,10 +2369,13 @@
     "completion": {
       "title": "Konto-Einrichtung abschließen",
       "subtitle": "Erzählen Sie uns von Ihrer Organisation.",
+      "emailConfirmed": "E-Mail bestätigt. Jetzt nur noch Ihre Organisation vervollständigen.",
       "matchesFound_one": "Wir haben {{count}} Organisation gefunden, die zu dieser Adresse passt. Wählen Sie Ihre aus oder erstellen Sie eine neue.",
       "matchesFound_other": "Wir haben {{count}} Organisationen gefunden, die zu dieser Adresse passen. Wählen Sie Ihre aus oder erstellen Sie eine neue.",
       "skip": "Nein, manuell eingeben",
       "titleTaken": "Eine Organisation mit diesem Namen existiert bereits.",
+      "addressTaken": "An dieser Adresse ist bereits eine Organisation registriert.",
+      "editDetails": "Angaben ändern",
       "joinInstead": "Stattdessen beitreten",
       "requestToJoin": "Beitritt anfragen",
       "joinTitle": "Einer bestehenden Organisation beitreten",
