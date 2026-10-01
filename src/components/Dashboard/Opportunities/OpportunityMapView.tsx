@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { MapView } from "../common/MapView/MapView";
 import { useEffect } from "react";
 import { MapContainer, PopupCardHeader, PopupLink } from "../common/MapView/styles";
@@ -15,8 +15,6 @@ type Props = {
 };
 
 export function OpportunityMapView({ markers, setNumOfOpps, volunteerMarker }: Props) {
-  const [activeMarkerIndex, setActiveMarkerIndex] = useState<number | undefined>(undefined);
-
   const { t } = useTranslation();
 
   const renderSinglePopupContent = (marker: SingleMarker) => (
@@ -46,7 +44,7 @@ export function OpportunityMapView({ markers, setNumOfOpps, volunteerMarker }: P
       ));
     }
   };
-  console.log("vol", volunteerMarker);
+
   useEffect(() => {
     const childrenMarkers = markers.flatMap((marker) => marker.children);
     setNumOfOpps(childrenMarkers.length);
@@ -55,8 +53,6 @@ export function OpportunityMapView({ markers, setNumOfOpps, volunteerMarker }: P
     <MapContainer>
       <MapView
         markers={markers}
-        activeMarkerIndex={activeMarkerIndex}
-        setActiveMarkerIndex={setActiveMarkerIndex}
         renderPopupContent={renderPopupContent}
         renderSinglePopupContent={renderSinglePopupContent}
         filterMarker={volunteerMarker}

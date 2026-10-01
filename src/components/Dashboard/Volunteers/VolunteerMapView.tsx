@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { MapView } from "../common/MapView/MapView";
 import { useEffect } from "react";
 import { MapContainer, PopupCardHeader, PopupLink } from "../common/MapView/styles";
@@ -9,14 +9,12 @@ import { useTranslation } from "react-i18next";
 import { EntityMarker, SingleMarker } from "../common/MapView/types";
 
 type Props = {
-  count: number;
-  setNumOfVols: (num: number) => void;
   markers: EntityMarker[];
+  setNumOfVols: (num: number) => void;
   opportunityMarker: SingleMarker | null;
 };
 
 export function VolunteerMapView({ markers, setNumOfVols, opportunityMarker }: Props) {
-  const [activeMarkerIndex, setActiveMarkerIndex] = useState<number | undefined>(undefined);
   const { t } = useTranslation();
 
   const renderSinglePopupContent = (marker: SingleMarker) => (
@@ -54,10 +52,7 @@ export function VolunteerMapView({ markers, setNumOfVols, opportunityMarker }: P
   return (
     <MapContainer>
       <MapView
-        showOtherRacs={true}
         markers={markers}
-        activeMarkerIndex={activeMarkerIndex}
-        setActiveMarkerIndex={setActiveMarkerIndex}
         renderPopupContent={renderPopupContent}
         renderSinglePopupContent={renderSinglePopupContent}
         filterMarker={opportunityMarker}
