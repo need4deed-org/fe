@@ -148,6 +148,7 @@ export function Volunteers() {
             apiFilterOptions={apiFilterOptions}
             opportunityId={opportunityId}
             viewMode={viewMode}
+            opportunityFilter={opportunityFilter}
           />
           <Filters
             isFiltersOpen={isFiltersOpen}

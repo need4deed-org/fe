@@ -124,6 +124,8 @@ export const MapOpportunityItem = styled.li`
 `;
 
 export const PopupContentWrapper = styled.div`
+  height: var(--dashboard-map-popup-height);
+  overflow-y: scroll;
   padding: var(--dashboard-map-popup-wrapper-padding);
   display: flex;
   flex-direction: column;

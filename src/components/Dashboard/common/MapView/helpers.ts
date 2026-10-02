@@ -1,23 +1,29 @@
 import { defaultAvatarURL } from "@/config/constants";
 import { getImageUrl } from "@/utils";
 import { TFunction } from "i18next";
-import { LatLngExpression } from "leaflet";
+import { LatLngBoundsExpression, LatLngExpression } from "leaflet";
 import {
+  ApiAgentGetList,
   ApiOpportunityGetList,
   ApiVolunteerGetList,
+  Lang,
   OpportunityStatusType,
   VolunteerStateEngagementType,
 } from "need4deed-sdk";
 import { formatAvailabilityItem } from "../../Profile/sections/VolunteerProfile/formatters";
 import { getTopLanguages } from "../../Volunteers/helpers";
-import { EntityMarker } from "./types";
+import { EntityMarker, EntityType, SingleFilter, SingleMarker } from "./types";
 
 export const DEFAULT_CENTER: LatLngExpression | undefined = [52.52, 13.405];
-
+export const BERLIN_BOUNDS: LatLngBoundsExpression = [
+  [51.359, 11.265],
+  [53.5585, 14.7655],
+];
 export const createOpportunityMarkers = (
   opportunities: ApiOpportunityGetList[],
   t: TFunction,
   lang: string,
+  volunteerId?: string,
 ): EntityMarker[] => {
   const oppMap = new Map<
     string,
@@ -26,6 +32,7 @@ export const createOpportunityMarkers = (
       lon: number;
       label: string;
       children: Array<{ title: string; link: string; language: string; availability: string }>;
+      entity: EntityType;
       onClick: () => null;
     }
   >();
@@ -47,21 +54,22 @@ export const createOpportunityMarkers = (
 
     const childItem = {
       title: opp.title,
-      link: `/${lang}/dashboard/opportunities/${opp.id}`,
+      link: `/${lang}/dashboard/opportunities/${opp.id}${volunteerId ? "?volunteer=" + volunteerId : ""}`,
       language: topLanguages.join(", ") + (languageOverflow > 0 ? ` +${languageOverflow}` : "") || "—",
       availability: allAvailabilities.map((a) => a).join("; "),
     };
 
-    if (!oppMap.has(String(opp.agentId))) {
-      oppMap.set(String(opp.agentId), {
+    if (!oppMap.has(`${opp.lat}${opp.lon}`)) {
+      oppMap.set(`${opp.lat}${opp.lon}`, {
         lat: opp.lat,
         lon: opp.lon,
-        label: opp.agentTitle,
+        label: t("dashboard.map.opportunities"),
         children: [childItem],
+        entity: EntityType.OPPORTUNITY,
         onClick: () => null,
       });
     } else {
-      oppMap.get(String(opp.agentId))?.children.push(childItem);
+      oppMap.get(String(`${opp.lat}${opp.lon}`))?.children.push(childItem);
     }
   });
   return Array.from(oppMap.values());
@@ -71,6 +79,7 @@ export const createVolunteerMarkers = (
   volunteers: ApiVolunteerGetList[],
   t: TFunction,
   lang: string,
+  opportunityId?: string,
 ): EntityMarker[] => {
   const volMap = new Map<
     string,
@@ -78,12 +87,9 @@ export const createVolunteerMarkers = (
       lat: number;
       lon: number;
       label: string;
-      title: string;
-      link: string;
-      language: string;
-      availability: string;
-      avatarUrl: string;
-      onClick?: () => null;
+      children: Array<{ title: string; link: string; language: string; availability: string }>;
+      entity: EntityType;
+      onClick: () => null;
     }
   >();
 
@@ -102,17 +108,121 @@ export const createVolunteerMarkers = (
       .filter((a): a is typeof a & { day: string; daytime: string } => Boolean(a.day && a.daytime))
       .map((a) => formatAvailabilityItem(a.day, a.daytime, t));
 
-    volMap.set(String(vol.id), {
-      lat: vol.lat,
-      lon: vol.lon,
-      label: vol.name,
+    const childItem = {
       title: vol.name,
-      link: `/${lang}/dashboard/volunteers/${vol.id}`,
+      link: `/${lang}/dashboard/volunteers/${vol.id}${opportunityId ? "?opportunity=" + opportunityId : ""}`,
       language: topLanguages.join(", ") + (languageOverflow > 0 ? ` +${languageOverflow}` : "") || "—",
       availability: allAvailabilities.map((a) => a).join("; "),
       avatarUrl: getImageUrl(vol?.avatarUrl || defaultAvatarURL),
-      onClick: () => null,
-    });
+    };
+
+    if (!volMap.has(`${vol.lat}${vol.lon}`)) {
+      volMap.set(`${vol.lat}${vol.lon}`, {
+        lat: vol.lat,
+        lon: vol.lon,
+        label: t("dashboard.map.volunteers"),
+        children: [childItem],
+        entity: EntityType.VOLUNTEER,
+        onClick: () => null,
+      });
+    } else {
+      volMap.get(`${vol.lat}${vol.lon}`)?.children.push(childItem);
+    }
   });
   return Array.from(volMap.values());
+};
+
+export const createAgentMarkers = (agents: ApiAgentGetList[], t: TFunction, lang: string): EntityMarker[] => {
+  const agentMap = new Map<
+    string,
+    {
+      lat: number;
+      lon: number;
+      label: string;
+      children: Array<{ title: string; link: string; district: string; type: string }>;
+      entity: EntityType;
+      onClick: () => null;
+    }
+  >();
+
+  agents?.forEach((agent) => {
+    if (!agent.lat || !agent.lon) return;
+
+    const districtTitleMap = agent.district?.title ?? {};
+    const typeTitleMap = agent.type?.title ?? {};
+    const districtTitle = districtTitleMap[Lang.DE] ?? "";
+    const typeTitle = typeTitleMap[lang as keyof typeof typeTitleMap] ?? typeTitleMap[Lang.DE] ?? "";
+
+    const childItem = {
+      title: agent.title,
+      link: `/${lang}/dashboard/agents/${agent.id}`,
+      district: districtTitle,
+      type: typeTitle,
+    };
+
+    if (!agentMap.has(`${agent.lat}${agent.lon}`)) {
+      agentMap.set(`${agent.lat}${agent.lon}`, {
+        lat: agent.lat,
+        lon: agent.lon,
+        label: t("dashboard.map.agents"),
+        children: [childItem],
+        entity: EntityType.AGENT,
+        onClick: () => null,
+      });
+    } else {
+      agentMap.get(`${agent.lat}${agent.lon}`)?.children.push(childItem);
+    }
+  });
+  return Array.from(agentMap.values());
+};
+
+export const createSingleOpportunityMarker = (
+  opportunityFilter: SingleFilter | undefined,
+  t: TFunction,
+  lang: string,
+): SingleMarker | null => {
+  if (!opportunityFilter || opportunityFilter.latitude === null || opportunityFilter.longitude === null) return null;
+  const topLanguages = opportunityFilter?.languages.length > 0 ? getTopLanguages(opportunityFilter?.languages, 2) : [];
+  const languageOverflow = opportunityFilter.languages?.length - topLanguages.length;
+
+  const allAvailabilities = opportunityFilter.availability
+    .filter((a): a is typeof a & { day: string; daytime: string } => Boolean(a.day && a.daytime))
+    .map((a) => formatAvailabilityItem(a.day, a.daytime, t));
+  return {
+    lat: opportunityFilter.latitude,
+    lon: opportunityFilter.longitude,
+    label: "Opportunity",
+    title: opportunityFilter.name,
+    link: `/${lang}/dashboard/volunteers/${opportunityFilter.id}`,
+    language: topLanguages.join(", ") + (languageOverflow > 0 ? ` +${languageOverflow}` : "") || "—",
+    availability: allAvailabilities.map((a) => a).join("; "),
+    entity: EntityType.OPPORTUNITY,
+    onClick: () => null,
+  };
+};
+
+export const createSingleVolunteerMarker = (
+  volunteerFilter: SingleFilter | undefined,
+  t: TFunction,
+  lang: string,
+): SingleMarker | null => {
+  if (!volunteerFilter || volunteerFilter.latitude === null || volunteerFilter.longitude === null) return null;
+  const topLanguages = volunteerFilter?.languages.length > 0 ? getTopLanguages(volunteerFilter?.languages, 2) : [];
+  const languageOverflow = volunteerFilter.languages?.length - topLanguages.length;
+
+  const allAvailabilities = volunteerFilter.availability
+    .filter((a): a is typeof a & { day: string; daytime: string } => Boolean(a.day && a.daytime))
+    .map((a) => formatAvailabilityItem(a.day, a.daytime, t));
+  return {
+    lat: volunteerFilter.latitude,
+    lon: volunteerFilter.longitude,
+    label: t("dashboard.map.volunteers"),
+    title: volunteerFilter.name,
+    link: `/${lang}/dashboard/volunteers/${volunteerFilter.id}`,
+    language: topLanguages?.join(", ") + (languageOverflow > 0 ? ` +${languageOverflow}` : "") || "—",
+    availability: allAvailabilities.map((a) => a).join("; "),
+    avatarUrl: volunteerFilter.avatarUrl || getImageUrl(defaultAvatarURL),
+    entity: EntityType.VOLUNTEER,
+    onClick: () => null,
+  };
 };

@@ -1,6 +1,6 @@
 import { type ApiAgentGetList, type ApiOptionLists, SortOrder } from "need4deed-sdk";
 import { AgentCardList } from "./AgentCardList";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { DashboardListLoading } from "@/components/Dashboard/common/DashboardListLoading";
 import { useGetQuery, usePageParam } from "@/hooks";
 import { apiPathAgent, cacheTTL, CARD_LIMIT, TABLE_LIMIT } from "@/config/constants";
@@ -12,6 +12,9 @@ import { useCopyEmails } from "@/hooks/useCopyEmails";
 import { createAgentFilterItems } from "./Filters/helpers";
 import { useTranslation } from "react-i18next";
 import { LoadingAgentTableList } from "./LoadingAgentTableList";
+import { createAgentMarkers } from "../common/MapView/helpers";
+import { LoadingMapView } from "../common/MapView/LoadingMapView";
+import { AgentMapView } from "./AgentMapView";
 
 type Props = {
   setNumOfAgents: (num: number) => void;
@@ -34,8 +37,9 @@ export const AgentListController = ({
   onSelect,
 }: Props) => {
   const { currentPage, setCurrentPage } = usePageParam();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const isListView = viewMode === ViewMode.LIST;
+  const isMapView = viewMode === ViewMode.MAP;
   const limit = isListView ? TABLE_LIMIT : CARD_LIMIT;
 
   const serializedFilter = new URLSearchParams(
@@ -64,9 +68,12 @@ export const AgentListController = ({
 
   useEffect(() => {
     setNumOfAgents(count);
-  }, [count, setNumOfAgents]);
+  }, [count, setNumOfAgents, viewMode]);
+
+  const markers = useMemo(() => createAgentMarkers(agents, t, i18n.language), [agents, t, i18n.language]);
 
   if (isLoading && isListView) return <LoadingAgentTableList dropdownFilters={dropdownFilters} />;
+  if (isLoading && isMapView) return <LoadingMapView />;
 
   if (isLoading) return <DashboardListLoading />;
 
@@ -85,6 +92,10 @@ export const AgentListController = ({
         dropdownFilters={dropdownFilters}
       />
     );
+  }
+
+  if (isMapView) {
+    return <AgentMapView setNumOfVols={setNumOfAgents} markers={markers} />;
   }
 
   return (
