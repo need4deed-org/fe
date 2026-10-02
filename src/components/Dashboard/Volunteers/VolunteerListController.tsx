@@ -17,7 +17,8 @@ import { useTranslation } from "react-i18next";
 import { LoadingVolunteerTableList } from "./LoadingVolunteerTableList";
 import { LoadingMapView } from "../common/MapView/LoadingMapView";
 import { VolunteerMapView } from "./VolunteerMapView";
-import { createVolunteerMarkers } from "../common/MapView/helpers";
+import { createSingleOpportunityMarker, createVolunteerMarkers } from "../common/MapView/helpers";
+import { SingleFilter } from "../common/MapView/types";
 
 interface VolunteerListControllerProps {
   setNumOfVols: (numOfVols: number) => void;
@@ -27,6 +28,7 @@ interface VolunteerListControllerProps {
   apiFilterOptions?: ApiOptionLists;
   opportunityId?: string;
   viewMode: ViewMode;
+  opportunityFilter: SingleFilter | undefined;
 }
 
 export function VolunteerListController({
@@ -37,6 +39,7 @@ export function VolunteerListController({
   apiFilterOptions,
   opportunityId,
   viewMode,
+  opportunityFilter,
 }: VolunteerListControllerProps) {
   const isListView = viewMode === ViewMode.LIST;
   const isMapView = viewMode === ViewMode.MAP;
@@ -91,7 +94,12 @@ export function VolunteerListController({
     setNumOfVols(count);
   }, [count, setNumOfVols, viewMode]);
 
-  const markers = useMemo(() => createVolunteerMarkers(volunteers, t, i18n.language), [volunteers, t, i18n.language]);
+  const markers = useMemo(
+    () => createVolunteerMarkers(volunteers, t, i18n.language, opportunityId),
+    [volunteers, t, i18n.language],
+  );
+
+  const opportunityMarker = createSingleOpportunityMarker(opportunityFilter, t, i18n.language);
 
   if (isLoading && isListView)
     return <LoadingVolunteerTableList canSeeContactColumns={canSeeContactColumns} dropdownFilters={dropdownFilters} />;
@@ -116,7 +124,7 @@ export function VolunteerListController({
   }
 
   if (isMapView) {
-    return <VolunteerMapView count={count} setNumOfVols={setNumOfVols} markers={markers} />;
+    return <VolunteerMapView setNumOfVols={setNumOfVols} markers={markers} opportunityMarker={opportunityMarker} />;
   }
 
   return (
