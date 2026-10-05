@@ -16,8 +16,8 @@ export const useGetVolunteer = (volunteerId: string | undefined) => {
   const id = data.id;
   const name = `${data.person.firstName} ${data.person.lastName}`.trim();
   const avatarUrl = data.person.avatarUrl ? getImageUrl(data.person.avatarUrl) : undefined;
-  const latitude = data.person.address.postcode.latitude;
-  const longitude = data.person.address.postcode.longitude;
+  const latitude = data.person.address?.postcode?.latitude ?? null;
+  const longitude = data.person.address?.postcode?.longitude ?? null;
   const languages = data.languages;
   const availability = data.availability;
 
