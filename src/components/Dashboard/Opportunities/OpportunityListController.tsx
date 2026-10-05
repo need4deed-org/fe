@@ -113,16 +113,22 @@ export function OpportunityListController({
     ? sortByAppointmentDate(rawOpportunities, sortOrder)
     : rawOpportunities;
 
-  useEffect(() => {
-    setNumOfOpps(count);
-  }, [count, setNumOfOpps, viewMode]);
-
   const markers = useMemo(
     () => createOpportunityMarkers(opportunities, t, i18n.language, volunteerId),
     [opportunities, i18n.language],
   );
 
   const volunteerMarker = createSingleVolunteerMarker(volunteerFilter, t, i18n.language);
+
+  const markerCount = useMemo(() => {
+    return markers?.flatMap((marker) => marker.children ?? []).length ?? 0;
+  }, [markers]);
+
+  const activeCount = isMapView ? markerCount : (count ?? 0);
+
+  useEffect(() => {
+    setNumOfOpps(activeCount);
+  }, [activeCount, setNumOfOpps]);
 
   const isPending = isLoading || !isRoleKnown;
   if (isPending && isListView) return <LoadingOpportunityTableList dropdownFilters={dropdownFilters} />;
@@ -145,7 +151,7 @@ export function OpportunityListController({
   }
 
   if (isMapView) {
-    return <OpportunityMapView setNumOfOpps={setNumOfOpps} markers={markers} volunteerMarker={volunteerMarker} />;
+    return <OpportunityMapView markers={markers} volunteerMarker={volunteerMarker} />;
   }
 
   return (

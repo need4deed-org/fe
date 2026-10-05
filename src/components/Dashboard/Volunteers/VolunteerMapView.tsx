@@ -1,6 +1,5 @@
 import React from "react";
 import { MapView } from "../common/MapView/MapView";
-import { useEffect } from "react";
 import { MapContainer, PopupCardHeader, PopupLink } from "../common/MapView/styles";
 import CardDetail from "./CardDetail";
 import { CardParagraph } from "./VolunteerCard";
@@ -10,11 +9,10 @@ import { EntityMarker, SingleMarker } from "../common/MapView/types";
 
 type Props = {
   markers: EntityMarker[];
-  setNumOfVols: (num: number) => void;
   opportunityMarker: SingleMarker | null;
 };
 
-export function VolunteerMapView({ markers, setNumOfVols, opportunityMarker }: Props) {
+export function VolunteerMapView({ markers, opportunityMarker }: Props) {
   const { t } = useTranslation();
 
   const renderSinglePopupContent = (marker: SingleMarker) => (
@@ -45,10 +43,6 @@ export function VolunteerMapView({ markers, setNumOfVols, opportunityMarker }: P
     }
   };
 
-  useEffect(() => {
-    const childrenLength = markers.flatMap((marker) => marker.children);
-    setNumOfVols(childrenLength?.length);
-  }, [markers]);
   return (
     <MapContainer>
       <MapView
