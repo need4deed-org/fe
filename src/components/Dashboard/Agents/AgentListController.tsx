@@ -71,11 +71,17 @@ export const AgentListController = ({
     volunteerSearchFilters: getSectionItems(filterSections, "volunteerSearch"),
   };
 
-  useEffect(() => {
-    setNumOfAgents(count);
-  }, [count, setNumOfAgents, viewMode]);
-
   const markers = useMemo(() => createAgentMarkers(agents, t, i18n.language), [agents, t, i18n.language]);
+
+  const markerCount = useMemo(() => {
+    return markers?.flatMap((marker) => marker.children ?? []).length ?? 0;
+  }, [markers]);
+
+  const activeCount = isMapView ? markerCount : (count ?? 0);
+
+  useEffect(() => {
+    setNumOfAgents(activeCount);
+  }, [activeCount, setNumOfAgents]);
 
   if (isLoading && isListView) return <LoadingAgentTableList dropdownFilters={dropdownFilters} />;
   if (isLoading && isMapView) return <LoadingMapView />;
@@ -100,7 +106,7 @@ export const AgentListController = ({
   }
 
   if (isMapView) {
-    return <AgentMapView setNumOfVols={setNumOfAgents} markers={markers} />;
+    return <AgentMapView markers={markers} />;
   }
 
   return (

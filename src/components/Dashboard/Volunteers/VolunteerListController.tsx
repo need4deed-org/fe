@@ -91,16 +91,21 @@ export function VolunteerListController({
   const user = useCurrentUser();
   const canSeeContactColumns = user?.role === UserRole.COORDINATOR || user?.role === UserRole.ADMIN;
 
-  useEffect(() => {
-    setNumOfVols(count);
-  }, [count, setNumOfVols, viewMode]);
-
   const markers = useMemo(
     () => createVolunteerMarkers(volunteers, t, i18n.language, opportunityId),
     [volunteers, t, i18n.language],
   );
-
   const opportunityMarker = createSingleOpportunityMarker(opportunityFilter, t, i18n.language);
+
+  const markerCount = useMemo(() => {
+    return markers?.flatMap((marker) => marker.children ?? []).length ?? 0;
+  }, [markers]);
+
+  const activeCount = isMapView ? markerCount : (count ?? 0);
+
+  useEffect(() => {
+    setNumOfVols(activeCount);
+  }, [activeCount, setNumOfVols]);
 
   if (isLoading && isListView)
     return <LoadingVolunteerTableList canSeeContactColumns={canSeeContactColumns} dropdownFilters={dropdownFilters} />;
@@ -125,7 +130,7 @@ export function VolunteerListController({
   }
 
   if (isMapView) {
-    return <VolunteerMapView setNumOfVols={setNumOfVols} markers={markers} opportunityMarker={opportunityMarker} />;
+    return <VolunteerMapView markers={markers} opportunityMarker={opportunityMarker} />;
   }
 
   return (

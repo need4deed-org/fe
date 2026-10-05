@@ -193,7 +193,7 @@ export const createSingleOpportunityMarker = (
     lon: opportunityFilter.longitude,
     label: "Opportunity",
     title: opportunityFilter.name,
-    link: `/${lang}/dashboard/volunteers/${opportunityFilter.id}`,
+    link: `/${lang}/dashboard/opportunities/${opportunityFilter.id}`,
     language: topLanguages.join(", ") + (languageOverflow > 0 ? ` +${languageOverflow}` : "") || "—",
     availability: allAvailabilities.map((a) => a).join("; "),
     entity: EntityType.OPPORTUNITY,
