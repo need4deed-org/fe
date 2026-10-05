@@ -790,6 +790,8 @@
           "unresponsive_description": "Hat nach mehreren Versuchen nie geantwortet"
         },
         "volunteerType_title": "Art der Tätigkeit",
+        "change_volunteerType": "Ändern",
+        "volunteerTypeModal_title": "Art der Tätigkeit ändern",
         "volunteerType_options": {
           "accompanying": "Begleitend",
           "regular": "Regelmäßig",
@@ -888,7 +890,6 @@
         "languages": "Sprachen",
         "availability": "Verfügbarkeit",
         "districts": "Bezirke",
-        "volunteerType": "Art der Tätigkeit",
         "activities": "Aktivitäten",
         "skills": "Fähigkeiten & Erfahrungen",
         "comments": "Kommentare",
@@ -900,7 +901,6 @@
           "levelRequired": "Wähle ein Niveau aus",
           "availabilityRequired": "Bitte wähle mindestens eine Verfügbarkeit aus",
           "districtsRequired": "Bitte wähle mindestens einen Bezirk aus",
-          "volunteerTypeRequired": "Art der Tätigkeit ist erforderlich",
           "activitiesRequired": "Bitte wähle mindestens eine Aktivität aus",
           "skillsRequired": "Fähigkeiten sind erforderlich"
         }
@@ -1566,20 +1566,21 @@
           "title": "Für diese ehrenamtliche Tätigkeit vorschlagen?",
           "messageStart": "Der Verantwortliche von",
           "messageMid": "wird benachrichtigt, dass Sie",
-          "messageEnd": "vorgeschlagen haben. Es erscheint in seinem*ihrem Profil unter \"ausstehenden\" Ehrenamtlichen.",
+          "messageEnd": "vorgeschlagen haben. Es erscheint in seinem*ihrem Profil unter \"Angefragt\".",
           "confirm": "Vorschlagen",
           "cancel": "Abbrechen",
           "success": "Vorschlag erfolgreich gesendet"
         },
         "appliedOn": "Beworben am",
         "tabs": {
-          "opp-pending": "Ausstehend",
+          "opp-pending": "Angefragt",
           "opp-matched": "Zugeordnet",
           "opp-active": "Aktiv",
           "opp-past": "Vergangen"
         },
         "emptyState": "Noch keine Ehrenamtlichen in dieser Kategorie",
         "statusUpdateSuccess": "Ehrenamtlichen-Status erfolgreich aktualisiert",
+        "engagementSyncError": "Die Zuordnung wurde gespeichert, aber der Engagement-Status konnte nicht aktualisiert werden. Bitte manuell setzen.",
         "removeSuccess": "Ehrenamtliche*r erfolgreich entfernt"
       },
       "opportunityDetails": {
@@ -2231,7 +2232,12 @@
     "deleteSuccess": "Dokument erfolgreich gelöscht!",
     "uploadError": "Hochladen fehlgeschlagen. Bitte versuchen Sie es erneut.",
     "deleteError": "Löschen fehlgeschlagen. Bitte versuchen Sie es erneut.",
-    "previewError": "Vorschau fehlgeschlagen. Bitte versuchen Sie es erneut."
+    "previewError": "Vorschau fehlgeschlagen. Bitte versuchen Sie es erneut.",
+    "apiErrors": {
+      "tooManyRequests": "Zu viele Versuche. Bitte warten Sie einige Minuten und versuchen Sie es erneut.",
+      "alreadyUsedToken": "Dieser Link wurde bereits verwendet.",
+      "personAlreadyRegistered": "Für diese E-Mail-Adresse gibt es bereits ein Konto. Bitte melden Sie sich stattdessen an."
+    }
   },
   "racGuidelines": {
     "heading": "Need4Deed Leitlinien",
@@ -2248,12 +2254,14 @@
     "visitsPhotosTitle": "Besuche und Fotoaufnahmen",
     "visitsPhotosBody": "Gelegentlich besuchen wir die Einrichtungen, um Fotos der Aktivitäten zu machen. Diese dienen der Gewinnung neuer Freiwilliger. Wir stellen sicher, dass keine Gesichter von Kindern oder Geflüchteten zu sehen sind, es sei denn, es liegt eine ausdrückliche Erlaubnis vor.",
     "sectionAccompaniment": "Einsatzbereiche für Begleitungen",
-    "supportCasesTitle": "Freiwillige können in folgenden Fällen unterstützen:",
-    "bulletGovtOffice": "Termine bei Behörden (ausgenommen Standesamt und Gericht)",
-    "bulletDoctorAppt": "Arzttermine (wir vermitteln keine Begleitungen zu Terminen in Krankenhäusern)",
-    "bulletSchoolDaycare": "Termine in Schulen/Kitas",
-    "bulletCounsellingBank": "Termine bei Beratungsstellen, Bänke (keine Termine bei Anwält*innen)",
-    "bulletNoInterpreting": "Wegbegleitung ohne Sprachmittlung",
+    "supportCasesTitle": "Freiwillige können niedrigschwellige Unterstützung in folgenden Fällen begleiten:",
+    "bulletDoctorAppt": "Arzttermine (ausgenommen Termine bei der Charité und Vivantes sowie alle OP-Vor- und -Nachbereitungstermine und Termine bei den folgenden Fachärzt*innen: Chirurgie, Neurochirurgie, Anästhesiologie, Strahlentherapie);",
+    "bulletGovtOffice": "Termine bei Behörden (außer Standesamt und Gericht);",
+    "bulletCounsellingBank": "Termine bei Beratungsstellen, Bänke (keine Termine bei Anwält*innen);",
+    "bulletAccountOpening": "Kontoeröffnungen;",
+    "bulletFlatViewing": "Wohnungsbesichtigungen;",
+    "bulletSchoolDaycare": "Termine in Schulen und Kitas;",
+    "bulletWayfinding": "Wegbegleitung.",
     "interpreterNote": "Die Freiwilligen sind keine professionellen Dolmetscher*innen, sondern vermitteln nach bestem Wissen und Gewissen. Need4Deed und die Freiwilligen übernehmen keine Haftung für die Richtigkeit der Sprachmittlung. Freiwillige übernehmen keine Beratungsfunktion.",
     "miscTitle": "Fristen und Ablauf",
     "miscBody": "Begleitung zu Terminen muss mindestens 7 Werktage vor dem Termin angefragt werden. Termine sollten eine Dauer von 3 Stunden nicht überschreiten und nicht vor 9.00 Uhr beginnen. Sie bekommen spätestens 4 Werktage vor dem Termin eine Rückmeldung, ob wir jemanden für die Begleitung gefunden haben."
@@ -2572,6 +2580,10 @@
     "4": "Donnerstag",
     "5": "Freitag",
     "6": "Samstag"
+  },
+  "thankYou": {
+    "header": "Danke!",
+    "para": ""
   },
   "spinner": {
     "header": "Lade Engagementangebote...",
