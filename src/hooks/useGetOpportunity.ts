@@ -18,8 +18,8 @@ export const useGetOpportunity = (opportunityId: string | undefined) => {
   const id = data.id;
   const name = data.title;
   const avatarUrl = data.avatarUrl ? getImageUrl(data.avatarUrl) : undefined;
-  const latitude = data.lat;
-  const longitude = data.lon;
+  const latitude = data.lat ?? null;
+  const longitude = data.lon ?? null;
   const languages = data.languages;
   const availability = data.availability;
 
