@@ -113,6 +113,7 @@ export const AgentListController = ({
         itemsPerPage={limit}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
+        onSelect={onSelect}
       />
     );
   }

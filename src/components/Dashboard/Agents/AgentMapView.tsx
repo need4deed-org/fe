@@ -7,6 +7,7 @@ import { EntityMarker } from "../common/MapView/types";
 import CardDetail from "../Volunteers/CardDetail";
 import { CardParagraph } from "../Volunteers/VolunteerCard";
 import PaginationNumbers from "@/components/core/paginatedGrid/PaginationNumbers";
+import type { ApiAgentGetList } from "need4deed-sdk";
 
 type Props = {
   markers: EntityMarker[];
@@ -14,9 +15,10 @@ type Props = {
   itemsPerPage: number;
   currentPage: number;
   setCurrentPage: (page: number) => void;
+  onSelect?: (agent: ApiAgentGetList) => void;
 };
 
-export function AgentMapView({ markers, count, itemsPerPage, currentPage, setCurrentPage }: Props) {
+export function AgentMapView({ markers, count, itemsPerPage, currentPage, setCurrentPage, onSelect }: Props) {
   const { t } = useTranslation();
   const totalPages = Math.ceil(count / itemsPerPage);
   const goToPage = (page: number) => {
@@ -26,7 +28,16 @@ export function AgentMapView({ markers, count, itemsPerPage, currentPage, setCur
   const renderPopupContent = (marker: EntityMarker) => {
     if ("children" in marker) {
       return marker.children?.map((child) => (
-        <PopupLink href={child.link} key={child.link}>
+        <PopupLink
+          href={child.link}
+          key={child.link}
+          onClick={(event) => {
+            if (onSelect && child.agent) {
+              event.preventDefault();
+              onSelect(child.agent);
+            }
+          }}
+        >
           <PopupCardHeader>{child.title}</PopupCardHeader>
           <CardDetail header={t("dashboard.agents.filters.type.header")} iconName={IconName.ShootingStar}>
             <CardParagraph text={child.type ?? ""} />
