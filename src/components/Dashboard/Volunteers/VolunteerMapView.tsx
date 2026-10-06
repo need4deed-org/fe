@@ -6,17 +6,33 @@ import { CardParagraph } from "./VolunteerCard";
 import { IconName } from "./icon";
 import { useTranslation } from "react-i18next";
 import { EntityMarker, SingleMarker } from "../common/MapView/types";
+import PaginationNumbers from "@/components/core/paginatedGrid/PaginationNumbers";
 
 type Props = {
   markers: EntityMarker[];
   opportunityMarker: SingleMarker | null;
+  count: number;
+  itemsPerPage: number;
+  currentPage: number;
+  setCurrentPage: (page: number) => void;
 };
 
-export function VolunteerMapView({ markers, opportunityMarker }: Props) {
+export function VolunteerMapView({
+  markers,
+  opportunityMarker,
+  count,
+  itemsPerPage,
+  currentPage,
+  setCurrentPage,
+}: Props) {
   const { t } = useTranslation();
+  const totalPages = Math.ceil(count / itemsPerPage);
+  const goToPage = (page: number) => {
+    if (page > 0 && page <= totalPages) setCurrentPage(page);
+  };
 
   const renderSinglePopupContent = (marker: SingleMarker) => (
-    <PopupLink href={marker.link} key={marker.title}>
+    <PopupLink href={marker.link} key={marker.link}>
       <PopupCardHeader>{marker.title}</PopupCardHeader>
       <CardDetail header={t("dashboard.volunteers.preferredAvailability")} iconName={IconName.CalendarDots}>
         <CardParagraph text={marker.availability} />
@@ -30,7 +46,7 @@ export function VolunteerMapView({ markers, opportunityMarker }: Props) {
   const renderPopupContent = (marker: EntityMarker) => {
     if ("children" in marker) {
       return marker.children?.map((child) => (
-        <PopupLink href={child.link} key={child.title}>
+        <PopupLink href={child.link} key={child.link}>
           <PopupCardHeader>{child.title}</PopupCardHeader>
           <CardDetail header={t("dashboard.volunteers.preferredAvailability")} iconName={IconName.CalendarDots}>
             <CardParagraph text={child.availability} />
@@ -51,6 +67,7 @@ export function VolunteerMapView({ markers, opportunityMarker }: Props) {
         renderSinglePopupContent={renderSinglePopupContent}
         filterMarker={opportunityMarker}
       />
+      <PaginationNumbers currentPage={currentPage} goToPage={goToPage} totalPages={totalPages} />
     </MapContainer>
   );
 }

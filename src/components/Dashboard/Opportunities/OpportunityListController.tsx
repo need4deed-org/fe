@@ -1,6 +1,13 @@
 import { useEffect, useMemo } from "react";
 import { DashboardListLoading } from "@/components/Dashboard/common/DashboardListLoading";
-import { apiPathOpportunity, AUTH_HINT_COOKIE_NAME, cacheTTL, CARD_LIMIT, TABLE_LIMIT } from "@/config/constants";
+import {
+  apiPathOpportunity,
+  AUTH_HINT_COOKIE_NAME,
+  cacheTTL,
+  CARD_LIMIT,
+  MAP_LIMIT,
+  TABLE_LIMIT,
+} from "@/config/constants";
 import { useGetQuery, usePageParam } from "@/hooks";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { getCookie } from "@/utils/helpers";
@@ -70,7 +77,7 @@ export function OpportunityListController({
   const isRoleKnown = Boolean(user) || getCookie(AUTH_HINT_COOKIE_NAME) !== "true";
   const isListView = viewMode === ViewMode.LIST;
   const isMapView = viewMode === ViewMode.MAP;
-  const limit = isListView ? TABLE_LIMIT : CARD_LIMIT;
+  const limit = isListView ? TABLE_LIMIT : isMapView ? MAP_LIMIT : CARD_LIMIT;
 
   const serializedFilter = serializeOpportunityFilters(filter, undefined, false, {
     serializeToIDs: true,
@@ -151,7 +158,16 @@ export function OpportunityListController({
   }
 
   if (isMapView) {
-    return <OpportunityMapView markers={markers} volunteerMarker={volunteerMarker} />;
+    return (
+      <OpportunityMapView
+        markers={markers}
+        volunteerMarker={volunteerMarker}
+        count={count}
+        itemsPerPage={limit}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
+    );
   }
 
   return (
