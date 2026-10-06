@@ -28,7 +28,7 @@ export default function AccordionFilter({
   const [isOpen, setIsOpen] = useState(false);
   const isGroupItemCheckbox = groupedItemsDisplayType === "checkbox";
 
-  const openContainerRef = useRef(null);
+  const openContainerRef = useRef<HTMLDivElement>(null);
 
   const checkboxHeight = getComputedStyle(document.documentElement).getPropertyValue(
     "--opportunities-filters-content-accordion-options-checkbox-height",
@@ -47,6 +47,7 @@ export default function AccordionFilter({
       <FilterHeaderContainer
         type="button"
         aria-expanded={isOpen}
+        disabled={isDropdownFilter && !items?.length}
         onClick={() => setIsOpen(!isOpen)}
         $isDropdownFilter={isDropdownFilter}
       >
@@ -113,6 +114,7 @@ const FilterContainer = styled.div`
 const FilterHeaderContainer = styled.button<{ $isDropdownFilter?: boolean }>(({ $isDropdownFilter }) => ({
   display: "flex",
   flexDirection: "row",
+  alignItems: "center",
   justifyContent: "space-between",
   background: "none",
   border: "none",
@@ -123,6 +125,22 @@ const FilterHeaderContainer = styled.button<{ $isDropdownFilter?: boolean }>(({ 
     ? "none"
     : "var(--opportunities-filters-content-accordion-header-border-top) solid var(--color-orchid)",
   paddingTop: "var(--opportunities-filters-content-accordion-header-padding-top)",
+  ...($isDropdownFilter && {
+    borderRadius: "50%",
+    transition: "transform 150ms ease, box-shadow 150ms ease",
+    "&:hover": {
+      transform: "translateY(-1px)",
+    },
+    "&:focus-visible": {
+      outline: "2px solid var(--color-aubergine)",
+      outlineOffset: "2px",
+    },
+    "&:disabled": {
+      cursor: "not-allowed",
+      opacity: 0.45,
+      transform: "none",
+    },
+  }),
 }));
 
 const OptionsContainer = styled.div<{ $isDropdownFilter?: boolean }>(({ $isDropdownFilter }) => ({
@@ -134,10 +152,29 @@ const OptionsContainer = styled.div<{ $isDropdownFilter?: boolean }>(({ $isDropd
   overflowY: "auto",
 
   ...($isDropdownFilter && {
+    position: "absolute",
+    top: "calc(100% + var(--spacing-4))",
+    right: "0",
+    zIndex: 10,
+    minWidth: "220px",
+    maxWidth: "280px",
+    maxHeight: "320px",
     background: "var(--color-white)",
-    padding: "var(--dropdown-filters-content-accordion-padding)",
-    border: "var(--dropdown-filters-content-accordion-border)",
-    borderRadius: "var(--dropdown-filters-content-accordion-border-radius)",
+    padding: "var(--spacing-8)",
+    border: "1px solid var(--color-grey-200)",
+    borderRadius: "var(--border-radius-small)",
+    boxShadow: "var(--dropdown-box-shadow)",
+    scrollbarWidth: "thin",
+    "& > div": {
+      minHeight: "40px",
+      padding: "var(--spacing-8) var(--spacing-12)",
+      borderRadius: "var(--border-radius-xs)",
+      whiteSpace: "nowrap",
+      transition: "background-color 150ms ease",
+    },
+    "& > div:hover": {
+      background: "var(--color-pink-50)",
+    },
   }),
 }));
 
