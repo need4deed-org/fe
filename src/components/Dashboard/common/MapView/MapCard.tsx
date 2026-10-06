@@ -36,11 +36,11 @@ const MapCard = ({ markers, renderPopupContent, filterMarker, renderSinglePopupC
     if (entity === EntityType.VOLUNTEER)
       return L.icon({
         iconUrl: url,
-        iconAnchor: [25, 5],
+        iconAnchor: [15, 15],
         className: "custom-avatar-icon",
       });
     return L.divIcon({
-      iconAnchor: [25, 5],
+      iconAnchor: [35, 5],
       className: "custom-icon",
       html: `<div>${count}</div>`,
     });

@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from "react";
 
 import { DashboardListLoading } from "@/components/Dashboard/common/DashboardListLoading";
-import { apiPathVolunteer, cacheTTL, CARD_LIMIT, TABLE_LIMIT } from "@/config/constants";
+import { apiPathVolunteer, cacheTTL, CARD_LIMIT, MAP_LIMIT, TABLE_LIMIT } from "@/config/constants";
 import { useGetQuery, usePageParam } from "@/hooks";
 import { ApiOptionLists, ApiVolunteerGetList, QueryParamsKeys, SortOrder, UserRole } from "need4deed-sdk";
 import { VolunteerCardsFilter } from "./Filters/types";
@@ -44,7 +44,7 @@ export function VolunteerListController({
 }: VolunteerListControllerProps) {
   const isListView = viewMode === ViewMode.LIST;
   const isMapView = viewMode === ViewMode.MAP;
-  const limit = isListView ? TABLE_LIMIT : CARD_LIMIT;
+  const limit = isListView ? TABLE_LIMIT : isMapView ? MAP_LIMIT : CARD_LIMIT;
   const { currentPage, setCurrentPage } = usePageParam();
   const { t, i18n } = useTranslation();
   const serializedFilter = serializeFilters(filter, undefined, false, {
@@ -130,7 +130,16 @@ export function VolunteerListController({
   }
 
   if (isMapView) {
-    return <VolunteerMapView markers={markers} opportunityMarker={opportunityMarker} />;
+    return (
+      <VolunteerMapView
+        markers={markers}
+        itemsPerPage={limit}
+        count={count}
+        opportunityMarker={opportunityMarker}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
+    );
   }
 
   return (

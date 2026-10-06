@@ -71,6 +71,8 @@ export const PopupWrapper = styled.div`
 
 export const MapContainer = styled.div`
   display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
   gap: var(--dashboard-map-container-gap);
 `;
@@ -124,8 +126,8 @@ export const MapOpportunityItem = styled.li`
 `;
 
 export const PopupContentWrapper = styled.div`
-  height: var(--dashboard-map-popup-height);
-  overflow-y: scroll;
+  max-height: var(--dashboard-map-popup-height);
+  overflow-y: auto;
   padding: var(--dashboard-map-popup-wrapper-padding);
   display: flex;
   flex-direction: column;
