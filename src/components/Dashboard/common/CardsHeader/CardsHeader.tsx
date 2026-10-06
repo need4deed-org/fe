@@ -9,6 +9,7 @@ import SortBy, { OnChangeSortOrder, SortOption } from "./SortBy";
 import { XIcon } from "@phosphor-icons/react";
 import { FilterItem } from "../CardsFilter/types";
 import { EntityFilterChip } from "./EntityFilterChip";
+import { HeaderTabs } from "../HeaderTabs";
 import {
   ClearAllButton,
   HeaderContainer,
@@ -17,8 +18,6 @@ import {
   HeaderTitleRow,
   HyphenatedHeading2,
   SearchBarSectionContainer,
-  TabHeading,
-  Tabs,
   TabsSectionContainer,
   TabsSearchBarContainer,
   XIconDiv,
@@ -85,20 +84,7 @@ export default function CardsHeader({
 
       <TabsSearchBarContainer>
         <TabsSectionContainer>
-          <Tabs role="tablist">
-            {tabs.map((tab, index) => (
-              <TabHeading
-                type="button"
-                role="tab"
-                aria-selected={selectedTabIndex === index}
-                key={tab}
-                onClick={() => setSelectedTabIndex(index)}
-                $isSelected={selectedTabIndex === index}
-              >
-                {tab}
-              </TabHeading>
-            ))}
-          </Tabs>
+          <HeaderTabs tabs={tabs} selectedTabIndex={selectedTabIndex} onTabChange={setSelectedTabIndex} />
           <SortBy sortOrder={sortOrder} onChange={onSortOrderChange} extraOptions={extraSortOptions} />
         </TabsSectionContainer>
 

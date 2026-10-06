@@ -573,7 +573,8 @@
         "posts": "Posts",
         "calendar": "Calendar",
         "profile": "Profile",
-        "more": "More"
+        "more": "More",
+        "admin": "Admin"
       },
       "createOpportunity": "Create New Opportunity"
     },
@@ -1767,6 +1768,30 @@
       "contactSection": "Contact details",
       "agentSection": "Your organisation",
       "submit": "Create opportunity"
+    },
+    "admin": {
+      "title": "Admin",
+      "tabs": {
+        "domains": "Domains",
+        "stats": "Statistics"
+      },
+      "domains": {
+        "helper": "People with an email on these domains can register as an NGO.",
+        "placeholder": "example.org",
+        "add": "Add",
+        "invalid": "Please enter a valid domain, e.g. example.org",
+        "duplicate": "This domain is already trusted.",
+        "empty": "No trusted domains yet.",
+        "added": "Domain added",
+        "removed": "Domain removed",
+        "remove": "Remove",
+        "removeAria": "Remove {{domain}}",
+        "removeTitle": "Remove domain?",
+        "removeMessage": "People with an email on {{domain}} will no longer be able to register as an NGO, unless the NGO already has a contact on that domain."
+      },
+      "stats": {
+        "comingSoon": "Coming soon"
+      }
     }
   },
   "aboutus": {

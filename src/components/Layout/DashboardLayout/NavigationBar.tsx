@@ -9,6 +9,7 @@ import {
   DotsThreeCircleIcon,
   HouseIcon,
   NotepadIcon,
+  ShieldCheckIcon,
   ShootingStarIcon,
   UserCheckIcon,
 } from "@phosphor-icons/react";
@@ -247,6 +248,11 @@ export default function NavigationBar() {
             label: t("dashboard.home.sidebar.calendar"),
             Icon: CalendarDotsIcon,
             route: DashboardRoutes.Calendar,
+          },
+          {
+            label: t("dashboard.home.sidebar.admin"),
+            Icon: ShieldCheckIcon,
+            route: DashboardRoutes.Admin,
           },
         ]
       : []),

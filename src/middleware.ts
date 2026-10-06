@@ -42,7 +42,7 @@ export function middleware(request: NextRequest) {
     const isAuthorized =
       (userObject && userObject.role === UserRole.ADMIN) || (userObject && userObject.role === UserRole.COORDINATOR);
 
-    const volunteerRestrictedRegex = /^(?:\/[a-z]{2})?\/dashboard\/(volunteers|agents|posts|calendar)(?:\/|$)/;
+    const volunteerRestrictedRegex = /^(?:\/[a-z]{2})?\/dashboard\/(volunteers|agents|posts|calendar|admin)(?:\/|$)/;
     if (userObject?.role === UserRole.VOLUNTEER && volunteerRestrictedRegex.test(pathname)) {
       const url = request.nextUrl.clone();
       url.pathname = "/dashboard";
@@ -60,8 +60,8 @@ export function middleware(request: NextRequest) {
       return redirectResponse;
     }
 
-    const calendarRegex = /^(?:\/[a-z]{2})?\/dashboard\/calendar(?:\/|$)/;
-    if (userObject?.role === UserRole.AGENT && calendarRegex.test(pathname)) {
+    const agentRestrictedRegex = /^(?:\/[a-z]{2})?\/dashboard\/(calendar|admin)(?:\/|$)/;
+    if (userObject?.role === UserRole.AGENT && agentRestrictedRegex.test(pathname)) {
       const url = request.nextUrl.clone();
       url.pathname = "/dashboard";
       return NextResponse.redirect(url);

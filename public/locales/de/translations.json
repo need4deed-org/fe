@@ -579,7 +579,8 @@
         "posts": "Beiträge",
         "calendar": "Kalender",
         "profile": "Profil",
-        "more": "Mehr"
+        "more": "Mehr",
+        "admin": "Admin"
       },
       "createOpportunity": "Neue Möglichkeit erstellen"
     },
@@ -1779,6 +1780,30 @@
       "contactSection": "Kontaktdaten",
       "agentSection": "Ihre Organisation",
       "submit": "Möglichkeit erstellen"
+    },
+    "admin": {
+      "title": "Admin",
+      "tabs": {
+        "domains": "Domains",
+        "stats": "Statistiken"
+      },
+      "domains": {
+        "helper": "Personen mit einer E-Mail-Adresse dieser Domains können sich als NGO registrieren.",
+        "placeholder": "example.org",
+        "add": "Hinzufügen",
+        "invalid": "Bitte eine gültige Domain eingeben, z. B. example.org",
+        "duplicate": "Diese Domain ist bereits vertrauenswürdig.",
+        "empty": "Noch keine vertrauenswürdigen Domains.",
+        "added": "Domain hinzugefügt",
+        "removed": "Domain entfernt",
+        "remove": "Entfernen",
+        "removeAria": "{{domain}} entfernen",
+        "removeTitle": "Domain entfernen?",
+        "removeMessage": "Personen mit einer E-Mail-Adresse auf {{domain}} können sich dann nicht mehr als NGO registrieren, außer die NGO hat bereits eine Kontaktperson mit dieser Domain."
+      },
+      "stats": {
+        "comingSoon": "Kommt bald"
+      }
     }
   },
   "aboutus": {
