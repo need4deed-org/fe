@@ -6,18 +6,27 @@ import { useTranslation } from "react-i18next";
 import { EntityMarker } from "../common/MapView/types";
 import CardDetail from "../Volunteers/CardDetail";
 import { CardParagraph } from "../Volunteers/VolunteerCard";
+import PaginationNumbers from "@/components/core/paginatedGrid/PaginationNumbers";
 
 type Props = {
   markers: EntityMarker[];
+  count: number;
+  itemsPerPage: number;
+  currentPage: number;
+  setCurrentPage: (page: number) => void;
 };
 
-export function AgentMapView({ markers }: Props) {
+export function AgentMapView({ markers, count, itemsPerPage, currentPage, setCurrentPage }: Props) {
   const { t } = useTranslation();
+  const totalPages = Math.ceil(count / itemsPerPage);
+  const goToPage = (page: number) => {
+    if (page > 0 && page <= totalPages) setCurrentPage(page);
+  };
 
   const renderPopupContent = (marker: EntityMarker) => {
     if ("children" in marker) {
       return marker.children?.map((child) => (
-        <PopupLink href={child.link} key={child.title}>
+        <PopupLink href={child.link} key={child.link}>
           <PopupCardHeader>{child.title}</PopupCardHeader>
           <CardDetail header={t("dashboard.agents.filters.type.header")} iconName={IconName.ShootingStar}>
             <CardParagraph text={child.type ?? ""} />
@@ -33,6 +42,7 @@ export function AgentMapView({ markers }: Props) {
   return (
     <MapContainer>
       <MapView markers={markers} renderPopupContent={renderPopupContent} />
+      <PaginationNumbers currentPage={currentPage} goToPage={goToPage} totalPages={totalPages} />
     </MapContainer>
   );
 }

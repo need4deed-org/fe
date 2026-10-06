@@ -3,7 +3,7 @@ import { AgentCardList } from "./AgentCardList";
 import { useEffect, useMemo } from "react";
 import { DashboardListLoading } from "@/components/Dashboard/common/DashboardListLoading";
 import { useGetQuery, usePageParam } from "@/hooks";
-import { apiPathAgent, cacheTTL, CARD_LIMIT, TABLE_LIMIT } from "@/config/constants";
+import { apiPathAgent, cacheTTL, CARD_LIMIT, MAP_LIMIT, TABLE_LIMIT } from "@/config/constants";
 import { serializeAgentFilters } from "./helpers";
 import { AgentCardsFilter } from "./Filters/types";
 import { ViewMode } from "../common/types";
@@ -41,7 +41,7 @@ export const AgentListController = ({
   const { t, i18n } = useTranslation();
   const isListView = viewMode === ViewMode.LIST;
   const isMapView = viewMode === ViewMode.MAP;
-  const limit = isListView ? TABLE_LIMIT : CARD_LIMIT;
+  const limit = isListView ? TABLE_LIMIT : isMapView ? MAP_LIMIT : CARD_LIMIT;
 
   const serializedFilter = new URLSearchParams(
     serializeAgentFilters(filter, undefined, false, {
@@ -106,7 +106,15 @@ export const AgentListController = ({
   }
 
   if (isMapView) {
-    return <AgentMapView markers={markers} />;
+    return (
+      <AgentMapView
+        markers={markers}
+        count={count}
+        itemsPerPage={limit}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
+    );
   }
 
   return (
