@@ -18,6 +18,10 @@ interface GroupedFilterItem {
   items: FilterItem[];
 }
 
+const cssVar = (name: string, fallback: string) =>
+  (typeof document !== "undefined" && getComputedStyle(document.documentElement).getPropertyValue(name).trim()) ||
+  fallback;
+
 export default function AccordionFilter({
   header,
   items,
@@ -30,13 +34,9 @@ export default function AccordionFilter({
 
   const openContainerRef = useRef<HTMLDivElement>(null);
 
-  const checkboxHeight = getComputedStyle(document.documentElement).getPropertyValue(
-    "--opportunities-filters-content-accordion-options-checkbox-height",
-  );
+  const checkboxHeight = cssVar("--opportunities-filters-content-accordion-options-checkbox-height", "18px");
 
-  const groupCheckboxHeight = getComputedStyle(document.documentElement).getPropertyValue(
-    "--opportunities-filters-content-accordion-group-options-checkbox-height",
-  );
+  const groupCheckboxHeight = cssVar("--opportunities-filters-content-accordion-group-options-checkbox-height", "16px");
 
   const GroupItemCheckComponent = isGroupItemCheckbox ? Checkbox : CheckButton;
 
