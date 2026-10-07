@@ -1,4 +1,4 @@
-import { apiPathTrustedDomain } from "@/config/constants";
+import { apiPathTrustedDomain, cacheTTL } from "@/config/constants";
 import { useGetQuery } from "@/hooks/useGetQuery";
 import { useMutationQuery } from "@/hooks/useMutationQuery";
 import axios from "axios";
@@ -7,9 +7,14 @@ import { ApiTrustedDomain, ApiTrustedDomainPost } from "need4deed-sdk";
 const queryKey = ["trusted-domains"];
 
 export const useTrustedDomains = (onDuplicate?: () => void) => {
-  const { data: domains = [], isLoading } = useGetQuery<ApiTrustedDomain[]>({
+  const {
+    data: domains = [],
+    isLoading,
+    isError,
+  } = useGetQuery<ApiTrustedDomain[]>({
     queryKey,
     apiPath: apiPathTrustedDomain,
+    staleTime: cacheTTL,
   });
 
   const { mutate: addDomain, isPending: isAdding } = useMutationQuery<ApiTrustedDomainPost, ApiTrustedDomain>({
@@ -30,5 +35,5 @@ export const useTrustedDomains = (onDuplicate?: () => void) => {
     queryKeyToInvalidate: queryKey,
   });
 
-  return { domains, isLoading, addDomain, isAdding, removeDomain, isRemoving };
+  return { domains, isLoading, isError, addDomain, isAdding, removeDomain, isRemoving };
 };

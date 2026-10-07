@@ -1794,6 +1794,7 @@
         "invalid": "Bitte eine gültige Domain eingeben, z. B. example.org",
         "duplicate": "Diese Domain ist bereits vertrauenswürdig.",
         "empty": "Noch keine vertrauenswürdigen Domains.",
+        "loadError": "Die vertrauenswürdigen Domains konnten nicht geladen werden. Bitte laden Sie die Seite neu.",
         "added": "Domain hinzugefügt",
         "removed": "Domain entfernt",
         "remove": "Entfernen",

@@ -1782,6 +1782,7 @@
         "invalid": "Please enter a valid domain, e.g. example.org",
         "duplicate": "This domain is already trusted.",
         "empty": "No trusted domains yet.",
+        "loadError": "Could not load the trusted domains. Please reload the page.",
         "added": "Domain added",
         "removed": "Domain removed",
         "remove": "Remove",

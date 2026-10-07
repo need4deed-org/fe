@@ -7,34 +7,33 @@ import { Paragraph } from "@/components/styled/text";
 import { useTrustedDomains } from "@/hooks/useTrustedDomains";
 import { TrashIcon } from "@phosphor-icons/react";
 import { ApiTrustedDomain } from "need4deed-sdk";
-import { FormEvent, useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
+import { z } from "zod";
 import { isValidDomain, normalizeDomain } from "./helpers";
+
+const createDomainSchema = (invalidMessage: string) =>
+  z.object({
+    domain: z.string().transform(normalizeDomain).refine(isValidDomain, invalidMessage),
+  });
+
+type DomainFormInput = { domain: string };
 
 export function TrustedDomainsTab() {
   const { t } = useTranslation();
-  const [input, setInput] = useState("");
-  const [error, setError] = useState<string | null>(null);
   const [domainToRemove, setDomainToRemove] = useState<ApiTrustedDomain | null>(null);
-  const { domains, isLoading, addDomain, isAdding, removeDomain, isRemoving } = useTrustedDomains(() =>
-    setError(t("dashboard.admin.domains.duplicate")),
+  const { control, handleSubmit, reset, setError, watch } = useForm<DomainFormInput, unknown, DomainFormInput>({
+    resolver: zodResolver(createDomainSchema(t("dashboard.admin.domains.invalid"))),
+    defaultValues: { domain: "" },
+  });
+  const { domains, isLoading, isError, addDomain, isAdding, removeDomain, isRemoving } = useTrustedDomains(() =>
+    setError("domain", { message: t("dashboard.admin.domains.duplicate") }),
   );
 
-  const handleInputChange = (value: string) => {
-    setInput(value);
-    setError(null);
-  };
-
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const domain = normalizeDomain(input);
-    if (!isValidDomain(domain)) {
-      setError(t("dashboard.admin.domains.invalid"));
-      return;
-    }
-    addDomain({ domain }, { onSuccess: () => setInput("") });
-  };
+  const onSubmit = ({ domain }: DomainFormInput) => addDomain({ domain }, { onSuccess: () => reset() });
 
   const handleConfirmRemove = () => {
     if (!domainToRemove) return;
@@ -45,25 +44,34 @@ export function TrustedDomainsTab() {
     <Container>
       <Paragraph>{t("dashboard.admin.domains.helper")}</Paragraph>
 
-      <AddForm onSubmit={handleSubmit} noValidate>
+      <AddForm onSubmit={handleSubmit(onSubmit)} noValidate>
         <InputWrapper>
-          <FormInput
-            placeHolder={t("dashboard.admin.domains.placeholder")}
-            value={input}
-            onInputChange={handleInputChange}
-            errors={error ? [error] : undefined}
+          <Controller
+            name="domain"
+            control={control}
+            render={({ field, fieldState }) => (
+              <FormInput
+                placeHolder={t("dashboard.admin.domains.placeholder")}
+                value={field.value}
+                // Locked while saving, so nothing typed meanwhile is lost on reset.
+                onInputChange={(value) => !isAdding && field.onChange(value)}
+                errors={fieldState.error?.message ? [fieldState.error.message] : undefined}
+              />
+            )}
           />
         </InputWrapper>
         <Button
           type="submit"
           text={t("dashboard.admin.domains.add")}
-          disabled={isAdding || !input.trim()}
+          disabled={isAdding || !watch("domain").trim()}
           width="auto"
         />
       </AddForm>
 
       {isLoading ? (
         <DashboardListLoading />
+      ) : isError ? (
+        <Paragraph color="var(--color-grey-500)">{t("dashboard.admin.domains.loadError")}</Paragraph>
       ) : domains.length === 0 ? (
         <Paragraph color="var(--color-grey-500)">{t("dashboard.admin.domains.empty")}</Paragraph>
       ) : (

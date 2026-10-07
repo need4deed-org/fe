@@ -195,6 +195,7 @@ export default function NavigationBar() {
   const isAgent = user?.role === UserRole.AGENT;
   const isVolunteer = user?.role === UserRole.VOLUNTEER;
   const canSeeStaffNav = !isAgent && !isVolunteer;
+  const isStaff = user?.role === UserRole.COORDINATOR || user?.role === UserRole.ADMIN;
   const navigationRef = useRef<HTMLDivElement>(null);
   const [isMoreOpen, setIsMoreOpen] = useState(false);
 
@@ -249,6 +250,11 @@ export default function NavigationBar() {
             Icon: CalendarDotsIcon,
             route: DashboardRoutes.Calendar,
           },
+        ]
+      : []),
+    // Only once the user is known to be staff (not while loading, not other roles).
+    ...(isStaff
+      ? [
           {
             label: t("dashboard.home.sidebar.admin"),
             Icon: ShieldCheckIcon,
