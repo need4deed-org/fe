@@ -1,8 +1,6 @@
 // Same rule as the be body schema, so anything accepted here also saves.
 const DOMAIN_REGEX = /^([a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,}$/;
 
-// The API stores the value as-is and matches it against the part after "@" of
-// an email, so pasted emails, URLs and "www." forms must be reduced to the bare domain.
 export const normalizeDomain = (input: string): string => {
   let domain = input.trim().toLowerCase();
   // URL parts first, so an "@" in a path or query can't pick the domain.

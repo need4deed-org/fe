@@ -252,7 +252,6 @@ export default function NavigationBar() {
           },
         ]
       : []),
-    // Only once the user is known to be staff (not while loading, not other roles).
     ...(isStaff
       ? [
           {

@@ -42,7 +42,7 @@ export function middleware(request: NextRequest) {
     const isAuthorized =
       (userObject && userObject.role === UserRole.ADMIN) || (userObject && userObject.role === UserRole.COORDINATOR);
 
-    // Staff only, as an allowlist: any other role (or an undecodable token) is sent away.
+    // Allowlist: any other role or an undecodable token is sent away.
     const adminRegex = /^(?:\/[a-z]{2})?\/dashboard\/admin(?:\/|$)/;
     if (!isAuthorized && adminRegex.test(pathname)) {
       const url = request.nextUrl.clone();
