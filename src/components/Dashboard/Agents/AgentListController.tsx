@@ -73,15 +73,9 @@ export const AgentListController = ({
 
   const markers = useMemo(() => createAgentMarkers(agents, t, i18n.language), [agents, t, i18n.language]);
 
-  const markerCount = useMemo(() => {
-    return markers?.flatMap((marker) => marker.children ?? []).length ?? 0;
-  }, [markers]);
-
-  const activeCount = isMapView ? markerCount : (count ?? 0);
-
   useEffect(() => {
-    setNumOfAgents(activeCount);
-  }, [activeCount, setNumOfAgents]);
+    setNumOfAgents(count);
+  }, [count, setNumOfAgents]);
 
   if (isLoading && isListView) return <LoadingAgentTableList dropdownFilters={dropdownFilters} />;
   if (isLoading && isMapView) return <LoadingMapView />;

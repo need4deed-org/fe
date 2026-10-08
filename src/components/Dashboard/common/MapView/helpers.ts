@@ -162,7 +162,7 @@ export const createAgentMarkers = (agents: ApiAgentGetList[], t: TFunction, lang
     };
 
     if (!agentMap.has(`${agent.lat}${agent.lon}`)) {
-      agentMap.set(`${agent.lat}${agent.lon}`, {
+      agentMap.set(`${agent.lat},${agent.lon}`, {
         lat: agent.lat,
         lon: agent.lon,
         label: t("dashboard.map.agents"),

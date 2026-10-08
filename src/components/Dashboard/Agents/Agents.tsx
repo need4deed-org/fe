@@ -76,6 +76,7 @@ export const Agents = () => {
     const targetViewMode = VIEW_MODE_BY_TAB[index] ?? ViewMode.CARDS;
 
     const params = new URLSearchParams(searchParams.toString());
+    params.delete("page");
     params.set("view", targetViewMode);
 
     router.push(pathname + questionMark + params.toString());
