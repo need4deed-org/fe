@@ -1,9 +1,5 @@
 import styled from "styled-components";
 
-interface WidthProps {
-  $width: string;
-}
-
 export const OuterContainer = styled.div`
   display: flex;
   align-items: center;
@@ -11,7 +7,7 @@ export const OuterContainer = styled.div`
   position: relative;
 `;
 
-export const ItemCount = styled.span<WidthProps>`
+export const ItemCount = styled.span`
   color: var(--color-grey-500);
   font-size: var(--font-size-14);
   font-weight: var(--font-weight-regular);
@@ -22,6 +18,6 @@ export const RelativeContainer = styled.div`
   position: relative;
 `;
 
-export const FilterWrapper = styled.div<WidthProps>`
+export const FilterWrapper = styled.div`
   position: relative;
 `;
