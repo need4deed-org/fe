@@ -93,7 +93,7 @@ export function VolunteerListController({
 
   const markers = useMemo(
     () => createVolunteerMarkers(volunteers, t, i18n.language, opportunityId),
-    [volunteers, t, i18n.language],
+    [volunteers, t, i18n.language, opportunityId],
   );
   const opportunityMarker = createSingleOpportunityMarker(opportunityFilter, t, i18n.language);
 
