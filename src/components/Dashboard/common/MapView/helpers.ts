@@ -59,7 +59,7 @@ export const createOpportunityMarkers = (
       availability: allAvailabilities.map((a) => a).join("; "),
     };
 
-    if (!oppMap.has(`${opp.lat}${opp.lon}`)) {
+    if (!oppMap.has(`${opp.lat},${opp.lon}`)) {
       oppMap.set(`${opp.lat}${opp.lon}`, {
         lat: opp.lat,
         lon: opp.lon,
@@ -116,7 +116,7 @@ export const createVolunteerMarkers = (
       avatarUrl: getImageUrl(vol?.avatarUrl || defaultAvatarURL),
     };
 
-    if (!volMap.has(`${vol.lat}${vol.lon}`)) {
+    if (!volMap.has(`${vol.lat},${vol.lon}`)) {
       volMap.set(`${vol.lat}${vol.lon}`, {
         lat: vol.lat,
         lon: vol.lon,
