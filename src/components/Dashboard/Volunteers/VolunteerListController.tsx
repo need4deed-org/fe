@@ -56,6 +56,8 @@ export function VolunteerListController({
     engagementFilters: getSectionItems(filterSections, QueryParamsKeys.ENGAGEMENT),
   };
 
+  const selectedDistrictIds = getCheckedOptionIds(dropdownFilters.districtFilters, apiFilterOptions?.district);
+
   if (opportunityId) {
     serializedFilter.set("opportunity", opportunityId);
   }
@@ -109,8 +111,7 @@ export function VolunteerListController({
         onCopyEmails={handleCopyEmails}
         isCopying={isCopying}
         canSeeContactColumns={canSeeContactColumns}
-        selectedDistrictIds={getCheckedOptionIds(dropdownFilters.districtFilters, apiFilterOptions?.district)}
-        selectedLanguageIds={getCheckedOptionIds(dropdownFilters.languageFilters, apiFilterOptions?.language)}
+        selectedDistrictIds={selectedDistrictIds}
         dropdownFilters={dropdownFilters}
       />
     );
@@ -128,6 +129,7 @@ export function VolunteerListController({
       currentPage={currentPage}
       setCurrentPage={setCurrentPage}
       opportunityId={opportunityId}
+      selectedDistrictIds={selectedDistrictIds}
     />
   );
 }

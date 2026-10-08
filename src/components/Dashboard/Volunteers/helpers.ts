@@ -134,7 +134,7 @@ export function getCheckedOptionIds(items: FilterItem[], options?: OptionItem[] 
   return (options ?? []).filter((option) => checked.includes(option.title)).map((option) => option.id);
 }
 
-export function getTopLanguages(languages: ApiLanguage[], max = 2, selectedIds: number[] = []): string[] {
+export function getTopLanguages(languages: ApiLanguage[], max = 2): string[] {
   const order = [
     LangProficiency.NATIVE,
     LangProficiency.FLUENT,
@@ -143,8 +143,8 @@ export function getTopLanguages(languages: ApiLanguage[], max = 2, selectedIds: 
     LangProficiency.BEGINNER,
   ];
   const rank = (p: LangProficiency | undefined) => (p !== undefined ? order.indexOf(p) : order.length);
-  const byProficiency = [...languages].sort((a, b) => rank(a.proficiency) - rank(b.proficiency));
-  return putSelectedFirst(byProficiency, (l) => selectedIds.includes(l.id))
+  return [...languages]
+    .sort((a, b) => rank(a.proficiency) - rank(b.proficiency))
     .map((l) => l.title)
     .filter(Boolean)
     .slice(0, max);

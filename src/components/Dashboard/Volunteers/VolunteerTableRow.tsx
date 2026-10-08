@@ -27,7 +27,6 @@ interface TableRowProps {
   opportunityId?: string;
   canSeeContactColumns: boolean;
   selectedDistrictIds: number[];
-  selectedLanguageIds: number[];
 }
 
 export function VolunteerTableRow({
@@ -39,7 +38,6 @@ export function VolunteerTableRow({
   opportunityId,
   canSeeContactColumns,
   selectedDistrictIds,
-  selectedLanguageIds,
 }: TableRowProps) {
   const { i18n } = useTranslation();
   const VOLUNTEER_COL_WIDTHS = getVolunteerColWidths(canSeeContactColumns);
@@ -52,7 +50,7 @@ export function VolunteerTableRow({
   };
   const { statusMatch, email, statusCommunication } = ext;
 
-  const topLangs = getTopLanguages(languages, 2, selectedLanguageIds);
+  const topLangs = getTopLanguages(languages, 2);
   const languageText =
     truncateList(topLangs.length ? topLangs : languages.map((l) => l.title).filter(Boolean), 2) || "—";
 
