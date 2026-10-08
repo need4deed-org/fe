@@ -24,6 +24,8 @@ interface TableListProps {
   onCopyEmails: () => void;
   isCopying: boolean;
   canSeeContactColumns: boolean;
+  selectedDistrictIds: number[];
+  selectedLanguageIds: number[];
   dropdownFilters: {
     districtFilters: FilterItem[];
     engagementFilters: FilterItem[];
@@ -42,6 +44,8 @@ export function VolunteerTableList({
   onCopyEmails,
   isCopying,
   canSeeContactColumns,
+  selectedDistrictIds,
+  selectedLanguageIds,
   dropdownFilters,
 }: TableListProps) {
   const { t } = useTranslation();
@@ -75,6 +79,8 @@ export function VolunteerTableList({
           matchLabels={matchLabels}
           opportunityId={opportunityId}
           canSeeContactColumns={canSeeContactColumns}
+          selectedDistrictIds={selectedDistrictIds}
+          selectedLanguageIds={selectedLanguageIds}
         />
       )}
       count={count}

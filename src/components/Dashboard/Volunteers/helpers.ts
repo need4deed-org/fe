@@ -10,6 +10,7 @@ export { createSelectedFilterItemsAsFlatArray } from "./Filters/helpers";
 import { ReadonlyURLSearchParams } from "next/navigation";
 import { AvailabilityKeys, AvailabilitySubKeys, SEPARATOR } from "./Filters/constants";
 import { VolunteerCardsFilter } from "./Filters/types";
+import { FilterItem } from "../common/CardsFilter/types";
 import { deserializeSelectionFilters, serializeSelectionFilters } from "../common/CardsFilter/selectionFilters";
 import { volunteerFilterConfigs } from "./Filters/config";
 
@@ -124,7 +125,16 @@ export function truncateList(items: string[], max: number): string {
   return `${items.slice(0, max).join(", ")} +${items.length - max}`;
 }
 
-export function getTopLanguages(languages: ApiLanguage[], max = 2): string[] {
+export function putSelectedFirst<T>(items: T[], isSelected: (item: T) => boolean): T[] {
+  return [...items.filter(isSelected), ...items.filter((item) => !isSelected(item))];
+}
+
+export function getCheckedOptionIds(items: FilterItem[], options?: OptionItem[] | null): number[] {
+  const checked = items.filter((item) => item.checked).map((item) => item.keyValue);
+  return (options ?? []).filter((option) => checked.includes(option.title)).map((option) => option.id);
+}
+
+export function getTopLanguages(languages: ApiLanguage[], max = 2, selectedIds: number[] = []): string[] {
   const order = [
     LangProficiency.NATIVE,
     LangProficiency.FLUENT,
@@ -133,8 +143,8 @@ export function getTopLanguages(languages: ApiLanguage[], max = 2): string[] {
     LangProficiency.BEGINNER,
   ];
   const rank = (p: LangProficiency | undefined) => (p !== undefined ? order.indexOf(p) : order.length);
-  return [...languages]
-    .sort((a, b) => rank(a.proficiency) - rank(b.proficiency))
+  const byProficiency = [...languages].sort((a, b) => rank(a.proficiency) - rank(b.proficiency));
+  return putSelectedFirst(byProficiency, (l) => selectedIds.includes(l.id))
     .map((l) => l.title)
     .filter(Boolean)
     .slice(0, max);
