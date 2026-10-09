@@ -5,7 +5,7 @@ import { apiPathVolunteer, cacheTTL, CARD_LIMIT, TABLE_LIMIT } from "@/config/co
 import { useGetQuery, usePageParam } from "@/hooks";
 import { ApiOptionLists, ApiVolunteerGetList, QueryParamsKeys, SortOrder, UserRole } from "need4deed-sdk";
 import { VolunteerCardsFilter } from "./Filters/types";
-import { serializeFilters } from "./helpers";
+import { getCheckedOptionIds, serializeFilters } from "./helpers";
 import { VolunteerCardList } from "./VolunteerCardList";
 import { VolunteerTableList } from "./VolunteerTableList";
 import { ViewMode } from "../common/types";
@@ -55,6 +55,8 @@ export function VolunteerListController({
     districtFilters: getSectionItems(filterSections, QueryParamsKeys.DISTRICT),
     engagementFilters: getSectionItems(filterSections, QueryParamsKeys.ENGAGEMENT),
   };
+
+  const selectedDistrictIds = getCheckedOptionIds(dropdownFilters.districtFilters, apiFilterOptions?.district);
 
   if (opportunityId) {
     serializedFilter.set("opportunity", opportunityId);
@@ -109,6 +111,7 @@ export function VolunteerListController({
         onCopyEmails={handleCopyEmails}
         isCopying={isCopying}
         canSeeContactColumns={canSeeContactColumns}
+        selectedDistrictIds={selectedDistrictIds}
         dropdownFilters={dropdownFilters}
       />
     );
@@ -126,6 +129,7 @@ export function VolunteerListController({
       currentPage={currentPage}
       setCurrentPage={setCurrentPage}
       opportunityId={opportunityId}
+      selectedDistrictIds={selectedDistrictIds}
     />
   );
 }

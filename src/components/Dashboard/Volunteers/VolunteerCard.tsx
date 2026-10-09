@@ -20,20 +20,24 @@ import { getImageUrl } from "@/utils";
 import { isBriefedAccompanying } from "../Profile/sections/ProfileHeader/common";
 import { formatAvailabilityItem } from "../Profile/sections/VolunteerProfile/formatters";
 import CardDetail from "./CardDetail";
-import { getFirstName, getTopLanguages, getNormalizedVolunteer, truncateList } from "./helpers";
+import { getFirstName, getTopLanguages, getNormalizedVolunteer, putSelectedFirst, truncateList } from "./helpers";
 import { IconName } from "./icon";
 
 interface Props {
   volunteer: ApiVolunteerGetList;
   opportunityId?: string;
+  selectedDistrictIds?: number[];
 }
 
-export function VolunteerCard({ volunteer, opportunityId }: Props) {
+export function VolunteerCard({ volunteer, opportunityId, selectedDistrictIds = [] }: Props) {
   const { t, i18n } = useTranslation();
   const router = useRouter();
 
   const { id, name, languages, activities, skills, locations, availability, avatarUrl, statusEngagement, statusType } =
-    getNormalizedVolunteer(volunteer);
+    getNormalizedVolunteer({
+      ...volunteer,
+      locations: putSelectedFirst(volunteer.locations, (loc) => selectedDistrictIds.includes(loc.id)),
+    });
 
   const { statusCommunication, statusMatch } = volunteer as ApiVolunteerGetList & {
     statusCommunication?: VolunteerStateCommunicationType;

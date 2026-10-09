@@ -10,6 +10,7 @@ export { createSelectedFilterItemsAsFlatArray } from "./Filters/helpers";
 import { ReadonlyURLSearchParams } from "next/navigation";
 import { AvailabilityKeys, AvailabilitySubKeys, SEPARATOR } from "./Filters/constants";
 import { VolunteerCardsFilter } from "./Filters/types";
+import { FilterItem } from "../common/CardsFilter/types";
 import { deserializeSelectionFilters, serializeSelectionFilters } from "../common/CardsFilter/selectionFilters";
 import { volunteerFilterConfigs } from "./Filters/config";
 
@@ -122,6 +123,15 @@ export function getFirstName(fullName: string): string {
 export function truncateList(items: string[], max: number): string {
   if (items.length <= max) return items.join(", ");
   return `${items.slice(0, max).join(", ")} +${items.length - max}`;
+}
+
+export function putSelectedFirst<T>(items: T[], isSelected: (item: T) => boolean): T[] {
+  return [...items.filter(isSelected), ...items.filter((item) => !isSelected(item))];
+}
+
+export function getCheckedOptionIds(items: FilterItem[], options?: OptionItem[] | null): number[] {
+  const checked = items.filter((item) => item.checked).map((item) => item.keyValue);
+  return (options ?? []).filter((option) => checked.includes(option.title)).map((option) => option.id);
 }
 
 export function getTopLanguages(languages: ApiLanguage[], max = 2): string[] {
