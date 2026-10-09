@@ -1,13 +1,42 @@
-export type OpportunityMarker = {
-  lat: number;
-  lon: number;
-  label: string;
-  children?: Array<{ title: string; link: string; language: string; availability: string }>;
-  onClick: () => null;
+import { ApiAgentGetList, ApiVolunteerGetList } from "need4deed-sdk";
+
+export const EntityType = {
+  VOLUNTEER: "volunteer",
+  OPPORTUNITY: "opportunity",
+  AGENT: "agent",
+} as const;
+
+export type EntityType = (typeof EntityType)[keyof typeof EntityType];
+
+export type SingleFilter = {
+  id: number | string;
+  name: string;
+  latitude: number | null;
+  longitude: number | null;
+  languages: ApiVolunteerGetList["languages"];
+  availability: ApiVolunteerGetList["availability"];
   avatarUrl?: string;
 };
 
-export type VolunteerMarker = {
+export type EntityMarker = {
+  lat: number;
+  lon: number;
+  label: string;
+  children?: Array<{
+    title: string;
+    link: string;
+    language?: string;
+    availability?: string;
+    type?: string;
+    district?: string;
+    agent?: ApiAgentGetList;
+  }>;
+  onClick: () => null;
+  entity: EntityType;
+  avatarUrl?: string;
+};
+
+export type SingleMarker = {
   lat: number;
   lon: number;
   label: string;
@@ -15,11 +44,10 @@ export type VolunteerMarker = {
   link: string;
   language: string;
   availability: string;
-  avatarUrl: string;
-  onClick?: () => null;
+  onClick: () => null;
+  entity: EntityType;
+  avatarUrl?: string;
 };
-
-export type EntityMarker = OpportunityMarker | VolunteerMarker;
 
 export type BerlinRacMarker = {
   id: string;
