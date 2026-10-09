@@ -1770,15 +1770,10 @@
     },
     "admin": {
       "title": "Admin",
-      "tabs": {
-        "domains": "Domains",
-        "stats": "Statistics"
-      },
       "domains": {
         "helper": "People with an email on these domains can register as an NGO.",
         "placeholder": "example.org",
         "add": "Add",
-        "invalid": "Please enter a valid domain, e.g. example.org",
         "duplicate": "This domain is already trusted.",
         "empty": "No trusted domains yet.",
         "loadError": "Could not load the trusted domains. Please reload the page.",
@@ -1791,6 +1786,10 @@
       },
       "stats": {
         "comingSoon": "Coming soon"
+      },
+      "nav": {
+        "domains": "Domains",
+        "stats": "Statistics"
       }
     }
   },

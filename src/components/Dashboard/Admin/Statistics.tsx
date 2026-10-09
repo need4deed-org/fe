@@ -1,9 +1,11 @@
+"use client";
+
 import { Heading4 } from "@/components/styled/text";
 import { ChartBarIcon } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
-export function StatisticsTab() {
+export function Statistics() {
   const { t } = useTranslation();
 
   return (
@@ -14,7 +16,7 @@ export function StatisticsTab() {
   );
 }
 
-export default StatisticsTab;
+export default Statistics;
 
 const EmptyState = styled.div`
   display: flex;

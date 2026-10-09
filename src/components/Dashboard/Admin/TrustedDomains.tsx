@@ -1,8 +1,11 @@
+"use client";
+
 import { Button } from "@/components/core/button";
 import { FormInput } from "@/components/core/common";
+import { ConfirmationDialog } from "@/components/core/common/ConfirmationDialog";
+import { ActionCell, Table, TableBody, TableCell, TableContainer, TableRow } from "@/components/core/common/Table";
 import { ActionButtonWithTooltip } from "@/components/Dashboard/common/ActionButtonWithTooltip";
 import { DashboardListLoading } from "@/components/Dashboard/common/DashboardListLoading";
-import { ConfirmationDialog } from "@/components/Dashboard/Profile/sections/shared/ConfirmationDialog";
 import { Paragraph } from "@/components/styled/text";
 import { useTrustedDomains } from "@/hooks/useTrustedDomains";
 import { TrashIcon } from "@phosphor-icons/react";
@@ -13,24 +16,28 @@ import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { z } from "zod";
-import { isValidDomain, normalizeDomain } from "./helpers";
+import { isValidDomain } from "./helpers";
 
-const createDomainSchema = (invalidMessage: string) =>
-  z.object({
-    domain: z.string().transform(normalizeDomain).refine(isValidDomain, invalidMessage),
-  });
+const domainSchema = z.object({ domain: z.string().refine(isValidDomain) });
 
 type DomainFormInput = { domain: string };
 
-export function TrustedDomainsTab() {
+export function TrustedDomains() {
   const { t } = useTranslation();
   const [domainToRemove, setDomainToRemove] = useState<ApiTrustedDomain | null>(null);
-  const { control, handleSubmit, reset, setError, watch } = useForm<DomainFormInput, unknown, DomainFormInput>({
-    resolver: zodResolver(createDomainSchema(t("dashboard.admin.domains.invalid"))),
+  const {
+    control,
+    handleSubmit,
+    reset,
+    setError,
+    formState: { isValid },
+  } = useForm<DomainFormInput>({
+    mode: "onChange",
+    resolver: zodResolver(domainSchema),
     defaultValues: { domain: "" },
   });
   const { domains, isLoading, isError, addDomain, isAdding, removeDomain, isRemoving } = useTrustedDomains(() =>
-    setError("domain", { message: t("dashboard.admin.domains.duplicate") }),
+    setError("domain", { type: "duplicate", message: t("dashboard.admin.domains.duplicate") }),
   );
 
   const onSubmit = ({ domain }: DomainFormInput) => addDomain({ domain }, { onSuccess: () => reset() });
@@ -53,19 +60,13 @@ export function TrustedDomainsTab() {
               <FormInput
                 placeHolder={t("dashboard.admin.domains.placeholder")}
                 value={field.value}
-                // Locked while saving, so nothing typed meanwhile is lost on reset.
-                onInputChange={(value) => !isAdding && field.onChange(value)}
-                errors={fieldState.error?.message ? [fieldState.error.message] : undefined}
+                onInputChange={(value) => !isAdding && field.onChange(value.trim().toLowerCase())}
+                errors={fieldState.error?.type === "duplicate" ? [fieldState.error.message] : undefined}
               />
             )}
           />
         </InputWrapper>
-        <Button
-          type="submit"
-          text={t("dashboard.admin.domains.add")}
-          disabled={isAdding || !watch("domain").trim()}
-          width="auto"
-        />
+        <Button type="submit" text={t("dashboard.admin.domains.add")} disabled={isAdding || !isValid} width="auto" />
       </AddForm>
 
       {isLoading ? (
@@ -75,20 +76,26 @@ export function TrustedDomainsTab() {
       ) : domains.length === 0 ? (
         <Paragraph color="var(--color-grey-500)">{t("dashboard.admin.domains.empty")}</Paragraph>
       ) : (
-        <DomainList>
-          {domains.map((trustedDomain) => (
-            <DomainRow key={trustedDomain.id}>
-              <Paragraph>{trustedDomain.domain}</Paragraph>
-              <ActionButtonWithTooltip
-                tooltipText={t("dashboard.admin.domains.remove")}
-                ariaLabel={t("dashboard.admin.domains.removeAria", { domain: trustedDomain.domain })}
-                onClick={() => setDomainToRemove(trustedDomain)}
-              >
-                <TrashIcon size={20} />
-              </ActionButtonWithTooltip>
-            </DomainRow>
-          ))}
-        </DomainList>
+        <TableContainer>
+          <Table>
+            <TableBody>
+              {domains.map((trustedDomain, index) => (
+                <TableRow key={trustedDomain.id} $isLast={index === domains.length - 1}>
+                  <TableCell>{trustedDomain.domain}</TableCell>
+                  <ActionCell>
+                    <ActionButtonWithTooltip
+                      tooltipText={t("dashboard.admin.domains.remove")}
+                      ariaLabel={t("dashboard.admin.domains.removeAria", { domain: trustedDomain.domain })}
+                      onClick={() => setDomainToRemove(trustedDomain)}
+                    >
+                      <TrashIcon size={20} />
+                    </ActionButtonWithTooltip>
+                  </ActionCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       )}
 
       {domainToRemove && (
@@ -106,7 +113,7 @@ export function TrustedDomainsTab() {
   );
 }
 
-export default TrustedDomainsTab;
+export default TrustedDomains;
 
 const Container = styled.div`
   display: flex;
@@ -129,21 +136,11 @@ const AddForm = styled.form`
 const InputWrapper = styled.div`
   flex: 1;
   min-width: 0;
-`;
-
-const DomainList = styled.ul`
-  display: flex;
-  flex-direction: column;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-`;
-
-const DomainRow = styled.li`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--spacing-12);
-  padding: var(--spacing-12) 0;
-  border-bottom: 1px solid var(--color-orchid-subtle);
+  --form-input-container-height: var(--button-height);
+  --form-input-container-border-radius: var(--button-border-radius);
+  --form-input-container-padding: 0 var(--spacing-24);
+  --form-input-container-border: 1px solid var(--color-grey-200);
+  --form-input-container-border-focus: 2px solid var(--color-green-200);
+  --form-input-container-border-error: 2px solid var(--color-red-600);
+  --form-input-fontSize: var(--text-p-font-size);
 `;

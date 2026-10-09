@@ -82,6 +82,8 @@ export enum DashboardRoutes {
   Calendar = "/dashboard/calendar",
   Profile = "/dashboard/profile",
   Admin = "/dashboard/admin",
+  AdminDomains = "/dashboard/admin/domains",
+  AdminStatistics = "/dashboard/admin/statistics",
 }
 
 export const questionMark = "?";

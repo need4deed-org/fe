@@ -9,7 +9,6 @@ import SortBy, { OnChangeSortOrder, SortOption } from "./SortBy";
 import { XIcon } from "@phosphor-icons/react";
 import { FilterItem } from "../CardsFilter/types";
 import { EntityFilterChip } from "./EntityFilterChip";
-import { HeaderTabs } from "../HeaderTabs";
 import {
   ClearAllButton,
   HeaderContainer,
@@ -18,6 +17,8 @@ import {
   HeaderTitleRow,
   HyphenatedHeading2,
   SearchBarSectionContainer,
+  TabHeading,
+  Tabs,
   TabsSectionContainer,
   TabsSearchBarContainer,
   XIconDiv,
@@ -47,9 +48,6 @@ type Props = {
   onClearAllFilters?: () => void;
   onClearFilter: (filter: string, parentKey?: string) => void;
   entityFilter?: EntityFilter;
-  // Optional slot next to the header title — e.g. a coordinator-only "+"
-  // button to create a record directly (fe#911). No consumer needs it yet
-  // beyond Agents, so it's a generic slot rather than a named prop per action.
   headerAction?: ReactNode;
 };
 
@@ -84,7 +82,20 @@ export default function CardsHeader({
 
       <TabsSearchBarContainer>
         <TabsSectionContainer>
-          <HeaderTabs tabs={tabs} selectedTabIndex={selectedTabIndex} onTabChange={setSelectedTabIndex} />
+          <Tabs role="tablist">
+            {tabs.map((tab, index) => (
+              <TabHeading
+                type="button"
+                role="tab"
+                aria-selected={selectedTabIndex === index}
+                key={tab}
+                onClick={() => setSelectedTabIndex(index)}
+                $isSelected={selectedTabIndex === index}
+              >
+                {tab}
+              </TabHeading>
+            ))}
+          </Tabs>
           <SortBy sortOrder={sortOrder} onChange={onSortOrderChange} extraOptions={extraSortOptions} />
         </TabsSectionContainer>
 
