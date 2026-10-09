@@ -58,7 +58,7 @@ export const createOpportunityMarkers = (
     };
 
     if (!oppMap.has(`${opp.lat},${opp.lon}`)) {
-      oppMap.set(`${opp.lat}${opp.lon}`, {
+      oppMap.set(`${opp.lat},${opp.lon}`, {
         lat: opp.lat,
         lon: opp.lon,
         label: t("dashboard.map.opportunities"),
@@ -67,7 +67,7 @@ export const createOpportunityMarkers = (
         onClick: () => null,
       });
     } else {
-      oppMap.get(String(`${opp.lat}${opp.lon}`))?.children.push(childItem);
+      oppMap.get(String(`${opp.lat},${opp.lon}`))?.children.push(childItem);
     }
   });
   return Array.from(oppMap.values());
@@ -115,7 +115,7 @@ export const createVolunteerMarkers = (
     };
 
     if (!volMap.has(`${vol.lat},${vol.lon}`)) {
-      volMap.set(`${vol.lat}${vol.lon}`, {
+      volMap.set(`${vol.lat},${vol.lon}`, {
         lat: vol.lat,
         lon: vol.lon,
         label: t("dashboard.map.volunteers"),
@@ -124,7 +124,7 @@ export const createVolunteerMarkers = (
         onClick: () => null,
       });
     } else {
-      volMap.get(`${vol.lat}${vol.lon}`)?.children.push(childItem);
+      volMap.get(`${vol.lat},${vol.lon}`)?.children.push(childItem);
     }
   });
   return Array.from(volMap.values());
