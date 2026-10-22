@@ -60,7 +60,6 @@ export function isSilentError(error: unknown): boolean {
   return isLeavingPage && axios.isAxiosError(error) && !error.response;
 }
 
-// The match status was saved; only the email carrying the note failed.
 export function isEmailNoteNotSent(error: unknown): boolean {
   if (!axios.isAxiosError(error) || error.response?.status !== 502) return false;
   const data = error.response.data as ApiErrorBody | undefined;
