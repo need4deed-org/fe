@@ -146,6 +146,20 @@ html {
   --color-pink-500: rgba(242, 177, 255, 1);
   --color-pink-600: rgba(220, 161, 232, 1);
 
+  /* map district colors */
+  --map-district-fill-color-mitte-orange: #f4a261;
+  --map-district-fill-color-friedrichshain-kreuzberg-teal: #2a9d8f;
+  --map-district-fill-color-pankow-coral: #e76f51;
+  --map-district-fill-color-charlottenburg-wilmersdorf-sage: #8ab17d;
+  --map-district-fill-color-spandau-yellow: #e9c46a;
+  --map-district-fill-color-steglitz-zehlendorf-blue: #577590;
+  --map-district-fill-color-tempelhof-schoeneberg-purple: #c77dff;
+  --map-district-fill-color-neukoelln-green: #90be6d;
+  --map-district-fill-color-treptow-koepenick-pink: #f28482;
+  --map-district-fill-color-marzahn-hellersdorf-teal: #43aa8b;
+  --map-district-fill-color-lichtenberg-yellow: #f9c74f;
+  --map-district-fill-color-reinickendorf-blue: #729ec2;
+
   /* text */
   --text-h2-font-weight: 600;
   --text-h2-font-size: 32px;

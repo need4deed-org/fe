@@ -1,5 +1,5 @@
 import "./map.css";
-import { MapContainer, Marker, Popup, TileLayer, useMapEvent } from "react-leaflet";
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { BERLIN_BOUNDS, DEFAULT_CENTER } from "./helpers";
 import { PopupContentWrapper, PopupHeader, StyledMapContainer } from "./styles";
 import { useState } from "react";
@@ -9,6 +9,8 @@ import { MapLegendControl } from "./MapLegend";
 import { MapScroll } from "./MapScroll";
 import { EntityMarker, EntityType, SingleMarker } from "./types";
 import { MapOtherRacs } from "./MapOtherRacs";
+import { useGetDistrictGeometry } from "@/hooks/useGetDistrictGeometry";
+import { DistrictPolygons } from "./DistrictPolygons";
 
 interface Props {
   markers?: EntityMarker[];
@@ -17,19 +19,11 @@ interface Props {
   renderSinglePopupContent?: (filter: SingleMarker) => React.ReactNode;
 }
 
-const SetViewOnClick = () => {
-  const map = useMapEvent("click", (e) => {
-    map.setView(e.latlng, map.getZoom(), {
-      animate: true,
-    });
-  });
-
-  return null;
-};
-
 const MapCard = ({ markers, renderPopupContent, filterMarker, renderSinglePopupContent }: Props) => {
   const [enableScroll, setEnableScroll] = useState<boolean>(true);
   const [showOtherRacs, setShowOtherRacs] = useState<boolean>(false);
+
+  const { data: districtGeometries } = useGetDistrictGeometry();
 
   const generateCustomIcon = (url: string, count?: number, entity?: EntityType) => {
     if (entity === EntityType.OPPORTUNITY) return new L.Icon.Default({ className: "need4deed-icon" });
@@ -48,15 +42,15 @@ const MapCard = ({ markers, renderPopupContent, filterMarker, renderSinglePopupC
 
   return (
     <StyledMapContainer>
-      <MapContainer center={DEFAULT_CENTER} minZoom={9} zoom={11} maxBounds={BERLIN_BOUNDS}>
+      <MapContainer center={DEFAULT_CENTER} minZoom={11} zoom={11} maxBounds={BERLIN_BOUNDS}>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <SetViewOnClick />
         <MapLegendControl />
         <MapScroll enableScroll={enableScroll} setEnabledScroll={setEnableScroll} />
         <MapOtherRacs showOtherRacs={showOtherRacs} setShowOtherRacs={setShowOtherRacs} />
+        {districtGeometries && <DistrictPolygons districtGeometries={districtGeometries} />}
         {showOtherRacs && <BerlinRacs />}
         {filterMarker && (
           <Marker
