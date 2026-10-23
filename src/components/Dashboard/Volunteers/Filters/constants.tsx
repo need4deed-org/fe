@@ -57,6 +57,8 @@ export const defaultVolunteerCardsFilter: VolunteerCardsFilter = {
       [OccasionalType.WEEKENDS]: false,
     },
   },
+  commutePostcode: "",
+  maxCommuteMinutes: 0,
 };
 
 export const DEFAULT_VOLUNTEER_ENGAGEMENTS = Object.values(VolunteerStateEngagementType).filter(

@@ -21,6 +21,7 @@ import CardsHeader from "../common/CardsHeader/CardsHeader";
 import { getClearFilter, getClearSingleFilter } from "../common/CardsFilter/helpers";
 import {
   applyMatchingPrefill,
+  clearCommutePrefill,
   hasFilterParams,
   PREFILLED_PARAM,
   withPrefilledMarker,
@@ -105,7 +106,10 @@ export function Volunteers() {
   };
 
   const handleClearFilter = (filterKey: string, parentKey?: string) => {
-    const cleared = getClearSingleFilter(cardsFilter, filterKey, parentKey);
+    const cleared =
+      filterKey === QueryParamsKeys.COMMUTE_POSTCODE
+        ? clearCommutePrefill(cardsFilter)
+        : getClearSingleFilter(cardsFilter, filterKey, parentKey);
     setCardsFilter(cleared);
     router.push(pathname + questionMark + serializeFilters(cleared, searchParams));
   };
@@ -138,6 +142,8 @@ export function Volunteers() {
         availability: isAccompanying ? [] : opportunityFilter.availability,
         appointmentDate: isAccompanying ? opportunityFilter.appointmentDate : null,
         appointmentTime: isAccompanying ? opportunityFilter.appointmentTime : null,
+        commutePostcode: opportunityFilter.commutePostcode,
+        maxCommuteMinutes: 5,
       },
       { district: apiFilterOptions.district, language: apiFilterOptions.language },
     );
@@ -205,7 +211,14 @@ export function Volunteers() {
           <Filters
             isFiltersOpen={isFiltersOpen}
             setIsFiltersOpen={setIsFiltersOpen}
-            filtersContent={<FiltersContent setFilter={handleFilterUpdate} filter={cardsFilter} viewMode={viewMode} />}
+            filtersContent={
+              <FiltersContent
+                setFilter={handleFilterUpdate}
+                filter={cardsFilter}
+                viewMode={viewMode}
+                isMatchMode={searchParams.has("opportunity")}
+              />
+            }
           />
         </ContentRow>
       </VolunteersContainer>

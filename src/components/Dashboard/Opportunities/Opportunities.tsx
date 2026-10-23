@@ -4,13 +4,14 @@ import { useTranslation } from "react-i18next";
 import { DashboardLayout } from "@/components/Layout";
 import { apiPathOption, questionMark, ScreenTypes } from "@/config/constants";
 import { useGetVolunteer, useGetQuery } from "@/hooks";
-import { ApiOptionLists, LangProficiency, UserRole } from "need4deed-sdk";
+import { ApiOptionLists, LangProficiency, QueryParamsKeys, UserRole } from "need4deed-sdk";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Filters from "../common/CardsFilter/Filters";
 import CardsHeader from "../common/CardsHeader/CardsHeader";
 import { getClearFilter, getClearSingleFilter } from "../common/CardsFilter/helpers";
 import {
   applyMatchingPrefill,
+  clearCommutePrefill,
   hasFilterParams,
   PREFILLED_PARAM,
   withPrefilledMarker,
@@ -76,6 +77,8 @@ export function Opportunities() {
         districtIds: volunteerFilter.districtIds,
         languages: volunteerFilter.languages.filter(({ proficiency }) => proficiency !== LangProficiency.BEGINNER),
         availability: volunteerFilter.availability,
+        commutePostcode: volunteerFilter.commutePostcode,
+        maxCommuteMinutes: 5,
       },
       { district: apiFilterOptions.district, language: apiFilterOptions.language },
     );
@@ -129,7 +132,10 @@ export function Opportunities() {
   };
 
   const handleClearFilter = (filterKey: string, parentKey?: string) => {
-    const cleared = getClearSingleFilter(cardsFilter, filterKey, parentKey);
+    const cleared =
+      filterKey === QueryParamsKeys.COMMUTE_POSTCODE
+        ? clearCommutePrefill(cardsFilter)
+        : getClearSingleFilter(cardsFilter, filterKey, parentKey);
     setCardsFilter(cleared);
     router.push(pathname + questionMark + serializeOpportunityFilters(cleared, searchParams));
   };
@@ -194,7 +200,14 @@ export function Opportunities() {
           <Filters
             isFiltersOpen={isFiltersOpen}
             setIsFiltersOpen={setIsFiltersOpen}
-            filtersContent={<FiltersContent setFilter={handleFilterUpdate} filter={cardsFilter} viewMode={viewMode} />}
+            filtersContent={
+              <FiltersContent
+                setFilter={handleFilterUpdate}
+                filter={cardsFilter}
+                viewMode={viewMode}
+                isMatchMode={searchParams.has("volunteer")}
+              />
+            }
           />
         </ContentRow>
       </OpportunitiesContainer>
