@@ -30,7 +30,7 @@ export const DistrictPolygons = ({ districtGeometries }: Props) => {
 
   const updateDistrictStyles = (activeDistrict: L.Path | null) => {
     districtLayers.current.forEach(({ layer, fillColor }) => {
-      layer.setStyle({ fillColor: activeDistrict && layer !== activeDistrict ? "#000000" : fillColor });
+      layer.setStyle({ fillColor: activeDistrict && layer !== activeDistrict ? "var(color-black)" : fillColor });
     });
   };
 
@@ -52,7 +52,7 @@ export const DistrictPolygons = ({ districtGeometries }: Props) => {
         <Polygon
           positions={[MAP_AREA_RING, ...districtMaskHoles]}
           pathOptions={{
-            fillColor: "#FEF4FF",
+            fillColor: "var(--color-orchid-light)",
             fillOpacity: 1,
             fillRule: "evenodd",
             stroke: false,
