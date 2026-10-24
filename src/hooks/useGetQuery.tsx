@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData as holdPreviousData, useQuery } from "@tanstack/react-query";
 import axios, { AxiosResponse } from "axios";
 import { Lang, SortOrder, UserRole } from "need4deed-sdk";
 import { useParams } from "next/navigation";
@@ -48,6 +48,7 @@ interface UseGetQuery {
   staleTime?: number;
   enabled?: boolean;
   toastOnError?: boolean;
+  keepPreviousData?: boolean;
 }
 
 export const useGetQuery = <T,>({
@@ -57,16 +58,18 @@ export const useGetQuery = <T,>({
   staleTime,
   enabled,
   toastOnError = true,
+  keepPreviousData = false,
 }: UseGetQuery) => {
   const { lang } = useParams<{ lang: Lang }>();
   const normalizedParams = { ...params, filter: getReducedFilter(params.filter) };
 
-  const { data, isLoading, isError, error } = useQuery<ApiResponse<T>, Error>({
+  const { data, isLoading, isError, error, isPlaceholderData } = useQuery<ApiResponse<T>, Error>({
     queryKey: [...queryKey, lang, normalizedParams],
     queryFn: () => fetchData<T>(apiPath, normalizedParams),
     staleTime,
     enabled,
     meta: { toastOnError },
+    placeholderData: keepPreviousData ? holdPreviousData : undefined,
   });
 
   return {
@@ -76,5 +79,6 @@ export const useGetQuery = <T,>({
     isLoading,
     isError,
     error,
+    isPlaceholderData,
   };
 };
