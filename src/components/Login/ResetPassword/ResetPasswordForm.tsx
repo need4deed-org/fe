@@ -7,7 +7,8 @@ import { useMutationQuery } from "@/hooks";
 import { useSearchParams } from "next/navigation";
 import { apiPathPasswordReset } from "@/config/constants";
 import { createResetPasswordSchema } from "./resetPasswordSchema";
-import { StyledForm } from "../styles";
+import { HiddenUsernameInput, StyledForm } from "../styles";
+import { decodeJwtPayload } from "@/utils/helpers";
 
 interface ResetPasswordData {
   newPassword: string;
@@ -49,6 +50,7 @@ export function ResetPasswordForm({ onResetSuccess }: Props) {
   const { t } = useTranslation();
   const searchParams = useSearchParams();
   const urlTokenParam = searchParams.get("token");
+  const email: string = (urlTokenParam && decodeJwtPayload(urlTokenParam)?.email) || "";
   const { mutate: resetPassword, isPending } = useResetPasswordMutation(onResetSuccess);
   const form = useForm({
     defaultValues: {
@@ -86,6 +88,17 @@ export function ResetPasswordForm({ onResetSuccess }: Props) {
         form.handleSubmit();
       }}
     >
+      {email && (
+        <HiddenUsernameInput
+          type="email"
+          name="email"
+          autoComplete="username"
+          value={email}
+          readOnly
+          tabIndex={-1}
+          aria-hidden="true"
+        />
+      )}
       <form.Field
         name="newPassword"
         validators={{
@@ -95,6 +108,8 @@ export function ResetPasswordForm({ onResetSuccess }: Props) {
         {(field) => (
           <FormInput
             type="password"
+            name="newPassword"
+            autoComplete="new-password"
             value={field.state.value}
             onInputChange={field.handleChange}
             placeHolder={t("dashboard.login.newPassword")}
@@ -111,6 +126,8 @@ export function ResetPasswordForm({ onResetSuccess }: Props) {
         {(field) => (
           <FormInput
             type="password"
+            name="confirmPassword"
+            autoComplete="new-password"
             value={field.state.value}
             onInputChange={field.handleChange}
             placeHolder={t("dashboard.login.confirmPassword")}
