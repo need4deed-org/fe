@@ -1,19 +1,22 @@
 import { GeoJSON, Pane, Polygon } from "react-leaflet";
 import { ApiDistrictGeometryCollection } from "need4deed-sdk";
-import { useRef } from "react";
-import { useMap, useMapEvent } from "react-leaflet";
+import { useEffect, useRef } from "react";
+import { useMapEvent } from "react-leaflet";
 import L from "leaflet";
 import { districtFillColors, MAP_AREA_RING } from "./helpers";
 
 interface Props {
   districtGeometries: ApiDistrictGeometryCollection;
+  onDistrictClick: (title: string) => void;
+  selectedDistrictTitles: string[];
 }
 
-export const DistrictPolygons = ({ districtGeometries }: Props) => {
-  const map = useMap();
+export const DistrictPolygons = ({ districtGeometries, onDistrictClick, selectedDistrictTitles }: Props) => {
   const districtLayers = useRef<Array<{ layer: L.Path; fillColor: string; title?: string }>>([]);
-  const selectedDistrict = useRef<L.Path | null>(null);
+  const selectedDistrictTitleSet = useRef(new Set(selectedDistrictTitles));
   const hoveredDistrict = useRef<L.Path | null>(null);
+  const onDistrictClickRef = useRef(onDistrictClick);
+  onDistrictClickRef.current = onDistrictClick;
 
   const districtMaskHoles: L.LatLngExpression[][] =
     districtGeometries?.features.flatMap(({ geometry }) => {
@@ -28,22 +31,35 @@ export const DistrictPolygons = ({ districtGeometries }: Props) => {
   const getDistrictFillColor = (title: unknown) =>
     typeof title === "string" ? districtFillColors[title] : districtFillColors.Mitte;
 
-  const updateDistrictStyles = (activeDistrict: L.Path | null) => {
-    districtLayers.current.forEach(({ layer, fillColor }) => {
-      layer.setStyle({ fillColor: activeDistrict && layer !== activeDistrict ? "var(color-black)" : fillColor });
+  const updateDistrictStyles = () => {
+    const selectedTitles = selectedDistrictTitleSet.current;
+    const hoveredLayer = hoveredDistrict.current;
+    districtLayers.current.forEach(({ layer, fillColor, title }) => {
+      const isSelected = title !== undefined && selectedTitles.has(title);
+      const isHovered = layer === hoveredLayer;
+      const hasActiveDistricts = selectedTitles.size > 0 || hoveredLayer !== null;
+      layer.setStyle({
+        fillColor: hasActiveDistricts && !isSelected && !isHovered ? "var(--color-black)" : fillColor,
+      });
     });
   };
 
+  useEffect(() => {
+    selectedDistrictTitleSet.current = new Set(selectedDistrictTitles);
+    districtLayers.current.forEach(({ layer, title }) => {
+      layer.unbindTooltip();
+      if (title) {
+        const isSelected = selectedDistrictTitleSet.current.has(title);
+        layer.bindTooltip(title, isSelected ? { permanent: true, direction: "center" } : undefined);
+        if (isSelected) layer.openTooltip();
+      }
+    });
+    updateDistrictStyles();
+  }, [selectedDistrictTitles]);
+
   useMapEvent("click", () => {
-    const previousDistrict = selectedDistrict.current;
-    if (previousDistrict) {
-      const district = districtLayers.current.find(({ layer }) => layer === previousDistrict);
-      previousDistrict.unbindTooltip();
-      if (district?.title) previousDistrict.bindTooltip(district.title);
-    }
-    selectedDistrict.current = null;
     hoveredDistrict.current = null;
-    updateDistrictStyles(null);
+    updateDistrictStyles();
   });
 
   return (
@@ -70,40 +86,31 @@ export const DistrictPolygons = ({ districtGeometries }: Props) => {
         data={districtGeometries}
         onEachFeature={(feature, layer) => {
           const title = feature.properties?.title;
-          if (title) layer.bindTooltip(title);
+          if (title) {
+            const isSelected = selectedDistrictTitleSet.current.has(title);
+            layer.bindTooltip(title, isSelected ? { permanent: true, direction: "center" } : undefined);
+            if (isSelected) layer.openTooltip();
+          }
           if (layer instanceof L.Path) {
             const fillColor = getDistrictFillColor(title);
             districtLayers.current.push({ layer, fillColor, title });
+            updateDistrictStyles();
             layer.options.bubblingMouseEvents = false;
             layer.on("mouseover", () => {
               hoveredDistrict.current = layer;
-              updateDistrictStyles(selectedDistrict.current ?? layer);
+              updateDistrictStyles();
             });
             layer.on("mouseout", () => {
               if (hoveredDistrict.current === layer) hoveredDistrict.current = null;
-              updateDistrictStyles(selectedDistrict.current ?? hoveredDistrict.current);
+              updateDistrictStyles();
             });
           }
-          layer.on("click", (event) => {
+          layer.on("click", () => {
             if (layer instanceof L.Path) {
-              const previousDistrict = selectedDistrict.current;
-              if (previousDistrict && previousDistrict !== layer) {
-                const previous = districtLayers.current.find(
-                  ({ layer: districtLayer }) => districtLayer === previousDistrict,
-                );
-                previousDistrict.unbindTooltip();
-                if (previous?.title) previousDistrict.bindTooltip(previous.title);
-              }
-
-              selectedDistrict.current = layer;
               hoveredDistrict.current = layer;
-              updateDistrictStyles(layer);
-              if (title) {
-                layer.unbindTooltip();
-                layer.bindTooltip(title, { permanent: true, direction: "center" }).openTooltip();
-              }
+              updateDistrictStyles();
+              if (title) onDistrictClickRef.current(title);
             }
-            map.setView(event.latlng, 12, { animate: true });
           });
         }}
       />
