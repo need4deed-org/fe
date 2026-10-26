@@ -15,7 +15,7 @@ export type CommutePrefillFilter = {
   maxCommuteMinutes: number;
 };
 
-export const MAX_COMMUTE_MINUTES_OPTIONS = [5, 10, 20, 30, 40, 50, 60] as const;
+export const MAX_COMMUTE_MINUTES_OPTIONS = [5, 10, 20, 30, 40, 50, 60];
 
 type MatchingSource = {
   districtIds: number[];
