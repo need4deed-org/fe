@@ -92,7 +92,9 @@ export function Volunteers() {
     const updatedFilter = typeof newFilter === "function" ? newFilter(cardsFilter) : newFilter;
 
     setCardsFilter(updatedFilter);
-    router.push(pathname + questionMark + serializeFilters(updatedFilter, searchParams));
+    router.push(pathname + questionMark + serializeFilters(updatedFilter, searchParams), {
+      scroll: false,
+    });
   };
 
   const handleRemoveOpportunityFilter = () => {
@@ -143,7 +145,7 @@ export function Volunteers() {
         appointmentDate: isAccompanying ? opportunityFilter.appointmentDate : null,
         appointmentTime: isAccompanying ? opportunityFilter.appointmentTime : null,
         commutePostcode: opportunityFilter.commutePostcode,
-        maxCommuteMinutes: 5,
+        maxCommuteMinutes: 30,
       },
       { district: apiFilterOptions.district, language: apiFilterOptions.language },
     );

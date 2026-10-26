@@ -78,7 +78,7 @@ export function Opportunities() {
         languages: volunteerFilter.languages.filter(({ proficiency }) => proficiency !== LangProficiency.BEGINNER),
         availability: volunteerFilter.availability,
         commutePostcode: volunteerFilter.commutePostcode,
-        maxCommuteMinutes: 5,
+        maxCommuteMinutes: 30,
       },
       { district: apiFilterOptions.district, language: apiFilterOptions.language },
     );
@@ -118,7 +118,9 @@ export function Opportunities() {
   ) => {
     const updatedFilter = typeof newFilter === "function" ? newFilter(cardsFilter) : newFilter;
     setCardsFilter(updatedFilter);
-    router.push(pathname + questionMark + serializeOpportunityFilters(updatedFilter, searchParams));
+    router.push(pathname + questionMark + serializeOpportunityFilters(updatedFilter, searchParams), {
+      scroll: false,
+    });
   };
 
   const handleRemoveVolunteerFilter = () => {
