@@ -12,8 +12,9 @@ import { EntityMarker, EntityType, SingleMarker } from "./types";
 import { MapOtherRacs } from "./MapOtherRacs";
 import { useGetDistrictGeometry } from "@/hooks/useGetDistrictGeometry";
 import { DistrictPolygons } from "./DistrictPolygons";
-import { questionMark } from "@/config/constants";
+import { questionMark, ScreenTypes } from "@/config/constants";
 import { QueryParamsKeys } from "need4deed-sdk";
+import { useScreenType } from "@/context/DeviceContext";
 
 interface Props {
   markers?: EntityMarker[];
@@ -28,6 +29,8 @@ const MapCard = ({ markers, renderPopupContent, filterMarker, renderSinglePopupC
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
+  const screenSize = useScreenType();
+  const isMobile = screenSize === ScreenTypes.MOBILE;
   const selectedDistrictTitles = useMemo(() => searchParams.getAll(QueryParamsKeys.DISTRICT), [searchParams]);
   const selectedDistrictTitlesRef = useRef(selectedDistrictTitles);
 
@@ -66,14 +69,19 @@ const MapCard = ({ markers, renderPopupContent, filterMarker, renderSinglePopupC
 
   return (
     <StyledMapContainer>
-      <MapContainer center={DEFAULT_CENTER} minZoom={11} zoom={11} maxBounds={BERLIN_BOUNDS}>
+      <MapContainer
+        center={DEFAULT_CENTER}
+        minZoom={isMobile ? 9 : 11}
+        zoom={isMobile ? 9 : 11}
+        maxBounds={BERLIN_BOUNDS}
+      >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <MapLegendControl />
-        <MapScroll enableScroll={enableScroll} setEnabledScroll={setEnableScroll} />
-        <MapOtherRacs showOtherRacs={showOtherRacs} setShowOtherRacs={setShowOtherRacs} />
+        {!isMobile && <MapLegendControl />}
+        {!isMobile && <MapScroll enableScroll={enableScroll} setEnabledScroll={setEnableScroll} />}
+        {!isMobile && <MapOtherRacs showOtherRacs={showOtherRacs} setShowOtherRacs={setShowOtherRacs} />}
         {districtGeometries && (
           <DistrictPolygons
             districtGeometries={districtGeometries}
