@@ -49,6 +49,7 @@ export function AccountStep({ data, onChange, errors, namespace = "agentRegistra
         <FieldLabel htmlFor={`${fieldId}-email`}>{t(`${namespace}.fields.email`)}</FieldLabel>
         <FormInput
           id={`${fieldId}-email`}
+          name="email"
           autoComplete="username"
           type="email"
           value={data.email}
@@ -62,6 +63,7 @@ export function AccountStep({ data, onChange, errors, namespace = "agentRegistra
         <FieldLabel htmlFor={`${fieldId}-password`}>{t(`${namespace}.fields.password`)}</FieldLabel>
         <FormInput
           id={`${fieldId}-password`}
+          name="password"
           autoComplete="new-password"
           type="password"
           value={data.password}
@@ -75,6 +77,7 @@ export function AccountStep({ data, onChange, errors, namespace = "agentRegistra
         <FieldLabel htmlFor={`${fieldId}-confirm-password`}>{t(`${namespace}.fields.confirmPassword`)}</FieldLabel>
         <FormInput
           id={`${fieldId}-confirm-password`}
+          name="confirmPassword"
           autoComplete="new-password"
           type="password"
           value={data.confirmPassword}

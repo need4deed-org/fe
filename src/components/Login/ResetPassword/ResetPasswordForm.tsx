@@ -1,13 +1,13 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { FieldApi, useForm } from "@tanstack/react-form";
-import { FormInput } from "../../core/common";
+import { FormInput, VisuallyHiddenInput } from "../../core/common";
 import { useTranslation } from "react-i18next";
 import { Button } from "../../core/button";
 import { useMutationQuery } from "@/hooks";
 import { useSearchParams } from "next/navigation";
 import { apiPathPasswordReset } from "@/config/constants";
 import { createResetPasswordSchema } from "./resetPasswordSchema";
-import { HiddenUsernameInput, StyledForm } from "../styles";
+import { StyledForm } from "../styles";
 import { decodeJwtPayload } from "@/utils/helpers";
 
 interface ResetPasswordData {
@@ -50,7 +50,7 @@ export function ResetPasswordForm({ onResetSuccess }: Props) {
   const { t } = useTranslation();
   const searchParams = useSearchParams();
   const urlTokenParam = searchParams.get("token");
-  const email: string = (urlTokenParam && decodeJwtPayload(urlTokenParam)?.email) || "";
+  const email: string = useMemo(() => (urlTokenParam && decodeJwtPayload(urlTokenParam)?.email) || "", [urlTokenParam]);
   const { mutate: resetPassword, isPending } = useResetPasswordMutation(onResetSuccess);
   const form = useForm({
     defaultValues: {
@@ -89,7 +89,7 @@ export function ResetPasswordForm({ onResetSuccess }: Props) {
       }}
     >
       {email && (
-        <HiddenUsernameInput
+        <VisuallyHiddenInput
           type="email"
           name="email"
           autoComplete="username"
