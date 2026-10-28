@@ -5,24 +5,24 @@ import {
   BerlinRacPopupContainer,
   PopupContentWrapper,
   PopupHeader,
-} from "./styles";
-import { IconName } from "../../Volunteers/icon";
-import CardDetail from "../../Volunteers/CardDetail";
-import { CardParagraph } from "../../Volunteers/VolunteerCard";
+} from "../styles";
+import { IconName } from "../../../Volunteers/icon";
+import CardDetail from "../../../Volunteers/CardDetail";
+import { CardParagraph } from "../../../Volunteers/VolunteerCard";
 import { useTranslation } from "react-i18next";
-import { CopyAddress } from "../CopyAddress";
+import { CopyAddress } from "../../CopyAddress";
 import { useBerlinRacs } from "@/hooks/useBerlinRacs";
-import { BerlinRacMarker } from "./types";
+import { BerlinRacMarker } from "../types";
 import L from "leaflet";
 import { DEFAULT_LEAFLET_ICON_URL } from "@/config/constants";
 
-const defaultLeafletIcon = new L.Icon.Default({
+const defaultLeafletIcon = new L.Icon({
   iconUrl: DEFAULT_LEAFLET_ICON_URL,
   shadowUrl: "",
   className: "berlin-rac-marker-icon",
 });
 
-const BerlinRacs = () => {
+export const BerlinRacs = () => {
   const { t } = useTranslation();
   const { berlinRacs, isLoading, isError } = useBerlinRacs();
 
@@ -56,5 +56,3 @@ const BerlinRacs = () => {
     ))
   );
 };
-
-export default BerlinRacs;

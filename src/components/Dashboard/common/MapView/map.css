@@ -1,3 +1,7 @@
+.leaflet-container.map-popup-open .leaflet-control-container {
+  visibility: hidden;
+}
+
 .leaflet-marker-icon.need4deed-icon {
   filter: hue-rotate(90deg) saturate(0.8);
 }
@@ -12,7 +16,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 2rem;
+  font-size: var(--dashboard-map-custom-icon-font-size);
   width: var(--dashboard-map-custom-icon-width) !important;
   height: var(--dashboard-map-custom-icon-width) !important;
   background: var(--color-white);

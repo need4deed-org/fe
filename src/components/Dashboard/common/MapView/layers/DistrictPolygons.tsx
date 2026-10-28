@@ -3,7 +3,7 @@ import { ApiDistrictGeometryCollection } from "need4deed-sdk";
 import { useEffect, useRef } from "react";
 import { useMapEvent } from "react-leaflet";
 import L from "leaflet";
-import { districtFillColors, MAP_AREA_RING } from "./helpers";
+import { districtFillColors, MAP_AREA_RING } from "../helpers";
 
 interface Props {
   districtGeometries: ApiDistrictGeometryCollection;

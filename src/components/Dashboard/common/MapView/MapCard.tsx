@@ -6,16 +6,17 @@ import { PopupContentWrapper, PopupHeader, StyledMapContainer } from "./styles";
 import { useMemo, useRef, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import L from "leaflet";
-import BerlinRacs from "./BerlinRacs";
-import { MapLegendControl } from "./MapLegend";
-import { MapScroll } from "./MapScroll";
+import { BerlinRacs } from "./layers/BerlinRacs";
+import { MapLegendControl } from "./controls/MapLegend";
+import { MapScroll } from "./controls/MapScroll";
 import { EntityMarker, EntityType, SingleMarker } from "./types";
-import { MapOtherRacs } from "./MapOtherRacs";
+import { MapOtherRacs } from "./controls/MapOtherRacs";
 import { useGetDistrictGeometry } from "@/hooks/useGetDistrictGeometry";
-import { DistrictPolygons } from "./DistrictPolygons";
-import { questionMark, ScreenTypes } from "@/config/constants";
+import { DistrictPolygons } from "./layers/DistrictPolygons";
+import { DEFAULT_LEAFLET_ICON_URL, questionMark, ScreenTypes } from "@/config/constants";
 import { QueryParamsKeys } from "need4deed-sdk";
 import { useScreenType } from "@/context/DeviceContext";
+import { MapPopupControlVisibility } from "./controls/MapPopupVisibilityControl";
 
 interface Props {
   markers?: EntityMarker[];
@@ -58,7 +59,8 @@ const MapCard = ({ markers, renderPopupContent, filterMarker, renderSinglePopupC
   };
 
   const generateCustomIcon = (url: string, count?: number, entity?: EntityType) => {
-    if (entity === EntityType.OPPORTUNITY) return new L.Icon.Default({ className: "need4deed-icon" });
+    if (entity === EntityType.OPPORTUNITY)
+      return new L.Icon({ iconUrl: DEFAULT_LEAFLET_ICON_URL, shadowUrl: "", className: "need4deed-icon" });
     if (entity === EntityType.VOLUNTEER)
       return L.icon({
         iconUrl: url,
@@ -79,7 +81,8 @@ const MapCard = ({ markers, renderPopupContent, filterMarker, renderSinglePopupC
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {<MapLegendControl />}
+        <MapPopupControlVisibility />
+        <MapLegendControl />
         {!isMobile && !isTablet && <MapScroll enableScroll={enableScroll} setEnabledScroll={setEnableScroll} />}
         {!isMobile && <MapOtherRacs showOtherRacs={showOtherRacs} setShowOtherRacs={setShowOtherRacs} />}
         {districtGeometries && (
