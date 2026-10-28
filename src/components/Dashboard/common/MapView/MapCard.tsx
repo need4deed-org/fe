@@ -30,13 +30,17 @@ const MapCard = ({ markers, renderPopupContent, filterMarker, renderSinglePopupC
   const pathname = usePathname();
   const router = useRouter();
   const screenSize = useScreenType();
-  const isMobile = screenSize === ScreenTypes.MOBILE;
+
   const selectedDistrictTitles = useMemo(() => searchParams.getAll(QueryParamsKeys.DISTRICT), [searchParams]);
   const selectedDistrictTitlesRef = useRef(selectedDistrictTitles);
 
   selectedDistrictTitlesRef.current = selectedDistrictTitles;
 
   const { data: districtGeometries } = useGetDistrictGeometry();
+
+  const isMobile = screenSize === ScreenTypes.MOBILE;
+  const isTablet = screenSize === ScreenTypes.TABLET;
+  const mapZoom = isMobile ? 9 : isTablet ? 10 : 11;
 
   const handleDistrictClick = (title: string) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -69,19 +73,14 @@ const MapCard = ({ markers, renderPopupContent, filterMarker, renderSinglePopupC
 
   return (
     <StyledMapContainer>
-      <MapContainer
-        center={DEFAULT_CENTER}
-        minZoom={isMobile ? 9 : 11}
-        zoom={isMobile ? 9 : 11}
-        maxBounds={BERLIN_BOUNDS}
-      >
+      <MapContainer center={DEFAULT_CENTER} minZoom={mapZoom} zoom={mapZoom} maxBounds={BERLIN_BOUNDS}>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {!isMobile && <MapLegendControl />}
-        {!isMobile && <MapScroll enableScroll={enableScroll} setEnabledScroll={setEnableScroll} />}
-        {!isMobile && <MapOtherRacs showOtherRacs={showOtherRacs} setShowOtherRacs={setShowOtherRacs} />}
+        {!isMobile && !isTablet && <MapLegendControl />}
+        {!isMobile && !isTablet && <MapScroll enableScroll={enableScroll} setEnabledScroll={setEnableScroll} />}
+        {!isMobile && !isTablet && <MapOtherRacs showOtherRacs={showOtherRacs} setShowOtherRacs={setShowOtherRacs} />}
         {districtGeometries && (
           <DistrictPolygons
             districtGeometries={districtGeometries}
