@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { DashboardLayout } from "@/components/Layout";
-import { apiPathOption, questionMark, ScreenTypes } from "@/config/constants";
+import { apiPathOption, DEFAULT_MAX_COMMUTE_MINUTES, questionMark, ScreenTypes } from "@/config/constants";
 import { useGetVolunteer, useGetQuery } from "@/hooks";
 import { ApiOptionLists, LangProficiency, QueryParamsKeys, UserRole } from "need4deed-sdk";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -83,7 +83,7 @@ export function Opportunities() {
         languages: volunteerFilter.languages.filter(({ proficiency }) => proficiency !== LangProficiency.BEGINNER),
         availability: volunteerFilter.availability,
         commutePostcode: volunteerFilter.commutePostcode,
-        maxCommuteMinutes: 30,
+        maxCommuteMinutes: DEFAULT_MAX_COMMUTE_MINUTES,
       },
       { district: apiFilterOptions.district, language: apiFilterOptions.language },
     );
@@ -218,7 +218,7 @@ export function Opportunities() {
                   setFilter={handleFilterUpdate}
                   filter={cardsFilter}
                   viewMode={viewMode}
-                  isMatchMode={searchParams.has("volunteer")}
+                  isMatchMode={!!volunteerId}
                 />
               }
             />

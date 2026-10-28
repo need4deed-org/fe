@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { DashboardLayout } from "@/components/Layout";
-import { apiPathOption, questionMark, ScreenTypes } from "@/config/constants";
+import { apiPathOption, DEFAULT_MAX_COMMUTE_MINUTES, questionMark, ScreenTypes } from "@/config/constants";
 import { useGetOpportunity, useGetQuery } from "@/hooks";
 import {
   ApiOptionLists,
@@ -145,7 +145,7 @@ export function Volunteers() {
         appointmentDate: isAccompanying ? opportunityFilter.appointmentDate : null,
         appointmentTime: isAccompanying ? opportunityFilter.appointmentTime : null,
         commutePostcode: opportunityFilter.commutePostcode,
-        maxCommuteMinutes: 30,
+        maxCommuteMinutes: DEFAULT_MAX_COMMUTE_MINUTES,
       },
       { district: apiFilterOptions.district, language: apiFilterOptions.language },
     );
@@ -218,7 +218,7 @@ export function Volunteers() {
                 setFilter={handleFilterUpdate}
                 filter={cardsFilter}
                 viewMode={viewMode}
-                isMatchMode={searchParams.has("opportunity")}
+                isMatchMode={!!opportunityId}
               />
             }
           />

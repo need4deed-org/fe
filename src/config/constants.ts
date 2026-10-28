@@ -112,3 +112,5 @@ export const MAX_PAGE_LIMIT = 120;
 export const CONTACT_EMAIL = "info@need4deed.org";
 export const REQUEST_SUGGEST_CONTACT_EMAIL = "contact@need4deed.org";
 export const REQUEST_SUGGEST_COMMENT_MARKER = "📩";
+
+export const DEFAULT_MAX_COMMUTE_MINUTES = 30;

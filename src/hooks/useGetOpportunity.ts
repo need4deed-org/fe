@@ -28,7 +28,7 @@ export const useGetOpportunity = (opportunityId: string | undefined) => {
   const volunteerType = data.volunteerType;
   const appointmentDate = data.appointmentDate;
   const appointmentTime = data.appointmentTime;
-  const commutePostcode = data.accompanyingDetails.appointmentPostcode || data.postcode || "";
+  const commutePostcode = data.accompanyingDetails?.appointmentPostcode || data.postcode || "";
 
   return {
     id,

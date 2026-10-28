@@ -23,7 +23,7 @@ export const useGetVolunteer = (volunteerId: string | undefined) => {
   const districtIds = data.locations
     .map(({ id }) => id)
     .filter((districtId): districtId is number => typeof districtId === "number");
-  const commutePostcode = data.person.address.postcode.code;
+  const commutePostcode = data.person.address?.postcode?.code ?? "";
 
   return { id, name, avatarUrl, latitude, longitude, languages, availability, districtIds, commutePostcode };
 };
