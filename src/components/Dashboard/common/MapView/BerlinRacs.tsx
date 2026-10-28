@@ -13,6 +13,14 @@ import { useTranslation } from "react-i18next";
 import { CopyAddress } from "../CopyAddress";
 import { useBerlinRacs } from "@/hooks/useBerlinRacs";
 import { BerlinRacMarker } from "./types";
+import L from "leaflet";
+import { DEFAULT_LEAFLET_ICON_URL } from "@/config/constants";
+
+const defaultLeafletIcon = new L.Icon.Default({
+  iconUrl: DEFAULT_LEAFLET_ICON_URL,
+  shadowUrl: "",
+  className: "berlin-rac-marker-icon",
+});
 
 const BerlinRacs = () => {
   const { t } = useTranslation();
@@ -24,7 +32,7 @@ const BerlinRacs = () => {
     berlinRacs &&
     berlinRacs.length > 0 &&
     berlinRacs?.map((rac: BerlinRacMarker) => (
-      <Marker key={`${rac.id}-${rac.lat}-${rac.lon}`} position={[rac.lat, rac.lon]}>
+      <Marker key={`${rac.id}-${rac.lat}-${rac.lon}`} position={[rac.lat, rac.lon]} icon={defaultLeafletIcon}>
         <Popup>
           <PopupContentWrapper>
             <PopupHeader>{rac.type}</PopupHeader>

@@ -1,7 +1,11 @@
-@import url("https://unpkg.com/leaflet@1.9.4/dist/leaflet.css");
-
 .leaflet-marker-icon.need4deed-icon {
   filter: hue-rotate(90deg) saturate(0.8);
+}
+
+.leaflet-marker-icon.berlin-rac-marker-icon {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
 }
 
 .custom-icon {

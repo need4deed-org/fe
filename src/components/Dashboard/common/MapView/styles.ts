@@ -10,6 +10,7 @@ export const StyledMapContainer = styled.div`
   .leaflet-container {
     height: 100%;
     width: 100%;
+    background: var(--color-orchid-light);
     border-radius: var(--dashboard-map-border-radius);
     z-index: 0;
   }
@@ -190,14 +191,26 @@ export const LegendCard = styled.div`
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   font-family: sans-serif;
   font-size: 13px;
-  color: #333;
+  color: var(--color-black);
 `;
 
 export const LegendTitle = styled.strong`
   display: block;
   margin-bottom: 8px;
   font-size: 14px;
-  color: #111;
+  cursor: pointer;
+`;
+
+export const LegendTitleNoContent = styled.strong`
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: var(--color-black);
+  background: white;
+  padding: 12px 14px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
 `;
 
 export const LegendRow = styled.div`

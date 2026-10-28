@@ -4,11 +4,12 @@ import { useMap } from "react-leaflet";
 import L from "leaflet";
 import { DEFAULT_LEAFLET_ICON_URL, defaultAvatarURL } from "@/config/constants";
 import { getImageUrl } from "@/utils";
-import { LegendCard, LegendTitle, LegendRow, IconSlot } from "./styles";
+import { LegendCard, LegendTitle, LegendRow, IconSlot, LegendTitleNoContent } from "./styles";
 import { useTranslation } from "react-i18next";
 
 export function MapLegendControl() {
   const [container, setContainer] = useState<HTMLElement | null>(null);
+  const [showLegend, setShowLegend] = useState<boolean>(false);
   const { t } = useTranslation();
   const map = useMap();
 
@@ -35,45 +36,49 @@ export function MapLegendControl() {
   if (!container) return null;
 
   return createPortal(
-    <LegendCard>
-      <LegendTitle>{t("dashboard.map.legend.title")}</LegendTitle>
+    showLegend ? (
+      <LegendCard onClick={() => setShowLegend(false)}>
+        <LegendTitle>{t("dashboard.map.legend.title")}</LegendTitle>
 
-      <LegendRow>
-        <IconSlot>
-          <img src={DEFAULT_LEAFLET_ICON_URL} alt={`${t("dashboard.map.legend.rac")} Pin`} />
-        </IconSlot>
-        <span>{t("dashboard.map.legend.rac")}</span>
-      </LegendRow>
+        <LegendRow>
+          <IconSlot>
+            <img src={DEFAULT_LEAFLET_ICON_URL} alt={`${t("dashboard.map.legend.rac")} Pin`} />
+          </IconSlot>
+          <span>{t("dashboard.map.legend.rac")}</span>
+        </LegendRow>
 
-      <LegendRow>
-        <IconSlot>
-          <img
-            src={DEFAULT_LEAFLET_ICON_URL}
-            className="ngo-pin"
-            alt={`${t("dashboard.map.legend.opportunity")} Pin`}
-          />
-        </IconSlot>
-        <span>{t("dashboard.map.legend.opportunity")}</span>
-      </LegendRow>
+        <LegendRow>
+          <IconSlot>
+            <img
+              src={DEFAULT_LEAFLET_ICON_URL}
+              className="ngo-pin"
+              alt={`${t("dashboard.map.legend.opportunity")} Pin`}
+            />
+          </IconSlot>
+          <span>{t("dashboard.map.legend.opportunity")}</span>
+        </LegendRow>
 
-      <LegendRow>
-        <IconSlot>
-          <img
-            src={getImageUrl(defaultAvatarURL)}
-            className="custom-avatar-icon"
-            alt={`${t("dashboard.map.legend.volunteer")} Pin`}
-          />
-        </IconSlot>
-        <span>{t("dashboard.map.legend.volunteer")}</span>
-      </LegendRow>
+        <LegendRow>
+          <IconSlot>
+            <img
+              src={getImageUrl(defaultAvatarURL)}
+              className="custom-avatar-icon"
+              alt={`${t("dashboard.map.legend.volunteer")} Pin`}
+            />
+          </IconSlot>
+          <span>{t("dashboard.map.legend.volunteer")}</span>
+        </LegendRow>
 
-      <LegendRow>
-        <IconSlot>
-          <div className="custom-icon">5</div>
-        </IconSlot>
-        <span>{t("dashboard.map.legend.numberOfEntities")}</span>
-      </LegendRow>
-    </LegendCard>,
+        <LegendRow>
+          <IconSlot>
+            <div className="custom-icon">5</div>
+          </IconSlot>
+          <span>{t("dashboard.map.legend.numberOfEntities")}</span>
+        </LegendRow>
+      </LegendCard>
+    ) : (
+      <LegendTitleNoContent onClick={() => setShowLegend(true)}>{t("dashboard.map.legend.title")}</LegendTitleNoContent>
+    ),
     container,
   );
 }
