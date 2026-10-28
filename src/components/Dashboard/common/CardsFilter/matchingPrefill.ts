@@ -102,6 +102,9 @@ export const deserializeCommutePrefill = <TFilter extends CommutePrefillFilter>(
   filter: TFilter,
   searchParams: { get: (key: string) => string | null },
 ): TFilter => {
+  filter.commutePostcode = "";
+  filter.maxCommuteMinutes = 0;
+
   const commutePostcode = searchParams.get(QueryParamsKeys.COMMUTE_POSTCODE);
   const maxCommuteMinutes = Number(searchParams.get(QueryParamsKeys.MAX_COMMUTE_MINUTES));
 

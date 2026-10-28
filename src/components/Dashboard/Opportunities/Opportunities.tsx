@@ -131,8 +131,8 @@ export function Opportunities() {
 
   const handleRemoveVolunteerFilter = () => {
     const wasPrefilled = searchParams.has(PREFILLED_PARAM);
-    const cleared = wasPrefilled ? getClearFilter(cardsFilter) : cardsFilter;
-    if (wasPrefilled) setCardsFilter(cleared);
+    const cleared = wasPrefilled ? getClearFilter(cardsFilter) : clearCommutePrefill(cardsFilter);
+    setCardsFilter(cleared);
     const params = new URLSearchParams(serializeOpportunityFilters(cleared, searchParams));
     params.delete("volunteer");
     params.delete(PREFILLED_PARAM);
