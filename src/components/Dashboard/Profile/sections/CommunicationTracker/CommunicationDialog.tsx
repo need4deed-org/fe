@@ -3,7 +3,13 @@ import { Modal } from "@/components/core/modal";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { X } from "@phosphor-icons/react";
 import { de, enUS } from "date-fns/locale";
-import { ApiCommunicationGet, CommunicationType, ContactMethodType, ContactType } from "need4deed-sdk";
+import {
+  ApiCommunicationGet,
+  ApiVolunteerCommunicationPatch,
+  CommunicationType,
+  ContactMethodType,
+  ContactType,
+} from "need4deed-sdk";
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -29,16 +35,19 @@ import {
 import { getContactTypeLabel } from "./utils/translations";
 import { CommunicationFormData, createValidationSchema } from "./utils/validation";
 
+export type CommunicationSaveData = ApiVolunteerCommunicationPatch & { id?: number };
+
 type Props = {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (data: Partial<ApiCommunicationGet>) => void;
+  onSave: (data: CommunicationSaveData) => void;
   initialData?: ApiCommunicationGet;
 };
 
 export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Props) {
   const { t, i18n } = useTranslation();
   const locale = i18n.language === "de" ? de : enUS;
+  const storedOtherType = initialData?.contactType === ContactType.OTHER ? initialData.communicationType : undefined;
 
   const schema = createValidationSchema(t);
 
@@ -68,7 +77,7 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
         reset({
           contactType: initialData.contactType,
           contactMethod: initialData.contactMethod,
-          communicationType: initialData.communicationType ?? manualCommunicationTypes[0],
+          communicationType: storedOtherType ?? manualCommunicationTypes[0],
           date: new Date(initialData.date),
         });
       } else {
@@ -80,19 +89,24 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
         });
       }
     }
-  }, [isOpen, initialData, reset]);
+  }, [isOpen, initialData, storedOtherType, reset]);
+
+  const getCommunicationTypeToSave = (contactType: ContactType, selectedType?: CommunicationType) => {
+    if (contactType === ContactType.OTHER) return selectedType;
+    if (!initialData || contactType === initialData.contactType) return undefined;
+    return null;
+  };
 
   const onSubmit = (data: CommunicationFormData) => {
     if (!data.contactType || !data.date) return;
 
-    const payload: Partial<ApiCommunicationGet> = {
+    onSave({
       id: initialData?.id,
       contactType: data.contactType,
       contactMethod: data.contactMethod,
-      communicationType: data.contactType === ContactType.OTHER ? data.communicationType : undefined,
+      communicationType: getCommunicationTypeToSave(data.contactType, data.communicationType),
       date: data.date,
-    };
-    onSave(payload);
+    });
   };
 
   return (
@@ -142,7 +156,7 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
                       control={control}
                       render={({ field }) => (
                         <Select {...field} data-testid="communication-type-select">
-                          {getCommunicationTypeOptions(t, initialData?.communicationType).map((option) => (
+                          {getCommunicationTypeOptions(t, storedOtherType).map((option) => (
                             <option key={option.value} value={option.value}>
                               {option.label}
                             </option>

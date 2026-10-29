@@ -1,17 +1,11 @@
 import { useCommunicationTracker } from "@/hooks/useCommunicationTracker";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { PencilSimple, Trash } from "@phosphor-icons/react";
-import {
-  ApiCommunicationGet,
-  ApiVolunteerCommunicationPost,
-  ApiVolunteerCommunicationPatch,
-  canModifyCommunication,
-  ContactType,
-} from "need4deed-sdk";
+import { ApiCommunicationGet, ApiVolunteerCommunicationPost, canModifyCommunication } from "need4deed-sdk";
 import { EntityType } from "@/components/Dashboard/Profile/types";
 import { forwardRef, useImperativeHandle, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { CommunicationDialog } from "./CommunicationDialog";
+import { CommunicationDialog, CommunicationSaveData } from "./CommunicationDialog";
 import { ConfirmationDialog } from "@/components/core/common/ConfirmationDialog";
 import { SectionWrapper, SectionEmptyState } from "../shared/styles";
 import {
@@ -84,21 +78,14 @@ export const CommunicationTracker = forwardRef<CommunicationTrackerRef, Props>(f
     setDeleteConfirmEntry(null);
   };
 
-  const handleSave = (data: Partial<ApiCommunicationGet>) => {
+  const handleSave = ({ id, ...data }: CommunicationSaveData) => {
     if (!data.contactType || !data.contactMethod || !data.date) {
       return;
     }
 
-    if (data.id) {
-      const payload: ApiVolunteerCommunicationPatch = {
-        contactType: data.contactType,
-        contactMethod: data.contactMethod,
-        communicationType:
-          data.communicationType ?? (editingEntry?.contactType === ContactType.OTHER ? null : undefined),
-        date: data.date,
-      };
+    if (id) {
       updateCommunication(
-        { id: data.id, data: payload },
+        { id, data },
         {
           onSuccess: () => setIsDialogOpen(false),
         },
@@ -107,7 +94,7 @@ export const CommunicationTracker = forwardRef<CommunicationTrackerRef, Props>(f
       const payload: ApiVolunteerCommunicationPost = {
         contactType: data.contactType,
         contactMethod: data.contactMethod,
-        communicationType: data.communicationType,
+        communicationType: data.communicationType ?? undefined,
         date: data.date,
       };
       createCommunication(payload, {
