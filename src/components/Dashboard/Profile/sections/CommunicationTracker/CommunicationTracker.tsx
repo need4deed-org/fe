@@ -5,8 +5,8 @@ import {
   ApiCommunicationGet,
   ApiVolunteerCommunicationPost,
   ApiVolunteerCommunicationPatch,
+  canModifyCommunication,
   ContactType,
-  UserRole,
 } from "need4deed-sdk";
 import { EntityType } from "@/components/Dashboard/Profile/types";
 import { forwardRef, useImperativeHandle, useState } from "react";
@@ -51,9 +51,6 @@ export const CommunicationTracker = forwardRef<CommunicationTrackerRef, Props>(f
     entityId,
     entityType,
   );
-
-  const canModify = (entry: ApiCommunicationGet) =>
-    !entry.userId || entry.userId === currentUser?.id || currentUser?.role === UserRole.ADMIN;
 
   const handleAddNew = () => {
     setEditingEntry(undefined);
@@ -144,7 +141,7 @@ export const CommunicationTracker = forwardRef<CommunicationTrackerRef, Props>(f
             </TableHeader>
             <TableBody>
               {communications.map((entry, index) => {
-                const isModifiable = canModify(entry);
+                const isModifiable = canModifyCommunication(entry, currentUser);
                 return (
                   <TableRow
                     key={entry.id}
