@@ -87,7 +87,7 @@ export const CommunicationTracker = forwardRef<CommunicationTrackerRef, Props>(f
       const payload: ApiVolunteerCommunicationPatch = {
         contactType: data.contactType,
         contactMethod: data.contactMethod,
-        communicationType: data.communicationType!,
+        communicationType: data.communicationType ?? null,
         date: data.date,
       };
       updateCommunication(
@@ -100,7 +100,7 @@ export const CommunicationTracker = forwardRef<CommunicationTrackerRef, Props>(f
       const payload: ApiVolunteerCommunicationPost = {
         contactType: data.contactType,
         contactMethod: data.contactMethod,
-        communicationType: data.communicationType!,
+        communicationType: data.communicationType,
         date: data.date,
       };
       createCommunication(payload, {
