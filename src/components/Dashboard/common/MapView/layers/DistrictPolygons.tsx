@@ -1,9 +1,9 @@
 import { GeoJSON, Pane, Polygon } from "react-leaflet";
 import { ApiDistrictGeometryCollection } from "need4deed-sdk";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useMapEvent } from "react-leaflet";
 import L from "leaflet";
-import { districtFillColors, MAP_AREA_RING } from "../helpers";
+import { districtFillColors, MAP_AREA_RING, resolveCssColor } from "../helpers";
 
 interface Props {
   districtGeometries: ApiDistrictGeometryCollection;
@@ -13,25 +13,53 @@ interface Props {
 
 export const DistrictPolygons = ({ districtGeometries, onDistrictClick, selectedDistrictTitles }: Props) => {
   const districtLayers = useRef<Array<{ layer: L.Path; fillColor: string; title?: string }>>([]);
+  const districtGeometriesRef = useRef(districtGeometries);
   const selectedDistrictTitleSet = useRef(new Set(selectedDistrictTitles));
   const hoveredDistrict = useRef<L.Path | null>(null);
   const onDistrictClickRef = useRef(onDistrictClick);
   onDistrictClickRef.current = onDistrictClick;
 
-  const districtMaskHoles: L.LatLngExpression[][] =
-    districtGeometries?.features.flatMap(({ geometry }) => {
-      const polygons = geometry.type === "Polygon" ? [geometry.coordinates] : geometry.coordinates;
+  const districtMaskHoles: L.LatLngExpression[][] = useMemo(
+    () =>
+      districtGeometries.features.flatMap(({ geometry }) => {
+        const polygons = geometry.type === "Polygon" ? [geometry.coordinates] : geometry.coordinates;
 
-      return polygons.flatMap((rings) => {
-        const outerRing = rings[0];
-        return outerRing ? [outerRing.map(([longitude, latitude]) => [latitude, longitude] as L.LatLngTuple)] : [];
-      });
-    }) ?? [];
+        return polygons.flatMap((rings) => {
+          const outerRing = rings[0];
+          return outerRing ? [outerRing.map(([longitude, latitude]) => [latitude, longitude] as L.LatLngTuple)] : [];
+        });
+      }),
+    [districtGeometries],
+  );
 
-  const getDistrictFillColor = (title: unknown) =>
-    typeof title === "string" ? districtFillColors[title] : districtFillColors.Mitte;
+  const resolvedDistrictFillColors = useMemo(
+    () =>
+      Object.fromEntries(
+        Object.entries(districtFillColors).map(([title, color]) => [title, resolveCssColor(color)]),
+      ) as Record<string, string>,
+    [],
+  );
+  const defaultDistrictFillColor = resolvedDistrictFillColors.Mitte;
+  const inactiveDistrictFillColor = resolveCssColor("var(--color-black)");
+  const backgroundFillColor = resolveCssColor("var(--color-orchid-light)");
 
-  const updateDistrictStyles = () => {
+  const getDistrictFillColor = useCallback(
+    (title: unknown) =>
+      typeof title === "string"
+        ? (resolvedDistrictFillColors[title] ?? defaultDistrictFillColor)
+        : defaultDistrictFillColor,
+    [defaultDistrictFillColor, resolvedDistrictFillColors],
+  );
+  const getDistrictStyle = useCallback<L.StyleFunction>(
+    (feature) => ({
+      fillColor: getDistrictFillColor(feature?.properties?.title),
+      color: inactiveDistrictFillColor,
+      weight: 2,
+    }),
+    [getDistrictFillColor, inactiveDistrictFillColor],
+  );
+
+  const updateDistrictStyles = useCallback(() => {
     const selectedTitles = selectedDistrictTitleSet.current;
     const hoveredLayer = hoveredDistrict.current;
     districtLayers.current.forEach(({ layer, fillColor, title }) => {
@@ -39,13 +67,14 @@ export const DistrictPolygons = ({ districtGeometries, onDistrictClick, selected
       const isHovered = layer === hoveredLayer;
       const hasActiveDistricts = selectedTitles.size > 0 || hoveredLayer !== null;
       layer.setStyle({
-        fillColor: hasActiveDistricts && !isSelected && !isHovered ? "var(--color-black)" : fillColor,
+        fillColor: hasActiveDistricts && !isSelected && !isHovered ? inactiveDistrictFillColor : fillColor,
       });
     });
-  };
+  }, [inactiveDistrictFillColor]);
 
   useEffect(() => {
     selectedDistrictTitleSet.current = new Set(selectedDistrictTitles);
+    hoveredDistrict.current = null;
     districtLayers.current.forEach(({ layer, title }) => {
       layer.unbindTooltip();
       if (title) {
@@ -55,7 +84,7 @@ export const DistrictPolygons = ({ districtGeometries, onDistrictClick, selected
       }
     });
     updateDistrictStyles();
-  }, [selectedDistrictTitles]);
+  }, [selectedDistrictTitles, updateDistrictStyles]);
 
   useMapEvent("click", () => {
     hoveredDistrict.current = null;
@@ -68,7 +97,7 @@ export const DistrictPolygons = ({ districtGeometries, onDistrictClick, selected
         <Polygon
           positions={[MAP_AREA_RING, ...districtMaskHoles]}
           pathOptions={{
-            fillColor: "var(--color-orchid-light)",
+            fillColor: backgroundFillColor,
             fillOpacity: 1,
             fillRule: "evenodd",
             stroke: false,
@@ -76,15 +105,14 @@ export const DistrictPolygons = ({ districtGeometries, onDistrictClick, selected
         />
       </Pane>
       <GeoJSON
-        style={(feature) => {
-          return {
-            fillColor: getDistrictFillColor(feature?.properties?.title),
-            color: "black",
-            weight: 2,
-          };
-        }}
+        style={getDistrictStyle}
         data={districtGeometries}
         onEachFeature={(feature, layer) => {
+          if (districtGeometriesRef.current !== districtGeometries) {
+            districtLayers.current = [];
+            hoveredDistrict.current = null;
+            districtGeometriesRef.current = districtGeometries;
+          }
           const title = feature.properties?.title;
           if (title) {
             const isSelected = selectedDistrictTitleSet.current.has(title);
@@ -107,7 +135,7 @@ export const DistrictPolygons = ({ districtGeometries, onDistrictClick, selected
           }
           layer.on("click", () => {
             if (layer instanceof L.Path) {
-              hoveredDistrict.current = layer;
+              hoveredDistrict.current = null;
               updateDistrictStyles();
               if (title) onDistrictClickRef.current(title);
             }

@@ -1,5 +1,7 @@
-.leaflet-container.map-popup-open .leaflet-control-container {
-  visibility: hidden;
+@media (max-width: 767px) {
+  .leaflet-container.map-popup-open .leaflet-control-container {
+    visibility: hidden;
+  }
 }
 
 .leaflet-marker-icon.need4deed-icon {

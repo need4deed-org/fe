@@ -17,6 +17,7 @@ import { DEFAULT_LEAFLET_ICON_URL, questionMark, ScreenTypes } from "@/config/co
 import { QueryParamsKeys } from "need4deed-sdk";
 import { useScreenType } from "@/context/DeviceContext";
 import { MapPopupControlVisibility } from "./controls/MapPopupVisibilityControl";
+import { MapZoom } from "./controls/MapZoom";
 
 interface Props {
   markers?: EntityMarker[];
@@ -68,7 +69,7 @@ const MapCard = ({ markers, renderPopupContent, filterMarker, renderSinglePopupC
         className: "custom-avatar-icon",
       });
     return L.divIcon({
-      iconAnchor: [35, 5],
+      iconAnchor: [isMobile ? 20 : 35, 5],
       className: "custom-icon",
       html: `<div>${count}</div>`,
     });
@@ -76,7 +77,8 @@ const MapCard = ({ markers, renderPopupContent, filterMarker, renderSinglePopupC
 
   return (
     <StyledMapContainer>
-      <MapContainer center={DEFAULT_CENTER} minZoom={mapZoom} zoom={mapZoom} maxBounds={BERLIN_BOUNDS}>
+      <MapContainer center={DEFAULT_CENTER} minZoom={9} zoom={mapZoom} maxBounds={BERLIN_BOUNDS}>
+        <MapZoom zoom={mapZoom} />
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

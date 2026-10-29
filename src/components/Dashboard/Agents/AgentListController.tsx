@@ -60,6 +60,7 @@ export const AgentListController = ({
       filter: serializedFilter,
     },
     staleTime: cacheTTL,
+    keepPreviousData: isMapView,
   });
 
   const agents: ApiAgentGetList[] = data || [];

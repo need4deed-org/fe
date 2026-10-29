@@ -108,6 +108,7 @@ export function OpportunityListController({
     },
     staleTime: cacheTTL,
     enabled: isRoleKnown,
+    keepPreviousData: isMapView,
   });
 
   const rawOpportunities: ApiVolunteerOpportunityGetList[] = data || [];

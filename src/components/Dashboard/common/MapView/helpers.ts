@@ -250,3 +250,8 @@ export const createSingleVolunteerMarker = (
     onClick: () => null,
   };
 };
+
+export const resolveCssColor = (color: string) => {
+  const variableName = color.match(/^var\((--[^)]+)\)$/)?.[1];
+  return variableName ? getComputedStyle(document.documentElement).getPropertyValue(variableName).trim() : color;
+};

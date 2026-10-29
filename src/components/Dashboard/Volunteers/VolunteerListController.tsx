@@ -85,6 +85,7 @@ export function VolunteerListController({
     apiPath: apiPathVolunteer,
     params,
     staleTime: cacheTTL,
+    keepPreviousData: isMapView,
   });
   const volunteers = data || [];
   const { handleCopyEmails, isCopying } = useCopyEmails(apiPathVolunteer, "volunteer-emails", emailsFilter);
