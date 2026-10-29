@@ -1,5 +1,5 @@
 import { TFunction } from "i18next";
-import { ContactType, ContactMethodType, CommunicationType } from "need4deed-sdk";
+import { ApiCommunicationGet, ContactType, ContactMethodType, CommunicationType } from "need4deed-sdk";
 import { getContactMethodLabel, getCommunicationTypeLabel } from "./translations";
 
 type Option = {
@@ -14,6 +14,20 @@ export const manualCommunicationTypes: CommunicationType[] = [
   CommunicationType.STATUS_UPDATE,
   CommunicationType.POST_FOLLOWUP,
 ];
+
+export function getStoredOtherType(entry?: ApiCommunicationGet): CommunicationType | undefined {
+  return entry?.contactType === ContactType.OTHER ? entry.communicationType : undefined;
+}
+
+export function getEditedCommunicationType(
+  initialContactType: ContactType,
+  contactType: ContactType,
+  selectedType?: CommunicationType,
+): CommunicationType | null | undefined {
+  if (contactType === ContactType.OTHER) return selectedType;
+  if (contactType === initialContactType) return undefined;
+  return null;
+}
 
 export function getCommunicationTypeOptions(t: TFunction, storedType?: CommunicationType): Option[] {
   const types =

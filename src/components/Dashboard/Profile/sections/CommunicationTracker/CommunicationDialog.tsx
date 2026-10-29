@@ -6,6 +6,7 @@ import { de, enUS } from "date-fns/locale";
 import {
   ApiCommunicationGet,
   ApiVolunteerCommunicationPatch,
+  ApiVolunteerCommunicationPost,
   CommunicationType,
   ContactMethodType,
   ContactType,
@@ -30,12 +31,16 @@ import {
   getCommunicationTypeOptions,
   getContactMethodOptions,
   getDefaultContactMethod,
+  getEditedCommunicationType,
+  getStoredOtherType,
   manualCommunicationTypes,
 } from "./utils/options";
 import { getContactTypeLabel } from "./utils/translations";
 import { CommunicationFormData, createValidationSchema } from "./utils/validation";
 
-export type CommunicationSaveData = ApiVolunteerCommunicationPatch & { id?: number };
+export type CommunicationSaveData =
+  | { kind: "create"; data: ApiVolunteerCommunicationPost }
+  | { kind: "update"; id: number; data: ApiVolunteerCommunicationPatch };
 
 type Props = {
   isOpen: boolean;
@@ -47,7 +52,6 @@ type Props = {
 export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Props) {
   const { t, i18n } = useTranslation();
   const locale = i18n.language === "de" ? de : enUS;
-  const storedOtherType = initialData?.contactType === ContactType.OTHER ? initialData.communicationType : undefined;
 
   const schema = createValidationSchema(t);
 
@@ -77,7 +81,7 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
         reset({
           contactType: initialData.contactType,
           contactMethod: initialData.contactMethod,
-          communicationType: storedOtherType ?? manualCommunicationTypes[0],
+          communicationType: getStoredOtherType(initialData) ?? manualCommunicationTypes[0],
           date: new Date(initialData.date),
         });
       } else {
@@ -89,24 +93,35 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
         });
       }
     }
-  }, [isOpen, initialData, storedOtherType, reset]);
-
-  const getCommunicationTypeToSave = (contactType: ContactType, selectedType?: CommunicationType) => {
-    if (contactType === ContactType.OTHER) return selectedType;
-    if (!initialData || contactType === initialData.contactType) return undefined;
-    return null;
-  };
+  }, [isOpen, initialData, reset]);
 
   const onSubmit = (data: CommunicationFormData) => {
     if (!data.contactType || !data.date) return;
 
-    onSave({
-      id: initialData?.id,
-      contactType: data.contactType,
-      contactMethod: data.contactMethod,
-      communicationType: getCommunicationTypeToSave(data.contactType, data.communicationType),
-      date: data.date,
-    });
+    const fields = { contactType: data.contactType, contactMethod: data.contactMethod, date: data.date };
+
+    if (initialData) {
+      onSave({
+        kind: "update",
+        id: initialData.id,
+        data: {
+          ...fields,
+          communicationType: getEditedCommunicationType(
+            initialData.contactType,
+            data.contactType,
+            data.communicationType,
+          ),
+        },
+      });
+    } else {
+      onSave({
+        kind: "create",
+        data: {
+          ...fields,
+          communicationType: data.contactType === ContactType.OTHER ? data.communicationType : undefined,
+        },
+      });
+    }
   };
 
   return (
@@ -156,7 +171,7 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
                       control={control}
                       render={({ field }) => (
                         <Select {...field} data-testid="communication-type-select">
-                          {getCommunicationTypeOptions(t, storedOtherType).map((option) => (
+                          {getCommunicationTypeOptions(t, getStoredOtherType(initialData)).map((option) => (
                             <option key={option.value} value={option.value}>
                               {option.label}
                             </option>

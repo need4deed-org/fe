@@ -1,7 +1,7 @@
 import { useCommunicationTracker } from "@/hooks/useCommunicationTracker";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { PencilSimple, Trash } from "@phosphor-icons/react";
-import { ApiCommunicationGet, ApiVolunteerCommunicationPost, canModifyCommunication } from "need4deed-sdk";
+import { ApiCommunicationGet, canModifyCommunication } from "need4deed-sdk";
 import { EntityType } from "@/components/Dashboard/Profile/types";
 import { forwardRef, useImperativeHandle, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -78,28 +78,13 @@ export const CommunicationTracker = forwardRef<CommunicationTrackerRef, Props>(f
     setDeleteConfirmEntry(null);
   };
 
-  const handleSave = ({ id, ...data }: CommunicationSaveData) => {
-    if (!data.contactType || !data.contactMethod || !data.date) {
-      return;
-    }
+  const handleSave = (save: CommunicationSaveData) => {
+    const onSuccess = () => setIsDialogOpen(false);
 
-    if (id) {
-      updateCommunication(
-        { id, data },
-        {
-          onSuccess: () => setIsDialogOpen(false),
-        },
-      );
+    if (save.kind === "update") {
+      updateCommunication({ id: save.id, data: save.data }, { onSuccess });
     } else {
-      const payload: ApiVolunteerCommunicationPost = {
-        contactType: data.contactType,
-        contactMethod: data.contactMethod,
-        communicationType: data.communicationType ?? undefined,
-        date: data.date,
-      };
-      createCommunication(payload, {
-        onSuccess: () => setIsDialogOpen(false),
-      });
+      createCommunication(save.data, { onSuccess });
     }
   };
 
