@@ -68,10 +68,7 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
         reset({
           contactType: initialData.contactType,
           contactMethod: initialData.contactMethod,
-          communicationType:
-            initialData.communicationType && manualCommunicationTypes.includes(initialData.communicationType)
-              ? initialData.communicationType
-              : manualCommunicationTypes[0],
+          communicationType: initialData.communicationType ?? manualCommunicationTypes[0],
           date: new Date(initialData.date),
         });
       } else {
@@ -145,7 +142,7 @@ export function CommunicationDialog({ isOpen, onClose, onSave, initialData }: Pr
                       control={control}
                       render={({ field }) => (
                         <Select {...field} data-testid="communication-type-select">
-                          {getCommunicationTypeOptions(t).map((option) => (
+                          {getCommunicationTypeOptions(t, initialData?.communicationType).map((option) => (
                             <option key={option.value} value={option.value}>
                               {option.label}
                             </option>

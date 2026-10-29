@@ -15,8 +15,12 @@ export const manualCommunicationTypes: CommunicationType[] = [
   CommunicationType.POST_FOLLOWUP,
 ];
 
-export function getCommunicationTypeOptions(t: TFunction): Option[] {
-  return manualCommunicationTypes.map((type) => ({
+export function getCommunicationTypeOptions(t: TFunction, storedType?: CommunicationType): Option[] {
+  const types =
+    storedType && !manualCommunicationTypes.includes(storedType)
+      ? [...manualCommunicationTypes, storedType]
+      : manualCommunicationTypes;
+  return types.map((type) => ({
     value: type,
     label: getCommunicationTypeLabel(t, type),
   }));
