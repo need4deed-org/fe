@@ -1,7 +1,12 @@
 import { useCommunicationTracker } from "@/hooks/useCommunicationTracker";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { PencilSimple, Trash } from "@phosphor-icons/react";
-import { ApiCommunicationGet, ApiVolunteerCommunicationPost, ApiVolunteerCommunicationPatch } from "need4deed-sdk";
+import {
+  ApiCommunicationGet,
+  ApiVolunteerCommunicationPost,
+  ApiVolunteerCommunicationPatch,
+  UserRole,
+} from "need4deed-sdk";
 import { EntityType } from "@/components/Dashboard/Profile/types";
 import { forwardRef, useImperativeHandle, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -45,6 +50,9 @@ export const CommunicationTracker = forwardRef<CommunicationTrackerRef, Props>(f
     entityId,
     entityType,
   );
+
+  const canModify = (entry: ApiCommunicationGet) =>
+    !entry.userId || entry.userId === currentUser?.id || currentUser?.role === UserRole.ADMIN;
 
   const handleAddNew = () => {
     setEditingEntry(undefined);
@@ -150,14 +158,18 @@ export const CommunicationTracker = forwardRef<CommunicationTrackerRef, Props>(f
                   {canEdit && (
                     <>
                       <ActionCell>
-                        <ActionButton onClick={() => handleEdit(entry)} data-testid={`edit-button-${entry.id}`}>
-                          <PencilSimple size={20} weight="regular" />
-                        </ActionButton>
+                        {canModify(entry) && (
+                          <ActionButton onClick={() => handleEdit(entry)} data-testid={`edit-button-${entry.id}`}>
+                            <PencilSimple size={20} weight="regular" />
+                          </ActionButton>
+                        )}
                       </ActionCell>
                       <ActionCell>
-                        <ActionButton onClick={() => handleDelete(entry)} data-testid={`delete-button-${entry.id}`}>
-                          <Trash size={20} weight="regular" />
-                        </ActionButton>
+                        {canModify(entry) && (
+                          <ActionButton onClick={() => handleDelete(entry)} data-testid={`delete-button-${entry.id}`}>
+                            <Trash size={20} weight="regular" />
+                          </ActionButton>
+                        )}
                       </ActionCell>
                     </>
                   )}
