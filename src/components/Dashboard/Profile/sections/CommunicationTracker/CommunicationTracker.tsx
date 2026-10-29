@@ -5,6 +5,7 @@ import {
   ApiCommunicationGet,
   ApiVolunteerCommunicationPost,
   ApiVolunteerCommunicationPatch,
+  ContactType,
   UserRole,
 } from "need4deed-sdk";
 import { EntityType } from "@/components/Dashboard/Profile/types";
@@ -95,7 +96,8 @@ export const CommunicationTracker = forwardRef<CommunicationTrackerRef, Props>(f
       const payload: ApiVolunteerCommunicationPatch = {
         contactType: data.contactType,
         contactMethod: data.contactMethod,
-        communicationType: data.communicationType ?? null,
+        communicationType:
+          data.communicationType ?? (editingEntry?.contactType === ContactType.OTHER ? null : undefined),
         date: data.date,
       };
       updateCommunication(
@@ -141,40 +143,43 @@ export const CommunicationTracker = forwardRef<CommunicationTrackerRef, Props>(f
               )}
             </TableHeader>
             <TableBody>
-              {communications.map((entry, index) => (
-                <TableRow
-                  key={entry.id}
-                  $isLast={index === communications.length - 1}
-                  data-testid={`communication-row-${entry.id}`}
-                >
-                  <TableCell>{getDisplayLabel(t, entry.contactType, entry.communicationType)}</TableCell>
-                  <TableCell $maxWidth="310px">{getContactMethodLabel(t, entry.contactMethod)}</TableCell>
-                  <TableCell $width="152px" $noWrap>
-                    {formatDate(entry.date)}
-                  </TableCell>
-                  <TableCell $width="140px" $noWrap>
-                    {entry.userId ? getLoggedByLabel(entry.userId, currentUser) : "-"}
-                  </TableCell>
-                  {canEdit && (
-                    <>
-                      <ActionCell>
-                        {canModify(entry) && (
-                          <ActionButton onClick={() => handleEdit(entry)} data-testid={`edit-button-${entry.id}`}>
-                            <PencilSimple size={20} weight="regular" />
-                          </ActionButton>
-                        )}
-                      </ActionCell>
-                      <ActionCell>
-                        {canModify(entry) && (
-                          <ActionButton onClick={() => handleDelete(entry)} data-testid={`delete-button-${entry.id}`}>
-                            <Trash size={20} weight="regular" />
-                          </ActionButton>
-                        )}
-                      </ActionCell>
-                    </>
-                  )}
-                </TableRow>
-              ))}
+              {communications.map((entry, index) => {
+                const isModifiable = canModify(entry);
+                return (
+                  <TableRow
+                    key={entry.id}
+                    $isLast={index === communications.length - 1}
+                    data-testid={`communication-row-${entry.id}`}
+                  >
+                    <TableCell>{getDisplayLabel(t, entry.contactType, entry.communicationType)}</TableCell>
+                    <TableCell $maxWidth="310px">{getContactMethodLabel(t, entry.contactMethod)}</TableCell>
+                    <TableCell $width="152px" $noWrap>
+                      {formatDate(entry.date)}
+                    </TableCell>
+                    <TableCell $width="140px" $noWrap>
+                      {entry.userId ? getLoggedByLabel(entry.userId, currentUser) : "-"}
+                    </TableCell>
+                    {canEdit && (
+                      <>
+                        <ActionCell>
+                          {isModifiable && (
+                            <ActionButton onClick={() => handleEdit(entry)} data-testid={`edit-button-${entry.id}`}>
+                              <PencilSimple size={20} weight="regular" />
+                            </ActionButton>
+                          )}
+                        </ActionCell>
+                        <ActionCell>
+                          {isModifiable && (
+                            <ActionButton onClick={() => handleDelete(entry)} data-testid={`delete-button-${entry.id}`}>
+                              <Trash size={20} weight="regular" />
+                            </ActionButton>
+                          )}
+                        </ActionCell>
+                      </>
+                    )}
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </CommunicationTableContainer>
