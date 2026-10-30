@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { DashboardLayout } from "@/components/Layout";
 import { apiPathOption, questionMark, ScreenTypes } from "@/config/constants";
 import { useGetVolunteer, useGetQuery } from "@/hooks";
-import { ApiOptionLists, LangProficiency, UserRole } from "need4deed-sdk";
+import { ApiOptionLists, LangProficiency, OpportunityStatusType, UserRole } from "need4deed-sdk";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Filters from "../common/CardsFilter/Filters";
 import CardsHeader from "../common/CardsHeader/CardsHeader";
@@ -81,6 +81,7 @@ export function Opportunities() {
         districtIds: volunteerFilter.districtIds,
         languages: volunteerFilter.languages.filter(({ proficiency }) => proficiency !== LangProficiency.BEGINNER),
         availability: volunteerFilter.availability,
+        status: [OpportunityStatusType.ACTIVE, OpportunityStatusType.SEARCHING],
       },
       { district: apiFilterOptions.district, language: apiFilterOptions.language },
     );
