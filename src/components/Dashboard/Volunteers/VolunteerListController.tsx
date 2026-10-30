@@ -100,7 +100,7 @@ export function VolunteerListController({
 
   useEffect(() => {
     setNumOfVols(count);
-  }, [setNumOfVols]);
+  }, [setNumOfVols, count]);
 
   if (isLoading && isListView)
     return <LoadingVolunteerTableList canSeeContactColumns={canSeeContactColumns} dropdownFilters={dropdownFilters} />;

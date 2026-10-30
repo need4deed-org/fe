@@ -53,7 +53,7 @@ export const DistrictPolygons = ({ districtGeometries, onDistrictClick, selected
     (feature) => ({
       fillColor: getDistrictFillColor(feature?.properties?.title),
       color: inactiveDistrictFillColor,
-      weight: 2,
+      weight: 1.5,
     }),
     [getDistrictFillColor, inactiveDistrictFillColor],
   );
@@ -93,7 +93,14 @@ export const DistrictPolygons = ({ districtGeometries, onDistrictClick, selected
   return (
     <>
       <Pane name="district-background" style={{ zIndex: 300 }}>
-        <Polygon positions={[MAP_AREA_RING, ...districtMaskHoles]} />
+        <Polygon
+          positions={[MAP_AREA_RING, ...districtMaskHoles]}
+          pathOptions={{
+            fillColor: inactiveDistrictFillColor,
+            fillOpacity: 0.35,
+            stroke: false,
+          }}
+        />
       </Pane>
       <GeoJSON
         style={getDistrictStyle}
