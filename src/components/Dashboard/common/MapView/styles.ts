@@ -10,7 +10,6 @@ export const StyledMapContainer = styled.div`
   .leaflet-container {
     height: 100%;
     width: 100%;
-    background: var(--color-orchid-light);
     border-radius: var(--dashboard-map-border-radius);
     z-index: 0;
   }
@@ -240,6 +239,10 @@ export const IconSlot = styled.div`
     &.custom-icon {
       border-radius: 50%;
       object-fit: contain;
+    }
+
+    &.custom-other-rac-icon {
+      filter: grayscale(1);
     }
   }
 `;

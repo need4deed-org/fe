@@ -71,9 +71,13 @@ export const MapLegendControl = () => {
 
         <LegendRow>
           <IconSlot>
-            <div className="custom-icon">5</div>
+            <img
+              src={DEFAULT_LEAFLET_ICON_URL}
+              alt={`${t("dashboard.map.legend.otherRac")} Pin`}
+              className="custom-other-rac-icon"
+            />
           </IconSlot>
-          <span>{t("dashboard.map.legend.numberOfEntities")}</span>
+          <span>{t("dashboard.map.legend.otherRac")}</span>
         </LegendRow>
       </LegendCard>
     ) : (

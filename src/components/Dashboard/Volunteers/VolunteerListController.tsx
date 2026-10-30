@@ -98,15 +98,9 @@ export function VolunteerListController({
   );
   const opportunityMarker = createSingleOpportunityMarker(opportunityFilter, t, i18n.language);
 
-  const markerCount = useMemo(() => {
-    return markers?.flatMap((marker) => marker.children ?? []).length ?? 0;
-  }, [markers]);
-
-  const activeCount = isMapView ? markerCount : (count ?? 0);
-
   useEffect(() => {
-    setNumOfVols(activeCount);
-  }, [activeCount, setNumOfVols]);
+    setNumOfVols(count);
+  }, [setNumOfVols]);
 
   if (isLoading && isListView)
     return <LoadingVolunteerTableList canSeeContactColumns={canSeeContactColumns} dropdownFilters={dropdownFilters} />;

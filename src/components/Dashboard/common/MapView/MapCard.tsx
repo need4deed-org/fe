@@ -13,11 +13,12 @@ import { EntityMarker, EntityType, SingleMarker } from "./types";
 import { MapOtherRacs } from "./controls/MapOtherRacs";
 import { useGetDistrictGeometry } from "@/hooks/useGetDistrictGeometry";
 import { DistrictPolygons } from "./layers/DistrictPolygons";
-import { DEFAULT_LEAFLET_ICON_URL, questionMark, ScreenTypes } from "@/config/constants";
+import { DEFAULT_LEAFLET_ICON_URL, defaultAvatarURL, questionMark, ScreenTypes } from "@/config/constants";
 import { QueryParamsKeys } from "need4deed-sdk";
 import { useScreenType } from "@/context/DeviceContext";
 import { MapPopupControlVisibility } from "./controls/MapPopupVisibilityControl";
 import { MapZoom } from "./controls/MapZoom";
+import { getImageUrl } from "@/utils";
 
 interface Props {
   markers?: EntityMarker[];
@@ -59,20 +60,16 @@ const MapCard = ({ markers, renderPopupContent, filterMarker, renderSinglePopupC
     router.push(pathname + questionMark + params.toString(), { scroll: false });
   };
 
-  const generateCustomIcon = (url: string, count?: number, entity?: EntityType) => {
+  const generateCustomIcon = (url: string, entity?: EntityType) => {
     if (entity === EntityType.OPPORTUNITY)
       return new L.Icon({ iconUrl: DEFAULT_LEAFLET_ICON_URL, shadowUrl: "", className: "need4deed-icon" });
     if (entity === EntityType.VOLUNTEER)
       return L.icon({
-        iconUrl: url,
+        iconUrl: url || getImageUrl(defaultAvatarURL),
         iconAnchor: [15, 15],
         className: "custom-avatar-icon",
       });
-    return L.divIcon({
-      iconAnchor: [isMobile ? 20 : 35, 5],
-      className: "custom-icon",
-      html: `<div>${count}</div>`,
-    });
+    return new L.Icon({ iconUrl: DEFAULT_LEAFLET_ICON_URL });
   };
 
   return (
@@ -98,7 +95,7 @@ const MapCard = ({ markers, renderPopupContent, filterMarker, renderSinglePopupC
         {filterMarker && (
           <Marker
             position={[filterMarker.lat, filterMarker.lon]}
-            icon={generateCustomIcon(filterMarker.avatarUrl ?? "", 0, filterMarker.entity)}
+            icon={generateCustomIcon(filterMarker.avatarUrl ?? "", filterMarker.entity)}
             zIndexOffset={200}
           >
             <Popup>{renderSinglePopupContent?.(filterMarker)}</Popup>
@@ -108,7 +105,7 @@ const MapCard = ({ markers, renderPopupContent, filterMarker, renderSinglePopupC
           <Marker
             key={`${idx}-${marker?.lat}-${marker?.lon}`}
             position={[marker.lat, marker.lon]}
-            icon={generateCustomIcon(marker?.avatarUrl ?? "", marker.children?.length)}
+            icon={generateCustomIcon(marker?.avatarUrl ?? "", marker.entity)}
             zIndexOffset={100}
           >
             <Popup>

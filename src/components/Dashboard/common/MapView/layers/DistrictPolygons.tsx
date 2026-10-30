@@ -41,7 +41,6 @@ export const DistrictPolygons = ({ districtGeometries, onDistrictClick, selected
   );
   const defaultDistrictFillColor = resolvedDistrictFillColors.Mitte;
   const inactiveDistrictFillColor = resolveCssColor("var(--color-black)");
-  const backgroundFillColor = resolveCssColor("var(--color-orchid-light)");
 
   const getDistrictFillColor = useCallback(
     (title: unknown) =>
@@ -94,15 +93,7 @@ export const DistrictPolygons = ({ districtGeometries, onDistrictClick, selected
   return (
     <>
       <Pane name="district-background" style={{ zIndex: 300 }}>
-        <Polygon
-          positions={[MAP_AREA_RING, ...districtMaskHoles]}
-          pathOptions={{
-            fillColor: backgroundFillColor,
-            fillOpacity: 1,
-            fillRule: "evenodd",
-            stroke: false,
-          }}
-        />
+        <Polygon positions={[MAP_AREA_RING, ...districtMaskHoles]} />
       </Pane>
       <GeoJSON
         style={getDistrictStyle}

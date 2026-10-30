@@ -12,6 +12,7 @@
   background: transparent;
   border: 0;
   box-shadow: none;
+  filter: grayScale(1);
 }
 
 .custom-icon {

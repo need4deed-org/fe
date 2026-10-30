@@ -128,15 +128,9 @@ export function OpportunityListController({
 
   const volunteerMarker = createSingleVolunteerMarker(volunteerFilter, t, i18n.language);
 
-  const markerCount = useMemo(() => {
-    return markers?.flatMap((marker) => marker.children ?? []).length ?? 0;
-  }, [markers]);
-
-  const activeCount = isMapView ? markerCount : (count ?? 0);
-
   useEffect(() => {
-    setNumOfOpps(activeCount);
-  }, [activeCount, setNumOfOpps]);
+    setNumOfOpps(count);
+  }, [count, setNumOfOpps]);
 
   const isPending = isLoading || !isRoleKnown;
   if (isPending && isListView) return <LoadingOpportunityTableList dropdownFilters={dropdownFilters} />;

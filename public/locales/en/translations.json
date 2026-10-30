@@ -592,6 +592,7 @@
         "title": "Legend",
         "opportunity": "Opportunity",
         "rac": "Refugee Accommodation Center",
+        "otherRac": "Other Refugee Accommodation Centers",
         "volunteer": "Volunteer",
         "numberOfEntities": "Number of opportunities or volunteers"
       },
