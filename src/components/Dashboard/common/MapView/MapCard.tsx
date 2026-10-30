@@ -1,14 +1,24 @@
+import "leaflet/dist/leaflet.css";
 import "./map.css";
-import { MapContainer, Marker, Popup, TileLayer, useMapEvent } from "react-leaflet";
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { BERLIN_BOUNDS, DEFAULT_CENTER } from "./helpers";
 import { PopupContentWrapper, PopupHeader, StyledMapContainer } from "./styles";
-import { useState } from "react";
+import { useMemo, useRef, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import L from "leaflet";
-import BerlinRacs from "./BerlinRacs";
-import { MapLegendControl } from "./MapLegend";
-import { MapScroll } from "./MapScroll";
+import { BerlinRacs } from "./layers/BerlinRacs";
+import { MapLegendControl } from "./controls/MapLegend";
+import { MapScroll } from "./controls/MapScroll";
 import { EntityMarker, EntityType, SingleMarker } from "./types";
-import { MapOtherRacs } from "./MapOtherRacs";
+import { MapOtherRacs } from "./controls/MapOtherRacs";
+import { useGetDistrictGeometry } from "@/hooks/useGetDistrictGeometry";
+import { DistrictPolygons } from "./layers/DistrictPolygons";
+import { DEFAULT_LEAFLET_ICON_URL, defaultAvatarURL, questionMark, ScreenTypes } from "@/config/constants";
+import { QueryParamsKeys } from "need4deed-sdk";
+import { useScreenType } from "@/context/DeviceContext";
+import { MapPopupControlVisibility } from "./controls/MapPopupVisibilityControl";
+import { MapZoom } from "./controls/MapZoom";
+import { getImageUrl } from "@/utils";
 
 interface Props {
   markers?: EntityMarker[];
@@ -17,51 +27,75 @@ interface Props {
   renderSinglePopupContent?: (filter: SingleMarker) => React.ReactNode;
 }
 
-const SetViewOnClick = () => {
-  const map = useMapEvent("click", (e) => {
-    map.setView(e.latlng, map.getZoom(), {
-      animate: true,
-    });
-  });
-
-  return null;
-};
-
 const MapCard = ({ markers, renderPopupContent, filterMarker, renderSinglePopupContent }: Props) => {
   const [enableScroll, setEnableScroll] = useState<boolean>(true);
   const [showOtherRacs, setShowOtherRacs] = useState<boolean>(false);
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
+  const screenSize = useScreenType();
 
-  const generateCustomIcon = (url: string, count?: number, entity?: EntityType) => {
-    if (entity === EntityType.OPPORTUNITY) return new L.Icon.Default({ className: "need4deed-icon" });
+  const selectedDistrictTitles = useMemo(() => searchParams.getAll(QueryParamsKeys.DISTRICT), [searchParams]);
+  const selectedDistrictTitlesRef = useRef(selectedDistrictTitles);
+
+  selectedDistrictTitlesRef.current = selectedDistrictTitles;
+
+  const { data: districtGeometries } = useGetDistrictGeometry();
+
+  const isMobile = screenSize === ScreenTypes.MOBILE;
+  const isTablet = screenSize === ScreenTypes.TABLET;
+  const mapZoom = isMobile ? 9 : isTablet ? 10 : 11;
+
+  const handleDistrictClick = (title: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    const selectedTitles = selectedDistrictTitlesRef.current;
+    const nextSelectedTitles = selectedTitles.includes(title)
+      ? selectedTitles.filter((selectedTitle) => selectedTitle !== title)
+      : [...selectedTitles, title];
+
+    selectedDistrictTitlesRef.current = nextSelectedTitles;
+    params.delete("page");
+    params.delete(QueryParamsKeys.DISTRICT);
+    nextSelectedTitles.forEach((selectedTitle) => params.append(QueryParamsKeys.DISTRICT, selectedTitle));
+    router.push(pathname + questionMark + params.toString(), { scroll: false });
+  };
+
+  const generateCustomIcon = (url: string, entity?: EntityType) => {
+    if (entity === EntityType.OPPORTUNITY)
+      return new L.Icon({ iconUrl: DEFAULT_LEAFLET_ICON_URL, shadowUrl: "", className: "need4deed-icon" });
     if (entity === EntityType.VOLUNTEER)
       return L.icon({
-        iconUrl: url,
+        iconUrl: url || getImageUrl(defaultAvatarURL),
         iconAnchor: [15, 15],
         className: "custom-avatar-icon",
       });
-    return L.divIcon({
-      iconAnchor: [35, 5],
-      className: "custom-icon",
-      html: `<div>${count}</div>`,
-    });
+    return new L.Icon({ iconUrl: DEFAULT_LEAFLET_ICON_URL });
   };
 
   return (
     <StyledMapContainer>
-      <MapContainer center={DEFAULT_CENTER} minZoom={9} zoom={11} maxBounds={BERLIN_BOUNDS}>
+      <MapContainer center={DEFAULT_CENTER} minZoom={9} zoom={mapZoom} maxBounds={BERLIN_BOUNDS}>
+        <MapZoom zoom={mapZoom} />
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <SetViewOnClick />
+        <MapPopupControlVisibility />
         <MapLegendControl />
-        <MapScroll enableScroll={enableScroll} setEnabledScroll={setEnableScroll} />
-        <MapOtherRacs showOtherRacs={showOtherRacs} setShowOtherRacs={setShowOtherRacs} />
+        {!isMobile && !isTablet && <MapScroll enableScroll={enableScroll} setEnabledScroll={setEnableScroll} />}
+        {!isMobile && <MapOtherRacs showOtherRacs={showOtherRacs} setShowOtherRacs={setShowOtherRacs} />}
+        {districtGeometries && (
+          <DistrictPolygons
+            districtGeometries={districtGeometries}
+            onDistrictClick={handleDistrictClick}
+            selectedDistrictTitles={selectedDistrictTitles}
+          />
+        )}
         {showOtherRacs && <BerlinRacs />}
         {filterMarker && (
           <Marker
             position={[filterMarker.lat, filterMarker.lon]}
-            icon={generateCustomIcon(filterMarker.avatarUrl ?? "", 0, filterMarker.entity)}
+            icon={generateCustomIcon(filterMarker.avatarUrl ?? "", filterMarker.entity)}
             zIndexOffset={200}
           >
             <Popup>{renderSinglePopupContent?.(filterMarker)}</Popup>
@@ -71,7 +105,7 @@ const MapCard = ({ markers, renderPopupContent, filterMarker, renderSinglePopupC
           <Marker
             key={`${idx}-${marker?.lat}-${marker?.lon}`}
             position={[marker.lat, marker.lon]}
-            icon={generateCustomIcon(marker?.avatarUrl ?? "", marker.children?.length)}
+            icon={generateCustomIcon(marker?.avatarUrl ?? "", marker.entity)}
             zIndexOffset={100}
           >
             <Popup>

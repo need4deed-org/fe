@@ -1,14 +1,25 @@
-@import url("https://unpkg.com/leaflet@1.9.4/dist/leaflet.css");
+@media (max-width: 767px) {
+  .leaflet-container.map-popup-open .leaflet-control-container {
+    visibility: hidden;
+  }
+}
 
 .leaflet-marker-icon.need4deed-icon {
   filter: hue-rotate(90deg) saturate(0.8);
+}
+
+.leaflet-marker-icon.berlin-rac-marker-icon {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  filter: grayScale(1);
 }
 
 .custom-icon {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 2rem;
+  font-size: var(--dashboard-map-custom-icon-font-size);
   width: var(--dashboard-map-custom-icon-width) !important;
   height: var(--dashboard-map-custom-icon-width) !important;
   background: var(--color-white);
@@ -23,4 +34,8 @@
   border: var(--dashboard-map-custom-icon-border);
   border-radius: var(--dashboard-map-custom-icon-border-radius);
   object-fit: contain;
+}
+
+.leaflet-pane > svg path.leaflet-interactive:focus {
+  outline: none;
 }
