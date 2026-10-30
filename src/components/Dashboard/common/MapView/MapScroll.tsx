@@ -49,8 +49,13 @@ export const MapScroll = ({ enableScroll, setEnabledScroll }: Props) => {
   return createPortal(
     <LegendCard>
       <ScrollZoomContainer>
-        <span>{t("dashboard.map.scrollZoom")}</span>
-        <Checkbox onChange={() => setEnabledScroll(!enableScroll)} width={"25"} height={"25"} checked={enableScroll} />
+        <Checkbox
+          label={t("dashboard.map.scrollZoom")}
+          onChange={setEnabledScroll}
+          width={"25"}
+          height={"25"}
+          checked={enableScroll}
+        />
       </ScrollZoomContainer>
     </LegendCard>,
     container,
