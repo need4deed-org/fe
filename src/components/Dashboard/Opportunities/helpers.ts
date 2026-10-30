@@ -9,6 +9,7 @@ import {
 } from "need4deed-sdk";
 import { ReadonlyURLSearchParams } from "next/navigation";
 import { deserializeSelectionFilters, serializeSelectionFilters } from "../common/CardsFilter/selectionFilters";
+import { deserializeCommutePrefill, serializeCommutePrefill } from "../common/CardsFilter/matchingPrefill";
 import { AvailabilityKeys, AvailabilitySubKeys, SEPARATOR } from "./Filters/constants";
 import { opportunityFilterConfigs } from "./Filters/config";
 import { OpportunityCardsFilter } from "./Filters/types";
@@ -65,6 +66,7 @@ export function serializeOpportunityFilters(
   else params.delete(QueryParamsKeys.SEARCH);
 
   serializeSelectionFilters(opportunityFilterConfigs, filter, params, options);
+  serializeCommutePrefill(filter, params);
 
   params.delete(QueryParamsKeys.AVAILABILITY);
   Object.entries(filter.availability).forEach(([key, subSlot]) => {
@@ -89,6 +91,7 @@ export function deserializeOpportunityFilters(
   if (search !== null) newFilter.search = search;
 
   deserializeSelectionFilters(opportunityFilterConfigs, newFilter, searchParams);
+  deserializeCommutePrefill(newFilter, searchParams);
 
   const queryAvailability = searchParams.getAll(QueryParamsKeys.AVAILABILITY);
   queryAvailability.forEach((item) => {

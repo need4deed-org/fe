@@ -16,6 +16,8 @@ export interface VolunteerCardsFilter {
   [QueryParamsKeys.DISTRICT]: SelectionMap;
   [QueryParamsKeys.LANGUAGE]: SelectionMap;
   type: SelectionMap;
+  commutePostcode: string;
+  maxCommuteMinutes: number;
 }
 
 export type VolunteerCardFilterKeys = keyof VolunteerCardsFilter;

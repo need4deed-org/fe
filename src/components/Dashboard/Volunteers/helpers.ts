@@ -12,6 +12,7 @@ import { AvailabilityKeys, AvailabilitySubKeys, SEPARATOR } from "./Filters/cons
 import { VolunteerCardsFilter } from "./Filters/types";
 import { FilterItem } from "../common/CardsFilter/types";
 import { deserializeSelectionFilters, serializeSelectionFilters } from "../common/CardsFilter/selectionFilters";
+import { deserializeCommutePrefill, serializeCommutePrefill } from "../common/CardsFilter/matchingPrefill";
 import { volunteerFilterConfigs } from "./Filters/config";
 
 const proficiencyOrder = [
@@ -70,6 +71,7 @@ export function serializeFilters(
   else params.delete(QueryParamsKeys.SEARCH);
 
   serializeSelectionFilters(volunteerFilterConfigs, filter, params, options);
+  serializeCommutePrefill(filter, params);
 
   params.delete(QueryParamsKeys.AVAILABILITY);
   Object.entries(filter.availability).forEach(([key, subSlot]) => {
@@ -94,6 +96,7 @@ export function deserializeVolunteerFilters(filter: VolunteerCardsFilter, search
   }
 
   deserializeSelectionFilters(volunteerFilterConfigs, newFilter, searchParams);
+  deserializeCommutePrefill(newFilter, searchParams);
 
   const queryAvailability = searchParams.getAll(QueryParamsKeys.AVAILABILITY);
   queryAvailability.forEach((item) => {

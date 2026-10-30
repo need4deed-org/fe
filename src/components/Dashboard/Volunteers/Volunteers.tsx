@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { DashboardLayout } from "@/components/Layout";
-import { apiPathOption, questionMark, ScreenTypes } from "@/config/constants";
+import { apiPathOption, DEFAULT_MAX_COMMUTE_MINUTES, questionMark, ScreenTypes } from "@/config/constants";
 import { useGetOpportunity, useGetQuery } from "@/hooks";
 import {
   ApiOptionLists,
@@ -21,6 +21,7 @@ import CardsHeader from "../common/CardsHeader/CardsHeader";
 import { getClearFilter, getClearSingleFilter } from "../common/CardsFilter/helpers";
 import {
   applyMatchingPrefill,
+  clearCommutePrefill,
   hasFilterParams,
   PREFILLED_PARAM,
   withPrefilledMarker,
@@ -91,13 +92,15 @@ export function Volunteers() {
     const updatedFilter = typeof newFilter === "function" ? newFilter(cardsFilter) : newFilter;
 
     setCardsFilter(updatedFilter);
-    router.push(pathname + questionMark + serializeFilters(updatedFilter, searchParams));
+    router.push(pathname + questionMark + serializeFilters(updatedFilter, searchParams), {
+      scroll: false,
+    });
   };
 
   const handleRemoveOpportunityFilter = () => {
     const wasPrefilled = searchParams.has(PREFILLED_PARAM);
-    const cleared = wasPrefilled ? getClearFilter(cardsFilter) : cardsFilter;
-    if (wasPrefilled) setCardsFilter(cleared);
+    const cleared = wasPrefilled ? getClearFilter(cardsFilter) : clearCommutePrefill(cardsFilter);
+    setCardsFilter(cleared);
     const params = new URLSearchParams(serializeFilters(cleared, searchParams));
     params.delete("opportunity");
     params.delete(PREFILLED_PARAM);
@@ -105,7 +108,10 @@ export function Volunteers() {
   };
 
   const handleClearFilter = (filterKey: string, parentKey?: string) => {
-    const cleared = getClearSingleFilter(cardsFilter, filterKey, parentKey);
+    const cleared =
+      filterKey === QueryParamsKeys.COMMUTE_POSTCODE
+        ? clearCommutePrefill(cardsFilter)
+        : getClearSingleFilter(cardsFilter, filterKey, parentKey);
     setCardsFilter(cleared);
     router.push(pathname + questionMark + serializeFilters(cleared, searchParams));
   };
@@ -138,6 +144,8 @@ export function Volunteers() {
         availability: isAccompanying ? [] : opportunityFilter.availability,
         appointmentDate: isAccompanying ? opportunityFilter.appointmentDate : null,
         appointmentTime: isAccompanying ? opportunityFilter.appointmentTime : null,
+        commutePostcode: opportunityFilter.commutePostcode,
+        maxCommuteMinutes: DEFAULT_MAX_COMMUTE_MINUTES,
       },
       { district: apiFilterOptions.district, language: apiFilterOptions.language },
     );
@@ -205,7 +213,14 @@ export function Volunteers() {
           <Filters
             isFiltersOpen={isFiltersOpen}
             setIsFiltersOpen={setIsFiltersOpen}
-            filtersContent={<FiltersContent setFilter={handleFilterUpdate} filter={cardsFilter} viewMode={viewMode} />}
+            filtersContent={
+              <FiltersContent
+                setFilter={handleFilterUpdate}
+                filter={cardsFilter}
+                viewMode={viewMode}
+                isMatchMode={!!opportunityId}
+              />
+            }
           />
         </ContentRow>
       </VolunteersContainer>
