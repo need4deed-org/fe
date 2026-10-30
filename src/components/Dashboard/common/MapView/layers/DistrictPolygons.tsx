@@ -1,8 +1,8 @@
 import { GeoJSON, Pane, Polygon } from "react-leaflet";
 import { ApiDistrictGeometryCollection } from "need4deed-sdk";
-import { useCallback, useEffect, useMemo, useRef } from "react";
-import { useMapEvent } from "react-leaflet";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import L from "leaflet";
+import type { Feature } from "geojson";
 import { districtFillColors, MAP_AREA_RING, resolveCssColor } from "../helpers";
 
 interface Props {
@@ -12,133 +12,99 @@ interface Props {
 }
 
 export const DistrictPolygons = ({ districtGeometries, onDistrictClick, selectedDistrictTitles }: Props) => {
-  const districtLayers = useRef<Array<{ layer: L.Path; fillColor: string; title?: string }>>([]);
-  const districtGeometriesRef = useRef(districtGeometries);
-  const selectedDistrictTitleSet = useRef(new Set(selectedDistrictTitles));
-  const hoveredDistrict = useRef<L.Path | null>(null);
+  const [hoveredDistrictTitle, setHoveredDistrictTitle] = useState<string | null>(null);
+  const geoJsonRef = useRef<L.GeoJSON>(null);
   const onDistrictClickRef = useRef(onDistrictClick);
   onDistrictClickRef.current = onDistrictClick;
 
-  const districtMaskHoles: L.LatLngExpression[][] = useMemo(
-    () =>
-      districtGeometries.features.flatMap(({ geometry }) => {
-        const polygons = geometry.type === "Polygon" ? [geometry.coordinates] : geometry.coordinates;
+  const { resolvedColors, inactiveColor, maskPathOptions } = useMemo(() => {
+    const colors = Object.fromEntries(
+      Object.entries(districtFillColors).map(([title, color]) => [title, resolveCssColor(color)]),
+    );
+    const inactive = resolveCssColor("var(--color-black)");
+    return {
+      resolvedColors: colors,
+      inactiveColor: inactive,
+      maskPathOptions: { fillColor: inactive, fillOpacity: 0.35, stroke: false },
+    };
+  }, []);
 
-        return polygons.flatMap((rings) => {
-          const outerRing = rings[0];
-          return outerRing ? [outerRing.map(([longitude, latitude]) => [latitude, longitude] as L.LatLngTuple)] : [];
-        });
-      }),
-    [districtGeometries],
-  );
+  const defaultColor = resolvedColors.Mitte;
+  const selectedSet = useMemo(() => new Set(selectedDistrictTitles), [selectedDistrictTitles]);
+  const selectedSetRef = useRef(selectedSet);
+  selectedSetRef.current = selectedSet;
+  const geometryKey = useMemo(() => JSON.stringify(districtGeometries), [districtGeometries]);
 
-  const resolvedDistrictFillColors = useMemo(
-    () =>
-      Object.fromEntries(
-        Object.entries(districtFillColors).map(([title, color]) => [title, resolveCssColor(color)]),
-      ) as Record<string, string>,
-    [],
-  );
-  const defaultDistrictFillColor = resolvedDistrictFillColors.Mitte;
-  const inactiveDistrictFillColor = resolveCssColor("var(--color-black)");
-
-  const getDistrictFillColor = useCallback(
-    (title: unknown) =>
-      typeof title === "string"
-        ? (resolvedDistrictFillColors[title] ?? defaultDistrictFillColor)
-        : defaultDistrictFillColor,
-    [defaultDistrictFillColor, resolvedDistrictFillColors],
-  );
-  const getDistrictStyle = useCallback<L.StyleFunction>(
-    (feature) => ({
-      fillColor: getDistrictFillColor(feature?.properties?.title),
-      color: inactiveDistrictFillColor,
-      weight: 1.5,
-    }),
-    [getDistrictFillColor, inactiveDistrictFillColor],
-  );
-
-  const updateDistrictStyles = useCallback(() => {
-    const selectedTitles = selectedDistrictTitleSet.current;
-    const hoveredLayer = hoveredDistrict.current;
-    districtLayers.current.forEach(({ layer, fillColor, title }) => {
-      const isSelected = title !== undefined && selectedTitles.has(title);
-      const isHovered = layer === hoveredLayer;
-      const hasActiveDistricts = selectedTitles.size > 0 || hoveredLayer !== null;
-      layer.setStyle({
-        fillColor: hasActiveDistricts && !isSelected && !isHovered ? inactiveDistrictFillColor : fillColor,
+  const maskPositions = useMemo(() => {
+    const holes = districtGeometries.features.flatMap(({ geometry }) => {
+      const polygons = geometry.type === "Polygon" ? [geometry.coordinates] : geometry.coordinates;
+      return polygons.flatMap((rings) => {
+        const outerRing = rings[0];
+        return outerRing ? [outerRing.map(([lng, lat]) => [lat, lng] as [number, number])] : [];
       });
     });
-  }, [inactiveDistrictFillColor]);
+    return [MAP_AREA_RING, ...holes];
+  }, [districtGeometries]);
+
+  const getDistrictStyle = useCallback(
+    (feature?: Feature) => {
+      const title = feature?.properties?.title as string | undefined;
+      const baseColor = title ? (resolvedColors[title] ?? defaultColor) : defaultColor;
+
+      const isSelected = title ? selectedSet.has(title) : false;
+      const isHovered = title === hoveredDistrictTitle;
+      const hasActive = selectedSet.size > 0 || hoveredDistrictTitle !== null;
+
+      return {
+        fillColor: hasActive && !isSelected && !isHovered ? inactiveColor : baseColor,
+        color: inactiveColor,
+        weight: 1.5,
+      };
+    },
+    [resolvedColors, defaultColor, selectedSet, hoveredDistrictTitle, inactiveColor],
+  );
 
   useEffect(() => {
-    selectedDistrictTitleSet.current = new Set(selectedDistrictTitles);
-    hoveredDistrict.current = null;
-    districtLayers.current.forEach(({ layer, title }) => {
+    geoJsonRef.current?.eachLayer((layer) => {
+      const title = (layer as L.Layer & { feature?: Feature }).feature?.properties?.title;
       layer.unbindTooltip();
-      if (title) {
-        const isSelected = selectedDistrictTitleSet.current.has(title);
-        layer.bindTooltip(title, isSelected ? { permanent: true, direction: "center" } : undefined);
-        if (isSelected) layer.openTooltip();
-      }
-    });
-    updateDistrictStyles();
-  }, [selectedDistrictTitles, updateDistrictStyles]);
+      if (typeof title !== "string" || !title) return;
 
-  useMapEvent("click", () => {
-    hoveredDistrict.current = null;
-    updateDistrictStyles();
-  });
+      const isSelected = selectedSet.has(title);
+      layer.bindTooltip(title, isSelected ? { permanent: true, direction: "center" } : undefined);
+      if (isSelected) layer.openTooltip();
+    });
+  }, [selectedSet]);
+
+  const handleEachFeature = useCallback((feature: Feature, layer: L.Layer) => {
+    const title = feature.properties?.title;
+    if (!title) return;
+
+    const isSelected = selectedSetRef.current.has(title);
+    layer.bindTooltip(title, isSelected ? { permanent: true, direction: "center" } : undefined);
+    if (isSelected) layer.openTooltip();
+
+    layer.on({
+      mouseover: () => setHoveredDistrictTitle(title),
+      mouseout: () => setHoveredDistrictTitle((curr) => (curr === title ? null : curr)),
+      click: () => {
+        if (L.Browser.touch) setHoveredDistrictTitle(null);
+        onDistrictClickRef.current(title);
+      },
+    });
+  }, []);
 
   return (
     <>
       <Pane name="district-background" style={{ zIndex: 300 }}>
-        <Polygon
-          positions={[MAP_AREA_RING, ...districtMaskHoles]}
-          pathOptions={{
-            fillColor: inactiveDistrictFillColor,
-            fillOpacity: 0.35,
-            stroke: false,
-          }}
-        />
+        <Polygon positions={maskPositions} pathOptions={maskPathOptions} />
       </Pane>
       <GeoJSON
-        style={getDistrictStyle}
+        key={geometryKey}
         data={districtGeometries}
-        onEachFeature={(feature, layer) => {
-          if (districtGeometriesRef.current !== districtGeometries) {
-            districtLayers.current = [];
-            hoveredDistrict.current = null;
-            districtGeometriesRef.current = districtGeometries;
-          }
-          const title = feature.properties?.title;
-          if (title) {
-            const isSelected = selectedDistrictTitleSet.current.has(title);
-            layer.bindTooltip(title, isSelected ? { permanent: true, direction: "center" } : undefined);
-            if (isSelected) layer.openTooltip();
-          }
-          if (layer instanceof L.Path) {
-            const fillColor = getDistrictFillColor(title);
-            districtLayers.current.push({ layer, fillColor, title });
-            updateDistrictStyles();
-            layer.options.bubblingMouseEvents = false;
-            layer.on("mouseover", () => {
-              hoveredDistrict.current = layer;
-              updateDistrictStyles();
-            });
-            layer.on("mouseout", () => {
-              if (hoveredDistrict.current === layer) hoveredDistrict.current = null;
-              updateDistrictStyles();
-            });
-          }
-          layer.on("click", () => {
-            if (layer instanceof L.Path) {
-              hoveredDistrict.current = null;
-              updateDistrictStyles();
-              if (title) onDistrictClickRef.current(title);
-            }
-          });
-        }}
+        style={getDistrictStyle}
+        onEachFeature={handleEachFeature}
+        ref={geoJsonRef}
       />
     </>
   );
