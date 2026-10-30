@@ -32,7 +32,11 @@ interface VolunteerListControllerProps {
   opportunityFilter: SingleFilter | undefined;
 }
 
-export function VolunteerListController({
+export function VolunteerListController(props: VolunteerListControllerProps) {
+  return <VolunteerListControllerContent key={props.viewMode} {...props} />;
+}
+
+function VolunteerListControllerContent({
   setNumOfVols,
   sortOrder,
   filter,

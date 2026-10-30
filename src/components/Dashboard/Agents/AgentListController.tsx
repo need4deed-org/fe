@@ -28,7 +28,9 @@ type Props = {
   onSelect?: (agent: ApiAgentGetList) => void;
 };
 
-export const AgentListController = ({
+export const AgentListController = (props: Props) => <AgentListControllerContent key={props.viewMode} {...props} />;
+
+const AgentListControllerContent = ({
   setNumOfAgents,
   sortOrder,
   filter,

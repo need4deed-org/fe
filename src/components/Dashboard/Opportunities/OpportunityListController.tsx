@@ -59,7 +59,11 @@ type Props = {
   volunteerFilter: SingleFilter | undefined;
 };
 
-export function OpportunityListController({
+export function OpportunityListController(props: Props) {
+  return <OpportunityListControllerContent key={props.viewMode} {...props} />;
+}
+
+function OpportunityListControllerContent({
   setNumOfOpps,
   sortOrder,
   filter,
