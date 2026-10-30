@@ -11,6 +11,8 @@ export const AvatarImg = styled.img`
 export const OpportunityVolunteersContainer = styled.div`
   display: flex;
   flex-direction: column;
+  max-height: var(--volunteer-profile-opportunities-container-height);
+  overflow-y: scroll;
   gap: var(--volunteer-profile-opportunities-container-gap);
 `;
 
