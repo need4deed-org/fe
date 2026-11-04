@@ -31,7 +31,11 @@ interface VolunteerListControllerProps {
   opportunityFilter: SingleFilter | undefined;
 }
 
-export function VolunteerListController({
+export function VolunteerListController(props: VolunteerListControllerProps) {
+  return <VolunteerListControllerContent key={props.viewMode} {...props} />;
+}
+
+function VolunteerListControllerContent({
   setNumOfVols,
   sortOrder,
   filter,
@@ -84,6 +88,7 @@ export function VolunteerListController({
     apiPath: apiPathVolunteer,
     params,
     staleTime: cacheTTL,
+    keepPreviousData: isMapView,
   });
   const volunteers = data || [];
   const { handleCopyEmails, isCopying } = useCopyEmails(apiPathVolunteer, "volunteer-emails", emailsFilter);
@@ -96,15 +101,9 @@ export function VolunteerListController({
   );
   const opportunityMarker = createSingleOpportunityMarker(opportunityFilter, t, i18n.language);
 
-  const markerCount = useMemo(() => {
-    return markers?.flatMap((marker) => marker.children ?? []).length ?? 0;
-  }, [markers]);
-
-  const activeCount = isMapView ? markerCount : (count ?? 0);
-
   useEffect(() => {
-    setNumOfVols(activeCount);
-  }, [activeCount, setNumOfVols]);
+    setNumOfVols(count);
+  }, [setNumOfVols, count]);
 
   if (isLoading && isMapView) return <LoadingMapView />;
   if (isLoading && !isListView) return <DashboardListLoading />;
