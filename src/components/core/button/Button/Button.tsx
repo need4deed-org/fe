@@ -71,6 +71,9 @@ const StyledButton = styled.button<StyledButtonProps>`
 `;
 
 export interface ButtonProps {
+  children?: React.ReactNode;
+  className?: string;
+  ["aria-controls"]?: string;
   text?: string;
   textFontSize?: string;
   onClick?: (() => void) | ((e: React.MouseEvent<HTMLButtonElement>) => void);
@@ -95,6 +98,9 @@ export interface ButtonProps {
 }
 
 export function Button({
+  children,
+  className,
+  ["aria-controls"]: ariaControls,
   text,
   textFontSize,
   onClick,
@@ -119,6 +125,8 @@ export function Button({
 }: ButtonProps) {
   return (
     <StyledButton
+      className={className}
+      aria-controls={ariaControls}
       type={type}
       disabled={disabled}
       onClick={onClick}
@@ -146,6 +154,7 @@ export function Button({
           {text}
         </ButtonSpan>
       )}
+      {children}
     </StyledButton>
   );
 }
