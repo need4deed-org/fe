@@ -1922,6 +1922,10 @@
         "domains": "Domains",
         "stats": "Statistics"
       }
+    },
+    "recommended": {
+      "volunteersTitle": "Recommended volunteers",
+      "opportunitiesTitle": "Recommended opportunities"
     }
   },
   "aboutus": {
