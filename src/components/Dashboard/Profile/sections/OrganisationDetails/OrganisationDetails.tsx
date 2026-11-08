@@ -63,8 +63,9 @@ export const OrganisationDetails = forwardRef<EditableSectionRef, Props>(functio
       services: (details?.services ?? [])
         .map((service) => (service.id ? serviceMapping.idToTitle[Number(service.id)] : undefined))
         .filter((title): title is string => Boolean(title)),
+      sharesVolunteers: agent.sharesVolunteers ?? false,
     }),
-    [details, agent.title, agent.operator, agentTypeMapping, serviceMapping],
+    [details, agent.title, agent.operator, agent.sharesVolunteers, agentTypeMapping, serviceMapping],
   );
 
   const methods = useForm<OrganisationDetailsFormData>({
@@ -106,6 +107,7 @@ export const OrganisationDetails = forwardRef<EditableSectionRef, Props>(functio
         ...(typeId !== undefined && { typeId }),
         serviceIds,
         ...(organizationId !== undefined && { organizationId }),
+        sharesVolunteers: values.sharesVolunteers,
       },
       {
         onSuccess: () => {

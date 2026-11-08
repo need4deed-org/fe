@@ -151,6 +151,24 @@ export const OrganisationDetailsEdit = ({
           )}
         />
         <Controller
+          name="sharesVolunteers"
+          control={control}
+          render={({ field }) => {
+            const yes = t(`${i18nPrefix}.sharesVolunteersYes`);
+            const no = t(`${i18nPrefix}.sharesVolunteersNo`);
+            return (
+              <EditableField
+                mode="edit"
+                type="radio-list"
+                label={t(`${i18nPrefix}.sharesVolunteers`)}
+                value={field.value ? yes : no}
+                setValue={(value) => field.onChange(value === yes)}
+                options={[yes, no]}
+              />
+            );
+          }}
+        />
+        <Controller
           name="services"
           control={control}
           render={({ field }) => (
