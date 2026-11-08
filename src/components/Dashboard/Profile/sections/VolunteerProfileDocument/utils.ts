@@ -1,5 +1,12 @@
 import { TFunction } from "i18next";
-import { ApiDocumentGet, ApiVolunteerGet, DocumentStatusType, DocumentType } from "need4deed-sdk";
+import {
+  ApiDocumentGet,
+  ApiVolunteerApplicationEmailError,
+  ApiVolunteerGet,
+  ApplicationEmailFailureReason,
+  DocumentStatusType,
+  DocumentType,
+} from "need4deed-sdk";
 import { ACTION_COLUMN_WIDTH } from "./styles";
 
 type ExtendedVolunteerGet = ApiVolunteerGet & {
@@ -26,6 +33,24 @@ const DOCUMENT_NAME_KEYS: Record<DocumentType, string> = {
 
 export const getDocumentNameKey = (type: DocumentType): string => {
   return DOCUMENT_NAME_KEYS[type];
+};
+
+const APPLICATION_EMAIL_FAILURE_KEYS: Record<ApplicationEmailFailureReason, string> = {
+  "attachment-unavailable": "message.applicationEmailNotSentAttachment",
+  "email-invalid": "message.applicationEmailNotSentInvalid",
+  "render-failed": "message.applicationEmailNotSentRender",
+  "send-failed": "message.applicationEmailNotSentSend",
+};
+
+const isApplicationEmailFailureReason = (reason: unknown): reason is ApplicationEmailFailureReason =>
+  typeof reason === "string" && Object.prototype.hasOwnProperty.call(APPLICATION_EMAIL_FAILURE_KEYS, reason);
+
+// Unknown or missing reason (e.g. an older be) falls back to the generic message.
+export const getApplicationEmailFailureKey = (body: unknown): string => {
+  const reason = (body as Partial<ApiVolunteerApplicationEmailError> | null | undefined)?.reason;
+  return isApplicationEmailFailureReason(reason)
+    ? APPLICATION_EMAIL_FAILURE_KEYS[reason]
+    : "message.applicationEmailNotSent";
 };
 
 export const formatDocumentDate = (date: Date): string => {

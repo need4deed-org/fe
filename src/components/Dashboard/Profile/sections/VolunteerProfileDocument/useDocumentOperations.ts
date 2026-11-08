@@ -15,6 +15,7 @@ import {
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
+import { getApplicationEmailFailureKey } from "./utils";
 
 type UploadMetaResponse = {
   url: string;
@@ -117,7 +118,7 @@ export const useSendApplicationEmail = (volunteerId: number) => {
           toast.error(t("message.applicationEmailJustSent"));
           return true;
         case 502:
-          toast.error(t("message.applicationEmailNotSent"));
+          toast.error(t(getApplicationEmailFailureKey(error.response.data)));
           return true;
         default:
           return false;
