@@ -907,7 +907,10 @@
         "markAsPastSuccess": "Als vergangen markiert",
         "emptyState": "Noch keine Einträge in dieser Kategorie",
         "unmatchDialogTitle": "Zuordnung aufheben",
-        "unmatchDialogDescription": "Möchten Sie die Zuordnung für diese Person wirklich aufheben?"
+        "unmatchDialogDescription": "Möchten Sie die Zuordnung für diese Person wirklich aufheben?",
+        "withdraw": "Vorschlag zurückziehen",
+        "withdrawDialogTitle": "Diesen Vorschlag zurückziehen?",
+        "withdrawDialogDescription": "Der offene Vorschlag wird bei der freiwilligen Person und beim Gesuch entfernt."
       },
       "contactDetails": {
         "title": "Kontaktdaten",

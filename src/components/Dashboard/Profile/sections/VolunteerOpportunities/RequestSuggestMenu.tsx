@@ -9,7 +9,7 @@ import styled from "styled-components";
 type Props = {
   isOpen: boolean;
   onClose: () => void;
-  onSelect: (opportunityTitle: string) => void;
+  onSelect: (opportunity: Pick<ApiOpportunityGetList, "id" | "title">) => void;
 };
 
 const MenuAnchor = styled.div`
@@ -34,7 +34,7 @@ export function RequestSuggestMenu({ isOpen, onClose, onSelect }: Props) {
             </Paragraph>
           )}
           {opportunities.map((opp) => (
-            <Menu.Item key={opp.id} onSelect={() => onSelect(opp.title)}>
+            <Menu.Item key={opp.id} onSelect={() => onSelect(opp)}>
               <ItemText>{opp.title}</ItemText>
             </Menu.Item>
           ))}

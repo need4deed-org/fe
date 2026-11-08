@@ -79,6 +79,36 @@ export const AccordionActions = ({
   );
 };
 
+export const WithdrawSuggestionAction = ({ onWithdraw }: { onWithdraw: () => void }) => {
+  const { t } = useTranslation();
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+
+  return (
+    <Actions>
+      {showConfirmDialog && (
+        <ConfirmationDialog
+          title={t("dashboard.volunteerProfile.opportunitiesSec.withdrawDialogTitle")}
+          message={t("dashboard.volunteerProfile.opportunitiesSec.withdrawDialogDescription")}
+          onCancel={() => setShowConfirmDialog(false)}
+          onConfirm={() => {
+            onWithdraw();
+            setShowConfirmDialog(false);
+          }}
+        />
+      )}
+      <Button
+        onClick={() => setShowConfirmDialog(true)}
+        text={t("dashboard.volunteerProfile.opportunitiesSec.withdraw")}
+        height="var(--volunteer-profile-opportunities-accordion-actions-button-height)"
+        textFontSize="var(--volunteer-profile-opportunities-accordion-actions-button-textFontSize)"
+        textColor="var(--color-aubergine)"
+        backgroundcolor="var(--color-white)"
+        border="var(--volunteer-profile-opportunities-accordion-actions-button-border)"
+      />
+    </Actions>
+  );
+};
+
 type StatusAccordionActionsProps = {
   currentStatus: OpportunityVolunteerStatusType;
   onMatch: MatchHandler;

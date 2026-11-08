@@ -15,7 +15,12 @@ import { useMatchWithEmailNote } from "../shared/useMatchWithEmailNote";
 import { ITEM_STATUS_REMOVED, TAB_STATUS_ORDER, useTabTransitions } from "../shared/useTabTransitions";
 import AccordionOpportunity from "./AccordionOpportunity";
 
-export default function VolunteerOpportunities({ volunteerId }: { volunteerId: Id }) {
+type Props = {
+  volunteerId: Id;
+  canWithdrawSuggestions?: boolean;
+};
+
+export default function VolunteerOpportunities({ volunteerId, canWithdrawSuggestions = false }: Props) {
   const { t } = useTranslation();
   const { isAuthorized } = useAuth();
 
@@ -93,7 +98,16 @@ export default function VolunteerOpportunities({ volunteerId }: { volunteerId: I
                 onMarkAsPast={() => handleMarkAsPast(opportunity.id)}
               />
             ) : (
-              <AccordionOpportunity key={opportunity.id} opportunity={opportunity} currentStatus={currentTabStatus} />
+              <AccordionOpportunity
+                key={opportunity.id}
+                opportunity={opportunity}
+                currentStatus={currentTabStatus}
+                onWithdraw={
+                  canWithdrawSuggestions && currentTabStatus === OpportunityVolunteerStatusType.PENDING
+                    ? () => handleNotAMatch(opportunity.id)
+                    : undefined
+                }
+              />
             ),
           )
         )}

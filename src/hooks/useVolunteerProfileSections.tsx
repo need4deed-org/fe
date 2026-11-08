@@ -17,11 +17,12 @@ import { VolunteerProfile, VolunteerProfileRef } from "@/components/Dashboard/Pr
 import { VolunteerProfileDocument } from "@/components/Dashboard/Profile/sections/VolunteerProfileDocument";
 import { IconName } from "@/components/Dashboard/Profile/types";
 import { useDeleteVolunteer } from "@/hooks/useDeleteVolunteer";
+import { useGetCurrentAgent } from "@/hooks/useGetCurrentAgent";
 import { useGetOpportunity } from "@/hooks/useGetOpportunity";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { useRequestVolunteerSuggestion } from "@/hooks/useRequestVolunteerSuggestion";
 import { useSuggestVolunteerOpportunity } from "@/hooks/useSuggestVolunteerOpportunity";
-import { ApiVolunteerGet, OpportunityVolunteerStatusType, UserRole } from "need4deed-sdk";
+import { ApiOpportunityGetList, ApiVolunteerGet, OpportunityVolunteerStatusType, UserRole } from "need4deed-sdk";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -35,6 +36,8 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
   const { isAuthorized, isOwnProfile } = useAuth(volunteer?.person.id);
   const hasEditingRights = isAuthorized || isOwnProfile;
   const isAgent = useCurrentUser()?.role === UserRole.AGENT;
+  const { agentIds } = useGetCurrentAgent();
+  const ownsVolunteer = isAgent && !!volunteer?.ownerAgentId && agentIds.includes(volunteer.ownerAgentId);
 
   const contactDetailsRef = useRef<EditableSectionRef>(null);
   const volunteerProfileRef = useRef<VolunteerProfileRef>(null);
@@ -57,6 +60,11 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
     router.push(`/${i18n.language}/dashboard/opportunities/${opportunityId}`);
   }, ["opportunity-volunteers", String(opportunityId)]);
 
+  const { mutate: ngoSuggest, isPending: isNgoSuggesting } = useSuggestVolunteerOpportunity(
+    () => setIsRequestMenuOpen(false),
+    ["volunteer-opportunities", String(volunteer?.id)],
+  );
+
   const {
     requestSuggestion,
     isPending: isRequestPending,
@@ -71,6 +79,18 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
   if (!volunteer) return null;
 
   const volunteerFullName = `${volunteer.person.firstName} ${volunteer.person.lastName}`;
+
+  const handleRequestSelect = (opportunity: Pick<ApiOpportunityGetList, "id" | "title">) => {
+    if (ownsVolunteer) {
+      ngoSuggest({
+        opportunityId: Number(opportunity.id),
+        volunteerId: volunteer.id,
+        status: OpportunityVolunteerStatusType.PENDING,
+      });
+      return;
+    }
+    requestSuggestion(opportunity.title);
+  };
 
   const handleSuggestConfirm = (emailNote: string) => {
     if (!opportunityId) return;
@@ -111,8 +131,10 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
           : () => router.push(`/${i18n.language}/dashboard/opportunities?volunteer=${volunteer.id}`),
       }),
       ...(isAgent && {
-        headerButtonName: t("dashboard.volunteerProfile.requestSuggest.button"),
-        headerButtonDisabled: isContactLoading || isRequestPending,
+        headerButtonName: ownsVolunteer
+          ? t("dashboard.volunteerProfile.suggestButtonName")
+          : t("dashboard.volunteerProfile.requestSuggest.button"),
+        headerButtonDisabled: ownsVolunteer ? isNgoSuggesting : isContactLoading || isRequestPending,
         onHeaderButtonClick: () => setIsRequestMenuOpen(true),
       }),
       subComponent: (
@@ -121,10 +143,10 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
             <RequestSuggestMenu
               isOpen={isRequestMenuOpen}
               onClose={() => setIsRequestMenuOpen(false)}
-              onSelect={requestSuggestion}
+              onSelect={handleRequestSelect}
             />
           )}
-          <VolunteerOpportunities volunteerId={volunteer.id} />
+          <VolunteerOpportunities volunteerId={volunteer.id} canWithdrawSuggestions={ownsVolunteer} />
           {isSuggestDialogOpen && (
             <SuggestDialog
               volunteerName={volunteerFullName}

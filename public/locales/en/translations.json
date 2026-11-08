@@ -900,7 +900,10 @@
         "markAsPastSuccess": "Marked as past",
         "emptyState": "No items in this category yet",
         "unmatchDialogTitle": "Confirm Unmatch",
-        "unmatchDialogDescription": "Are you sure you want to unmatch this volunteer?"
+        "unmatchDialogDescription": "Are you sure you want to unmatch this volunteer?",
+        "withdraw": "Withdraw suggestion",
+        "withdrawDialogTitle": "Withdraw this suggestion?",
+        "withdrawDialogDescription": "The pending suggestion is removed from the volunteer and the opportunity."
       },
       "contactDetails": {
         "title": "Contact details",
