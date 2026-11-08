@@ -1,7 +1,8 @@
 import axios from "axios";
 import { TFunction } from "i18next";
+import { ApplicationEmailFailureReason } from "need4deed-sdk";
 
-type ApiErrorBody = { error?: string; message?: string };
+type ApiErrorBody = { error?: string; message?: string; reason?: string };
 
 const ERROR_CLASS_KEYS: Record<string, string> = {
   AlreadyUsedTokenError: "message.apiErrors.alreadyUsedToken",
@@ -60,10 +61,30 @@ export function isSilentError(error: unknown): boolean {
   return isLeavingPage && axios.isAxiosError(error) && !error.response;
 }
 
+function getEmailNotSentBody(error: unknown): ApiErrorBody | undefined {
+  if (!axios.isAxiosError(error) || error.response?.status !== 502) return undefined;
+  const data: unknown = error.response.data;
+  if (typeof data !== "object" || data === null) return undefined;
+  const body = data as ApiErrorBody;
+  return body.error === "EmailNotSentError" ? body : undefined;
+}
+
 export function isEmailNoteNotSent(error: unknown): boolean {
-  if (!axios.isAxiosError(error) || error.response?.status !== 502) return false;
-  const data = error.response.data as ApiErrorBody | undefined;
-  return data?.error === "EmailNotSentError";
+  return getEmailNotSentBody(error) !== undefined;
+}
+
+const APPLICATION_EMAIL_FAILURE_KEYS: Record<ApplicationEmailFailureReason, string> = {
+  "attachment-unavailable": "message.applicationEmailNotSentAttachment",
+  "email-invalid": "message.applicationEmailNotSentInvalid",
+  "render-failed": "message.applicationEmailNotSentRender",
+  "send-failed": "message.applicationEmailNotSentSend",
+};
+
+export function getApplicationEmailFailureKey(error: unknown): string {
+  const reason = getEmailNotSentBody(error)?.reason;
+  return reason && Object.hasOwn(APPLICATION_EMAIL_FAILURE_KEYS, reason)
+    ? APPLICATION_EMAIL_FAILURE_KEYS[reason as ApplicationEmailFailureReason]
+    : "message.applicationEmailNotSent";
 }
 
 export function withEmailNote<T extends { emailNote?: string }>(payload: T): T {

@@ -2,6 +2,7 @@ import { apiPathVolunteer } from "@/config/constants";
 import { communicationsQuery } from "@/hooks/useCommunicationTracker";
 import { useGetQuery } from "@/hooks/useGetQuery";
 import { useMutationQuery } from "@/hooks/useMutationQuery";
+import { getApplicationEmailFailureKey } from "@/utils/apiErrors";
 import { useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import {
@@ -15,7 +16,6 @@ import {
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
-import { getApplicationEmailFailureKey } from "./utils";
 
 type UploadMetaResponse = {
   url: string;
@@ -118,7 +118,7 @@ export const useSendApplicationEmail = (volunteerId: number) => {
           toast.error(t("message.applicationEmailJustSent"));
           return true;
         case 502:
-          toast.error(t(getApplicationEmailFailureKey(error.response.data)));
+          toast.error(t(getApplicationEmailFailureKey(error)));
           return true;
         default:
           return false;
