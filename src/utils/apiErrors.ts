@@ -61,11 +61,11 @@ export function isSilentError(error: unknown): boolean {
   return isLeavingPage && axios.isAxiosError(error) && !error.response;
 }
 
-function getEmailNotSentBody(error: unknown): Partial<ApiVolunteerApplicationEmailError> | undefined {
+function getEmailNotSentBody(error: unknown): ApiErrorBody | undefined {
   if (!axios.isAxiosError(error) || error.response?.status !== 502) return undefined;
   const data: unknown = error.response.data;
   if (typeof data !== "object" || data === null) return undefined;
-  const body = data as Partial<ApiVolunteerApplicationEmailError>;
+  const body = data as ApiErrorBody;
   return body.error === "EmailNotSentError" ? body : undefined;
 }
 
@@ -73,7 +73,7 @@ export function isEmailNoteNotSent(error: unknown): boolean {
   return getEmailNotSentBody(error) !== undefined;
 }
 
-const APPLICATION_EMAIL_FAILURE_KEYS: Record<ApplicationEmailFailureReason, string> = {
+const applicationEmailFailureKeys: Record<ApplicationEmailFailureReason, string> = {
   "attachment-unavailable": "message.applicationEmailNotSentAttachment",
   "email-invalid": "message.applicationEmailNotSentInvalid",
   "render-failed": "message.applicationEmailNotSentRender",
@@ -81,12 +81,12 @@ const APPLICATION_EMAIL_FAILURE_KEYS: Record<ApplicationEmailFailureReason, stri
 };
 
 const isApplicationEmailFailureReason = (reason: unknown): reason is ApplicationEmailFailureReason =>
-  typeof reason === "string" && Object.prototype.hasOwnProperty.call(APPLICATION_EMAIL_FAILURE_KEYS, reason);
+  typeof reason === "string" && Object.prototype.hasOwnProperty.call(applicationEmailFailureKeys, reason);
 
 export function getApplicationEmailFailureKey(error: unknown): string {
-  const reason = getEmailNotSentBody(error)?.reason;
+  const reason = (getEmailNotSentBody(error) as Partial<ApiVolunteerApplicationEmailError> | undefined)?.reason;
   return isApplicationEmailFailureReason(reason)
-    ? APPLICATION_EMAIL_FAILURE_KEYS[reason]
+    ? applicationEmailFailureKeys[reason]
     : "message.applicationEmailNotSent";
 }
 
