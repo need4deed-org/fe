@@ -1,8 +1,8 @@
 import axios from "axios";
 import { TFunction } from "i18next";
-import { ApplicationEmailFailureReason } from "need4deed-sdk";
+import { ApiVolunteerApplicationEmailError, ApplicationEmailFailureReason } from "need4deed-sdk";
 
-type ApiErrorBody = { error?: string; message?: string; reason?: string };
+type ApiErrorBody = { error?: string; message?: string };
 
 const ERROR_CLASS_KEYS: Record<string, string> = {
   AlreadyUsedTokenError: "message.apiErrors.alreadyUsedToken",
@@ -61,11 +61,11 @@ export function isSilentError(error: unknown): boolean {
   return isLeavingPage && axios.isAxiosError(error) && !error.response;
 }
 
-function getEmailNotSentBody(error: unknown): ApiErrorBody | undefined {
+function getEmailNotSentBody(error: unknown): Partial<ApiVolunteerApplicationEmailError> | undefined {
   if (!axios.isAxiosError(error) || error.response?.status !== 502) return undefined;
   const data: unknown = error.response.data;
   if (typeof data !== "object" || data === null) return undefined;
-  const body = data as ApiErrorBody;
+  const body = data as Partial<ApiVolunteerApplicationEmailError>;
   return body.error === "EmailNotSentError" ? body : undefined;
 }
 
@@ -80,10 +80,13 @@ const APPLICATION_EMAIL_FAILURE_KEYS: Record<ApplicationEmailFailureReason, stri
   "send-failed": "message.applicationEmailNotSentSend",
 };
 
+const isApplicationEmailFailureReason = (reason: unknown): reason is ApplicationEmailFailureReason =>
+  typeof reason === "string" && Object.prototype.hasOwnProperty.call(APPLICATION_EMAIL_FAILURE_KEYS, reason);
+
 export function getApplicationEmailFailureKey(error: unknown): string {
   const reason = getEmailNotSentBody(error)?.reason;
-  return reason && Object.hasOwn(APPLICATION_EMAIL_FAILURE_KEYS, reason)
-    ? APPLICATION_EMAIL_FAILURE_KEYS[reason as ApplicationEmailFailureReason]
+  return isApplicationEmailFailureReason(reason)
+    ? APPLICATION_EMAIL_FAILURE_KEYS[reason]
     : "message.applicationEmailNotSent";
 }
 
