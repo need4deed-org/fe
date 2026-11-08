@@ -785,7 +785,8 @@
         "commentText": "Requested for {{opportunity}}",
         "contactMissing": "Request could not be sent: need4deed contact not found",
         "success": "Request sent",
-        "noOpportunities": "You have no opportunities yet"
+        "noOpportunities": "You have no opportunities yet",
+        "ownerSuccess": "Request sent to the volunteer's NGO"
       },
       "suggestDialog": {
         "title": "Suggest to this volunteer?",

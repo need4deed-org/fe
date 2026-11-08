@@ -791,7 +791,8 @@
         "commentText": "Angefragt für {{opportunity}}",
         "contactMissing": "Anfrage konnte nicht gesendet werden: need4deed-Kontakt nicht gefunden",
         "success": "Anfrage gesendet",
-        "noOpportunities": "Du hast noch keine ehrenamtlichen Tätigkeiten"
+        "noOpportunities": "Du hast noch keine ehrenamtlichen Tätigkeiten",
+        "ownerSuccess": "Anfrage an die Einrichtung der freiwilligen Person gesendet"
       },
       "suggestDialog": {
         "title": "Diesem*r Ehrenamtlichen vorschlagen?",

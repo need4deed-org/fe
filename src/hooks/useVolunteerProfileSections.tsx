@@ -23,6 +23,7 @@ import { useGetMultiOpportunityLinked } from "@/hooks/useGetMultiOpportunityLink
 import { useGetQuery } from "@/hooks/useGetQuery";
 import { useGetOpportunity } from "@/hooks/useGetOpportunity";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { useRequestOwnerSuggestion } from "@/hooks/useRequestOwnerSuggestion";
 import { useRequestVolunteerSuggestion } from "@/hooks/useRequestVolunteerSuggestion";
 import { useSuggestVolunteerOpportunity } from "@/hooks/useSuggestVolunteerOpportunity";
 import {
@@ -47,13 +48,14 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
   const isAgent = useCurrentUser()?.role === UserRole.AGENT;
   const { agentIds, isLoading: isAgentLoading } = useGetCurrentAgent();
   const ownsVolunteer = isAgent && !!volunteer?.ownerAgentId && agentIds.includes(volunteer.ownerAgentId);
+  const ownedByOtherNgo = isAgent && !!volunteer?.ownerAgentId && !ownsVolunteer;
   const { allLinkedOpportunities } = useGetMultiOpportunityLinked(ownsVolunteer ? agentIds : []);
   const ownOpportunityIds = (allLinkedOpportunities as ApiOpportunityGetList[]).map(({ id }) => Number(id));
   const { data: volunteerMatches = [] } = useGetQuery<ApiOpportunityVolunteerGet[]>({
     queryKey: ["volunteer-opportunities", String(volunteer?.id)],
     apiPath: `${apiPathVolunteer}/${volunteer?.id}/opportunity-linked`,
     staleTime: cacheTTL,
-    enabled: ownsVolunteer,
+    enabled: ownsVolunteer || ownedByOtherNgo,
   });
   const linkedOpportunityIds = volunteerMatches.map(({ opportunityId }) => Number(opportunityId));
   const [pendingSuggestion, setPendingSuggestion] = useState<Pick<ApiOpportunityGetList, "id" | "title">>();
@@ -88,7 +90,10 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
     requestSuggestion,
     isPending: isRequestPending,
     isContactLoading,
-  } = useRequestVolunteerSuggestion(volunteer?.id ?? 0, isAgent && !ownsVolunteer && !!volunteer);
+  } = useRequestVolunteerSuggestion(volunteer?.id ?? 0, isAgent && !volunteer?.ownerAgentId && !!volunteer);
+  const { mutate: requestOwnerSuggestion, isPending: isOwnerRequestPending } = useRequestOwnerSuggestion(
+    volunteer?.id ?? 0,
+  );
 
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const { mutate: deleteMutate, isPending: isDeleting } = useDeleteVolunteer(volunteer?.id ?? 0, () => {
@@ -102,6 +107,10 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
   const handleRequestSelect = (opportunity: Pick<ApiOpportunityGetList, "id" | "title">) => {
     if (ownsVolunteer) {
       setPendingSuggestion(opportunity);
+      return;
+    }
+    if (ownedByOtherNgo) {
+      requestOwnerSuggestion({ opportunityId: Number(opportunity.id) });
       return;
     }
     requestSuggestion(opportunity.title);
@@ -160,7 +169,12 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
           ? t("dashboard.volunteerProfile.suggestButtonName")
           : t("dashboard.volunteerProfile.requestSuggest.button"),
         headerButtonDisabled:
-          isAgentLoading || (ownsVolunteer ? isNgoSuggesting : isContactLoading || isRequestPending),
+          isAgentLoading ||
+          (ownsVolunteer
+            ? isNgoSuggesting
+            : ownedByOtherNgo
+              ? isOwnerRequestPending
+              : isContactLoading || isRequestPending),
         onHeaderButtonClick: () => setIsRequestMenuOpen(true),
       }),
       subComponent: (
@@ -170,8 +184,8 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
               isOpen={isRequestMenuOpen}
               onClose={() => setIsRequestMenuOpen(false)}
               onSelect={handleRequestSelect}
-              excludeOpportunityIds={ownsVolunteer ? linkedOpportunityIds : []}
-              openOnly={ownsVolunteer}
+              excludeOpportunityIds={volunteer.ownerAgentId ? linkedOpportunityIds : []}
+              openOnly={Boolean(volunteer.ownerAgentId)}
             />
           )}
           {pendingSuggestion && (
