@@ -19,8 +19,12 @@ export function RegistrationLink({ agentId }: { agentId: number }) {
 
   const handleCopy = async () => {
     if (!link) return;
-    await navigator.clipboard.writeText(link.link);
-    toast.success(t(`${i18nPrefix}.copied`));
+    try {
+      await navigator.clipboard.writeText(link.link);
+      toast.success(t(`${i18nPrefix}.copied`));
+    } catch {
+      toast.error(t(`${i18nPrefix}.copyFailed`));
+    }
   };
 
   return (

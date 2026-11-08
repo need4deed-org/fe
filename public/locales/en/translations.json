@@ -1970,8 +1970,10 @@
           "create": "Create link",
           "copy": "Copy link",
           "copied": "Link copied",
-          "expires": "Valid until {{date}}"
-        }
+          "expires": "Valid until {{date}}",
+          "copyFailed": "Could not copy the link. Please select and copy it."
+        },
+        "inactive": "{{title}} (inactive)"
       }
     }
   },
@@ -2516,7 +2518,10 @@
       "title": "Check your email",
       "description": "We sent a confirmation link to your email address. Click it to continue setting up your account."
     },
-    "ngoLinkNotice": "You're signing up through an NGO's link: you'll belong to that NGO."
+    "ngoLinkNotice": "You're signing up through an NGO's link: your new account will belong to that NGO.",
+    "ngoLinkExpired": "This registration link is no longer valid. Please ask the NGO for a new one.",
+    "ngoLinkSignedIn": "You're already signed in. NGO registration links are for new accounts only.",
+    "toDashboard": "Go to your dashboard"
   },
   "formInput": {
     "showPassword": "Show password",

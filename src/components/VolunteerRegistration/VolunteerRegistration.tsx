@@ -27,6 +27,15 @@ import {
 import { AccountRegistrationData, defaultAccountRegistrationData } from "@/components/AgentRegistration/types";
 import Link from "next/link";
 
+const isLinkTokenExpired = (token: string): boolean => {
+  try {
+    const payload = JSON.parse(atob(token.split(".")[1].replace(/-/g, "+").replace(/_/g, "/")));
+    return typeof payload.exp !== "number" || payload.exp * 1000 <= Date.now();
+  } catch {
+    return true;
+  }
+};
+
 export function VolunteerRegistration() {
   const { t, i18n } = useTranslation();
   const router = useRouter();
@@ -39,9 +48,9 @@ export function VolunteerRegistration() {
   const [isSuccess, setIsSuccess] = useState(false);
 
   useEffect(() => {
-    if (!user) return;
+    if (!user || ngoToken) return;
     router.push(`/${i18n.language}${DashboardRoutes.Home}`);
-  }, [user, i18n.language, router]);
+  }, [user, ngoToken, i18n.language, router]);
 
   const update = (fields: Partial<AccountRegistrationData>) => {
     setFormData((prev) => ({ ...prev, ...fields }));
@@ -85,6 +94,31 @@ export function VolunteerRegistration() {
       setIsSubmitting(false);
     }
   };
+
+  const ngoLinkMessage = ngoToken
+    ? user
+      ? t("volunteerRegistration.ngoLinkSignedIn")
+      : isLinkTokenExpired(ngoToken)
+        ? t("volunteerRegistration.ngoLinkExpired")
+        : undefined
+    : undefined;
+
+  if (ngoLinkMessage) {
+    return (
+      <PageLayout>
+        <PageWrapper>
+          <Card>
+            <SuccessWrapper>
+              <SuccessText>{ngoLinkMessage}</SuccessText>
+              {user && (
+                <Link href={`/${i18n.language}${DashboardRoutes.Home}`}>{t("volunteerRegistration.toDashboard")}</Link>
+              )}
+            </SuccessWrapper>
+          </Card>
+        </PageWrapper>
+      </PageLayout>
+    );
+  }
 
   if (user) {
     return null;

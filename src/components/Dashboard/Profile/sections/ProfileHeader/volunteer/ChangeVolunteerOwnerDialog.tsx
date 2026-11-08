@@ -25,7 +25,7 @@ export const ChangeVolunteerOwnerDialog = ({ dialog, currentOwner }: Props) => {
     }
   }, [isOpen]);
 
-  const agents = useAgentSearch(search, isOpen);
+  const { agents } = useAgentSearch(search, isOpen);
 
   const pinned = [currentOwner, picked].filter((agent): agent is AgentOption => Boolean(agent));
   const listed = [...pinned, ...agents].filter(

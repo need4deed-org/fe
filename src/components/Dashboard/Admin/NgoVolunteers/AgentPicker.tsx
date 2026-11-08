@@ -19,7 +19,7 @@ type Props = {
 export function AgentPicker({ selected, onSelect }: Props) {
   const { t } = useTranslation();
   const [search, setSearch] = useState("");
-  const agents = useAgentSearch(search, !selected);
+  const { agents, isSettled } = useAgentSearch(search, !selected);
 
   if (selected) {
     return (
@@ -42,13 +42,13 @@ export function AgentPicker({ selected, onSelect }: Props) {
       <InputWrapper>
         <FormInput placeHolder={t(`${i18nPrefix}.search`)} value={search} onInputChange={setSearch} />
       </InputWrapper>
-      {search.trim().length >= 2 && agents.length === 0 && (
+      {isSettled && agents.length === 0 && (
         <Paragraph color="var(--color-grey-500)">{t(`${i18nPrefix}.noResults`)}</Paragraph>
       )}
       <Results>
         {agents.map((agent) => (
           <ResultButton key={agent.id} type="button" onClick={() => onSelect(agent)}>
-            {agent.title}
+            {agent.isInactive ? t(`${i18nPrefix}.inactive`, { title: agent.title }) : agent.title}
           </ResultButton>
         ))}
       </Results>
