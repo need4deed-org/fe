@@ -799,7 +799,9 @@
         "messageEnd": "vorgeschlagen haben. Es erscheint in seinem*ihrem Profil unter \"Angefragt\".",
         "confirm": "Vorschlagen",
         "cancel": "Abbrechen",
-        "success": "Vorschlag erfolgreich gesendet"
+        "success": "Vorschlag erfolgreich gesendet",
+        "ngoSuggestTitle": "{{volunteer}} für {{opportunity}} vorschlagen?",
+        "ngoSuggestDescription": "Die freiwillige Person sieht den Vorschlag als offen."
       },
       "activities": "Aktivitäten",
       "volunteerHeader": {
@@ -910,7 +912,8 @@
         "unmatchDialogDescription": "Möchten Sie die Zuordnung für diese Person wirklich aufheben?",
         "withdraw": "Vorschlag zurückziehen",
         "withdrawDialogTitle": "Diesen Vorschlag zurückziehen?",
-        "withdrawDialogDescription": "Der offene Vorschlag wird bei der freiwilligen Person und beim Gesuch entfernt."
+        "withdrawDialogDescription": "Der offene Vorschlag wird bei der freiwilligen Person und beim Gesuch entfernt.",
+        "withdrawSuccess": "Vorschlag zurückgezogen"
       },
       "contactDetails": {
         "title": "Kontaktdaten",

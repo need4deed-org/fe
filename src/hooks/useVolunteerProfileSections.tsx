@@ -17,12 +17,21 @@ import { VolunteerProfile, VolunteerProfileRef } from "@/components/Dashboard/Pr
 import { VolunteerProfileDocument } from "@/components/Dashboard/Profile/sections/VolunteerProfileDocument";
 import { IconName } from "@/components/Dashboard/Profile/types";
 import { useDeleteVolunteer } from "@/hooks/useDeleteVolunteer";
+import { apiPathVolunteer, cacheTTL } from "@/config/constants";
 import { useGetCurrentAgent } from "@/hooks/useGetCurrentAgent";
+import { useGetMultiOpportunityLinked } from "@/hooks/useGetMultiOpportunityLinked";
+import { useGetQuery } from "@/hooks/useGetQuery";
 import { useGetOpportunity } from "@/hooks/useGetOpportunity";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { useRequestVolunteerSuggestion } from "@/hooks/useRequestVolunteerSuggestion";
 import { useSuggestVolunteerOpportunity } from "@/hooks/useSuggestVolunteerOpportunity";
-import { ApiOpportunityGetList, ApiVolunteerGet, OpportunityVolunteerStatusType, UserRole } from "need4deed-sdk";
+import {
+  ApiOpportunityGetList,
+  ApiOpportunityVolunteerGet,
+  ApiVolunteerGet,
+  OpportunityVolunteerStatusType,
+  UserRole,
+} from "need4deed-sdk";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -36,8 +45,18 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
   const { isAuthorized, isOwnProfile } = useAuth(volunteer?.person.id);
   const hasEditingRights = isAuthorized || isOwnProfile;
   const isAgent = useCurrentUser()?.role === UserRole.AGENT;
-  const { agentIds } = useGetCurrentAgent();
+  const { agentIds, isLoading: isAgentLoading } = useGetCurrentAgent();
   const ownsVolunteer = isAgent && !!volunteer?.ownerAgentId && agentIds.includes(volunteer.ownerAgentId);
+  const { allLinkedOpportunities } = useGetMultiOpportunityLinked(ownsVolunteer ? agentIds : []);
+  const ownOpportunityIds = (allLinkedOpportunities as ApiOpportunityGetList[]).map(({ id }) => Number(id));
+  const { data: volunteerMatches = [] } = useGetQuery<ApiOpportunityVolunteerGet[]>({
+    queryKey: ["volunteer-opportunities", String(volunteer?.id)],
+    apiPath: `${apiPathVolunteer}/${volunteer?.id}/opportunity-linked`,
+    staleTime: cacheTTL,
+    enabled: ownsVolunteer,
+  });
+  const linkedOpportunityIds = volunteerMatches.map(({ opportunityId }) => Number(opportunityId));
+  const [pendingSuggestion, setPendingSuggestion] = useState<Pick<ApiOpportunityGetList, "id" | "title">>();
 
   const contactDetailsRef = useRef<EditableSectionRef>(null);
   const volunteerProfileRef = useRef<VolunteerProfileRef>(null);
@@ -60,16 +79,16 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
     router.push(`/${i18n.language}/dashboard/opportunities/${opportunityId}`);
   }, ["opportunity-volunteers", String(opportunityId)]);
 
-  const { mutate: ngoSuggest, isPending: isNgoSuggesting } = useSuggestVolunteerOpportunity(
-    () => setIsRequestMenuOpen(false),
-    ["volunteer-opportunities", String(volunteer?.id)],
-  );
+  const { mutate: ngoSuggest, isPending: isNgoSuggesting } = useSuggestVolunteerOpportunity(undefined, [
+    "volunteer-opportunities",
+    String(volunteer?.id),
+  ]);
 
   const {
     requestSuggestion,
     isPending: isRequestPending,
     isContactLoading,
-  } = useRequestVolunteerSuggestion(volunteer?.id ?? 0, isAgent && !!volunteer);
+  } = useRequestVolunteerSuggestion(volunteer?.id ?? 0, isAgent && !ownsVolunteer && !!volunteer);
 
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const { mutate: deleteMutate, isPending: isDeleting } = useDeleteVolunteer(volunteer?.id ?? 0, () => {
@@ -82,14 +101,20 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
 
   const handleRequestSelect = (opportunity: Pick<ApiOpportunityGetList, "id" | "title">) => {
     if (ownsVolunteer) {
-      ngoSuggest({
-        opportunityId: Number(opportunity.id),
-        volunteerId: volunteer.id,
-        status: OpportunityVolunteerStatusType.PENDING,
-      });
+      setPendingSuggestion(opportunity);
       return;
     }
     requestSuggestion(opportunity.title);
+  };
+
+  const handleNgoSuggestConfirm = () => {
+    if (!pendingSuggestion) return;
+    ngoSuggest({
+      opportunityId: Number(pendingSuggestion.id),
+      volunteerId: volunteer.id,
+      status: OpportunityVolunteerStatusType.PENDING,
+    });
+    setPendingSuggestion(undefined);
   };
 
   const handleSuggestConfirm = (emailNote: string) => {
@@ -134,7 +159,8 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
         headerButtonName: ownsVolunteer
           ? t("dashboard.volunteerProfile.suggestButtonName")
           : t("dashboard.volunteerProfile.requestSuggest.button"),
-        headerButtonDisabled: ownsVolunteer ? isNgoSuggesting : isContactLoading || isRequestPending,
+        headerButtonDisabled:
+          isAgentLoading || (ownsVolunteer ? isNgoSuggesting : isContactLoading || isRequestPending),
         onHeaderButtonClick: () => setIsRequestMenuOpen(true),
       }),
       subComponent: (
@@ -144,9 +170,25 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
               isOpen={isRequestMenuOpen}
               onClose={() => setIsRequestMenuOpen(false)}
               onSelect={handleRequestSelect}
+              excludeOpportunityIds={ownsVolunteer ? linkedOpportunityIds : []}
+              openOnly={ownsVolunteer}
             />
           )}
-          <VolunteerOpportunities volunteerId={volunteer.id} canWithdrawSuggestions={ownsVolunteer} />
+          {pendingSuggestion && (
+            <ConfirmationDialog
+              title={t("dashboard.volunteerProfile.suggestDialog.ngoSuggestTitle", {
+                volunteer: volunteerFullName,
+                opportunity: pendingSuggestion.title,
+              })}
+              message={t("dashboard.volunteerProfile.suggestDialog.ngoSuggestDescription")}
+              onCancel={() => setPendingSuggestion(undefined)}
+              onConfirm={handleNgoSuggestConfirm}
+            />
+          )}
+          <VolunteerOpportunities
+            volunteerId={volunteer.id}
+            withdrawableOpportunityIds={ownsVolunteer ? ownOpportunityIds : []}
+          />
           {isSuggestDialogOpen && (
             <SuggestDialog
               volunteerName={volunteerFullName}
