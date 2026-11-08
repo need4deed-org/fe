@@ -24,6 +24,7 @@ test("parses comma CSV with headers in any order and case", () => {
   assert.deepEqual(result, {
     status: "ok",
     rows: [{ firstName: "Anna", lastName: "Berg", email: "anna@x.de", postcode: "10115", phone: "+49 30 1" }],
+    lines: [2],
   });
 });
 
@@ -32,6 +33,7 @@ test("parses semicolon CSV with quotes, a BOM and CRLF", () => {
   assert.deepEqual(result, {
     status: "ok",
     rows: [{ firstName: "Müller; Jo", email: "jo@x.de", postcode: "01067" }],
+    lines: [2],
   });
 });
 
@@ -50,4 +52,25 @@ test("reports missing required columns", () => {
 
 test("reports a file without data rows", () => {
   assert.deepEqual(parseVolunteerCsv("firstName,email,postcode\n"), { status: "empty" });
+});
+
+test("keeps file line numbers across blank lines and quoted line breaks", () => {
+  const result = parseVolunteerCsv('firstName,email,postcode\n\n"Anna\nMarie",anna@x.de,10115\nBo,bo@x.de,10117\n');
+  assert.equal(result.status, "ok");
+  assert.deepEqual(result.lines, [3, 5]);
+  assert.equal(result.rows[0].firstName, "Anna\nMarie");
+  assert.equal(result.rows[1].firstName, "Bo");
+});
+
+test("detects the delimiter outside quoted header cells", () => {
+  const result = parseVolunteerCsv('"first, name";email;postcode\nAnna;a@x.de;10115\n');
+  assert.equal(result.status, "missing-columns");
+  assert.deepEqual(result.columns, ["firstName"]);
+});
+
+test("reports a repeated column", () => {
+  assert.deepEqual(parseVolunteerCsv("firstName,email,email,postcode\nA,a@x.de,b@x.de,10115\n"), {
+    status: "duplicate-columns",
+    columns: ["email"],
+  });
 });

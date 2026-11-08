@@ -10,6 +10,7 @@ export const useImportVolunteers = (agentId: number, onReport: (report: ApiVolun
   useMutationQuery<ApiVolunteerImportPost, { data: ApiVolunteerImportResult }>({
     mutationFn: async (payload) => (await axios.post(`${apiPathAgent}/${agentId}/volunteer-import`, payload)).data,
     noToast: true,
+    queryKeyToInvalidate: ["volunteers"],
     onSuccessCallback: (response) => onReport(response.data),
     onErrorCallback: (error) => {
       const report = reportOf(error);
