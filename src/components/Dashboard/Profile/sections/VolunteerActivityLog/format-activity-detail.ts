@@ -1,5 +1,5 @@
 import { TFunction } from "i18next";
-import { ApiVolunteerAuditLogGet, OpportunityVolunteerStatusType, VolunteerAuditLogType } from "need4deed-sdk";
+import { ApiVolunteerAuditLogGet, VolunteerAuditLogType } from "need4deed-sdk";
 import { parseMatchDetail } from "./parse-match-detail";
 
 export function formatActivityDetail({ type, detail }: ApiVolunteerAuditLogGet, t: TFunction): string {
@@ -8,8 +8,8 @@ export function formatActivityDetail({ type, detail }: ApiVolunteerAuditLogGet, 
     return detail;
   }
 
-  const label = (status: OpportunityVolunteerStatusType) =>
-    t(`dashboard.volunteerProfile.opportunitiesSec.tabs.${status}`);
+  const label = (status: string) =>
+    t(`dashboard.volunteerProfile.opportunitiesSec.tabs.${status}`, { defaultValue: status });
   const { title } = match;
 
   switch (match.kind) {
@@ -17,7 +17,7 @@ export function formatActivityDetail({ type, detail }: ApiVolunteerAuditLogGet, 
       const linked = match.status
         ? t("dashboard.volunteerActivityLog.linkedAs", { title, status: label(match.status) })
         : t("dashboard.volunteerActivityLog.linked", { title });
-      return match.imported ? `${linked} (${t("dashboard.volunteerActivityLog.imported")})` : linked;
+      return match.imported ? t("dashboard.volunteerActivityLog.imported", { entry: linked }) : linked;
     }
     case "removed":
       return t("dashboard.volunteerActivityLog.removed", { title, from: label(match.from) });

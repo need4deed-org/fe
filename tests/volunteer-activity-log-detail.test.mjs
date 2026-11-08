@@ -87,14 +87,24 @@ test("parses Removed and status changes with and without from", () => {
   });
 });
 
-test("keeps quotes inside titles", () => {
+test("keeps quotes and line breaks inside titles", () => {
+  assert.equal(parseMatchDetail('Linked to opportunity "Foo\nBar" as opp-pending.').title, "Foo\nBar");
   assert.equal(parseMatchDetail('Linked to opportunity "Café "Am Park"" as opp-pending.').title, 'Café "Am Park"');
   assert.equal(parseMatchDetail('Opportunity "say "hi" to" status changed to opp-past.').title, 'say "hi" to');
 });
 
-test("returns null for unknown statuses and other sentences", () => {
+test("accepts unknown opp-* statuses", () => {
+  assert.deepEqual(parseMatchDetail('Linked to opportunity "X" as opp-on-hold.'), {
+    kind: "linked",
+    title: "X",
+    status: "opp-on-hold",
+    imported: false,
+  });
+});
+
+test("returns null for non-opp statuses and other sentences", () => {
   for (const detail of [
-    'Linked to opportunity "X" as opp-weird.',
+    'Linked to opportunity "X" as matched.',
     'Removed from opportunity "X" (was matched).',
     'Opportunity "X" status changed from opp-pending to done.',
     'Linked to opportunity "X" as opp-matched',
@@ -142,8 +152,18 @@ test("shows the raw detail for other entry types and unparsed sentences", () => 
     'Linked to opportunity "X".',
   );
   assert.equal(
-    formatActivityDetail(matchEntry('Linked to opportunity "X" as opp-weird.'), t),
-    'Linked to opportunity "X" as opp-weird.',
+    formatActivityDetail(matchEntry('Linked to opportunity "X" as matched.'), t),
+    'Linked to opportunity "X" as matched.',
+  );
+});
+
+test("an unknown opp-* status keeps the sentence translated and shows the raw id", () => {
+  assert.equal(
+    formatActivityDetail(
+      matchEntry('Opportunity "X" status changed from opp-matched to opp-on-hold.'),
+      i18n.getFixedT("de"),
+    ),
+    "„X“: Zugeordnet → opp-on-hold",
   );
 });
 

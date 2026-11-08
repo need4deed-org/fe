@@ -1,43 +1,30 @@
-import { OpportunityVolunteerStatusType } from "need4deed-sdk";
-
 export type MatchDetail =
-  | { kind: "linked"; title: string; status?: OpportunityVolunteerStatusType; imported: boolean }
-  | { kind: "removed"; title: string; from: OpportunityVolunteerStatusType }
-  | {
-      kind: "statusChanged";
-      title: string;
-      from?: OpportunityVolunteerStatusType;
-      to: OpportunityVolunteerStatusType;
-    };
+  | { kind: "linked"; title: string; status?: string; imported: boolean }
+  | { kind: "removed"; title: string; from: string }
+  | { kind: "statusChanged"; title: string; from?: string; to: string };
 
-const LINKED = /^Linked to opportunity "(.*)"(?: as (\S+))?( \(imported\))?\.$/;
-const REMOVED = /^Removed from opportunity "(.*)" \(was (\S+)\)\.$/;
-const STATUS_CHANGED = /^Opportunity "(.*)" status changed(?: from (\S+))? to (\S+)\.$/;
-
-const statuses: string[] = Object.values(OpportunityVolunteerStatusType);
-
-const isStatus = (value: string): value is OpportunityVolunteerStatusType => statuses.includes(value);
-
-const isOptionalStatus = (value: string | undefined): value is OpportunityVolunteerStatusType | undefined =>
-  value === undefined || isStatus(value);
+const STATUS = "(opp-[a-z-]+)";
+const LINKED = new RegExp(`^Linked to opportunity "(.*)"(?: as ${STATUS})?( \\(imported\\))?\\.$`, "s");
+const REMOVED = new RegExp(`^Removed from opportunity "(.*)" \\(was ${STATUS}\\)\\.$`, "s");
+const STATUS_CHANGED = new RegExp(`^Opportunity "(.*)" status changed(?: from ${STATUS})? to ${STATUS}\\.$`, "s");
 
 export function parseMatchDetail(detail: string): MatchDetail | null {
   const linked = LINKED.exec(detail);
   if (linked) {
     const [, title, status, imported] = linked;
-    return isOptionalStatus(status) ? { kind: "linked", title, status, imported: Boolean(imported) } : null;
+    return { kind: "linked", title, status, imported: Boolean(imported) };
   }
 
   const removed = REMOVED.exec(detail);
   if (removed) {
     const [, title, from] = removed;
-    return isStatus(from) ? { kind: "removed", title, from } : null;
+    return { kind: "removed", title, from };
   }
 
   const statusChanged = STATUS_CHANGED.exec(detail);
   if (statusChanged) {
     const [, title, from, to] = statusChanged;
-    return isOptionalStatus(from) && isStatus(to) ? { kind: "statusChanged", title, from, to } : null;
+    return { kind: "statusChanged", title, from, to };
   }
 
   return null;

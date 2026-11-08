@@ -1350,7 +1350,7 @@
       "removed": "Removed from \"{{title}}\" (was {{from}})",
       "statusChanged": "\"{{title}}\": status changed to {{to}}",
       "statusChangedFrom": "\"{{title}}\": {{from}} → {{to}}",
-      "imported": "imported, date approximate"
+      "imported": "{{entry}} (imported, date approximate)"
     },
     "profile": {
       "loading": "Loading profile...",

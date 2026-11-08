@@ -1362,7 +1362,7 @@
       "removed": "Entfernt aus „{{title}}“ (war {{from}})",
       "statusChanged": "„{{title}}“: Status geändert zu {{to}}",
       "statusChangedFrom": "„{{title}}“: {{from}} → {{to}}",
-      "imported": "importiert, Datum ungefähr"
+      "imported": "{{entry}} (importiert, Datum ungefähr)"
     },
     "profile": {
       "loading": "Profil wird geladen...",
