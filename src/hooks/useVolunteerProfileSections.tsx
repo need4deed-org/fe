@@ -47,15 +47,22 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
   const hasEditingRights = isAuthorized || isOwnProfile;
   const isAgent = useCurrentUser()?.role === UserRole.AGENT;
   const { agentIds, isLoading: isAgentLoading } = useGetCurrentAgent();
-  const ownsVolunteer = isAgent && !!volunteer?.ownerAgentId && agentIds.includes(volunteer.ownerAgentId);
-  const ownedByOtherNgo = isAgent && !!volunteer?.ownerAgentId && !ownsVolunteer;
+  const requestMode: "own" | "other" | "platform" | undefined =
+    !isAgent || isAgentLoading || !volunteer
+      ? undefined
+      : !volunteer.ownerAgentId
+        ? "platform"
+        : agentIds.includes(volunteer.ownerAgentId)
+          ? "own"
+          : "other";
+  const ownsVolunteer = requestMode === "own";
   const { allLinkedOpportunities } = useGetMultiOpportunityLinked(ownsVolunteer ? agentIds : []);
   const ownOpportunityIds = (allLinkedOpportunities as ApiOpportunityGetList[]).map(({ id }) => Number(id));
-  const { data: volunteerMatches = [] } = useGetQuery<ApiOpportunityVolunteerGet[]>({
+  const { data: volunteerMatches = [], isLoading: isMatchesLoading } = useGetQuery<ApiOpportunityVolunteerGet[]>({
     queryKey: ["volunteer-opportunities", String(volunteer?.id)],
     apiPath: `${apiPathVolunteer}/${volunteer?.id}/opportunity-linked`,
     staleTime: cacheTTL,
-    enabled: ownsVolunteer || ownedByOtherNgo,
+    enabled: ownsVolunteer,
   });
   const linkedOpportunityIds = volunteerMatches.map(({ opportunityId }) => Number(opportunityId));
   const [pendingSuggestion, setPendingSuggestion] = useState<Pick<ApiOpportunityGetList, "id" | "title">>();
@@ -90,7 +97,7 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
     requestSuggestion,
     isPending: isRequestPending,
     isContactLoading,
-  } = useRequestVolunteerSuggestion(volunteer?.id ?? 0, isAgent && !volunteer?.ownerAgentId && !!volunteer);
+  } = useRequestVolunteerSuggestion(volunteer?.id ?? 0, requestMode === "platform");
   const { mutate: requestOwnerSuggestion, isPending: isOwnerRequestPending } = useRequestOwnerSuggestion(
     volunteer?.id ?? 0,
   );
@@ -109,7 +116,7 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
       setPendingSuggestion(opportunity);
       return;
     }
-    if (ownedByOtherNgo) {
+    if (requestMode === "other") {
       requestOwnerSuggestion({ opportunityId: Number(opportunity.id) });
       return;
     }
@@ -169,12 +176,10 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
           ? t("dashboard.volunteerProfile.suggestButtonName")
           : t("dashboard.volunteerProfile.requestSuggest.button"),
         headerButtonDisabled:
-          isAgentLoading ||
-          (ownsVolunteer
-            ? isNgoSuggesting
-            : ownedByOtherNgo
-              ? isOwnerRequestPending
-              : isContactLoading || isRequestPending),
+          !requestMode ||
+          (requestMode === "own" && (isNgoSuggesting || isMatchesLoading)) ||
+          (requestMode === "other" && isOwnerRequestPending) ||
+          (requestMode === "platform" && (isContactLoading || isRequestPending)),
         onHeaderButtonClick: () => setIsRequestMenuOpen(true),
       }),
       subComponent: (
@@ -184,8 +189,8 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
               isOpen={isRequestMenuOpen}
               onClose={() => setIsRequestMenuOpen(false)}
               onSelect={handleRequestSelect}
-              excludeOpportunityIds={volunteer.ownerAgentId ? linkedOpportunityIds : []}
-              openOnly={Boolean(volunteer.ownerAgentId)}
+              excludeOpportunityIds={ownsVolunteer ? linkedOpportunityIds : []}
+              openOnly={requestMode === "own" || requestMode === "other"}
             />
           )}
           {pendingSuggestion && (
