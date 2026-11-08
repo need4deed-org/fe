@@ -14,7 +14,6 @@ import {
   ApiOpportunityVolunteerGet,
   ApiVolunteerGet,
   OpportunityVolunteerStatusType,
-  UserRole,
   VolunteerStateEngagementType,
   VolunteerStateMatchType,
 } from "need4deed-sdk";
@@ -38,7 +37,6 @@ import { useEngagementStatusDialog } from "./useEngagementStatusDialog";
 import { useVolunteerOwnerDialog } from "./useVolunteerOwnerDialog";
 import { useVolunteerTypeDialog } from "./useVolunteerTypeDialog";
 import { useAuth } from "@/hooks/useAuth";
-import { useCurrentUser } from "@/hooks/useCurrentUser";
 
 function deriveMatchStatus(statuses: OpportunityVolunteerStatusType[]): VolunteerStateMatchType {
   if (
@@ -59,18 +57,20 @@ export const VolunteerHeader = ({ volunteer }: Props) => {
   const { t, i18n } = useTranslation();
   const dialog = useEngagementStatusDialog(volunteer);
   const volunteerTypeDialog = useVolunteerTypeDialog(volunteer);
-  const { isAuthorized, isOwnProfile, isVolunteer } = useAuth(volunteer.person.id);
+  const { isAdmin, isAuthorized, isOwnProfile, isVolunteer, isUserLoaded } = useAuth(volunteer.person.id);
   const hasEditingRights = isAuthorized || isOwnProfile;
-  const isAdmin = useCurrentUser()?.role === UserRole.ADMIN;
+  const canSeeOwner = isUserLoaded && !isVolunteer;
   const ownerDialog = useVolunteerOwnerDialog(volunteer);
 
   const { data: owner } = useGetQuery<ApiAgentGet>({
     queryKey: ["agent", String(volunteer.ownerAgentId)],
     apiPath: `${apiPathAgent}/${volunteer.ownerAgentId}`,
     staleTime: cacheTTL,
-    enabled: Boolean(volunteer.ownerAgentId) && !isVolunteer,
+    enabled: Boolean(volunteer.ownerAgentId) && canSeeOwner,
   });
-  const currentOwner = owner?.id ? { id: owner.id, title: owner.title } : undefined;
+  const currentOwner = volunteer.ownerAgentId
+    ? { id: volunteer.ownerAgentId, title: owner?.title || `#${volunteer.ownerAgentId}` }
+    : undefined;
 
   const { data: opportunitiesData } = useGetQuery<ApiOpportunityVolunteerGet[]>({
     queryKey: ["volunteer-opportunities", String(volunteer.id)],
@@ -157,14 +157,14 @@ export const VolunteerHeader = ({ volunteer }: Props) => {
         }
       />
 
-      {!isVolunteer && (
+      {canSeeOwner && (
         <StatusRowField
           title={t("dashboard.volunteerProfile.volunteerHeader.owner_title")}
           extra={
             currentOwner ? (
               <AgentLink href={`/${i18n.language}/dashboard/agents/${currentOwner.id}`}>{currentOwner.title}</AgentLink>
             ) : (
-              !volunteer.ownerAgentId && <span>{t("dashboard.volunteerProfile.volunteerHeader.owner_none")}</span>
+              <span>{t("dashboard.volunteerProfile.volunteerHeader.owner_none")}</span>
             )
           }
           action={
