@@ -19,7 +19,7 @@ export const VolunteerActivityLog = ({ volunteer }: VolunteerActivityLogProps) =
   return (
     <SectionWrapper>
       {activities.length === 0 ? (
-        <SectionEmptyState>{t("dashboard.activityLog.emptyState")}</SectionEmptyState>
+        <SectionEmptyState>{t("dashboard.volunteerActivityLog.emptyState")}</SectionEmptyState>
       ) : (
         <VolunteerActivityLogTableContainer>
           <Table>
