@@ -1968,7 +1968,22 @@
       },
       "nav": {
         "domains": "Domains",
-        "stats": "Statistiken"
+        "stats": "Statistiken",
+        "ngoVolunteers": "Freiwillige der Einrichtungen"
+      },
+      "ngoVolunteers": {
+        "helper": "Wähle eine Einrichtung, um ihren Freiwilligen einen Registrierungslink zu geben oder ihre bestehenden Freiwilligen zu importieren.",
+        "search": "Einrichtungen suchen",
+        "noResults": "Keine Einrichtung gefunden",
+        "change": "Einrichtung ändern",
+        "link": {
+          "title": "Registrierungslink",
+          "helper": "Freiwillige, die sich über diesen Link registrieren, gehören zur Einrichtung. Ein Link gilt 90 Tage; ein neuer Link hebt ältere nicht auf. Wird die Einrichtung inaktiv gesetzt, funktionieren alle ihre Links nicht mehr.",
+          "create": "Link erstellen",
+          "copy": "Link kopieren",
+          "copied": "Link kopiert",
+          "expires": "Gültig bis {{date}}"
+        }
       }
     }
   },
@@ -2855,7 +2870,8 @@
     "checkEmail": {
       "title": "Prüfen Sie Ihre E-Mail",
       "description": "Wir haben einen Bestätigungslink an Ihre E-Mail-Adresse gesendet. Klicken Sie darauf, um die Einrichtung Ihres Kontos fortzusetzen."
-    }
+    },
+    "ngoLinkNotice": "Du registrierst dich über den Link einer Einrichtung: Du gehörst dann zu dieser Einrichtung."
   },
   "formInput": {
     "showPassword": "Passwort anzeigen",

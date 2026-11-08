@@ -6,7 +6,7 @@ import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { getLocalizedErrorMessage } from "@/utils/apiErrors";
 import axios from "axios";
 import { UserRole } from "need4deed-sdk";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { validateStep } from "@/components/AgentRegistration/helpers";
@@ -30,6 +30,7 @@ import Link from "next/link";
 export function VolunteerRegistration() {
   const { t, i18n } = useTranslation();
   const router = useRouter();
+  const ngoToken = useSearchParams().get("ngo") || undefined;
   const user = useCurrentUser(true);
   const [formData, setFormData] = useState<AccountRegistrationData>(defaultAccountRegistrationData);
   const [errors, setErrors] = useState<Partial<Record<keyof AccountRegistrationData, string>>>({});
@@ -74,6 +75,7 @@ export function VolunteerRegistration() {
           lastName: formData.lastName,
           phone: formData.phone,
         },
+        ...(ngoToken && { ngoToken }),
       });
 
       setIsSuccess(true);
@@ -109,6 +111,7 @@ export function VolunteerRegistration() {
         <Card>
           <PageTitle>{t("volunteerRegistration.title")}</PageTitle>
           <PageSubtitle>{t("volunteerRegistration.subtitle")}</PageSubtitle>
+          {ngoToken && <PageSubtitle>{t("volunteerRegistration.ngoLinkNotice")}</PageSubtitle>}
 
           <ExistingUserWrapper>
             <ExistingUserText>{t("volunteerRegistration.alreadyUser")}</ExistingUserText>
