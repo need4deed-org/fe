@@ -1,18 +1,27 @@
 "use client";
-import { apiPathVolunteer, cacheTTL, defaultAvatarVolunteerProfile, EMPTY_PLACEHOLDER_VALUE } from "@/config/constants";
+import {
+  apiPathAgent,
+  apiPathVolunteer,
+  cacheTTL,
+  defaultAvatarVolunteerProfile,
+  EMPTY_PLACEHOLDER_VALUE,
+} from "@/config/constants";
 import { useGetQuery } from "@/hooks/useGetQuery";
 import { formatDateTime, getImageUrl } from "@/utils";
 import { CheckCircleIcon } from "@phosphor-icons/react";
 import {
+  ApiAgentGet,
   ApiOpportunityVolunteerGet,
   ApiVolunteerGet,
   OpportunityVolunteerStatusType,
+  UserRole,
   VolunteerStateEngagementType,
   VolunteerStateMatchType,
 } from "need4deed-sdk";
 import Image from "next/image";
 import { useTranslation } from "react-i18next";
 import {
+  AgentLink,
   AvatarContainer,
   createVolunteerTypeLabelMap,
   EditButton,
@@ -22,11 +31,14 @@ import {
   StatusRowField,
 } from "../common";
 import { ChangeEngagementStatusDialog } from "./ChangeEngagementStatusDialog";
+import { ChangeVolunteerOwnerDialog } from "./ChangeVolunteerOwnerDialog";
 import { ChangeVolunteerTypeDialog } from "./ChangeVolunteerTypeDialog";
 import { createEngagementLabelMap, createMatchLabelMap } from "./constants";
 import { useEngagementStatusDialog } from "./useEngagementStatusDialog";
+import { useVolunteerOwnerDialog } from "./useVolunteerOwnerDialog";
 import { useVolunteerTypeDialog } from "./useVolunteerTypeDialog";
 import { useAuth } from "@/hooks/useAuth";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
 
 function deriveMatchStatus(statuses: OpportunityVolunteerStatusType[]): VolunteerStateMatchType {
   if (
@@ -44,11 +56,21 @@ type Props = {
 };
 
 export const VolunteerHeader = ({ volunteer }: Props) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const dialog = useEngagementStatusDialog(volunteer);
   const volunteerTypeDialog = useVolunteerTypeDialog(volunteer);
-  const { isAuthorized, isOwnProfile } = useAuth(volunteer.person.id);
+  const { isAuthorized, isOwnProfile, isVolunteer } = useAuth(volunteer.person.id);
   const hasEditingRights = isAuthorized || isOwnProfile;
+  const isAdmin = useCurrentUser()?.role === UserRole.ADMIN;
+  const ownerDialog = useVolunteerOwnerDialog(volunteer);
+
+  const { data: owner } = useGetQuery<ApiAgentGet>({
+    queryKey: ["agent", String(volunteer.ownerAgentId)],
+    apiPath: `${apiPathAgent}/${volunteer.ownerAgentId}`,
+    staleTime: cacheTTL,
+    enabled: Boolean(volunteer.ownerAgentId) && !isVolunteer,
+  });
+  const currentOwner = owner?.id ? { id: owner.id, title: owner.title } : undefined;
 
   const { data: opportunitiesData } = useGetQuery<ApiOpportunityVolunteerGet[]>({
     queryKey: ["volunteer-opportunities", String(volunteer.id)],
@@ -90,6 +112,7 @@ export const VolunteerHeader = ({ volunteer }: Props) => {
         <>
           <ChangeEngagementStatusDialog dialog={dialog} />
           <ChangeVolunteerTypeDialog dialog={volunteerTypeDialog} />
+          {isAdmin && <ChangeVolunteerOwnerDialog dialog={ownerDialog} currentOwner={currentOwner} />}
         </>
       }
     >
@@ -133,6 +156,26 @@ export const VolunteerHeader = ({ volunteer }: Props) => {
           )
         }
       />
+
+      {!isVolunteer && (
+        <StatusRowField
+          title={t("dashboard.volunteerProfile.volunteerHeader.owner_title")}
+          extra={
+            currentOwner ? (
+              <AgentLink href={`/${i18n.language}/dashboard/agents/${currentOwner.id}`}>{currentOwner.title}</AgentLink>
+            ) : (
+              !volunteer.ownerAgentId && <span>{t("dashboard.volunteerProfile.volunteerHeader.owner_none")}</span>
+            )
+          }
+          action={
+            isAdmin && (
+              <EditButton onClick={ownerDialog.openDialog}>
+                {t("dashboard.volunteerProfile.volunteerHeader.change_owner")}
+              </EditButton>
+            )
+          }
+        />
+      )}
     </HeaderCard>
   );
 };
