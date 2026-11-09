@@ -178,7 +178,6 @@ const NavLabel = styled(Paragraph)`
   text-align: center;
   overflow-wrap: break-word;
   word-break: break-word;
-  white-space: pre-line;
   width: 100%;
 `;
 
