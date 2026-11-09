@@ -24,8 +24,7 @@ const BarContainer = styled.div`
   display: flex;
   flex-direction: column;
   position: sticky;
-  width: fit-content;
-  min-width: var(--dashboard-navigation-bar-container-width);
+  width: var(--dashboard-navigation-bar-container-width);
   top: 112px;
   left: 0;
   z-index: 0;

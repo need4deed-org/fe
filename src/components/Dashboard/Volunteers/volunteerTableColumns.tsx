@@ -18,7 +18,6 @@ const RESTRICTED_WIDTHS = {
   ...FULL_WIDTHS,
   name: COLUMN_WIDTH.LG,
   type: COLUMN_WIDTH.XXXL,
-  engagement: COLUMN_WIDTH.XXXL,
   matching: COLUMN_WIDTH.XXL,
   language: COLUMN_WIDTH.LG,
 };
