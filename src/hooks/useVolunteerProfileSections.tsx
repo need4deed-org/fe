@@ -23,7 +23,7 @@ import { useGetCurrentAgent } from "@/hooks/useGetCurrentAgent";
 import { useGetMultiOpportunityLinked } from "@/hooks/useGetMultiOpportunityLinked";
 import { useGetQuery } from "@/hooks/useGetQuery";
 import { useGetOpportunity } from "@/hooks/useGetOpportunity";
-import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { useCurrentUserQuery } from "@/hooks/useCurrentUser";
 import { useRequestOwnerSuggestion } from "@/hooks/useRequestOwnerSuggestion";
 import { useRequestVolunteerSuggestion } from "@/hooks/useRequestVolunteerSuggestion";
 import { useSuggestVolunteerOpportunity } from "@/hooks/useSuggestVolunteerOpportunity";
@@ -46,7 +46,7 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
   const searchParams = useSearchParams();
   const { isAuthorized, isOwnProfile } = useAuth(volunteer?.person.id);
   const hasEditingRights = isAuthorized || isOwnProfile;
-  const currentUser = useCurrentUser();
+  const { data: currentUser, isLoading: isCurrentUserLoading } = useCurrentUserQuery();
   const isAgent = currentUser?.role === UserRole.AGENT;
   const { agentIds, isLoading: isAgentLoading } = useGetCurrentAgent();
   const requestMode: "own" | "other" | "platform" | undefined =
@@ -63,7 +63,7 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
   );
   const ownOpportunityIds = (allLinkedOpportunities as ApiOpportunityGetList[]).map(({ id }) => Number(id));
   const isListRestricted = !currentUser || isAgent;
-  const isListableLoading = !currentUser || (isAgent && (isAgentLoading || isOwnOpportunitiesLoading));
+  const isListableLoading = isCurrentUserLoading || (isAgent && (isAgentLoading || isOwnOpportunitiesLoading));
   const { data: volunteerMatches = [], isLoading: isMatchesLoading } = useGetQuery<ApiOpportunityVolunteerGet[]>({
     queryKey: ["volunteer-opportunities", String(volunteer?.id)],
     apiPath: `${apiPathVolunteer}/${volunteer?.id}/opportunity-linked`,
