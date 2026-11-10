@@ -57,7 +57,7 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
           ? "own"
           : "other";
   const ownsVolunteer = requestMode === "own";
-  const { allLinkedOpportunities } = useGetMultiOpportunityLinked(ownsVolunteer ? agentIds : []);
+  const { allLinkedOpportunities } = useGetMultiOpportunityLinked(isAgent ? agentIds : []);
   const ownOpportunityIds = (allLinkedOpportunities as ApiOpportunityGetList[]).map(({ id }) => Number(id));
   const { data: volunteerMatches = [], isLoading: isMatchesLoading } = useGetQuery<ApiOpportunityVolunteerGet[]>({
     queryKey: ["volunteer-opportunities", String(volunteer?.id)],
@@ -209,6 +209,7 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
           <VolunteerOpportunities
             volunteerId={volunteer.id}
             withdrawableOpportunityIds={ownsVolunteer ? ownOpportunityIds : []}
+            listableOpportunityIds={isAgent ? ownOpportunityIds : undefined}
           />
           {isAuthorized && <RecommendedOpportunities volunteerId={volunteer.id} volunteerName={volunteerFullName} />}
           {isSuggestDialogOpen && (
