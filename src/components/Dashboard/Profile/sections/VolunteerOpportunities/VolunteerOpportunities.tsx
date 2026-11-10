@@ -19,12 +19,14 @@ type Props = {
   volunteerId: Id;
   withdrawableOpportunityIds?: number[];
   listableOpportunityIds?: number[];
+  isListableLoading?: boolean;
 };
 
 export default function VolunteerOpportunities({
   volunteerId,
   withdrawableOpportunityIds = [],
   listableOpportunityIds,
+  isListableLoading = false,
 }: Props) {
   const { t } = useTranslation();
   const { isAuthorized } = useAuth();
@@ -69,8 +71,9 @@ export default function VolunteerOpportunities({
     withdrawLink({ m2mId });
   };
 
-  const listedItems = listableOpportunityIds
-    ? visibleItems.filter(({ opportunityId }) => listableOpportunityIds.includes(Number(opportunityId)))
+  const listableIdSet = listableOpportunityIds && new Set(listableOpportunityIds);
+  const listedItems = listableIdSet
+    ? visibleItems.filter(({ opportunityId }) => listableIdSet.has(Number(opportunityId)))
     : visibleItems;
 
   const tabs = TAB_STATUS_ORDER.map((key, index) => ({
@@ -93,7 +96,7 @@ export default function VolunteerOpportunities({
     updateStatus({ m2mId, status: OpportunityVolunteerStatusType.PAST });
   };
 
-  if (isLoading) {
+  if (isLoading || isListableLoading) {
     return <VolunteerOpportunitiesContainer />;
   }
 

@@ -46,7 +46,8 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
   const searchParams = useSearchParams();
   const { isAuthorized, isOwnProfile } = useAuth(volunteer?.person.id);
   const hasEditingRights = isAuthorized || isOwnProfile;
-  const isAgent = useCurrentUser()?.role === UserRole.AGENT;
+  const currentUser = useCurrentUser();
+  const isAgent = currentUser?.role === UserRole.AGENT;
   const { agentIds, isLoading: isAgentLoading } = useGetCurrentAgent();
   const requestMode: "own" | "other" | "platform" | undefined =
     !isAgent || isAgentLoading || !volunteer
@@ -57,8 +58,12 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
           ? "own"
           : "other";
   const ownsVolunteer = requestMode === "own";
-  const { allLinkedOpportunities } = useGetMultiOpportunityLinked(isAgent ? agentIds : []);
+  const { allLinkedOpportunities, isLoading: isOwnOpportunitiesLoading } = useGetMultiOpportunityLinked(
+    isAgent ? agentIds : [],
+  );
   const ownOpportunityIds = (allLinkedOpportunities as ApiOpportunityGetList[]).map(({ id }) => Number(id));
+  const isListRestricted = !currentUser || isAgent;
+  const isListableLoading = !currentUser || (isAgent && (isAgentLoading || isOwnOpportunitiesLoading));
   const { data: volunteerMatches = [], isLoading: isMatchesLoading } = useGetQuery<ApiOpportunityVolunteerGet[]>({
     queryKey: ["volunteer-opportunities", String(volunteer?.id)],
     apiPath: `${apiPathVolunteer}/${volunteer?.id}/opportunity-linked`,
@@ -209,7 +214,8 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
           <VolunteerOpportunities
             volunteerId={volunteer.id}
             withdrawableOpportunityIds={ownsVolunteer ? ownOpportunityIds : []}
-            listableOpportunityIds={isAgent ? ownOpportunityIds : undefined}
+            listableOpportunityIds={isListRestricted ? ownOpportunityIds : undefined}
+            isListableLoading={isListableLoading}
           />
           {isAuthorized && <RecommendedOpportunities volunteerId={volunteer.id} volunteerName={volunteerFullName} />}
           {isSuggestDialogOpen && (
