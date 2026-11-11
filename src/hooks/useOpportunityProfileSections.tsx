@@ -47,7 +47,7 @@ export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | u
 
   const volunteerId = searchParams.get("volunteer") ?? undefined;
   const volunteer = useGetVolunteer(volunteerId);
-  const { isAlreadyMatched } = useGetVolunteerOpportunityLinked(opportunity?.id ?? 0, volunteerId);
+  const { isAlreadyMatched } = useGetVolunteerOpportunityLinked(opportunity?.id ?? 0, volunteerId, hasEditingRights);
 
   const { mutate: suggestMutate, isPending: isSuggesting } = useSuggestVolunteerOpportunity(() => {
     setIsSuggestDialogOpen(false);
