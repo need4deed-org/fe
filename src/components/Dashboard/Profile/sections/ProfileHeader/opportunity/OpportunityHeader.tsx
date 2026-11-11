@@ -8,7 +8,7 @@ import { EmptyPlaceholder } from "@/components/core/common/EmptyPlaceholder";
 import { EMPTY_PLACEHOLDER_VALUE } from "@/config/constants";
 import { formatDateTime } from "@/utils";
 import { QuestionIcon, ShootingStarIcon } from "@phosphor-icons/react";
-import { ApiOpportunityGet, UserRole } from "need4deed-sdk";
+import { ApiOpportunityGet } from "need4deed-sdk";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
@@ -25,7 +25,6 @@ import { ChangeOpportunityTypeDialog } from "./ChangeOpportunityTypeDialog/Chang
 import { createOpportunityStatusLabelMap, OpportunityManualStatusType } from "./constants";
 import { useOpportunityStatusDialog } from "./useOpportunityStatusDialog";
 import { useAuth } from "@/hooks/useAuth";
-import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { ChangeOpportunityAgentDialog } from "./ChangeOpportunityAgentDialog";
 import { useOpportunityAgentDialog } from "./useOpportunityAgentDialog";
 import { useGetCurrentAgent } from "@/hooks/useGetCurrentAgent";
@@ -36,10 +35,8 @@ type Props = {
 
 export const OpportunityHeader = ({ opportunity }: Props) => {
   const { isAuthorized, isOwnProfile } = useAuth({ agentId: opportunity.agent?.id });
-  const currentUser = useCurrentUser();
   const { currentAgents } = useGetCurrentAgent();
-  const canChangeStatus =
-    isAuthorized || (currentUser?.role === UserRole.AGENT && currentUser?.agentId === opportunity.agent?.id);
+  const canChangeStatus = isAuthorized || isOwnProfile;
   const { t, i18n } = useTranslation();
   const dialogStatus = useOpportunityStatusDialog(opportunity);
   const dialogAgent = useOpportunityAgentDialog(opportunity);
