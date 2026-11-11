@@ -36,6 +36,7 @@ type Props = {
 export const OpportunityHeader = ({ opportunity }: Props) => {
   const { isAuthorized, isOwnProfile } = useAuth({ agentId: opportunity.agent?.id });
   const { currentAgents } = useGetCurrentAgent();
+  const loadedAgents = currentAgents.filter(Boolean);
   const canChangeStatus = isAuthorized || isOwnProfile;
   const { t, i18n } = useTranslation();
   const dialogStatus = useOpportunityStatusDialog(opportunity);
@@ -66,7 +67,7 @@ export const OpportunityHeader = ({ opportunity }: Props) => {
         <>
           <ChangeOpportunityStatusDialog dialog={dialogStatus} isAuthorized={isAuthorized} />
           {isTypeOpen && <ChangeOpportunityTypeDialog onClose={() => setIsTypeOpen(false)} opportunity={opportunity} />}
-          <ChangeOpportunityAgentDialog dialog={dialogAgent} currentAgents={currentAgents} />
+          <ChangeOpportunityAgentDialog dialog={dialogAgent} currentAgents={loadedAgents} />
         </>
       }
     >
@@ -129,7 +130,7 @@ export const OpportunityHeader = ({ opportunity }: Props) => {
           title={t("dashboard.opportunityProfile.agent")}
           action={
             isOwnProfile &&
-            currentAgents.length > 1 && (
+            loadedAgents.length > 1 && (
               <EditButton onClick={dialogAgent.openDialog}>{t("dashboard.opportunityProfile.change_ngo")}</EditButton>
             )
           }
