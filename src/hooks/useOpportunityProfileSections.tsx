@@ -47,7 +47,7 @@ export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | u
 
   const volunteerId = searchParams.get("volunteer") ?? undefined;
   const volunteer = useGetVolunteer(volunteerId);
-  const { isAlreadyMatched, isLoading: isLinkedLoading } = useGetVolunteerOpportunityLinked(opportunity?.id ?? 0, {
+  const { isAlreadyMatched } = useGetVolunteerOpportunityLinked(opportunity?.id ?? 0, {
     volunteerId,
     enabled: hasEditingRights,
   });
@@ -153,8 +153,7 @@ export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | u
         iconName: IconName.UsersThree,
         title: t("dashboard.opportunityProfile.volunteersSec.title"),
         ...(isAuthorized &&
-          !isLinkedLoading &&
-          !isAlreadyMatched && {
+          isAlreadyMatched === false && {
             headerButtonName: volunteerId
               ? t("dashboard.opportunityProfile.volunteersSec.suggestButtonName")
               : t("dashboard.opportunityProfile.volunteersSec.findVolunteers"),
