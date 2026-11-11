@@ -27,6 +27,31 @@ test("a volunteer owns the profile with their personId", () => {
 
 test("an NGO user owns the profile with their agentId", () => {
   assert.equal(isOwnProfile({ role: UserRole.AGENT, agentId: 5 }, { agentId: 5 }), true);
+  assert.equal(isOwnProfile({ role: UserRole.AGENT, agentId: "5" }, { agentId: "5" }), true);
+});
+
+test("an NGO user owns the profiles of every NGO they're a member of", () => {
+  const viewer = {
+    role: UserRole.AGENT,
+    agentId: 5,
+    agentMemberships: [
+      { agentId: 5, agentTitle: "A" },
+      { agentId: 9, agentTitle: "B" },
+    ],
+  };
+  assert.equal(isOwnProfile(viewer, { agentId: 9 }), true);
+  assert.equal(isOwnProfile(viewer, { agentId: "9" }), true);
+  assert.equal(isOwnProfile(viewer, { agentId: 11 }), false);
+});
+
+test("a volunteer's agentMemberships never make them an NGO owner", () => {
+  assert.equal(
+    isOwnProfile(
+      { role: UserRole.VOLUNTEER, personId: 1, agentMemberships: [{ agentId: 9, agentTitle: "B" }] },
+      { agentId: 9 },
+    ),
+    false,
+  );
 });
 
 test("a volunteer whose personId equals the agent id doesn't own the agent", () => {
