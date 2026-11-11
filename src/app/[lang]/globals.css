@@ -662,6 +662,12 @@ html {
   --dashboard-login-checkbox-label-fontSize: 20px;
   --dashboard-login-forgot-password-label-fontWeight: 600;
   --dashboard-login-forgot-password-email-message-gap: 16px;
+  --dashboard-notification-badge-container-bottom: 10px;
+  --dashboard-notification-circle-border-radius: 20px;
+  --dashboard-notification-circle-padding: 0.1rem 0.5rem;
+  --dashboard-notification-font-size: 0.85rem;
+  --dashboard-notification-background-color: var(--color-red-600);
+  --dashboard-notification-text-color: var(--color-white);
   --dropdown-filters-content-accordion-padding: 2rem;
   --dropdown-filters-content-accordion-border: 2px solid var(--color-orchid);
   --dropdown-filters-content-accordion-border-radius: 20px;
@@ -1514,13 +1520,6 @@ html {
     --paginated-grid-pagination-number-width: 36px;
     --paginated-grid-pagination-number-height: 44px;
     --paginated-grid-pagination-number-border-radius: 6px;
-
-    --dashboard-notification-badge-container-bottom: 10px;
-    --dashboard-notification-circle-border-radius: 20px;
-    --dashboard-notification-circle-padding: 0.1rem 0.5rem;
-    --dashboard-notification-font-size: 0.85rem;
-    --dashboard-notification-background-color: var(--color-red-600);
-    --dashboard-notification-text-color: var(--color-white);
 
     --dashboard-home-container-padding: 40px 120px 100px 132px;
 

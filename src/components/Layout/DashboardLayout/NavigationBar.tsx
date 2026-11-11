@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import { Paragraph } from "@/components/styled/text";
-import { DashboardRoutes } from "@/config/constants";
+import { DashboardRoutes, ScreenTypes } from "@/config/constants";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import {
   BookOpenTextIcon,
@@ -19,6 +19,7 @@ import { ElementType, useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { NotificationBadge } from "./NotificationBadge";
 import { UserRole } from "need4deed-sdk";
+import { useScreenType } from "@/context/DeviceContext";
 
 const BarContainer = styled.div`
   display: flex;
@@ -176,8 +177,6 @@ const StyledParagraph = ({ label, isSelected }: StyledParagraphProps) => {
 
 const NavLabel = styled(Paragraph)`
   text-align: center;
-  overflow-wrap: break-word;
-  word-break: break-word;
   width: 100%;
 `;
 
@@ -189,15 +188,20 @@ interface BarOptions {
 }
 
 export default function NavigationBar() {
+  const [isMoreOpen, setIsMoreOpen] = useState(false);
+
   const { t, i18n } = useTranslation();
   const currentPathname = usePathname();
   const user = useCurrentUser();
+  const navigationRef = useRef<HTMLDivElement>(null);
+  const screenSize = useScreenType();
+
+  const isMobile = screenSize === ScreenTypes.MOBILE;
   const isAgent = user?.role === UserRole.AGENT;
   const isVolunteer = user?.role === UserRole.VOLUNTEER;
   const canSeeStaffNav = !isAgent && !isVolunteer;
   const isStaff = user?.role === UserRole.COORDINATOR || user?.role === UserRole.ADMIN;
-  const navigationRef = useRef<HTMLDivElement>(null);
-  const [isMoreOpen, setIsMoreOpen] = useState(false);
+  const showAbbreviatedLabel = isMobile && i18n.language === "de";
 
   const userInitials = user?.fullName
     ? user.fullName
@@ -215,13 +219,17 @@ export default function NavigationBar() {
       ? []
       : [
           {
-            label: t("dashboard.home.sidebar.volunteers"),
+            label: showAbbreviatedLabel
+              ? t("dashboard.home.sidebar.volunteersShort")
+              : t("dashboard.home.sidebar.volunteers"),
             Icon: UserCheckIcon,
             route: DashboardRoutes.Volunteers,
           },
         ]),
     {
-      label: t("dashboard.home.sidebar.opportunities"),
+      label: showAbbreviatedLabel
+        ? t("dashboard.home.sidebar.opportunitiesShort")
+        : t("dashboard.home.sidebar.opportunities"),
       Icon: ShootingStarIcon,
       route: DashboardRoutes.Opportunities,
     },
@@ -268,12 +276,7 @@ export default function NavigationBar() {
     },
   ];
 
-  const coordinatorPrimaryRoutes = [
-    DashboardRoutes.Home,
-    DashboardRoutes.Volunteers,
-    DashboardRoutes.Opportunities,
-    DashboardRoutes.Posts,
-  ];
+  const coordinatorPrimaryRoutes = [DashboardRoutes.Home, DashboardRoutes.Volunteers, DashboardRoutes.Opportunities];
   const hasMoreMenu = canSeeStaffNav;
   const moreOptions = hasMoreMenu ? options.filter(({ route }) => !coordinatorPrimaryRoutes.includes(route)) : [];
   const moreIsSelected = moreOptions.some(({ route }) => {
