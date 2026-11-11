@@ -29,7 +29,7 @@ export const OpportunityVolunteers = ({
 
   const queryKey = ["opportunity-volunteers", String(opportunityId)];
 
-  const { data, isLoading } = useGetVolunteerOpportunityLinked(opportunityId);
+  const { data, isLoading } = useGetVolunteerOpportunityLinked(opportunityId, { enabled: hasEditingRights });
 
   const volunteers = useMemo(() => data ?? [], [data]);
 
