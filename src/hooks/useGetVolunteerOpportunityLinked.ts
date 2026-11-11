@@ -2,7 +2,10 @@ import { ApiVolunteerOpportunityGet, Id } from "need4deed-sdk";
 import { useGetQuery } from "./useGetQuery";
 import { apiPathOpportunity, cacheTTL } from "@/config/constants";
 
-export const useGetVolunteerOpportunityLinked = (opportunityId: Id, volunteerId?: string, enabled = true) => {
+export const useGetVolunteerOpportunityLinked = (
+  opportunityId: Id,
+  { volunteerId, enabled }: { volunteerId?: string; enabled: boolean },
+) => {
   const { data, isLoading } = useGetQuery<ApiVolunteerOpportunityGet[]>({
     queryKey: ["opportunity-volunteers", String(opportunityId)],
     apiPath: `${apiPathOpportunity}/${opportunityId}/volunteer-linked`,

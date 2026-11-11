@@ -27,8 +27,8 @@ export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | u
   const { t, i18n } = useTranslation();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { isAuthorized, isOwnProfile, isUserLoaded } = useAuth(opportunity?.agent?.id);
-  const hasEditingRights = isAuthorized || isOwnProfile;
+  const { isAuthorized, isAgent, isOwnProfile, isUserLoaded } = useAuth(opportunity?.agent?.id);
+  const hasEditingRights = isAuthorized || (isAgent && isOwnProfile);
 
   const opportunityContactDetailsRef = useRef<EditableSectionRef>(null);
   const accompanyingDetailsRef = useRef<EditableSectionRef>(null);
@@ -47,7 +47,10 @@ export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | u
 
   const volunteerId = searchParams.get("volunteer") ?? undefined;
   const volunteer = useGetVolunteer(volunteerId);
-  const { isAlreadyMatched } = useGetVolunteerOpportunityLinked(opportunity?.id ?? 0, volunteerId, hasEditingRights);
+  const { isAlreadyMatched, isLoading: isLinkedLoading } = useGetVolunteerOpportunityLinked(opportunity?.id ?? 0, {
+    volunteerId,
+    enabled: hasEditingRights,
+  });
 
   const { mutate: suggestMutate, isPending: isSuggesting } = useSuggestVolunteerOpportunity(() => {
     setIsSuggestDialogOpen(false);
@@ -150,6 +153,7 @@ export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | u
         iconName: IconName.UsersThree,
         title: t("dashboard.opportunityProfile.volunteersSec.title"),
         ...(isAuthorized &&
+          !isLinkedLoading &&
           !isAlreadyMatched && {
             headerButtonName: volunteerId
               ? t("dashboard.opportunityProfile.volunteersSec.suggestButtonName")
