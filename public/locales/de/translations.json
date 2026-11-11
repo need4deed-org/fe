@@ -654,7 +654,9 @@
       "sidebar": {
         "home": "Startseite",
         "volunteers": "Ehrenamtliche",
+        "volunteersShort": "EA",
         "opportunities": "Ehrenamtsbedarfe",
+        "opportunitiesShort": "EA-Bedarfe",
         "agents": "Einrichtungen / Projekte",
         "racs": "RACs",
         "posts": "Beiträge",
