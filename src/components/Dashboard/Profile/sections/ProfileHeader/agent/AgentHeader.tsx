@@ -30,7 +30,7 @@ export const AgentHeader = ({ agent }: Props) => {
   const dialogEngagementStatus = useAgentEngagementStatusDialog(agent);
   const dialogVolunteerSearch = useAgentVolunteerSearchDialog(agent);
   const { mutate: patchAgent } = useUpdateAgentStatus(agent.id);
-  const { isAuthorized, isOwnProfile } = useAuth(agent.id);
+  const { isAuthorized, isOwnProfile } = useAuth({ agentId: agent.id });
 
   const registeredDate = agent.createdAt ? formatDateTime(agent.createdAt) : EMPTY_PLACEHOLDER_VALUE;
   const subtitle = `${t("dashboard.agentProfile.registeredSince")} ${registeredDate}`;
