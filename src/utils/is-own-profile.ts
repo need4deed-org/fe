@@ -1,8 +1,8 @@
-import { Id, UserRole } from "need4deed-sdk";
+import { ApiUserGet, Id, UserRole } from "need4deed-sdk";
 
 export type ProfileOwner = { agentId?: Id; personId?: Id };
 
-type Viewer = { role?: UserRole; agentId?: number | null; personId?: number | null };
+type Viewer = Pick<ApiUserGet, "role" | "agentId" | "personId">;
 
 const isSameId = (own: number | null | undefined, other: Id | undefined) =>
   own != null && other != null && own === Number(other);
