@@ -22,7 +22,7 @@ import { useAuth } from "./useAuth";
 export const useAgentProfileSections = (agent: ApiAgentProfileGet | undefined) => {
   const { t, i18n } = useTranslation();
   const router = useRouter();
-  const { isAuthorized: isAdminOrCoordinator, isOwnProfile } = useAuth(agent?.id);
+  const { isAuthorized: isAdminOrCoordinator, isOwnProfile } = useAuth({ agentId: agent?.id });
   const hasEditingRights = isAdminOrCoordinator || isOwnProfile;
 
   const organisationDetailsRef = useRef<EditableSectionRef>(null);

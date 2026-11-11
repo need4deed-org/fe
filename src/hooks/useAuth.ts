@@ -1,7 +1,7 @@
 import { Id, UserRole } from "need4deed-sdk";
 import { useCurrentUser } from "./useCurrentUser";
 
-export const useAuth = (compareId?: Id) => {
+export const useAuth = (owner?: { agentId?: Id; personId?: Id }) => {
   const user = useCurrentUser();
   const personId = user?.personId;
   const agentId = user?.agentId;
@@ -11,7 +11,8 @@ export const useAuth = (compareId?: Id) => {
   const isAdmin = user?.role === UserRole.ADMIN;
   const isAuthorized = isAdmin || user?.role === UserRole.COORDINATOR;
   const isOwnProfile =
-    (user?.role === UserRole.VOLUNTEER && personId === compareId) || (isAgent && agentId === compareId);
+    (isVolunteer && personId !== undefined && personId === owner?.personId) ||
+    (isAgent && agentId !== undefined && agentId === owner?.agentId);
 
   return { isAdmin, isAuthorized, isOwnProfile, isAgent, isVolunteer, isUserLoaded: Boolean(user) };
 };

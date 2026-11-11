@@ -35,7 +35,7 @@ type Props = {
 };
 
 export const OpportunityHeader = ({ opportunity }: Props) => {
-  const { isAuthorized, isOwnProfile } = useAuth(opportunity.agent?.id);
+  const { isAuthorized, isOwnProfile } = useAuth({ agentId: opportunity.agent?.id });
   const currentUser = useCurrentUser();
   const { currentAgents } = useGetCurrentAgent();
   const canChangeStatus =
