@@ -17,6 +17,7 @@ import { CertificateStep } from "../steps/CertificateStep";
 import { Actions, Card, ErrorBanner, PageSubtitle, PageTitle, StepDescription, StepTitle, Wrapper } from "../styled";
 import { DefaultVolunteerRegistrationData, defaultVolunteerRegistrationData, TOTAL_COMPLETION_STEPS } from "../types";
 import { useGetQuery } from "@/hooks";
+import { useCheckPLZ } from "@/hooks/use-check-plz";
 import { formToApiAvailability } from "@/components/Dashboard/Profile/sections/VolunteerProfile/availabilityUtils";
 import { createMapping } from "@/components/Dashboard/Profile/sections/VolunteerProfile/mappingUtils";
 import {
@@ -100,6 +101,9 @@ export function ProfileCompletion() {
     },
   });
 
+  const postcode = formVolunteer.useStore((state) => state.values.addressPostcode);
+  const plz = useCheckPLZ(postcode ?? "");
+
   const showSubmitError = useCallback((message: string) => {
     setSubmitError(message);
     requestAnimationFrame(() => {
@@ -114,8 +118,9 @@ export function ProfileCompletion() {
   const handleNext = async () => {
     const errors = await formVolunteer.validateAllFields("submit");
     const hasStepErrors = Object.keys(errors).length > 0;
+    const isPLZBlocking = step === 1 && plz.blocksSubmit;
 
-    if (!hasStepErrors) {
+    if (!hasStepErrors && !isPLZBlocking) {
       setStep((s) => s + 1);
     }
   };
@@ -150,6 +155,7 @@ export function ProfileCompletion() {
           onSubmit={(e) => {
             e.preventDefault();
             e.stopPropagation();
+            if (plz.blocksSubmit) return;
             formVolunteer.handleSubmit();
           }}
         >
@@ -157,7 +163,7 @@ export function ProfileCompletion() {
             <div>
               <StepTitle>{t("volunteerRegistration.steps.address.title")}</StepTitle>
               <StepDescription>{t("volunteerRegistration.steps.address.description")}</StepDescription>
-              <AddressStep form={formVolunteer} optionLists={optionLists} />
+              <AddressStep form={formVolunteer} optionLists={optionLists} plzStatus={plz.status} />
             </div>
           )}
 
@@ -214,7 +220,7 @@ export function ProfileCompletion() {
                 backgroundcolor="var(--color-aubergine)"
                 textColor="var(--color-white)"
                 onClick={handleNext}
-                disabled={tokenMissing}
+                disabled={tokenMissing || (step === 1 && plz.blocksSubmit)}
               />
             )}
           </Actions>
