@@ -6,7 +6,8 @@ import { LanguageFields } from "@/components/forms/LanguageFields";
 import { TypePLZ } from "@/components/forms/types";
 import { isValidPLZ } from "@/components/forms/utils";
 import { EditableField } from "@/components/EditableField/EditableField";
-import { ErrorMessage, FormInput } from "@/components/core/common";
+import { ErrorMessage, FormInput, PLZChip } from "@/components/core/common";
+import { PLZCheckStatus } from "@/utils/openplz";
 import { ApiOptionLists, Lang } from "need4deed-sdk";
 import { useTranslation } from "react-i18next";
 import { FieldLabel, FieldWrapper } from "../styled";
@@ -17,9 +18,10 @@ import { useMemo } from "react";
 type Props = {
   form: ReturnType<typeof useForm<DefaultVolunteerRegistrationData>>;
   optionLists?: ApiOptionLists;
+  plzStatus: PLZCheckStatus;
 };
 
-export function AddressStep({ form, optionLists }: Props) {
+export function AddressStep({ form, optionLists, plzStatus }: Props) {
   const { t, i18n } = useTranslation();
 
   const locations = optionLists?.district;
@@ -53,6 +55,7 @@ export function AddressStep({ form, optionLists }: Props) {
               placeHolder="12345"
             />
             {field.state.meta.errors.length > 0 && <ErrorMessage message={field.state.meta.errors.join(", ")} />}
+            <PLZChip status={plzStatus} />
           </FieldWrapper>
         )}
       </form.Field>

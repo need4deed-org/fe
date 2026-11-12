@@ -1,5 +1,6 @@
 "use client";
-import { FormInput } from "@/components/core/common";
+import { FormInput, PLZChip } from "@/components/core/common";
+import { PLZCheckStatus } from "@/utils/openplz";
 import { useTranslation } from "react-i18next";
 import { FieldLabel, FieldWrapper, StepDescription, StepTitle } from "../styled";
 import { ProfileCompletionData } from "../types";
@@ -11,9 +12,10 @@ type Props = {
   onChange: (fields: Partial<AddressData>) => void;
   errors: Partial<Record<string, string>>;
   hideStreet?: boolean;
+  plzStatus: PLZCheckStatus;
 };
 
-export function AddressStep({ data, onChange, errors, hideStreet = false }: Props) {
+export function AddressStep({ data, onChange, errors, hideStreet = false, plzStatus }: Props) {
   const { t } = useTranslation();
 
   return (
@@ -45,6 +47,7 @@ export function AddressStep({ data, onChange, errors, hideStreet = false }: Prop
           placeHolder="12345"
           errors={errors.addressPostcode ? [errors.addressPostcode] : []}
         />
+        <PLZChip status={plzStatus} />
       </FieldWrapper>
     </div>
   );
