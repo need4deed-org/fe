@@ -19,6 +19,21 @@ export async function fetchPLZExists(
   return localities.length > 0;
 }
 
+type PLZLookupState = {
+  isCandidate: boolean;
+  isSettled: boolean;
+  isError: boolean;
+  exists?: boolean;
+};
+
+export function resolvePLZStatus({ isCandidate, isSettled, isError, exists }: PLZLookupState): PLZCheckStatus {
+  if (!isCandidate) return "idle";
+  if (!isSettled) return "pending";
+  if (isError) return "unavailable";
+  if (exists === undefined) return "pending";
+  return exists ? "known" : "unknown";
+}
+
 export function canSubmitPLZ(status: PLZCheckStatus): boolean {
   return status !== "unknown" && status !== "pending";
 }

@@ -17,7 +17,7 @@ function loadModule(file) {
   return loadedModule.exports;
 }
 
-const { fetchPLZExists, canSubmitPLZ, openPlzLocalitiesUrl } = loadModule("src/utils/openplz.ts");
+const { fetchPLZExists, canSubmitPLZ, resolvePLZStatus, openPlzLocalitiesUrl } = loadModule("src/utils/openplz.ts");
 
 const respond =
   (body, ok = true) =>
@@ -71,4 +71,22 @@ test("unknown and pending block submit; known, unavailable and idle don't", () =
   assert.equal(canSubmitPLZ("known"), true);
   assert.equal(canSubmitPLZ("unavailable"), true);
   assert.equal(canSubmitPLZ("idle"), true);
+});
+
+const lookup = (overrides) => ({ isCandidate: true, isSettled: true, isError: false, exists: undefined, ...overrides });
+
+test("a PLZ failing the range check is idle, whatever the lookup says", () => {
+  assert.equal(resolvePLZStatus(lookup({ isCandidate: false, exists: false })), "idle");
+  assert.equal(resolvePLZStatus(lookup({ isCandidate: false, isSettled: false })), "idle");
+});
+
+test("pending while typing or while the lookup runs", () => {
+  assert.equal(resolvePLZStatus(lookup({ isSettled: false, exists: true })), "pending");
+  assert.equal(resolvePLZStatus(lookup({})), "pending");
+});
+
+test("a failed lookup is unavailable; an answered one is known or unknown", () => {
+  assert.equal(resolvePLZStatus(lookup({ isError: true })), "unavailable");
+  assert.equal(resolvePLZStatus(lookup({ exists: true })), "known");
+  assert.equal(resolvePLZStatus(lookup({ exists: false })), "unknown");
 });
