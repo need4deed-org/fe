@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { DashboardLayout } from "@/components/Layout";
 import { apiPathOption, DEFAULT_MAX_COMMUTE_MINUTES, questionMark, ScreenTypes } from "@/config/constants";
@@ -18,7 +18,14 @@ import {
 } from "../common/CardsFilter/matchingPrefill";
 import { withOptionFilters } from "../common/CardsFilter/selectionFilters";
 import { opportunityFilterConfigs } from "./Filters/config";
-import { defaultOpportunityCardsFilter, MATCHING_OPPORTUNITY_STATUSES, STATUS_PARAM } from "./Filters/constants";
+import {
+  DEFAULT_NGO_OPPORTUNITY_STATUSES,
+  DEFAULT_OPPORTUNITY_STATUSES,
+  DEFAULT_STAFF_OPPORTUNITY_STATUSES,
+  defaultOpportunityCardsFilter,
+  MATCHING_OPPORTUNITY_STATUSES,
+  STATUS_PARAM,
+} from "./Filters/constants";
 import FiltersContent from "./Filters/FiltersContent";
 import { OpportunityCardsFilter } from "./Filters/types";
 import { createSelectedOpportunityFiltersAsFlatArray } from "./Filters/helpers";
@@ -42,13 +49,34 @@ export function Opportunities() {
   const { t } = useTranslation();
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [numOfOpps, setNumOfOpps] = useState(0);
-  const [cardsFilter, setCardsFilter] = useState(defaultOpportunityCardsFilter);
   const { data: apiFilterOptions } = useGetQuery<ApiOptionLists>({ queryKey: ["options"], apiPath: apiPathOption });
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
   const sortOrder = parseSortParam(searchParams.get(SORT_PARAM));
   const isAgent = user?.role === UserRole.AGENT;
+  const isVolunteer = user?.role === UserRole.VOLUNTEER;
+  const isStaff = user?.role === UserRole.COORDINATOR || user?.role === UserRole.ADMIN;
+  const isExplicitStatusClear = searchParams.getAll(STATUS_PARAM).includes("");
+  const roleDefaultStatuses = isAgent
+    ? DEFAULT_NGO_OPPORTUNITY_STATUSES
+    : isStaff
+      ? DEFAULT_STAFF_OPPORTUNITY_STATUSES
+      : [];
+  const defaultStatuses =
+    !isExplicitStatusClear && roleDefaultStatuses.length > 0 ? roleDefaultStatuses : DEFAULT_OPPORTUNITY_STATUSES;
+  const cardsFilter = useMemo(() => {
+    const baseFilters = apiFilterOptions
+      ? withOptionFilters(opportunityFilterConfigs, defaultOpportunityCardsFilter, apiFilterOptions)
+      : structuredClone(defaultOpportunityCardsFilter);
+    const filter = deserializeOpportunityFilters(baseFilters, searchParams);
+    if (!isExplicitStatusClear && !Object.values(filter.status).some(Boolean)) {
+      roleDefaultStatuses.forEach((status) => {
+        filter.status[status] = true;
+      });
+    }
+    return filter;
+  }, [apiFilterOptions, isExplicitStatusClear, roleDefaultStatuses, searchParams]);
   const tabs = !user
     ? []
     : [
@@ -122,12 +150,19 @@ export function Opportunities() {
     { value: "appointment-distant", label: t("dashboard.sortBy.appointmentDistant") },
   ];
 
+  const serializeFilterUpdate = (filter: OpportunityCardsFilter) => {
+    const params = new URLSearchParams(serializeOpportunityFilters(filter, searchParams));
+    if ((isAgent || isStaff) && !Object.values(filter.status).some(Boolean)) {
+      params.set(STATUS_PARAM, "");
+    }
+    return params;
+  };
+
   const handleFilterUpdate = (
     newFilter: OpportunityCardsFilter | ((prev: OpportunityCardsFilter) => OpportunityCardsFilter),
   ) => {
     const updatedFilter = typeof newFilter === "function" ? newFilter(cardsFilter) : newFilter;
-    setCardsFilter(updatedFilter);
-    router.push(pathname + questionMark + serializeOpportunityFilters(updatedFilter, searchParams), {
+    router.push(pathname + questionMark + serializeFilterUpdate(updatedFilter), {
       scroll: false,
     });
   };
@@ -135,7 +170,6 @@ export function Opportunities() {
   const handleRemoveVolunteerFilter = () => {
     const wasPrefilled = searchParams.has(PREFILLED_PARAM);
     const cleared = wasPrefilled ? getClearFilter(cardsFilter) : clearCommutePrefill(cardsFilter);
-    setCardsFilter(cleared);
     const params = new URLSearchParams(serializeOpportunityFilters(cleared, searchParams));
     params.delete("volunteer");
     params.delete(PREFILLED_PARAM);
@@ -147,30 +181,17 @@ export function Opportunities() {
       filterKey === QueryParamsKeys.COMMUTE_VOLUNTEER_ID
         ? clearCommutePrefill(cardsFilter)
         : getClearSingleFilter(cardsFilter, filterKey, parentKey);
-    setCardsFilter(cleared);
-    router.push(pathname + questionMark + serializeOpportunityFilters(cleared, searchParams), { scroll: false });
+    router.push(pathname + questionMark + serializeFilterUpdate(cleared), { scroll: false });
   };
 
   const handleClearAllFilters = () => {
     const cleared = getClearFilter(cardsFilter);
-    setCardsFilter(cleared);
-    const params = serializeOpportunityFilters(cleared, searchParams, false);
+    const params = serializeFilterUpdate(cleared);
     params.delete(SORT_PARAM);
     router.push(pathname + questionMark + params.toString(), { scroll: false });
   };
 
-  useEffect(() => {
-    if (!apiFilterOptions) return;
-
-    setCardsFilter((prev) => {
-      const baseFilters = withOptionFilters(opportunityFilterConfigs, prev, apiFilterOptions);
-
-      return deserializeOpportunityFilters(baseFilters, searchParams);
-    });
-  }, [apiFilterOptions, searchParams]);
-
-  const isVolunteer = user?.role === UserRole.VOLUNTEER;
-  const activeFilters = createSelectedOpportunityFiltersAsFlatArray(cardsFilter, setCardsFilter, t).filter(
+  const activeFilters = createSelectedOpportunityFiltersAsFlatArray(cardsFilter, handleFilterUpdate, t).filter(
     ({ parentKey }) => !isVolunteer || parentKey !== STATUS_PARAM,
   );
 
@@ -212,6 +233,7 @@ export function Opportunities() {
               volunteerId={volunteerId}
               viewMode={viewMode}
               volunteerFilter={volunteerFilter}
+              defaultStatuses={defaultStatuses}
             />
             <Filters
               isFiltersOpen={isFiltersOpen}

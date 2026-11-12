@@ -36,6 +36,7 @@ import { withOptionFilters } from "../common/CardsFilter/selectionFilters";
 import { volunteerFilterConfigs } from "./Filters/config";
 import {
   DEFAULT_NGO_VOLUNTEER_ENGAGEMENTS,
+  DEFAULT_STAFF_VOLUNTEER_ENGAGEMENTS,
   DEFAULT_VOLUNTEER_ENGAGEMENTS,
   defaultVolunteerCardsFilter,
 } from "./Filters/constants";
@@ -62,9 +63,17 @@ export function Volunteers() {
   const [sortOrder, setSortOrder] = useState(SortOrder.NewToOld);
   const { data: apiFilterOptions } = useGetQuery<ApiOptionLists>({ queryKey: ["options"], apiPath: apiPathOption });
   const searchParams = useSearchParams();
+  const isStaff = user?.role === UserRole.COORDINATOR || user?.role === UserRole.ADMIN;
   const isExplicitEngagementClear = searchParams.getAll(QueryParamsKeys.ENGAGEMENT).includes("");
+  const roleDefaultEngagements = isAgent
+    ? DEFAULT_NGO_VOLUNTEER_ENGAGEMENTS
+    : isStaff
+      ? DEFAULT_STAFF_VOLUNTEER_ENGAGEMENTS
+      : [];
   const defaultEngagements =
-    isAgent && !isExplicitEngagementClear ? DEFAULT_NGO_VOLUNTEER_ENGAGEMENTS : DEFAULT_VOLUNTEER_ENGAGEMENTS;
+    !isExplicitEngagementClear && roleDefaultEngagements.length > 0
+      ? roleDefaultEngagements
+      : DEFAULT_VOLUNTEER_ENGAGEMENTS;
   const cardsFilter = useMemo(() => {
     const baseFilters = apiFilterOptions
       ? withOptionFilters(volunteerFilterConfigs, defaultVolunteerCardsFilter, apiFilterOptions)
@@ -72,14 +81,14 @@ export function Volunteers() {
     const filter = deserializeVolunteerFilters(baseFilters, searchParams);
     if (isAgent) {
       filter.search = "";
-      if (!isExplicitEngagementClear && !Object.values(filter[QueryParamsKeys.ENGAGEMENT]).some(Boolean)) {
-        defaultEngagements.forEach((engagement) => {
-          filter[QueryParamsKeys.ENGAGEMENT][engagement] = true;
-        });
-      }
+    }
+    if (!isExplicitEngagementClear && !Object.values(filter[QueryParamsKeys.ENGAGEMENT]).some(Boolean)) {
+      roleDefaultEngagements.forEach((engagement) => {
+        filter[QueryParamsKeys.ENGAGEMENT][engagement] = true;
+      });
     }
     return filter;
-  }, [apiFilterOptions, defaultEngagements, isAgent, isExplicitEngagementClear, searchParams]);
+  }, [apiFilterOptions, isAgent, isExplicitEngagementClear, roleDefaultEngagements, searchParams]);
   const pathname = usePathname();
   const router = useRouter();
   const tabs = !user
@@ -120,7 +129,7 @@ export function Volunteers() {
 
   const serializeFilterUpdate = (filter: VolunteerCardsFilter) => {
     const params = new URLSearchParams(serializeFilters(filter, searchParams));
-    if (isAgent && !Object.values(filter[QueryParamsKeys.ENGAGEMENT]).some(Boolean)) {
+    if ((isAgent || isStaff) && !Object.values(filter[QueryParamsKeys.ENGAGEMENT]).some(Boolean)) {
       params.set(QueryParamsKeys.ENGAGEMENT, "");
     }
     return params;
