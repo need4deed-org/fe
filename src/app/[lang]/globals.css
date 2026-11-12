@@ -540,6 +540,15 @@ html {
   --form-input-error-message-lineHeight: 20px;
   --form-input-error-message-fontWeight: 400;
 
+  /* plz chip */
+  --plz-chip-bg: var(--color-red-50);
+  --plz-chip-color: var(--color-red-600);
+  --plz-chip-gap: 8px;
+  --plz-chip-margin-top: 8px;
+  --plz-chip-padding: 6px 12px;
+  --plz-chip-border-radius: 16px;
+  --plz-chip-transition-duration: 200ms;
+
   /* checkButton */
   --check-button-label-font-size: 18px;
   --check-button-label-font-weight: 400;

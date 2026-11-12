@@ -220,6 +220,7 @@
       "required": "This field is required",
       "postcode": "Must be a valid postcode of Berlin",
       "postcodeGermany": "Must be a valid German postcode (5 digits)",
+      "postcodeUnknown": "We couldn't find this postcode. Please check it.",
       "email": "Must be a valid email",
       "badEmail": "Bad email",
       "location": "Please pick at least one location",
