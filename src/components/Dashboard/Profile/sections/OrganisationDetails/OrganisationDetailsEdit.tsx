@@ -1,9 +1,10 @@
 import Button from "@/components/core/button/Button/Button";
-import { ErrorMessage } from "@/components/core/common";
+import { ErrorMessage, PLZChip } from "@/components/core/common";
 import { EditableField } from "@/components/EditableField/EditableField";
 import { LanguageFields } from "@/components/forms/LanguageFields";
 import { Option } from "need4deed-sdk";
-import { Controller, useFormContext } from "react-hook-form";
+import { useCheckPLZ } from "@/hooks/use-check-plz";
+import { Controller, useFormContext, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { FormButtonRow, FormDetails } from "../shared/styles";
 import { OrganisationDetailsFormData } from "./organisationDetailsSchema";
@@ -33,6 +34,8 @@ export const OrganisationDetailsEdit = ({
     control,
     formState: { errors, isDirty, isValid },
   } = useFormContext<OrganisationDetailsFormData>();
+  const postcode = useWatch({ control, name: "addressPostcode" });
+  const plz = useCheckPLZ(postcode ?? "");
 
   const displayOperators = useCallback(
     (value: string) => {
@@ -114,6 +117,7 @@ export const OrganisationDetailsEdit = ({
               value={field.value ?? ""}
               setValue={field.onChange}
               errorMessage={errors.addressPostcode?.message}
+              supportingContent={<PLZChip status={plz.status} />}
             />
           )}
         />
@@ -215,7 +219,7 @@ export const OrganisationDetailsEdit = ({
           onClick={onSubmit}
           width="auto"
           padding="var(--volunteer-profile-section-card-header-button-padding)"
-          disabled={!isDirty || !isValid}
+          disabled={!isDirty || !isValid || plz.blocksSubmit}
         />
       </FormButtonRow>
     </>

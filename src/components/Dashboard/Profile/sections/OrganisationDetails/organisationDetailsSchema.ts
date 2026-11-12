@@ -1,3 +1,5 @@
+import { TypePLZ } from "@/components/forms/types";
+import { isValidPLZ } from "@/components/forms/utils";
 import { LanguageLevel } from "@/types";
 import { z } from "zod";
 
@@ -22,7 +24,9 @@ export const createOrganisationDetailsSchema = (t: (key: string) => string, vali
       })
       .optional(),
     addressStreet: z.string(),
-    addressPostcode: z.string(),
+    addressPostcode: z
+      .string()
+      .refine((code) => !code?.trim() || isValidPLZ(code, TypePLZ.GERMANY), t("form.error.postcodeGermany")),
     organizationType: z.string().min(1, required),
     operator: z
       .string()
