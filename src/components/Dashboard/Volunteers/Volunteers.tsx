@@ -36,6 +36,7 @@ import { withOptionFilters } from "../common/CardsFilter/selectionFilters";
 import { volunteerFilterConfigs } from "./Filters/config";
 import {
   DEFAULT_NGO_VOLUNTEER_ENGAGEMENTS,
+  DEFAULT_STAFF_VOLUNTEER_ENGAGEMENTS,
   DEFAULT_VOLUNTEER_ENGAGEMENTS,
   defaultVolunteerCardsFilter,
 } from "./Filters/constants";
@@ -62,9 +63,29 @@ export function Volunteers() {
   const [sortOrder, setSortOrder] = useState(SortOrder.NewToOld);
   const { data: apiFilterOptions } = useGetQuery<ApiOptionLists>({ queryKey: ["options"], apiPath: apiPathOption });
   const searchParams = useSearchParams();
-  const isExplicitEngagementClear = searchParams.getAll(QueryParamsKeys.ENGAGEMENT).includes("");
-  const defaultEngagements =
-    isAgent && !isExplicitEngagementClear ? DEFAULT_NGO_VOLUNTEER_ENGAGEMENTS : DEFAULT_VOLUNTEER_ENGAGEMENTS;
+  const pathname = usePathname();
+  const router = useRouter();
+  const opportunityId = searchParams.get("opportunity") ?? undefined;
+  const opportunityFilter = useGetOpportunity(opportunityId);
+  const prefilledForRef = useRef<string | null>(null);
+  const defaultAppliedRef = useRef(false);
+  const isStaff = user?.role === UserRole.COORDINATOR || user?.role === UserRole.ADMIN;
+  const roleDefaultEngagements = isAgent
+    ? DEFAULT_NGO_VOLUNTEER_ENGAGEMENTS
+    : isStaff
+      ? DEFAULT_STAFF_VOLUNTEER_ENGAGEMENTS
+      : [];
+  const hasValidEngagementParam = Object.keys(defaultVolunteerCardsFilter[QueryParamsKeys.ENGAGEMENT]).some((key) =>
+    searchParams.getAll(QueryParamsKeys.ENGAGEMENT).includes(key.replace(/^vol-/, "")),
+  );
+  const hasInitialFilterParams =
+    hasFilterParams(
+      searchParams,
+      Object.keys(volunteerFilterConfigs).filter((key) => key !== QueryParamsKeys.ENGAGEMENT),
+    ) || hasValidEngagementParam;
+  const shouldApplyDefaultEngagements =
+    !defaultAppliedRef.current && !opportunityId && !hasInitialFilterParams && roleDefaultEngagements.length > 0;
+  const defaultEngagements = shouldApplyDefaultEngagements ? roleDefaultEngagements : DEFAULT_VOLUNTEER_ENGAGEMENTS;
   const cardsFilter = useMemo(() => {
     const baseFilters = apiFilterOptions
       ? withOptionFilters(volunteerFilterConfigs, defaultVolunteerCardsFilter, apiFilterOptions)
@@ -72,16 +93,14 @@ export function Volunteers() {
     const filter = deserializeVolunteerFilters(baseFilters, searchParams);
     if (isAgent) {
       filter.search = "";
-      if (!isExplicitEngagementClear && !Object.values(filter[QueryParamsKeys.ENGAGEMENT]).some(Boolean)) {
-        defaultEngagements.forEach((engagement) => {
-          filter[QueryParamsKeys.ENGAGEMENT][engagement] = true;
-        });
-      }
+    }
+    if (shouldApplyDefaultEngagements) {
+      roleDefaultEngagements.forEach((engagement) => {
+        filter[QueryParamsKeys.ENGAGEMENT][engagement] = true;
+      });
     }
     return filter;
-  }, [apiFilterOptions, defaultEngagements, isAgent, isExplicitEngagementClear, searchParams]);
-  const pathname = usePathname();
-  const router = useRouter();
+  }, [apiFilterOptions, isAgent, roleDefaultEngagements, searchParams, shouldApplyDefaultEngagements]);
   const tabs = !user
     ? []
     : [
@@ -96,9 +115,11 @@ export function Volunteers() {
   const foundIndex = VIEW_MODE_BY_TAB.findIndex((mode) => mode === urlViewParam);
   const selectedTabIndex = foundIndex === -1 ? defaultTabIndex : foundIndex;
   const viewMode = VIEW_MODE_BY_TAB[selectedTabIndex];
-  const opportunityId = searchParams.get("opportunity") ?? undefined;
-  const opportunityFilter = useGetOpportunity(opportunityId);
-  const prefilledForRef = useRef<string | null>(null);
+
+  const pushFilterUrl = (params: URLSearchParams | string) => {
+    const query = params.toString();
+    router.push(query ? pathname + questionMark + query : pathname, { scroll: false });
+  };
 
   const handleSearchInputChange = (searchInput: string) => {
     handleFilterUpdate((prev) => ({ ...prev, [QueryParamsKeys.SEARCH]: searchInput }));
@@ -118,43 +139,58 @@ export function Volunteers() {
     router.push(pathname + questionMark + params.toString(), { scroll: false });
   };
 
-  const serializeFilterUpdate = (filter: VolunteerCardsFilter) => {
-    const params = new URLSearchParams(serializeFilters(filter, searchParams));
-    if (isAgent && !Object.values(filter[QueryParamsKeys.ENGAGEMENT]).some(Boolean)) {
-      params.set(QueryParamsKeys.ENGAGEMENT, "");
-    }
-    return params;
-  };
-
   const handleFilterUpdate = (
     newFilter: VolunteerCardsFilter | ((prev: VolunteerCardsFilter) => VolunteerCardsFilter),
   ) => {
+    defaultAppliedRef.current = true;
     const updatedFilter = typeof newFilter === "function" ? newFilter(cardsFilter) : newFilter;
 
-    router.push(pathname + questionMark + serializeFilterUpdate(updatedFilter), { scroll: false });
+    pushFilterUrl(serializeFilters(updatedFilter, searchParams));
   };
 
   const handleRemoveOpportunityFilter = () => {
     const wasPrefilled = searchParams.has(PREFILLED_PARAM);
     const cleared = wasPrefilled ? getClearFilter(cardsFilter) : clearCommutePrefill(cardsFilter);
+    if (wasPrefilled) {
+      roleDefaultEngagements.forEach((engagement) => {
+        cleared[QueryParamsKeys.ENGAGEMENT][engagement] = true;
+      });
+    }
     const params = new URLSearchParams(serializeFilters(cleared, searchParams));
     params.delete("opportunity");
     params.delete(PREFILLED_PARAM);
-    router.push(pathname + questionMark + params.toString(), { scroll: false });
+    pushFilterUrl(params);
   };
 
   const handleClearFilter = (filterKey: string, parentKey?: string) => {
+    defaultAppliedRef.current = true;
     const cleared =
       filterKey === QueryParamsKeys.COMMUTE_OPPORTUNITY_ID
         ? clearCommutePrefill(cardsFilter)
         : getClearSingleFilter(cardsFilter, filterKey, parentKey);
-    router.push(pathname + questionMark + serializeFilterUpdate(cleared), { scroll: false });
+    pushFilterUrl(serializeFilters(cleared, searchParams));
   };
 
   const handleClearAllFilters = () => {
+    defaultAppliedRef.current = true;
     const cleared = getClearFilter(cardsFilter);
-    router.push(pathname + questionMark + serializeFilterUpdate(cleared), { scroll: false });
+    pushFilterUrl(serializeFilters(cleared, searchParams));
   };
+
+  useEffect(() => {
+    if (!user || defaultAppliedRef.current || opportunityId || roleDefaultEngagements.length === 0) return;
+    if (hasInitialFilterParams) {
+      defaultAppliedRef.current = true;
+      return;
+    }
+
+    const nextFilter = structuredClone(defaultVolunteerCardsFilter);
+    roleDefaultEngagements.forEach((engagement) => {
+      nextFilter[QueryParamsKeys.ENGAGEMENT][engagement] = true;
+    });
+    const query = serializeFilters(nextFilter, searchParams);
+    router.replace(query ? pathname + questionMark + query : pathname, { scroll: false });
+  }, [hasInitialFilterParams, opportunityId, pathname, roleDefaultEngagements, router, searchParams, user]);
 
   useEffect(() => {
     if (!user || !opportunityId || !opportunityFilter || !apiFilterOptions) return;

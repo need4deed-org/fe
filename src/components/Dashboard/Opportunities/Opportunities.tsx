@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { DashboardLayout } from "@/components/Layout";
 import { apiPathOption, DEFAULT_MAX_COMMUTE_MINUTES, questionMark, ScreenTypes } from "@/config/constants";
@@ -18,7 +18,14 @@ import {
 } from "../common/CardsFilter/matchingPrefill";
 import { withOptionFilters } from "../common/CardsFilter/selectionFilters";
 import { opportunityFilterConfigs } from "./Filters/config";
-import { defaultOpportunityCardsFilter, MATCHING_OPPORTUNITY_STATUSES, STATUS_PARAM } from "./Filters/constants";
+import {
+  DEFAULT_NGO_OPPORTUNITY_STATUSES,
+  DEFAULT_OPPORTUNITY_STATUSES,
+  DEFAULT_STAFF_OPPORTUNITY_STATUSES,
+  defaultOpportunityCardsFilter,
+  MATCHING_OPPORTUNITY_STATUSES,
+  STATUS_PARAM,
+} from "./Filters/constants";
 import FiltersContent from "./Filters/FiltersContent";
 import { OpportunityCardsFilter } from "./Filters/types";
 import { createSelectedOpportunityFiltersAsFlatArray } from "./Filters/helpers";
@@ -42,13 +49,18 @@ export function Opportunities() {
   const { t } = useTranslation();
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [numOfOpps, setNumOfOpps] = useState(0);
-  const [cardsFilter, setCardsFilter] = useState(defaultOpportunityCardsFilter);
   const { data: apiFilterOptions } = useGetQuery<ApiOptionLists>({ queryKey: ["options"], apiPath: apiPathOption });
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
   const sortOrder = parseSortParam(searchParams.get(SORT_PARAM));
+  const volunteerId = searchParams.get("volunteer") ?? undefined;
+  const volunteerFilter = useGetVolunteer(volunteerId);
+  const prefilledForRef = useRef<string | null>(null);
+  const defaultAppliedRef = useRef(false);
   const isAgent = user?.role === UserRole.AGENT;
+  const isVolunteer = user?.role === UserRole.VOLUNTEER;
+  const isStaff = user?.role === UserRole.COORDINATOR || user?.role === UserRole.ADMIN;
   const tabs = !user
     ? []
     : [
@@ -66,9 +78,53 @@ export function Opportunities() {
   const selectedTabIndex = isOtherTab ? VIEW_MODE_BY_TAB.length : foundIndex === -1 ? defaultTabIndex : foundIndex;
   const viewMode = VIEW_MODE_BY_TAB[isOtherTab ? defaultTabIndex : selectedTabIndex];
 
-  const volunteerId = searchParams.get("volunteer") ?? undefined;
-  const volunteerFilter = useGetVolunteer(volunteerId);
-  const prefilledForRef = useRef<string | null>(null);
+  const roleDefaultStatuses = isAgent
+    ? DEFAULT_NGO_OPPORTUNITY_STATUSES
+    : isStaff
+      ? DEFAULT_STAFF_OPPORTUNITY_STATUSES
+      : [];
+  const hasValidStatusParam = Object.keys(defaultOpportunityCardsFilter.status).some((key) =>
+    searchParams.getAll(STATUS_PARAM).includes(key),
+  );
+  const hasInitialFilterParams =
+    hasFilterParams(
+      searchParams,
+      Object.keys(opportunityFilterConfigs).filter((key) => key !== STATUS_PARAM),
+    ) || hasValidStatusParam;
+  const shouldApplyDefaultStatuses =
+    !defaultAppliedRef.current &&
+    !volunteerId &&
+    !isOtherTab &&
+    !hasInitialFilterParams &&
+    roleDefaultStatuses.length > 0;
+  const defaultStatuses = shouldApplyDefaultStatuses ? roleDefaultStatuses : DEFAULT_OPPORTUNITY_STATUSES;
+  const cardsFilter = useMemo(() => {
+    const baseFilters = apiFilterOptions
+      ? withOptionFilters(opportunityFilterConfigs, defaultOpportunityCardsFilter, apiFilterOptions)
+      : structuredClone(defaultOpportunityCardsFilter);
+    const filter = deserializeOpportunityFilters(baseFilters, searchParams);
+    if (shouldApplyDefaultStatuses) {
+      roleDefaultStatuses.forEach((status) => {
+        filter.status[status] = true;
+      });
+    }
+    return filter;
+  }, [apiFilterOptions, roleDefaultStatuses, searchParams, shouldApplyDefaultStatuses]);
+
+  useEffect(() => {
+    if (!user || defaultAppliedRef.current || volunteerId || isOtherTab || roleDefaultStatuses.length === 0) return;
+    if (hasInitialFilterParams) {
+      defaultAppliedRef.current = true;
+      return;
+    }
+
+    const nextFilter = structuredClone(defaultOpportunityCardsFilter);
+    roleDefaultStatuses.forEach((status) => {
+      nextFilter.status[status] = true;
+    });
+    const query = serializeOpportunityFilters(nextFilter, searchParams);
+    router.replace(query ? pathname + questionMark + query : pathname, { scroll: false });
+  }, [hasInitialFilterParams, isOtherTab, pathname, roleDefaultStatuses, router, searchParams, user, volunteerId]);
 
   useEffect(() => {
     if (!volunteerId || !volunteerFilter || !apiFilterOptions) return;
@@ -92,6 +148,11 @@ export function Opportunities() {
     });
     router.replace(pathname + questionMark + withPrefilledMarker(serializeOpportunityFilters(prefilled, searchParams)));
   }, [apiFilterOptions, volunteerFilter, volunteerId, pathname, router, searchParams]);
+
+  const pushFilterUrl = (params: URLSearchParams | string) => {
+    const query = params.toString();
+    router.push(query ? pathname + questionMark + query : pathname, { scroll: false });
+  };
 
   const handleSearchInputChange = (searchInput: string) => {
     handleFilterUpdate((prev) => ({ ...prev, search: searchInput }));
@@ -125,52 +186,43 @@ export function Opportunities() {
   const handleFilterUpdate = (
     newFilter: OpportunityCardsFilter | ((prev: OpportunityCardsFilter) => OpportunityCardsFilter),
   ) => {
+    defaultAppliedRef.current = true;
     const updatedFilter = typeof newFilter === "function" ? newFilter(cardsFilter) : newFilter;
-    setCardsFilter(updatedFilter);
-    router.push(pathname + questionMark + serializeOpportunityFilters(updatedFilter, searchParams), {
-      scroll: false,
-    });
+    pushFilterUrl(serializeOpportunityFilters(updatedFilter, searchParams));
   };
 
   const handleRemoveVolunteerFilter = () => {
     const wasPrefilled = searchParams.has(PREFILLED_PARAM);
     const cleared = wasPrefilled ? getClearFilter(cardsFilter) : clearCommutePrefill(cardsFilter);
-    setCardsFilter(cleared);
+    if (wasPrefilled) {
+      roleDefaultStatuses.forEach((status) => {
+        cleared.status[status] = true;
+      });
+    }
     const params = new URLSearchParams(serializeOpportunityFilters(cleared, searchParams));
     params.delete("volunteer");
     params.delete(PREFILLED_PARAM);
-    router.push(pathname + questionMark + params.toString(), { scroll: false });
+    pushFilterUrl(params);
   };
 
   const handleClearFilter = (filterKey: string, parentKey?: string) => {
+    defaultAppliedRef.current = true;
     const cleared =
       filterKey === QueryParamsKeys.COMMUTE_VOLUNTEER_ID
         ? clearCommutePrefill(cardsFilter)
         : getClearSingleFilter(cardsFilter, filterKey, parentKey);
-    setCardsFilter(cleared);
-    router.push(pathname + questionMark + serializeOpportunityFilters(cleared, searchParams), { scroll: false });
+    pushFilterUrl(serializeOpportunityFilters(cleared, searchParams));
   };
 
   const handleClearAllFilters = () => {
+    defaultAppliedRef.current = true;
     const cleared = getClearFilter(cardsFilter);
-    setCardsFilter(cleared);
     const params = serializeOpportunityFilters(cleared, searchParams, false);
     params.delete(SORT_PARAM);
-    router.push(pathname + questionMark + params.toString(), { scroll: false });
+    pushFilterUrl(params);
   };
 
-  useEffect(() => {
-    if (!apiFilterOptions) return;
-
-    setCardsFilter((prev) => {
-      const baseFilters = withOptionFilters(opportunityFilterConfigs, prev, apiFilterOptions);
-
-      return deserializeOpportunityFilters(baseFilters, searchParams);
-    });
-  }, [apiFilterOptions, searchParams]);
-
-  const isVolunteer = user?.role === UserRole.VOLUNTEER;
-  const activeFilters = createSelectedOpportunityFiltersAsFlatArray(cardsFilter, setCardsFilter, t).filter(
+  const activeFilters = createSelectedOpportunityFiltersAsFlatArray(cardsFilter, handleFilterUpdate, t).filter(
     ({ parentKey }) => !isVolunteer || parentKey !== STATUS_PARAM,
   );
 
@@ -212,6 +264,7 @@ export function Opportunities() {
               volunteerId={volunteerId}
               viewMode={viewMode}
               volunteerFilter={volunteerFilter}
+              defaultStatuses={defaultStatuses}
             />
             <Filters
               isFiltersOpen={isFiltersOpen}
