@@ -54,29 +54,13 @@ export function Opportunities() {
   const pathname = usePathname();
   const router = useRouter();
   const sortOrder = parseSortParam(searchParams.get(SORT_PARAM));
+  const volunteerId = searchParams.get("volunteer") ?? undefined;
+  const volunteerFilter = useGetVolunteer(volunteerId);
+  const prefilledForRef = useRef<string | null>(null);
+  const defaultAppliedRef = useRef(false);
   const isAgent = user?.role === UserRole.AGENT;
   const isVolunteer = user?.role === UserRole.VOLUNTEER;
   const isStaff = user?.role === UserRole.COORDINATOR || user?.role === UserRole.ADMIN;
-  const isExplicitStatusClear = searchParams.getAll(STATUS_PARAM).includes("");
-  const roleDefaultStatuses = isAgent
-    ? DEFAULT_NGO_OPPORTUNITY_STATUSES
-    : isStaff
-      ? DEFAULT_STAFF_OPPORTUNITY_STATUSES
-      : [];
-  const defaultStatuses =
-    !isExplicitStatusClear && roleDefaultStatuses.length > 0 ? roleDefaultStatuses : DEFAULT_OPPORTUNITY_STATUSES;
-  const cardsFilter = useMemo(() => {
-    const baseFilters = apiFilterOptions
-      ? withOptionFilters(opportunityFilterConfigs, defaultOpportunityCardsFilter, apiFilterOptions)
-      : structuredClone(defaultOpportunityCardsFilter);
-    const filter = deserializeOpportunityFilters(baseFilters, searchParams);
-    if (!isExplicitStatusClear && !Object.values(filter.status).some(Boolean)) {
-      roleDefaultStatuses.forEach((status) => {
-        filter.status[status] = true;
-      });
-    }
-    return filter;
-  }, [apiFilterOptions, isExplicitStatusClear, roleDefaultStatuses, searchParams]);
   const tabs = !user
     ? []
     : [
@@ -94,9 +78,53 @@ export function Opportunities() {
   const selectedTabIndex = isOtherTab ? VIEW_MODE_BY_TAB.length : foundIndex === -1 ? defaultTabIndex : foundIndex;
   const viewMode = VIEW_MODE_BY_TAB[isOtherTab ? defaultTabIndex : selectedTabIndex];
 
-  const volunteerId = searchParams.get("volunteer") ?? undefined;
-  const volunteerFilter = useGetVolunteer(volunteerId);
-  const prefilledForRef = useRef<string | null>(null);
+  const roleDefaultStatuses = isAgent
+    ? DEFAULT_NGO_OPPORTUNITY_STATUSES
+    : isStaff
+      ? DEFAULT_STAFF_OPPORTUNITY_STATUSES
+      : [];
+  const hasValidStatusParam = Object.keys(defaultOpportunityCardsFilter.status).some((key) =>
+    searchParams.getAll(STATUS_PARAM).includes(key),
+  );
+  const hasInitialFilterParams =
+    hasFilterParams(
+      searchParams,
+      Object.keys(opportunityFilterConfigs).filter((key) => key !== STATUS_PARAM),
+    ) || hasValidStatusParam;
+  const shouldApplyDefaultStatuses =
+    !defaultAppliedRef.current &&
+    !volunteerId &&
+    !isOtherTab &&
+    !hasInitialFilterParams &&
+    roleDefaultStatuses.length > 0;
+  const defaultStatuses = shouldApplyDefaultStatuses ? roleDefaultStatuses : DEFAULT_OPPORTUNITY_STATUSES;
+  const cardsFilter = useMemo(() => {
+    const baseFilters = apiFilterOptions
+      ? withOptionFilters(opportunityFilterConfigs, defaultOpportunityCardsFilter, apiFilterOptions)
+      : structuredClone(defaultOpportunityCardsFilter);
+    const filter = deserializeOpportunityFilters(baseFilters, searchParams);
+    if (shouldApplyDefaultStatuses) {
+      roleDefaultStatuses.forEach((status) => {
+        filter.status[status] = true;
+      });
+    }
+    return filter;
+  }, [apiFilterOptions, roleDefaultStatuses, searchParams, shouldApplyDefaultStatuses]);
+
+  useEffect(() => {
+    if (!user || defaultAppliedRef.current || volunteerId || isOtherTab || roleDefaultStatuses.length === 0) return;
+    if (hasInitialFilterParams) {
+      defaultAppliedRef.current = true;
+      return;
+    }
+
+    const nextFilter = structuredClone(defaultOpportunityCardsFilter);
+    roleDefaultStatuses.forEach((status) => {
+      nextFilter.status[status] = true;
+    });
+    const query = serializeOpportunityFilters(nextFilter, searchParams);
+    router.replace(query ? pathname + questionMark + query : pathname, { scroll: false });
+  }, [hasInitialFilterParams, isOtherTab, pathname, roleDefaultStatuses, router, searchParams, user, volunteerId]);
 
   useEffect(() => {
     if (!volunteerId || !volunteerFilter || !apiFilterOptions) return;
@@ -120,6 +148,11 @@ export function Opportunities() {
     });
     router.replace(pathname + questionMark + withPrefilledMarker(serializeOpportunityFilters(prefilled, searchParams)));
   }, [apiFilterOptions, volunteerFilter, volunteerId, pathname, router, searchParams]);
+
+  const pushFilterUrl = (params: URLSearchParams | string) => {
+    const query = params.toString();
+    router.push(query ? pathname + questionMark + query : pathname, { scroll: false });
+  };
 
   const handleSearchInputChange = (searchInput: string) => {
     handleFilterUpdate((prev) => ({ ...prev, search: searchInput }));
@@ -150,45 +183,43 @@ export function Opportunities() {
     { value: "appointment-distant", label: t("dashboard.sortBy.appointmentDistant") },
   ];
 
-  const serializeFilterUpdate = (filter: OpportunityCardsFilter) => {
-    const params = new URLSearchParams(serializeOpportunityFilters(filter, searchParams));
-    if ((isAgent || isStaff) && !Object.values(filter.status).some(Boolean)) {
-      params.set(STATUS_PARAM, "");
-    }
-    return params;
-  };
-
   const handleFilterUpdate = (
     newFilter: OpportunityCardsFilter | ((prev: OpportunityCardsFilter) => OpportunityCardsFilter),
   ) => {
+    defaultAppliedRef.current = true;
     const updatedFilter = typeof newFilter === "function" ? newFilter(cardsFilter) : newFilter;
-    router.push(pathname + questionMark + serializeFilterUpdate(updatedFilter), {
-      scroll: false,
-    });
+    pushFilterUrl(serializeOpportunityFilters(updatedFilter, searchParams));
   };
 
   const handleRemoveVolunteerFilter = () => {
     const wasPrefilled = searchParams.has(PREFILLED_PARAM);
     const cleared = wasPrefilled ? getClearFilter(cardsFilter) : clearCommutePrefill(cardsFilter);
+    if (wasPrefilled) {
+      roleDefaultStatuses.forEach((status) => {
+        cleared.status[status] = true;
+      });
+    }
     const params = new URLSearchParams(serializeOpportunityFilters(cleared, searchParams));
     params.delete("volunteer");
     params.delete(PREFILLED_PARAM);
-    router.push(pathname + questionMark + params.toString(), { scroll: false });
+    pushFilterUrl(params);
   };
 
   const handleClearFilter = (filterKey: string, parentKey?: string) => {
+    defaultAppliedRef.current = true;
     const cleared =
       filterKey === QueryParamsKeys.COMMUTE_VOLUNTEER_ID
         ? clearCommutePrefill(cardsFilter)
         : getClearSingleFilter(cardsFilter, filterKey, parentKey);
-    router.push(pathname + questionMark + serializeFilterUpdate(cleared), { scroll: false });
+    pushFilterUrl(serializeOpportunityFilters(cleared, searchParams));
   };
 
   const handleClearAllFilters = () => {
+    defaultAppliedRef.current = true;
     const cleared = getClearFilter(cardsFilter);
-    const params = serializeFilterUpdate(cleared);
+    const params = serializeOpportunityFilters(cleared, searchParams, false);
     params.delete(SORT_PARAM);
-    router.push(pathname + questionMark + params.toString(), { scroll: false });
+    pushFilterUrl(params);
   };
 
   const activeFilters = createSelectedOpportunityFiltersAsFlatArray(cardsFilter, handleFilterUpdate, t).filter(
