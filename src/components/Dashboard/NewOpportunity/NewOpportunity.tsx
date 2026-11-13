@@ -1,6 +1,7 @@
 "use client";
 import { SectionCard } from "@/components/Dashboard/Profile/common/SectionCard";
 import {
+  ApiLanguageOption,
   useApiActivities,
   useApiLanguages,
   useApiSkills,
@@ -25,6 +26,8 @@ import {
   TranslatedIntoType,
   VolunteerStateTypeType,
   OpportunityFormDataWithAgentSubmitter,
+  ApiOpportunityGet,
+  Lang,
 } from "need4deed-sdk";
 import { useEffect } from "react";
 import Link from "next/link";
@@ -50,16 +53,25 @@ import {
 } from "../Profile/sections/OpportunityAddress";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { useMinAppointmentDate } from "@/hooks/useMinAppointmentDate";
+import { apiToFormAvailability } from "../Profile/sections/VolunteerProfile/availabilityUtils";
+import { isoCodeToLanguage, languageToIsoCode } from "./helper";
 
 export function NewOpportunity() {
   const { t, i18n } = useTranslation();
   const lang = i18n.language;
   const locale = lang === "de" ? de : enUS;
   const router = useRouter();
+
   const requestedAgentId = Number(useSearchParams().get("agentId")) || 0;
+  const duplicateOpportunityId = Number(useSearchParams().get("duplicateOpportunityId")) || 0;
 
   const userData = useCurrentUser();
   const currentAgents = userData?.agentMemberships ?? [];
+  const duplicateOpportunity = useGetQuery<ApiOpportunityGet>({
+    apiPath: `${apiPathOpportunity}/${duplicateOpportunityId}`,
+    queryKey: ["opportunity", String(duplicateOpportunityId)],
+    enabled: Boolean(duplicateOpportunityId),
+  }).data;
 
   const minAppointmentDate = useMinAppointmentDate();
 
@@ -67,10 +79,25 @@ export function NewOpportunity() {
   const { data: apiActivities = [] } = useApiActivities();
   const { data: apiSkills = [] } = useApiSkills();
 
+  const toFormOption = (l: ApiLanguageOption) => ({
+    id: l.id,
+    title: { [lang as Lang]: l.title } as Record<Lang, string>,
+  });
+  const mainCommunicationLanguagesForForm = getMainCommunicationLanguageOptions(apiLanguages).map(toFormOption);
+
+  const mainLanguageIsoToIdMap = new Map(
+    mainCommunicationLanguagesForForm.map((l) => [languageToIsoCode(l.title[lang as Lang]), l.id]),
+  );
+  const IdToLanguageMap = new Map(apiLanguages.map((l) => [l.id, l.title]));
+
   const headerMethods = useForm<HeaderFormData>({
     resolver: zodResolver(createHeaderSchema(t)),
     mode: "onChange",
-    defaultValues: { title: "", volunteerType: undefined, agentId: 0 },
+    defaultValues: {
+      title: duplicateOpportunity?.title ?? "",
+      volunteerType: duplicateOpportunity?.volunteerType ?? undefined,
+      agentId: duplicateOpportunity?.agent?.id ?? 0,
+    },
   });
   const { watch: watchHeader, setValue: setAgentId } = headerMethods;
   const selectedType = watchHeader("volunteerType");
@@ -85,30 +112,44 @@ export function NewOpportunity() {
     resolver: zodResolver(createNewOpportunityDetailsSchema(t, getMainCommunicationLanguageOptions(apiLanguages))),
     mode: "onChange",
     defaultValues: {
-      description: "",
-      numberOfVolunteers: "1",
-      mainCommunication: [{ id: 1, language: "", level: "" }],
-      residentsSpeak: [{ id: 1, language: "", level: "" }],
-      availability: undefined,
-      eventDate: null,
-      eventTime: "",
-      activities: [],
-      skills: [],
+      description: duplicateOpportunity?.description ?? "",
+      numberOfVolunteers: String(duplicateOpportunity?.numberOfVolunteers) ?? "1",
+      mainCommunication: [
+        {
+          id: mainLanguageIsoToIdMap.get(duplicateOpportunity?.originalLanguage) ?? 1,
+          language: isoCodeToLanguage(duplicateOpportunity?.originalLanguage, lang) ?? "",
+          level: "",
+        },
+      ],
+      residentsSpeak: duplicateOpportunity?.languages.map((lan) => ({
+        id: lan.id,
+        language: lan.title,
+        level: "",
+      })) ?? [{ id: 1, language: "", level: "" }],
+      availability: apiToFormAvailability(duplicateOpportunity?.availability) ?? [],
+      eventDate: new Date(`${duplicateOpportunity?.event?.date}`) ?? null,
+      eventTime: duplicateOpportunity?.event?.time ?? "",
+      activities: duplicateOpportunity?.activities.map((act) => String(act.id)) ?? [],
+      skills: duplicateOpportunity?.skills.map((skill) => String(skill.id)) ?? [],
     },
   });
+
+  const { accompanyingDetails: accompanyingDetailsDefaultValues } = duplicateOpportunity || {};
 
   const accompanyingMethods = useForm<AccompanyingDetailsFormData>({
     resolver: zodResolver(createAccompanyingDetailsSchema(t, true, minAppointmentDate)),
     mode: "onChange",
     defaultValues: {
-      appointmentAddress: "",
-      appointmentPostcode: "",
-      appointmentDate: null,
-      appointmentTime: "",
-      refugeeNumber: "",
-      refugeeName: "",
-      refugeeLanguage: [],
-      appointmentLanguage: undefined,
+      appointmentAddress: accompanyingDetailsDefaultValues?.appointmentAddress ?? "",
+      appointmentPostcode: accompanyingDetailsDefaultValues?.appointmentPostcode ?? "",
+      appointmentDate: new Date(`${accompanyingDetailsDefaultValues?.appointmentDate}`) ?? null,
+      appointmentTime: accompanyingDetailsDefaultValues?.appointmentTime ?? "",
+      refugeeNumber: accompanyingDetailsDefaultValues?.refugeeNumber ?? "",
+      refugeeName: accompanyingDetailsDefaultValues?.refugeeName ?? "",
+      refugeeLanguage:
+        accompanyingDetailsDefaultValues?.refugeeLanguage?.map((refLang) => IdToLanguageMap.get(Number(refLang.id))) ??
+        [],
+      appointmentLanguage: accompanyingDetailsDefaultValues?.appointmentLanguage ?? undefined,
     },
   });
 

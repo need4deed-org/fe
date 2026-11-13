@@ -22,12 +22,13 @@ import { useCallback, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "./useAuth";
 import { useGetVolunteerOpportunityLinked } from "./useGetVolunteerOpportunityLinked";
+import { CreateOpportunityButton } from "@/components/Dashboard/Home/agent/CreateOpportunityButton";
 
 export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | undefined) => {
   const { t, i18n } = useTranslation();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { isAuthorized, isOwnProfile, isUserLoaded } = useAuth({ agentId: opportunity?.agent?.id });
+  const { isAuthorized, isOwnProfile, isUserLoaded, isAgent } = useAuth({ agentId: opportunity?.agent?.id });
   const hasEditingRights = isAuthorized || isOwnProfile;
 
   const opportunityContactDetailsRef = useRef<EditableSectionRef>(null);
@@ -189,6 +190,14 @@ export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | u
         ),
       },
     );
+  }
+
+  if (isAgent && isOwnProfile) {
+    sections.push({
+      iconName: IconName.ShootingStar,
+      title: "Duplicate Opportunity",
+      subComponent: <CreateOpportunityButton opportunityId={opportunity.id} />,
+    });
   }
 
   if (isAuthorized) {
