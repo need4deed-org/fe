@@ -127,7 +127,7 @@ export function NewOpportunity() {
         level: "",
       })) ?? [{ id: 1, language: "", level: "" }],
       availability: apiToFormAvailability(duplicateOpportunity?.availability) ?? [],
-      eventDate: new Date(`${duplicateOpportunity?.event?.date}`) ?? null,
+      eventDate: duplicateOpportunity?.event?.date ? new Date(`${duplicateOpportunity?.event?.date}`) : null,
       eventTime: duplicateOpportunity?.event?.time ?? "",
       activities: duplicateOpportunity?.activities.map((act) => String(act.id)) ?? [],
       skills: duplicateOpportunity?.skills.map((skill) => String(skill.id)) ?? [],
@@ -142,7 +142,9 @@ export function NewOpportunity() {
     defaultValues: {
       appointmentAddress: accompanyingDetailsDefaultValues?.appointmentAddress ?? "",
       appointmentPostcode: accompanyingDetailsDefaultValues?.appointmentPostcode ?? "",
-      appointmentDate: new Date(`${accompanyingDetailsDefaultValues?.appointmentDate}`) ?? null,
+      appointmentDate: accompanyingDetailsDefaultValues?.appointmentDate
+        ? new Date(`${accompanyingDetailsDefaultValues?.appointmentDate}`)
+        : null,
       appointmentTime: accompanyingDetailsDefaultValues?.appointmentTime ?? "",
       refugeeNumber: accompanyingDetailsDefaultValues?.refugeeNumber ?? "",
       refugeeName: accompanyingDetailsDefaultValues?.refugeeName ?? "",
