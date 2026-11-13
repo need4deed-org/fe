@@ -14,6 +14,12 @@ import { AccompanyingDetailsFormData } from "../Profile/sections/AccompanyingDet
 import { NewOpportunityDetailsFormData } from "@/components/Dashboard/Profile/sections/OpportunityDetails/opportunityDetailsSchema";
 import { resolveFormLanguageToOption } from "../Profile/sections/OpportunityDetails/formatters";
 
+export const ALLOWED_VOLUNTEER_TYPES = [
+  VolunteerStateTypeType.REGULAR,
+  VolunteerStateTypeType.ACCOMPANYING,
+  VolunteerStateTypeType.EVENTS,
+];
+
 export function toLangOptionItems(
   formLangs: { language: string }[],
   apiLanguages: ApiLanguageOption[],
@@ -108,3 +114,16 @@ export function buildCreatePayload(
     last_edited_time_notion: undefined,
   };
 }
+
+export const languageToIsoCode = (language: string): Lang | undefined => {
+  if (language === "Deutsch" || language === "German") return Lang.DE;
+  if (language === "English" || language === "Englisch") return Lang.EN;
+  return undefined;
+};
+export const isoCodeToLanguage = (isoCode: Lang | undefined, lang: string) => {
+  if (isoCode === "de" && lang === "de") return "Deutsch";
+  if (isoCode === "de" && lang === "en") return "German";
+  if (isoCode === "en" && lang === "en") return "English";
+  if (isoCode === "en" && lang === "de") return "Englisch";
+  return "";
+};

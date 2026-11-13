@@ -60,7 +60,7 @@ export interface SectionCardProps extends PropsWithChildren {
   headerButtonName?: string;
   headerButtonDisabled?: boolean;
   onHeaderButtonClick?: () => void;
-  subComponent: ReactNode;
+  subComponent?: ReactNode;
 }
 
 export const SectionCard = ({
