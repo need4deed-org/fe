@@ -1,18 +1,10 @@
 "use client";
 import styled from "styled-components";
 import { InlineNeed4DeedLogo } from "@/components/svg/Need4DeedLogo";
-import { ElementType } from "react";
 import { useTranslation } from "react-i18next";
 import { routes } from "@/constants/routes";
 import NextLink from "next/link";
 import { Navigation } from "./Navigation";
-
-type MenuItemType = {
-  label: string;
-  Icon?: ElementType;
-  route: string;
-  text?: string;
-};
 
 type SidebarProps = {
   breakpoint: number;
@@ -20,7 +12,6 @@ type SidebarProps = {
 
 export const Sidebar = ({ breakpoint }: SidebarProps) => {
   const {
-    t,
     i18n: { language },
   } = useTranslation();
 

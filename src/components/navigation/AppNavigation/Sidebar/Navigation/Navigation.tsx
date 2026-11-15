@@ -8,9 +8,7 @@ import {
   CalendarDotIcon,
   HandHeartIcon,
   NotepadIcon,
-  ShieldCheckIcon,
   SquaresFourIcon,
-  UserCircleIcon,
   UsersThreeIcon,
 } from "@phosphor-icons/react";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
@@ -90,7 +88,7 @@ export const Navigation = ({ breakpoint }: NavigationProps) => {
       <List $breakpoint={breakpoint}>
         {links
           .filter(({ roles }) => roles.includes(user.role))
-          .map(({ route, Icon, label, roles }) => (
+          .map(({ route, Icon, label }) => (
             <ListItem key={route}>
               <Link href={route} $selected={route === pathname} $breakpoint={breakpoint}>
                 <Icon />
@@ -147,6 +145,7 @@ const Link = styled(NextLink)<{ $selected: boolean; $breakpoint: number }>`
   background-color: ${({ $selected }) => ($selected ? "var(--blue-100) !important" : "transparent")};
   border-radius: var(--field-border-radius);
   color: var(--white);
+  transition: var(--short-transition);
 
   &:hover,
   &:active,
