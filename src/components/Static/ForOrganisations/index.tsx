@@ -24,31 +24,31 @@ import {
 const STEPS = ["request", "prepare", "match", "introduction", "noMatch", "afterMatch"];
 const DASHBOARD_FEATURES = ["volunteers", "hours", "posts", "openSource"];
 
-function ForOrganisations() {
+function forOrganizations() {
   const { t, i18n } = useTranslation();
   const lang = i18n.language;
 
   return (
     <Container>
-      <Heading>{t("forOrganisationsPage.heading")}</Heading>
+      <Heading>{t("forOrganizationsPage.heading")}</Heading>
 
       <ContentSection>
-        <NoteText>{t("forOrganisationsPage.intro")}</NoteText>
+        <NoteText>{t("forOrganizationsPage.intro")}</NoteText>
 
         <SectionBlock>
-          <SectionHeader>{t("forOrganisationsPage.stepsHeading")}</SectionHeader>
+          <SectionHeader>{t("forOrganizationsPage.stepsHeading")}</SectionHeader>
           <ItemsList>
             {STEPS.map((step, index) => (
               <Item key={step}>
                 <QuestionRow>
                   <Badge>{index + 1}</Badge>
-                  <ItemTitle>{t(`forOrganisationsPage.steps.${step}.title`)}</ItemTitle>
+                  <ItemTitle>{t(`forOrganizationsPage.steps.${step}.title`)}</ItemTitle>
                 </QuestionRow>
                 <AnswerRow>
                   <DashContainer>
                     <Dash />
                   </DashContainer>
-                  <ItemBody>{t(`forOrganisationsPage.steps.${step}.body`)}</ItemBody>
+                  <ItemBody>{t(`forOrganizationsPage.steps.${step}.body`)}</ItemBody>
                 </AnswerRow>
               </Item>
             ))}
@@ -56,20 +56,20 @@ function ForOrganisations() {
         </SectionBlock>
 
         <SectionBlock>
-          <SectionHeader>{t("forOrganisationsPage.dashboard.heading")}</SectionHeader>
-          <NoteText>{t("forOrganisationsPage.dashboard.intro")}</NoteText>
+          <SectionHeader>{t("forOrganizationsPage.dashboard.heading")}</SectionHeader>
+          <NoteText>{t("forOrganizationsPage.dashboard.intro")}</NoteText>
           <ItemsList>
             {DASHBOARD_FEATURES.map((feature, index) => (
               <Item key={feature}>
                 <QuestionRow>
                   <Badge>{index + 1}</Badge>
-                  <ItemTitle>{t(`forOrganisationsPage.dashboard.features.${feature}.title`)}</ItemTitle>
+                  <ItemTitle>{t(`forOrganizationsPage.dashboard.features.${feature}.title`)}</ItemTitle>
                 </QuestionRow>
                 <AnswerRow>
                   <DashContainer>
                     <Dash />
                   </DashContainer>
-                  <ItemBody>{t(`forOrganisationsPage.dashboard.features.${feature}.body`)}</ItemBody>
+                  <ItemBody>{t(`forOrganizationsPage.dashboard.features.${feature}.body`)}</ItemBody>
                 </AnswerRow>
               </Item>
             ))}
@@ -77,20 +77,20 @@ function ForOrganisations() {
         </SectionBlock>
 
         <SectionBlock>
-          <SectionHeader>{t("forOrganisationsPage.goodToKnow.heading")}</SectionHeader>
-          <NoteText>{t("forOrganisationsPage.goodToKnow.free")}</NoteText>
+          <SectionHeader>{t("forOrganizationsPage.goodToKnow.heading")}</SectionHeader>
+          <NoteText>{t("forOrganizationsPage.goodToKnow.free")}</NoteText>
           <NoteText>
-            {t("forOrganisationsPage.goodToKnow.register")}{" "}
+            {t("forOrganizationsPage.goodToKnow.register")}{" "}
             <TextLink href={routes.registerOrganization(lang)}>
-              {t("forOrganisationsPage.goodToKnow.registerLink")}
+              {t("forOrganizationsPage.goodToKnow.registerLink")}
             </TextLink>
           </NoteText>
           <NoteText>
-            {t("forOrganisationsPage.goodToKnow.guidelines")}{" "}
-            <TextLink href={routes.racGuidelines(lang)}>{t("forOrganisationsPage.goodToKnow.guidelinesLink")}</TextLink>
+            {t("forOrganizationsPage.goodToKnow.guidelines")}{" "}
+            <TextLink href={routes.racGuidelines(lang)}>{t("forOrganizationsPage.goodToKnow.guidelinesLink")}</TextLink>
           </NoteText>
           <NoteText>
-            {t("forOrganisationsPage.goodToKnow.contact")}{" "}
+            {t("forOrganizationsPage.goodToKnow.contact")}{" "}
             <TextLink href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</TextLink>
           </NoteText>
         </SectionBlock>
@@ -99,4 +99,4 @@ function ForOrganisations() {
   );
 }
 
-export default ForOrganisations;
+export default forOrganizations;

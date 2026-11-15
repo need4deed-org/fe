@@ -22,7 +22,7 @@
         "agreement": "Ehrenamtliche Vereinbarung",
         "cookies": "Cookies"
       },
-      "forOrganisations": "FÜR ORGANISATIONEN"
+      "forOrganizations": "FÜR ORGANISATIONEN"
     },
     "iframeTitles": {
       "howToVolunteer": "Wie Du Geflüchtete in Deiner Nachbarschaft unterstützen können"
@@ -1921,7 +1921,7 @@
       "bevos": "BEVOS wurde aus dem Europäischen Sozialfonds (ESF) gefördert.",
       "need4deed": "Need4Deed wurde aus dem Asyl-, Migrations- und Integrationsfonds (AMIF) der Europäischen Union gefördert."
     },
-    "forOrganisations": "Für Organisationen",
+    "forOrganizations": "Für Organisationen",
     "intro": "Need4Deed ist ein strukturelles Projekt: Mit eigenen, einzigartigen Werkzeugen vernetzen und stärken wir kleine Ehrenamtsprojekte, die Geflüchtete unterstützen.",
     "offline": {
       "heading": "Vermittlung, Vernetzung, Workshops und Events",
@@ -2818,7 +2818,7 @@
     "header": "Angebote werden aktualisiert...",
     "para": "Wir aktualisieren gerade die Engagementangebote. Dies kann einige Zeit dauern. Wir empfehlen, die Seite später am Tag erneut zu aktualisieren. Wenn Du Fragen hast, wende Dich bitte an volunteer@need4deed.org"
   },
-  "forOrganisationsPage": {
+  "forOrganizationsPage": {
     "heading": "Für Organisationen",
     "intro": "Für Einrichtungen und Projekte, die Geflüchtete in Berlin unterstützen: So arbeiten wir mit Dir zusammen, von der ersten Anfrage bis zur freiwilligen Person vor Ort.",
     "stepsHeading": "So vermitteln wir Freiwillige",

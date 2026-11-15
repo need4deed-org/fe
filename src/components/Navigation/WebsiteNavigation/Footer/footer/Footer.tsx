@@ -80,7 +80,7 @@ export function Footer() {
   } = useTranslation();
   const links1: Link[] = [
     { route: routes.about(language), label: t("website.footer.about") },
-    { route: routes.forOrganizations(language), label: t("website.footer.forOrganisations") },
+    { route: routes.forOrganizations(language), label: t("website.footer.forOrganizations") },
     { route: routes.faq(language), label: t("website.footer.faq") },
   ];
   const links2: Link[] = [

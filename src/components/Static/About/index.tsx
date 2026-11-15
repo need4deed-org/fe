@@ -90,7 +90,7 @@ function AboutUs() {
           <NoteText>{t("aboutus.funding.need4deed")}</NoteText>
         </SectionBlock>
 
-        <SubHeading>{t("aboutus.forOrganisations")}</SubHeading>
+        <SubHeading>{t("aboutus.forOrganizations")}</SubHeading>
 
         <SectionBlock>
           <SectionHeader>{t("aboutus.offline.heading")}</SectionHeader>

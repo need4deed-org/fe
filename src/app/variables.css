@@ -74,6 +74,8 @@
   --header-logo-height: 32px;
   --mobile-menu-width: 320px;
   --mobile-menu-logo-height: 24px;
+  --mobile-footer-menu-height: 74px;
+  --mobile-menu-font-size: 10px;
 
   /* Miscellaneous */
   --short-transition: 0.15s ease-in-out; /* For short animations */

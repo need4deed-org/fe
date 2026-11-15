@@ -24,7 +24,7 @@
         "legalNotice": "Legal notice",
         "cookies": "Cookies"
       },
-      "forOrganisations": "FOR ORGANISATIONS"
+      "forOrganizations": "FOR ORGANIZATIONS"
     },
     "iframeTitles": {
       "howToVolunteer": "How you can support refugees in your community"
@@ -1909,7 +1909,7 @@
       "bevos": "BEVOS was funded by the European Social Fund (ESF).",
       "need4deed": "Need4Deed was funded by the Asylum, Migration and Integration Fund (AMIF) of the European Union."
     },
-    "forOrganisations": "For organisations",
+    "forOrganizations": "For organizations",
     "intro": "Need4Deed is a structural project: with unique tools of our own, we connect and empower small volunteer projects that support refugees.",
     "offline": {
       "heading": "Matching, networking, workshops and events",
@@ -1977,7 +1977,7 @@
       }
     },
     "organisations": {
-      "heading": "For organisations",
+      "heading": "For organizations",
       "register": {
         "question": "How does our organisation register?",
         "answer": "Register your organisation and add its address with the postcode: you need it to create requests.",
@@ -2009,8 +2009,8 @@
       },
       "more": {
         "question": "Where can we read more?",
-        "answer": "How we work with organisations, step by step, and our guidelines are on the page for organisations.",
-        "link": "For organisations"
+        "answer": "How we work with organisations, step by step, and our guidelines are on the page for organizations.",
+        "link": "For organizations"
       }
     }
   },
@@ -2463,8 +2463,8 @@
     "header": "Opportunities are being updated...",
     "para": "We are currently updating the volunteering opportunities. This may take a while. We recommend refreshing the page later on today.  If you have any specific question please contact us at volunteer@need4deed.org"
   },
-  "forOrganisationsPage": {
-    "heading": "For organisations",
+  "forOrganizationsPage": {
+    "heading": "For organizations",
     "intro": "For centres and projects that support refugees in Berlin: how we work with you, from your first request to a volunteer on site.",
     "stepsHeading": "How we match volunteers",
     "steps": {
@@ -2499,7 +2499,7 @@
       "register": "Not registered yet?",
       "registerLink": "Register your organisation",
       "guidelines": "The rules for working together are in our",
-      "guidelinesLink": "guidelines for organisations",
+      "guidelinesLink": "guidelines for organizations",
       "contact": "Questions? Write to us at"
     },
     "dashboard": {
