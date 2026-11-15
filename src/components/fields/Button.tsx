@@ -25,7 +25,7 @@ const ButtonElement = styled.button<{ $selected: boolean }>`
   height: var(--field-size);
   padding-left: var(--large-spacing);
   padding-right: var(--large-spacing);
-  background-color: ${({ $selected }) => ($selected ? "var(--medium-blue)" : "var(--blue)")};
+  background-color: ${({ $selected }) => ($selected ? "var(--blue-75)" : "var(--blue-100)")};
   border-radius: var(--field-border-radius);
   font-weight: var(--bold);
   color: var(--white);
@@ -35,11 +35,11 @@ const ButtonElement = styled.button<{ $selected: boolean }>`
   &:hover,
   &:active,
   &:focus {
-    background-color: var(--medium-blue);
+    background-color: var(--blue-75);
   }
 
   &:disabled {
-    background-color: var(--medium-blue);
-    color: var(--light-blue);
+    background-color: var(--blue-75);
+    color: var(--blue-25);
   }
 `;

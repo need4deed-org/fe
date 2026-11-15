@@ -4,27 +4,33 @@ import { Icon } from "@phosphor-icons/react";
 
 type IconButtonProps = {
   Icon: Icon;
+  selected?: boolean;
   onClick?: () => void;
 };
 
-export const IconButton = ({ Icon, onClick }: IconButtonProps) => {
-  return <Button onClick={() => onClick && onClick()}>{<Icon />}</Button>;
+export const IconButton = ({ Icon, selected = false, onClick }: IconButtonProps) => {
+  return (
+    <Button $selected={selected} onClick={() => onClick && onClick()}>
+      {<Icon />}
+    </Button>
+  );
 };
 
-const Button = styled.button`
+const Button = styled.button<{ $selected: boolean }>`
   display: -webkit-flex;
   display: flex;
   justify-content: center;
   align-items: center;
   width: var(--field-size);
   height: var(--field-size);
-  background-color: var(--blue);
+  background-color: ${({ $selected }) => ($selected ? "var(--blue-75)" : "var(--blue-100)")};
   border-radius: 50%;
+  transition: var(--short-transition);
 
   &:hover,
   &:active,
   &:focus {
-    background-color: var(--medium-blue);
+    background-color: var(--blue-75);
   }
 
   svg {

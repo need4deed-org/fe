@@ -10,7 +10,11 @@ import { useSearchParams } from "next/navigation";
 import { IconButton } from "@/components/fields/IconButton";
 import { Button } from "@/components/fields/Button";
 
-export const LanguageSelector = () => {
+type LanguageSelectorProps = {
+  breakpoint: number;
+};
+
+export const LanguageSelector = ({ breakpoint }: LanguageSelectorProps) => {
   const {
     i18n: { language },
   } = useTranslation();
@@ -36,10 +40,10 @@ export const LanguageSelector = () => {
 
   return (
     <Wrapper>
-      <IconButton Icon={TranslateIcon} onClick={() => setOpen(true)} />
-      <MenuWrapper $open={open}>
+      <IconButton Icon={TranslateIcon} selected={open} onClick={() => setOpen(true)} />
+      <MenuWrapper $open={open} $breakpoint={breakpoint}>
         <OverlayCloseButton onClick={() => setOpen(false)} />
-        <Menu>
+        <Menu $breakpoint={breakpoint}>
           <li>
             <Button label="Deutsch" selected={language === Lang.DE} onClick={() => handleLanguageChange(Lang.DE)} />
           </li>
@@ -56,11 +60,15 @@ const Wrapper = styled.div`
   position: relative;
 `;
 
-const MenuWrapper = styled.div<{ $open: boolean }>`
+const MenuWrapper = styled.div<{ $open: boolean; $breakpoint: number }>`
   display: ${({ $open }) => ($open ? "block" : "none")};
   position: absolute;
   left: 0;
   z-index: 0;
+
+  @media screen and (max-width: ${({ $breakpoint }) => $breakpoint}px) {
+    top: 0;
+  }
 `;
 
 const OverlayCloseButton = styled.button`
@@ -75,7 +83,7 @@ const OverlayCloseButton = styled.button`
   outline: none;
 `;
 
-const Menu = styled.ul`
+const Menu = styled.ul<{ $breakpoint: number }>`
   display: -webkit-flex;
   display: flex;
   flex-direction: column;
@@ -85,8 +93,15 @@ const Menu = styled.ul`
   margin: 0;
   margin-top: var(--small-spacing);
   z-index: 2;
-  background-color: var(--light-blue);
+  background-color: var(--blue-50);
   border-radius: var(--surface-border-radius);
   list-style: none;
   list-style-type: none;
+
+  @media screen and (max-width: ${({ $breakpoint }) => $breakpoint}px) {
+    position: absolute;
+    left: 0;
+    bottom: var(--small-spacing);
+    margin: 0;
+  }
 `;
