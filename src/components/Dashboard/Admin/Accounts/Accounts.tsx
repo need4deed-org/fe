@@ -18,7 +18,7 @@ import { Paragraph } from "@/components/styled/text";
 import { useAdminAccounts } from "@/hooks/useAdminAccounts";
 import { useAuth } from "@/hooks/useAuth";
 import { PencilSimpleIcon } from "@phosphor-icons/react";
-import { ApiUserGet, UserRole } from "need4deed-sdk";
+import { UserRole } from "need4deed-sdk";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
@@ -30,15 +30,13 @@ const ROLE_OPTIONS = [
   { role: UserRole.ADMIN, labelKey: "dashboard.posts.roles.admin" },
 ];
 
-type EditableAccount = ApiUserGet & { personId: number };
-
 export function Accounts() {
   const { t } = useTranslation();
   const { isAdmin } = useAuth();
   const [role, setRole] = useState(UserRole.COORDINATOR);
   const [search, setSearch] = useState("");
-  const [accountToEdit, setAccountToEdit] = useState<EditableAccount | null>(null);
-  const { accounts, isLoading, isError } = useAdminAccounts(role, search.trim());
+  const [accountToEdit, setAccountToEdit] = useState<{ personId: number; email: string } | null>(null);
+  const { accounts, isLoading, isError, isTruncated } = useAdminAccounts(role, search.trim());
 
   return (
     <Container>
@@ -87,7 +85,7 @@ export function Accounts() {
                       <ActionButtonWithTooltip
                         tooltipText={t("dashboard.admin.accounts.edit")}
                         ariaLabel={t("dashboard.admin.accounts.editAria", { email: account.email })}
-                        onClick={() => setAccountToEdit({ ...account, personId: account.personId! })}
+                        onClick={() => setAccountToEdit({ personId: account.personId!, email: account.email })}
                       >
                         <PencilSimpleIcon size={20} />
                       </ActionButtonWithTooltip>
@@ -99,6 +97,8 @@ export function Accounts() {
           </Table>
         </TableContainer>
       )}
+
+      {isTruncated && <Paragraph color="var(--color-grey-500)">{t("dashboard.admin.accounts.truncated")}</Paragraph>}
 
       {accountToEdit && (
         <EditNameDialog

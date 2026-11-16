@@ -2114,7 +2114,9 @@
         "firstName": "First name",
         "lastName": "Last name",
         "save": "Save",
-        "renamed": "Name updated"
+        "renamed": "Name updated",
+        "personLoadError": "This person could not be loaded, so the name can't be edited right now.",
+        "truncated": "Only the newest accounts are shown. Search to find others."
       }
     },
     "recommended": {

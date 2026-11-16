@@ -15,18 +15,20 @@ type Props = {
 
 export function EditNameDialog({ personId, email, onClose }: Props) {
   const { t } = useTranslation();
-  const { data: person, isLoading } = useAccountPerson(personId);
+  const { person, isLoading, isError } = useAccountPerson(personId);
   const { renameAccount, isRenaming } = useRenameAccount();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [isPrefilled, setIsPrefilled] = useState(false);
 
   useEffect(() => {
-    if (!person) return;
+    if (!person || isPrefilled) return;
     setFirstName(person.firstName ?? "");
     setLastName(person.lastName ?? "");
-  }, [person]);
+    setIsPrefilled(true);
+  }, [person, isPrefilled]);
 
-  const isValid = firstName.trim().length > 0 && lastName.trim().length > 0;
+  const isValid = firstName.trim().length > 0;
 
   const handleSave = () =>
     renameAccount(
@@ -37,12 +39,12 @@ export function EditNameDialog({ personId, email, onClose }: Props) {
   return (
     <ConfirmationDialog
       title={t("dashboard.admin.accounts.editTitle")}
-      message={email}
+      message={isError ? t("dashboard.admin.accounts.personLoadError") : email}
       confirmText={t("dashboard.admin.accounts.save")}
       onCancel={onClose}
       onConfirm={handleSave}
       cancelDisabled={isRenaming}
-      confirmDisabled={isLoading || isRenaming || !isValid}
+      confirmDisabled={isLoading || isError || !isPrefilled || isRenaming || !isValid}
     >
       <Fields>
         <Label>

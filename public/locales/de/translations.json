@@ -2126,7 +2126,9 @@
         "firstName": "Vorname",
         "lastName": "Nachname",
         "save": "Speichern",
-        "renamed": "Name aktualisiert"
+        "renamed": "Name aktualisiert",
+        "personLoadError": "Diese Person konnte nicht geladen werden, der Name lässt sich gerade nicht bearbeiten.",
+        "truncated": "Es werden nur die neuesten Konten angezeigt. Suche, um weitere zu finden."
       }
     },
     "recommended": {
