@@ -37,7 +37,7 @@ export const routes = {
   calendarEdit: (lang: string, id: Id) => `/${lang}/calendar/${id}/edit`,
   admin: (lang: string) => `/${lang}/admin`,
   profile: (lang: string) => `/${lang}/profile`,
-  domains: (lang: string) => `/${lang}/admin/domains`,
+  domains: (lang: string) => `/${lang}/organizations/domains`,
   statistics: (lang: string) => `/${lang}/admin/statistics`,
 } as const;
 

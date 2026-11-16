@@ -7,6 +7,7 @@ import { AgentHomeContent } from "./agent";
 import { CoordinatorHomeContent } from "./coordinator";
 import { VolunteerHomeContent } from "./volunteer";
 import { HomeSkeleton } from "./HomeSkeleton";
+import { LogoutButton } from "./LogoutButton";
 
 export type DashboardControllerProps = {
   volunteerId?: number;
@@ -25,6 +26,7 @@ export default function HomeContentController() {
 
   return (
     <DashboardContentContainer>
+      <LogoutButton />
       <DashboardContentController volunteerId={user?.volunteerId} />
     </DashboardContentContainer>
   );

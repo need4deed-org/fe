@@ -993,6 +993,7 @@
     },
     "agents": {
       "agents": "NGO Directory",
+      "trustedDomains": "Trusted Domains",
       "table": {
         "title": "Name",
         "type": "Type",

@@ -1,6 +1,6 @@
-import forOrganizations from "@/components/Static/forOrganizations";
+import ForOrganizations from "@/components/Static/ForOrganizations";
 import React from "react";
 
 export default function forOrganizationsPage() {
-  return <forOrganizations />;
+  return <ForOrganizations />;
 }

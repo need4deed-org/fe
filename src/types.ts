@@ -2,8 +2,6 @@ export interface PropsWithToken {
   token?: string | null;
 }
 
-export type MenuItemType = [string, string];
-
 export type RouteParams<T extends string = string> = {
   params: Promise<{ id: T }>;
 };

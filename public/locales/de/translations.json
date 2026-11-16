@@ -940,6 +940,7 @@
     },
     "agents": {
       "agents": "Einrichtungs-/Projektverzeichnis",
+      "trustedDomains": "Vertrauenswürdige Domains",
       "table": {
         "title": "Name",
         "type": "Typ",

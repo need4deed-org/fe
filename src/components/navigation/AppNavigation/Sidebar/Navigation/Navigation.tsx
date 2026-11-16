@@ -10,6 +10,7 @@ import {
   NotepadIcon,
   SquaresFourIcon,
   UsersThreeIcon,
+  UserCircleIcon,
 } from "@phosphor-icons/react";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import NextLink from "next/link";
@@ -67,18 +68,12 @@ export const Navigation = ({ breakpoint }: NavigationProps) => {
       label: t("dashboard.home.sidebar.calendar"),
       roles: [UserRole.USER, UserRole.COORDINATOR, UserRole.ADMIN],
     },
-    /*{
-            route: routes.admin(language),
-            Icon: ShieldCheckIcon,
-            label: t("dashboard.home.sidebar.admin"),
-            roles: [ UserRole.COORDINATOR, UserRole.ADMIN ]
-        },
-        {
-            route: routes.profile(language),
-            Icon: UserCircleIcon,
-            label: t("dashboard.home.sidebar.profile"),
-            roles: [ UserRole.VOLUNTEER, UserRole.AGENT, UserRole.USER, UserRole.COORDINATOR, UserRole.ADMIN ]
-        }*/
+    {
+      route: routes.profile(language),
+      Icon: UserCircleIcon,
+      label: t("dashboard.home.sidebar.profile"),
+      roles: [UserRole.VOLUNTEER, UserRole.AGENT, UserRole.USER, UserRole.COORDINATOR, UserRole.ADMIN],
+    },
   ];
 
   if (!user) return;
@@ -90,7 +85,7 @@ export const Navigation = ({ breakpoint }: NavigationProps) => {
           .filter(({ roles }) => roles.includes(user.role))
           .map(({ route, Icon, label }) => (
             <ListItem key={route}>
-              <Link href={route} $selected={route === pathname} $breakpoint={breakpoint}>
+              <Link href={route} $selected={pathname.startsWith(route)} $breakpoint={breakpoint}>
                 <Icon />
                 <Label $breakpoint={breakpoint}>{label}</Label>
               </Link>

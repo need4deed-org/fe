@@ -12,7 +12,7 @@ const DEVICE_HEADER_NAME = "x-device-type";
 const LANG_COOKIE = "preferred-lang";
 const REFRESH = "refresh";
 
-const appSections = "dashboard|opportunities|volunteers|organizations|posts|calendar|admin|profile";
+const appSections = "dashboard|opportunities|volunteers|organizations|posts|calendar|profile";
 const localePrefixRegex = /^\/([a-z]{2})(?:\/|$)/i;
 
 const authorizedRoutes: Record<string, { regex: RegExp; redirect: RouteBuilder }> = {
@@ -70,14 +70,6 @@ export function middleware(request: NextRequest) {
     const userObject = decodeJwtPayload(token);
     const isAuthorized =
       (userObject && userObject.role === UserRole.ADMIN) || (userObject && userObject.role === UserRole.COORDINATOR);
-
-    // Allowlist: any other role or an undecodable token is sent away.
-    const adminRegex = /^(?:\/[a-z]{2})?\/admin(?:\/|$)/;
-    if (!isAuthorized && adminRegex.test(pathname)) {
-      const url = request.nextUrl.clone();
-      url.pathname = routes.dashboard(lang);
-      return NextResponse.redirect(url);
-    }
 
     const volunteerRestrictedRegex = /^(?:\/[a-z]{2})?\/(volunteers|organizations|posts|calendar)(?:\/|$)/;
     if (userObject?.role === UserRole.VOLUNTEER && volunteerRestrictedRegex.test(pathname)) {

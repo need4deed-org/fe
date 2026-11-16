@@ -27,6 +27,8 @@ import { useGetOpportunity } from "@/hooks/useGetOpportunity";
 import { useTransferOpportunityToAgent } from "@/hooks/useTransferOpportunityToAgent";
 import { ConfirmationDialog } from "@/components/core/common/ConfirmationDialog";
 import { useScreenType } from "@/context/DeviceContext";
+import { LinkButton } from "@/components/fields/LinkButton";
+import styled from "styled-components";
 
 export const Agents = () => {
   const user = useCurrentUser(true);
@@ -125,9 +127,17 @@ export const Agents = () => {
   }, [apiFilterOptions, searchParams]);
 
   const activeFilters = createSelectedAgentFiltersAsFlatArray(cardsFilter, setCardsFilter, t);
+
+  if (!user) return;
+
   return (
     <>
       <AgentsContainer data-testid="agents-container">
+        {[UserRole.COORDINATOR, UserRole.ADMIN].includes(user.role) && (
+          <DomainsButtonContainer>
+            <LinkButton href={routes.domains(i18n.language)} inline label={t("dashboard.agents.trustedDomains")} />
+          </DomainsButtonContainer>
+        )}
         <CardsHeader
           header={
             transferOpportunityId
@@ -194,3 +204,9 @@ export const Agents = () => {
     </>
   );
 };
+
+const DomainsButtonContainer = styled.div`
+  display: -webkit-flex;
+  display: flex;
+  justify-content: right;
+`;

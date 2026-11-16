@@ -24,7 +24,7 @@ import {
 const STEPS = ["request", "prepare", "match", "introduction", "noMatch", "afterMatch"];
 const DASHBOARD_FEATURES = ["volunteers", "hours", "posts", "openSource"];
 
-function forOrganizations() {
+function ForOrganizations() {
   const { t, i18n } = useTranslation();
   const lang = i18n.language;
 
@@ -99,4 +99,4 @@ function forOrganizations() {
   );
 }
 
-export default forOrganizations;
+export default ForOrganizations;
