@@ -2042,7 +2042,8 @@
       "nav": {
         "domains": "Domains",
         "stats": "Statistics",
-        "ngoVolunteers": "NGO volunteers"
+        "ngoVolunteers": "NGO volunteers",
+        "accounts": "Accounts"
       },
       "ngoVolunteers": {
         "helper": "Pick an NGO to give its volunteers a registration link or to import its existing volunteers.",
@@ -2095,6 +2096,25 @@
             "otherPerson": "Email belongs to a different person"
           }
         }
+      },
+      "accounts": {
+        "helper": "Coordinator, NGO and admin accounts. Edit a name here and it changes everywhere the person appears.",
+        "role": "Role",
+        "search": "Search by name or email",
+        "loadError": "Accounts could not be loaded.",
+        "empty": "No accounts found.",
+        "name": "Name",
+        "email": "Email",
+        "status": "Status",
+        "active": "Active",
+        "inactive": "Deactivated",
+        "edit": "Edit name",
+        "editAria": "Edit name of {{email}}",
+        "editTitle": "Edit name",
+        "firstName": "First name",
+        "lastName": "Last name",
+        "save": "Save",
+        "renamed": "Name updated"
       }
     },
     "recommended": {
