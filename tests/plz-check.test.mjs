@@ -17,7 +17,7 @@ function loadModule(file) {
   return loadedModule.exports;
 }
 
-const { fetchPLZExists, canSubmitPLZ, resolvePLZStatus } = loadModule("src/utils/plz-check.ts");
+const { fetchPLZExists, canSubmitPLZ, isPLZResolving, resolvePLZStatus } = loadModule("src/utils/plz-check.ts");
 
 const apiPath = "/api/postcode/check";
 const respond = (body) => async () => ({ data: body });
@@ -59,7 +59,14 @@ test("unknown, pending and checking block submit; known, unavailable and idle do
   assert.equal(canSubmitPLZ("idle"), true);
 });
 
-const lookup = (overrides) => ({ isCandidate: true, isSettled: true, isError: false, exists: undefined, ...overrides });
+const lookup = (overrides) => ({
+  isCandidate: true,
+  isSettled: true,
+  isError: false,
+  isFetching: false,
+  exists: undefined,
+  ...overrides,
+});
 
 test("a PLZ failing the range check is idle, whatever the lookup says", () => {
   assert.equal(resolvePLZStatus(lookup({ isCandidate: false, exists: false })), "idle");
@@ -69,6 +76,17 @@ test("a PLZ failing the range check is idle, whatever the lookup says", () => {
 test("pending while typing, checking while the lookup runs", () => {
   assert.equal(resolvePLZStatus(lookup({ isSettled: false, exists: true })), "pending");
   assert.equal(resolvePLZStatus(lookup({})), "checking");
+});
+
+test("re-checking after a failed or stale lookup is checking, not the old answer", () => {
+  assert.equal(resolvePLZStatus(lookup({ isFetching: true, isError: true })), "checking");
+  assert.equal(resolvePLZStatus(lookup({ isFetching: true, exists: false })), "checking");
+});
+
+test("only pending and checking are still resolving", () => {
+  assert.equal(isPLZResolving("pending"), true);
+  assert.equal(isPLZResolving("checking"), true);
+  for (const status of ["idle", "known", "unknown", "unavailable"]) assert.equal(isPLZResolving(status), false);
 });
 
 test("a failed lookup is unavailable; an answered one is known or unknown", () => {

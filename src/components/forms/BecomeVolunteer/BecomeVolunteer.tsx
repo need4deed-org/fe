@@ -4,7 +4,7 @@ import { validate as validateEmail } from "email-validator";
 import { Lang } from "need4deed-sdk";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { apiPathVolunteer } from "../../../config/constants";
@@ -15,6 +15,7 @@ import { PLZChip } from "@/components/core/common";
 import WithParentRef from "@/components/withParentRef";
 import { useCheckPLZ } from "@/hooks/use-check-plz";
 import useList from "@/hooks/useLists";
+import { isPLZResolving } from "@/utils/plz-check";
 import usePostRequest from "@/hooks/usePostRequest";
 import { LanguageLevel, Subpage } from "@/types";
 import ErrorAnnouncement from "../AddOpportunity/ErrorAnnouncement";
@@ -109,6 +110,13 @@ export default function BecomeVolunteer() {
 
   const postcode = formVolunteer.useStore((state) => state.values.postcode);
   const plz = useCheckPLZ(postcode ?? "");
+  const [isSubmitQueued, setIsSubmitQueued] = useState(false);
+
+  useEffect(() => {
+    if (!isSubmitQueued || isPLZResolving(plz.status)) return;
+    setIsSubmitQueued(false);
+    if (!plz.blocksSubmit) formVolunteer.handleSubmit();
+  }, [isSubmitQueued, plz.status, plz.blocksSubmit, formVolunteer]);
 
   if (showErrorAnnouncement) {
     return <ErrorAnnouncement copies={somethingWrong} />;
@@ -132,7 +140,10 @@ export default function BecomeVolunteer() {
         onSubmit={(e) => {
           e.preventDefault();
           e.stopPropagation();
-          if (plz.blocksSubmit) return;
+          if (plz.blocksSubmit) {
+            setIsSubmitQueued(isPLZResolving(plz.status));
+            return;
+          }
           formVolunteer.handleSubmit();
         }}
       >

@@ -24,7 +24,7 @@ export function useCheckPLZ(plz: string, { scope = TypePLZ.GERMANY, savedPLZ }: 
   const isCandidate = !isSavedPLZ(trimmed, savedPLZ) && isValidPLZ(trimmed, scope);
   const isSettled = debounced === trimmed;
 
-  const { data, isError } = useQuery({
+  const { data, isError, isFetching } = useQuery({
     queryKey: ["postcode-check", isCandidate ? debounced : null],
     queryFn: () => fetchPLZExists(apiPathPostcodeCheck, debounced),
     enabled: isCandidate && isSettled,
@@ -35,6 +35,6 @@ export function useCheckPLZ(plz: string, { scope = TypePLZ.GERMANY, savedPLZ }: 
     networkMode: "always",
   });
 
-  const status = resolvePLZStatus({ isCandidate, isSettled, isError, exists: data });
+  const status = resolvePLZStatus({ isCandidate, isSettled, isError, isFetching, exists: data });
   return { status, blocksSubmit: !canSubmitPLZ(status) };
 }

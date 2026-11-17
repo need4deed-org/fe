@@ -26,15 +26,27 @@ type PLZLookupState = {
   isCandidate: boolean;
   isSettled: boolean;
   isError: boolean;
+  isFetching: boolean;
   exists?: boolean;
 };
 
-export function resolvePLZStatus({ isCandidate, isSettled, isError, exists }: PLZLookupState): PLZCheckStatus {
+export function resolvePLZStatus({
+  isCandidate,
+  isSettled,
+  isError,
+  isFetching,
+  exists,
+}: PLZLookupState): PLZCheckStatus {
   if (!isCandidate) return "idle";
   if (!isSettled) return "pending";
+  if (isFetching) return "checking";
   if (isError) return "unavailable";
   if (exists === undefined) return "checking";
   return exists ? "known" : "unknown";
+}
+
+export function isPLZResolving(status: PLZCheckStatus): boolean {
+  return status === "pending" || status === "checking";
 }
 
 export function canSubmitPLZ(status: PLZCheckStatus): boolean {

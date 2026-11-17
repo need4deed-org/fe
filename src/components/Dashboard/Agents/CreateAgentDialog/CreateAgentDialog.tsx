@@ -6,13 +6,13 @@ import { EditableField } from "@/components/EditableField/EditableField";
 import { apiPathAgent, cacheTTL } from "@/config/constants";
 import { PLZChip } from "@/components/core/common";
 import { useGetQuery } from "@/hooks";
-import { useCheckPLZ } from "@/hooks/use-check-plz";
+import { usePLZField } from "@/hooks/use-plz-field";
 import { useCreateAgent } from "@/hooks/useCreateAgent";
 import { ApiAgentGet, ApiAgentRegisterConflict } from "need4deed-sdk";
 import Link from "next/link";
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, ControllerRenderProps, useForm, useWatch } from "react-hook-form";
+import { Controller, ControllerRenderProps, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { ButtonRow, FormDetails } from "../../Profile/sections/shared/styles";
 import { CreateAgentFormData, createAgentFormSchema } from "./createAgentFormSchema";
@@ -48,8 +48,7 @@ export const CreateAgentDialog = ({ isOpen, onClose }: Props) => {
     mode: "onChange",
     defaultValues: emptyValues,
   });
-  const postcode = useWatch({ control, name: "addressPostcode" });
-  const plz = useCheckPLZ(postcode ?? "");
+  const plz = usePLZField(control, "addressPostcode");
 
   const handleClose = () => {
     reset(emptyValues);
