@@ -8,11 +8,25 @@ import {
   OpportunityLegacyType,
   OpportunityFormDataWithAgentSubmitter,
   ApiOpportunityAddress,
+  ApiOpportunityGet,
 } from "need4deed-sdk";
 import { HeaderFormData } from "./headerSchema";
 import { AccompanyingDetailsFormData } from "../Profile/sections/AccompanyingDetails/createAccompanyingDetailsSchema";
 import { NewOpportunityDetailsFormData } from "@/components/Dashboard/Profile/sections/OpportunityDetails/opportunityDetailsSchema";
-import { resolveFormLanguageToOption } from "../Profile/sections/OpportunityDetails/formatters";
+import { languagesToFormValues, resolveFormLanguageToOption } from "../Profile/sections/OpportunityDetails/formatters";
+import { apiToFormAvailability } from "../Profile/sections/VolunteerProfile/availabilityUtils";
+import { UseFormReturn } from "react-hook-form";
+
+interface PopulateDuplicateParams {
+  duplicateOpportunity: ApiOpportunityGet;
+  headerMethods: UseFormReturn<HeaderFormData>;
+  detailsMethods: UseFormReturn<NewOpportunityDetailsFormData>;
+  accompanyingMethods: UseFormReturn<AccompanyingDetailsFormData>;
+  mainLanguageIsoToIdMap: Map<Lang | undefined, number>;
+  IdToLanguageMap: Map<number, string>;
+  lang: string;
+  t: TFunction<"translation", undefined>;
+}
 
 export const ALLOWED_VOLUNTEER_TYPES = [
   VolunteerStateTypeType.REGULAR,
@@ -126,4 +140,58 @@ export const isoCodeToLanguage = (isoCode: Lang | undefined, lang: string) => {
   if (isoCode === "en" && lang === "en") return "English";
   if (isoCode === "en" && lang === "de") return "Englisch";
   return "";
+};
+
+export const populateDuplicateOpportunity = ({
+  duplicateOpportunity,
+  headerMethods,
+  detailsMethods,
+  accompanyingMethods,
+  mainLanguageIsoToIdMap,
+  IdToLanguageMap,
+  lang,
+  t,
+}: PopulateDuplicateParams) => {
+  // 1. Reset Header
+  headerMethods.reset({
+    title: duplicateOpportunity.title ?? "",
+    volunteerType: duplicateOpportunity.volunteerType ?? undefined,
+    agentId: duplicateOpportunity.agent?.id ?? 0,
+  });
+
+  // 2. Reset Details
+  detailsMethods.reset({
+    description: String(duplicateOpportunity.description ?? ""),
+    numberOfVolunteers: String(duplicateOpportunity.numberOfVolunteers ?? "1"),
+    mainCommunication: [
+      {
+        id: mainLanguageIsoToIdMap.get(duplicateOpportunity.originalLanguage) ?? 1,
+        language: isoCodeToLanguage(duplicateOpportunity.originalLanguage, lang) ?? "",
+        level: "",
+      },
+    ],
+    residentsSpeak: languagesToFormValues(duplicateOpportunity.languages ?? [], t) ?? [
+      { id: 1, language: "", level: "" },
+    ],
+    availability: apiToFormAvailability(duplicateOpportunity.availability) ?? [],
+    eventDate: duplicateOpportunity.event?.date ? new Date(`${duplicateOpportunity.event.date}`) : null,
+    eventTime: duplicateOpportunity.event?.time ?? "",
+    activities: duplicateOpportunity.activities.map((act) => String(act.id)) ?? [],
+    skills: duplicateOpportunity.skills.map((skill) => String(skill.id)) ?? [],
+  });
+
+  // 3. Reset Accompanying Details (if present)
+  if (duplicateOpportunity.accompanyingDetails) {
+    const acc = duplicateOpportunity.accompanyingDetails;
+    accompanyingMethods.reset({
+      appointmentAddress: acc.appointmentAddress ?? "",
+      appointmentPostcode: acc.appointmentPostcode ?? "",
+      appointmentDate: acc.appointmentDate ? new Date(`${acc.appointmentDate}`) : null,
+      appointmentTime: acc.appointmentTime ?? "",
+      refugeeNumber: acc.refugeeNumber ?? "",
+      refugeeName: acc.refugeeName ?? "",
+      refugeeLanguage: acc.refugeeLanguage?.map((refLang) => IdToLanguageMap.get(Number(refLang.id))) ?? [],
+      appointmentLanguage: acc.appointmentLanguage ?? undefined,
+    });
+  }
 };

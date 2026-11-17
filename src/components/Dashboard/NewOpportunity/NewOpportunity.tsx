@@ -40,7 +40,7 @@ import {
 } from "../Profile/sections/AccompanyingDetails/createAccompanyingDetailsSchema";
 import { AddressWarning, SaveRow } from "./styled";
 import { OpportunityDetailsFields } from "./fields/OpportunityDetailsFields";
-import { buildCreatePayload } from "./helper";
+import { buildCreatePayload, populateDuplicateOpportunity } from "./helper";
 import { createHeaderSchema, HeaderFormData } from "./headerSchema";
 import OpportunityHeaderCard from "./OpportunityHeaderCard";
 import DescriptionField from "./fields/DescriptionField";
@@ -55,6 +55,7 @@ import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { useMinAppointmentDate } from "@/hooks/useMinAppointmentDate";
 import { apiToFormAvailability } from "../Profile/sections/VolunteerProfile/availabilityUtils";
 import { isoCodeToLanguage, languageToIsoCode } from "./helper";
+import { languagesToFormValues } from "../Profile/sections/OpportunityDetails/formatters";
 
 export function NewOpportunity() {
   const { t, i18n } = useTranslation();
@@ -112,7 +113,7 @@ export function NewOpportunity() {
     resolver: zodResolver(createNewOpportunityDetailsSchema(t, getMainCommunicationLanguageOptions(apiLanguages))),
     mode: "onChange",
     defaultValues: {
-      description: duplicateOpportunity?.description ?? "",
+      description: String(duplicateOpportunity?.description ?? ""),
       numberOfVolunteers: String(duplicateOpportunity?.numberOfVolunteers) ?? "1",
       mainCommunication: [
         {
@@ -121,11 +122,9 @@ export function NewOpportunity() {
           level: "",
         },
       ],
-      residentsSpeak: duplicateOpportunity?.languages.map((lan) => ({
-        id: lan.id,
-        language: lan.title,
-        level: "",
-      })) ?? [{ id: 1, language: "", level: "" }],
+      residentsSpeak: languagesToFormValues(duplicateOpportunity?.languages ?? [], t) ?? [
+        { id: 1, language: "", level: "" },
+      ],
       availability: apiToFormAvailability(duplicateOpportunity?.availability) ?? [],
       eventDate: duplicateOpportunity?.event?.date ? new Date(`${duplicateOpportunity?.event?.date}`) : null,
       eventTime: duplicateOpportunity?.event?.time ?? "",
@@ -223,6 +222,20 @@ export function NewOpportunity() {
       setAgentId("agentId", firstNGOId);
     }
   }, [firstNGOId]);
+
+  useEffect(() => {
+    if (!duplicateOpportunity) return;
+    populateDuplicateOpportunity({
+      duplicateOpportunity,
+      headerMethods,
+      detailsMethods,
+      accompanyingMethods,
+      mainLanguageIsoToIdMap,
+      IdToLanguageMap,
+      lang,
+      t,
+    });
+  }, [duplicateOpportunity, lang, t]);
 
   return (
     <PageContainer>
