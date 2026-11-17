@@ -89,7 +89,6 @@ export function NewOpportunity() {
   const mainLanguageIsoToIdMap = new Map(
     mainCommunicationLanguagesForForm.map((l) => [languageToIsoCode(l.title[lang as Lang]), l.id]),
   );
-  const IdToLanguageMap = new Map(apiLanguages.map((l) => [l.id, l.title]));
 
   const headerMethods = useForm<HeaderFormData>({
     resolver: zodResolver(createHeaderSchema(t)),
@@ -114,7 +113,7 @@ export function NewOpportunity() {
     mode: "onChange",
     defaultValues: {
       description: String(duplicateOpportunity?.description ?? ""),
-      numberOfVolunteers: String(duplicateOpportunity?.numberOfVolunteers) ?? "1",
+      numberOfVolunteers: String(duplicateOpportunity?.numberOfVolunteers ?? 1),
       mainCommunication: [
         {
           id: mainLanguageIsoToIdMap.get(duplicateOpportunity?.originalLanguage) ?? 1,
@@ -147,9 +146,7 @@ export function NewOpportunity() {
       appointmentTime: accompanyingDetailsDefaultValues?.appointmentTime ?? "",
       refugeeNumber: accompanyingDetailsDefaultValues?.refugeeNumber ?? "",
       refugeeName: accompanyingDetailsDefaultValues?.refugeeName ?? "",
-      refugeeLanguage:
-        accompanyingDetailsDefaultValues?.refugeeLanguage?.map((refLang) => IdToLanguageMap.get(Number(refLang.id))) ??
-        [],
+      refugeeLanguage: accompanyingDetailsDefaultValues?.refugeeLanguage?.map((refLang) => String(refLang.id)) ?? [],
       appointmentLanguage: accompanyingDetailsDefaultValues?.appointmentLanguage ?? undefined,
     },
   });
@@ -231,7 +228,6 @@ export function NewOpportunity() {
       detailsMethods,
       accompanyingMethods,
       mainLanguageIsoToIdMap,
-      IdToLanguageMap,
       lang,
       t,
     });

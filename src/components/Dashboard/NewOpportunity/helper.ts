@@ -23,7 +23,6 @@ interface PopulateDuplicateParams {
   detailsMethods: UseFormReturn<NewOpportunityDetailsFormData>;
   accompanyingMethods: UseFormReturn<AccompanyingDetailsFormData>;
   mainLanguageIsoToIdMap: Map<Lang | undefined, number>;
-  IdToLanguageMap: Map<number, string>;
   lang: string;
   t: TFunction<"translation", undefined>;
 }
@@ -82,9 +81,18 @@ export function buildCreatePayload(
   const isEvent = headerData.volunteerType === VolunteerStateTypeType.EVENTS;
   const isAccompanying = headerData.volunteerType === VolunteerStateTypeType.ACCOMPANYING;
 
-  const mainLangIds = toLangOptionItems(detailsData.mainCommunication, apiLanguages, t).map((i) => i.id);
-  const residentsLangIds = toLangOptionItems(detailsData.residentsSpeak, apiLanguages, t).map((i) => i.id);
-  const refugeeLangIds = (accompData?.refugeeLanguage ?? []).map(Number).filter((id) => !isNaN(id));
+  const mainLangIds = isAccompanying
+    ? []
+    : toLangOptionItems(detailsData.mainCommunication, apiLanguages, t).map((i) => i.id);
+
+  const residentsLangIds = isAccompanying
+    ? []
+    : toLangOptionItems(detailsData.residentsSpeak, apiLanguages, t).map((i) => i.id);
+
+  const refugeeLangIds = isAccompanying
+    ? (accompData?.refugeeLanguage ?? []).map(Number).filter((id) => !isNaN(id))
+    : [];
+
   const languageIds = [...new Set([...mainLangIds, ...residentsLangIds, ...refugeeLangIds])];
 
   const activityIds = toOptionItems(detailsData.activities, apiActivities).map((i) => i.id);
@@ -148,28 +156,29 @@ export const populateDuplicateOpportunity = ({
   detailsMethods,
   accompanyingMethods,
   mainLanguageIsoToIdMap,
-  IdToLanguageMap,
   lang,
   t,
 }: PopulateDuplicateParams) => {
-  // 1. Reset Header
   headerMethods.reset({
     title: duplicateOpportunity.title ?? "",
     volunteerType: duplicateOpportunity.volunteerType ?? undefined,
     agentId: duplicateOpportunity.agent?.id ?? 0,
   });
 
-  // 2. Reset Details
   detailsMethods.reset({
     description: String(duplicateOpportunity.description ?? ""),
-    numberOfVolunteers: String(duplicateOpportunity.numberOfVolunteers ?? "1"),
-    mainCommunication: [
-      {
-        id: mainLanguageIsoToIdMap.get(duplicateOpportunity.originalLanguage) ?? 1,
-        language: isoCodeToLanguage(duplicateOpportunity.originalLanguage, lang) ?? "",
-        level: "",
-      },
-    ],
+    numberOfVolunteers: String(duplicateOpportunity.numberOfVolunteers ?? 1),
+    mainCommunication: duplicateOpportunity.accompanyingDetails
+      ? []
+      : duplicateOpportunity.languages?.length
+        ? languagesToFormValues(duplicateOpportunity.languages, t)
+        : [
+            {
+              id: mainLanguageIsoToIdMap.get(duplicateOpportunity.originalLanguage) ?? 1,
+              language: isoCodeToLanguage(duplicateOpportunity.originalLanguage, lang) ?? "",
+              level: "",
+            },
+          ],
     residentsSpeak: languagesToFormValues(duplicateOpportunity.languages ?? [], t) ?? [
       { id: 1, language: "", level: "" },
     ],
@@ -180,7 +189,6 @@ export const populateDuplicateOpportunity = ({
     skills: duplicateOpportunity.skills.map((skill) => String(skill.id)) ?? [],
   });
 
-  // 3. Reset Accompanying Details (if present)
   if (duplicateOpportunity.accompanyingDetails) {
     const acc = duplicateOpportunity.accompanyingDetails;
     accompanyingMethods.reset({
@@ -190,7 +198,7 @@ export const populateDuplicateOpportunity = ({
       appointmentTime: acc.appointmentTime ?? "",
       refugeeNumber: acc.refugeeNumber ?? "",
       refugeeName: acc.refugeeName ?? "",
-      refugeeLanguage: acc.refugeeLanguage?.map((refLang) => IdToLanguageMap.get(Number(refLang.id))) ?? [],
+      refugeeLanguage: acc.refugeeLanguage?.map((refLang) => String(refLang.id)) ?? [],
       appointmentLanguage: acc.appointmentLanguage ?? undefined,
     });
   }
