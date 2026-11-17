@@ -82,3 +82,7 @@ Commit prefixes: 🎨 style · 🐛 fix · ✨ feature · 📝 docs · ♻️ re
 The runtime contract is at https://app.need4deed.org/swagger/json
 
 The transpile time contract is at SDK (`yarn upgrade need4deed-sdk --latest`)
+
+## Documentation
+
+Read all documentation in the [/docs](./docs/) directory and follow them closely
