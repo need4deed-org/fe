@@ -1,6 +1,6 @@
 "use client";
 import { FormInput, PLZChip } from "@/components/core/common";
-import { PLZCheckStatus } from "@/utils/openplz";
+import { PLZCheckStatus } from "@/utils/plz-check";
 import { useTranslation } from "react-i18next";
 import { FieldLabel, FieldWrapper, StepDescription, StepTitle } from "../styled";
 import { ProfileCompletionData } from "../types";

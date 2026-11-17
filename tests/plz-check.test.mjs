@@ -17,52 +17,37 @@ function loadModule(file) {
   return loadedModule.exports;
 }
 
-const { fetchPLZExists, canSubmitPLZ, resolvePLZStatus, openPlzLocalitiesUrl } = loadModule("src/utils/openplz.ts");
+const { fetchPLZExists, canSubmitPLZ, resolvePLZStatus } = loadModule("src/utils/plz-check.ts");
 
-const respond =
-  (body, ok = true) =>
-  async () => ({ ok, json: async () => body });
+const apiPath = "/api/postcode/check";
+const respond = (body) => async () => ({ data: body });
 
-test("a PLZ with localities is known", async () => {
-  const fetchFn = respond([{ postalCode: "10969", name: "Berlin" }]);
-  assert.equal(await fetchPLZExists("10969", fetchFn), true);
+test("a PLZ on be's reference list is known", async () => {
+  assert.equal(await fetchPLZExists(apiPath, "10969", respond({ data: { code: "10969", known: true } })), true);
 });
 
-test("a PLZ without localities is unknown", async () => {
-  assert.equal(await fetchPLZExists("10699", respond([])), false);
+test("a PLZ missing from be's reference list is unknown", async () => {
+  assert.equal(await fetchPLZExists(apiPath, "10699", respond({ data: { code: "10699", known: false } })), false);
 });
 
-test("queries the localities endpoint for the given PLZ", async () => {
+test("asks be's postcode check for the given PLZ with a timeout", async () => {
   let calledWith;
-  const fetchFn = async (url, init) => {
-    calledWith = { url, init };
-    return { ok: true, json: async () => [] };
+  const getFn = async (url, config) => {
+    calledWith = { url, config };
+    return { data: { data: { code: "01067", known: true } } };
   };
-  await fetchPLZExists("01067", fetchFn);
-  assert.equal(calledWith.url, `${openPlzLocalitiesUrl}?postalCode=01067`);
-  assert.ok(calledWith.init.signal instanceof AbortSignal);
+  await fetchPLZExists(apiPath, "01067", getFn, 1234);
+  assert.deepEqual(calledWith, { url: apiPath, config: { params: { code: "01067" }, timeout: 1234 } });
 });
 
-test("an error response, unexpected body or network failure throws (unavailable)", async () => {
-  await assert.rejects(fetchPLZExists("10969", respond([], false)));
-  await assert.rejects(fetchPLZExists("10969", respond({ error: "x" })));
+test("an unexpected body or a failed request throws (unavailable)", async () => {
+  await assert.rejects(fetchPLZExists(apiPath, "10969", respond({ data: { code: "10969" } })));
+  await assert.rejects(fetchPLZExists(apiPath, "10969", respond("")));
   await assert.rejects(
-    fetchPLZExists("10969", async () => {
-      throw new TypeError("Failed to fetch");
+    fetchPLZExists(apiPath, "10969", async () => {
+      throw new Error("Network Error");
     }),
   );
-});
-
-test("a slow response times out (unavailable)", async () => {
-  const hang = (_url, { signal }) =>
-    new Promise((_resolve, reject) => {
-      const keepAlive = setTimeout(() => reject(new Error("timeout did not fire")), 1000);
-      signal.addEventListener("abort", () => {
-        clearTimeout(keepAlive);
-        reject(signal.reason);
-      });
-    });
-  await assert.rejects(fetchPLZExists("10969", hang, 20), { name: "TimeoutError" });
 });
 
 test("unknown and pending block submit; known, unavailable and idle don't", () => {

@@ -1,6 +1,7 @@
 import { TypePLZ } from "@/components/forms/types";
 import { isValidPLZ } from "@/components/forms/utils";
-import { canSubmitPLZ, fetchPLZExists, PLZCheckStatus, resolvePLZStatus } from "@/utils/openplz";
+import { apiPathPostcodeCheck } from "@/config/constants";
+import { canSubmitPLZ, fetchPLZExists, PLZCheckStatus, resolvePLZStatus } from "@/utils/plz-check";
 import { useQuery } from "@tanstack/react-query";
 import { useDebounce } from "./useDebounce";
 
@@ -18,8 +19,8 @@ export function useCheckPLZ(plz: string, scope: TypePLZ = TypePLZ.GERMANY): PLZC
   const isSettled = debounced === trimmed;
 
   const { data, isError } = useQuery({
-    queryKey: ["openplz", debounced],
-    queryFn: () => fetchPLZExists(debounced),
+    queryKey: ["postcode-check", debounced],
+    queryFn: () => fetchPLZExists(apiPathPostcodeCheck, debounced),
     enabled: isCandidate && isSettled,
     staleTime: Infinity,
     gcTime: Infinity,

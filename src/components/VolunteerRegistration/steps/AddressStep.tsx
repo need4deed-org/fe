@@ -7,7 +7,7 @@ import { TypePLZ } from "@/components/forms/types";
 import { isValidPLZ } from "@/components/forms/utils";
 import { EditableField } from "@/components/EditableField/EditableField";
 import { ErrorMessage, FormInput, PLZChip } from "@/components/core/common";
-import { PLZCheckStatus } from "@/utils/openplz";
+import { PLZCheckStatus } from "@/utils/plz-check";
 import { ApiOptionLists, Lang } from "need4deed-sdk";
 import { useTranslation } from "react-i18next";
 import { FieldLabel, FieldWrapper } from "../styled";

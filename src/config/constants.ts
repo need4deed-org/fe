@@ -11,6 +11,7 @@ export const apiPathComment = `/${apiPrefix}/comment`;
 export const apiPathCommunication = `/${apiPrefix}/communication`;
 export const apiPathAppreciation = `/${apiPrefix}/appreciation`;
 export const apiPathActivityLog = `/${apiPrefix}/activity-log`;
+export const apiPathPostcodeCheck = `/${apiPrefix}/postcode/check`;
 export const apiPathEvent = `/${apiPrefix}/event`;
 export const apiPathPost = `/${apiPrefix}/post`;
 export const apiPathLogin = `/${apiPrefix}/auth/login`;

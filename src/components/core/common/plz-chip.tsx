@@ -1,5 +1,5 @@
 import { Paragraph } from "@/components/styled/text";
-import { PLZCheckStatus } from "@/utils/openplz";
+import { PLZCheckStatus } from "@/utils/plz-check";
 import { WarningCircleIcon } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
