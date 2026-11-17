@@ -26,7 +26,9 @@ export default function HomeContentController() {
 
   return (
     <DashboardContentContainer>
-      <LogoutButton />
+      <div>
+        <LogoutButton />
+      </div>
       <DashboardContentController volunteerId={user?.volunteerId} />
     </DashboardContentContainer>
   );
