@@ -31,6 +31,7 @@ const ButtonElement = styled.button<{ $inline: boolean; $selected: boolean }>`
   font-weight: var(--bold);
   color: var(--white);
   text-transform: capitalize;
+  white-space: nowrap;
   transition: var(--short-transition);
 
   &:hover,

@@ -723,7 +723,7 @@
       "button": {
         "login": "Log in",
         "dashboard": "Dashboard",
-        "logout": "Log out"
+        "logout": "Logout"
       }
     },
     "login": {

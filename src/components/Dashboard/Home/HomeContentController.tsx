@@ -54,4 +54,5 @@ const ButtonContainer = styled.div`
   display: -webkit-flex;
   display: flex;
   gap: var(--small-spacing);
+  flex-wrap: wrap;
 `;
