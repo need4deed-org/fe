@@ -81,9 +81,7 @@ export function buildCreatePayload(
   const isEvent = headerData.volunteerType === VolunteerStateTypeType.EVENTS;
   const isAccompanying = headerData.volunteerType === VolunteerStateTypeType.ACCOMPANYING;
 
-  const mainLangIds = isAccompanying
-    ? []
-    : toLangOptionItems(detailsData.mainCommunication, apiLanguages, t).map((i) => i.id);
+  const mainLangIds = toLangOptionItems(detailsData.mainCommunication, apiLanguages, t).map((i) => i.id);
 
   const residentsLangIds = isAccompanying
     ? []
@@ -168,17 +166,13 @@ export const populateDuplicateOpportunity = ({
   detailsMethods.reset({
     description: String(duplicateOpportunity.description ?? ""),
     numberOfVolunteers: String(duplicateOpportunity.numberOfVolunteers ?? 1),
-    mainCommunication: duplicateOpportunity.accompanyingDetails
-      ? []
-      : duplicateOpportunity.languages?.length
-        ? languagesToFormValues(duplicateOpportunity.languages, t)
-        : [
-            {
-              id: mainLanguageIsoToIdMap.get(duplicateOpportunity.originalLanguage) ?? 1,
-              language: isoCodeToLanguage(duplicateOpportunity.originalLanguage, lang) ?? "",
-              level: "",
-            },
-          ],
+    mainCommunication: [
+      {
+        id: mainLanguageIsoToIdMap.get(duplicateOpportunity.originalLanguage) ?? 1,
+        language: isoCodeToLanguage(duplicateOpportunity.originalLanguage, lang) ?? "",
+        level: "",
+      },
+    ],
     residentsSpeak: languagesToFormValues(duplicateOpportunity.languages ?? [], t) ?? [
       { id: 1, language: "", level: "" },
     ],
