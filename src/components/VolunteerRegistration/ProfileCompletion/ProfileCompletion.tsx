@@ -155,7 +155,10 @@ export function ProfileCompletion() {
           onSubmit={(e) => {
             e.preventDefault();
             e.stopPropagation();
-            if (plz.blocksSubmit) return;
+            if (plz.blocksSubmit) {
+              setStep(1);
+              return;
+            }
             formVolunteer.handleSubmit();
           }}
         >

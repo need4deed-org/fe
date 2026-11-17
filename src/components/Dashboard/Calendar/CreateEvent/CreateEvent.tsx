@@ -127,7 +127,12 @@ export function CreateEvent({ eventId }: Props) {
       unstructuredAddress: "houseNumber" in fields || "postcode" in fields ? false : prev.unstructuredAddress,
     }));
 
-  const plz = useCheckPLZ(formData.unstructuredAddress ? "" : formData.postcode, TypePLZ.GERMANY);
+  const savedPostcode = editingEvent ? parseAddress(editingEvent.address).postcode : "";
+  const plz = useCheckPLZ(formData.unstructuredAddress ? "" : formData.postcode, TypePLZ.GERMANY, savedPostcode);
+  const isPostcodeInvalid =
+    formData.postcode.trim().length > 0 &&
+    formData.postcode !== savedPostcode &&
+    !isValidPLZ(formData.postcode, TypePLZ.GERMANY);
 
   const handleNext = () => setStep((s) => Math.min(s + 1, TOTAL_STEPS));
   const handleBack = () => {
@@ -196,7 +201,8 @@ export function CreateEvent({ eventId }: Props) {
         formData.street.trim().length > 0 &&
         (formData.unstructuredAddress ||
           (formData.houseNumber.trim().length > 0 &&
-            isValidPLZ(formData.postcode, TypePLZ.GERMANY) &&
+            formData.postcode.trim().length > 0 &&
+            !isPostcodeInvalid &&
             !plz.blocksSubmit)) &&
         (formData.registrationLink === editingEvent?.linkRSVP || isHttpUrl(formData.registrationLink))
       );
@@ -261,6 +267,7 @@ export function CreateEvent({ eventId }: Props) {
               houseNumber={formData.houseNumber}
               postcode={formData.postcode}
               plzStatus={plz.status}
+              isPostcodeInvalid={isPostcodeInvalid}
               registrationLink={formData.registrationLink}
               onChange={update}
               onNext={handleNext}

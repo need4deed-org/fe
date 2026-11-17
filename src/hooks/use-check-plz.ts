@@ -12,10 +12,11 @@ export type PLZCheck = {
   blocksSubmit: boolean;
 };
 
-export function useCheckPLZ(plz: string, scope: TypePLZ = TypePLZ.GERMANY): PLZCheck {
+export function useCheckPLZ(plz: string, scope: TypePLZ = TypePLZ.GERMANY, savedPLZ?: string): PLZCheck {
   const trimmed = plz.trim();
+  const isUnchanged = savedPLZ !== undefined && trimmed === savedPLZ.trim();
   const debounced = useDebounce(trimmed, debounceMs);
-  const isCandidate = isValidPLZ(trimmed, scope);
+  const isCandidate = !isUnchanged && isValidPLZ(trimmed, scope);
   const isSettled = debounced === trimmed;
 
   const { data, isError } = useQuery({
@@ -25,6 +26,7 @@ export function useCheckPLZ(plz: string, scope: TypePLZ = TypePLZ.GERMANY): PLZC
     staleTime: Infinity,
     gcTime: Infinity,
     retry: false,
+    refetchOnWindowFocus: false,
   });
 
   const status = resolvePLZStatus({ isCandidate, isSettled, isError, exists: data });

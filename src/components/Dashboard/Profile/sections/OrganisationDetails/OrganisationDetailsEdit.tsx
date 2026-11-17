@@ -32,10 +32,10 @@ export const OrganisationDetailsEdit = ({
   const { t } = useTranslation();
   const {
     control,
-    formState: { errors, isDirty, isValid },
+    formState: { errors, isDirty, isValid, defaultValues },
   } = useFormContext<OrganisationDetailsFormData>();
   const postcode = useWatch({ control, name: "addressPostcode" });
-  const plz = useCheckPLZ(postcode ?? "");
+  const plz = useCheckPLZ(postcode ?? "", undefined, defaultValues?.addressPostcode ?? "");
 
   const displayOperators = useCallback(
     (value: string) => {

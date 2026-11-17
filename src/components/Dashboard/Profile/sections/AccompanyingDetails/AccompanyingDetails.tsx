@@ -57,7 +57,13 @@ export const AccompanyingDetails = forwardRef<EditableSectionRef, Props>(functio
 
   const methods = useForm<AccompanyingDetailsFormData>({
     resolver: zodResolver(
-      createAccompanyingDetailsSchema(t, false, minAppointmentDate, initialFormValues.appointmentDate),
+      createAccompanyingDetailsSchema(
+        t,
+        false,
+        minAppointmentDate,
+        initialFormValues.appointmentDate,
+        initialFormValues.appointmentPostcode,
+      ),
     ),
     mode: "onChange",
     defaultValues: initialFormValues,

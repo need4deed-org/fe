@@ -28,10 +28,10 @@ export const VolunteerContactDetailsEdit = ({
   const { t } = useTranslation();
   const {
     control,
-    formState: { errors, isValid, isDirty },
+    formState: { errors, isValid, isDirty, defaultValues },
   } = useFormContext<VolunteerContactDetailsFormData>();
   const postcode = useWatch({ control, name: "postcode" });
-  const plz = useCheckPLZ(postcode ?? "");
+  const plz = useCheckPLZ(postcode ?? "", undefined, defaultValues?.postcode ?? "");
 
   return (
     <>

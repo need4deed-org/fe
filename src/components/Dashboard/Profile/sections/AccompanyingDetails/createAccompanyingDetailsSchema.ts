@@ -16,6 +16,7 @@ export const createAccompanyingDetailsSchema = (
   required: boolean,
   minAppointmentDate?: Date,
   currentAppointmentDate?: Date | null,
+  currentAppointmentPostcode?: string,
 ) => {
   const dateTooSoonMessage =
     minAppointmentDate &&
@@ -36,7 +37,10 @@ export const createAccompanyingDetailsSchema = (
       : z
           .string()
           .optional()
-          .refine((code) => !code?.trim() || isValidPLZ(code), t("form.error.postcode")),
+          .refine(
+            (code) => !code?.trim() || code === currentAppointmentPostcode || isValidPLZ(code),
+            t("form.error.postcode"),
+          ),
     appointmentDate: required
       ? z.date({ message: t(`${i18nPrefix}.dateRequired`) }).refine(notTooSoon, dateTooSoonMessage)
       : z.date().nullable().optional().refine(notTooSoon, dateTooSoonMessage),

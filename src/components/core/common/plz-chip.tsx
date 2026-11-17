@@ -34,12 +34,25 @@ type Props = {
 
 export function PLZChip({ status }: Props) {
   const { t } = useTranslation();
-  const isOpen = status === "unknown";
+  const isUnknown = status === "unknown";
+  const isChecking = status === "pending";
+  const isOpen = isUnknown || isChecking;
 
   return (
     <SlideContainer $isOpen={isOpen} role="status" aria-live="polite" data-testid="plz-chip">
       <SlideContent>
-        {isOpen && (
+        {isChecking && (
+          <Paragraph
+            margin="var(--plz-chip-margin-top) 0 0"
+            color="var(--plz-chip-checking-color)"
+            fontSize="var(--form-input-error-message-fontSize)"
+            fontWeight="var(--form-input-error-message-fontWeight)"
+            lineheight="var(--form-input-error-message-lineHeight)"
+          >
+            {t("form.error.postcodeChecking")}
+          </Paragraph>
+        )}
+        {isUnknown && (
           <Chip>
             <WarningCircleIcon aria-hidden="true" size={20} color="var(--plz-chip-color)" />
             <Paragraph

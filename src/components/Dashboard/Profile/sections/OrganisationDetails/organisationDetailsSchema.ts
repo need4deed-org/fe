@@ -11,7 +11,11 @@ const languageObjectSchema = z.object({
 
 const urlRegex = /^https?:\/\/.+/;
 
-export const createOrganisationDetailsSchema = (t: (key: string) => string, validOperators: string[]) => {
+export const createOrganisationDetailsSchema = (
+  t: (key: string) => string,
+  validOperators: string[],
+  savedPostcode?: string,
+) => {
   const required = t(`${i18nPrefix}.required`);
 
   return z.object({
@@ -26,7 +30,10 @@ export const createOrganisationDetailsSchema = (t: (key: string) => string, vali
     addressStreet: z.string(),
     addressPostcode: z
       .string()
-      .refine((code) => !code?.trim() || isValidPLZ(code, TypePLZ.GERMANY), t("form.error.postcodeGermany")),
+      .refine(
+        (code) => !code?.trim() || code === savedPostcode || isValidPLZ(code, TypePLZ.GERMANY),
+        t("form.error.postcodeGermany"),
+      ),
     organizationType: z.string().min(1, required),
     operator: z
       .string()

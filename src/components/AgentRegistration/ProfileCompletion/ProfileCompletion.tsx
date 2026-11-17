@@ -190,7 +190,10 @@ export function ProfileCompletion() {
       setErrors(stepErrors);
       return;
     }
-    if (plz.blocksSubmit) return;
+    if (plz.blocksSubmit) {
+      setStep(1);
+      return;
+    }
     submit({ agent: buildNewAgent(formData, operatorId) });
   };
 

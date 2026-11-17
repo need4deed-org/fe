@@ -219,6 +219,7 @@
       "postcode": "Bitte nur die PLZ eintragen (keine Buchstaben, nur Zahlen)",
       "postcodeGermany": "Bitte eine gültige deutsche PLZ eintragen (5 Ziffern)",
       "postcodeUnknown": "Diese PLZ konnten wir nicht finden. Bitte überprüfe sie.",
+      "postcodeChecking": "PLZ wird geprüft…",
       "email": "Muss eine gültige E-Mail-Adresse sein",
       "badEmail": "Keine gültige Betreiber E-Mail",
       "location": "Bitte wähle mindestens einen Standort aus",
