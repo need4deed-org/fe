@@ -1,5 +1,6 @@
 import { SectionCardProps } from "@/components/Dashboard/Profile/common/SectionCard";
 import { AccompanyingDetails } from "@/components/Dashboard/Profile/sections/AccompanyingDetails";
+import { isAccompanyingType as isAccompanyingVolunteerType } from "@/components/Dashboard/Profile/sections/AccompanyingDetails/helpers";
 import { Comments } from "@/components/Dashboard/Profile/sections/Comments";
 import { ContactDetails } from "@/components/Dashboard/Profile/sections/ContactDetails";
 import { OpportunityDetails } from "@/components/Dashboard/Profile/sections/OpportunityDetails";
@@ -16,7 +17,7 @@ import { IconName } from "@/components/Dashboard/Profile/types";
 import { useDeleteOpportunity } from "@/hooks/useDeleteOpportunity";
 import { useGetVolunteer } from "@/hooks/useGetVolunteer";
 import { useSuggestVolunteerOpportunity } from "@/hooks/useSuggestVolunteerOpportunity";
-import { ApiOpportunityGet, OpportunityVolunteerStatusType, VolunteerStateTypeType } from "need4deed-sdk";
+import { ApiOpportunityGet, OpportunityVolunteerStatusType } from "need4deed-sdk";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -65,9 +66,7 @@ export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | u
   if (!opportunity) return null;
 
   const commentsCount = opportunity.comments.length;
-  const isAccompanyingType =
-    opportunity.volunteerType === VolunteerStateTypeType.ACCOMPANYING ||
-    opportunity.volunteerType === VolunteerStateTypeType.REGULAR_ACCOMPANYING;
+  const isAccompanyingType = isAccompanyingVolunteerType(opportunity.volunteerType);
 
   const handleSuggestConfirm = (emailNote: string) => {
     if (!volunteerId) return;
@@ -133,22 +132,25 @@ export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | u
           />
         ),
       },
-      {
-        iconName: IconName.Users,
-        title: t("dashboard.opportunityProfile.accompanyingDetailsTitle"),
-        ...(isAccompanyingType &&
-          !isAccompanyingEditing && {
-            headerButtonName: t("dashboard.opportunityProfile.editButtonName"),
-            onHeaderButtonClick: () => accompanyingDetailsRef.current?.handleEditClick?.(),
-          }),
-        subComponent: (
-          <AccompanyingDetails
-            ref={accompanyingDetailsRef}
-            opportunity={opportunity}
-            onEditingChange={handleAccompanyingEditingChange}
-          />
-        ),
-      },
+      ...(isAccompanyingType
+        ? [
+            {
+              iconName: IconName.Users,
+              title: t("dashboard.opportunityProfile.accompanyingDetailsTitle"),
+              ...(!isAccompanyingEditing && {
+                headerButtonName: t("dashboard.opportunityProfile.editButtonName"),
+                onHeaderButtonClick: () => accompanyingDetailsRef.current?.handleEditClick?.(),
+              }),
+              subComponent: (
+                <AccompanyingDetails
+                  ref={accompanyingDetailsRef}
+                  opportunity={opportunity}
+                  onEditingChange={handleAccompanyingEditingChange}
+                />
+              ),
+            },
+          ]
+        : []),
       {
         iconName: IconName.UsersThree,
         title: t("dashboard.opportunityProfile.volunteersSec.title"),

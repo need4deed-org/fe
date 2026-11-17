@@ -1,13 +1,6 @@
 import styled from "styled-components";
 import { HasError, IsEditing } from "@/types";
 
-export const NotAccompanyingMessage = styled.p`
-  color: var(--color-grey-500);
-  font-size: var(--font-size-16);
-  line-height: 1.5;
-  margin: 0;
-`;
-
 export const Container = styled.div<IsEditing>`
   display: flex;
   flex-direction: column;
