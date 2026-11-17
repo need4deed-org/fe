@@ -3,7 +3,7 @@ import { ApiPostcodeCheck } from "need4deed-sdk";
 
 export const plzCheckTimeoutMs = 3000;
 
-export type PLZCheckStatus = "idle" | "pending" | "known" | "unknown" | "unavailable";
+export type PLZCheckStatus = "idle" | "pending" | "checking" | "known" | "unknown" | "unavailable";
 
 type GetFn = (
   url: string,
@@ -33,10 +33,10 @@ export function resolvePLZStatus({ isCandidate, isSettled, isError, exists }: PL
   if (!isCandidate) return "idle";
   if (!isSettled) return "pending";
   if (isError) return "unavailable";
-  if (exists === undefined) return "pending";
+  if (exists === undefined) return "checking";
   return exists ? "known" : "unknown";
 }
 
 export function canSubmitPLZ(status: PLZCheckStatus): boolean {
-  return status !== "unknown" && status !== "pending";
+  return status === "idle" || status === "known" || status === "unavailable";
 }

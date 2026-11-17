@@ -101,6 +101,7 @@ export const AccompanyingTypeChangeForm = ({ opportunityId, locale, onCancel }: 
         cancelLabel={t("dashboard.opportunityProfile.typeModal.cancel")}
         saveLabel={t("dashboard.opportunityProfile.typeModal.save")}
         loading={isPending}
+        saveDisabled={plz.blocksSubmit}
       />
     </>
   );

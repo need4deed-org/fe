@@ -50,9 +50,10 @@ test("an unexpected body or a failed request throws (unavailable)", async () => 
   );
 });
 
-test("unknown and pending block submit; known, unavailable and idle don't", () => {
+test("unknown, pending and checking block submit; known, unavailable and idle don't", () => {
   assert.equal(canSubmitPLZ("unknown"), false);
   assert.equal(canSubmitPLZ("pending"), false);
+  assert.equal(canSubmitPLZ("checking"), false);
   assert.equal(canSubmitPLZ("known"), true);
   assert.equal(canSubmitPLZ("unavailable"), true);
   assert.equal(canSubmitPLZ("idle"), true);
@@ -65,9 +66,9 @@ test("a PLZ failing the range check is idle, whatever the lookup says", () => {
   assert.equal(resolvePLZStatus(lookup({ isCandidate: false, isSettled: false })), "idle");
 });
 
-test("pending while typing or while the lookup runs", () => {
+test("pending while typing, checking while the lookup runs", () => {
   assert.equal(resolvePLZStatus(lookup({ isSettled: false, exists: true })), "pending");
-  assert.equal(resolvePLZStatus(lookup({})), "pending");
+  assert.equal(resolvePLZStatus(lookup({})), "checking");
 });
 
 test("a failed lookup is unavailable; an answered one is known or unknown", () => {

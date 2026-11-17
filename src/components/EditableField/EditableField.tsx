@@ -229,11 +229,7 @@ const HintText = styled.span`
   flex: 1;
 `;
 
-const FieldError = styled.div<{ $stacked?: boolean; $stackAt: number }>`
-  ${fieldSupportingTextStyles}
-`;
-
-const FieldSupportingContent = styled.div<{ $stacked?: boolean; $stackAt: number }>`
+const FieldSupport = styled.div<{ $stacked?: boolean; $stackAt: number }>`
   ${fieldSupportingTextStyles}
 `;
 
@@ -628,19 +624,19 @@ export const EditableField = forwardRef(function EditableField<T extends string 
         )}
       </FieldWrapper>
       {error && (
-        <FieldError $stacked={stacked} $stackAt={stackAt}>
+        <FieldSupport $stacked={stacked} $stackAt={stackAt}>
           <ErrorMessage message={error} />
-        </FieldError>
+        </FieldSupport>
       )}
       {errorMessage && (
-        <FieldError id={errorId} $stacked={stacked} $stackAt={stackAt}>
+        <FieldSupport id={errorId} $stacked={stacked} $stackAt={stackAt}>
           <ErrorMessage message={errorMessage} />
-        </FieldError>
+        </FieldSupport>
       )}
       {supportingContent && (
-        <FieldSupportingContent $stacked={stacked} $stackAt={stackAt}>
+        <FieldSupport $stacked={stacked} $stackAt={stackAt}>
           {supportingContent}
-        </FieldSupportingContent>
+        </FieldSupport>
       )}
       {hint && (
         <HintWrapper $stacked={stacked} $stackAt={stackAt} data-testid="editable-field-hint">

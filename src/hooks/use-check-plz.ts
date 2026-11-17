@@ -1,5 +1,5 @@
 import { TypePLZ } from "@/components/forms/types";
-import { isValidPLZ } from "@/components/forms/utils";
+import { isSavedPLZ, isValidPLZ } from "@/components/forms/utils";
 import { apiPathPostcodeCheck } from "@/config/constants";
 import { canSubmitPLZ, fetchPLZExists, PLZCheckStatus, resolvePLZStatus } from "@/utils/plz-check";
 import { useQuery } from "@tanstack/react-query";
@@ -14,9 +14,8 @@ export type PLZCheck = {
 
 export function useCheckPLZ(plz: string, scope: TypePLZ = TypePLZ.GERMANY, savedPLZ?: string): PLZCheck {
   const trimmed = plz.trim();
-  const isUnchanged = savedPLZ !== undefined && trimmed === savedPLZ.trim();
   const debounced = useDebounce(trimmed, debounceMs);
-  const isCandidate = !isUnchanged && isValidPLZ(trimmed, scope);
+  const isCandidate = !isSavedPLZ(trimmed, savedPLZ) && isValidPLZ(trimmed, scope);
   const isSettled = debounced === trimmed;
 
   const { data, isError } = useQuery({
@@ -27,6 +26,7 @@ export function useCheckPLZ(plz: string, scope: TypePLZ = TypePLZ.GERMANY, saved
     gcTime: Infinity,
     retry: false,
     refetchOnWindowFocus: false,
+    networkMode: "always",
   });
 
   const status = resolvePLZStatus({ isCandidate, isSettled, isError, exists: data });

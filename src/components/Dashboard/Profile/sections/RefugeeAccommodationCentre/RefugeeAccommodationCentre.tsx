@@ -33,7 +33,7 @@ export const RefugeeAccommodationCentre = forwardRef<EditableSectionRef, Props>(
     const [isEditing, setIsEditing] = useState(false);
 
     const methods = useForm<OpportunityAddressFormData>({
-      resolver: zodResolver(createOpportunityAddressSchema(t)),
+      resolver: zodResolver(createOpportunityAddressSchema(t, opportunity.address?.postcode)),
       mode: "onChange",
       values: toAddressFormData(opportunity.address),
     });

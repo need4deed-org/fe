@@ -1,6 +1,7 @@
 import { Paragraph } from "@/components/styled/text";
 import { PLZCheckStatus } from "@/utils/plz-check";
 import { WarningCircleIcon } from "@phosphor-icons/react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
@@ -32,16 +33,19 @@ type Props = {
   status: PLZCheckStatus;
 };
 
+type ChipMessage = "checking" | "unknown";
+
 export function PLZChip({ status }: Props) {
   const { t } = useTranslation();
-  const isUnknown = status === "unknown";
-  const isChecking = status === "pending";
-  const isOpen = isUnknown || isChecking;
+  const message: ChipMessage | null = status === "checking" || status === "unknown" ? status : null;
+  const [lastMessage, setLastMessage] = useState<ChipMessage | null>(message);
+  if (message && message !== lastMessage) setLastMessage(message);
+  const shownMessage = message ?? lastMessage;
 
   return (
-    <SlideContainer $isOpen={isOpen} role="status" aria-live="polite" data-testid="plz-chip">
-      <SlideContent>
-        {isChecking && (
+    <SlideContainer $isOpen={message !== null} role="status" aria-live="polite" data-testid="plz-chip">
+      <SlideContent aria-hidden={message === null}>
+        {shownMessage === "checking" && (
           <Paragraph
             margin="var(--plz-chip-margin-top) 0 0"
             color="var(--plz-chip-checking-color)"
@@ -52,7 +56,7 @@ export function PLZChip({ status }: Props) {
             {t("form.error.postcodeChecking")}
           </Paragraph>
         )}
-        {isUnknown && (
+        {shownMessage === "unknown" && (
           <Chip>
             <WarningCircleIcon aria-hidden="true" size={20} color="var(--plz-chip-color)" />
             <Paragraph

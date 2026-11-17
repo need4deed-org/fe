@@ -8,7 +8,7 @@ import { EventN4DType, Lang, type ApiEventN4DCreate, type ApiEventN4DPatch } fro
 import { PageLayout } from "@/components/Layout";
 import Button from "@/components/core/button/Button/Button";
 import { TypePLZ } from "@/components/forms/types";
-import { isValidPLZ } from "@/components/forms/utils";
+import { isValidOrSavedPLZ } from "@/components/forms/utils";
 import { useCreateEvent, useEvent, useUpdateEvent } from "@/hooks";
 import { useCheckPLZ } from "@/hooks/use-check-plz";
 
@@ -128,11 +128,9 @@ export function CreateEvent({ eventId }: Props) {
     }));
 
   const savedPostcode = editingEvent ? parseAddress(editingEvent.address).postcode : "";
-  const plz = useCheckPLZ(formData.unstructuredAddress ? "" : formData.postcode, TypePLZ.GERMANY, savedPostcode);
+  const plz = useCheckPLZ(formData.unstructuredAddress ? "" : formData.postcode, TypePLZ.BERLIN, savedPostcode);
   const isPostcodeInvalid =
-    formData.postcode.trim().length > 0 &&
-    formData.postcode !== savedPostcode &&
-    !isValidPLZ(formData.postcode, TypePLZ.GERMANY);
+    formData.postcode.trim().length > 0 && !isValidOrSavedPLZ(formData.postcode, TypePLZ.BERLIN, savedPostcode);
 
   const handleNext = () => setStep((s) => Math.min(s + 1, TOTAL_STEPS));
   const handleBack = () => {
