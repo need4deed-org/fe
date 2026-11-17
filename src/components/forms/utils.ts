@@ -208,6 +208,10 @@ export function isValidOrSavedPLZ(code: string | undefined, scope: TypePLZ, save
   return isSavedPLZ(code, savedPLZ) || isValidPLZ(code ?? "", scope);
 }
 
+export function isEmptyOrValidPLZ(code: string | undefined, scope: TypePLZ, savedPLZ?: string) {
+  return !code?.trim() || isValidOrSavedPLZ(code, scope, savedPLZ);
+}
+
 export function getTickMark(isTicked: boolean) {
   return isTicked ? "☑" : "◻️";
 }

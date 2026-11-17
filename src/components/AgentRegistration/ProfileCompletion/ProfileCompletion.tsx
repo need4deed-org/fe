@@ -175,10 +175,8 @@ export function ProfileCompletion() {
 
   const submitJoin = (agentId: number) => submit({ agentId });
 
-  const submitAtSharedAddress = () => {
-    if (plz.blocksSubmit) return;
+  const submitAtSharedAddress = () =>
     submit({ agent: { ...buildNewAgent(formData, operatorId), confirmSharedAddress: true } });
-  };
 
   const handleSubmit = () => {
     if (selectedAgent) {
@@ -203,7 +201,6 @@ export function ProfileCompletion() {
       setErrors(stepErrors);
       return;
     }
-    if (step === 1 && plz.blocksSubmit) return;
     setErrors({});
     setStep((s) => s + 1);
   };

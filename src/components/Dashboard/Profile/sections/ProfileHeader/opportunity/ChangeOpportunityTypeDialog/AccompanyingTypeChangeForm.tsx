@@ -63,7 +63,7 @@ export const AccompanyingTypeChangeForm = ({ opportunityId, locale, onCancel }: 
 
   const handleSave = async () => {
     const valid = await methods.trigger();
-    if (!valid || plz.blocksSubmit) return;
+    if (!valid) return;
 
     await updateType({
       opportunity_type: VolunteerStateTypeType.ACCOMPANYING as OpportunityType,
@@ -91,7 +91,7 @@ export const AccompanyingTypeChangeForm = ({ opportunityId, locale, onCancel }: 
             onSubmit={() => {}}
             isPending={false}
             minAppointmentDate={minAppointmentDate}
-            plz={plz}
+            plzStatus={plz.status}
             hideButtons
           />
         </FormProvider>

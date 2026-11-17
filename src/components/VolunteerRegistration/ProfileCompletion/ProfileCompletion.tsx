@@ -118,9 +118,8 @@ export function ProfileCompletion() {
   const handleNext = async () => {
     const errors = await formVolunteer.validateAllFields("submit");
     const hasStepErrors = Object.keys(errors).length > 0;
-    const isPLZBlocking = step === 1 && plz.blocksSubmit;
 
-    if (!hasStepErrors && !isPLZBlocking) {
+    if (!hasStepErrors) {
       setStep((s) => s + 1);
     }
   };

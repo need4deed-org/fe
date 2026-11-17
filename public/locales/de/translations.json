@@ -216,7 +216,6 @@
   "form": {
     "error": {
       "required": "Dieses Feld ist erforderlich",
-      "postcode": "Bitte nur die PLZ eintragen (keine Buchstaben, nur Zahlen)",
       "postcodeGermany": "Bitte eine gültige deutsche PLZ eintragen (5 Ziffern)",
       "postcodeUnknown": "Diese PLZ konnten wir nicht finden. Bitte überprüfe sie.",
       "postcodeBerlin": "Bitte eine gültige Berliner PLZ eintragen",

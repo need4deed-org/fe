@@ -155,7 +155,8 @@ export const AccompanyingDetails = forwardRef<EditableSectionRef, Props>(functio
             onSubmit={handleSubmit(onSubmit)}
             isPending={isPending}
             minAppointmentDate={minAppointmentDate}
-            plz={plz}
+            plzStatus={plz.status}
+            saveDisabled={plz.blocksSubmit}
           />
         ) : (
           <AccompanyingDetailsDisplay

@@ -218,7 +218,6 @@
   "form": {
     "error": {
       "required": "This field is required",
-      "postcode": "Must be a valid postcode of Berlin",
       "postcodeGermany": "Must be a valid German postcode (5 digits)",
       "postcodeUnknown": "We couldn't find this postcode. Please check it.",
       "postcodeBerlin": "Must be a valid Berlin postcode",

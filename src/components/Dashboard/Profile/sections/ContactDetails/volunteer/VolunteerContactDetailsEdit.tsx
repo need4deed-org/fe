@@ -1,9 +1,9 @@
 import Button from "@/components/core/button/Button/Button";
 import { PLZChip } from "@/components/core/common";
 import { EditableField } from "@/components/EditableField/EditableField";
-import { useCheckPLZ } from "@/hooks/use-check-plz";
+import { usePLZField } from "@/hooks/use-plz-field";
 import { VolunteerCommunicationType } from "need4deed-sdk";
-import { Controller, useFormContext, useWatch } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { FormButtonRow, FormDetails } from "../../shared/styles";
 import { VolunteerContactDetailsFormData } from "./volunteerContactDetailsSchema";
@@ -28,10 +28,9 @@ export const VolunteerContactDetailsEdit = ({
   const { t } = useTranslation();
   const {
     control,
-    formState: { errors, isValid, isDirty, defaultValues },
+    formState: { errors, isValid, isDirty },
   } = useFormContext<VolunteerContactDetailsFormData>();
-  const postcode = useWatch({ control, name: "postcode" });
-  const plz = useCheckPLZ(postcode ?? "", { savedPLZ: defaultValues?.postcode });
+  const plz = usePLZField(control, "postcode");
 
   return (
     <>

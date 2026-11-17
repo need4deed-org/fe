@@ -14,7 +14,7 @@ interface Props {
   houseNumber: string;
   postcode: string;
   plzStatus: PLZCheckStatus;
-  isPostcodeInvalid: boolean;
+  showPostcodeError: boolean;
   registrationLink: string;
   onChange: (fields: Partial<EventFormData>) => void;
   onNext: () => void;
@@ -27,7 +27,7 @@ export function StepLocation({
   houseNumber,
   postcode,
   plzStatus,
-  isPostcodeInvalid,
+  showPostcodeError,
   registrationLink,
   onChange,
   onNext,
@@ -80,7 +80,7 @@ export function StepLocation({
         <CharCount>
           {postcode.length}/{FIELD_MAX}
         </CharCount>
-        {isPostcodeInvalid && <ErrorMessage message={t("form.error.postcodeBerlin")} />}
+        {showPostcodeError && <ErrorMessage message={t("form.error.postcodeBerlin")} />}
         <PLZChip status={plzStatus} />
       </FieldGroup>
 

@@ -8,7 +8,7 @@ import { EventN4DType, Lang, type ApiEventN4DCreate, type ApiEventN4DPatch } fro
 import { PageLayout } from "@/components/Layout";
 import Button from "@/components/core/button/Button/Button";
 import { TypePLZ } from "@/components/forms/types";
-import { isValidOrSavedPLZ } from "@/components/forms/utils";
+import { isEmptyOrValidPLZ } from "@/components/forms/utils";
 import { useCreateEvent, useEvent, useUpdateEvent } from "@/hooks";
 import { useCheckPLZ } from "@/hooks/use-check-plz";
 
@@ -132,8 +132,9 @@ export function CreateEvent({ eventId }: Props) {
     scope: TypePLZ.BERLIN,
     savedPLZ: savedPostcode,
   });
-  const isPostcodeInvalid =
-    formData.postcode.trim().length > 0 && !isValidOrSavedPLZ(formData.postcode, TypePLZ.BERLIN, savedPostcode);
+  const postcode = formData.postcode.trim();
+  const isPostcodeValid = isEmptyOrValidPLZ(postcode, TypePLZ.BERLIN, savedPostcode);
+  const showPostcodeError = !isPostcodeValid && (postcode.length >= 5 || /\D/.test(postcode));
 
   const handleNext = () => setStep((s) => Math.min(s + 1, TOTAL_STEPS));
   const handleBack = () => {
@@ -162,7 +163,7 @@ export function CreateEvent({ eventId }: Props) {
   };
   const address = formData.unstructuredAddress
     ? formData.street.trim()
-    : `${formData.street.trim()} ${formData.houseNumber.trim()}, ${formData.postcode.trim()} Berlin`;
+    : `${formData.street.trim()} ${formData.houseNumber.trim()}, ${postcode} Berlin`;
   const toBasePayload = () => ({
     date: new Date(`${formData.startDate}T${formData.startTime}`),
     dateEnd: new Date(`${formData.endDate}T${formData.endTime}`),
@@ -201,10 +202,7 @@ export function CreateEvent({ eventId }: Props) {
       return (
         formData.street.trim().length > 0 &&
         (formData.unstructuredAddress ||
-          (formData.houseNumber.trim().length > 0 &&
-            formData.postcode.trim().length > 0 &&
-            !isPostcodeInvalid &&
-            !plz.blocksSubmit)) &&
+          (formData.houseNumber.trim().length > 0 && postcode.length > 0 && isPostcodeValid && !plz.blocksSubmit)) &&
         (formData.registrationLink === editingEvent?.linkRSVP || isHttpUrl(formData.registrationLink))
       );
     if (step === 3) {
@@ -268,7 +266,7 @@ export function CreateEvent({ eventId }: Props) {
               houseNumber={formData.houseNumber}
               postcode={formData.postcode}
               plzStatus={plz.status}
-              isPostcodeInvalid={isPostcodeInvalid}
+              showPostcodeError={showPostcodeError}
               registrationLink={formData.registrationLink}
               onChange={update}
               onNext={handleNext}

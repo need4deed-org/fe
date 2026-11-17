@@ -3,8 +3,8 @@ import { ErrorMessage, PLZChip } from "@/components/core/common";
 import { EditableField } from "@/components/EditableField/EditableField";
 import { LanguageFields } from "@/components/forms/LanguageFields";
 import { Option } from "need4deed-sdk";
-import { useCheckPLZ } from "@/hooks/use-check-plz";
-import { Controller, useFormContext, useWatch } from "react-hook-form";
+import { usePLZField } from "@/hooks/use-plz-field";
+import { Controller, useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { FormButtonRow, FormDetails } from "../shared/styles";
 import { OrganisationDetailsFormData } from "./organisationDetailsSchema";
@@ -32,10 +32,9 @@ export const OrganisationDetailsEdit = ({
   const { t } = useTranslation();
   const {
     control,
-    formState: { errors, isDirty, isValid, defaultValues },
+    formState: { errors, isDirty, isValid },
   } = useFormContext<OrganisationDetailsFormData>();
-  const postcode = useWatch({ control, name: "addressPostcode" });
-  const plz = useCheckPLZ(postcode ?? "", { savedPLZ: defaultValues?.addressPostcode });
+  const plz = usePLZField(control, "addressPostcode");
 
   const displayOperators = useCallback(
     (value: string) => {

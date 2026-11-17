@@ -163,15 +163,7 @@ export function NewOpportunity() {
     const detailsValid = await detailsMethods.trigger();
     const accompValid = !isAccompanying || (await accompanyingMethods.trigger());
     const addressValid = isAccompanying || (await addressMethods.trigger());
-    if (
-      !headerValid ||
-      !detailsValid ||
-      !accompValid ||
-      !addressValid ||
-      !selectedAgentId ||
-      isAgentAddressMissing ||
-      isPLZBlocking
-    )
+    if (!headerValid || !detailsValid || !accompValid || !addressValid || !selectedAgentId || isAgentAddressMissing)
       return;
 
     const payload = buildCreatePayload(
@@ -224,7 +216,7 @@ export function NewOpportunity() {
                   onSubmit={() => {}}
                   isPending={false}
                   minAppointmentDate={minAppointmentDate}
-                  plz={appointmentPLZ}
+                  plzStatus={appointmentPLZ.status}
                   hideButtons
                 />
               </FormProvider>

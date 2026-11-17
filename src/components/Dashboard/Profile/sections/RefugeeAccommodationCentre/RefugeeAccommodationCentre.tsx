@@ -59,10 +59,7 @@ export const RefugeeAccommodationCentre = forwardRef<EditableSectionRef, Props>(
       setEditing(false);
     };
 
-    const handleSubmit = methods.handleSubmit((data) => {
-      if (plz.blocksSubmit) return;
-      mutate({ address: toApiAddress(data) });
-    });
+    const handleSubmit = methods.handleSubmit((data) => mutate({ address: toApiAddress(data) }));
 
     if (isEditing) {
       return (

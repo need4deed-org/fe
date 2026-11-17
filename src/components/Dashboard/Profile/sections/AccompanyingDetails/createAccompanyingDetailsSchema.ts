@@ -1,5 +1,5 @@
 import { TypePLZ } from "@/components/forms/types";
-import { isValidOrSavedPLZ, isValidPLZ } from "@/components/forms/utils";
+import { isEmptyOrValidPLZ, isValidPLZ } from "@/components/forms/utils";
 import { format, isSameDay } from "date-fns";
 import { MIN_APPOINTMENT_WORKING_DAYS, TranslatedIntoType } from "need4deed-sdk";
 import { z } from "zod";
@@ -39,7 +39,7 @@ export const createAccompanyingDetailsSchema = (
           .string()
           .optional()
           .refine(
-            (code) => !code?.trim() || isValidOrSavedPLZ(code, TypePLZ.BERLIN, currentAppointmentPostcode),
+            (code) => isEmptyOrValidPLZ(code, TypePLZ.BERLIN, currentAppointmentPostcode),
             t("form.error.postcodeBerlin"),
           ),
     appointmentDate: required

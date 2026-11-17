@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useDebounce } from "./useDebounce";
 
 const debounceMs = 400;
+const unknownStaleMs = 5 * 60 * 1000;
 
 export type PLZCheck = {
   status: PLZCheckStatus;
@@ -27,7 +28,7 @@ export function useCheckPLZ(plz: string, { scope = TypePLZ.GERMANY, savedPLZ }: 
     queryKey: ["postcode-check", isCandidate ? debounced : null],
     queryFn: () => fetchPLZExists(apiPathPostcodeCheck, debounced),
     enabled: isCandidate && isSettled,
-    staleTime: Infinity,
+    staleTime: ({ state }) => (state.data === false ? unknownStaleMs : Infinity),
     gcTime: Infinity,
     retry: false,
     refetchOnWindowFocus: false,
