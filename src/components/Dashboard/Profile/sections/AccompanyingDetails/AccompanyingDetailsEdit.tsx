@@ -4,10 +4,11 @@ import { EditableField } from "@/components/EditableField/EditableField";
 import { Locale } from "date-fns";
 import { Controller, ControllerFieldState, ControllerRenderProps, useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { ErrorMessage } from "@/components/core/common";
+import { ErrorMessage, PLZChip } from "@/components/core/common";
 
 import { ButtonRow, DateFieldRow, DatePickerContainer, Details, TimeInput, TimeInputWrapper } from "./styles";
 import { AccompanyingDetailsFormData } from "./createAccompanyingDetailsSchema";
+import { useAppointmentPLZ } from "./use-appointment-plz";
 
 type Props = {
   locale: Locale;
@@ -43,6 +44,7 @@ export const AccompanyingDetailsEdit = ({
     control,
     formState: { errors, isValid, isDirty, defaultValues },
   } = useFormContext<AccompanyingDetailsFormData>();
+  const plz = useAppointmentPLZ(control);
 
   return (
     <>
@@ -73,6 +75,7 @@ export const AccompanyingDetailsEdit = ({
               value={field.value || ""}
               setValue={field.onChange}
               errorMessage={errors.appointmentPostcode?.message}
+              supportingContent={<PLZChip status={plz.status} />}
             />
           )}
         />
@@ -213,7 +216,7 @@ export const AccompanyingDetailsEdit = ({
             onClick={onSubmit}
             width="auto"
             padding="var(--volunteer-profile-section-card-header-button-padding)"
-            disabled={!isDirty || !isValid || isPending}
+            disabled={!isDirty || !isValid || isPending || plz.blocksSubmit}
           />
         </ButtonRow>
       )}

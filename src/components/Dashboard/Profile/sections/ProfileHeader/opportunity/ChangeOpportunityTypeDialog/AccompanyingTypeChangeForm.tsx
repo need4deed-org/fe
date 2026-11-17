@@ -12,6 +12,7 @@ import {
   AccompanyingDetailsFormData,
 } from "../../../AccompanyingDetails/createAccompanyingDetailsSchema";
 import { buildAccompanyingPayload, getInitialFormValues } from "../../../AccompanyingDetails/helpers";
+import { useAppointmentPLZ } from "../../../AccompanyingDetails/use-appointment-plz";
 import { useApiLanguages } from "../../../VolunteerProfile/hooks";
 import { useMinAppointmentDate } from "@/hooks/useMinAppointmentDate";
 import { useUpdateOpportunityType } from "@/hooks/useUpdateOpportunityType";
@@ -54,13 +55,15 @@ export const AccompanyingTypeChangeForm = ({ opportunityId, locale, onCancel }: 
     defaultValues: getInitialFormValues(undefined),
   });
 
+  const plz = useAppointmentPLZ(methods.control);
+
   useEffect(() => {
     methods.reset(getInitialFormValues(undefined));
   }, [methods]);
 
   const handleSave = async () => {
     const valid = await methods.trigger();
-    if (!valid) return;
+    if (!valid || plz.blocksSubmit) return;
 
     await updateType({
       opportunity_type: VolunteerStateTypeType.ACCOMPANYING as OpportunityType,

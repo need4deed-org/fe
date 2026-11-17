@@ -7,7 +7,10 @@ import { EventN4DType, Lang, type ApiEventN4DCreate, type ApiEventN4DPatch } fro
 
 import { PageLayout } from "@/components/Layout";
 import Button from "@/components/core/button/Button/Button";
+import { TypePLZ } from "@/components/forms/types";
+import { isValidPLZ } from "@/components/forms/utils";
 import { useCreateEvent, useEvent, useUpdateEvent } from "@/hooks";
+import { useCheckPLZ } from "@/hooks/use-check-plz";
 
 import { StepDateTime } from "./StepDateTime";
 import { StepLocation } from "./StepLocation";
@@ -124,6 +127,8 @@ export function CreateEvent({ eventId }: Props) {
       unstructuredAddress: "houseNumber" in fields || "postcode" in fields ? false : prev.unstructuredAddress,
     }));
 
+  const plz = useCheckPLZ(formData.unstructuredAddress ? "" : formData.postcode, TypePLZ.GERMANY);
+
   const handleNext = () => setStep((s) => Math.min(s + 1, TOTAL_STEPS));
   const handleBack = () => {
     if (step === 1) {
@@ -190,7 +195,9 @@ export function CreateEvent({ eventId }: Props) {
       return (
         formData.street.trim().length > 0 &&
         (formData.unstructuredAddress ||
-          (formData.houseNumber.trim().length > 0 && formData.postcode.trim().length > 0)) &&
+          (formData.houseNumber.trim().length > 0 &&
+            isValidPLZ(formData.postcode, TypePLZ.GERMANY) &&
+            !plz.blocksSubmit)) &&
         (formData.registrationLink === editingEvent?.linkRSVP || isHttpUrl(formData.registrationLink))
       );
     if (step === 3) {
@@ -253,6 +260,7 @@ export function CreateEvent({ eventId }: Props) {
               street={formData.street}
               houseNumber={formData.houseNumber}
               postcode={formData.postcode}
+              plzStatus={plz.status}
               registrationLink={formData.registrationLink}
               onChange={update}
               onNext={handleNext}

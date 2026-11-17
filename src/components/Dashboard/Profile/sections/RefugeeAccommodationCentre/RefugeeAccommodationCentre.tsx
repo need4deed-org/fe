@@ -15,6 +15,7 @@ import {
   formatAddress,
   toAddressFormData,
   toApiAddress,
+  useAddressPLZ,
 } from "../OpportunityAddress";
 import { FormButtonRow } from "../shared/styles";
 import { EditableSectionProps, EditableSectionRef } from "../shared/types";
@@ -37,6 +38,8 @@ export const RefugeeAccommodationCentre = forwardRef<EditableSectionRef, Props>(
       values: toAddressFormData(opportunity.address),
     });
 
+    const plz = useAddressPLZ(methods.control);
+
     const { mutate, isPending } = useMutationQuery<Pick<ApiOpportunityPatch, "address">, unknown>({
       apiPath: `${apiPathOpportunity}/${opportunity.id}`,
       method: "patch",
@@ -56,7 +59,10 @@ export const RefugeeAccommodationCentre = forwardRef<EditableSectionRef, Props>(
       setEditing(false);
     };
 
-    const handleSubmit = methods.handleSubmit((data) => mutate({ address: toApiAddress(data) }));
+    const handleSubmit = methods.handleSubmit((data) => {
+      if (plz.blocksSubmit) return;
+      mutate({ address: toApiAddress(data) });
+    });
 
     if (isEditing) {
       return (
@@ -76,7 +82,7 @@ export const RefugeeAccommodationCentre = forwardRef<EditableSectionRef, Props>(
               onClick={handleSubmit}
               width="auto"
               padding="var(--volunteer-profile-section-card-header-button-padding)"
-              disabled={!methods.formState.isDirty || isPending}
+              disabled={!methods.formState.isDirty || isPending || plz.blocksSubmit}
             />
           </FormButtonRow>
         </FormProvider>

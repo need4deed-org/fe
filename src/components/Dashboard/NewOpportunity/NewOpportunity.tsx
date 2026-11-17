@@ -35,6 +35,7 @@ import {
   createAccompanyingDetailsSchema,
   AccompanyingDetailsFormData,
 } from "../Profile/sections/AccompanyingDetails/createAccompanyingDetailsSchema";
+import { useAppointmentPLZ } from "../Profile/sections/AccompanyingDetails/use-appointment-plz";
 import { AddressWarning, SaveRow } from "./styled";
 import { OpportunityDetailsFields } from "./fields/OpportunityDetailsFields";
 import { buildCreatePayload } from "./helper";
@@ -47,6 +48,7 @@ import {
   createOpportunityAddressSchema,
   toAddressFormData,
   toApiAddress,
+  useAddressPLZ,
 } from "../Profile/sections/OpportunityAddress";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { useMinAppointmentDate } from "@/hooks/useMinAppointmentDate";
@@ -118,6 +120,10 @@ export function NewOpportunity() {
     defaultValues: toAddressFormData(),
   });
 
+  const addressPLZ = useAddressPLZ(addressMethods.control);
+  const appointmentPLZ = useAppointmentPLZ(accompanyingMethods.control);
+  const isPLZBlocking = isAccompanying ? appointmentPLZ.blocksSubmit : addressPLZ.blocksSubmit;
+
   const keyToLabel: Record<string, string> = {};
   const labelToKey: Record<string, string> = {};
   apiLanguages.forEach((l) => {
@@ -157,7 +163,15 @@ export function NewOpportunity() {
     const detailsValid = await detailsMethods.trigger();
     const accompValid = !isAccompanying || (await accompanyingMethods.trigger());
     const addressValid = isAccompanying || (await addressMethods.trigger());
-    if (!headerValid || !detailsValid || !accompValid || !addressValid || !selectedAgentId || isAgentAddressMissing)
+    if (
+      !headerValid ||
+      !detailsValid ||
+      !accompValid ||
+      !addressValid ||
+      !selectedAgentId ||
+      isAgentAddressMissing ||
+      isPLZBlocking
+    )
       return;
 
     const payload = buildCreatePayload(
@@ -254,7 +268,7 @@ export function NewOpportunity() {
           backgroundcolor="var(--color-aubergine)"
           textColor="var(--color-white)"
           onClick={handleCreate}
-          disabled={isPending || !selectedAgentId || isAgentAddressMissing}
+          disabled={isPending || !selectedAgentId || isAgentAddressMissing || isPLZBlocking}
         />
       </SaveRow>
     </PageContainer>
