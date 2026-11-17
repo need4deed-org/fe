@@ -23,6 +23,7 @@ import { de, enUS } from "date-fns/locale";
 import {
   ApiAgentGet,
   TranslatedIntoType,
+  UserRole,
   VolunteerStateTypeType,
   OpportunityFormDataWithAgentSubmitter,
   ApiOpportunityGet,
@@ -76,6 +77,8 @@ export function NewOpportunity() {
     queryKey: ["opportunity", String(duplicateOpportunityId)],
     enabled: Boolean(duplicateOpportunityId),
   }).data;
+  const isStaff = userData?.role === UserRole.COORDINATOR || userData?.role === UserRole.ADMIN;
+
   const minAppointmentDate = useMinAppointmentDate();
 
   const { data: apiLanguages = [] } = useApiLanguages();
@@ -107,7 +110,11 @@ export function NewOpportunity() {
   const isAccompanying = selectedType === VolunteerStateTypeType.ACCOMPANYING;
   const isEvent = selectedType === VolunteerStateTypeType.EVENTS;
   const requestedIsOwn = currentAgents.some((agent) => agent.agentId === requestedAgentId);
-  const firstNGOId = requestedIsOwn ? requestedAgentId : currentAgents[0]?.agentId || (userData?.agentId ?? 0);
+  const firstNGOId = isStaff
+    ? requestedAgentId
+    : requestedIsOwn
+      ? requestedAgentId
+      : currentAgents[0]?.agentId || (userData?.agentId ?? 0);
 
   let currentEventDateTime: Date | null = null;
   if (duplicateOpportunity?.event?.date && duplicateOpportunity.event?.time) {
@@ -257,7 +264,12 @@ export function NewOpportunity() {
       </BackButton>
       <Heading2>{t("dashboard.newOpportunity.title")}</Heading2>
       <FormProvider {...headerMethods}>
-        <OpportunityHeaderCard selectedType={selectedType} agentTitles={currentAgents} />
+        <OpportunityHeaderCard
+          selectedType={selectedType}
+          agentTitles={currentAgents}
+          canPickAnyNgo={isStaff}
+          selectedAgentTitle={selectedAgent?.title}
+        />
       </FormProvider>
       {isAccompanying ? (
         <SectionCard

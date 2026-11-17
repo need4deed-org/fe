@@ -2,7 +2,14 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { DashboardLayout } from "@/components/Layout";
-import { apiPathOption, DEFAULT_MAX_COMMUTE_MINUTES, questionMark, ScreenTypes } from "@/config/constants";
+import {
+  apiPathOption,
+  DashboardRoutes,
+  DEFAULT_MAX_COMMUTE_MINUTES,
+  questionMark,
+  ScreenTypes,
+} from "@/config/constants";
+import { PlusIcon } from "@phosphor-icons/react";
 import { useGetVolunteer, useGetQuery } from "@/hooks";
 import { ApiOptionLists, LangProficiency, QueryParamsKeys, UserRole } from "need4deed-sdk";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -31,7 +38,7 @@ import {
 } from "./helpers";
 import { OpportunityListController } from "./OpportunityListController";
 import { OtherOpportunities } from "./OtherOpportunities";
-import { ContentRow, OpportunitiesContainer } from "./styles";
+import { ContentRow, CreateOpportunityButton, OpportunitiesContainer } from "./styles";
 import { ViewMode } from "../common/types";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { useScreenType } from "@/context/DeviceContext";
@@ -39,7 +46,7 @@ import { useScreenType } from "@/context/DeviceContext";
 export function Opportunities() {
   const user = useCurrentUser(true);
   const screenType = useScreenType();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [numOfOpps, setNumOfOpps] = useState(0);
   const [cardsFilter, setCardsFilter] = useState(defaultOpportunityCardsFilter);
@@ -47,6 +54,7 @@ export function Opportunities() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
+  const isStaff = user?.role === UserRole.COORDINATOR || user?.role === UserRole.ADMIN;
   const sortOrder = parseSortParam(searchParams.get(SORT_PARAM));
   const isAgent = user?.role === UserRole.AGENT;
   const tabs = !user
@@ -198,6 +206,17 @@ export function Opportunities() {
             volunteerFilter && !isOtherTab ? { ...volunteerFilter, onRemove: handleRemoveVolunteerFilter } : undefined
           }
           showListControls={!isOtherTab}
+          headerAction={
+            isStaff && (
+              <CreateOpportunityButton
+                type="button"
+                onClick={() => router.push(`/${i18n.language}${DashboardRoutes.Opportunities}/new`)}
+                aria-label={t("dashboard.home.createOpportunity")}
+              >
+                <PlusIcon size={16} weight="bold" />
+              </CreateOpportunityButton>
+            )
+          }
         />
         {isOtherTab ? (
           <OtherOpportunities search={cardsFilter.search} setCount={setNumOfOpps} />

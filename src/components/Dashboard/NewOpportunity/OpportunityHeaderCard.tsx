@@ -12,11 +12,12 @@ import { ShootingStarIcon } from "@phosphor-icons/react";
 import { useFormContext, Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { ApiAgentMembershipSummary, VolunteerStateTypeType } from "need4deed-sdk";
-import { VolunteerTypeRow, TypeButtons, TypeButton, NGOTypeRow, NGOnonEditableRow } from "./styled";
+import { VolunteerTypeRow, TypeButtons, TypeButton, NGOTypeRow, NGOnonEditableRow, NGOPickerColumn } from "./styled";
 import { Heading3, Heading4 } from "@/components/styled/text";
 import { createVolunteerTypeLabelMap } from "@/components/Dashboard/Profile/sections/ProfileHeader/common/labelMaps";
 import { HeaderFormData } from "./headerSchema";
 import { ErrorMessage } from "@/components/core/common";
+import { AgentPicker } from "@/components/Dashboard/Admin/NgoVolunteers/AgentPicker";
 
 const SELECTABLE_VOLUNTEER_TYPES = [
   VolunteerStateTypeType.REGULAR,
@@ -27,9 +28,11 @@ const SELECTABLE_VOLUNTEER_TYPES = [
 type Props = {
   selectedType: VolunteerStateTypeType | undefined;
   agentTitles: ApiAgentMembershipSummary[];
+  canPickAnyNgo?: boolean;
+  selectedAgentTitle?: string;
 };
 
-export default function OpportunityHeaderCard({ selectedType, agentTitles }: Props) {
+export default function OpportunityHeaderCard({ selectedType, agentTitles, canPickAnyNgo, selectedAgentTitle }: Props) {
   const { t } = useTranslation();
   const {
     control,
@@ -88,7 +91,16 @@ export default function OpportunityHeaderCard({ selectedType, agentTitles }: Pro
               name="agentId"
               control={control}
               render={({ field }) =>
-                agentTitles.length > 1 ? (
+                canPickAnyNgo ? (
+                  <NGOPickerColumn>
+                    <Heading4>{t("dashboard.newOpportunity.fields.ngo")}</Heading4>
+                    <AgentPicker
+                      selected={field.value ? { id: field.value, title: selectedAgentTitle ?? "" } : undefined}
+                      onSelect={(agent) => setValue("agentId", agent?.id ?? 0, { shouldValidate: true })}
+                    />
+                    {errors.agentId?.message && <ErrorMessage message={errors.agentId.message} />}
+                  </NGOPickerColumn>
+                ) : agentTitles.length > 1 ? (
                   <EditableField
                     stackAt={opportunityFieldStackingThreshold}
                     mode="edit"
