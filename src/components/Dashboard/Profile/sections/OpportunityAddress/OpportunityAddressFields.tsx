@@ -5,12 +5,16 @@ import { Controller, useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { FormDetails } from "../shared/styles";
 import { OpportunityAddressFormData } from "./opportunityAddressSchema";
-import { useAddressPLZ } from "./use-address-plz";
+import { PLZCheckStatus } from "@/utils/plz-check";
 
 const i18nPrefix = "dashboard.opportunityProfile.opportunityAddress";
 const textFields = ["street", "postcode", "city"] as const;
 
-export function OpportunityAddressFields() {
+type Props = {
+  plzStatus: PLZCheckStatus;
+};
+
+export function OpportunityAddressFields({ plzStatus }: Props) {
   const { t } = useTranslation();
   const {
     control,
@@ -18,7 +22,6 @@ export function OpportunityAddressFields() {
     formState: { errors },
   } = useFormContext<OpportunityAddressFormData>();
   const notMyLocation = watch("notMyLocation");
-  const plz = useAddressPLZ(control);
 
   return (
     <FormDetails>
@@ -49,7 +52,7 @@ export function OpportunityAddressFields() {
                 value={field.value}
                 setValue={field.onChange}
                 errorMessage={errors[name]?.message}
-                supportingContent={name === "postcode" ? <PLZChip status={plz.status} /> : undefined}
+                supportingContent={name === "postcode" ? <PLZChip status={plzStatus} /> : undefined}
               />
             )}
           />

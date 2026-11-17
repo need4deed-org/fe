@@ -12,14 +12,19 @@ export type PLZCheck = {
   blocksSubmit: boolean;
 };
 
-export function useCheckPLZ(plz: string, scope: TypePLZ = TypePLZ.GERMANY, savedPLZ?: string): PLZCheck {
+type CheckPLZOptions = {
+  scope?: TypePLZ;
+  savedPLZ?: string;
+};
+
+export function useCheckPLZ(plz: string, { scope = TypePLZ.GERMANY, savedPLZ }: CheckPLZOptions = {}): PLZCheck {
   const trimmed = plz.trim();
   const debounced = useDebounce(trimmed, debounceMs);
   const isCandidate = !isSavedPLZ(trimmed, savedPLZ) && isValidPLZ(trimmed, scope);
   const isSettled = debounced === trimmed;
 
   const { data, isError } = useQuery({
-    queryKey: ["postcode-check", debounced],
+    queryKey: ["postcode-check", isCandidate ? debounced : null],
     queryFn: () => fetchPLZExists(apiPathPostcodeCheck, debounced),
     enabled: isCandidate && isSettled,
     staleTime: Infinity,

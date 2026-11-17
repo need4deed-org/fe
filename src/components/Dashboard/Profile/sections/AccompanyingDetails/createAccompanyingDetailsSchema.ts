@@ -34,13 +34,13 @@ export const createAccompanyingDetailsSchema = (
       ? z
           .string()
           .min(1, t(`${i18nPrefix}.postcodeRequired`))
-          .refine(isValidPLZ, t("form.error.postcode"))
+          .refine(isValidPLZ, t("form.error.postcodeBerlin"))
       : z
           .string()
           .optional()
           .refine(
             (code) => !code?.trim() || isValidOrSavedPLZ(code, TypePLZ.BERLIN, currentAppointmentPostcode),
-            t("form.error.postcode"),
+            t("form.error.postcodeBerlin"),
           ),
     appointmentDate: required
       ? z.date({ message: t(`${i18nPrefix}.dateRequired`) }).refine(notTooSoon, dateTooSoonMessage)

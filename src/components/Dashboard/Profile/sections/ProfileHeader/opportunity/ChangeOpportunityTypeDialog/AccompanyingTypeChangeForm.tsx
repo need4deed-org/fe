@@ -91,6 +91,7 @@ export const AccompanyingTypeChangeForm = ({ opportunityId, locale, onCancel }: 
             onSubmit={() => {}}
             isPending={false}
             minAppointmentDate={minAppointmentDate}
+            plz={plz}
             hideButtons
           />
         </FormProvider>

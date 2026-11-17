@@ -6,5 +6,5 @@ import { AccompanyingDetailsFormData } from "./createAccompanyingDetailsSchema";
 export function useAppointmentPLZ(control: Control<AccompanyingDetailsFormData>) {
   const postcode = useWatch({ control, name: "appointmentPostcode" });
   const { defaultValues } = useFormState({ control });
-  return useCheckPLZ(postcode ?? "", TypePLZ.BERLIN, defaultValues?.appointmentPostcode ?? "");
+  return useCheckPLZ(postcode ?? "", { scope: TypePLZ.BERLIN, savedPLZ: defaultValues?.appointmentPostcode });
 }

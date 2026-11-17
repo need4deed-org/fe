@@ -128,7 +128,10 @@ export function CreateEvent({ eventId }: Props) {
     }));
 
   const savedPostcode = editingEvent ? parseAddress(editingEvent.address).postcode : "";
-  const plz = useCheckPLZ(formData.unstructuredAddress ? "" : formData.postcode, TypePLZ.BERLIN, savedPostcode);
+  const plz = useCheckPLZ(formData.unstructuredAddress ? "" : formData.postcode, {
+    scope: TypePLZ.BERLIN,
+    savedPLZ: savedPostcode,
+  });
   const isPostcodeInvalid =
     formData.postcode.trim().length > 0 && !isValidOrSavedPLZ(formData.postcode, TypePLZ.BERLIN, savedPostcode);
 

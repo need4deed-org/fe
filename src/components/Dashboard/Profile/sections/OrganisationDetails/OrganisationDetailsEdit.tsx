@@ -35,7 +35,7 @@ export const OrganisationDetailsEdit = ({
     formState: { errors, isDirty, isValid, defaultValues },
   } = useFormContext<OrganisationDetailsFormData>();
   const postcode = useWatch({ control, name: "addressPostcode" });
-  const plz = useCheckPLZ(postcode ?? "", undefined, defaultValues?.addressPostcode ?? "");
+  const plz = useCheckPLZ(postcode ?? "", { savedPLZ: defaultValues?.addressPostcode });
 
   const displayOperators = useCallback(
     (value: string) => {

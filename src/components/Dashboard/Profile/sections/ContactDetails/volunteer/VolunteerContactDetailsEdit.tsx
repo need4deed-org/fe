@@ -31,7 +31,7 @@ export const VolunteerContactDetailsEdit = ({
     formState: { errors, isValid, isDirty, defaultValues },
   } = useFormContext<VolunteerContactDetailsFormData>();
   const postcode = useWatch({ control, name: "postcode" });
-  const plz = useCheckPLZ(postcode ?? "", undefined, defaultValues?.postcode ?? "");
+  const plz = useCheckPLZ(postcode ?? "", { savedPLZ: defaultValues?.postcode });
 
   return (
     <>

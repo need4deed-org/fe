@@ -1,9 +1,9 @@
 import { Paragraph } from "@/components/styled/text";
 import { PLZCheckStatus } from "@/utils/plz-check";
-import { WarningCircleIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
+import { ErrorMessage } from "./ErrorMessage";
 
 const SlideContainer = styled.div<{ $isOpen: boolean }>`
   display: grid;
@@ -21,12 +21,14 @@ const SlideContent = styled.div`
 
 const Chip = styled.div`
   display: inline-flex;
-  align-items: center;
-  gap: var(--plz-chip-gap);
   margin-top: var(--plz-chip-margin-top);
   padding: var(--plz-chip-padding);
   border-radius: var(--plz-chip-border-radius);
   background-color: var(--plz-chip-bg);
+
+  & > * {
+    margin-top: 0;
+  }
 `;
 
 type Props = {
@@ -53,20 +55,12 @@ export function PLZChip({ status }: Props) {
             fontWeight="var(--form-input-error-message-fontWeight)"
             lineheight="var(--form-input-error-message-lineHeight)"
           >
-            {t("form.error.postcodeChecking")}
+            {t("form.postcodeChecking")}
           </Paragraph>
         )}
         {shownMessage === "unknown" && (
           <Chip>
-            <WarningCircleIcon aria-hidden="true" size={20} color="var(--plz-chip-color)" />
-            <Paragraph
-              color="var(--plz-chip-color)"
-              fontSize="var(--form-input-error-message-fontSize)"
-              fontWeight="var(--form-input-error-message-fontWeight)"
-              lineheight="var(--form-input-error-message-lineHeight)"
-            >
-              {t("form.error.postcodeUnknown")}
-            </Paragraph>
+            <ErrorMessage message={t("form.error.postcodeUnknown")} />
           </Chip>
         )}
       </SlideContent>

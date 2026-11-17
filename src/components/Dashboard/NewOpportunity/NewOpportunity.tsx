@@ -224,6 +224,7 @@ export function NewOpportunity() {
                   onSubmit={() => {}}
                   isPending={false}
                   minAppointmentDate={minAppointmentDate}
+                  plz={appointmentPLZ}
                   hideButtons
                 />
               </FormProvider>
@@ -248,7 +249,7 @@ export function NewOpportunity() {
                 />
               </FormProvider>
               <FormProvider {...addressMethods}>
-                <OpportunityAddressFields />
+                <OpportunityAddressFields plzStatus={addressPLZ.status} />
               </FormProvider>
             </>
           }

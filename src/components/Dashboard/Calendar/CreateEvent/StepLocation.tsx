@@ -80,7 +80,7 @@ export function StepLocation({
         <CharCount>
           {postcode.length}/{FIELD_MAX}
         </CharCount>
-        {isPostcodeInvalid && <ErrorMessage message={t("form.error.postcode")} />}
+        {isPostcodeInvalid && <ErrorMessage message={t("form.error.postcodeBerlin")} />}
         <PLZChip status={plzStatus} />
       </FieldGroup>
 

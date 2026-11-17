@@ -8,7 +8,7 @@ import { ErrorMessage, PLZChip } from "@/components/core/common";
 
 import { ButtonRow, DateFieldRow, DatePickerContainer, Details, TimeInput, TimeInputWrapper } from "./styles";
 import { AccompanyingDetailsFormData } from "./createAccompanyingDetailsSchema";
-import { useAppointmentPLZ } from "./use-appointment-plz";
+import { PLZCheck } from "@/hooks/use-check-plz";
 
 type Props = {
   locale: Locale;
@@ -22,6 +22,7 @@ type Props = {
   onSubmit: () => void;
   isPending: boolean;
   minAppointmentDate?: Date;
+  plz: PLZCheck;
   hideButtons?: boolean;
 };
 
@@ -37,6 +38,7 @@ export const AccompanyingDetailsEdit = ({
   onSubmit,
   isPending,
   minAppointmentDate,
+  plz,
   hideButtons = false,
 }: Props) => {
   const { t } = useTranslation();
@@ -44,7 +46,6 @@ export const AccompanyingDetailsEdit = ({
     control,
     formState: { errors, isValid, isDirty, defaultValues },
   } = useFormContext<AccompanyingDetailsFormData>();
-  const plz = useAppointmentPLZ(control);
 
   return (
     <>

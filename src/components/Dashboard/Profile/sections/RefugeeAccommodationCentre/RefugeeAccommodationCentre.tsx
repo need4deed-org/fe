@@ -67,7 +67,7 @@ export const RefugeeAccommodationCentre = forwardRef<EditableSectionRef, Props>(
     if (isEditing) {
       return (
         <FormProvider {...methods}>
-          <OpportunityAddressFields />
+          <OpportunityAddressFields plzStatus={plz.status} />
           <FormButtonRow>
             <Button
               text={t("dashboard.opportunityProfile.accompanyingDetails.cancel")}
