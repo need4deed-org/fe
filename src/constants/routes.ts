@@ -24,6 +24,7 @@ export const routes = {
   registerVolunteerComplete: (lang: string) => `/${lang}/register/volunteer/complete`,
 
   dashboard: (lang: string) => `/${lang}/dashboard`,
+  statistics: (lang: string) => `/${lang}/dashboard/statistics`,
   volunteers: (lang: string) => `/${lang}/volunteers`,
   volunteerDetail: (lang: string, id: Id) => `/${lang}/volunteers/${id}`,
   opportunities: (lang: string) => `/${lang}/opportunities`,
@@ -38,7 +39,7 @@ export const routes = {
   admin: (lang: string) => `/${lang}/admin`,
   profile: (lang: string) => `/${lang}/profile`,
   domains: (lang: string) => `/${lang}/organizations/domains`,
-  statistics: (lang: string) => `/${lang}/admin/statistics`,
+  ngoVolunteers: (lang: string) => `/${lang}/dashboard/ngo-volunteers`,
 } as const;
 
 export type RouteBuilder = (lang: string) => string;

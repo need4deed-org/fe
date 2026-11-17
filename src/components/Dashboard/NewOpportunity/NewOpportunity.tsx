@@ -42,6 +42,13 @@ import { buildCreatePayload } from "./helper";
 import { createHeaderSchema, HeaderFormData } from "./headerSchema";
 import OpportunityHeaderCard from "./OpportunityHeaderCard";
 import DescriptionField from "./fields/DescriptionField";
+import {
+  OpportunityAddressFields,
+  OpportunityAddressFormData,
+  createOpportunityAddressSchema,
+  toAddressFormData,
+  toApiAddress,
+} from "../Profile/sections/OpportunityAddress";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { useMinAppointmentDate } from "@/hooks/useMinAppointmentDate";
 
@@ -106,6 +113,12 @@ export function NewOpportunity() {
     },
   });
 
+  const addressMethods = useForm<OpportunityAddressFormData>({
+    resolver: zodResolver(createOpportunityAddressSchema(t)),
+    mode: "onChange",
+    defaultValues: toAddressFormData(),
+  });
+
   const keyToLabel: Record<string, string> = {};
   const labelToKey: Record<string, string> = {};
   apiLanguages.forEach((l) => {
@@ -144,7 +157,9 @@ export function NewOpportunity() {
     const headerValid = await headerMethods.trigger();
     const detailsValid = await detailsMethods.trigger();
     const accompValid = !isAccompanying || (await accompanyingMethods.trigger());
-    if (!headerValid || !detailsValid || !accompValid || !selectedAgentId || isAgentAddressMissing) return;
+    const addressValid = isAccompanying || (await addressMethods.trigger());
+    if (!headerValid || !detailsValid || !accompValid || !addressValid || !selectedAgentId || isAgentAddressMissing)
+      return;
 
     const payload = buildCreatePayload(
       headerMethods.getValues(),
@@ -156,6 +171,7 @@ export function NewOpportunity() {
       lang,
       t,
       selectedAgentId,
+      isAccompanying ? null : toApiAddress(addressMethods.getValues()),
     );
     createOpportunity(payload);
   };
@@ -209,14 +225,19 @@ export function NewOpportunity() {
           iconName={IconName.Wrench}
           title={t("dashboard.opportunityProfile.opportunityDetails.title")}
           subComponent={
-            <FormProvider {...detailsMethods}>
-              <OpportunityDetailsFields
-                isEvent={isEvent}
-                apiLanguages={apiLanguages}
-                apiActivities={apiActivities}
-                apiSkills={apiSkills}
-              />
-            </FormProvider>
+            <>
+              <FormProvider {...detailsMethods}>
+                <OpportunityDetailsFields
+                  isEvent={isEvent}
+                  apiLanguages={apiLanguages}
+                  apiActivities={apiActivities}
+                  apiSkills={apiSkills}
+                />
+              </FormProvider>
+              <FormProvider {...addressMethods}>
+                <OpportunityAddressFields />
+              </FormProvider>
+            </>
           }
         />
       )}

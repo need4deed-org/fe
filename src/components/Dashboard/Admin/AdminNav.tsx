@@ -16,6 +16,7 @@ export function AdminNav() {
   const NAV_ITEMS = [
     { route: routes.domains(language), labelKey: "dashboard.admin.nav.domains" },
     { route: routes.statistics(language), labelKey: "dashboard.admin.nav.stats" },
+    { route: routes.ngoVolunteers(language), labelKey: "dashboard.admin.nav.ngoVolunteers" },
   ];
 
   return (

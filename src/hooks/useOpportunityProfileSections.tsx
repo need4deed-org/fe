@@ -4,7 +4,9 @@ import { AccompanyingDetails } from "@/components/Dashboard/Profile/sections/Acc
 import { Comments } from "@/components/Dashboard/Profile/sections/Comments";
 import { ContactDetails } from "@/components/Dashboard/Profile/sections/ContactDetails";
 import { OpportunityDetails } from "@/components/Dashboard/Profile/sections/OpportunityDetails";
+import { OpportunityTranslations } from "@/components/Dashboard/Profile/sections/opportunity-translations/opportunity-translations";
 import { OpportunityVolunteers } from "@/components/Dashboard/Profile/sections/OpportunityVolunteers";
+import { RecommendedVolunteers } from "@/components/Dashboard/Profile/sections/RecommendedMatches";
 import { SuggestDialog } from "@/components/Dashboard/Profile/sections/OpportunityVolunteers/SuggestDialog";
 import { ProfileHeader } from "@/components/Dashboard/Profile/sections/ProfileHeader";
 import { RefugeeAccommodationCentre } from "@/components/Dashboard/Profile/sections/RefugeeAccommodationCentre";
@@ -26,12 +28,14 @@ export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | u
   const { t, i18n } = useTranslation();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { isAuthorized, isOwnProfile } = useAuth(opportunity?.agent?.id);
+  const { isAuthorized, isOwnProfile, isUserLoaded } = useAuth({ agentId: opportunity?.agent?.id });
   const hasEditingRights = isAuthorized || isOwnProfile;
 
   const opportunityContactDetailsRef = useRef<EditableSectionRef>(null);
   const accompanyingDetailsRef = useRef<EditableSectionRef>(null);
   const opportunityDetailsRef = useRef<EditableSectionRef>(null);
+  const locationRef = useRef<EditableSectionRef>(null);
+  const [isLocationEditing, setIsLocationEditing] = useState(false);
 
   const [isOppDetailsEditing, setIsOppDetailsEditing] = useState(false);
   const [isContactEditing, setIsContactEditing] = useState(false);
@@ -44,7 +48,10 @@ export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | u
 
   const volunteerId = searchParams.get("volunteer") ?? undefined;
   const volunteer = useGetVolunteer(volunteerId);
-  const { isAlreadyMatched } = useGetVolunteerOpportunityLinked(opportunity?.id ?? 0, volunteerId);
+  const { isAlreadyMatched } = useGetVolunteerOpportunityLinked(opportunity?.id ?? 0, {
+    volunteerId,
+    enabled: hasEditingRights,
+  });
 
   const { mutate: suggestMutate, isPending: isSuggesting } = useSuggestVolunteerOpportunity(() => {
     setIsSuggestDialogOpen(false);
@@ -93,7 +100,19 @@ export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | u
     {
       iconName: IconName.House,
       title: t("dashboard.opportunityProfile.racTitle"),
-      subComponent: <RefugeeAccommodationCentre opportunity={opportunity} />,
+      ...(hasEditingRights &&
+        !isAccompanyingType &&
+        !isLocationEditing && {
+          headerButtonName: t("dashboard.opportunityProfile.editButtonName"),
+          onHeaderButtonClick: () => locationRef.current?.handleEditClick(),
+        }),
+      subComponent: (
+        <RefugeeAccommodationCentre
+          ref={locationRef}
+          opportunity={opportunity}
+          onEditingChange={setIsLocationEditing}
+        />
+      ),
     },
   ];
 
@@ -135,7 +154,7 @@ export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | u
         iconName: IconName.UsersThree,
         title: t("dashboard.opportunityProfile.volunteersSec.title"),
         ...(isAuthorized &&
-          !isAlreadyMatched && {
+          isAlreadyMatched === false && {
             headerButtonName: volunteerId
               ? t("dashboard.opportunityProfile.volunteersSec.suggestButtonName")
               : t("dashboard.opportunityProfile.volunteersSec.findVolunteers"),
@@ -145,7 +164,19 @@ export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | u
           }),
         subComponent: (
           <>
-            <OpportunityVolunteers opportunityId={opportunity.id} hasEditingRights={hasEditingRights} />
+            <OpportunityVolunteers
+              opportunityId={opportunity.id}
+              hasEditingRights={hasEditingRights}
+              isStaff={isAuthorized}
+              isUserLoaded={isUserLoaded}
+            />
+            {isUserLoaded && (
+              <RecommendedVolunteers
+                opportunityId={opportunity.id}
+                opportunityTitle={opportunity.title}
+                canSuggest={isAuthorized}
+              />
+            )}
             {isSuggestDialogOpen && (
               <SuggestDialog
                 opportunityName={opportunity.title}
@@ -162,6 +193,11 @@ export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | u
   }
 
   if (isAuthorized) {
+    sections.splice(1, 0, {
+      iconName: IconName.ClipboardText,
+      title: t("opportunityTranslations.title"),
+      subComponent: <OpportunityTranslations opportunityId={opportunity.id} />,
+    });
     sections.push({
       iconName: IconName.ChatCircleDots,
       title: `${t("dashboard.volunteerProfile.coordinatorComments")} • ${commentsCount}`,

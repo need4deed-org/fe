@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData as holdPreviousData, useQuery } from "@tanstack/react-query";
 import axios, { AxiosResponse } from "axios";
 import { Lang, SortOrder, UserRole } from "need4deed-sdk";
 import { useParams } from "next/navigation";
@@ -33,6 +33,7 @@ interface ApiResponse<T> {
 
 type FilterParam = URLSearchParams | Record<string, unknown>;
 interface Params {
+  districtId?: number;
   language?: Lang;
   page?: number;
   limit?: number;
@@ -49,6 +50,7 @@ interface UseGetQuery {
   enabled?: boolean;
   toastOnError?: boolean;
   keepPreviousData?: boolean;
+  localeIndependent?: boolean;
 }
 
 export const useGetQuery = <T,>({
@@ -59,17 +61,18 @@ export const useGetQuery = <T,>({
   enabled,
   toastOnError = true,
   keepPreviousData = false,
+  localeIndependent = false,
 }: UseGetQuery) => {
   const { lang } = useParams<{ lang: Lang }>();
   const normalizedParams = { ...params, filter: getReducedFilter(params.filter) };
 
-  const { data, isLoading, isError, error } = useQuery<ApiResponse<T>, Error>({
-    queryKey: [...queryKey, lang, normalizedParams],
+  const { data, isLoading, isError, error, isPlaceholderData, refetch } = useQuery<ApiResponse<T>, Error>({
+    queryKey: localeIndependent ? [...queryKey, normalizedParams] : [...queryKey, lang, normalizedParams],
     queryFn: () => fetchData<T>(apiPath, normalizedParams),
     staleTime,
     enabled,
-    placeholderData: keepPreviousData ? (previousData) => previousData : undefined,
     meta: { toastOnError },
+    placeholderData: keepPreviousData ? holdPreviousData : undefined,
   });
 
   return {
@@ -79,5 +82,7 @@ export const useGetQuery = <T,>({
     isLoading,
     isError,
     error,
+    isPlaceholderData,
+    refetch,
   };
 };

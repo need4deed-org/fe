@@ -15,7 +15,19 @@ import { useMatchWithEmailNote } from "../shared/useMatchWithEmailNote";
 import { ITEM_STATUS_REMOVED, TAB_STATUS_ORDER, useTabTransitions } from "../shared/useTabTransitions";
 import AccordionOpportunity from "./AccordionOpportunity";
 
-export default function VolunteerOpportunities({ volunteerId }: { volunteerId: Id }) {
+type Props = {
+  volunteerId: Id;
+  withdrawableOpportunityIds?: number[];
+  listableOpportunityIds?: number[];
+  isListableLoading?: boolean;
+};
+
+export default function VolunteerOpportunities({
+  volunteerId,
+  withdrawableOpportunityIds = [],
+  listableOpportunityIds,
+  isListableLoading = false,
+}: Props) {
   const { t } = useTranslation();
   const { isAuthorized } = useAuth();
 
@@ -48,6 +60,21 @@ export default function VolunteerOpportunities({ volunteerId }: { volunteerId: I
   const { mutate: deleteLink } = useDeleteOpportunityVolunteer(queryKey, ({ m2mId }) =>
     clearItemStatus(m2mId, ITEM_STATUS_REMOVED),
   );
+  const { mutate: withdrawLink } = useDeleteOpportunityVolunteer(
+    queryKey,
+    ({ m2mId }) => clearItemStatus(m2mId, ITEM_STATUS_REMOVED),
+    "dashboard.volunteerProfile.opportunitiesSec.withdrawSuccess",
+  );
+
+  const handleWithdraw = (m2mId: number) => {
+    setItemStatus(m2mId, ITEM_STATUS_REMOVED);
+    withdrawLink({ m2mId });
+  };
+
+  const listableIdSet = listableOpportunityIds && new Set(listableOpportunityIds);
+  const listedItems = listableIdSet
+    ? visibleItems.filter(({ opportunityId }) => listableIdSet.has(Number(opportunityId)))
+    : visibleItems;
 
   const tabs = TAB_STATUS_ORDER.map((key, index) => ({
     label: t(`dashboard.volunteerProfile.opportunitiesSec.tabs.${key}`),
@@ -69,7 +96,7 @@ export default function VolunteerOpportunities({ volunteerId }: { volunteerId: I
     updateStatus({ m2mId, status: OpportunityVolunteerStatusType.PAST });
   };
 
-  if (isLoading) {
+  if (isLoading || isListableLoading) {
     return <VolunteerOpportunitiesContainer />;
   }
 
@@ -80,7 +107,7 @@ export default function VolunteerOpportunities({ volunteerId }: { volunteerId: I
         {visibleItems.length === 0 ? (
           <SectionEmptyState>{t("dashboard.volunteerProfile.opportunitiesSec.emptyState")}</SectionEmptyState>
         ) : (
-          visibleItems.map((opportunity) =>
+          listedItems.map((opportunity) =>
             isAuthorized ? (
               <AccordionOpportunity
                 key={opportunity.id}
@@ -93,7 +120,17 @@ export default function VolunteerOpportunities({ volunteerId }: { volunteerId: I
                 onMarkAsPast={() => handleMarkAsPast(opportunity.id)}
               />
             ) : (
-              <AccordionOpportunity key={opportunity.id} opportunity={opportunity} currentStatus={currentTabStatus} />
+              <AccordionOpportunity
+                key={opportunity.id}
+                opportunity={opportunity}
+                currentStatus={currentTabStatus}
+                onWithdraw={
+                  currentTabStatus === OpportunityVolunteerStatusType.PENDING &&
+                  withdrawableOpportunityIds.includes(Number(opportunity.opportunityId))
+                    ? () => handleWithdraw(opportunity.id)
+                    : undefined
+                }
+              />
             ),
           )
         )}

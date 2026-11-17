@@ -15,6 +15,7 @@ import {
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
+import { NotificationBadge } from "./NotificationBadge";
 
 type MenuLink = IconLink & {
   roles: UserRole[];
@@ -88,6 +89,7 @@ export const Navigation = ({ breakpoint }: NavigationProps) => {
               <Link href={route} $selected={pathname.startsWith(route)} $breakpoint={breakpoint}>
                 <Icon />
                 <Label $breakpoint={breakpoint}>{label}</Label>
+                {route === routes.dashboard(language) && <NotificationBadge breakpoint={breakpoint} />}
               </Link>
             </ListItem>
           ))}
@@ -133,6 +135,7 @@ const Link = styled(NextLink)<{ $selected: boolean; $breakpoint: number }>`
   display: -webkit-inline-flex;
   display: inline-flex;
   align-items: center;
+  position: relative;
   gap: var(--small-spacing);
   height: var(--field-size);
   padding-left: var(--large-spacing);

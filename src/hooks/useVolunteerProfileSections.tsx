@@ -14,15 +14,27 @@ import { EditableSectionRef } from "@/components/Dashboard/Profile/sections/shar
 import { RequestSuggestMenu } from "@/components/Dashboard/Profile/sections/VolunteerOpportunities/RequestSuggestMenu";
 import { SuggestDialog } from "@/components/Dashboard/Profile/sections/VolunteerOpportunities/SuggestDialog";
 import VolunteerOpportunities from "@/components/Dashboard/Profile/sections/VolunteerOpportunities/VolunteerOpportunities";
+import { RecommendedOpportunities } from "@/components/Dashboard/Profile/sections/RecommendedMatches";
 import { VolunteerProfile, VolunteerProfileRef } from "@/components/Dashboard/Profile/sections/VolunteerProfile";
 import { VolunteerProfileDocument } from "@/components/Dashboard/Profile/sections/VolunteerProfileDocument";
 import { IconName } from "@/components/Dashboard/Profile/types";
 import { useDeleteVolunteer } from "@/hooks/useDeleteVolunteer";
+import { apiPathVolunteer, cacheTTL } from "@/config/constants";
+import { useGetCurrentAgent } from "@/hooks/useGetCurrentAgent";
+import { useGetMultiOpportunityLinked } from "@/hooks/useGetMultiOpportunityLinked";
+import { useGetQuery } from "@/hooks/useGetQuery";
 import { useGetOpportunity } from "@/hooks/useGetOpportunity";
-import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { useCurrentUserQuery } from "@/hooks/useCurrentUser";
+import { useRequestOwnerSuggestion } from "@/hooks/useRequestOwnerSuggestion";
 import { useRequestVolunteerSuggestion } from "@/hooks/useRequestVolunteerSuggestion";
 import { useSuggestVolunteerOpportunity } from "@/hooks/useSuggestVolunteerOpportunity";
-import { ApiVolunteerGet, OpportunityVolunteerStatusType, UserRole } from "need4deed-sdk";
+import {
+  ApiOpportunityGetList,
+  ApiOpportunityVolunteerGet,
+  ApiVolunteerGet,
+  OpportunityVolunteerStatusType,
+  UserRole,
+} from "need4deed-sdk";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -33,9 +45,34 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
   const { t, i18n } = useTranslation();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { isAuthorized, isOwnProfile } = useAuth(volunteer?.person.id);
+  const { isAuthorized, isOwnProfile } = useAuth({ personId: volunteer?.person.id });
   const hasEditingRights = isAuthorized || isOwnProfile;
-  const isAgent = useCurrentUser()?.role === UserRole.AGENT;
+  const { data: currentUser, isLoading: isCurrentUserLoading } = useCurrentUserQuery();
+  const isAgent = currentUser?.role === UserRole.AGENT;
+  const { agentIds, isLoading: isAgentLoading } = useGetCurrentAgent();
+  const requestMode: "own" | "other" | "platform" | undefined =
+    !isAgent || isAgentLoading || !volunteer
+      ? undefined
+      : !volunteer.ownerAgentId
+        ? "platform"
+        : agentIds.includes(volunteer.ownerAgentId)
+          ? "own"
+          : "other";
+  const ownsVolunteer = requestMode === "own";
+  const { allLinkedOpportunities, isLoading: isOwnOpportunitiesLoading } = useGetMultiOpportunityLinked(
+    isAgent ? agentIds : [],
+  );
+  const ownOpportunityIds = (allLinkedOpportunities as ApiOpportunityGetList[]).map(({ id }) => Number(id));
+  const isListRestricted = !currentUser || isAgent;
+  const isListableLoading = isCurrentUserLoading || (isAgent && (isAgentLoading || isOwnOpportunitiesLoading));
+  const { data: volunteerMatches = [], isLoading: isMatchesLoading } = useGetQuery<ApiOpportunityVolunteerGet[]>({
+    queryKey: ["volunteer-opportunities", String(volunteer?.id)],
+    apiPath: `${apiPathVolunteer}/${volunteer?.id}/opportunity-linked`,
+    staleTime: cacheTTL,
+    enabled: ownsVolunteer,
+  });
+  const linkedOpportunityIds = volunteerMatches.map(({ opportunityId }) => Number(opportunityId));
+  const [pendingSuggestion, setPendingSuggestion] = useState<Pick<ApiOpportunityGetList, "id" | "title">>();
 
   const contactDetailsRef = useRef<EditableSectionRef>(null);
   const volunteerProfileRef = useRef<VolunteerProfileRef>(null);
@@ -58,11 +95,19 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
     if (opportunityId) router.push(routes.opportunityDetail(i18n.language, opportunityId));
   }, ["opportunity-volunteers", String(opportunityId)]);
 
+  const { mutate: ngoSuggest, isPending: isNgoSuggesting } = useSuggestVolunteerOpportunity(undefined, [
+    "volunteer-opportunities",
+    String(volunteer?.id),
+  ]);
+
   const {
     requestSuggestion,
     isPending: isRequestPending,
     isContactLoading,
-  } = useRequestVolunteerSuggestion(volunteer?.id ?? 0, isAgent && !!volunteer);
+  } = useRequestVolunteerSuggestion(volunteer?.id ?? 0, requestMode === "platform");
+  const { mutate: requestOwnerSuggestion, isPending: isOwnerRequestPending } = useRequestOwnerSuggestion(
+    volunteer?.id ?? 0,
+  );
 
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const { mutate: deleteMutate, isPending: isDeleting } = useDeleteVolunteer(volunteer?.id ?? 0, () => {
@@ -72,6 +117,28 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
   if (!volunteer) return null;
 
   const volunteerFullName = `${volunteer.person.firstName} ${volunteer.person.lastName}`;
+
+  const handleRequestSelect = (opportunity: Pick<ApiOpportunityGetList, "id" | "title">) => {
+    if (ownsVolunteer) {
+      setPendingSuggestion(opportunity);
+      return;
+    }
+    if (requestMode === "other") {
+      requestOwnerSuggestion({ opportunityId: Number(opportunity.id) });
+      return;
+    }
+    requestSuggestion(opportunity.title);
+  };
+
+  const handleNgoSuggestConfirm = () => {
+    if (!pendingSuggestion) return;
+    ngoSuggest({
+      opportunityId: Number(pendingSuggestion.id),
+      volunteerId: volunteer.id,
+      status: OpportunityVolunteerStatusType.PENDING,
+    });
+    setPendingSuggestion(undefined);
+  };
 
   const handleSuggestConfirm = (emailNote: string) => {
     if (!opportunityId) return;
@@ -112,8 +179,14 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
           : () => router.push(`${routes.opportunities(i18n.language)}?volunteer=${volunteer.id}`),
       }),
       ...(isAgent && {
-        headerButtonName: t("dashboard.volunteerProfile.requestSuggest.button"),
-        headerButtonDisabled: isContactLoading || isRequestPending,
+        headerButtonName: ownsVolunteer
+          ? t("dashboard.volunteerProfile.suggestButtonName")
+          : t("dashboard.volunteerProfile.requestSuggest.button"),
+        headerButtonDisabled:
+          !requestMode ||
+          (requestMode === "own" && (isNgoSuggesting || isMatchesLoading)) ||
+          (requestMode === "other" && isOwnerRequestPending) ||
+          (requestMode === "platform" && (isContactLoading || isRequestPending)),
         onHeaderButtonClick: () => setIsRequestMenuOpen(true),
       }),
       subComponent: (
@@ -121,11 +194,31 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
           {isAgent && (
             <RequestSuggestMenu
               isOpen={isRequestMenuOpen}
+              volunteerId={volunteer.id}
               onClose={() => setIsRequestMenuOpen(false)}
-              onSelect={requestSuggestion}
+              onSelect={handleRequestSelect}
+              excludeOpportunityIds={ownsVolunteer ? linkedOpportunityIds : []}
+              openOnly={requestMode === "own" || requestMode === "other"}
             />
           )}
-          <VolunteerOpportunities volunteerId={volunteer.id} />
+          {pendingSuggestion && (
+            <ConfirmationDialog
+              title={t("dashboard.volunteerProfile.suggestDialog.ngoSuggestTitle", {
+                volunteer: volunteerFullName,
+                opportunity: pendingSuggestion.title,
+              })}
+              message={t("dashboard.volunteerProfile.suggestDialog.ngoSuggestDescription")}
+              onCancel={() => setPendingSuggestion(undefined)}
+              onConfirm={handleNgoSuggestConfirm}
+            />
+          )}
+          <VolunteerOpportunities
+            volunteerId={volunteer.id}
+            withdrawableOpportunityIds={ownsVolunteer ? ownOpportunityIds : []}
+            listableOpportunityIds={isListRestricted ? ownOpportunityIds : undefined}
+            isListableLoading={isListableLoading}
+          />
+          {isAuthorized && <RecommendedOpportunities volunteerId={volunteer.id} volunteerName={volunteerFullName} />}
           {isSuggestDialogOpen && (
             <SuggestDialog
               volunteerName={volunteerFullName}

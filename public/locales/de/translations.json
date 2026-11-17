@@ -429,6 +429,7 @@
       "loading": "Wird geladen...",
       "selectOption": "Option auswählen...",
       "selectOptions": "Optionen auswählen...",
+      "commuteRange": "{{min}}-{{max}} Min.",
       "datePrefix": {
         "appliedOn": "Beworben am",
         "matchedOn": "Zugeordnet am",
@@ -533,6 +534,8 @@
           "regular-accompanying": "Regelmäßig + Begleitend"
         }
       },
+      "retry": "Erneut versuchen",
+      "agentHeadline": "Ehrenamtliche, die wir für Sie kontaktieren können",
       "volunteers": "Ehrenamtliche",
       "languages": "Sprachen",
       "activities": "Aktivitäten",
@@ -555,6 +558,8 @@
       }
     },
     "home": {
+      "statistics": "Statistics",
+      "ngoVolunteers": "NGO-Freiwillige",
       "content": {
         "header": "Dashboard Startseite",
         "newTags": "Neueste Tags",
@@ -598,12 +603,30 @@
         "agents": "*Einrichtungen ohne geprüfte Adresse werden nicht auf der Karte angezeigt.",
         "volunteers": "*Ehrenamtliche ohne geprüfte Adresse werden nicht auf der Karte angezeigt."
       },
+      "districtList": "Bezirke",
+      "densityLegend": "Dunklere Flächen zeigen mehr Ergebnisse",
+      "additionalCounts": "Ergebnisse außerhalb der Bezirke",
+      "unassignedBerlin": "Nicht zugeordnet in Berlin",
+      "outsideBerlin": "Außerhalb Berlins",
+      "remote": "Ortsunabhängig",
+      "backToOverview": "Zurück zur Berlin-Übersicht",
+      "selectedDistrictCount": "{{count}} Ergebnisse in diesem Bezirk",
+      "loading": "Bezirksergebnisse werden geladen…",
+      "loadError": "Kartendaten konnten nicht geladen werden. Bitte erneut versuchen.",
+      "unsupportedFilters": "Die Bezirkskarte kann Such- oder verknüpfte Profilfilter noch nicht anwenden. Entfernen Sie diese Filter, um passende Bezirksergebnisse zu sehen.",
+      "emptyDistrict": "Keine Ergebnisse für diesen Bezirk und die aktiven Filter.",
+      "emptyOverview": "Für die aktiven Filter gibt es keine Ergebnisse in Berlin.",
+      "truncated": "Es werden nur die ersten {{max}} passenden Ergebnisse angezeigt.",
+      "viewAllResults": "Alle Ergebnisse in der Kartenansicht anzeigen",
+      "volunteersInterested": "Ehrenamtliche mit Interesse an {{district}}",
+      "volunteersInterestedExplainer": "Die Zahlen für Ehrenamtliche basieren auf bevorzugten Bezirken und können sich überschneiden. Markierungen zeigen ungefähre Standorte und können sich überlagern.",
       "legend": {
         "title": "Legende",
         "opportunity": "Ehrenamtsbedarfe",
         "rac": "Unterkunft für Geflüchtete",
         "otherRac": "Weitere Berliner Unterkünfte für Geflüchtete",
         "volunteer": "Ehrenamtliche",
+        "cluster": "Gebündelte Markierungen",
         "numberOfEntities": "Anzahl der Ehrenamtliche oder Ehrenamtsbedarfe"
       },
       "scrollZoom": "Scroll-Zoom umschalten",
@@ -766,7 +789,14 @@
         "commentText": "Angefragt für {{opportunity}}",
         "contactMissing": "Anfrage konnte nicht gesendet werden: need4deed-Kontakt nicht gefunden",
         "success": "Anfrage gesendet",
-        "noOpportunities": "Du hast noch keine ehrenamtlichen Tätigkeiten"
+        "noOpportunities": "Du hast noch keine ehrenamtlichen Tätigkeiten",
+        "ownerSuccess": "Anfrage an die Einrichtung der freiwilligen Person gesendet",
+        "errors": {
+          "alreadyRequested": "Diese freiwillige Person wurde für das Gesuch bereits angefragt oder verknüpft.",
+          "noOwnerMembers": "Die Einrichtung der freiwilligen Person hat keine aktiven Mitglieder. Bitte frag stattdessen need4deed.",
+          "notOpen": "Das Gesuch ist nicht mehr offen.",
+          "ngoInactive": "Eure Einrichtung ist inaktiv."
+        }
       },
       "suggestDialog": {
         "title": "Diesem*r Ehrenamtlichen vorschlagen?",
@@ -774,7 +804,9 @@
         "messageEnd": "vorgeschlagen haben. Es erscheint in seinem*ihrem Profil unter \"Angefragt\".",
         "confirm": "Vorschlagen",
         "cancel": "Abbrechen",
-        "success": "Vorschlag erfolgreich gesendet"
+        "success": "Vorschlag erfolgreich gesendet",
+        "ngoSuggestTitle": "{{volunteer}} für {{opportunity}} vorschlagen?",
+        "ngoSuggestDescription": "Die freiwillige Person sieht den Vorschlag als offen."
       },
       "activities": "Aktivitäten",
       "volunteerHeader": {
@@ -853,6 +885,16 @@
         "certificateGC_options": {
           "uploaded": "Hochgeladen",
           "missing": "Fehlend"
+        },
+        "owner_title": "Einrichtung",
+        "owner_none": "need4deed (Plattform)",
+        "change_owner": "Einrichtung ändern",
+        "ownerModal": {
+          "title": "Einrichtung der freiwilligen Person",
+          "search": "Einrichtungen suchen",
+          "none": "Keine Einrichtung: Plattform-Freiwillige*r",
+          "save": "Speichern",
+          "cancel": "Abbrechen"
         }
       },
       "opportunitiesSec": {
@@ -872,7 +914,11 @@
         "markAsPastSuccess": "Als vergangen markiert",
         "emptyState": "Noch keine Einträge in dieser Kategorie",
         "unmatchDialogTitle": "Zuordnung aufheben",
-        "unmatchDialogDescription": "Möchten Sie die Zuordnung für diese Person wirklich aufheben?"
+        "unmatchDialogDescription": "Möchten Sie die Zuordnung für diese Person wirklich aufheben?",
+        "withdraw": "Vorschlag zurückziehen",
+        "withdrawDialogTitle": "Diesen Vorschlag zurückziehen?",
+        "withdrawDialogDescription": "Der offene Vorschlag wird bei der freiwilligen Person und beim Gesuch entfernt.",
+        "withdrawSuccess": "Vorschlag zurückgezogen"
       },
       "contactDetails": {
         "title": "Kontaktdaten",
@@ -1461,6 +1507,10 @@
         "operator": "Träger",
         "services": "Leistungen",
         "clientLanguages": "Sprachen des*der Klienten*in",
+        "sharesVolunteers": "Teilt Freiwillige",
+        "sharesVolunteersYes": "Ja",
+        "sharesVolunteersNo": "Nein",
+        "sharesVolunteersHint": "Andere Einrichtungen, die ebenfalls teilen, sehen die Freiwilligen eurer Einrichtung und können sie für ihre Gesuche vorschlagen.",
         "cancel": "Abbrechen",
         "saveChanges": "Änderungen speichern",
         "saveSuccess": "Organisationsdetails erfolgreich aktualisiert",
@@ -1670,6 +1720,14 @@
         "confirmTitle": "Diese Möglichkeit löschen?",
         "confirmMessage": "Dadurch wird \"{{name}}\" dauerhaft gelöscht. Dies kann nicht rückgängig gemacht werden.",
         "deleteSuccess": "Möglichkeit erfolgreich gelöscht"
+      },
+      "opportunityAddress": {
+        "notMyLocation": "Nicht mein Standort",
+        "street": "Straße und Hausnummer",
+        "postcode": "PLZ",
+        "city": "Stadt",
+        "required": "Pflichtfeld",
+        "postcodeInvalid": "Bitte eine 5-stellige deutsche PLZ eingeben"
       }
     },
     "racTitle": "Geflüchtetenunterkunft",
@@ -1864,12 +1922,118 @@
         "removeMessage": "Personen mit einer E-Mail-Adresse auf {{domain}} können sich dann nicht mehr als NGO registrieren, außer die NGO hat bereits eine Kontaktperson mit dieser Domain."
       },
       "stats": {
-        "comingSoon": "Kommt bald"
+        "metricLabel": "Kennzahl",
+        "metric": {
+          "newVolunteers": "Neue Freiwillige",
+          "requests": "Anfragen",
+          "leadFrom": "Wie haben Sie von uns erfahren"
+        },
+        "granularityLabel": "Zeitraum",
+        "granularity": {
+          "month": "Monat",
+          "quarter": "Quartal",
+          "year": "Jahr"
+        },
+        "rangeLabel": "Datumsbereich",
+        "from": "Von",
+        "to": "Bis",
+        "clearRange": "Daten zurücksetzen",
+        "invalidRange": "Das Startdatum muss vor oder auf dem Enddatum liegen.",
+        "groupByLabel": "Aufteilen nach",
+        "groupBy": {
+          "none": "Keine Aufteilung",
+          "district": "Bezirk",
+          "opportunityType": "Art der Anfrage",
+          "volunteerType": "Art des Engagements",
+          "leadFrom": "Quelle"
+        },
+        "titleBy": "{{metric}} nach {{groupBy}}",
+        "total": "Gesamt",
+        "other": "Sonstige",
+        "period": "Zeitraum",
+        "legend": "Legende",
+        "showTable": "Als Tabelle anzeigen",
+        "hideTable": "Tabelle ausblenden",
+        "empty": "Keine Daten für diesen Zeitraum.",
+        "loadError": "Die Statistiken konnten nicht geladen werden. Bitte laden Sie die Seite neu.",
+        "overlapNote": "Manche Einträge zählen zu mehreren Gruppen, daher können die Segmente zusammen mehr als die Gesamtzahl ergeben.",
+        "allTime": {
+          "title": "Gesamtzahlen seit Beginn",
+          "tracked": "Seit Beginn der Erfassung",
+          "beforeTracking": "Vor Beginn der Erfassung",
+          "beforeTrackingNote": "„Vor Beginn der Erfassung“ umfasst Antworten, die gesammelt wurden, bevor wir festgehalten haben, wann sie gegeben wurden. Sie sind daher nicht im Diagramm oben enthalten."
+        }
       },
       "nav": {
         "domains": "Domains",
-        "stats": "Statistiken"
+        "stats": "Statistiken",
+        "ngoVolunteers": "Freiwillige der NGOs"
+      },
+      "ngoVolunteers": {
+        "helper": "Wählen Sie eine NGO, um ihren Freiwilligen einen Registrierungslink zu geben oder ihre bestehenden Freiwilligen zu importieren.",
+        "search": "NGOs suchen",
+        "noResults": "Keine NGO gefunden",
+        "change": "NGO ändern",
+        "link": {
+          "title": "Registrierungslink",
+          "helper": "Freiwillige, die sich über diesen Link registrieren, gehören zur NGO. Ein Link gilt 90 Tage; ein neuer Link hebt ältere nicht auf. Wird die NGO inaktiv gesetzt, funktionieren alle ihre Links nicht mehr.",
+          "create": "Link erstellen",
+          "copy": "Link kopieren",
+          "copied": "Link kopiert",
+          "expires": "Gültig bis {{date}}",
+          "copyFailed": "Der Link konnte nicht kopiert werden. Bitte markieren und kopieren Sie ihn."
+        },
+        "inactive": "{{title}} (inaktiv)",
+        "import": {
+          "title": "Bestehende Freiwillige importieren",
+          "helper": "Laden Sie eine CSV-Datei mit den Spalten firstName, lastName, email, phone und postcode (Komma oder Semikolon getrennt). Zuerst die Vorschau: Es wird nichts gespeichert, solange die Vorschau ungültige Zeilen hat. Bestehende Freiwillige werden übersprungen.",
+          "file": "CSV-Datei",
+          "tooMany": "Höchstens {{max}} Zeilen pro Import.",
+          "missingColumns": "Fehlende Spalten: {{columns}}",
+          "empty": "Die Datei enthält keine Datenzeilen.",
+          "preview": "Vorschau",
+          "import": "Importieren",
+          "summary": "{{created}} anlegen, {{skipped}} übersprungen, {{invalid}} ungültig",
+          "imported": "{{created}} importiert, {{skipped}} übersprungen",
+          "line": "Zeile",
+          "email": "E-Mail",
+          "outcome": "Ergebnis",
+          "details": "Details",
+          "outcomes": {
+            "created": "Anlegen",
+            "skipped": "Überspringen",
+            "invalid": "Ungültig"
+          },
+          "skipReasons": {
+            "already-volunteer": "Bereits freiwillig registriert",
+            "duplicate-in-import": "Doppelt in dieser Datei"
+          },
+          "rowsLoaded_one": "{{count}} Zeile geladen",
+          "rowsLoaded_other": "{{count}} Zeilen geladen",
+          "duplicateColumns": "Doppelte Spalten: {{columns}}",
+          "rejected": "Es wurde nichts importiert: {{invalid}} ungültig, {{created}} würden angelegt, {{skipped}} übersprungen",
+          "rowErrors": {
+            "firstName": "Vorname fehlt",
+            "email": "E-Mail-Adresse ist ungültig",
+            "postcode": "Postleitzahl ist unbekannt",
+            "registered": "E-Mail gehört zu einem registrierten Konto",
+            "otherPerson": "E-Mail gehört zu einer anderen Person"
+          }
+        }
       }
+    },
+    "volunteerActivityLog": {
+      "emptyState": "Noch keine Aktivitäten",
+      "linked": "Verknüpft mit „{{title}}“",
+      "linkedAs": "Verknüpft mit „{{title}}“ als {{status}}",
+      "removed": "Entfernt aus „{{title}}“ (war {{from}})",
+      "statusChanged": "„{{title}}“: Status geändert zu {{to}}",
+      "statusChangedFrom": "„{{title}}“: {{from}} → {{to}}",
+      "imported": "{{entry}} (importiert, Datum ungefähr)"
+    },
+    "recommended": {
+      "volunteersTitle": "Empfohlene Ehrenamtliche",
+      "opportunitiesTitle": "Empfohlene Ehrenamtsbedarfe"
     }
   },
   "aboutus": {
@@ -2436,6 +2600,10 @@
     "applicationEmailSent": "E-Mail mit Antrag gesendet!",
     "applicationEmailJustSent": "Die E-Mail mit Antrag wurde gerade gesendet. Bitte versuchen Sie es in einer Minute erneut.",
     "applicationEmailNotSent": "Die E-Mail mit Antrag konnte nicht gesendet werden. Bitte versuchen Sie es später erneut.",
+    "applicationEmailNotSentAttachment": "Die E-Mail mit Antrag konnte nicht gesendet werden: Das Antragsformular konnte nicht geladen werden. Bitte versuchen Sie es später erneut; wenn es weiterhin passiert, informieren Sie das Tech-Team.",
+    "applicationEmailNotSentInvalid": "Die E-Mail mit Antrag konnte nicht gesendet werden: Sie hat die Inhaltsprüfung nicht bestanden. Bitte informieren Sie das Tech-Team.",
+    "applicationEmailNotSentRender": "Die E-Mail mit Antrag konnte nicht gesendet werden: Beim Erstellen ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut; wenn es weiterhin passiert, informieren Sie das Tech-Team.",
+    "applicationEmailNotSentSend": "Die E-Mail mit Antrag konnte nicht gesendet werden: Der Mailserver hat sie nicht angenommen. Bitte versuchen Sie es später erneut.",
     "uploadError": "Hochladen fehlgeschlagen. Bitte versuchen Sie es erneut.",
     "deleteError": "Löschen fehlgeschlagen. Bitte versuchen Sie es erneut.",
     "previewError": "Vorschau fehlgeschlagen. Bitte versuchen Sie es erneut.",
@@ -2751,7 +2919,11 @@
     "checkEmail": {
       "title": "Prüfen Sie Ihre E-Mail",
       "description": "Wir haben einen Bestätigungslink an Ihre E-Mail-Adresse gesendet. Klicken Sie darauf, um die Einrichtung Ihres Kontos fortzusetzen."
-    }
+    },
+    "ngoLinkNotice": "Sie registrieren sich über den Link einer NGO: Ihr neues Konto gehört dann zu dieser NGO.",
+    "ngoLinkExpired": "Dieser Registrierungslink ist nicht mehr gültig. Bitte fragen Sie die NGO nach einem neuen Link.",
+    "ngoLinkSignedIn": "Sie sind bereits angemeldet. Registrierungslinks von NGOs gelten nur für neue Konten.",
+    "toDashboard": "Zum Dashboard"
   },
   "formInput": {
     "showPassword": "Passwort anzeigen",
@@ -2880,5 +3052,83 @@
         }
       }
     }
+  },
+  "opportunityTranslations": {
+    "target": "Übersetzung: {{language}}",
+    "review": "Übersetzung prüfen",
+    "close": "Prüfung schließen",
+    "targetLanguage": "Übersetzungssprache",
+    "edit": "Übersetzung bearbeiten",
+    "save": "Übersetzung speichern",
+    "confirm": "Übersetzung bestätigen",
+    "cancel": "Abbrechen",
+    "retry": "Erneut versuchen",
+    "changeOriginal": "Originalsprache ändern",
+    "originalLanguage": "Originalsprache",
+    "dialogTitle": "Originalsprache ändern?",
+    "dialogBody": "Wählen Sie die Sprache, in der der Originaltext verfasst wurde. Dies ändert die Ausgangssprache des Angebots, nicht die Oberflächensprache.",
+    "replaceWarning": "Alle Übersetzungen, auch von Menschen bearbeitete, werden neu erstellt. Prüfen Sie sie anschließend erneut.",
+    "required": "Bitte geben Sie eine Übersetzung ein.",
+    "tooLong": "Verwenden Sie höchstens {{count}} Zeichen.",
+    "changedBeforeConfirm": "Seit dem Öffnen der Prüfung wurde eine Übersetzung geändert. Prüfen Sie den aktuellen Text vor dem Bestätigen.",
+    "changedDuringEdit": "Das Original oder die Übersetzung wurde während Ihrer Bearbeitung geändert. Brechen Sie ab und prüfen Sie den aktuellen Text vor dem Speichern.",
+    "staleError": "Die Übersetzungen konnten nicht aktualisiert werden. Der angezeigte Text ist möglicherweise veraltet. Ihre ungespeicherten Änderungen bleiben erhalten; versuchen Sie es vor dem Speichern oder Bestätigen erneut.",
+    "saved": "Übersetzung gespeichert",
+    "confirmed": "Fertige maschinelle Übersetzungen bestätigt",
+    "languageChanged": "Originalsprache aktualisiert; Übersetzungen werden neu erstellt",
+    "reviewStatus": {
+      "missing": "Übersetzung nicht verfügbar",
+      "pending": "Übersetzung wird erstellt",
+      "failed": "Übersetzung prüfen"
+    },
+    "title": "Übersetzungen",
+    "loading": "Übersetzungen werden geladen…",
+    "error": "Die Übersetzungen konnten nicht geladen werden. Wählen Sie „Erneut versuchen“.",
+    "empty": "Für dieses Angebot ist kein übersetzbarer Text vorhanden.",
+    "original": "Original",
+    "mixedLanguages": "Mehrere Sprachen",
+    "unknownLanguage": "Sprache nicht erfasst",
+    "sameAsOriginal": "Dies ist die Originalsprache; siehe Originaltext.",
+    "originalStillShown": "Es liegt keine fertige Übersetzung vor. Im Angebot wird stattdessen der Originaltext angezeigt.",
+    "missing": "Keine Übersetzung vorhanden. Im Angebot wird stattdessen der Originaltext angezeigt.",
+    "unknownError": "Die Übersetzung konnte nicht abgeschlossen werden.",
+    "fields": {
+      "title": "Titel",
+      "info": "Beschreibung"
+    },
+    "languages": {
+      "en": "Englisch",
+      "de": "Deutsch"
+    },
+    "reasons": {
+      "empty": "Die Übersetzung war leer.",
+      "length_ratio": "Die Länge der Übersetzung hat die Prüfung nicht bestanden.",
+      "token_missing": "Erforderliche Angaben wurden in der Übersetzung nicht beibehalten.",
+      "email_missing": "Eine E-Mail-Adresse aus dem Original fehlt in der Übersetzung.",
+      "url_missing": "Ein Link aus dem Original fehlt in der Übersetzung.",
+      "phone_missing": "Eine Telefonnummer aus dem Original fehlt in der Übersetzung.",
+      "date_missing": "Ein Datum aus dem Original fehlt oder wurde in der Übersetzung verändert.",
+      "time_missing": "Eine Uhrzeit aus dem Original fehlt oder wurde in der Übersetzung verändert.",
+      "number_missing": "Eine Zahl aus dem Original fehlt oder wurde in der Übersetzung verändert.",
+      "untranslated": "Der Text scheint nicht übersetzt zu sein.",
+      "source_is_target": "Der Originaltext ist möglicherweise bereits in der Zielsprache.",
+      "wrong_language": "Die Übersetzung ist nicht in der erwarteten Sprache.",
+      "bad_response": "Der Übersetzungsdienst hat eine ungültige Antwort geliefert.",
+      "provider_unavailable": "Der Übersetzungsdienst war nicht verfügbar."
+    },
+    "confirmFailed": "Einige Übersetzungen konnten nicht bestätigt werden. Erfolgreiche Bestätigungen bleiben erhalten. Prüfen Sie den Fehler, bevor Sie es erneut versuchen.",
+    "writeFailed": "Einige Änderungen konnten nicht gespeichert werden. Erfolgreiche Änderungen bleiben erhalten, nicht gespeicherter Text bleibt im Editor. Prüfen Sie den Fehler, bevor Sie es erneut versuchen.",
+    "regenerate": "Übersetzung neu erstellen",
+    "regenerateTitle": "Diese Übersetzung neu erstellen?",
+    "regenerateBody": "Neue automatische Übersetzungen ersetzen {{fields}} auf {{language}}, einschließlich manueller Änderungen. Der Originaltext bleibt unverändert.",
+    "regenerateFieldFailed": "{{field}} konnte nicht neu erstellt werden. {{reason}}",
+    "retryLimitReached": "Die maximale Anzahl automatischer Übersetzungsversuche wurde erreicht. Sie können die Übersetzung weiterhin manuell bearbeiten.",
+    "regenerateRequested": "Neuerstellung der Übersetzung angefordert",
+    "changedBeforeRegeneration": "Das Original oder die Übersetzung wurde geändert. Schließen Sie diesen Dialog und prüfen Sie den aktuellen Text, bevor Sie es erneut versuchen."
+  },
+  "datePicker": {
+    "openCalendar": "Kalender öffnen",
+    "invalidDate": "Bitte ein gültiges Datum eingeben (TT.MM.JJJJ).",
+    "beforeMinYear": "Daten vor {{year}} werden nicht unterstützt."
   }
 }

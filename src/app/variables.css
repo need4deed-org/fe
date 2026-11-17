@@ -76,6 +76,9 @@
   --mobile-menu-logo-height: 24px;
   --mobile-footer-menu-height: 74px;
   --mobile-menu-font-size: 10px;
+  --notification-badge-size: 24px; /* For notification badges on app navigation sidebar items */
+  --notification-badge-side-spacing: 6px;
+  --notification-badge-border-radius: calc(var(--notification-badge-size) / 2);
 
   /* Miscellaneous */
   --short-transition: 0.15s ease-in-out; /* For short animations */

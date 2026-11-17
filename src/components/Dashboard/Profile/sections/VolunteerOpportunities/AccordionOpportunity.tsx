@@ -11,6 +11,7 @@ import OpportunityDetail from "./OpportunityDetail";
 type Props = {
   opportunity: ApiOpportunityVolunteerGet;
   currentStatus: OpportunityVolunteerStatusType;
+  onWithdraw?: () => void;
 } & AccordionActionProps;
 
 export default function AccordionOpportunity({ opportunity, currentStatus, ...actionProps }: Props) {
@@ -27,7 +28,7 @@ export default function AccordionOpportunity({ opportunity, currentStatus, ...ac
     </Heading4>
   );
 
-  const hasActions = !!actionProps.onMatch;
+  const hasActions = !!actionProps.onMatch || !!actionProps.onWithdraw;
   const hasActivityLog =
     currentStatus === OpportunityVolunteerStatusType.ACTIVE || currentStatus === OpportunityVolunteerStatusType.PAST;
 

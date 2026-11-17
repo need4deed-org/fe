@@ -423,6 +423,7 @@
       "loading": "Loading...",
       "selectOption": "Select option...",
       "selectOptions": "Select options...",
+      "commuteRange": "{{min}}-{{max}} min",
       "datePrefix": {
         "appliedOn": "Applied on",
         "matchedOn": "Matched on",
@@ -527,6 +528,8 @@
           "regular-accompanying": "Regular + Accompanying"
         }
       },
+      "retry": "Try again",
+      "agentHeadline": "Volunteers you can ask us to contact",
       "volunteers": "Volunteers",
       "languages": "Languages",
       "activities": "Activities",
@@ -549,6 +552,8 @@
       }
     },
     "home": {
+      "statistics": "Statistiken",
+      "ngoVolunteers": "NGO Volunteers",
       "content": {
         "header": "Dashboard Home",
         "newTags": "Newest Tags",
@@ -592,12 +597,30 @@
         "agents": "*NGOs without a certified address are not shown on the map.",
         "volunteers": "*Volunteers without a certified address are not shown on the map."
       },
+      "districtList": "Districts",
+      "densityLegend": "Higher shading means more results",
+      "additionalCounts": "Results outside the districts",
+      "unassignedBerlin": "Unassigned in Berlin",
+      "outsideBerlin": "Outside Berlin",
+      "remote": "Remote",
+      "backToOverview": "Back to all Berlin",
+      "selectedDistrictCount": "{{count}} results in this district",
+      "loading": "Loading district results…",
+      "loadError": "District map data could not be loaded. Please try again.",
+      "unsupportedFilters": "District maps cannot apply search or linked-profile filters yet. Clear those filters to see matching district results.",
+      "emptyDistrict": "No results match this district and the active filters.",
+      "emptyOverview": "No results match the active filters in Berlin.",
+      "truncated": "Showing only the first {{max}} matching results.",
+      "viewAllResults": "View all results in Cards",
+      "volunteersInterested": "Volunteers interested in {{district}}",
+      "volunteersInterestedExplainer": "Volunteer counts show preferred districts and may overlap. Pins show approximate locations and may overlap.",
       "legend": {
         "title": "Legend",
         "opportunity": "Opportunity",
         "rac": "Refugee Accommodation Center",
         "otherRac": "Other Refugee Accommodation Centers",
         "volunteer": "Volunteer",
+        "cluster": "Grouped markers",
         "numberOfEntities": "Number of opportunities or volunteers"
       },
       "scrollZoom": "Toggle Scroll Zoom",
@@ -760,7 +783,14 @@
         "commentText": "Requested for {{opportunity}}",
         "contactMissing": "Request could not be sent: need4deed contact not found",
         "success": "Request sent",
-        "noOpportunities": "You have no opportunities yet"
+        "noOpportunities": "You have no opportunities yet",
+        "ownerSuccess": "Request sent to the volunteer's NGO",
+        "errors": {
+          "alreadyRequested": "This volunteer was already requested or linked for that opportunity.",
+          "noOwnerMembers": "The volunteer's NGO has no active members to ask. Please ask need4deed instead.",
+          "notOpen": "That opportunity is no longer open.",
+          "ngoInactive": "Your NGO is inactive."
+        }
       },
       "suggestDialog": {
         "title": "Suggest to this volunteer?",
@@ -768,7 +798,9 @@
         "messageEnd": "to them. It will appear in their profile under \"pending\" opportunities.",
         "confirm": "Suggest",
         "cancel": "Cancel",
-        "success": "Suggestion sent successfully"
+        "success": "Suggestion sent successfully",
+        "ngoSuggestTitle": "Suggest {{volunteer}} for {{opportunity}}?",
+        "ngoSuggestDescription": "The volunteer will see the suggestion as pending."
       },
       "activities": "Activities",
       "volunteerHeader": {
@@ -846,6 +878,16 @@
         "certificateGC_options": {
           "uploaded": "Uploaded",
           "missing": "Missing"
+        },
+        "owner_title": "NGO",
+        "owner_none": "need4deed (platform)",
+        "change_owner": "Change NGO",
+        "ownerModal": {
+          "title": "Volunteer's NGO",
+          "search": "Search NGOs",
+          "none": "No NGO: platform volunteer",
+          "save": "Save",
+          "cancel": "Cancel"
         }
       },
       "opportunitiesSec": {
@@ -865,7 +907,11 @@
         "markAsPastSuccess": "Marked as past",
         "emptyState": "No items in this category yet",
         "unmatchDialogTitle": "Confirm Unmatch",
-        "unmatchDialogDescription": "Are you sure you want to unmatch this volunteer?"
+        "unmatchDialogDescription": "Are you sure you want to unmatch this volunteer?",
+        "withdraw": "Withdraw suggestion",
+        "withdrawDialogTitle": "Withdraw this suggestion?",
+        "withdrawDialogDescription": "The pending suggestion is removed from the volunteer and the opportunity.",
+        "withdrawSuccess": "Suggestion withdrawn"
       },
       "contactDetails": {
         "title": "Contact details",
@@ -1449,6 +1495,10 @@
         "operator": "Operator / Träger",
         "services": "Services",
         "clientLanguages": "Client languages",
+        "sharesVolunteers": "Shares volunteers",
+        "sharesVolunteersYes": "Yes",
+        "sharesVolunteersNo": "No",
+        "sharesVolunteersHint": "Other NGOs that also share can see your NGO's volunteers and suggest them for their opportunities.",
         "cancel": "Cancel",
         "saveChanges": "Save changes",
         "saveSuccess": "Organisation details updated successfully",
@@ -1658,6 +1708,14 @@
         "confirmTitle": "Delete this opportunity?",
         "confirmMessage": "This will permanently delete \"{{name}}\" and cannot be undone.",
         "deleteSuccess": "Opportunity deleted successfully"
+      },
+      "opportunityAddress": {
+        "notMyLocation": "Not my location",
+        "street": "Street and number",
+        "postcode": "Postcode",
+        "city": "City",
+        "required": "Required",
+        "postcodeInvalid": "Enter a 5-digit German postcode"
       }
     },
     "racTitle": "Refugee accommodation centre",
@@ -1852,12 +1910,118 @@
         "removeMessage": "People with an email on {{domain}} will no longer be able to register as an NGO, unless the NGO already has a contact on that domain."
       },
       "stats": {
-        "comingSoon": "Coming soon"
+        "metricLabel": "Metric",
+        "metric": {
+          "newVolunteers": "New volunteers",
+          "requests": "Requests",
+          "leadFrom": "Where did you hear about us"
+        },
+        "granularityLabel": "Period",
+        "granularity": {
+          "month": "Month",
+          "quarter": "Quarter",
+          "year": "Year"
+        },
+        "rangeLabel": "Date range",
+        "from": "From",
+        "to": "To",
+        "clearRange": "Clear dates",
+        "invalidRange": "The start date must be on or before the end date.",
+        "groupByLabel": "Split by",
+        "groupBy": {
+          "none": "No split",
+          "district": "District",
+          "opportunityType": "Request type",
+          "volunteerType": "Volunteer type",
+          "leadFrom": "Source"
+        },
+        "titleBy": "{{metric}} by {{groupBy}}",
+        "total": "Total",
+        "other": "Other",
+        "period": "Period",
+        "legend": "Legend",
+        "showTable": "Show as table",
+        "hideTable": "Hide table",
+        "empty": "No data for this period.",
+        "loadError": "Could not load the statistics. Please reload the page.",
+        "overlapNote": "Some entries count towards more than one group, so the segments can add up to more than the total.",
+        "allTime": {
+          "title": "All-time totals",
+          "tracked": "Since tracking started",
+          "beforeTracking": "Before tracking started",
+          "beforeTrackingNote": "\"Before tracking started\" counts answers collected before we recorded when they were given, so they are not part of the chart above."
+        }
       },
       "nav": {
         "domains": "Domains",
-        "stats": "Statistics"
+        "stats": "Statistics",
+        "ngoVolunteers": "NGO volunteers"
+      },
+      "ngoVolunteers": {
+        "helper": "Pick an NGO to give its volunteers a registration link or to import its existing volunteers.",
+        "search": "Search NGOs",
+        "noResults": "No NGO found",
+        "change": "Change NGO",
+        "link": {
+          "title": "Registration link",
+          "helper": "Volunteers who sign up through this link belong to the NGO. A link is valid for 90 days; a new link doesn't cancel older ones. Marking the NGO inactive stops all its links.",
+          "create": "Create link",
+          "copy": "Copy link",
+          "copied": "Link copied",
+          "expires": "Valid until {{date}}",
+          "copyFailed": "Could not copy the link. Please select and copy it."
+        },
+        "inactive": "{{title}} (inactive)",
+        "import": {
+          "title": "Import existing volunteers",
+          "helper": "Load a CSV file with the columns firstName, lastName, email, phone and postcode (comma or semicolon separated). Preview first: nothing is written until the preview has no invalid rows. Existing volunteers are skipped.",
+          "file": "CSV file",
+          "tooMany": "At most {{max}} rows per import.",
+          "missingColumns": "Missing columns: {{columns}}",
+          "empty": "The file has no data rows.",
+          "preview": "Preview",
+          "import": "Import",
+          "summary": "{{created}} to create, {{skipped}} skipped, {{invalid}} invalid",
+          "imported": "{{created}} imported, {{skipped}} skipped",
+          "line": "Line",
+          "email": "Email",
+          "outcome": "Result",
+          "details": "Details",
+          "outcomes": {
+            "created": "Create",
+            "skipped": "Skip",
+            "invalid": "Invalid"
+          },
+          "skipReasons": {
+            "already-volunteer": "Already a volunteer",
+            "duplicate-in-import": "Repeated in this file"
+          },
+          "rowsLoaded_one": "{{count}} row loaded",
+          "rowsLoaded_other": "{{count}} rows loaded",
+          "duplicateColumns": "Repeated columns: {{columns}}",
+          "rejected": "Nothing was imported: {{invalid}} invalid, {{created}} would be created, {{skipped}} skipped",
+          "rowErrors": {
+            "firstName": "First name is missing",
+            "email": "Email address is not valid",
+            "postcode": "Postcode is unknown",
+            "registered": "Email belongs to a registered account",
+            "otherPerson": "Email belongs to a different person"
+          }
+        }
       }
+    },
+    "volunteerActivityLog": {
+      "emptyState": "No activity yet",
+      "linked": "Linked to \"{{title}}\"",
+      "linkedAs": "Linked to \"{{title}}\" as {{status}}",
+      "removed": "Removed from \"{{title}}\" (was {{from}})",
+      "statusChanged": "\"{{title}}\": status changed to {{to}}",
+      "statusChangedFrom": "\"{{title}}\": {{from}} → {{to}}",
+      "imported": "{{entry}} (imported, date approximate)"
+    },
+    "recommended": {
+      "volunteersTitle": "Recommended volunteers",
+      "opportunitiesTitle": "Recommended opportunities"
     }
   },
   "aboutus": {
@@ -2092,6 +2256,10 @@
     "applicationEmailSent": "Email with application sent!",
     "applicationEmailJustSent": "The email with application was just sent. Please try again in a minute.",
     "applicationEmailNotSent": "The email with application could not be sent. Please try again later.",
+    "applicationEmailNotSentAttachment": "The email with application could not be sent: the application form could not be loaded. Please try again later; if it keeps happening, tell the tech team.",
+    "applicationEmailNotSentInvalid": "The email with application could not be sent: it failed the content checks. Please tell the tech team.",
+    "applicationEmailNotSentRender": "The email with application could not be sent: something went wrong while preparing it. Please try again later; if it keeps happening, tell the tech team.",
+    "applicationEmailNotSentSend": "The email with application could not be sent: the mail server did not accept it. Please try again later.",
     "uploadError": "Upload failed. Please try again.",
     "deleteError": "Delete failed. Please try again.",
     "previewError": "Preview failed. Please try again.",
@@ -2396,7 +2564,11 @@
     "checkEmail": {
       "title": "Check your email",
       "description": "We sent a confirmation link to your email address. Click it to continue setting up your account."
-    }
+    },
+    "ngoLinkNotice": "You're signing up through an NGO's link: your new account will belong to that NGO.",
+    "ngoLinkExpired": "This registration link is no longer valid. Please ask the NGO for a new one.",
+    "ngoLinkSignedIn": "You're already signed in. NGO registration links are for new accounts only.",
+    "toDashboard": "Go to your dashboard"
   },
   "formInput": {
     "showPassword": "Show password",
@@ -2525,5 +2697,83 @@
         }
       }
     }
+  },
+  "opportunityTranslations": {
+    "target": "{{language}} translation",
+    "review": "Review translation",
+    "close": "Close review",
+    "targetLanguage": "Translation language",
+    "edit": "Edit translation",
+    "save": "Save translation",
+    "confirm": "Confirm translation",
+    "cancel": "Cancel",
+    "retry": "Try again",
+    "changeOriginal": "Change original language",
+    "originalLanguage": "Original language",
+    "dialogTitle": "Change the original language?",
+    "dialogBody": "Select the language the original text was written in. This changes the opportunity's source language, not the interface language.",
+    "replaceWarning": "All translations, including human-edited ones, will be regenerated. Review them again afterwards.",
+    "required": "Please enter a translation.",
+    "tooLong": "Use no more than {{count}} characters.",
+    "changedBeforeConfirm": "A translation changed since you opened the review. Check the updated text before confirming.",
+    "changedDuringEdit": "The source or translation changed while you were editing. Cancel and review the latest text before saving.",
+    "staleError": "Translations could not be refreshed. The text below may be out of date. Your unsaved edits are kept; try again before saving or confirming.",
+    "saved": "Translation saved",
+    "confirmed": "Completed machine translations confirmed",
+    "languageChanged": "Original language updated; translations will be regenerated",
+    "reviewStatus": {
+      "missing": "Translation not available",
+      "pending": "Translation in progress",
+      "failed": "Translation needs attention"
+    },
+    "title": "Translations",
+    "loading": "Loading translations…",
+    "error": "Translations could not be loaded. Select Try again to retry.",
+    "empty": "No translatable text is available for this opportunity.",
+    "original": "Original",
+    "mixedLanguages": "Multiple languages",
+    "unknownLanguage": "Language not recorded",
+    "sameAsOriginal": "This is the original language; see the original text.",
+    "originalStillShown": "No completed translation is available. The opportunity displays the original text instead.",
+    "missing": "No translation is available. The opportunity displays the original text instead.",
+    "unknownError": "The translation could not be completed.",
+    "fields": {
+      "title": "Title",
+      "info": "Description"
+    },
+    "languages": {
+      "en": "English",
+      "de": "German"
+    },
+    "reasons": {
+      "empty": "The translation was empty.",
+      "length_ratio": "The translation length did not pass validation.",
+      "token_missing": "The translation did not preserve required details.",
+      "email_missing": "An email address from the original is missing in the translation.",
+      "url_missing": "A link from the original is missing in the translation.",
+      "phone_missing": "A phone number from the original is missing in the translation.",
+      "date_missing": "A date from the original is missing or changed in the translation.",
+      "time_missing": "A time from the original is missing or changed in the translation.",
+      "number_missing": "A number from the original is missing or changed in the translation.",
+      "untranslated": "The text appears untranslated.",
+      "source_is_target": "The original text may already be in the target language.",
+      "wrong_language": "The translation is not in the expected language.",
+      "bad_response": "The translation service returned an invalid response.",
+      "provider_unavailable": "The translation service was unavailable."
+    },
+    "confirmFailed": "Some translations could not be confirmed. Successful confirmations are kept. Check the error before trying again.",
+    "writeFailed": "Some changes could not be saved. Successful changes are kept, and unsaved text remains in the editor. Check the error before trying again.",
+    "regenerate": "Regenerate translation",
+    "regenerateTitle": "Regenerate this translation?",
+    "regenerateBody": "New automatic translations will replace {{fields}} in {{language}}, including any manual edits. The original text stays unchanged.",
+    "regenerateFieldFailed": "{{field}} could not be regenerated. {{reason}}",
+    "retryLimitReached": "The automatic translation retry limit was reached. You can still edit the translation manually.",
+    "regenerateRequested": "Translation regeneration requested",
+    "changedBeforeRegeneration": "The source or translation changed. Close this dialog and review the latest text before trying again."
+  },
+  "datePicker": {
+    "openCalendar": "Open calendar",
+    "invalidDate": "Enter a valid date (dd.mm.yyyy).",
+    "beforeMinYear": "Dates before {{year}} are not supported."
   }
 }
