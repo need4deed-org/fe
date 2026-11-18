@@ -49,7 +49,6 @@ import { DashboardListLoading } from "../common/DashboardListLoading";
 import { ErrorMessage } from "@/components/core/common";
 import { Button } from "@/components/core/button";
 import { useScreenType } from "@/context/DeviceContext";
-import { PageHeader } from "@/components/navigation/PageHeader";
 
 export function Volunteers() {
   const { data: user, isLoading: isUserLoading, isError: isUserError } = useCurrentUserQuery(true, false);
@@ -60,7 +59,6 @@ export function Volunteers() {
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [numOfVols, setNumOfVols] = useState(0);
   const [sortOrder, setSortOrder] = useState(SortOrder.NewToOld);
-  const [search, setSearch] = useState("");
   const { data: apiFilterOptions } = useGetQuery<ApiOptionLists>({ queryKey: ["options"], apiPath: apiPathOption });
   const searchParams = useSearchParams();
   const isExplicitEngagementClear = searchParams.getAll(QueryParamsKeys.ENGAGEMENT).includes("");
@@ -216,13 +214,6 @@ export function Volunteers() {
 
   return (
     <VolunteersContainer>
-      <PageHeader
-        search={{
-          value: search,
-          onChange: setSearch,
-        }}
-        onAddClick={() => {}}
-      />
       <CardsHeader
         header={t(isAgent ? "dashboard.volunteers.agentHeadline" : "dashboard.volunteers.volunteers")}
         resultCounter={numOfVols}

@@ -2,6 +2,7 @@
   /* Colors */
   --white: #ffffff;
 
+  /* Number in color variable names is the percentage of that color mixed with pure white */
   --grey-100: rgb(102, 112, 133);
   --grey-75: color-mix(in srgb, var(--grey-100) 75%, white);
   --grey-50: color-mix(in srgb, var(--grey-100) 50%, white);
