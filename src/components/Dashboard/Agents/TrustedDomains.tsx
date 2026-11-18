@@ -16,8 +16,9 @@ import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { z } from "zod";
-import { isValidDomain } from "./helpers";
 
+const DOMAIN_REGEX = /^([a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,}$/;
+const isValidDomain = (domain: string): boolean => domain.length <= 253 && DOMAIN_REGEX.test(domain);
 const domainSchema = z.object({ domain: z.string().refine(isValidDomain) });
 
 type DomainFormInput = { domain: string };
@@ -120,6 +121,7 @@ const Container = styled.div`
   flex-direction: column;
   gap: var(--spacing-24);
   max-width: 640px;
+  padding: var(--large-spacing);
 `;
 
 const AddForm = styled.form`

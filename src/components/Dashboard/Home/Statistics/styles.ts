@@ -5,6 +5,7 @@ export const Container = styled.div`
   flex-direction: column;
   gap: var(--spacing-24);
   min-width: 0;
+  padding: var(--large-spacing);
 `;
 
 export const Card = styled.section<{ $isDimmed?: boolean }>`

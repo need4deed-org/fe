@@ -20,6 +20,6 @@ All routing must use constructor methods in [/constants/routes.ts](../src/consta
 - Modules should be names after the component in them: `Sidebar.tsx`
 - Complex modules should be nested into directories: `/components/navigation/AppNavigation/Sidebar/Navigation/Navigation.tsx`
   - Add an index.ts file to export root component: `/components/navigation/AppNavigation/Sidebar/Navigation.index.ts`
-    - Export root component: `export { Navigation } from "./Navigation"`
+    - Export root component: `export * from "./Navigation"`
   - Supporting components get placed at the level they are consumed. Example: `/components/navigation/AppNavigation/Sidebar/NotificationBadge.tsx`
 - Components should be placed higher than all of the modules they are consumed in
