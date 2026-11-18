@@ -1,5 +1,12 @@
 # Conventions
 
+## Documentation
+
+- All documentation belongs in the [/docs](./) directory
+- Documentation file names should use kebab case
+
+> The CLAUDE.md file includes instructions to read and follow everything in the /docs directory
+
 ## Constants
 
 - Global constants belong in the [/constants](../src/constants/) directory
