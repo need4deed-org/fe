@@ -45,10 +45,6 @@ export function resolvePLZStatus({
   return exists ? "known" : "unknown";
 }
 
-export function isPLZResolving(status: PLZCheckStatus): boolean {
-  return status === "pending" || status === "checking";
-}
-
 export function canSubmitPLZ(status: PLZCheckStatus): boolean {
   return status === "idle" || status === "known" || status === "unavailable";
 }
