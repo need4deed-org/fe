@@ -1,6 +1,8 @@
 "use client";
 import Button from "@/components/core/button/Button/Button";
+import { ErrorMessage, PLZChip } from "@/components/core/common";
 import { Heading2 } from "@/components/styled/text";
+import { PLZCheckStatus } from "@/utils/plz-check";
 import { useTranslation } from "react-i18next";
 import { EventFormData } from "./CreateEvent";
 import { ButtonRow, CharCount, FieldGroup, FieldLabel, HelperText, StyledInput } from "./styles";
@@ -11,6 +13,8 @@ interface Props {
   street: string;
   houseNumber: string;
   postcode: string;
+  plzStatus: PLZCheckStatus;
+  showPostcodeError: boolean;
   registrationLink: string;
   onChange: (fields: Partial<EventFormData>) => void;
   onNext: () => void;
@@ -22,6 +26,8 @@ export function StepLocation({
   street,
   houseNumber,
   postcode,
+  plzStatus,
+  showPostcodeError,
   registrationLink,
   onChange,
   onNext,
@@ -74,6 +80,8 @@ export function StepLocation({
         <CharCount>
           {postcode.length}/{FIELD_MAX}
         </CharCount>
+        {showPostcodeError && <ErrorMessage message={t("form.error.postcodeBerlin")} />}
+        <PLZChip status={plzStatus} />
       </FieldGroup>
 
       <FieldGroup>

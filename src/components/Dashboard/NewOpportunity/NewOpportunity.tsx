@@ -35,6 +35,7 @@ import {
   createAccompanyingDetailsSchema,
   AccompanyingDetailsFormData,
 } from "../Profile/sections/AccompanyingDetails/createAccompanyingDetailsSchema";
+import { useAppointmentPLZ } from "../Profile/sections/AccompanyingDetails/use-appointment-plz";
 import { AddressWarning, SaveRow } from "./styled";
 import { OpportunityDetailsFields } from "./fields/OpportunityDetailsFields";
 import { buildCreatePayload } from "./helper";
@@ -47,6 +48,7 @@ import {
   createOpportunityAddressSchema,
   toAddressFormData,
   toApiAddress,
+  useAddressPLZ,
 } from "../Profile/sections/OpportunityAddress";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { useMinAppointmentDate } from "@/hooks/useMinAppointmentDate";
@@ -117,6 +119,10 @@ export function NewOpportunity() {
     mode: "onChange",
     defaultValues: toAddressFormData(),
   });
+
+  const addressPLZ = useAddressPLZ(addressMethods.control);
+  const appointmentPLZ = useAppointmentPLZ(accompanyingMethods.control);
+  const isPLZBlocking = isAccompanying ? appointmentPLZ.blocksSubmit : addressPLZ.blocksSubmit;
 
   const keyToLabel: Record<string, string> = {};
   const labelToKey: Record<string, string> = {};
@@ -210,6 +216,7 @@ export function NewOpportunity() {
                   onSubmit={() => {}}
                   isPending={false}
                   minAppointmentDate={minAppointmentDate}
+                  plzStatus={appointmentPLZ.status}
                   hideButtons
                 />
               </FormProvider>
@@ -234,7 +241,7 @@ export function NewOpportunity() {
                 />
               </FormProvider>
               <FormProvider {...addressMethods}>
-                <OpportunityAddressFields />
+                <OpportunityAddressFields plzStatus={addressPLZ.status} />
               </FormProvider>
             </>
           }
@@ -254,7 +261,7 @@ export function NewOpportunity() {
           backgroundcolor="var(--color-aubergine)"
           textColor="var(--color-white)"
           onClick={handleCreate}
-          disabled={isPending || !selectedAgentId || isAgentAddressMissing}
+          disabled={isPending || !selectedAgentId || isAgentAddressMissing || isPLZBlocking}
         />
       </SaveRow>
     </PageContainer>

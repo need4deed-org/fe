@@ -216,8 +216,9 @@
   "form": {
     "error": {
       "required": "Dieses Feld ist erforderlich",
-      "postcode": "Bitte nur die PLZ eintragen (keine Buchstaben, nur Zahlen)",
       "postcodeGermany": "Bitte eine gültige deutsche PLZ eintragen (5 Ziffern)",
+      "postcodeUnknown": "Diese PLZ konnten wir nicht finden. Bitte überprüfe sie.",
+      "postcodeBerlin": "Bitte eine gültige Berliner PLZ eintragen",
       "email": "Muss eine gültige E-Mail-Adresse sein",
       "badEmail": "Keine gültige Betreiber E-Mail",
       "location": "Bitte wähle mindestens einen Standort aus",
@@ -228,6 +229,7 @@
       "language": "Bitte wähle mindestens eine Sprache aus",
       "number": "Bitte gib eine Nummer ein"
     },
+    "postcodeChecking": "PLZ wird geprüft…",
     "button": {
       "more": "mehr...",
       "submit": "Senden"

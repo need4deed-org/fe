@@ -218,8 +218,9 @@
   "form": {
     "error": {
       "required": "This field is required",
-      "postcode": "Must be a valid postcode of Berlin",
       "postcodeGermany": "Must be a valid German postcode (5 digits)",
+      "postcodeUnknown": "We couldn't find this postcode. Please check it.",
+      "postcodeBerlin": "Must be a valid Berlin postcode",
       "email": "Must be a valid email",
       "badEmail": "Bad email",
       "location": "Please pick at least one location",
@@ -230,6 +231,7 @@
       "activity": "Please pick at least one activity",
       "language": "Please pick at least one language"
     },
+    "postcodeChecking": "Checking postcode…",
     "button": {
       "more": "more...",
       "submit": "Submit"
