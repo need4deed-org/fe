@@ -36,7 +36,7 @@ export function Accounts() {
   const [role, setRole] = useState(UserRole.COORDINATOR);
   const [search, setSearch] = useState("");
   const [accountToEdit, setAccountToEdit] = useState<{ personId: number; email: string } | null>(null);
-  const { accounts, isLoading, isError, isTruncated } = useAdminAccounts(role, search.trim());
+  const { accounts, isLoading, isError, isStale, isTruncated } = useAdminAccounts(role, search.trim());
 
   return (
     <Container>
@@ -64,7 +64,7 @@ export function Accounts() {
       ) : accounts.length === 0 ? (
         <Paragraph color="var(--color-grey-500)">{t("dashboard.admin.accounts.empty")}</Paragraph>
       ) : (
-        <TableContainer>
+        <TableContainer aria-busy={isStale} style={isStale ? { opacity: 0.5 } : undefined}>
           <Table>
             <TableHeader>
               <TableHeaderCell>{t("dashboard.admin.accounts.name")}</TableHeaderCell>
@@ -81,7 +81,7 @@ export function Accounts() {
                     {t(account.isActive ? "dashboard.admin.accounts.active" : "dashboard.admin.accounts.inactive")}
                   </TableCell>
                   <ActionCell $width="64px">
-                    {isAdmin && account.personId != null && (
+                    {isAdmin && !isStale && account.personId != null && (
                       <ActionButtonWithTooltip
                         tooltipText={t("dashboard.admin.accounts.edit")}
                         ariaLabel={t("dashboard.admin.accounts.editAria", { email: account.email })}

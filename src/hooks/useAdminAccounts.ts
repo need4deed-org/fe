@@ -9,8 +9,10 @@ const accountsQueryKey = ["admin-accounts"];
 export const useAdminAccounts = (role: UserRole, search: string) => {
   const {
     data: accounts = [],
+    count,
     isLoading,
     isError,
+    isPlaceholderData,
   } = useGetQuery<ApiUserGet[]>({
     queryKey: [...accountsQueryKey, role, search],
     apiPath: apiPathUser,
@@ -23,7 +25,13 @@ export const useAdminAccounts = (role: UserRole, search: string) => {
     keepPreviousData: true,
   });
 
-  return { accounts, isLoading, isError, isTruncated: accounts.length >= MAX_PAGE_LIMIT };
+  return {
+    accounts,
+    isLoading,
+    isError,
+    isStale: isPlaceholderData,
+    isTruncated: !isPlaceholderData && count > accounts.length,
+  };
 };
 
 export const useAccountPerson = (personId: number) => {

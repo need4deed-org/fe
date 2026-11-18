@@ -2098,9 +2098,9 @@
         }
       },
       "accounts": {
-        "helper": "Coordinator, NGO and admin accounts. Edit a name here and it changes everywhere the person appears.",
+        "helper": "Coordinator, NGO and admin accounts. Edit a name here to rename the person.",
         "role": "Role",
-        "search": "Search by name or email",
+        "search": "Search by name",
         "loadError": "Accounts could not be loaded.",
         "empty": "No accounts found.",
         "name": "Name",

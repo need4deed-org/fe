@@ -3,7 +3,8 @@
 import { FormInput } from "@/components/core/common";
 import { ConfirmationDialog } from "@/components/core/common/ConfirmationDialog";
 import { useAccountPerson, useRenameAccount } from "@/hooks/useAdminAccounts";
-import { useEffect, useState } from "react";
+import { ApiPersonGet } from "need4deed-sdk";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
@@ -13,28 +14,27 @@ type Props = {
   onClose: () => void;
 };
 
-export function EditNameDialog({ personId, email, onClose }: Props) {
+export function EditNameDialog(props: Props) {
+  const { person, isError } = useAccountPerson(props.personId);
+  return <EditNameForm key={person ? "loaded" : "loading"} {...props} person={person} isError={isError} />;
+}
+
+type FormProps = Props & { person?: ApiPersonGet; isError: boolean };
+
+function EditNameForm({ personId, email, onClose, person, isError }: FormProps) {
   const { t } = useTranslation();
-  const { person, isLoading, isError } = useAccountPerson(personId);
   const { renameAccount, isRenaming } = useRenameAccount();
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [isPrefilled, setIsPrefilled] = useState(false);
+  const [firstName, setFirstName] = useState(person?.firstName ?? "");
+  const [lastName, setLastName] = useState(person?.lastName ?? "");
 
-  useEffect(() => {
-    if (!person || isPrefilled) return;
-    setFirstName(person.firstName ?? "");
-    setLastName(person.lastName ?? "");
-    setIsPrefilled(true);
-  }, [person, isPrefilled]);
+  const changes = {
+    ...(firstName.trim() !== (person?.firstName ?? "") ? { firstName: firstName.trim() } : {}),
+    ...(lastName.trim() !== (person?.lastName ?? "") ? { lastName: lastName.trim() } : {}),
+  };
+  const isValid = firstName.trim().length > 0 && lastName.trim().length > 0;
+  const hasChanges = Object.keys(changes).length > 0;
 
-  const isValid = firstName.trim().length > 0;
-
-  const handleSave = () =>
-    renameAccount(
-      { personId, name: { firstName: firstName.trim(), lastName: lastName.trim() } },
-      { onSuccess: onClose },
-    );
+  const handleSave = () => renameAccount({ personId, name: changes }, { onSuccess: onClose });
 
   return (
     <ConfirmationDialog
@@ -44,16 +44,22 @@ export function EditNameDialog({ personId, email, onClose }: Props) {
       onCancel={onClose}
       onConfirm={handleSave}
       cancelDisabled={isRenaming}
-      confirmDisabled={isLoading || isError || !isPrefilled || isRenaming || !isValid}
+      confirmDisabled={!person || isError || isRenaming || !isValid || !hasChanges}
     >
       <Fields>
         <Label>
           {t("dashboard.admin.accounts.firstName")}
-          <FormInput name="firstName" autoComplete="off" value={firstName} onInputChange={setFirstName} />
+          <FormInput
+            name="firstName"
+            autoComplete="off"
+            placeHolder=""
+            value={firstName}
+            onInputChange={setFirstName}
+          />
         </Label>
         <Label>
           {t("dashboard.admin.accounts.lastName")}
-          <FormInput name="lastName" autoComplete="off" value={lastName} onInputChange={setLastName} />
+          <FormInput name="lastName" autoComplete="off" placeHolder="" value={lastName} onInputChange={setLastName} />
         </Label>
       </Fields>
     </ConfirmationDialog>
