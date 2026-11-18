@@ -28,7 +28,7 @@ import {
   ApiOpportunityGet,
   LangPurpose,
 } from "need4deed-sdk";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { FormProvider, useForm } from "react-hook-form";
@@ -40,7 +40,7 @@ import {
 import { useAppointmentPLZ } from "../Profile/sections/AccompanyingDetails/use-appointment-plz";
 import { AddressWarning, SaveRow } from "./styled";
 import { OpportunityDetailsFields } from "./fields/OpportunityDetailsFields";
-import { buildCreatePayload, populateDuplicateOpportunity } from "./helper";
+import { ALLOWED_VOLUNTEER_TYPES, buildCreatePayload, populateDuplicateOpportunity } from "./helper";
 import { createHeaderSchema, HeaderFormData } from "./headerSchema";
 import OpportunityHeaderCard from "./OpportunityHeaderCard";
 import DescriptionField from "./fields/DescriptionField";
@@ -64,6 +64,7 @@ export function NewOpportunity() {
   const lang = i18n.language;
   const locale = lang === "de" ? de : enUS;
   const router = useRouter();
+  const hasInitializedDuplicate = useRef(false);
 
   const requestedAgentId = Number(useSearchParams().get("agentId")) || 0;
   const duplicateOpportunityId = Number(useSearchParams().get("duplicateOpportunityId")) || 0;
@@ -75,7 +76,6 @@ export function NewOpportunity() {
     queryKey: ["opportunity", String(duplicateOpportunityId)],
     enabled: Boolean(duplicateOpportunityId),
   }).data;
-
   const minAppointmentDate = useMinAppointmentDate();
 
   const { data: apiLanguages = [] } = useApiLanguages();
@@ -96,7 +96,7 @@ export function NewOpportunity() {
     mode: "onChange",
     defaultValues: {
       title: duplicateOpportunity?.title ?? "",
-      volunteerType: duplicateOpportunity?.volunteerType ?? undefined,
+      volunteerType: (duplicateOpportunity?.volunteerType as ALLOWED_VOLUNTEER_TYPES) ?? undefined,
       agentId: duplicateOpportunity?.agent?.id ?? 0,
     },
   });
@@ -150,7 +150,7 @@ export function NewOpportunity() {
     },
   });
 
-  const duplicateOpportunityAddress = duplicateOpportunity?.postcode
+  const duplicateOpportunityAddress = duplicateOpportunity?.address?.postcode
     ? {
         notMyLocation: true,
         street: duplicateOpportunity?.address?.street ?? "",
@@ -227,13 +227,13 @@ export function NewOpportunity() {
   };
 
   useEffect(() => {
-    if (firstNGOId) {
+    if (firstNGOId && !duplicateOpportunityId) {
       setAgentId("agentId", firstNGOId);
     }
-  }, [firstNGOId]);
+  }, [firstNGOId, duplicateOpportunityId]);
 
   useEffect(() => {
-    if (!duplicateOpportunity) return;
+    if (!duplicateOpportunity || hasInitializedDuplicate.current) return;
     populateDuplicateOpportunity({
       duplicateOpportunity,
       headerMethods,
@@ -247,7 +247,9 @@ export function NewOpportunity() {
       duplicateOpportunityAddress,
       t,
     });
-  }, [duplicateOpportunity, lang, t]);
+
+    hasInitializedDuplicate.current = true;
+  }, [duplicateOpportunity]);
 
   return (
     <PageContainer>

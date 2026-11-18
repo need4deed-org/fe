@@ -10,6 +10,7 @@ import {
   ApiOpportunityAddress,
   ApiOpportunityGet,
   ApiLanguage,
+  ProfileVolunteeringType,
 } from "need4deed-sdk";
 import { HeaderFormData } from "./headerSchema";
 import { AccompanyingDetailsFormData } from "../Profile/sections/AccompanyingDetails/createAccompanyingDetailsSchema";
@@ -34,11 +35,11 @@ interface PopulateDuplicateParams {
   t: TFunction<"translation", undefined>;
 }
 
-export const ALLOWED_VOLUNTEER_TYPES = [
-  VolunteerStateTypeType.REGULAR,
-  VolunteerStateTypeType.ACCOMPANYING,
-  VolunteerStateTypeType.EVENTS,
-];
+export type ALLOWED_VOLUNTEER_TYPES =
+  | ProfileVolunteeringType.ACCOMPANYING
+  | ProfileVolunteeringType.REGULAR
+  | ProfileVolunteeringType.EVENTS
+  | undefined;
 
 export function toLangOptionItems(
   formLangs: { language: string }[],
@@ -88,7 +89,9 @@ export function buildCreatePayload(
   const isEvent = headerData.volunteerType === VolunteerStateTypeType.EVENTS;
   const isAccompanying = headerData.volunteerType === VolunteerStateTypeType.ACCOMPANYING;
 
-  const mainLangIds = toLangOptionItems(detailsData.mainCommunication, apiLanguages, t).map((i) => i.id);
+  const mainLangIds = isAccompanying
+    ? []
+    : toLangOptionItems(detailsData.mainCommunication, apiLanguages, t).map((i) => i.id);
 
   const residentsLangIds = isAccompanying
     ? []
@@ -170,8 +173,8 @@ export const populateDuplicateOpportunity = ({
 }: PopulateDuplicateParams) => {
   headerMethods.reset({
     title: duplicateOpportunity.title ?? "",
-    volunteerType: duplicateOpportunity.volunteerType ?? undefined,
-    agentId: duplicateOpportunity.agent?.id ?? 0,
+    volunteerType: (duplicateOpportunity.volunteerType as ALLOWED_VOLUNTEER_TYPES) ?? undefined,
+    agentId: duplicateOpportunity.agentId ?? 0,
   });
 
   detailsMethods.reset({
