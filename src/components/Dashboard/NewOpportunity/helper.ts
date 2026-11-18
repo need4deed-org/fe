@@ -9,6 +9,7 @@ import {
   OpportunityFormDataWithAgentSubmitter,
   ApiOpportunityAddress,
   ApiOpportunityGet,
+  ApiLanguage,
 } from "need4deed-sdk";
 import { HeaderFormData } from "./headerSchema";
 import { AccompanyingDetailsFormData } from "../Profile/sections/AccompanyingDetails/createAccompanyingDetailsSchema";
@@ -16,14 +17,20 @@ import { NewOpportunityDetailsFormData } from "@/components/Dashboard/Profile/se
 import { languagesToFormValues, resolveFormLanguageToOption } from "../Profile/sections/OpportunityDetails/formatters";
 import { apiToFormAvailability } from "../Profile/sections/VolunteerProfile/availabilityUtils";
 import { UseFormReturn } from "react-hook-form";
+import { formatToLocalTime } from "@/utils";
+import { OpportunityAddressFormData } from "../Profile/sections/OpportunityAddress";
 
 interface PopulateDuplicateParams {
   duplicateOpportunity: ApiOpportunityGet;
   headerMethods: UseFormReturn<HeaderFormData>;
   detailsMethods: UseFormReturn<NewOpportunityDetailsFormData>;
   accompanyingMethods: UseFormReturn<AccompanyingDetailsFormData>;
-  mainLanguageIsoToIdMap: Map<Lang | undefined, number>;
-  lang: string;
+  addressMethods: UseFormReturn<OpportunityAddressFormData>;
+  accompanyingInitValues: AccompanyingDetailsFormData;
+  currentEventDateTime: Date | null;
+  generalLangs: ApiLanguage[] | undefined;
+  residentsLangs: ApiLanguage[] | undefined;
+  duplicateOpportunityAddress: OpportunityAddressFormData | undefined;
   t: TFunction<"translation", undefined>;
 }
 
@@ -153,8 +160,12 @@ export const populateDuplicateOpportunity = ({
   headerMethods,
   detailsMethods,
   accompanyingMethods,
-  mainLanguageIsoToIdMap,
-  lang,
+  addressMethods,
+  accompanyingInitValues,
+  currentEventDateTime,
+  generalLangs,
+  residentsLangs,
+  duplicateOpportunityAddress,
   t,
 }: PopulateDuplicateParams) => {
   headerMethods.reset({
@@ -166,34 +177,31 @@ export const populateDuplicateOpportunity = ({
   detailsMethods.reset({
     description: String(duplicateOpportunity.description ?? ""),
     numberOfVolunteers: String(duplicateOpportunity.numberOfVolunteers ?? 1),
-    mainCommunication: [
-      {
-        id: mainLanguageIsoToIdMap.get(duplicateOpportunity.originalLanguage) ?? 1,
-        language: isoCodeToLanguage(duplicateOpportunity.originalLanguage, lang) ?? "",
-        level: "",
-      },
-    ],
-    residentsSpeak: languagesToFormValues(duplicateOpportunity.languages ?? [], t) ?? [
-      { id: 1, language: "", level: "" },
-    ],
+    mainCommunication: languagesToFormValues(generalLangs ?? [], t) ?? [{ id: 1, language: "", level: "" }],
+    residentsSpeak: languagesToFormValues(residentsLangs ?? [], t) ?? [{ id: 1, language: "", level: "" }],
     availability: apiToFormAvailability(duplicateOpportunity.availability) ?? [],
-    eventDate: duplicateOpportunity.event?.date ? new Date(`${duplicateOpportunity.event.date}`) : null,
-    eventTime: duplicateOpportunity.event?.time ?? "",
+    eventDate: currentEventDateTime ? currentEventDateTime : null,
+    eventTime: currentEventDateTime ? formatToLocalTime(currentEventDateTime) : "",
     activities: duplicateOpportunity.activities.map((act) => String(act.id)) ?? [],
     skills: duplicateOpportunity.skills.map((skill) => String(skill.id)) ?? [],
   });
 
-  if (duplicateOpportunity.accompanyingDetails) {
-    const acc = duplicateOpportunity.accompanyingDetails;
+  if (accompanyingInitValues) {
     accompanyingMethods.reset({
-      appointmentAddress: acc.appointmentAddress ?? "",
-      appointmentPostcode: acc.appointmentPostcode ?? "",
-      appointmentDate: acc.appointmentDate ? new Date(`${acc.appointmentDate}`) : null,
-      appointmentTime: acc.appointmentTime ?? "",
-      refugeeNumber: acc.refugeeNumber ?? "",
-      refugeeName: acc.refugeeName ?? "",
-      refugeeLanguage: acc.refugeeLanguage?.map((refLang) => String(refLang.id)) ?? [],
-      appointmentLanguage: acc.appointmentLanguage ?? undefined,
+      appointmentAddress: accompanyingInitValues.appointmentAddress ?? "",
+      appointmentPostcode: accompanyingInitValues.appointmentPostcode ?? "",
+      appointmentDate: accompanyingInitValues.appointmentDate
+        ? new Date(`${accompanyingInitValues.appointmentDate}`)
+        : null,
+      appointmentTime: accompanyingInitValues.appointmentTime ?? "",
+      refugeeNumber: accompanyingInitValues.refugeeNumber ?? "",
+      refugeeName: accompanyingInitValues.refugeeName ?? "",
+      refugeeLanguage: accompanyingInitValues.refugeeLanguage ?? [],
+      appointmentLanguage: accompanyingInitValues.appointmentLanguage ?? undefined,
     });
+  }
+
+  if (duplicateOpportunityAddress) {
+    addressMethods.reset(duplicateOpportunityAddress);
   }
 };
