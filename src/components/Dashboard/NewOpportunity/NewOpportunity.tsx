@@ -21,9 +21,9 @@ import { Heading2 } from "@/components/styled/text";
 import { ArrowLeftIcon } from "@phosphor-icons/react";
 import { de, enUS } from "date-fns/locale";
 import {
+  AgentEngagementStatusType,
   ApiAgentGet,
   TranslatedIntoType,
-  UserRole,
   VolunteerStateTypeType,
   OpportunityFormDataWithAgentSubmitter,
   ApiOpportunityGet,
@@ -53,6 +53,7 @@ import {
   toApiAddress,
   useAddressPLZ,
 } from "../Profile/sections/OpportunityAddress";
+import { useAuth } from "@/hooks/useAuth";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { useMinAppointmentDate } from "@/hooks/useMinAppointmentDate";
 import { apiToFormAvailability } from "../Profile/sections/VolunteerProfile/availabilityUtils";
@@ -77,7 +78,7 @@ export function NewOpportunity() {
     queryKey: ["opportunity", String(duplicateOpportunityId)],
     enabled: Boolean(duplicateOpportunityId),
   }).data;
-  const isStaff = userData?.role === UserRole.COORDINATOR || userData?.role === UserRole.ADMIN;
+  const { isAuthorized: isStaff } = useAuth();
 
   const minAppointmentDate = useMinAppointmentDate();
 
@@ -110,11 +111,8 @@ export function NewOpportunity() {
   const isAccompanying = selectedType === VolunteerStateTypeType.ACCOMPANYING;
   const isEvent = selectedType === VolunteerStateTypeType.EVENTS;
   const requestedIsOwn = currentAgents.some((agent) => agent.agentId === requestedAgentId);
-  const firstNGOId = isStaff
-    ? requestedAgentId
-    : requestedIsOwn
-      ? requestedAgentId
-      : currentAgents[0]?.agentId || (userData?.agentId ?? 0);
+  const firstNGOId =
+    isStaff || requestedIsOwn ? requestedAgentId : currentAgents[0]?.agentId || (userData?.agentId ?? 0);
 
   let currentEventDateTime: Date | null = null;
   if (duplicateOpportunity?.event?.date && duplicateOpportunity.event?.time) {
@@ -189,22 +187,25 @@ export function NewOpportunity() {
     appointmentLanguageLabelToKey[label] = key;
   });
 
-  const { data: selectedAgent } = useGetQuery<ApiAgentGet>({
+  const { data: selectedAgent, isError: isAgentError } = useGetQuery<ApiAgentGet>({
     apiPath: `${apiPathAgent}/${selectedAgentId}`,
     queryKey: ["agent", String(selectedAgentId)],
     enabled: Boolean(selectedAgentId),
   });
   const isAgentAddressMissing = Boolean(selectedAgent) && !selectedAgent?.agentDetails?.addressPostcode;
+  const isAgentInactive = selectedAgent?.statusEngagement === AgentEngagementStatusType.INACTIVE;
+  const isAgentNotReady = !selectedAgent || isAgentAddressMissing || isAgentInactive;
 
   const { mutate: createOpportunity, isPending } = useMutationQuery<OpportunityFormDataWithAgentSubmitter, unknown>({
     apiPath: `${apiPathOpportunity}/`,
     method: "post",
     onSuccessCallback: () => {
-      router.push(`/${lang}${DashboardRoutes.Home}`);
+      router.push(`/${lang}${isStaff ? DashboardRoutes.Opportunities : DashboardRoutes.Home}`);
     },
     queryKeyToInvalidate: [
       ["agent-opportunities", String(selectedAgentId)],
       ["agent", String(selectedAgentId)],
+      ["opportunities"],
     ],
   });
 
@@ -213,8 +214,7 @@ export function NewOpportunity() {
     const detailsValid = await detailsMethods.trigger();
     const accompValid = !isAccompanying || (await accompanyingMethods.trigger());
     const addressValid = isAccompanying || (await addressMethods.trigger());
-    if (!headerValid || !detailsValid || !accompValid || !addressValid || !selectedAgentId || isAgentAddressMissing)
-      return;
+    if (!headerValid || !detailsValid || !accompValid || !addressValid || !selectedAgentId || isAgentNotReady) return;
 
     const payload = buildCreatePayload(
       headerMethods.getValues(),
@@ -321,6 +321,10 @@ export function NewOpportunity() {
           }
         />
       )}
+      {Boolean(selectedAgentId) && isAgentError && (
+        <AddressWarning role="alert">{t("dashboard.newOpportunity.agentUnavailable")}</AddressWarning>
+      )}
+      {isAgentInactive && <AddressWarning role="alert">{t("dashboard.newOpportunity.agentInactive")}</AddressWarning>}
       {isAgentAddressMissing && (
         <AddressWarning role="alert">
           {t("dashboard.newOpportunity.addressMissing")}{" "}
@@ -335,7 +339,7 @@ export function NewOpportunity() {
           backgroundcolor="var(--color-aubergine)"
           textColor="var(--color-white)"
           onClick={handleCreate}
-          disabled={isPending || !selectedAgentId || isAgentAddressMissing || isPLZBlocking}
+          disabled={isPending || !selectedAgentId || isAgentNotReady || isPLZBlocking}
         />
       </SaveRow>
     </PageContainer>

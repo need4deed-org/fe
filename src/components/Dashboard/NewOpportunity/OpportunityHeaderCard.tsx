@@ -18,6 +18,8 @@ import { createVolunteerTypeLabelMap } from "@/components/Dashboard/Profile/sect
 import { HeaderFormData } from "./headerSchema";
 import { ErrorMessage } from "@/components/core/common";
 import { AgentPicker } from "@/components/Dashboard/Admin/NgoVolunteers/AgentPicker";
+import { AgentOption } from "@/hooks/useAgentSearch";
+import { useState } from "react";
 
 const SELECTABLE_VOLUNTEER_TYPES = [
   VolunteerStateTypeType.REGULAR,
@@ -40,6 +42,7 @@ export default function OpportunityHeaderCard({ selectedType, agentTitles, canPi
     formState: { errors },
   } = useFormContext<HeaderFormData>();
   const volunteerTypeLabelMap = createVolunteerTypeLabelMap(t);
+  const [pickedAgent, setPickedAgent] = useState<AgentOption>();
   return (
     <Card>
       <ProfileContent>
@@ -95,8 +98,19 @@ export default function OpportunityHeaderCard({ selectedType, agentTitles, canPi
                   <NGOPickerColumn>
                     <Heading4>{t("dashboard.newOpportunity.fields.ngo")}</Heading4>
                     <AgentPicker
-                      selected={field.value ? { id: field.value, title: selectedAgentTitle ?? "" } : undefined}
-                      onSelect={(agent) => setValue("agentId", agent?.id ?? 0, { shouldValidate: true })}
+                      hideInactive
+                      selected={
+                        field.value
+                          ? {
+                              id: field.value,
+                              title: (pickedAgent?.id === field.value ? pickedAgent.title : selectedAgentTitle) ?? "",
+                            }
+                          : undefined
+                      }
+                      onSelect={(agent) => {
+                        setPickedAgent(agent);
+                        setValue("agentId", agent?.id ?? 0, { shouldValidate: Boolean(agent) });
+                      }}
                     />
                     {errors.agentId?.message && <ErrorMessage message={errors.agentId.message} />}
                   </NGOPickerColumn>

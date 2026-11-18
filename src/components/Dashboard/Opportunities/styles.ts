@@ -1,11 +1,6 @@
 import styled from "styled-components";
 
 import { BaseCard } from "@/components/styled/container";
-import { circleIconButtonStyles } from "@/components/styled/mixins";
-
-export const CreateOpportunityButton = styled.button`
-  ${circleIconButtonStyles}
-`;
 
 export const OpportunitiesContainer = styled.div`
   display: flex;

@@ -1979,7 +1979,9 @@
       "agentSection": "Your organisation",
       "submit": "Create opportunity",
       "addressMissing": "Your organisation profile has no postcode yet, so this opportunity can't be created. Your entries here stay.",
-      "addressMissingLink": "Add the address in the organisation profile (opens in a new tab)"
+      "addressMissingLink": "Add the address in the organisation profile (opens in a new tab)",
+      "agentUnavailable": "This NGO could not be loaded. Pick it again or choose another one.",
+      "agentInactive": "This NGO is inactive, so no opportunity can be created for it."
     },
     "admin": {
       "title": "Admin",

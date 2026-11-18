@@ -38,8 +38,10 @@ import {
 } from "./helpers";
 import { OpportunityListController } from "./OpportunityListController";
 import { OtherOpportunities } from "./OtherOpportunities";
-import { ContentRow, CreateOpportunityButton, OpportunitiesContainer } from "./styles";
+import { CircleIconLink } from "@/components/styled/circle-icon-button";
+import { ContentRow, OpportunitiesContainer } from "./styles";
 import { ViewMode } from "../common/types";
+import { useAuth } from "@/hooks/useAuth";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { useScreenType } from "@/context/DeviceContext";
 
@@ -54,7 +56,7 @@ export function Opportunities() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
-  const isStaff = user?.role === UserRole.COORDINATOR || user?.role === UserRole.ADMIN;
+  const { isAuthorized: isStaff } = useAuth();
   const sortOrder = parseSortParam(searchParams.get(SORT_PARAM));
   const isAgent = user?.role === UserRole.AGENT;
   const tabs = !user
@@ -208,13 +210,12 @@ export function Opportunities() {
           showListControls={!isOtherTab}
           headerAction={
             isStaff && (
-              <CreateOpportunityButton
-                type="button"
-                onClick={() => router.push(`/${i18n.language}${DashboardRoutes.Opportunities}/new`)}
+              <CircleIconLink
+                href={`/${i18n.language}${DashboardRoutes.Opportunities}/new`}
                 aria-label={t("dashboard.home.createOpportunity")}
               >
                 <PlusIcon size={16} weight="bold" />
-              </CreateOpportunityButton>
+              </CircleIconLink>
             )
           }
         />
