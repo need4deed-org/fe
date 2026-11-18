@@ -132,6 +132,10 @@ export default function BecomeVolunteer() {
         onSubmit={(e) => {
           e.preventDefault();
           e.stopPropagation();
+          if (plz.status === "unknown") {
+            document.getElementById("postcode")?.focus();
+            return;
+          }
           if (plz.blocksSubmit) return;
           formVolunteer.handleSubmit();
         }}
@@ -465,7 +469,11 @@ export default function BecomeVolunteer() {
               .join(", ");
             return (
               <div className={style["form-submit"]}>
-                <button className="n4d-cta" type="submit" disabled={!state.canSubmit || plz.blocksSubmit}>
+                <button
+                  className="n4d-cta"
+                  type="submit"
+                  disabled={!state.canSubmit || (plz.blocksSubmit && plz.status !== "unknown")}
+                >
                   {state.isSubmitting ? (
                     "..."
                   ) : (

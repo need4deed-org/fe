@@ -1,5 +1,5 @@
 import { TypePLZ } from "@/components/forms/types";
-import { isValidPLZ } from "@/components/forms/utils";
+import { isEmptyOrValidPLZ } from "@/components/forms/utils";
 import { z } from "zod";
 
 export const createAgentFormSchema = (t: (key: string) => string) => {
@@ -10,7 +10,7 @@ export const createAgentFormSchema = (t: (key: string) => string) => {
       .string()
       .optional()
       .or(z.literal(""))
-      .refine((code) => !code?.trim() || isValidPLZ(code, TypePLZ.GERMANY), t("form.error.postcodeGermany")),
+      .refine((code) => isEmptyOrValidPLZ(code, TypePLZ.GERMANY), t("form.error.postcodeGermany")),
   });
 };
 
