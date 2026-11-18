@@ -1,5 +1,7 @@
 import Button from "@/components/core/button/Button/Button";
+import { PLZChip } from "@/components/core/common";
 import { EditableField } from "@/components/EditableField/EditableField";
+import { usePLZField } from "@/hooks/use-plz-field";
 import { VolunteerCommunicationType } from "need4deed-sdk";
 import { Controller, useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -28,6 +30,7 @@ export const VolunteerContactDetailsEdit = ({
     control,
     formState: { errors, isValid, isDirty },
   } = useFormContext<VolunteerContactDetailsFormData>();
+  const plz = usePLZField(control, "postcode");
 
   return (
     <>
@@ -86,6 +89,7 @@ export const VolunteerContactDetailsEdit = ({
               value={field.value}
               setValue={field.onChange}
               errorMessage={errors.postcode?.message}
+              supportingContent={<PLZChip status={plz.status} />}
             />
           )}
         />
@@ -122,7 +126,7 @@ export const VolunteerContactDetailsEdit = ({
           onClick={onSubmit}
           width="auto"
           padding="var(--volunteer-profile-section-card-header-button-padding)"
-          disabled={!isDirty || !isValid || isPending}
+          disabled={!isDirty || !isValid || isPending || plz.blocksSubmit}
         />
       </FormButtonRow>
     </>

@@ -13,6 +13,7 @@ import {
   ApiAgentTitleConflict,
   ApiOptionLists,
 } from "need4deed-sdk";
+import { useCheckPLZ } from "@/hooks/use-check-plz";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { AgentMembershipStatus, ApiAgentRegister, ApiAgentRegisterNew, ApiAgentRegisterResponse } from "../types";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -101,6 +102,8 @@ export function ProfileCompletion() {
     (m) => m.title && update({ addressStreet: m.title }),
   );
 
+  const plz = useCheckPLZ(formData.addressPostcode);
+
   const showSubmitError = useCallback((message: string) => {
     setSubmitError(message);
     requestAnimationFrame(() => {
@@ -183,6 +186,10 @@ export function ProfileCompletion() {
     const stepErrors = validateCompletionStep(step, formData, t, operatorTitles, operatorListState);
     if (Object.keys(stepErrors).length > 0) {
       setErrors(stepErrors);
+      return;
+    }
+    if (plz.blocksSubmit) {
+      setStep(1);
       return;
     }
     submit({ agent: buildNewAgent(formData, operatorId) });
@@ -301,7 +308,7 @@ export function ProfileCompletion() {
                 <Button
                   text={t("agentRegistration.completion.createAtSharedAddress")}
                   onClick={submitAtSharedAddress}
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || plz.blocksSubmit}
                   backgroundcolor="var(--color-white)"
                   textColor="var(--color-aubergine)"
                   border="var(--border-width-medium) solid var(--color-aubergine)"
@@ -369,7 +376,7 @@ export function ProfileCompletion() {
                   </>
                 )}
               </FieldWrapper>
-              <AddressStep data={formData} onChange={update} errors={errors} hideStreet />
+              <AddressStep data={formData} onChange={update} errors={errors} hideStreet plzStatus={plz.status} />
             </div>
           ))}
 
@@ -412,7 +419,7 @@ export function ProfileCompletion() {
               backgroundcolor="var(--color-aubergine)"
               textColor="var(--color-white)"
               onClick={handleNext}
-              disabled={tokenMissing || (step === 1 && showBanner)}
+              disabled={tokenMissing || (step === 1 && (showBanner || plz.blocksSubmit))}
             />
           )}
         </Actions>

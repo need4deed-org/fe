@@ -7,3 +7,4 @@ export * from "./Activities";
 export * from "./TextArea";
 export * from "./VisuallyHiddenInput";
 export * from "./select";
+export * from "./plz-chip";
