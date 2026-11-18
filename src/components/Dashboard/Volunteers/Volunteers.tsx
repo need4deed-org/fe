@@ -267,6 +267,7 @@ const VolunteersContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: var(--dashboard-volunteers-container-gap);
+  padding: var(--large-spacing);
 `;
 
 const ContentRow = styled.div`

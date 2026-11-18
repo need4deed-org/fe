@@ -6,6 +6,7 @@ export const OpportunitiesContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: var(--dashboard-volunteers-container-gap);
+  padding: var(--large-spacing);
 `;
 
 export const ContentRow = styled.div`
