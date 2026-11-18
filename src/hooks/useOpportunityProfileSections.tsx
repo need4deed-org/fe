@@ -1,6 +1,6 @@
 import { SectionCardProps } from "@/components/Dashboard/Profile/common/SectionCard";
 import { AccompanyingDetails } from "@/components/Dashboard/Profile/sections/AccompanyingDetails";
-import { isAccompanyingType as isAccompanyingVolunteerType } from "@/components/Dashboard/Profile/sections/AccompanyingDetails/helpers";
+import { isAccompanyingType } from "@/components/Dashboard/Profile/sections/AccompanyingDetails/helpers";
 import { Comments } from "@/components/Dashboard/Profile/sections/Comments";
 import { ContactDetails } from "@/components/Dashboard/Profile/sections/ContactDetails";
 import { OpportunityDetails } from "@/components/Dashboard/Profile/sections/OpportunityDetails";
@@ -66,7 +66,7 @@ export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | u
   if (!opportunity) return null;
 
   const commentsCount = opportunity.comments.length;
-  const isAccompanyingType = isAccompanyingVolunteerType(opportunity.volunteerType);
+  const isAccompanying = isAccompanyingType(opportunity.volunteerType);
 
   const handleSuggestConfirm = (emailNote: string) => {
     if (!volunteerId) return;
@@ -99,7 +99,7 @@ export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | u
       iconName: IconName.House,
       title: t("dashboard.opportunityProfile.racTitle"),
       ...(hasEditingRights &&
-        !isAccompanyingType &&
+        !isAccompanying &&
         !isLocationEditing && {
           headerButtonName: t("dashboard.opportunityProfile.editButtonName"),
           onHeaderButtonClick: () => locationRef.current?.handleEditClick(),
@@ -132,7 +132,7 @@ export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | u
           />
         ),
       },
-      ...(isAccompanyingType
+      ...(isAccompanying
         ? [
             {
               iconName: IconName.Users,
