@@ -1,9 +1,9 @@
 "use client";
+import { routes } from "@/constants/routes";
 import { FormInput } from "@/components/core/common";
 import { useTranslation } from "react-i18next";
 import { AgentRegistrationData } from "../types";
 import { FieldConsent, FieldLabel, FieldWrapper, StepDescription, StepTitle, StyledErrorMessage } from "../styled";
-import { Subpage } from "@/types";
 import { WarningCircle } from "@phosphor-icons/react";
 import { useId } from "react";
 
@@ -15,7 +15,7 @@ type Props = {
 };
 
 export function AccountStep({ data, onChange, errors, namespace = "agentRegistration" }: Props) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const fieldId = useId();
 
   return (
@@ -111,10 +111,10 @@ export function AccountStep({ data, onChange, errors, namespace = "agentRegistra
           />
           <span>
             {t(`${namespace}.fields.consent.header`)}{" "}
-            <a href={`/${Subpage.DATA_PRIVACY}`}>{t("homepage.footer.legal.dataPrivacy")}</a>,{" "}
-            <a href={`/${Subpage.RAC_GUIDELINES}`}>{t("homepage.footer.legal.guidelines")}</a>{" "}
+            <a href={routes.privacy(i18n.language)}>{t("website.footer.legal.dataPrivacy")}</a>,{" "}
+            <a href={routes.racGuidelines(i18n.language)}>{t("website.footer.legal.guidelines")}</a>{" "}
             {t(`${namespace}.fields.consent.and`)}{" "}
-            <a href={`/${Subpage.AGREEMENT}`}>{t("homepage.footer.legal.agreement")}</a>{" "}
+            <a href={routes.agreement(i18n.language)}>{t("website.footer.legal.agreement")}</a>{" "}
           </span>
         </FieldConsent>
         {errors.consent && (

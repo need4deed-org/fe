@@ -1,4 +1,5 @@
 "use client";
+import { routes } from "@/constants/routes";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { UserRole } from "need4deed-sdk";
 import { useTranslation } from "react-i18next";
@@ -10,9 +11,5 @@ export function CreateOpportunityButton() {
 
   if (user?.role !== UserRole.AGENT) return null;
 
-  return (
-    <StyledLink href={`/${i18n.language}/dashboard/opportunities/new`}>
-      + {t("dashboard.home.createOpportunity")}
-    </StyledLink>
-  );
+  return <StyledLink href={routes.newOpportunity(i18n.language)}>+ {t("dashboard.home.createOpportunity")}</StyledLink>;
 }

@@ -1,3 +1,4 @@
+import { routes } from "@/constants/routes";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import i18next from "i18next";
 import { UserRole } from "need4deed-sdk";
@@ -23,7 +24,9 @@ export function LoginController() {
   useEffect(() => {
     if (!(user && "role" in user)) return;
     const path =
-      user.role !== UserRole.USER ? `/${language}/dashboard?role=${user.role}&userId=${user.id}` : `/${language}`;
+      user.role !== UserRole.USER
+        ? `${routes.dashboard(language)}?role=${user.role}&userId=${user.id}`
+        : routes.home(language);
     router.push(path);
   }, [user, language, router]);
 

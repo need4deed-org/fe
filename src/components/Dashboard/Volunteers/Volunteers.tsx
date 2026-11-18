@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { DashboardLayout } from "@/components/Layout";
 import {
   apiPathOption,
   DEFAULT_MAX_COMMUTE_MINUTES,
@@ -198,77 +197,67 @@ export function Volunteers() {
   const activeFilters = createSelectedFilterItemsAsFlatArray(cardsFilter, handleFilterUpdate, t);
 
   if (isUserLoading) {
-    return (
-      <DashboardLayout>
-        <DashboardListLoading />
-      </DashboardLayout>
-    );
+    return <DashboardListLoading />;
   }
 
   if (isUserError || !user) {
     return (
-      <DashboardLayout>
-        <VolunteersContainer role="alert">
-          <ErrorMessage message={t("message.errorGeneric")} />
-          <Button
-            text={t("dashboard.volunteers.retry")}
-            onClick={() => queryClient.invalidateQueries({ queryKey: USER_QUERY_KEY })}
-          />
-        </VolunteersContainer>
-      </DashboardLayout>
+      <VolunteersContainer role="alert">
+        <ErrorMessage message={t("message.errorGeneric")} />
+        <Button
+          text={t("dashboard.volunteers.retry")}
+          onClick={() => queryClient.invalidateQueries({ queryKey: USER_QUERY_KEY })}
+        />
+      </VolunteersContainer>
     );
   }
 
   return (
-    <DashboardLayout>
-      <VolunteersContainer>
-        <CardsHeader
-          header={t(isAgent ? "dashboard.volunteers.agentHeadline" : "dashboard.volunteers.volunteers")}
-          resultCounter={numOfVols}
-          resultText={t("dashboard.home.sidebar.volunteers")}
-          tabs={tabs}
-          selectedTabIndex={selectedTabIndex}
-          setSelectedTabIndex={handleTabChange}
-          setIsFiltersOpen={setIsFiltersOpen}
-          onSearchInputChange={handleSearchInputChange}
-          searchValue={cardsFilter.search}
-          showSearch={!isAgent}
+    <VolunteersContainer>
+      <CardsHeader
+        header={t(isAgent ? "dashboard.volunteers.agentHeadline" : "dashboard.volunteers.volunteers")}
+        resultCounter={numOfVols}
+        resultText={t("dashboard.home.sidebar.volunteers")}
+        tabs={tabs}
+        selectedTabIndex={selectedTabIndex}
+        setSelectedTabIndex={handleTabChange}
+        setIsFiltersOpen={setIsFiltersOpen}
+        onSearchInputChange={handleSearchInputChange}
+        searchValue={cardsFilter.search}
+        showSearch={!isAgent}
+        sortOrder={sortOrder}
+        onSortOrderChange={handleSortChange}
+        activeFilters={activeFilters}
+        onClearAllFilters={handleClearAllFilters}
+        onClearFilter={handleClearFilter}
+        entityFilter={opportunityFilter ? { ...opportunityFilter, onRemove: handleRemoveOpportunityFilter } : undefined}
+      />
+      <ContentRow>
+        <VolunteerListController
+          setNumOfVols={setNumOfVols}
           sortOrder={sortOrder}
-          onSortOrderChange={handleSortChange}
-          activeFilters={activeFilters}
-          onClearAllFilters={handleClearAllFilters}
-          onClearFilter={handleClearFilter}
-          entityFilter={
-            opportunityFilter ? { ...opportunityFilter, onRemove: handleRemoveOpportunityFilter } : undefined
+          filter={cardsFilter}
+          setFilter={handleFilterUpdate}
+          apiFilterOptions={apiFilterOptions}
+          opportunityId={opportunityId}
+          viewMode={viewMode}
+          opportunityFilter={opportunityFilter}
+          defaultEngagements={defaultEngagements}
+        />
+        <Filters
+          isFiltersOpen={isFiltersOpen}
+          setIsFiltersOpen={setIsFiltersOpen}
+          filtersContent={
+            <FiltersContent
+              setFilter={handleFilterUpdate}
+              filter={cardsFilter}
+              viewMode={viewMode}
+              isMatchMode={!!opportunityId}
+            />
           }
         />
-        <ContentRow>
-          <VolunteerListController
-            setNumOfVols={setNumOfVols}
-            sortOrder={sortOrder}
-            filter={cardsFilter}
-            setFilter={handleFilterUpdate}
-            apiFilterOptions={apiFilterOptions}
-            opportunityId={opportunityId}
-            viewMode={viewMode}
-            opportunityFilter={opportunityFilter}
-            defaultEngagements={defaultEngagements}
-          />
-          <Filters
-            isFiltersOpen={isFiltersOpen}
-            setIsFiltersOpen={setIsFiltersOpen}
-            filtersContent={
-              <FiltersContent
-                setFilter={handleFilterUpdate}
-                filter={cardsFilter}
-                viewMode={viewMode}
-                isMatchMode={!!opportunityId}
-              />
-            }
-          />
-        </ContentRow>
-      </VolunteersContainer>
-    </DashboardLayout>
+      </ContentRow>
+    </VolunteersContainer>
   );
 }
 
@@ -278,6 +267,7 @@ const VolunteersContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: var(--dashboard-volunteers-container-gap);
+  padding: var(--large-spacing);
 `;
 
 const ContentRow = styled.div`

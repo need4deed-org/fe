@@ -1,3 +1,4 @@
+import { routes } from "@/constants/routes";
 import { ConfirmationDialog } from "@/components/core/common/ConfirmationDialog";
 import { apiPathUser, cacheTTL, MAX_PAGE_LIMIT } from "@/config/constants";
 import { useDeletePost, useGetQuery, useTogglePostBookmark, useUpdatePost } from "@/hooks";
@@ -226,11 +227,7 @@ export function PostCard({ post, isRepliesExpanded, onReply, onToggleReplies }: 
         {post.linkedOpportunities.length > 0 && (
           <OpportunityList>
             {post.linkedOpportunities.map((opportunity) => (
-              <OpportunityChip
-                as={Link}
-                key={opportunity.id}
-                href={`/${lang}/dashboard/opportunities/${opportunity.id}`}
-              >
+              <OpportunityChip as={Link} key={opportunity.id} href={routes.opportunityDetail(lang, opportunity.id)}>
                 {opportunity.title}
               </OpportunityChip>
             ))}

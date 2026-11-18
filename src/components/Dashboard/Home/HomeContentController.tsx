@@ -1,15 +1,17 @@
 "use client";
-
 import React from "react";
-import { useTranslation } from "react-i18next";
 import { UserRole } from "need4deed-sdk";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
-import { Heading2 } from "@/components/styled/text";
 import { DashboardContentContainer } from "./styles";
 import { AgentHomeContent } from "./agent";
 import { CoordinatorHomeContent } from "./coordinator";
 import { VolunteerHomeContent } from "./volunteer";
 import { HomeSkeleton } from "./HomeSkeleton";
+import { LogoutButton } from "./LogoutButton";
+import { LinkButton } from "@/components/fields/LinkButton";
+import { routes } from "@/constants/routes";
+import { useTranslation } from "react-i18next";
+import styled from "styled-components";
 
 export type DashboardControllerProps = {
   volunteerId?: number;
@@ -23,15 +25,34 @@ const DASHBOARD_CONTROLLER_MAP: Partial<Record<UserRole, React.ComponentType<Das
 };
 
 export default function HomeContentController() {
-  const { t } = useTranslation();
   const user = useCurrentUser(true);
-
   const DashboardContentController = (user?.role && DASHBOARD_CONTROLLER_MAP[user.role]) || HomeSkeleton;
+  const {
+    t,
+    i18n: { language },
+  } = useTranslation();
+
+  if (!user) return;
 
   return (
     <DashboardContentContainer>
-      <Heading2>{t("dashboard.home.content.header")}</Heading2>
+      <ButtonContainer>
+        <LogoutButton />
+        {[UserRole.COORDINATOR, UserRole.ADMIN].includes(user.role) && (
+          <LinkButton inline href={routes.statistics(language)} label={t("dashboard.home.statistics")} />
+        )}
+        {[UserRole.COORDINATOR, UserRole.ADMIN].includes(user.role) && (
+          <LinkButton inline href={routes.ngoVolunteers(language)} label={t("dashboard.home.ngoVolunteers")} />
+        )}
+      </ButtonContainer>
       <DashboardContentController volunteerId={user?.volunteerId} />
     </DashboardContentContainer>
   );
 }
+
+const ButtonContainer = styled.div`
+  display: -webkit-flex;
+  display: flex;
+  gap: var(--small-spacing);
+  flex-wrap: wrap;
+`;

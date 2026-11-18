@@ -1,3 +1,4 @@
+import { routes } from "@/constants/routes";
 import { useParams, useRouter } from "next/navigation";
 import { ResetPasswordForm } from "./ResetPasswordForm";
 
@@ -5,5 +6,5 @@ export function ResetPasswordController() {
   const router = useRouter();
   const { lang } = useParams<{ lang: string }>();
 
-  return <ResetPasswordForm onResetSuccess={() => router.push(`/${lang}/login`)} />;
+  return <ResetPasswordForm onResetSuccess={() => router.push(routes.login(lang))} />;
 }

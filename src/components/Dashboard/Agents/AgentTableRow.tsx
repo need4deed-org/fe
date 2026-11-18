@@ -1,5 +1,6 @@
 "use client";
 
+import { routes } from "@/constants/routes";
 import type { ApiAgentGetList, Lang, OptionItem } from "need4deed-sdk";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
@@ -27,7 +28,7 @@ export function AgentTableRow({ agent, isLast, searchLabels, districtsList, onSe
   const districtTitle = district?.id ? (districtsList?.find((d) => d.id === district.id)?.title ?? null) : null;
   const lang = i18n.language as Lang;
 
-  const profileUrl = id ? `/${i18n.language}/dashboard/agents/${id}` : "";
+  const profileUrl = id ? routes.organizationDetail(i18n.language, id) : "";
 
   const rowProps = onSelect
     ? {

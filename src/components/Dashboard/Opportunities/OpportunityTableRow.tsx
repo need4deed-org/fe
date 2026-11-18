@@ -1,5 +1,6 @@
 "use client";
 
+import { routes } from "@/constants/routes";
 import type { ApiVolunteerOpportunityGetList, OptionItem } from "need4deed-sdk";
 import { ProfileVolunteeringType } from "need4deed-sdk";
 import Link from "next/link";
@@ -65,7 +66,7 @@ export function OpportunityTableRow({ opportunity, isLast, districtsList, volunt
   const matchedNames = firstName && otherVolunteersCount ? `${firstName} +${otherVolunteersCount}` : firstName;
 
   const params = volunteerId ? `?volunteer=${volunteerId}` : "";
-  const profileUrl = id ? `/${i18n.language}/dashboard/opportunities/${id}${params}` : "";
+  const profileUrl = id ? `${routes.opportunityDetail(i18n.language, id)}${params}` : "";
 
   return (
     <ClickableRow as={Link} href={profileUrl} $isLast={isLast} data-testid={`opportunity-row-${id}`}>

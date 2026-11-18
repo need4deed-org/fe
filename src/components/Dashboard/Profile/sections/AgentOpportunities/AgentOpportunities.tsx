@@ -1,3 +1,4 @@
+import { routes } from "@/constants/routes";
 import { Heading4 } from "@/components/styled/text";
 import { apiPathAgent, cacheTTL } from "@/config/constants";
 import { useGetQuery } from "@/hooks/useGetQuery";
@@ -39,7 +40,7 @@ export const AgentOpportunities = ({ agentId }: Props) => {
               </Heading4>
             }
             subtitle={opp.statusOpportunity ? t(`dashboard.opportunities.status.${opp.statusOpportunity}`) : "-"}
-            onGoToProfile={() => router.push(`/${i18n.language}/dashboard/opportunities/${opp.id}`)}
+            onGoToProfile={() => router.push(routes.opportunityDetail(i18n.language, opp.id))}
           />
         ))
       )}

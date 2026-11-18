@@ -35,7 +35,7 @@ To pick up a new SDK release: `yarn upgrade need4deed-sdk --latest` (see API con
 
 **Stack:** Next.js 15 App Router, React 19, TypeScript strict, Styled Components, TanStack Query v5, React Hook Form + TanStack Form, Zod, Axios, i18next (en/de).
 
-**Routing:** All routes are under `src/app/[lang]/` — the middleware injects the language prefix automatically from the `preferred-lang` cookie. Device type (mobile/tablet/desktop) is also detected in middleware and available via `DeviceContext`.
+**Routing:** All routes are under `src/app/[lang]/` — the middleware injects the language prefix automatically, using the `preferred-lang` cookie, then the browser's `Accept-Language` header, then `en`. A language already in the URL always wins and is saved to the cookie. Device type (mobile/tablet/desktop) is also detected in middleware and available via `DeviceContext`.
 
 **API layer:**
 
@@ -82,3 +82,7 @@ Commit prefixes: 🎨 style · 🐛 fix · ✨ feature · 📝 docs · ♻️ re
 The runtime contract is at https://app.need4deed.org/swagger/json
 
 The transpile time contract is at SDK (`yarn upgrade need4deed-sdk --latest`)
+
+## Documentation
+
+Read all documentation in the [/docs](./docs/) directory and follow them closely

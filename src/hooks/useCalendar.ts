@@ -1,3 +1,4 @@
+import { routes } from "@/constants/routes";
 import type { ApiEventN4DGetList } from "need4deed-sdk";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -55,8 +56,8 @@ export function useCalendar() {
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   const createEvent = (date?: string) =>
-    router.push(`/${i18n.language}/dashboard/calendar/create${date ? `?date=${date}` : ""}`);
-  const editEvent = (event: ApiEventN4DGetList) => router.push(`/${i18n.language}/dashboard/calendar/${event.id}/edit`);
+    router.push(`${routes.calendarCreate(i18n.language)}${date ? `?date=${date}` : ""}`);
+  const editEvent = (event: ApiEventN4DGetList) => router.push(routes.calendarEdit(i18n.language, event.id));
 
   const selectDate = (date: Date, hasEvents: boolean) => {
     const key = dateKey(date);

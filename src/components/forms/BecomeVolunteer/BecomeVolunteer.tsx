@@ -1,4 +1,5 @@
 "use client";
+import { routes } from "@/constants/routes";
 import { useForm } from "@tanstack/react-form";
 import { validate as validateEmail } from "email-validator";
 import { Lang } from "need4deed-sdk";
@@ -14,7 +15,7 @@ import UploadIcon from "../../svg/Upload";
 import WithParentRef from "@/components/withParentRef";
 import useList from "@/hooks/useLists";
 import usePostRequest from "@/hooks/usePostRequest";
-import { LanguageLevel, Subpage } from "@/types";
+import { LanguageLevel } from "@/types";
 import ErrorAnnouncement from "../AddOpportunity/ErrorAnnouncement";
 import { AvailabilityGrid } from "../AvailabilityGrid";
 import FieldInfo from "../FieldInfo";
@@ -98,7 +99,7 @@ export default function BecomeVolunteer() {
 
       const { success } = await postRequest(data);
       if (success) {
-        navigate.push(`/${Subpage.ANNOUNCEMENT}/?pointer=${thankYou}`);
+        navigate.push(`${routes.announcement(i18n.language)}?pointer=${thankYou}`);
       } else {
         setShowErrorAnnouncement(true);
       }
@@ -431,9 +432,9 @@ export default function BecomeVolunteer() {
                   <label htmlFor="consent">{getTickMark(!!fieldConsent.state.value)}</label>
                   <span>
                     {t("form.becomeVolunteer.fields.consent.header")}{" "}
-                    <a href={`/${Subpage.DATA_PRIVACY}`}>{t("homepage.footer.legal.dataPrivacy")}</a>{" "}
+                    <a href={routes.privacy(i18n.language)}>{t("website.footer.legal.dataPrivacy")}</a>{" "}
                     {t("form.becomeVolunteer.fields.consent.and")}{" "}
-                    <a href={`/${Subpage.AGREEMENT}`}>{t("homepage.footer.legal.agreement")}</a>
+                    <a href={routes.agreement(i18n.language)}>{t("website.footer.legal.agreement")}</a>
                   </span>
                 </div>
                 <FieldInfo field={fieldConsent} />

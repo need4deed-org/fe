@@ -1,4 +1,5 @@
 "use client";
+import { routes } from "@/constants/routes";
 import { Button } from "@/components/core/button";
 import { FormInput } from "@/components/core/common";
 import { apiPathAgentRegister, apiPathOption } from "@/config/constants";
@@ -143,7 +144,7 @@ export function ProfileCompletion() {
         return;
       }
       setAuthHint();
-      router.push(`/${i18next.language}/dashboard`);
+      router.push(routes.dashboard(i18next.language));
     } catch (err) {
       if (axios.isAxiosError(err) && err.response?.status === 409) {
         const data = err.response.data as Partial<ApiAgentRegisterConflict> | undefined;
@@ -229,7 +230,7 @@ export function ProfileCompletion() {
             </SuccessText>
             <Button
               text={t("agentRegistration.completed.continue")}
-              onClick={() => router.replace(`/${i18next.language}/${currentUser ? "dashboard" : "login"}`)}
+              onClick={() => router.replace((currentUser ? routes.dashboard : routes.login)(i18next.language))}
             />
           </SuccessWrapper>
         </Card>

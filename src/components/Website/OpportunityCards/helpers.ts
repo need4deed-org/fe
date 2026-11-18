@@ -1,3 +1,4 @@
+import { routes } from "@/constants/routes";
 import { TFunction } from "i18next";
 import { Lang, OpportunityLegacyType, TranslatedIntoType } from "need4deed-sdk";
 import { IconName } from "@/components/VolunteeringCategories/types";
@@ -15,9 +16,9 @@ import { CardsFilter, Day, DayKeys, Days, DaysKeys, LegacyTimeslot, Opportunity,
 
 const mapOpportunity = (opp: OpportunityApi, t: TFunction): Opportunity => {
   const accompanyingTranslationMap = {
-    [TranslatedIntoType.ENGLISH_OK]: t("homepage.volunteeringOpportunities.accompanyingTranslation.en"),
-    [TranslatedIntoType.DEUTSCHE]: t("homepage.volunteeringOpportunities.accompanyingTranslation.de"),
-    [TranslatedIntoType.NO_TRANSLATION]: t("homepage.volunteeringOpportunities.accompanyingTranslation.no"),
+    [TranslatedIntoType.ENGLISH_OK]: t("website.volunteeringOpportunities.accompanyingTranslation.en"),
+    [TranslatedIntoType.DEUTSCHE]: t("website.volunteeringOpportunities.accompanyingTranslation.de"),
+    [TranslatedIntoType.NO_TRANSLATION]: t("website.volunteeringOpportunities.accompanyingTranslation.no"),
   };
 
   const accompanyingKey = categoryKeyById[CategoryTitle.ACCOMPANYING];
@@ -47,7 +48,7 @@ const mapOpportunity = (opp: OpportunityApi, t: TFunction): Opportunity => {
     voInformation: opp.vo_information,
     categoryId: opp.category_id,
     lastEditedTimeNotion: new Date(opp.last_edited_time_notion ?? opp.updated_at),
-    defaultMainCommunication: t("homepage.volunteeringOpportunities.defaultMainCommunication"),
+    defaultMainCommunication: t("website.volunteeringOpportunities.defaultMainCommunication"),
     category,
   };
 };
@@ -82,7 +83,7 @@ export const formatAccompanyingDate = (date: Date, lang: Lang): string => {
 };
 
 export const getRegisterCtaUrl = (lang: Lang, { id, title }: Pick<Opportunity, "id" | "title">) =>
-  `/${lang}/forms/volunteer?id=${id}&title=${encodeURIComponent(title)}`;
+  `${routes.volunteerForm(lang)}?id=${id}&title=${encodeURIComponent(title)}`;
 
 const dayEnumMap: Record<number, DaysKeys> = {
   1: "monday",
@@ -199,7 +200,7 @@ const createDefaultFilterFromSet = (set: Set<string>) =>
 
 export const getCategoryLabel = (category: string, t: TFunction) =>
   category === OTHER_CATEGORY
-    ? t("homepage.volunteeringOpportunities.otherCategory")
+    ? t("website.volunteeringOpportunities.otherCategory")
     : t(`opportunityPage.categories.${category}`);
 
 export const extractCardsFilter = (opportunities: Opportunity[]): Partial<CardsFilter> => {

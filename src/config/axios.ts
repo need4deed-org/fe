@@ -1,3 +1,4 @@
+import { routes } from "@/constants/routes";
 import axios, { InternalAxiosRequestConfig } from "axios";
 import i18next from "i18next";
 import { Lang } from "need4deed-sdk";
@@ -58,7 +59,7 @@ export const cancelLogout = (): void => {
 const isSessionRejected = (refreshError: unknown) =>
   axios.isAxiosError(refreshError) && SESSION_REJECTED_STATUSES.includes(refreshError.response?.status ?? 0);
 
-const getActiveLanguage = (): Lang => {
+export const getActiveLanguage = (): Lang => {
   if (typeof window !== "undefined") {
     const routeLanguage = window.location.pathname.split("/")[1];
     if (supportedLangs.includes(routeLanguage)) return routeLanguage as Lang;
@@ -129,7 +130,7 @@ axios.interceptors.response.use(
         if (isRedirecting) {
           rememberSessionExpired();
           markSessionExpired(error);
-          window.location.href = "/login";
+          window.location.href = routes.login(getActiveLanguage());
         }
 
         return Promise.reject(error);

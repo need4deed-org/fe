@@ -1,7 +1,6 @@
 "use client";
-
+import { routes } from "@/constants/routes";
 import { Button } from "@/components/core/button";
-import { PageLayout } from "@/components/Layout";
 import { Body, Description, Detail, Details, EventCard, Hero, PageContent } from "@/components/styled/eventPageLayout";
 import { Heading1, Heading2, Paragraph } from "@/components/styled/text";
 import { useEvent, useEvents } from "@/hooks/useEvents";
@@ -230,72 +229,70 @@ export function EventPage({ eventId }: EventPageProps) {
   const additionalEvents = hasEventId ? [] : upcomingEvents.slice(1);
 
   return (
-    <PageLayout>
-      <PageContent>
-        {isLoading ? (
-          <EmptyState aria-live="polite">
-            <Heading2>{t("eventPage.loading")}</Heading2>
-          </EmptyState>
-        ) : isError ? (
-          <EmptyState role="alert">
-            <Heading2>{t("eventPage.loadError")}</Heading2>
-          </EmptyState>
-        ) : selectedEvent ? (
-          <EventStack>
-            {hasEventId ? (
-              <BackLink href={`/${i18n.language}/event-page`}>
-                <ArrowLeftIcon size={18} aria-hidden />
-                {t("eventPage.backToEvents")}
-              </BackLink>
-            ) : (
-              <PageHeader>
-                <Eyebrow>{t("eventPage.eyebrow")}</Eyebrow>
-                <ResponsiveHeading1 margin={0}>{t("eventPage.heading")}</ResponsiveHeading1>
-                <Paragraph margin="var(--spacing-12) 0 0">{t("eventPage.intro")}</Paragraph>
-              </PageHeader>
-            )}
+    <PageContent>
+      {isLoading ? (
+        <EmptyState aria-live="polite">
+          <Heading2>{t("eventPage.loading")}</Heading2>
+        </EmptyState>
+      ) : isError ? (
+        <EmptyState role="alert">
+          <Heading2>{t("eventPage.loadError")}</Heading2>
+        </EmptyState>
+      ) : selectedEvent ? (
+        <EventStack>
+          {hasEventId ? (
+            <BackLink href={routes.events(i18n.language)}>
+              <ArrowLeftIcon size={18} aria-hidden />
+              {t("eventPage.backToEvents")}
+            </BackLink>
+          ) : (
+            <PageHeader>
+              <Eyebrow>{t("eventPage.eyebrow")}</Eyebrow>
+              <ResponsiveHeading1 margin={0}>{t("eventPage.heading")}</ResponsiveHeading1>
+              <Paragraph margin="var(--spacing-12) 0 0">{t("eventPage.intro")}</Paragraph>
+            </PageHeader>
+          )}
 
-            <EventDetails event={selectedEvent} />
+          <EventDetails event={selectedEvent} />
 
-            {additionalEvents.length > 0 && (
-              <MoreEvents>
-                <ResponsiveHeading2 margin={0}>{t("eventPage.moreEvents")}</ResponsiveHeading2>
-                <UpcomingGrid>
-                  {additionalEvents.map((event) => (
-                    <UpcomingCard key={event.id}>
-                      <EventType>{getEventTypeLabel(event.type, t)}</EventType>
-                      <ResponsiveHeading2 margin={0}>{event.title}</ResponsiveHeading2>
-                      <Paragraph margin={0}>{event.shortDescription}</Paragraph>
-                      <UpcomingMeta>
-                        <MetaRow>
-                          <CalendarBlankIcon size={20} aria-hidden />
-                          <span>
-                            {eventDateRange(event, i18n.language, "Europe/Berlin")} {t("eventPage.berlinTime")}
-                          </span>
-                        </MetaRow>
-                        <MetaRow>
-                          <MapPinIcon size={20} aria-hidden />
-                          <span>{event.address}</span>
-                        </MetaRow>
-                      </UpcomingMeta>
-                      <DetailsLink href={`/${i18n.language}/event-page/${event.id}`}>
-                        {t("eventPage.viewDetails")}
-                        <ArrowRightIcon size={18} aria-hidden />
-                      </DetailsLink>
-                    </UpcomingCard>
-                  ))}
-                </UpcomingGrid>
-              </MoreEvents>
-            )}
-          </EventStack>
-        ) : (
-          <EmptyState aria-live="polite">
-            <Heading2>{t("eventPage.empty")}</Heading2>
-            <Paragraph margin="var(--spacing-12) 0 0">{t("eventPage.emptyDescription")}</Paragraph>
-          </EmptyState>
-        )}
-      </PageContent>
-    </PageLayout>
+          {additionalEvents.length > 0 && (
+            <MoreEvents>
+              <ResponsiveHeading2 margin={0}>{t("eventPage.moreEvents")}</ResponsiveHeading2>
+              <UpcomingGrid>
+                {additionalEvents.map((event) => (
+                  <UpcomingCard key={event.id}>
+                    <EventType>{getEventTypeLabel(event.type, t)}</EventType>
+                    <ResponsiveHeading2 margin={0}>{event.title}</ResponsiveHeading2>
+                    <Paragraph margin={0}>{event.shortDescription}</Paragraph>
+                    <UpcomingMeta>
+                      <MetaRow>
+                        <CalendarBlankIcon size={20} aria-hidden />
+                        <span>
+                          {eventDateRange(event, i18n.language, "Europe/Berlin")} {t("eventPage.berlinTime")}
+                        </span>
+                      </MetaRow>
+                      <MetaRow>
+                        <MapPinIcon size={20} aria-hidden />
+                        <span>{event.address}</span>
+                      </MetaRow>
+                    </UpcomingMeta>
+                    <DetailsLink href={routes.event(i18n.language, event.id)}>
+                      {t("eventPage.viewDetails")}
+                      <ArrowRightIcon size={18} aria-hidden />
+                    </DetailsLink>
+                  </UpcomingCard>
+                ))}
+              </UpcomingGrid>
+            </MoreEvents>
+          )}
+        </EventStack>
+      ) : (
+        <EmptyState aria-live="polite">
+          <Heading2>{t("eventPage.empty")}</Heading2>
+          <Paragraph margin="var(--spacing-12) 0 0">{t("eventPage.emptyDescription")}</Paragraph>
+        </EmptyState>
+      )}
+    </PageContent>
   );
 }
 

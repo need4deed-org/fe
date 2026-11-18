@@ -1,5 +1,6 @@
 "use client";
 
+import { routes } from "@/constants/routes";
 import { MapPinIcon } from "@phosphor-icons/react";
 import { AgentTrustLevel } from "@/components/Dashboard/Profile/types/agent";
 import type { ApiAgentGetList, Lang, OptionItem } from "need4deed-sdk";
@@ -41,7 +42,7 @@ export const AgentCard = ({ agent, districtsList, onSelect }: Props) => {
   const volunteerSearchLabels = createVolunteerSearchMap(t);
   const trustLevelLabels = createTrustLevelLabelMap(t);
 
-  const profileUrl = id ? `/${i18n.language}/dashboard/agents/${id}` : "";
+  const profileUrl = id ? routes.organizationDetail(i18n.language, id) : "";
 
   const handleTrustLevelChange = (next: AgentTrustLevel) => {
     if (id == null) return;

@@ -1,0 +1,86 @@
+:root {
+  /* Colors */
+  --white: #ffffff;
+
+  /* Number in color variable names is the percentage of that color mixed with pure white */
+  --grey-100: rgb(102, 112, 133);
+  --grey-75: color-mix(in srgb, var(--grey-100) 75%, white);
+  --grey-50: color-mix(in srgb, var(--grey-100) 50%, white);
+  --grey-25: color-mix(in srgb, var(--grey-100) 25%, white);
+
+  --midnight-100: rgb(26, 38, 132);
+  --midnight-75: color-mix(in srgb, var(--midnight-100) 75%, white);
+  --midnight-50: color-mix(in srgb, var(--midnight-100) 50%, white);
+  --midnight-25: color-mix(in srgb, var(--midnight-100) 25%, white);
+
+  --blue-100: rgb(26, 72, 242);
+  --blue-75: color-mix(in srgb, var(--blue-100) 75%, white);
+  --blue-50: color-mix(in srgb, var(--blue-100) 50%, white);
+  --blue-25: color-mix(in srgb, var(--blue-100) 25%, white);
+
+  --orchid-100: rgb(220, 161, 232);
+  --orchid-75: color-mix(in srgb, var(--orchid-100) 75%, white);
+  --orchid-50: color-mix(in srgb, var(--orchid-100) 50%, white);
+  --orchid-25: color-mix(in srgb, var(--orchid-100) 25%, white);
+
+  --lavender-100: rgb(138, 100, 233);
+  --lavender-75: color-mix(in srgb, var(--lavender-100) 75%, white);
+  --lavender-50: color-mix(in srgb, var(--lavender-100) 50%, white);
+  --lavender-25: color-mix(in srgb, var(--lavender-100) 25%, white);
+
+  --coral-100: rgb(255, 125, 104);
+  --coral-75: color-mix(in srgb, var(--coral-100) 75%, white);
+  --coral-50: color-mix(in srgb, var(--coral-100) 50%, white);
+  --coral-25: color-mix(in srgb, var(--coral-100) 25%, white);
+
+  --mint-100: rgb(0, 201, 128);
+  --mint-75: color-mix(in srgb, var(--mint-100) 75%, white);
+  --mint-50: color-mix(in srgb, var(--mint-100) 50%, white);
+  --mint-25: color-mix(in srgb, var(--mint-100) 25%, white);
+
+  --raspberry-100: rgb(197, 15, 82);
+  --raspberry-75: color-mix(in srgb, var(--raspberry-100) 75%, white);
+  --raspberry-50: color-mix(in srgb, var(--raspberry-100) 50%, white);
+  --raspberry-25: color-mix(in srgb, var(--raspberry-100) 25%, white);
+
+  --sand-100: rgb(242, 226, 211);
+  --sand-75: color-mix(in srgb, var(--sand-100) 75%, white);
+  --sand-50: color-mix(in srgb, var(--sand-100) 50%, white);
+  --sand-25: color-mix(in srgb, var(--sand-100) 25%, white);
+
+  /* Text */
+  --font-size: 16px; /* Font size of body text, text inputs, and buttons */
+  --heading-font-size: 24px; /* For section/card headings */
+  --sans-serif: "Figtree", sans-serif; /* The primary font */
+  --bold: bolder;
+
+  /* Sizes */
+  --small-spacing: 8px; /* For inner gaps between list items or buttons in fields */
+  --medium-spacing: 18px; /* For "normal" spacing, left/right padding in text fields, and padding around fields */
+  --large-spacing: 28px; /* For spacious spacing and left/right padding in buttons */
+  --field-size: 44px; /* The height for form fields or the height and width of square buttons */
+  --border-width: 1.8px; /* The border width of inputs */
+  --sidebar-width: 300px; /* Main navigation sidebar width on desktop view */
+  --header-height: 74px; /* Main navigational header height */
+  --field-icon-size: 20px; /* For icons in a field like a search icon in a search bar */
+  --heading-icon-size: 32px; /* For icons paired with section/card headings */
+  --tag-size: 36px; /* Height of tags/chips with text/icons on them or height and width of square tags */
+  --modal-width: 600px; /* Width of modal window */
+  --modal-height: 500px; /* Height of modal window */
+  --dialog-width: 300px;
+  --field-border-radius: 8px; /* Border radius of fields */
+  --surface-border-radius: calc(
+    var(--field-border-radius) + var(--medium-spacing)
+  ); /* Outer border radius of the containing surface behind the fields */
+  --header-logo-height: 32px;
+  --mobile-menu-width: 320px;
+  --mobile-menu-logo-height: 24px;
+  --mobile-footer-menu-height: 74px;
+  --mobile-menu-font-size: 10px;
+  --notification-badge-size: 24px; /* For notification badges on app navigation sidebar items */
+  --notification-badge-side-spacing: 6px;
+  --notification-badge-border-radius: calc(var(--notification-badge-size) / 2);
+
+  /* Miscellaneous */
+  --short-transition: 0.15s ease-in-out; /* For short animations */
+}

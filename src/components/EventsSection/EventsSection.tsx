@@ -1,10 +1,10 @@
 "use client";
-
+import { routes } from "@/constants/routes";
 import { Button } from "@/components/core/button";
 import { ImageWithGradient } from "@/components/core/image";
 import { FullWidthContainer, OverlayingSectionContainer } from "@/components/styled/container";
 import { CustomHeading, Heading1, Heading4 } from "@/components/styled/text";
-import { eventsPublicLandingUrl, ScreenTypes } from "@/config/constants";
+import { ScreenTypes } from "@/config/constants";
 import { useScreenType } from "@/context/DeviceContext";
 import { useEvents } from "@/hooks/useEvents";
 import { getImageUrl } from "@/utils/helpers";
@@ -97,14 +97,14 @@ export function EventsSection() {
       <EventsSectionContainer id="events-section-container">
         <ContentContainer>
           <Heading1 color="var(--color-white)" margin={0}>
-            {t("homepage.events.headline")}
+            {t("website.events.headline")}
           </Heading1>
 
           <EventContainer>
             <EventCard aria-live="polite">
               {isLoading ? (
                 <Heading4 color="var(--color-white)" margin={0}>
-                  {t("homepage.events.loading")}
+                  {t("website.events.loading")}
                 </Heading4>
               ) : upcomingEvent ? (
                 <>
@@ -131,7 +131,7 @@ export function EventsSection() {
                 </>
               ) : (
                 <Heading4 color="var(--color-white)" margin={0}>
-                  {t("homepage.events.empty")}
+                  {t("website.events.empty")}
                 </Heading4>
               )}
             </EventCard>
@@ -141,10 +141,10 @@ export function EventsSection() {
                 <Button
                   text={
                     upcomingEvents.length > 1
-                      ? t("homepage.events.viewAll", { count: upcomingEvents.length })
-                      : t("homepage.events.button")
+                      ? t("website.events.viewAll", { count: upcomingEvents.length })
+                      : t("website.events.button")
                   }
-                  onClick={() => window.location.assign(`/${i18n.language}${eventsPublicLandingUrl}`)}
+                  onClick={() => window.location.assign(routes.events(i18n.language))}
                 />
               </ButtonContainer>
             )}

@@ -6,6 +6,7 @@ export const HomeContainer = styled.div`
   flex-direction: row;
   padding: var(--dashboard-home-container-padding);
   gap: var(--dashboard-home-container-gap);
+  padding: var(--large-spacing);
 
   @media (max-width: 767px) {
     flex-direction: column;

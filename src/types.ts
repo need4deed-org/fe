@@ -2,8 +2,6 @@ export interface PropsWithToken {
   token?: string | null;
 }
 
-export type MenuItemType = [string, string];
-
 export type RouteParams<T extends string = string> = {
   params: Promise<{ id: T }>;
 };
@@ -11,24 +9,6 @@ export type RouteParams<T extends string = string> = {
 export type VolunteerIdProps = {
   volunteerId: string;
 };
-
-export enum Subpage {
-  ABOUT = "about",
-  DATA_PRIVACY = "data-privacy",
-  FAQ = "faq",
-  LEGAL_NOTICE = "legal-notice",
-  LOGIN = "login",
-  OPPORTUNITY_CARDS = "opportunity-cards",
-  VOLUNTEER_FORM = "volunteer-form",
-  VPA = "vpa",
-  AGREEMENT = "agreement",
-  ANNOUNCEMENT = "announcement",
-  OPPORTUNITY_FORM = "opportunity-form",
-  DATA_PROTECTION = "data-protection",
-  GUIDELINES = "guidelines",
-  RAC_GUIDELINES = "rac-guidelines",
-  FOR_ORGANISATIONS = "for-organisations",
-}
 
 export enum Env {
   DEVELOPMENT = "development",
@@ -53,8 +33,6 @@ export type LanguageObject = {
   level: LanguageLevel | "";
   purpose?: import("need4deed-sdk").LangPurpose;
 };
-
-export type FooterLink = [string, string];
 
 export type HttpMethod = "post" | "patch" | "put" | "delete";
 

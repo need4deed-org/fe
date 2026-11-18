@@ -1,3 +1,4 @@
+import { routes } from "@/constants/routes";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "next/navigation";
 
@@ -64,11 +65,11 @@ export default function HeroContent() {
           <Button
             backgroundcolor="var(--color-orchid-light)"
             textColor="var(--color-midnight)"
-            onClick={() => router.push(`/${i18n.language}/forms/volunteer`)}
+            onClick={() => router.push(routes.volunteerForm(i18n.language))}
             text={t("dashboard.heroSection.buttonJoinVolunteer")}
           />
           <Button
-            onClick={() => router.push(`/${i18n.language}/register/agent`)}
+            onClick={() => router.push(routes.registerOrganization(i18n.language))}
             text={t("dashboard.heroSection.buttonJoinRefugeeCenter")}
           />
         </HeroButtonsContainer>

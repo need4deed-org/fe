@@ -1,7 +1,7 @@
 "use client";
+import { routes } from "@/constants/routes";
 import { Button } from "@/components/core/button";
-import { PageLayout } from "@/components/Layout";
-import { apiPathUser, DashboardRoutes } from "@/config/constants";
+import { apiPathUser } from "@/config/constants";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { getLocalizedErrorMessage } from "@/utils/apiErrors";
 import axios from "axios";
@@ -42,7 +42,7 @@ export function AgentRegistration() {
 
   useEffect(() => {
     if (!user) return;
-    router.push(`/${i18n.language}${DashboardRoutes.Home}`);
+    router.push(routes.dashboard(i18n.language));
   }, [user, i18n.language, router]);
 
   const update = (fields: Partial<AgentRegistrationData>) => {
@@ -101,47 +101,43 @@ export function AgentRegistration() {
 
   if (isSuccess) {
     return (
-      <PageLayout>
-        <PageWrapper>
-          <Card>
-            <SuccessWrapper>
-              <SuccessTitle>{t("agentRegistration.checkEmail.title")}</SuccessTitle>
-              <SuccessText>{t("agentRegistration.checkEmail.description")}</SuccessText>
-            </SuccessWrapper>
-          </Card>
-        </PageWrapper>
-      </PageLayout>
+      <PageWrapper>
+        <Card>
+          <SuccessWrapper>
+            <SuccessTitle>{t("agentRegistration.checkEmail.title")}</SuccessTitle>
+            <SuccessText>{t("agentRegistration.checkEmail.description")}</SuccessText>
+          </SuccessWrapper>
+        </Card>
+      </PageWrapper>
     );
   }
 
   return (
-    <PageLayout>
-      <PageWrapper>
-        <Card>
-          <PageTitle>{t("agentRegistration.title")}</PageTitle>
-          <PageSubtitle>{t("agentRegistration.subtitle")}</PageSubtitle>
+    <PageWrapper>
+      <Card>
+        <PageTitle>{t("agentRegistration.title")}</PageTitle>
+        <PageSubtitle>{t("agentRegistration.subtitle")}</PageSubtitle>
 
-          <ExistingUserWrapper>
-            <ExistingUserText>{t("agentRegistration.alreadyUser")}</ExistingUserText>
-            <Link href="/login">{t("agentRegistration.loginLink")}</Link>
-          </ExistingUserWrapper>
+        <ExistingUserWrapper>
+          <ExistingUserText>{t("agentRegistration.alreadyUser")}</ExistingUserText>
+          <Link href={routes.login(i18n.language)}>{t("agentRegistration.loginLink")}</Link>
+        </ExistingUserWrapper>
 
-          {submitError && <ErrorBanner>{submitError}</ErrorBanner>}
+        {submitError && <ErrorBanner>{submitError}</ErrorBanner>}
 
-          <AccountStep data={formData} onChange={update} errors={errors} />
+        <AccountStep data={formData} onChange={update} errors={errors} />
 
-          <Actions>
-            <div />
-            <Button
-              text={t("agentRegistration.next")}
-              backgroundcolor="var(--color-aubergine)"
-              textColor="var(--color-white)"
-              onClick={handleSubmit}
-              disabled={isSubmitting}
-            />
-          </Actions>
-        </Card>
-      </PageWrapper>
-    </PageLayout>
+        <Actions>
+          <div />
+          <Button
+            text={t("agentRegistration.next")}
+            backgroundcolor="var(--color-aubergine)"
+            textColor="var(--color-white)"
+            onClick={handleSubmit}
+            disabled={isSubmitting}
+          />
+        </Actions>
+      </Card>
+    </PageWrapper>
   );
 }

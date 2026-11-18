@@ -1,4 +1,5 @@
 "use client";
+import { routes } from "@/constants/routes";
 import {
   getMatchStatusDisplay,
   matchStatusColorMap,
@@ -136,7 +137,10 @@ export const OpportunityHeader = ({ opportunity }: Props) => {
           }
           extra={
             <AgentLink
-              href={`/${i18n.language}/dashboard/agents/${(opportunity.agent as typeof opportunity.agent & { id?: number }).id}`}
+              href={routes.organizationDetail(
+                i18n.language,
+                String((opportunity.agent as typeof opportunity.agent & { id?: number }).id),
+              )}
             >
               {opportunity.agent.name}
             </AgentLink>

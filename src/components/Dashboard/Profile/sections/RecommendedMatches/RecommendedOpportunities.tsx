@@ -1,3 +1,4 @@
+import { routes } from "@/constants/routes";
 import { Button } from "@/components/core/button";
 import { Heading4 } from "@/components/styled/text";
 import { apiPathOption } from "@/config/constants";
@@ -56,7 +57,7 @@ export function RecommendedOpportunities({ volunteerId, volunteerName }: Props) 
           }
           subtitle={opportunity.agentTitle}
           onGoToProfile={() =>
-            router.push(`/${i18n.language}/dashboard/opportunities/${opportunity.id}?volunteer=${volunteerId}`)
+            router.push(`${routes.opportunityDetail(i18n.language, opportunity.id)}?volunteer=${volunteerId}`)
           }
           headerAction={
             <Button

@@ -1,5 +1,6 @@
 "use client";
 
+import { routes } from "@/constants/routes";
 import Button from "@/components/core/button/Button/Button";
 import { Modal } from "@/components/core/modal/Modal";
 import { EditableField } from "@/components/EditableField/EditableField";
@@ -122,7 +123,7 @@ export const CreateAgentDialog = ({ isOpen, onClose }: Props) => {
         <ConflictBox role="alert">
           <span>{t(`dashboard.agents.createAgent.conflict.${conflict.conflict}`)}</span>
           {conflictAgent?.title && <strong>{conflictAgent.title}</strong>}
-          <Link href={`/${i18n.language}/dashboard/agents/${conflict.agentId}`} onClick={handleClose}>
+          <Link href={routes.organizationDetail(i18n.language, conflict.agentId)} onClick={handleClose}>
             {t("dashboard.agents.createAgent.conflict.open")}
           </Link>
           {conflict.conflict === "address" && (

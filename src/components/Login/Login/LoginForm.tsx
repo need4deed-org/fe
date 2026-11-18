@@ -1,3 +1,4 @@
+import { routes } from "@/constants/routes";
 import { useForm } from "@tanstack/react-form";
 import axios from "axios";
 import { useId, useState } from "react";
@@ -38,7 +39,7 @@ const useLoginMutation = (onLoginSuccess: () => void) => {
       const message =
         status === 401 ? (
           <span>
-            {t(key)} <Link href={`/${lang}/forgotten-password`}>{t("dashboard.login.forgotPassword")}?</Link>
+            {t(key)} <Link href={routes.forgotPassword(lang)}>{t("dashboard.login.forgotPassword")}?</Link>
           </span>
         ) : (
           t(key)
@@ -142,7 +143,7 @@ export const LoginForm = ({ onLoginSuccess }: LoginFormProps) => {
           label={t("dashboard.login.rememberMe")}
           labelFontSize="var(--dashboard-login-checkbox-label-fontSize)"
         />
-        <Link href={`/${lang}/forgotten-password`}>{t("dashboard.login.forgotPassword")}?</Link>
+        <Link href={routes.forgotPassword(lang)}>{t("dashboard.login.forgotPassword")}?</Link>
       </FormActions>
 
       <SubmitRow>

@@ -64,14 +64,14 @@ export default function OpportunityCard({
       <DetailGroup>
         <Paragraph fontWeight={400}>
           {isAccompanying
-            ? t("homepage.volunteeringOpportunities.translationTo")
-            : t("homepage.volunteeringOpportunities.mainCommunication")}
+            ? t("website.volunteeringOpportunities.translationTo")
+            : t("website.volunteeringOpportunities.mainCommunication")}
           :
         </Paragraph>
         <Paragraph>{isAccompanying ? accompanyingTranslation : defaultMainCommunication}</Paragraph>
       </DetailGroup>
       <DetailGroup>
-        <Paragraph fontWeight={400}>{t("homepage.volunteeringOpportunities.residentsSpeak")}:</Paragraph>
+        <Paragraph fontWeight={400}>{t("website.volunteeringOpportunities.residentsSpeak")}:</Paragraph>
         <Paragraph>{languages.join(", ")}</Paragraph>
       </DetailGroup>
     </DetailGroup>
@@ -80,21 +80,21 @@ export default function OpportunityCard({
   const cardDetails: CardDetail[] = [
     {
       icon: <TranslateIcon size={20} color="var(--icon-color)" />,
-      headerText: t("homepage.volunteeringOpportunities.languages"),
+      headerText: t("website.volunteeringOpportunities.languages"),
       body: languagesBody,
     },
     {
       icon: <CalendarDotsIcon size={20} color="var(--icon-color)" />,
       headerText: accompanyingDate
-        ? t("homepage.volunteeringOpportunities.dateOfAppointment")
-        : t("homepage.volunteeringOpportunities.schedule"),
+        ? t("website.volunteeringOpportunities.dateOfAppointment")
+        : t("website.volunteeringOpportunities.schedule"),
       body: (
         <Paragraph>{(accompanyingDate && formatAccompanyingDate(accompanyingDate, language)) || schedule}</Paragraph>
       ),
     },
     {
       icon: <MapPinIcon size={20} weight="fill" color="var(--icon-color)" />,
-      headerText: t("homepage.volunteeringOpportunities.district"),
+      headerText: t("website.volunteeringOpportunities.district"),
       body: <Paragraph>{locations.join(", ")}</Paragraph>,
     },
   ];

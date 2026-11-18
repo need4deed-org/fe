@@ -18,6 +18,7 @@ export const PostsContainer = styled.div`
         )
     )
   );
+  padding: var(--large-spacing);
 
   @media (max-width: 767px) {
     height: max(

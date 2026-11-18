@@ -1,3 +1,4 @@
+import { routes } from "@/constants/routes";
 import { Heading4 } from "@/components/styled/text";
 import { ApiOpportunityVolunteerGet, OpportunityVolunteerStatusType } from "need4deed-sdk";
 import { useRouter } from "next/navigation";
@@ -18,7 +19,7 @@ export default function AccordionOpportunity({ opportunity, currentStatus, ...ac
   const router = useRouter();
 
   const handleGoToProfile = () => {
-    router.push(`/${i18n.language}/dashboard/opportunities/${opportunity.opportunityId}`);
+    router.push(routes.opportunityDetail(i18n.language, opportunity.opportunityId));
   };
 
   const headerLeft = (

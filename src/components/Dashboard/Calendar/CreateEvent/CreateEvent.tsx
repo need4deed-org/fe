@@ -1,11 +1,10 @@
 "use client";
+import { routes } from "@/constants/routes";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { EventN4DType, Lang, type ApiEventN4DCreate, type ApiEventN4DPatch } from "need4deed-sdk";
-
-import { PageLayout } from "@/components/Layout";
 import Button from "@/components/core/button/Button/Button";
 import { useCreateEvent, useEvent, useUpdateEvent } from "@/hooks";
 
@@ -127,14 +126,14 @@ export function CreateEvent({ eventId }: Props) {
   const handleNext = () => setStep((s) => Math.min(s + 1, TOTAL_STEPS));
   const handleBack = () => {
     if (step === 1) {
-      router.push(`/${i18n.language}/dashboard/calendar`);
+      router.push(routes.calendar(i18n.language));
     } else {
       setStep((s) => s - 1);
     }
   };
-  const handleCancel = () => router.push(`/${i18n.language}/dashboard/calendar`);
+  const handleCancel = () => router.push(routes.calendar(i18n.language));
 
-  const returnToEvents = () => router.push(`/${i18n.language}/dashboard/calendar`);
+  const returnToEvents = () => router.push(routes.calendar(i18n.language));
   const createEvent = useCreateEvent(returnToEvents);
   const updateEvent = useUpdateEvent(eventId ?? 0, returnToEvents);
 
@@ -203,83 +202,77 @@ export function CreateEvent({ eventId }: Props) {
 
   if (eventId && isLoading)
     return (
-      <PageLayout background="var(--color-orchid-subtle)">
-        <PageContent>
-          <StateMessage role="status">{t("dashboard.calendar.editLoading")}</StateMessage>
-        </PageContent>
-      </PageLayout>
+      <PageContent>
+        <StateMessage role="status">{t("dashboard.calendar.editLoading")}</StateMessage>
+      </PageContent>
     );
   if (eventId && !isLoading && (isError || !editingEvent))
     return (
-      <PageLayout background="var(--color-orchid-subtle)">
-        <PageContent>
-          <StateMessage role="alert">
-            <p>{t("dashboard.calendar.editLoadError")}</p>
-            <Button
-              text={t("dashboard.calendar.backToCalendar")}
-              onClick={returnToEvents}
-              width="auto"
-              padding="var(--button-padding)"
-            />
-          </StateMessage>
-        </PageContent>
-      </PageLayout>
+      <PageContent>
+        <StateMessage role="alert">
+          <p>{t("dashboard.calendar.editLoadError")}</p>
+          <Button
+            text={t("dashboard.calendar.backToCalendar")}
+            onClick={returnToEvents}
+            width="auto"
+            padding="var(--button-padding)"
+          />
+        </StateMessage>
+      </PageContent>
     );
 
   return (
-    <PageLayout background="var(--color-orchid-subtle)">
-      <PageContent>
-        <ProgressBar>
-          {Array.from({ length: TOTAL_STEPS }).map((_, i) => (
-            <ProgressSegment key={i} $active={i < step} />
-          ))}
-        </ProgressBar>
+    <PageContent>
+      <ProgressBar>
+        {Array.from({ length: TOTAL_STEPS }).map((_, i) => (
+          <ProgressSegment key={i} $active={i < step} />
+        ))}
+      </ProgressBar>
 
-        <Card>
-          {step === 1 && (
-            <StepTitle
-              type={formData.type}
-              title={formData.title}
-              description={formData.description}
-              hostName={formData.hostName}
-              onChange={update}
-              onNext={handleNext}
-              onCancel={handleCancel}
-              isNextEnabled={isNextEnabled()}
-            />
-          )}
-          {step === 2 && (
-            <StepLocation
-              street={formData.street}
-              houseNumber={formData.houseNumber}
-              postcode={formData.postcode}
-              registrationLink={formData.registrationLink}
-              onChange={update}
-              onNext={handleNext}
-              onBack={handleBack}
-              isNextEnabled={isNextEnabled()}
-            />
-          )}
-          {step === 3 && (
-            <StepDateTime
-              startDate={formData.startDate}
-              startTime={formData.startTime}
-              endDate={formData.endDate}
-              endTime={formData.endTime}
-              onChange={update}
-              onBack={handleBack}
-              onSubmit={handleSubmit}
-              submitLabel={t(
-                editingEvent?.active
-                  ? "dashboard.calendar.createForm.saveChanges"
-                  : "dashboard.calendar.createForm.saveDraft",
-              )}
-              isSubmitEnabled={isNextEnabled() && !createEvent.isPending && !updateEvent.isPending}
-            />
-          )}
-        </Card>
-      </PageContent>
-    </PageLayout>
+      <Card>
+        {step === 1 && (
+          <StepTitle
+            type={formData.type}
+            title={formData.title}
+            description={formData.description}
+            hostName={formData.hostName}
+            onChange={update}
+            onNext={handleNext}
+            onCancel={handleCancel}
+            isNextEnabled={isNextEnabled()}
+          />
+        )}
+        {step === 2 && (
+          <StepLocation
+            street={formData.street}
+            houseNumber={formData.houseNumber}
+            postcode={formData.postcode}
+            registrationLink={formData.registrationLink}
+            onChange={update}
+            onNext={handleNext}
+            onBack={handleBack}
+            isNextEnabled={isNextEnabled()}
+          />
+        )}
+        {step === 3 && (
+          <StepDateTime
+            startDate={formData.startDate}
+            startTime={formData.startTime}
+            endDate={formData.endDate}
+            endTime={formData.endTime}
+            onChange={update}
+            onBack={handleBack}
+            onSubmit={handleSubmit}
+            submitLabel={t(
+              editingEvent?.active
+                ? "dashboard.calendar.createForm.saveChanges"
+                : "dashboard.calendar.createForm.saveDraft",
+            )}
+            isSubmitEnabled={isNextEnabled() && !createEvent.isPending && !updateEvent.isPending}
+          />
+        )}
+      </Card>
+    </PageContent>
   );
 }
 

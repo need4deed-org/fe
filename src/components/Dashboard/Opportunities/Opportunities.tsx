@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { DashboardLayout } from "@/components/Layout";
 import { apiPathOption, DEFAULT_MAX_COMMUTE_MINUTES, questionMark, ScreenTypes } from "@/config/constants";
 import { useGetVolunteer, useGetQuery } from "@/hooks";
 import { ApiOptionLists, LangProficiency, QueryParamsKeys, UserRole } from "need4deed-sdk";
@@ -175,60 +174,58 @@ export function Opportunities() {
   );
 
   return (
-    <DashboardLayout>
-      <OpportunitiesContainer data-testid="opportunities-container">
-        <CardsHeader
-          header={t("dashboard.opportunities.opportunities")}
-          resultCounter={numOfOpps}
-          resultText={t("dashboard.home.sidebar.opportunities")}
-          tabs={tabs}
-          selectedTabIndex={selectedTabIndex}
-          setSelectedTabIndex={handleTabChange}
-          setIsFiltersOpen={setIsFiltersOpen}
-          onSearchInputChange={handleSearchInputChange}
-          searchValue={cardsFilter.search}
-          searchPlaceholder={t("dashboard.opportunities.card.search")}
-          sortOrder={sortOrder}
-          onSortOrderChange={handleSortChange}
-          extraSortOptions={extraSortOptions}
-          activeFilters={isOtherTab ? [] : activeFilters}
-          onClearAllFilters={handleClearAllFilters}
-          onClearFilter={handleClearFilter}
-          entityFilter={
-            volunteerFilter && !isOtherTab ? { ...volunteerFilter, onRemove: handleRemoveVolunteerFilter } : undefined
-          }
-          showListControls={!isOtherTab}
-        />
-        {isOtherTab ? (
-          <OtherOpportunities search={cardsFilter.search} setCount={setNumOfOpps} />
-        ) : (
-          <ContentRow>
-            <OpportunityListController
-              setNumOfOpps={setNumOfOpps}
-              sortOrder={sortOrder}
-              filter={cardsFilter}
-              setFilter={handleFilterUpdate}
-              apiFilterOptions={apiFilterOptions}
-              volunteerId={volunteerId}
-              viewMode={viewMode}
-              volunteerFilter={volunteerFilter}
-            />
-            <Filters
-              isFiltersOpen={isFiltersOpen}
-              setIsFiltersOpen={setIsFiltersOpen}
-              filtersContent={
-                <FiltersContent
-                  setFilter={handleFilterUpdate}
-                  filter={cardsFilter}
-                  viewMode={viewMode}
-                  isMatchMode={!!volunteerId}
-                />
-              }
-            />
-          </ContentRow>
-        )}
-      </OpportunitiesContainer>
-    </DashboardLayout>
+    <OpportunitiesContainer data-testid="opportunities-container">
+      <CardsHeader
+        header={t("dashboard.opportunities.opportunities")}
+        resultCounter={numOfOpps}
+        resultText={t("dashboard.home.sidebar.opportunities")}
+        tabs={tabs}
+        selectedTabIndex={selectedTabIndex}
+        setSelectedTabIndex={handleTabChange}
+        setIsFiltersOpen={setIsFiltersOpen}
+        onSearchInputChange={handleSearchInputChange}
+        searchValue={cardsFilter.search}
+        searchPlaceholder={t("dashboard.opportunities.card.search")}
+        sortOrder={sortOrder}
+        onSortOrderChange={handleSortChange}
+        extraSortOptions={extraSortOptions}
+        activeFilters={isOtherTab ? [] : activeFilters}
+        onClearAllFilters={handleClearAllFilters}
+        onClearFilter={handleClearFilter}
+        entityFilter={
+          volunteerFilter && !isOtherTab ? { ...volunteerFilter, onRemove: handleRemoveVolunteerFilter } : undefined
+        }
+        showListControls={!isOtherTab}
+      />
+      {isOtherTab ? (
+        <OtherOpportunities search={cardsFilter.search} setCount={setNumOfOpps} />
+      ) : (
+        <ContentRow>
+          <OpportunityListController
+            setNumOfOpps={setNumOfOpps}
+            sortOrder={sortOrder}
+            filter={cardsFilter}
+            setFilter={handleFilterUpdate}
+            apiFilterOptions={apiFilterOptions}
+            volunteerId={volunteerId}
+            viewMode={viewMode}
+            volunteerFilter={volunteerFilter}
+          />
+          <Filters
+            isFiltersOpen={isFiltersOpen}
+            setIsFiltersOpen={setIsFiltersOpen}
+            filtersContent={
+              <FiltersContent
+                setFilter={handleFilterUpdate}
+                filter={cardsFilter}
+                viewMode={viewMode}
+                isMatchMode={!!volunteerId}
+              />
+            }
+          />
+        </ContentRow>
+      )}
+    </OpportunitiesContainer>
   );
 }
 

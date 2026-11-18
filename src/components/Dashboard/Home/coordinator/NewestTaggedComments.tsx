@@ -53,7 +53,7 @@ export function NewestTaggedComments() {
               entityId={comment.entityId}
               authorName={comment.authorName}
               apiPath={processEntity[comment.entityType as DashboardEntityType].path}
-              link={`/${i18n.language}${processEntity[comment.entityType as DashboardEntityType].linkUrl}/${comment.entityId}`}
+              link={processEntity[comment.entityType as DashboardEntityType].linkUrl(i18n.language, comment.entityId)}
               personId={personId}
               commentId={comment.id}
               isRead={handleIsRead(comment)}

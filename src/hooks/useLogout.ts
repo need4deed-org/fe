@@ -1,5 +1,6 @@
+import { routes } from "@/constants/routes";
 import axios from "axios";
-import { cancelLogout, startLogout } from "@/config/axios";
+import { cancelLogout, getActiveLanguage, startLogout } from "@/config/axios";
 import { apiPathAuthLogout } from "@/config/constants";
 import { useMutationQuery } from "@/hooks";
 import { clearAuthHint } from "@/utils/helpers";
@@ -19,7 +20,7 @@ export const useLogout = () => {
     noToast: true,
     onSuccessCallback: () => {
       clearAuthHint();
-      window.location.href = "/login";
+      window.location.href = routes.login(getActiveLanguage());
     },
   });
 };

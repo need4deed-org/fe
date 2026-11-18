@@ -1,0 +1,98 @@
+:where(*, *::before, *::after) {
+  box-sizing: border-box;
+}
+
+:where(html) {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+:where(body) {
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+:where(img, picture, video, canvas, svg) {
+  display: block;
+  max-width: 100%;
+}
+
+:where(img, video) {
+  height: auto;
+}
+
+:where(input, button, textarea, select) {
+  font: inherit;
+  color: inherit;
+  outline: none;
+}
+
+:where(button, [role="button"], label[for], select, summary) {
+  cursor: pointer;
+}
+
+:where(button:disabled, select:disabled) {
+  cursor: not-allowed;
+}
+
+:where(textarea) {
+  resize: vertical;
+}
+
+:where(h1, h2, h3, h4, h5, h6, p, li, figcaption) {
+  overflow-wrap: break-word;
+}
+
+:where(table) {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+html body :where(h1, h2, h3, h4, h5, h6, p, ul, ol, dl, dd, figure, blockquote, pre, fieldset, legend, hr) {
+  margin: 0;
+  padding: 0;
+}
+
+html body :where(h1, h2, h3, h4, h5, h6) {
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+}
+
+html body :where(ul, ol) {
+  list-style: none;
+}
+
+html body :where(fieldset) {
+  min-width: 0;
+  border: 0;
+}
+
+html body :where(a),
+html body a:hover {
+  outline: none;
+  text-decoration: none;
+}
+
+html body :where(button) {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(html) {
+    scroll-behavior: auto;
+  }
+
+  :where(*, *::before, *::after) {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

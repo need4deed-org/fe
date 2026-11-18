@@ -1,91 +1,12 @@
 {
-  "opportunityTranslations": {
-    "target": "Übersetzung: {{language}}",
-    "review": "Übersetzung prüfen",
-    "close": "Prüfung schließen",
-    "targetLanguage": "Übersetzungssprache",
-    "edit": "Übersetzung bearbeiten",
-    "save": "Übersetzung speichern",
-    "confirm": "Übersetzung bestätigen",
-    "cancel": "Abbrechen",
-    "retry": "Erneut versuchen",
-    "changeOriginal": "Originalsprache ändern",
-    "originalLanguage": "Originalsprache",
-    "dialogTitle": "Originalsprache ändern?",
-    "dialogBody": "Wählen Sie die Sprache, in der der Originaltext verfasst wurde. Dies ändert die Ausgangssprache des Angebots, nicht die Oberflächensprache.",
-    "replaceWarning": "Alle Übersetzungen, auch von Menschen bearbeitete, werden neu erstellt. Prüfen Sie sie anschließend erneut.",
-    "required": "Bitte geben Sie eine Übersetzung ein.",
-    "tooLong": "Verwenden Sie höchstens {{count}} Zeichen.",
-    "changedBeforeConfirm": "Seit dem Öffnen der Prüfung wurde eine Übersetzung geändert. Prüfen Sie den aktuellen Text vor dem Bestätigen.",
-    "changedDuringEdit": "Das Original oder die Übersetzung wurde während Ihrer Bearbeitung geändert. Brechen Sie ab und prüfen Sie den aktuellen Text vor dem Speichern.",
-    "staleError": "Die Übersetzungen konnten nicht aktualisiert werden. Der angezeigte Text ist möglicherweise veraltet. Ihre ungespeicherten Änderungen bleiben erhalten; versuchen Sie es vor dem Speichern oder Bestätigen erneut.",
-    "saved": "Übersetzung gespeichert",
-    "confirmed": "Fertige maschinelle Übersetzungen bestätigt",
-    "languageChanged": "Originalsprache aktualisiert; Übersetzungen werden neu erstellt",
-    "reviewStatus": {
-      "missing": "Übersetzung nicht verfügbar",
-      "pending": "Übersetzung wird erstellt",
-      "failed": "Übersetzung prüfen"
-    },
-    "title": "Übersetzungen",
-    "loading": "Übersetzungen werden geladen…",
-    "error": "Die Übersetzungen konnten nicht geladen werden. Wählen Sie „Erneut versuchen“.",
-    "empty": "Für dieses Angebot ist kein übersetzbarer Text vorhanden.",
-    "original": "Original",
-    "mixedLanguages": "Mehrere Sprachen",
-    "unknownLanguage": "Sprache nicht erfasst",
-    "sameAsOriginal": "Dies ist die Originalsprache; siehe Originaltext.",
-    "originalStillShown": "Es liegt keine fertige Übersetzung vor. Im Angebot wird stattdessen der Originaltext angezeigt.",
-    "missing": "Keine Übersetzung vorhanden. Im Angebot wird stattdessen der Originaltext angezeigt.",
-    "unknownError": "Die Übersetzung konnte nicht abgeschlossen werden.",
-    "fields": {
-      "title": "Titel",
-      "info": "Beschreibung"
-    },
-    "languages": {
-      "en": "Englisch",
-      "de": "Deutsch"
-    },
-    "reasons": {
-      "empty": "Die Übersetzung war leer.",
-      "length_ratio": "Die Länge der Übersetzung hat die Prüfung nicht bestanden.",
-      "token_missing": "Erforderliche Angaben wurden in der Übersetzung nicht beibehalten.",
-      "email_missing": "Eine E-Mail-Adresse aus dem Original fehlt in der Übersetzung.",
-      "url_missing": "Ein Link aus dem Original fehlt in der Übersetzung.",
-      "phone_missing": "Eine Telefonnummer aus dem Original fehlt in der Übersetzung.",
-      "date_missing": "Ein Datum aus dem Original fehlt oder wurde in der Übersetzung verändert.",
-      "time_missing": "Eine Uhrzeit aus dem Original fehlt oder wurde in der Übersetzung verändert.",
-      "number_missing": "Eine Zahl aus dem Original fehlt oder wurde in der Übersetzung verändert.",
-      "untranslated": "Der Text scheint nicht übersetzt zu sein.",
-      "source_is_target": "Der Originaltext ist möglicherweise bereits in der Zielsprache.",
-      "wrong_language": "Die Übersetzung ist nicht in der erwarteten Sprache.",
-      "bad_response": "Der Übersetzungsdienst hat eine ungültige Antwort geliefert.",
-      "provider_unavailable": "Der Übersetzungsdienst war nicht verfügbar."
-    },
-    "confirmFailed": "Einige Übersetzungen konnten nicht bestätigt werden. Erfolgreiche Bestätigungen bleiben erhalten. Prüfen Sie den Fehler, bevor Sie es erneut versuchen.",
-    "writeFailed": "Einige Änderungen konnten nicht gespeichert werden. Erfolgreiche Änderungen bleiben erhalten, nicht gespeicherter Text bleibt im Editor. Prüfen Sie den Fehler, bevor Sie es erneut versuchen.",
-    "regenerate": "Übersetzung neu erstellen",
-    "regenerateTitle": "Diese Übersetzung neu erstellen?",
-    "regenerateBody": "Neue automatische Übersetzungen ersetzen {{fields}} auf {{language}}, einschließlich manueller Änderungen. Der Originaltext bleibt unverändert.",
-    "regenerateFieldFailed": "{{field}} konnte nicht neu erstellt werden. {{reason}}",
-    "retryLimitReached": "Die maximale Anzahl automatischer Übersetzungsversuche wurde erreicht. Sie können die Übersetzung weiterhin manuell bearbeiten.",
-    "regenerateRequested": "Neuerstellung der Übersetzung angefordert",
-    "changedBeforeRegeneration": "Das Original oder die Übersetzung wurde geändert. Schließen Sie diesen Dialog und prüfen Sie den aktuellen Text, bevor Sie es erneut versuchen."
-  },
-  "homepage": {
-    "heroSection": {
-      "menuItems": {
-        "about": "ÜBER UNS",
-        "volunteeringOpportunities": "Ehrenamtsbedarfe",
-        "events": "VERANSTALTUNGEN",
-        "openMenu": "Menü öffnen"
-      },
-      "content": {
-        "heroText": "Ehrenamtliche Unterstützung für Geflüchtete",
-        "heroSupportingText": "Wir vermitteln Ehrenamtliche an Gemeinschaftsunterkünften in Berlin",
-        "buttonJoinVolunteer": "Finde jetzt dein Ehrenamt",
-        "buttonJoinRefugeeCenter": "Für Einrichtungen"
-      }
+  "website": {
+    "header": {
+      "about": "Über",
+      "volunteer": "Ehrenamtsbedarfe",
+      "events": "Veranstaltungen",
+      "login": "Anmelden",
+      "dashboard": "Dashboard",
+      "logout": "Abmelden"
     },
     "footer": {
       "about": "ÜBER",
@@ -101,7 +22,7 @@
         "agreement": "Ehrenamtliche Vereinbarung",
         "cookies": "Cookies"
       },
-      "forOrganisations": "FÜR ORGANISATIONEN"
+      "forOrganizations": "FÜR ORGANISATIONEN"
     },
     "iframeTitles": {
       "howToVolunteer": "Wie Du Geflüchtete in Deiner Nachbarschaft unterstützen können"
@@ -637,6 +558,8 @@
       }
     },
     "home": {
+      "statistics": "Statistiken",
+      "ngoVolunteers": "NGO-Freiwillige",
       "content": {
         "header": "Dashboard Startseite",
         "newTags": "Neueste Tags",
@@ -652,10 +575,10 @@
         "mostRelevantNoResults": "Es werden keine Ergebnisse angezeigt. Versuchen Sie, Ihre Verfügbarkeit oder Ihren Bezirk in Ihrem Profil anzupassen, um mehr Ergebnisse zu sehen."
       },
       "sidebar": {
-        "home": "Startseite",
+        "dashboard": "Dashboard",
         "volunteers": "Ehrenamtliche",
         "opportunities": "Ehrenamtsbedarfe",
-        "agents": "Einrichtungen / Projekte",
+        "organizations": "Organisationen",
         "racs": "RACs",
         "posts": "Beiträge",
         "calendar": "Kalender",
@@ -1063,6 +986,7 @@
     },
     "agents": {
       "agents": "Einrichtungs-/Projektverzeichnis",
+      "trustedDomains": "Vertrauenswürdige Domains",
       "table": {
         "title": "Name",
         "type": "Typ",
@@ -1452,15 +1376,6 @@
       "entryDeleted": "Eintrag erfolgreich gelöscht",
       "deleteConfirmTitle": "Eintrag löschen?",
       "deleteConfirmText": "Der Eintrag vom {{date}} wird dauerhaft gelöscht."
-    },
-    "volunteerActivityLog": {
-      "emptyState": "Noch keine Aktivitäten",
-      "linked": "Verknüpft mit „{{title}}“",
-      "linkedAs": "Verknüpft mit „{{title}}“ als {{status}}",
-      "removed": "Entfernt aus „{{title}}“ (war {{from}})",
-      "statusChanged": "„{{title}}“: Status geändert zu {{to}}",
-      "statusChangedFrom": "„{{title}}“: {{from}} → {{to}}",
-      "imported": "{{entry}} (importiert, Datum ungefähr)"
     },
     "profile": {
       "loading": "Profil wird geladen...",
@@ -2107,6 +2022,15 @@
         }
       }
     },
+    "volunteerActivityLog": {
+      "emptyState": "Noch keine Aktivitäten",
+      "linked": "Verknüpft mit „{{title}}“",
+      "linkedAs": "Verknüpft mit „{{title}}“ als {{status}}",
+      "removed": "Entfernt aus „{{title}}“ (war {{from}})",
+      "statusChanged": "„{{title}}“: Status geändert zu {{to}}",
+      "statusChangedFrom": "„{{title}}“: {{from}} → {{to}}",
+      "imported": "{{entry}} (importiert, Datum ungefähr)"
+    },
     "recommended": {
       "volunteersTitle": "Empfohlene Ehrenamtliche",
       "opportunitiesTitle": "Empfohlene Ehrenamtsbedarfe"
@@ -2162,7 +2086,7 @@
       "bevos": "BEVOS wurde aus dem Europäischen Sozialfonds (ESF) gefördert.",
       "need4deed": "Need4Deed wurde aus dem Asyl-, Migrations- und Integrationsfonds (AMIF) der Europäischen Union gefördert."
     },
-    "forOrganisations": "Für Organisationen",
+    "forOrganizations": "Für Organisationen",
     "intro": "Need4Deed ist ein strukturelles Projekt: Mit eigenen, einzigartigen Werkzeugen vernetzen und stärken wir kleine Ehrenamtsprojekte, die Geflüchtete unterstützen.",
     "offline": {
       "heading": "Vermittlung, Vernetzung, Workshops und Events",
@@ -3067,7 +2991,7 @@
     "header": "Angebote werden aktualisiert...",
     "para": "Wir aktualisieren gerade die Engagementangebote. Dies kann einige Zeit dauern. Wir empfehlen, die Seite später am Tag erneut zu aktualisieren. Wenn Du Fragen hast, wende Dich bitte an volunteer@need4deed.org"
   },
-  "forOrganisationsPage": {
+  "forOrganizationsPage": {
     "heading": "Für Organisationen",
     "intro": "Für Einrichtungen und Projekte, die Geflüchtete in Berlin unterstützen: So arbeiten wir mit Dir zusammen, von der ersten Anfrage bis zur freiwilligen Person vor Ort.",
     "stepsHeading": "So vermitteln wir Freiwillige",
@@ -3128,6 +3052,79 @@
         }
       }
     }
+  },
+  "opportunityTranslations": {
+    "target": "Übersetzung: {{language}}",
+    "review": "Übersetzung prüfen",
+    "close": "Prüfung schließen",
+    "targetLanguage": "Übersetzungssprache",
+    "edit": "Übersetzung bearbeiten",
+    "save": "Übersetzung speichern",
+    "confirm": "Übersetzung bestätigen",
+    "cancel": "Abbrechen",
+    "retry": "Erneut versuchen",
+    "changeOriginal": "Originalsprache ändern",
+    "originalLanguage": "Originalsprache",
+    "dialogTitle": "Originalsprache ändern?",
+    "dialogBody": "Wählen Sie die Sprache, in der der Originaltext verfasst wurde. Dies ändert die Ausgangssprache des Angebots, nicht die Oberflächensprache.",
+    "replaceWarning": "Alle Übersetzungen, auch von Menschen bearbeitete, werden neu erstellt. Prüfen Sie sie anschließend erneut.",
+    "required": "Bitte geben Sie eine Übersetzung ein.",
+    "tooLong": "Verwenden Sie höchstens {{count}} Zeichen.",
+    "changedBeforeConfirm": "Seit dem Öffnen der Prüfung wurde eine Übersetzung geändert. Prüfen Sie den aktuellen Text vor dem Bestätigen.",
+    "changedDuringEdit": "Das Original oder die Übersetzung wurde während Ihrer Bearbeitung geändert. Brechen Sie ab und prüfen Sie den aktuellen Text vor dem Speichern.",
+    "staleError": "Die Übersetzungen konnten nicht aktualisiert werden. Der angezeigte Text ist möglicherweise veraltet. Ihre ungespeicherten Änderungen bleiben erhalten; versuchen Sie es vor dem Speichern oder Bestätigen erneut.",
+    "saved": "Übersetzung gespeichert",
+    "confirmed": "Fertige maschinelle Übersetzungen bestätigt",
+    "languageChanged": "Originalsprache aktualisiert; Übersetzungen werden neu erstellt",
+    "reviewStatus": {
+      "missing": "Übersetzung nicht verfügbar",
+      "pending": "Übersetzung wird erstellt",
+      "failed": "Übersetzung prüfen"
+    },
+    "title": "Übersetzungen",
+    "loading": "Übersetzungen werden geladen…",
+    "error": "Die Übersetzungen konnten nicht geladen werden. Wählen Sie „Erneut versuchen“.",
+    "empty": "Für dieses Angebot ist kein übersetzbarer Text vorhanden.",
+    "original": "Original",
+    "mixedLanguages": "Mehrere Sprachen",
+    "unknownLanguage": "Sprache nicht erfasst",
+    "sameAsOriginal": "Dies ist die Originalsprache; siehe Originaltext.",
+    "originalStillShown": "Es liegt keine fertige Übersetzung vor. Im Angebot wird stattdessen der Originaltext angezeigt.",
+    "missing": "Keine Übersetzung vorhanden. Im Angebot wird stattdessen der Originaltext angezeigt.",
+    "unknownError": "Die Übersetzung konnte nicht abgeschlossen werden.",
+    "fields": {
+      "title": "Titel",
+      "info": "Beschreibung"
+    },
+    "languages": {
+      "en": "Englisch",
+      "de": "Deutsch"
+    },
+    "reasons": {
+      "empty": "Die Übersetzung war leer.",
+      "length_ratio": "Die Länge der Übersetzung hat die Prüfung nicht bestanden.",
+      "token_missing": "Erforderliche Angaben wurden in der Übersetzung nicht beibehalten.",
+      "email_missing": "Eine E-Mail-Adresse aus dem Original fehlt in der Übersetzung.",
+      "url_missing": "Ein Link aus dem Original fehlt in der Übersetzung.",
+      "phone_missing": "Eine Telefonnummer aus dem Original fehlt in der Übersetzung.",
+      "date_missing": "Ein Datum aus dem Original fehlt oder wurde in der Übersetzung verändert.",
+      "time_missing": "Eine Uhrzeit aus dem Original fehlt oder wurde in der Übersetzung verändert.",
+      "number_missing": "Eine Zahl aus dem Original fehlt oder wurde in der Übersetzung verändert.",
+      "untranslated": "Der Text scheint nicht übersetzt zu sein.",
+      "source_is_target": "Der Originaltext ist möglicherweise bereits in der Zielsprache.",
+      "wrong_language": "Die Übersetzung ist nicht in der erwarteten Sprache.",
+      "bad_response": "Der Übersetzungsdienst hat eine ungültige Antwort geliefert.",
+      "provider_unavailable": "Der Übersetzungsdienst war nicht verfügbar."
+    },
+    "confirmFailed": "Einige Übersetzungen konnten nicht bestätigt werden. Erfolgreiche Bestätigungen bleiben erhalten. Prüfen Sie den Fehler, bevor Sie es erneut versuchen.",
+    "writeFailed": "Einige Änderungen konnten nicht gespeichert werden. Erfolgreiche Änderungen bleiben erhalten, nicht gespeicherter Text bleibt im Editor. Prüfen Sie den Fehler, bevor Sie es erneut versuchen.",
+    "regenerate": "Übersetzung neu erstellen",
+    "regenerateTitle": "Diese Übersetzung neu erstellen?",
+    "regenerateBody": "Neue automatische Übersetzungen ersetzen {{fields}} auf {{language}}, einschließlich manueller Änderungen. Der Originaltext bleibt unverändert.",
+    "regenerateFieldFailed": "{{field}} konnte nicht neu erstellt werden. {{reason}}",
+    "retryLimitReached": "Die maximale Anzahl automatischer Übersetzungsversuche wurde erreicht. Sie können die Übersetzung weiterhin manuell bearbeiten.",
+    "regenerateRequested": "Neuerstellung der Übersetzung angefordert",
+    "changedBeforeRegeneration": "Das Original oder die Übersetzung wurde geändert. Schließen Sie diesen Dialog und prüfen Sie den aktuellen Text, bevor Sie es erneut versuchen."
   },
   "datePicker": {
     "openCalendar": "Kalender öffnen",

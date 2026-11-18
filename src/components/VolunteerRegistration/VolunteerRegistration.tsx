@@ -1,7 +1,7 @@
 "use client";
+import { routes } from "@/constants/routes";
 import { Button } from "@/components/core/button";
-import { PageLayout } from "@/components/Layout";
-import { apiPathUser, DashboardRoutes } from "@/config/constants";
+import { apiPathUser } from "@/config/constants";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { getLocalizedErrorMessage } from "@/utils/apiErrors";
 import axios from "axios";
@@ -49,7 +49,7 @@ export function VolunteerRegistration() {
 
   useEffect(() => {
     if (!user || ngoToken) return;
-    router.push(`/${i18n.language}${DashboardRoutes.Home}`);
+    router.push(routes.dashboard(i18n.language));
   }, [user, ngoToken, i18n.language, router]);
 
   const update = (fields: Partial<AccountRegistrationData>) => {
@@ -105,18 +105,14 @@ export function VolunteerRegistration() {
 
   if (ngoLinkMessage) {
     return (
-      <PageLayout>
-        <PageWrapper>
-          <Card>
-            <SuccessWrapper>
-              <SuccessText>{ngoLinkMessage}</SuccessText>
-              {user && (
-                <Link href={`/${i18n.language}${DashboardRoutes.Home}`}>{t("volunteerRegistration.toDashboard")}</Link>
-              )}
-            </SuccessWrapper>
-          </Card>
-        </PageWrapper>
-      </PageLayout>
+      <PageWrapper>
+        <Card>
+          <SuccessWrapper>
+            <SuccessText>{ngoLinkMessage}</SuccessText>
+            {user && <Link href={routes.dashboard(i18n.language)}>{t("volunteerRegistration.toDashboard")}</Link>}
+          </SuccessWrapper>
+        </Card>
+      </PageWrapper>
     );
   }
 
@@ -126,48 +122,44 @@ export function VolunteerRegistration() {
 
   if (isSuccess) {
     return (
-      <PageLayout>
-        <PageWrapper>
-          <Card>
-            <SuccessWrapper>
-              <SuccessTitle>{t("volunteerRegistration.checkEmail.title")}</SuccessTitle>
-              <SuccessText>{t("volunteerRegistration.checkEmail.description")}</SuccessText>
-            </SuccessWrapper>
-          </Card>
-        </PageWrapper>
-      </PageLayout>
+      <PageWrapper>
+        <Card>
+          <SuccessWrapper>
+            <SuccessTitle>{t("volunteerRegistration.checkEmail.title")}</SuccessTitle>
+            <SuccessText>{t("volunteerRegistration.checkEmail.description")}</SuccessText>
+          </SuccessWrapper>
+        </Card>
+      </PageWrapper>
     );
   }
 
   return (
-    <PageLayout>
-      <PageWrapper>
-        <Card>
-          <PageTitle>{t("volunteerRegistration.title")}</PageTitle>
-          <PageSubtitle>{t("volunteerRegistration.subtitle")}</PageSubtitle>
-          {ngoToken && <PageSubtitle>{t("volunteerRegistration.ngoLinkNotice")}</PageSubtitle>}
+    <PageWrapper>
+      <Card>
+        <PageTitle>{t("volunteerRegistration.title")}</PageTitle>
+        <PageSubtitle>{t("volunteerRegistration.subtitle")}</PageSubtitle>
+        {ngoToken && <PageSubtitle>{t("volunteerRegistration.ngoLinkNotice")}</PageSubtitle>}
 
-          <ExistingUserWrapper>
-            <ExistingUserText>{t("volunteerRegistration.alreadyUser")}</ExistingUserText>
-            <Link href="/login">{t("volunteerRegistration.loginLink")}</Link>
-          </ExistingUserWrapper>
+        <ExistingUserWrapper>
+          <ExistingUserText>{t("volunteerRegistration.alreadyUser")}</ExistingUserText>
+          <Link href={routes.login(i18n.language)}>{t("volunteerRegistration.loginLink")}</Link>
+        </ExistingUserWrapper>
 
-          {submitError && <ErrorBanner>{submitError}</ErrorBanner>}
+        {submitError && <ErrorBanner>{submitError}</ErrorBanner>}
 
-          <AccountStep data={formData} onChange={update} errors={errors} namespace="volunteerRegistration" />
+        <AccountStep data={formData} onChange={update} errors={errors} namespace="volunteerRegistration" />
 
-          <Actions>
-            <div />
-            <Button
-              text={t("volunteerRegistration.next")}
-              backgroundcolor="var(--color-aubergine)"
-              textColor="var(--color-white)"
-              onClick={handleSubmit}
-              disabled={isSubmitting}
-            />
-          </Actions>
-        </Card>
-      </PageWrapper>
-    </PageLayout>
+        <Actions>
+          <div />
+          <Button
+            text={t("volunteerRegistration.next")}
+            backgroundcolor="var(--color-aubergine)"
+            textColor="var(--color-white)"
+            onClick={handleSubmit}
+            disabled={isSubmitting}
+          />
+        </Actions>
+      </Card>
+    </PageWrapper>
   );
 }
