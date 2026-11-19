@@ -1,3 +1,5 @@
+import { TypePLZ } from "@/components/forms/types";
+import { isEmptyOrValidPLZ } from "@/components/forms/utils";
 import { LanguageLevel } from "@/types";
 import { z } from "zod";
 
@@ -9,7 +11,11 @@ const languageObjectSchema = z.object({
 
 const urlRegex = /^https?:\/\/.+/;
 
-export const createOrganisationDetailsSchema = (t: (key: string) => string, validOperators: string[]) => {
+export const createOrganisationDetailsSchema = (
+  t: (key: string) => string,
+  validOperators: string[],
+  savedPostcode?: string,
+) => {
   const required = t(`${i18nPrefix}.required`);
 
   return z.object({
@@ -22,7 +28,9 @@ export const createOrganisationDetailsSchema = (t: (key: string) => string, vali
       })
       .optional(),
     addressStreet: z.string(),
-    addressPostcode: z.string(),
+    addressPostcode: z
+      .string()
+      .refine((code) => isEmptyOrValidPLZ(code, TypePLZ.GERMANY, savedPostcode), t("form.error.postcodeGermany")),
     organizationType: z.string().min(1, required),
     operator: z
       .string()

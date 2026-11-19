@@ -1,28 +1,11 @@
 import assert from "node:assert/strict";
-import fs from "node:fs";
-import path from "node:path";
 import test from "node:test";
-import { createRequire } from "node:module";
-import { fileURLToPath } from "node:url";
-import ts from "typescript";
 import { OpportunityVolunteerStatusType as Status, UserRole } from "need4deed-sdk";
+import { loadModule } from "./helpers/load-module.mjs";
 
-const packageRequire = createRequire(import.meta.url);
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-const root = path.resolve(__dirname, "..");
 const hookPath = "src/components/Dashboard/Profile/sections/shared/useTabTransitions.ts";
 const orderPath =
   "src/components/Dashboard/Profile/sections/OpportunityVolunteers/get-opportunity-volunteer-status-order.ts";
-
-function loadModule(file, dependencies) {
-  const source = fs.readFileSync(path.join(root, file), "utf8");
-  const output = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS } }).outputText;
-  const loadedModule = { exports: {} };
-  const localRequire = (id) => dependencies[id] ?? packageRequire(id);
-  new Function("require", "module", "exports", output)(localRequire, loadedModule, loadedModule.exports);
-  return loadedModule.exports;
-}
 
 function createHarness() {
   const states = [];

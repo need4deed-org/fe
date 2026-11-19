@@ -57,7 +57,7 @@ export const VolunteerHeader = ({ volunteer }: Props) => {
   const { t, i18n } = useTranslation();
   const dialog = useEngagementStatusDialog(volunteer);
   const volunteerTypeDialog = useVolunteerTypeDialog(volunteer);
-  const { isAdmin, isAuthorized, isOwnProfile, isVolunteer, isUserLoaded } = useAuth(volunteer.person.id);
+  const { isAdmin, isAuthorized, isOwnProfile, isVolunteer, isUserLoaded } = useAuth({ personId: volunteer.person.id });
   const hasEditingRights = isAuthorized || isOwnProfile;
   const canSeeOwner = isUserLoaded && !isVolunteer;
   const ownerDialog = useVolunteerOwnerDialog(volunteer);

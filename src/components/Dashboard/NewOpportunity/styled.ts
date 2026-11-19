@@ -143,6 +143,13 @@ export const NGOnonEditableRow = styled.div`
   align-items: center;
 `;
 
+export const NGOPickerColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+  width: 100%;
+`;
+
 export const TypeButtons = styled.div`
   display: flex;
   gap: var(--spacing-8);

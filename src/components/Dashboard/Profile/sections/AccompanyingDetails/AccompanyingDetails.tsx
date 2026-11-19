@@ -12,8 +12,9 @@ import { EditableSectionProps, EditableSectionRef } from "../shared/types";
 import { useEditingChangeNotifier } from "../shared/useEditingChangeNotifier";
 import { AccompanyingDetailsDisplay } from "./AccompanyingDetailsDisplay";
 import { AccompanyingDetailsEdit } from "./AccompanyingDetailsEdit";
-import { getInitialFormValues, isAccompanyingType, buildAccompanyingPayload } from "./helpers";
-import { Container, NotAccompanyingMessage } from "./styles";
+import { useAppointmentPLZ } from "./use-appointment-plz";
+import { getInitialFormValues, buildAccompanyingPayload } from "./helpers";
+import { Container } from "./styles";
 import { createAccompanyingDetailsSchema, AccompanyingDetailsFormData } from "./createAccompanyingDetailsSchema";
 
 type Props = {
@@ -31,7 +32,6 @@ export const AccompanyingDetails = forwardRef<EditableSectionRef, Props>(functio
 
   useEditingChangeNotifier(isEditing, onEditingChange);
   const { data: apiLanguages } = useApiLanguages();
-  const showFullDetails = isAccompanyingType(opportunity.volunteerType);
   const minAppointmentDate = useMinAppointmentDate();
 
   const languageOptions = apiLanguages.map((lang) => lang.title);
@@ -57,20 +57,23 @@ export const AccompanyingDetails = forwardRef<EditableSectionRef, Props>(functio
 
   const methods = useForm<AccompanyingDetailsFormData>({
     resolver: zodResolver(
-      createAccompanyingDetailsSchema(t, false, minAppointmentDate, initialFormValues.appointmentDate),
+      createAccompanyingDetailsSchema(
+        t,
+        false,
+        minAppointmentDate,
+        initialFormValues.appointmentDate,
+        initialFormValues.appointmentPostcode,
+      ),
     ),
     mode: "onChange",
     defaultValues: initialFormValues,
   });
   const { handleSubmit, reset, watch } = methods;
+  const plz = useAppointmentPLZ(methods.control);
 
   const formValues = watch();
 
-  const handleEditClick = () => {
-    if (showFullDetails) {
-      setIsEditing(true);
-    }
-  };
+  const handleEditClick = () => setIsEditing(true);
 
   useImperativeHandle(ref, () => ({
     handleEditClick,
@@ -99,16 +102,6 @@ export const AccompanyingDetails = forwardRef<EditableSectionRef, Props>(functio
       reset(getInitialFormValues(opportunity.accompanyingDetails));
     }
   }, [opportunity, isEditing, reset]);
-
-  if (!showFullDetails) {
-    return (
-      <div data-testid="accompanying-details-not-accompanying">
-        <NotAccompanyingMessage>
-          {t("dashboard.opportunityProfile.accompanyingDetails.notAccompanyingMessage")}
-        </NotAccompanyingMessage>
-      </div>
-    );
-  }
 
   type ExtendedAccompanyingDetails = ApiOpportunityAccompanyingDetails & {
     refugeeLanguage?: { id: number | string }[];
@@ -147,6 +140,8 @@ export const AccompanyingDetails = forwardRef<EditableSectionRef, Props>(functio
             onSubmit={handleSubmit(onSubmit)}
             isPending={isPending}
             minAppointmentDate={minAppointmentDate}
+            plzStatus={plz.status}
+            saveDisabled={plz.blocksSubmit}
           />
         ) : (
           <AccompanyingDetailsDisplay

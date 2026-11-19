@@ -1,6 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
 
+import { useRouteLang } from "@/hooks/use-route-lang";
+import { localizedPath } from "@/utils/helpers";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 import Person, { PersonType } from "./Person";
@@ -8,6 +10,7 @@ import Person, { PersonType } from "./Person";
 export default function Persons() {
   const [persons, setPersons] = useState<PersonType[]>([]);
   const router = useRouter();
+  const lang = useRouteLang();
 
   useEffect(() => {
     fetch("/api/person", {
@@ -22,7 +25,7 @@ export default function Persons() {
         } else {
           console.error(`HTTP error! status: ${res.status}`);
           if (res.status === 401) {
-            router.push("/login");
+            router.push(localizedPath(lang, "/login"));
           }
           return [];
         }
@@ -33,16 +36,12 @@ export default function Persons() {
       .catch((err) => {
         console.error("Error fetching persons:", err);
       });
-  }, [router]);
+  }, [lang, router]);
 
   return (
     <div className={styles["list-container"]}>
       <h1>Persons</h1>
-      <ul>
-        {persons && persons.length
-          ? persons.map((person) => <Person key={person.id} person={person} />)
-          : null}
-      </ul>
+      <ul>{persons && persons.length ? persons.map((person) => <Person key={person.id} person={person} />) : null}</ul>
     </div>
   );
 }

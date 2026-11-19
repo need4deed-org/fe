@@ -18,7 +18,7 @@ Need4Deed frontend — a Next.js 15 PWA for a Berlin NGO connecting volunteers w
 
 ## Commands
 
-`package.json`'s `scripts` has the standard ones (dev, build, lint, typecheck, test, dev:docker). No test framework is configured: `yarn test` runs `tests/*.test.mjs` with `node:test`, transpiling the TS modules under test on load (see `tests/opportunity-volunteer-tabs.test.mjs`).
+`package.json`'s `scripts` has the standard ones (dev, build, lint, typecheck, test, dev:docker). No test framework is configured: `yarn test` runs `tests/*.test.mjs` with `node:test`, transpiling the TS modules under test on load with the shared `loadModule` in `tests/helpers/load-module.mjs`.
 
 ## Local setup
 
@@ -35,7 +35,7 @@ To pick up a new SDK release: `yarn upgrade need4deed-sdk --latest` (see API con
 
 **Stack:** Next.js 15 App Router, React 19, TypeScript strict, Styled Components, TanStack Query v5, React Hook Form + TanStack Form, Zod, Axios, i18next (en/de).
 
-**Routing:** All routes are under `src/app/[lang]/` — the middleware injects the language prefix automatically from the `preferred-lang` cookie. Device type (mobile/tablet/desktop) is also detected in middleware and available via `DeviceContext`.
+**Routing:** All routes are under `src/app/[lang]/` — the middleware injects the language prefix automatically from the `preferred-lang` cookie. The initial device type (mobile/tablet/desktop) comes from `user-agent` in the root layout (`src/utils/screen-type.ts`) and is available via `DeviceContext`, which updates it from the viewport width on the client.
 
 **API layer:**
 
@@ -61,7 +61,7 @@ Both live in `src/hooks/`. Many resource-specific hooks wrap these (e.g. `useGet
 
 **Styling:** Styled Components. Follow Figma designs in each issue before styling. Do not introduce new UI libraries.
 
-**i18n:** Translation files at `public/locales/{en,de}/translations.json`. Language falls back to `de` if not found.
+**i18n:** Translation files at `public/locales/{en,de}/translations.json`. A missing translation key falls back to `de` (i18next `fallbackLng`); the middleware redirects a missing or unsupported route language to the `preferred-lang` cookie language, else `en` (`defaultRouteLang`). Paths the middleware matcher excludes (`/api`, `/health`, `/_next`, `/.well-known`, and static-file extensions such as `.png`, `.json`, `.txt`, `.xml`) never get that redirect; if one reaches `[lang]` (e.g. `/missing.png`), the root layout calls `notFound()`, which gives a plain, unstyled 404 (`[lang]/not-found.tsx` sits below the root layout, so it cannot render). Keep the extension list explicit: email links such as `/verify-email/<JWT>` have dots in the last segment and must still get the language redirect.
 
 ## Key constraints
 

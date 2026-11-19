@@ -34,7 +34,7 @@ export const VolunteerContactDetails = forwardRef<EditableSectionRef, Props>(fun
     "dashboard.volunteerProfile.contactDetails.preferredCommunicationType",
   );
 
-  const schema = createVolunteerContactDetailsSchema(t);
+  const schema = createVolunteerContactDetailsSchema(t, volunteer.person.address?.postcode?.code);
 
   const initialFormValues = useMemo(
     (): VolunteerContactDetailsFormData => ({

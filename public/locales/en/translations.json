@@ -15,7 +15,8 @@
     "dialogBody": "Select the language the original text was written in. This changes the opportunity's source language, not the interface language.",
     "replaceWarning": "All translations, including human-edited ones, will be regenerated. Review them again afterwards.",
     "required": "Please enter a translation.",
-    "tooLong": "Use no more than {{count}} characters.",
+    "tooLong": "Use no more than {{max}} characters (now {{count}}).",
+    "shortenOnly": "Already over {{max}} characters; shorten it to {{allowed}} or fewer (now {{count}}).",
     "changedBeforeConfirm": "A translation changed since you opened the review. Check the updated text before confirming.",
     "changedDuringEdit": "The source or translation changed while you were editing. Cancel and review the latest text before saving.",
     "staleError": "Translations could not be refreshed. The text below may be out of date. Your unsaved edits are kept; try again before saving or confirming.",
@@ -218,8 +219,9 @@
   "form": {
     "error": {
       "required": "This field is required",
-      "postcode": "Must be a valid postcode of Berlin",
       "postcodeGermany": "Must be a valid German postcode (5 digits)",
+      "postcodeUnknown": "We couldn't find this postcode. Please check it.",
+      "postcodeBerlin": "Must be a valid Berlin postcode",
       "email": "Must be a valid email",
       "badEmail": "Bad email",
       "location": "Please pick at least one location",
@@ -230,6 +232,7 @@
       "activity": "Please pick at least one activity",
       "language": "Please pick at least one language"
     },
+    "postcodeChecking": "Checking postcode…",
     "button": {
       "more": "more...",
       "submit": "Submit"
@@ -1724,7 +1727,6 @@
         "cancel": "Cancel",
         "saveChanges": "Save changes",
         "saveSuccess": "Accompanying details updated successfully",
-        "notAccompanyingMessage": "This opportunity is not marked as accompanying. Change this status in the top card if you need to fill out the accompanying information (appointment address, refugee details, etc.).",
         "validation": {
           "invalidTimeFormat": "Invalid time format (use HH:MM)",
           "addressRequired": "Appointment address is required",
@@ -1772,14 +1774,16 @@
         "numberOfVolunteers": "Number of volunteers",
         "activities": "Activities",
         "skills": "Skills & experience",
-        "descriptionHint": "Max. {{max}} characters",
+        "maxCharsHint": "Max. {{max}} characters",
         "cancel": "Cancel",
         "saveChanges": "Save changes",
         "saveSuccess": "Opportunity updated successfully",
         "validation": {
           "opportunityNameRequired": "Name is required",
+          "opportunityNameTooLong": "Name is too long (max. {{max}} characters)",
+          "shortenOnly": "Already over {{max}} characters; shorten it to {{allowed}} or fewer (now {{count}}).",
           "descriptionRequired": "Description is required",
-          "descriptionTooLong": "Description is too long",
+          "descriptionTooLong": "Description is too long (max. {{max}} characters)",
           "numberOfVolunteersRequired": "Number of volunteers must be at least 1",
           "languageRequired": "At least one language is required",
           "mainCommunicationInvalid": "Main communication must be German, English, or both",
@@ -1803,7 +1807,8 @@
         "city": "City",
         "required": "Required",
         "postcodeInvalid": "Enter a 5-digit German postcode"
-      }
+      },
+      "duplicateOpportunity": "Duplicate opportunity"
     },
     "racTitle": "Refugee accommodation centre",
     "rac": {
@@ -1978,7 +1983,9 @@
       "agentSection": "Your organisation",
       "submit": "Create opportunity",
       "addressMissing": "Your organisation profile has no postcode yet, so this opportunity can't be created. Your entries here stay.",
-      "addressMissingLink": "Add the address in the organisation profile (opens in a new tab)"
+      "addressMissingLink": "Add the address in the organisation profile (opens in a new tab)",
+      "agentUnavailable": "This NGO could not be loaded. Pick it again or choose another one.",
+      "agentInactive": "This NGO is inactive, so no opportunity can be created for it."
     },
     "admin": {
       "title": "Admin",
@@ -2042,7 +2049,8 @@
       "nav": {
         "domains": "Domains",
         "stats": "Statistics",
-        "ngoVolunteers": "NGO volunteers"
+        "ngoVolunteers": "NGO volunteers",
+        "accounts": "Accounts"
       },
       "ngoVolunteers": {
         "helper": "Pick an NGO to give its volunteers a registration link or to import its existing volunteers.",
@@ -2095,6 +2103,27 @@
             "otherPerson": "Email belongs to a different person"
           }
         }
+      },
+      "accounts": {
+        "helper": "Coordinator, NGO and admin accounts. Edit a name here to rename the person.",
+        "role": "Role",
+        "search": "Search by name",
+        "loadError": "Accounts could not be loaded.",
+        "empty": "No accounts found.",
+        "name": "Name",
+        "email": "Email",
+        "status": "Status",
+        "active": "Active",
+        "inactive": "Deactivated",
+        "edit": "Edit name",
+        "editAria": "Edit name of {{email}}",
+        "editTitle": "Edit name",
+        "firstName": "First name",
+        "lastName": "Last name",
+        "save": "Save",
+        "renamed": "Name updated",
+        "personLoadError": "This person could not be loaded, so the name can't be edited right now.",
+        "truncated": "Only the newest accounts are shown. Search to find others."
       }
     },
     "recommended": {

@@ -20,7 +20,7 @@ i18next.use(initReactI18next).init({
 
 interface I18nProviderProps {
   children: React.ReactNode;
-  initialLang: string;
+  initialLang: Lang;
 }
 
 export function I18nProvider({ children, initialLang }: I18nProviderProps) {
