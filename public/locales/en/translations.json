@@ -645,7 +645,11 @@
         "error": "There was an error when loading the page. Please refresh",
         "mostRelevantOpp": "Most relevant opportunities",
         "mostRelevantOppDesc": "(based on district and availability)",
-        "mostRelevantNoResults": "No results are showing. Try adjusting your availability or district on your profile to see more results"
+        "mostRelevantNoResults": "No results are showing. Try adjusting your availability or district on your profile to see more results",
+        "myActivity": "My recent activity",
+        "noActivity": "No comments or changes from you yet",
+        "noActivityThisWeek": "Nothing from you this week yet",
+        "earlierActivity": "Earlier ({{count}})"
       },
       "sidebar": {
         "home": "Home",

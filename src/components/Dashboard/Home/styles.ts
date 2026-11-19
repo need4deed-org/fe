@@ -74,3 +74,19 @@ export const StyledLink = styled(Link)`
     opacity: 0.88;
   }
 `;
+
+export const ActivityDate = styled.span`
+  margin-left: auto;
+  white-space: nowrap;
+  color: var(--color-grey-700);
+`;
+
+export const EarlierActivity = styled.details`
+  display: flex;
+  flex-direction: column;
+  gap: var(--dashboard-home-container-gap);
+  & summary {
+    cursor: pointer;
+    padding: var(--tag-row-padding);
+  }
+`;
