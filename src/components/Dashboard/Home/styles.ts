@@ -82,11 +82,14 @@ export const ActivityDate = styled.span`
 `;
 
 export const EarlierActivity = styled.details`
-  display: flex;
-  flex-direction: column;
-  gap: var(--dashboard-home-container-gap);
   & summary {
     cursor: pointer;
     padding: var(--tag-row-padding);
   }
+`;
+
+export const EarlierActivityRows = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: var(--dashboard-home-container-gap);
 `;

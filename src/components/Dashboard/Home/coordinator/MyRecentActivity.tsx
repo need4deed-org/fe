@@ -9,7 +9,7 @@ import { useGetMyActivity } from "@/hooks/useGetMyActivity";
 import { formatDateTime } from "../../Profile/sections/shared/utils/formatDateTime";
 import { formatActivityDetail } from "../../Profile/sections/VolunteerActivityLog/format-activity-detail";
 import { processEntity } from "../helpers";
-import { ActivityDate, EarlierActivity, TagContainer, TagRow } from "../styles";
+import { ActivityDate, EarlierActivity, EarlierActivityRows, TagContainer, TagRow } from "../styles";
 
 const MENTION_TOKEN = /<@\d+>\s*/g;
 
@@ -39,10 +39,13 @@ function ActivityRow({ item }: { item: ApiMyActivityItem }) {
 
 export function MyRecentActivity() {
   const { t } = useTranslation();
-  const { activity, isLoading } = useGetMyActivity();
+  const { activity, isLoading, isError } = useGetMyActivity();
 
   if (isLoading) {
     return <Heading4>{t("dashboard.home.content.loading")}</Heading4>;
+  }
+  if (isError) {
+    return <Heading4>{t("dashboard.home.content.error")}</Heading4>;
   }
   if (activity.length === 0) {
     return <Heading4>{t("dashboard.home.content.noActivity")}</Heading4>;
@@ -61,9 +64,11 @@ export function MyRecentActivity() {
       {earlier.length > 0 && (
         <EarlierActivity>
           <summary>{t("dashboard.home.content.earlierActivity", { count: earlier.length })}</summary>
-          {earlier.map((item) => (
-            <ActivityRow key={item.id} item={item} />
-          ))}
+          <EarlierActivityRows>
+            {earlier.map((item) => (
+              <ActivityRow key={item.id} item={item} />
+            ))}
+          </EarlierActivityRows>
         </EarlierActivity>
       )}
     </TagContainer>
