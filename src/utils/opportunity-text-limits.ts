@@ -1,4 +1,5 @@
 import {
+  ApiOpportunityGet,
   Lang,
   OPPORTUNITY_DESCRIPTION_MAX_LENGTH,
   OPPORTUNITY_TITLE_MAX_LENGTH,
@@ -30,9 +31,21 @@ export function getTextLimitIssue(value: string | null | undefined, limit: TextL
   return limit.allowed > limit.max ? "shortenOnly" : "tooLong";
 }
 
-type Translate = (key: string, options?: Record<string, unknown>) => string;
+export type Translate = (key: string, options?: Record<string, unknown>) => string;
 
 export type TextLimitMessages = Record<TextLimitIssue, string>;
+
+const OPPORTUNITY_VALIDATION = "dashboard.opportunityProfile.opportunityDetails.validation";
+
+export const OPPORTUNITY_TITLE_MESSAGES: TextLimitMessages = {
+  tooLong: `${OPPORTUNITY_VALIDATION}.opportunityNameTooLong`,
+  shortenOnly: `${OPPORTUNITY_VALIDATION}.shortenOnly`,
+};
+
+export const OPPORTUNITY_DESCRIPTION_MESSAGES: TextLimitMessages = {
+  tooLong: `${OPPORTUNITY_VALIDATION}.descriptionTooLong`,
+  shortenOnly: `${OPPORTUNITY_VALIDATION}.shortenOnly`,
+};
 
 export function getTextLimitMessage(
   t: Translate,
@@ -67,15 +80,13 @@ const TRANSLATED_DESCRIPTION_TYPES: readonly VolunteerStateTypeType[] = [
  * Mirrors be: an edit in a language other than the original is stored as a translation
  * (title always, description only for regular and events opportunities) and gets the
  * translation cap. The text shown may stay or shrink. For a translated field that text may
- * be the source fallback, which be doesn't count; no source is over a translation cap, so
- * this never lets through what be rejects.
+ * be the source fallback, which be doesn't count. No prod source is over a translation cap
+ * (max description 1322, title 133) and new sources are capped lower, so in practice fe and
+ * be agree; if one ever were, be's 400 is the backstop.
  */
 export function getOpportunityTextLimits(
-  opportunity: {
-    title: string;
+  opportunity: Pick<ApiOpportunityGet, "title" | "volunteerType" | "originalLanguage"> & {
     description?: string | null;
-    volunteerType: VolunteerStateTypeType;
-    originalLanguage?: Lang;
   },
   language: Lang,
 ): OpportunityTextLimits {

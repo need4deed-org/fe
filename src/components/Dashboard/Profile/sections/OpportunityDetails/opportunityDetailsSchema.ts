@@ -1,10 +1,17 @@
 import { Availability } from "@/components/forms/types";
 import { LanguageLevel } from "@/types";
-import { OpportunityTextLimits, refineTextLimit, SOURCE_TEXT_LIMITS } from "@/utils/opportunity-text-limits";
+import {
+  OPPORTUNITY_DESCRIPTION_MESSAGES,
+  OPPORTUNITY_TITLE_MESSAGES,
+  OpportunityTextLimits,
+  refineTextLimit,
+  SOURCE_TEXT_LIMITS,
+  Translate,
+} from "@/utils/opportunity-text-limits";
 import { z } from "zod";
 import { resolveFormLanguageToOption } from "./formatters";
 
-export const i18nPrefix = "dashboard.opportunityProfile.opportunityDetails.validation";
+const i18nPrefix = "dashboard.opportunityProfile.opportunityDetails.validation";
 
 const languageObjectSchema = z.object({
   id: z.number(),
@@ -27,13 +34,6 @@ export function getMainCommunicationLanguageOptions<T extends MainCommunicationL
   return apiLanguages.filter((l) => toLangCode(l) !== null);
 }
 
-type Translate = (key: string, options?: Record<string, unknown>) => string;
-
-export const lengthMessages = (tooLongKey: string) => ({
-  tooLong: tooLongKey,
-  shortenOnly: `${i18nPrefix}.shortenOnly`,
-});
-
 export const createOpportunityDetailsSchema = (
   t: Translate,
   mainCommunicationLanguageOptions: MainCommunicationLanguageOption[] = [],
@@ -44,10 +44,8 @@ export const createOpportunityDetailsSchema = (
       .string()
       .trim()
       .min(1, t(`${i18nPrefix}.opportunityNameRequired`))
-      .superRefine(refineTextLimit(t, limits.title, lengthMessages(`${i18nPrefix}.opportunityNameTooLong`))),
-    description: z
-      .string()
-      .superRefine(refineTextLimit(t, limits.description, lengthMessages(`${i18nPrefix}.descriptionTooLong`))),
+      .superRefine(refineTextLimit(t, limits.title, OPPORTUNITY_TITLE_MESSAGES)),
+    description: z.string().superRefine(refineTextLimit(t, limits.description, OPPORTUNITY_DESCRIPTION_MESSAGES)),
     numberOfVolunteers: z.string(),
     mainCommunication: z.array(languageObjectSchema).superRefine((langs, ctx) => {
       const selected = langs.filter(({ language }) => !!language);
