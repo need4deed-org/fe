@@ -1,9 +1,10 @@
-import { ReactNode } from "react";
+import { ReactNode, useId, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { Paragraph } from "../../../styled/text";
 import { Search } from "../../../core/common";
 import FiltersButton from "./FiltersButton";
+import Filters from "../CardsFilter/Filters";
 import Results from "./Results";
 import SortBy, { OnChangeSortOrder, SortOption } from "./SortBy";
 import { XIcon } from "@phosphor-icons/react";
@@ -11,17 +12,18 @@ import { FilterItem } from "../CardsFilter/types";
 import { EntityFilterChip } from "./EntityFilterChip";
 import {
   ClearAllButton,
+  FilterControls,
   HeaderContainer,
   HeaderFilterItem,
   HeaderFilterItemContainer,
   HeaderTitleRow,
   HyphenatedHeading2,
   SearchBarSectionContainer,
+  SearchField,
   TabHeading,
   Tabs,
-  TabsSectionContainer,
   TabsSearchBarContainer,
-  XIconDiv,
+  RemoveFilterButton,
 } from "./styles";
 
 export type EntityFilter = {
@@ -40,7 +42,8 @@ type Props = {
   tabs: string[];
   selectedTabIndex: number;
   setSelectedTabIndex: (index: number) => void;
-  setIsFiltersOpen: (isOpen: boolean) => void;
+  filtersContent: ReactNode;
+  showSort: boolean;
   sortOrder: string;
   onSortOrderChange?: OnChangeSortOrder;
   extraSortOptions?: SortOption[];
@@ -63,7 +66,8 @@ export default function CardsHeader({
   selectedTabIndex,
   setSelectedTabIndex,
   tabs,
-  setIsFiltersOpen,
+  filtersContent,
+  showSort,
   sortOrder,
   onSortOrderChange,
   extraSortOptions,
@@ -76,6 +80,9 @@ export default function CardsHeader({
   headerAction,
 }: Props) {
   const { t } = useTranslation();
+  const filtersId = useId();
+  const filtersButton = useRef<HTMLButtonElement>(null);
+  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
 
   return (
     <HeaderContainer>
@@ -85,38 +92,62 @@ export default function CardsHeader({
       </HeaderTitleRow>
 
       <TabsSearchBarContainer>
-        <TabsSectionContainer>
-          <Tabs role="tablist">
-            {tabs.map((tab, index) => (
-              <TabHeading
-                type="button"
-                role="tab"
-                aria-selected={selectedTabIndex === index}
-                key={tab}
-                onClick={() => setSelectedTabIndex(index)}
-                $isSelected={selectedTabIndex === index}
-              >
-                {tab}
-              </TabHeading>
-            ))}
-          </Tabs>
-          {showListControls && (
-            <SortBy sortOrder={sortOrder} onChange={onSortOrderChange} extraOptions={extraSortOptions} />
-          )}
-        </TabsSectionContainer>
+        <Tabs role="tablist">
+          {tabs.map((tab, index) => (
+            <TabHeading
+              type="button"
+              role="tab"
+              aria-selected={selectedTabIndex === index}
+              key={tab}
+              onClick={() => setSelectedTabIndex(index)}
+              $isSelected={selectedTabIndex === index}
+            >
+              {tab}
+            </TabHeading>
+          ))}
+        </Tabs>
 
-        <SearchBarSectionContainer>
-          {showSearch && (
-            <Search
-              placeHolder={searchPlaceholder ?? `${t("dashboard.searchPlaceHolder")}...`}
-              onInputChange={onSearchInputChange}
-              width="var(--filters-search-bar-width)"
-              backgroundColor="var(--color-magnolia-light)"
-              value={searchValue}
-            />
+        <FilterControls>
+          <SearchBarSectionContainer>
+            {showSearch && (
+              <SearchField>
+                <Search
+                  placeHolder={searchPlaceholder ?? `${t("dashboard.searchPlaceHolder")}...`}
+                  onInputChange={onSearchInputChange}
+                  width="100%"
+                  backgroundColor="var(--color-magnolia-light)"
+                  value={searchValue}
+                />
+              </SearchField>
+            )}
+            {showListControls && (
+              <FiltersButton
+                panelId={filtersId}
+                isFiltersOpen={isFiltersOpen}
+                onToggle={(event) => {
+                  filtersButton.current = event.currentTarget;
+                  setIsFiltersOpen((open) => !open);
+                }}
+              />
+            )}
+            {showListControls && showSort && (
+              <SortBy sortOrder={sortOrder} onChange={onSortOrderChange} extraOptions={extraSortOptions} />
+            )}
+          </SearchBarSectionContainer>
+
+          {showListControls && (
+            <Filters
+              id={filtersId}
+              isOpen={isFiltersOpen}
+              onClose={() => {
+                setIsFiltersOpen(false);
+                filtersButton.current?.focus();
+              }}
+            >
+              {filtersContent}
+            </Filters>
           )}
-          {showListControls && <FiltersButton setIsFiltersOpen={setIsFiltersOpen} />}
-        </SearchBarSectionContainer>
+        </FilterControls>
 
         <Results counter={resultCounter} text={resultText} />
 
@@ -129,7 +160,7 @@ export default function CardsHeader({
             />
           )}
           {activeFilters.map((f) => (
-            <HeaderFilterItem key={f.label}>
+            <HeaderFilterItem key={JSON.stringify([f.parentKey, f.keyValue])}>
               <Paragraph
                 color="var(--color-midnight)"
                 fontSize="var(--cards-header-filter-item-font-size)"
@@ -137,18 +168,17 @@ export default function CardsHeader({
               >
                 {f.label}
               </Paragraph>
-              <XIconDiv>
-                <XIcon
-                  size={20}
-                  onClick={() => {
-                    onClearFilter(f?.keyValue || f.label, f.parentKey);
-                  }}
-                />
-              </XIconDiv>
+              <RemoveFilterButton
+                type="button"
+                aria-label={t("dashboard.filters.remove", { label: f.label })}
+                onClick={() => onClearFilter(f.keyValue, f.parentKey)}
+              >
+                <XIcon size={20} aria-hidden />
+              </RemoveFilterButton>
             </HeaderFilterItem>
           ))}
-          {activeFilters.length > 1 && onClearAllFilters && (
-            <ClearAllButton onClick={onClearAllFilters}>
+          {activeFilters.length > 0 && onClearAllFilters && (
+            <ClearAllButton type="button" onClick={onClearAllFilters}>
               <Paragraph
                 color="var(--color-midnight)"
                 fontSize="var(--filters-clear-all-button-text-font-size)"

@@ -839,8 +839,10 @@
     },
     "filters": {
       "button": "FILTERS",
-      "closeFilters": "CLOSE FILTERS",
-      "clearAll": "Clear all",
+      "title": "Filters",
+      "closeFilters": "Close filters",
+      "remove": "Remove filter: {{label}}",
+      "clearAll": "Clear all filters",
       "commute": "Max Commute: {{minutes}} min",
       "commuteMinutesHeader": "Maximum commute time",
       "commuteMinutesOption": "{{minutes}} min"

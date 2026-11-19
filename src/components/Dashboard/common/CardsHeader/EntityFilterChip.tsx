@@ -1,7 +1,8 @@
 import Image from "next/image";
+import { useTranslation } from "react-i18next";
 import { ShootingStarIcon, XIcon } from "@phosphor-icons/react";
 import { Paragraph } from "@/components/styled/text";
-import { AvatarWrapper, DefaultAvatarWrapper, EntityChip, EntityChipXIconDiv } from "./styles";
+import { AvatarWrapper, DefaultAvatarWrapper, EntityChip, RemoveEntityFilterButton } from "./styles";
 
 type Props = {
   name: string;
@@ -10,6 +11,8 @@ type Props = {
 };
 
 export function EntityFilterChip({ name, avatarUrl, onRemove }: Props) {
+  const { t } = useTranslation();
+
   return (
     <EntityChip data-testid="entity-filter-chip">
       <AvatarWrapper>
@@ -32,9 +35,13 @@ export function EntityFilterChip({ name, avatarUrl, onRemove }: Props) {
       >
         {name}
       </Paragraph>
-      <EntityChipXIconDiv onClick={onRemove}>
-        <XIcon size={20} color="var(--color-white)" />
-      </EntityChipXIconDiv>
+      <RemoveEntityFilterButton
+        type="button"
+        aria-label={t("dashboard.filters.remove", { label: name })}
+        onClick={onRemove}
+      >
+        <XIcon size={20} aria-hidden />
+      </RemoveEntityFilterButton>
     </EntityChip>
   );
 }

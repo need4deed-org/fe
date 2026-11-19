@@ -4,22 +4,19 @@ import AccordionFilter from "../../common/CardsFilter/AccordionFilter";
 import { getVisibleSelectionFilterSections } from "../../common/CardsFilter/selectionFilters";
 import { SetFilter } from "../../common/CardsFilter/types";
 import { createAgentFilterSections } from "./helpers";
-import { FiltersContentContainer } from "./styles";
+import { FiltersContentContainer } from "../../common/CardsFilter/Filters";
 import { useAuth } from "@/hooks/useAuth";
-import { ViewMode } from "../../common/types";
 
 type Props = {
   filter: AgentCardsFilter;
   setFilter: SetFilter<AgentCardsFilter>;
-  viewMode: ViewMode;
 };
 
-export default function FiltersContent({ setFilter, filter, viewMode }: Props) {
+export default function FiltersContent({ setFilter, filter }: Props) {
   const { t } = useTranslation();
   const { isAuthorized, isAgent, isVolunteer } = useAuth();
 
   const sections = getVisibleSelectionFilterSections(createAgentFilterSections(filter, setFilter, t), {
-    viewMode,
     isAuthorized,
     isAgent,
     isVolunteer,

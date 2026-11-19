@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import { FiltersContentContainer, FullWidthFilter } from "../../common/CardsFilter/Filters";
 import { useTranslation } from "react-i18next";
 import { QueryParamsKeys } from "need4deed-sdk";
 import { VolunteerCardsFilter } from "./types";
@@ -6,23 +6,20 @@ import { createAvailabilityFilterItems, createVolunteerFilterSections } from "./
 import AccordionFilter from "../../common/CardsFilter/AccordionFilter";
 import { getVisibleSelectionFilterSections } from "../../common/CardsFilter/selectionFilters";
 import { SetFilter } from "../../common/CardsFilter/types";
-import { ViewMode } from "../../common/types";
 import { useAuth } from "@/hooks/useAuth";
 import { createCommuteMinutesFilterItems } from "../../common/CardsFilter/matchingPrefill";
 
 interface Props {
   filter: VolunteerCardsFilter;
   setFilter: SetFilter<VolunteerCardsFilter>;
-  viewMode: ViewMode;
   isMatchMode: boolean;
 }
 
-export default function FiltersContent({ setFilter, filter, viewMode, isMatchMode }: Props) {
+export default function FiltersContent({ setFilter, filter, isMatchMode }: Props) {
   const { t } = useTranslation();
   const { isAuthorized, isAgent, isVolunteer } = useAuth();
 
   const sections = getVisibleSelectionFilterSections(createVolunteerFilterSections(filter, setFilter, t), {
-    viewMode,
     isAuthorized,
     isAgent,
     isVolunteer,
@@ -40,7 +37,7 @@ export default function FiltersContent({ setFilter, filter, viewMode, isMatchMod
           items={createCommuteMinutesFilterItems(filter, setFilter, t)}
         />
       )}
-      <AccordionFilter
+      <FullWidthFilter
         header={t("dashboard.volunteers.filters.preferredAv.header")}
         groupedItems={availabilityFilters}
         groupedItemsDisplayType="button"
@@ -48,12 +45,3 @@ export default function FiltersContent({ setFilter, filter, viewMode, isMatchMod
     </FiltersContentContainer>
   );
 }
-
-const FiltersContentContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: var(--opportunities-filters-content-container-width);
-  height: auto;
-  gap: var(--opportunities-filters-content-container-gap);
-  padding: var(--opportunities-filters-content-container-padding);
-`;

@@ -11,6 +11,7 @@ interface Props {
   header: string;
   items?: FilterItem[];
   groupedItems?: GroupedFilterItem[];
+  className?: string;
   groupedItemsDisplayType?: "checkbox" | "button";
   isDropdownFilter?: boolean;
 }
@@ -43,6 +44,7 @@ const cssVar = (name: string, fallback: string) =>
 
 export default function AccordionFilter({
   header,
+  className,
   items,
   groupedItems,
   groupedItemsDisplayType = "checkbox",
@@ -146,7 +148,7 @@ export default function AccordionFilter({
     ) : null;
 
   return (
-    <FilterContainer ref={openContainerRef}>
+    <FilterContainer className={className} ref={openContainerRef}>
       <FilterHeaderContainer
         ref={headerRef}
         type="button"
@@ -207,10 +209,7 @@ const FilterHeaderContainer = styled.button<{ $isDropdownFilter?: boolean }>(({ 
   cursor: "pointer",
   padding: "0",
   textAlign: "left",
-  borderTop: $isDropdownFilter
-    ? "none"
-    : "var(--opportunities-filters-content-accordion-header-border-top) solid var(--color-orchid)",
-  paddingTop: "var(--opportunities-filters-content-accordion-header-padding-top)",
+  paddingTop: $isDropdownFilter ? "var(--opportunities-filters-content-accordion-header-padding-top)" : 0,
   ...($isDropdownFilter && {
     "&:disabled": {
       cursor: "not-allowed",

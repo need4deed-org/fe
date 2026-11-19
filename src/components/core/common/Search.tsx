@@ -59,7 +59,12 @@ export function Search({
 }: Props) {
   const [inputValue, setInputValue] = useState(value);
   const inputRef = useRef<HTMLInputElement>(null);
+  const onInputChangeRef = useRef(onInputChange);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    onInputChangeRef.current = onInputChange;
+  }, [onInputChange]);
 
   const debouncedOnInputChange = useCallback(
     (value: string) => {
@@ -68,12 +73,13 @@ export function Search({
       }
 
       const id = setTimeout(() => {
-        onInputChange(value);
+        timeoutRef.current = null;
+        onInputChangeRef.current(value);
       }, debounceTime);
 
       timeoutRef.current = id;
     },
-    [debounceTime, onInputChange],
+    [debounceTime],
   );
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
