@@ -100,6 +100,7 @@ export enum DashboardRoutes {
   AdminDomains = "/dashboard/admin/domains",
   AdminStatistics = "/dashboard/admin/statistics",
   AdminNgoVolunteers = "/dashboard/admin/ngo-volunteers",
+  AdminAccounts = "/dashboard/admin/accounts",
 }
 
 export const questionMark = "?";

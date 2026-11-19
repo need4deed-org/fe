@@ -2055,7 +2055,8 @@
       "nav": {
         "domains": "Domains",
         "stats": "Statistiken",
-        "ngoVolunteers": "Freiwillige der NGOs"
+        "ngoVolunteers": "Freiwillige der NGOs",
+        "accounts": "Konten"
       },
       "ngoVolunteers": {
         "helper": "Wählen Sie eine NGO, um ihren Freiwilligen einen Registrierungslink zu geben oder ihre bestehenden Freiwilligen zu importieren.",
@@ -2108,6 +2109,27 @@
             "otherPerson": "E-Mail gehört zu einer anderen Person"
           }
         }
+      },
+      "accounts": {
+        "helper": "Konten von Koordinator*innen, NGOs und Admins. Hier lässt sich der Name einer Person ändern.",
+        "role": "Rolle",
+        "search": "Nach Name suchen",
+        "loadError": "Konten konnten nicht geladen werden.",
+        "empty": "Keine Konten gefunden.",
+        "name": "Name",
+        "email": "E-Mail",
+        "status": "Status",
+        "active": "Aktiv",
+        "inactive": "Deaktiviert",
+        "edit": "Name bearbeiten",
+        "editAria": "Name von {{email}} bearbeiten",
+        "editTitle": "Name bearbeiten",
+        "firstName": "Vorname",
+        "lastName": "Nachname",
+        "save": "Speichern",
+        "renamed": "Name aktualisiert",
+        "personLoadError": "Diese Person konnte nicht geladen werden, der Name lässt sich gerade nicht bearbeiten.",
+        "truncated": "Es werden nur die neuesten Konten angezeigt. Suche, um weitere zu finden."
       }
     },
     "recommended": {
