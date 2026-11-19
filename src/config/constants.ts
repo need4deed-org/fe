@@ -106,9 +106,9 @@ export const questionMark = "?";
 
 export const supportedLangs = Object.values(Lang) as string[];
 
-export const DEFAULT_ROUTE_LANG = Lang.EN;
+export const defaultRouteLang = Lang.EN;
 
-export const LANG_COOKIE_NAME = "preferred-lang";
+export const langCookieName = "preferred-lang";
 
 export const EMPTY_PLACEHOLDER_VALUE = "–";
 

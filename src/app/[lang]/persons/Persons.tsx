@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 
-import { useRouteLang } from "@/hooks/useRouteLang";
+import { useRouteLang } from "@/hooks/use-route-lang";
 import { localizedPath } from "@/utils/helpers";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";

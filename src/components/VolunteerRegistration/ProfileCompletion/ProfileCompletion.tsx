@@ -3,7 +3,7 @@
 import { Button } from "@/components/core/button";
 import { apiPathOption } from "@/config/constants";
 import { useRegisterVolunteer } from "@/hooks/useRegisterVolunteer";
-import { useRouteLang } from "@/hooks/useRouteLang";
+import { useRouteLang } from "@/hooks/use-route-lang";
 import { localizedPath, setAuthHint } from "@/utils/helpers";
 import { useForm } from "@tanstack/react-form";
 import { ApiOptionLists, ApiVolunteerRegisterNew, DocumentStatusType } from "need4deed-sdk";

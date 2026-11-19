@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Button } from "../core/button";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "next/navigation";
-import { useRouteLang } from "@/hooks/useRouteLang";
+import { useRouteLang } from "@/hooks/use-route-lang";
 import { localizedPath } from "@/utils/helpers";
 
 const LoginRegisterContainer = styled.div`

@@ -3,7 +3,7 @@ import { Button } from "@/components/core/button";
 import { PageLayout } from "@/components/Layout";
 import { apiPathUser, DashboardRoutes } from "@/config/constants";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
-import { useRouteLang } from "@/hooks/useRouteLang";
+import { useRouteLang } from "@/hooks/use-route-lang";
 import { localizedPath } from "@/utils/helpers";
 import { getLocalizedErrorMessage } from "@/utils/apiErrors";
 import axios from "axios";

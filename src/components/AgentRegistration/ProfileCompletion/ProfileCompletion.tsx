@@ -42,7 +42,7 @@ import { defaultProfileCompletionData, ProfileCompletionData, TOTAL_COMPLETION_S
 import { CheckMark, MatchBanner, MatchActions, MatchListCopy, MatchRow } from "./styled";
 import { useAgentAddressLookup } from "./useAgentAddressLookup";
 import { useGetRegistrationOrganizations } from "@/hooks/useGetRegistrationOrganizations";
-import { useRouteLang } from "@/hooks/useRouteLang";
+import { useRouteLang } from "@/hooks/use-route-lang";
 import { localizedPath, setAuthHint } from "@/utils/helpers";
 
 function buildNewAgent(formData: ProfileCompletionData, organizationId?: number): ApiAgentRegisterNew {

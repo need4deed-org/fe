@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { userAgent } from "next/server";
 import { UserRole } from "need4deed-sdk";
-import { LANG_COOKIE_NAME } from "./config/constants";
+import { langCookieName } from "./config/constants";
 import {
   decodeJwtPayload,
   getPathLanguage,
@@ -24,7 +24,7 @@ const authorizedRoutes = {
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const currentLocale = getPathLanguage(pathname);
-  const locale = currentLocale ?? resolveLanguage(request.cookies.get(LANG_COOKIE_NAME)?.value);
+  const locale = currentLocale ?? resolveLanguage(request.cookies.get(langCookieName)?.value);
 
   const redirectTo = (path: string, { clearSearch = false } = {}) => {
     const url = request.nextUrl.clone();
@@ -76,7 +76,7 @@ export function middleware(request: NextRequest) {
   }
 
   const response = NextResponse.next();
-  response.cookies.set(LANG_COOKIE_NAME, currentLocale, {
+  response.cookies.set(langCookieName, currentLocale, {
     path: "/",
     maxAge: 60 * 60 * 24 * 365,
     sameSite: "lax",
