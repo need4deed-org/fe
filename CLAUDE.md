@@ -61,7 +61,7 @@ Both live in `src/hooks/`. Many resource-specific hooks wrap these (e.g. `useGet
 
 **Styling:** Styled Components. Follow Figma designs in each issue before styling. Do not introduce new UI libraries.
 
-**i18n:** Translation files at `public/locales/{en,de}/translations.json`. Language falls back to `de` if not found.
+**i18n:** Translation files at `public/locales/{en,de}/translations.json`. A missing translation key falls back to `de` (i18next `fallbackLng`); the middleware redirects a missing or unsupported route language to the `preferred-lang` cookie language, else `en` (`defaultRouteLang`). Paths the middleware matcher excludes (`/api`, `/health`, `/_next`, `/.well-known`, and static-file extensions such as `.png`, `.json`, `.txt`, `.xml`) never get that redirect; if one reaches `[lang]` (e.g. `/missing.png`), the root layout calls `notFound()`, which gives a plain, unstyled 404 (`[lang]/not-found.tsx` sits below the root layout, so it cannot render). Keep the extension list explicit: email links such as `/verify-email/<JWT>` have dots in the last segment and must still get the language redirect.
 
 ## Key constraints
 
