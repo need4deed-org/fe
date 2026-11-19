@@ -24,7 +24,6 @@ const authorizedRoutes = {
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const currentLocale = getPathLanguage(pathname);
-  // Redirect targets: the route language, else the saved preference, else the default.
   const locale = currentLocale ?? resolveLanguage(request.cookies.get(LANG_COOKIE_NAME)?.value);
 
   const redirectTo = (path: string, { clearSearch = false } = {}) => {
@@ -39,7 +38,6 @@ export function middleware(request: NextRequest) {
   if (!token) {
     const isDashboard = authorizedRoutes.DASHBOARD.regex.test(pathname);
     if (isDashboard || authorizedRoutes.NEW_OPPORTUNITIES.regex.test(pathname)) {
-      // The dashboard drops its query; the opportunity form keeps it.
       return redirectTo("/login", { clearSearch: isDashboard });
     }
   }

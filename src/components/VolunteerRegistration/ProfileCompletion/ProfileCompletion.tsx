@@ -49,7 +49,7 @@ export function ProfileCompletion() {
     () => createMapping(optionLists?.activity as ApiLanguageOption[]),
     [optionLists?.activity],
   );
-  const skillMapping = useMemo(() => createMapping(optionLists?.skill as ApiLanguageOption[]), [optionLists?.language]);
+  const skillMapping = useMemo(() => createMapping(optionLists?.skill as ApiLanguageOption[]), [optionLists?.skill]);
 
   const leadMapping = useMemo(
     () => createMapping(optionLists?.lead_from as ApiLanguageOption[]),

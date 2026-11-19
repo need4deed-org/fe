@@ -12,13 +12,13 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
           <Link href={localizedPath(lang, "/login")} className={styles.secondary}>
             Login
           </Link>
-          <Link href="/persons" className={styles.secondary}>
+          <Link href={localizedPath(lang, "/persons")} className={styles.secondary}>
             Persons
           </Link>
-          <Link href="/forms/volunteer" className={styles.secondary}>
+          <Link href={localizedPath(lang, "/forms/volunteer")} className={styles.secondary}>
             Volunteer form
           </Link>
-          <Link href="/forms/opportunity" className={styles.secondary}>
+          <Link href={localizedPath(lang, "/forms/opportunity")} className={styles.secondary}>
             Opportunity form
           </Link>
         </div>

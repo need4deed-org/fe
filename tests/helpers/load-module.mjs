@@ -11,14 +11,6 @@ const extensions = ["", ".ts", ".tsx", "/index.ts", "/index.tsx"];
 const resolveSource = (base) =>
   extensions.map((ext) => base + ext).find((file) => /\.tsx?$/.test(file) && existsSync(file));
 
-/**
- * Transpiles a TypeScript source file and evaluates it as CommonJS.
- * `@/…` and relative imports resolve to sources (each loaded once per call); anything else comes from
- * node_modules. `dependencies` overrides any import by its exact specifier.
- *
- * @param {string} file path relative to the repo root, e.g. "src/middleware.ts"
- * @param {Record<string, unknown>} [dependencies]
- */
 export function loadModule(file, dependencies = {}) {
   const cache = new Map();
 
@@ -38,8 +30,9 @@ export function loadModule(file, dependencies = {}) {
         : id.startsWith(".")
           ? path.resolve(path.dirname(absolutePath), id)
           : undefined;
-      const resolved = base && resolveSource(base);
-      return resolved ? load(resolved) : packageRequire(id);
+      if (!base) return packageRequire(id);
+      const source = resolveSource(base);
+      return source ? load(source) : createRequire(absolutePath)(base);
     };
     new Function("require", "module", "exports", outputText)(localRequire, loaded, loaded.exports);
     return loaded.exports;
