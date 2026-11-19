@@ -61,7 +61,7 @@ Both live in `src/hooks/`. Many resource-specific hooks wrap these (e.g. `useGet
 
 **Styling:** Styled Components. Follow Figma designs in each issue before styling. Do not introduce new UI libraries.
 
-**i18n:** Translation files at `public/locales/{en,de}/translations.json`. A missing translation key falls back to `de` (i18next `fallbackLng`); an unsupported route language resolves to `en` (`defaultRouteLang`), in the middleware and the root layout alike.
+**i18n:** Translation files at `public/locales/{en,de}/translations.json`. A missing translation key falls back to `de` (i18next `fallbackLng`); the middleware redirects a missing or unsupported route language to the `preferred-lang` cookie language, else `en` (`defaultRouteLang`).
 
 ## Key constraints
 
