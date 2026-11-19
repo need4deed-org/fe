@@ -1,5 +1,6 @@
 import { SectionCardProps } from "@/components/Dashboard/Profile/common/SectionCard";
 import { Appreciation, AppreciationRef } from "@/components/Dashboard/Profile/sections/Appreciation";
+import { VolunteerEvents } from "@/components/Dashboard/Profile/sections/VolunteerEvents";
 import { Comments } from "@/components/Dashboard/Profile/sections/Comments";
 import {
   CommunicationTracker,
@@ -259,6 +260,15 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
         }),
         subComponent: <Appreciation ref={appreciationRef} volunteer={volunteer} canEdit={isAuthorized} />,
       },
+      ...(isAuthorized
+        ? [
+            {
+              iconName: IconName.CalendarStar,
+              title: t("dashboard.volunteerEvents.title"),
+              subComponent: <VolunteerEvents volunteerId={volunteer.id} />,
+            },
+          ]
+        : []),
       {
         iconName: IconName.ChartLine,
         title: t("dashboard.volunteerProfile.activityLog"),

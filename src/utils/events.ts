@@ -22,7 +22,7 @@ export function formatEventDate(event: ApiEventN4DGetList, locale: string) {
   return start === end ? start : `${start} – ${end}`;
 }
 
-export function getHttpUrl(value?: string) {
+export function getHttpUrl(value?: string | null) {
   if (!value) return undefined;
 
   try {
@@ -31,4 +31,8 @@ export function getHttpUrl(value?: string) {
   } catch {
     return undefined;
   }
+}
+
+export function getEventRegistrationHref(event: Pick<ApiEventN4DGetList, "id" | "linkRSVP">, language: string) {
+  return getHttpUrl(event.linkRSVP) ?? `/${language}/event-page/${event.id}#register`;
 }
