@@ -1,15 +1,19 @@
 import z from "zod";
-import { textLength } from "@/utils/opportunity-text-limits";
-import { OPPORTUNITY_TITLE_MAX_LENGTH, VolunteerStateTypeType } from "need4deed-sdk";
+import { refineTextLimit } from "../Profile/sections/OpportunityDetails/opportunityDetailsSchema";
+import { SOURCE_TEXT_LIMITS } from "@/utils/opportunity-text-limits";
+import { VolunteerStateTypeType } from "need4deed-sdk";
 
-export const createHeaderSchema = (t: (key: string) => string) =>
+export const createHeaderSchema = (t: (key: string, options?: Record<string, unknown>) => string) =>
   z.object({
     title: z
       .string()
       .min(1, t("form.error.required"))
-      .refine(
-        (value) => textLength(value) <= OPPORTUNITY_TITLE_MAX_LENGTH,
-        t("dashboard.opportunityProfile.opportunityDetails.validation.opportunityNameTooLong"),
+      .superRefine(
+        refineTextLimit(
+          t,
+          SOURCE_TEXT_LIMITS.title,
+          "dashboard.opportunityProfile.opportunityDetails.validation.opportunityNameTooLong",
+        ),
       ),
     volunteerType: z.enum(
       [VolunteerStateTypeType.REGULAR, VolunteerStateTypeType.ACCOMPANYING, VolunteerStateTypeType.EVENTS],

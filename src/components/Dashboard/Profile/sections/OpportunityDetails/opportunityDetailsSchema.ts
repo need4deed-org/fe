@@ -1,6 +1,11 @@
 import { Availability } from "@/components/forms/types";
 import { LanguageLevel } from "@/types";
-import { OpportunityTextLimits, SOURCE_TEXT_LIMITS, textLength } from "@/utils/opportunity-text-limits";
+import {
+  getTextLimitIssue,
+  OpportunityTextLimits,
+  SOURCE_TEXT_LIMITS,
+  TextLimit,
+} from "@/utils/opportunity-text-limits";
 import { z } from "zod";
 import { resolveFormLanguageToOption } from "./formatters";
 
@@ -27,8 +32,25 @@ export function getMainCommunicationLanguageOptions<T extends MainCommunicationL
   return apiLanguages.filter((l) => toLangCode(l) !== null);
 }
 
+type Translate = (key: string, options?: Record<string, unknown>) => string;
+
+/** be's rule in the form: over the cap is an error, unless the text was already over it and isn't growing. */
+export function refineTextLimit(t: Translate, limit: TextLimit, tooLongKey: string) {
+  return (value: string, ctx: z.RefinementCtx) => {
+    const issue = getTextLimitIssue(value, limit);
+    if (!issue) return;
+    ctx.addIssue({
+      code: "custom",
+      message:
+        issue === "tooLong"
+          ? t(tooLongKey, { max: limit.max })
+          : t(`${i18nPrefix}.shortenOnly`, { max: limit.max, count: limit.allowed }),
+    });
+  };
+}
+
 export const createOpportunityDetailsSchema = (
-  t: (key: string) => string,
+  t: Translate,
   mainCommunicationLanguageOptions: MainCommunicationLanguageOption[] = [],
   limits: OpportunityTextLimits = SOURCE_TEXT_LIMITS,
 ) =>
@@ -36,10 +58,8 @@ export const createOpportunityDetailsSchema = (
     title: z
       .string()
       .min(1, t(`${i18nPrefix}.opportunityNameRequired`))
-      .refine((value) => textLength(value) <= limits.title, t(`${i18nPrefix}.opportunityNameTooLong`)),
-    description: z
-      .string()
-      .refine((value) => textLength(value) <= limits.description, t(`${i18nPrefix}.descriptionTooLong`)),
+      .superRefine(refineTextLimit(t, limits.title, `${i18nPrefix}.opportunityNameTooLong`)),
+    description: z.string().superRefine(refineTextLimit(t, limits.description, `${i18nPrefix}.descriptionTooLong`)),
     numberOfVolunteers: z.string(),
     mainCommunication: z.array(languageObjectSchema).superRefine((langs, ctx) => {
       const selected = langs.filter(({ language }) => !!language);
@@ -72,7 +92,7 @@ export const createOpportunityDetailsSchema = (
 export type OpportunityDetailsFormData = z.infer<ReturnType<typeof createOpportunityDetailsSchema>>;
 
 export const createNewOpportunityDetailsSchema = (
-  t: (key: string) => string,
+  t: Translate,
   mainCommunicationLanguageOptions: MainCommunicationLanguageOption[] = [],
 ) => createOpportunityDetailsSchema(t, mainCommunicationLanguageOptions).omit({ title: true });
 

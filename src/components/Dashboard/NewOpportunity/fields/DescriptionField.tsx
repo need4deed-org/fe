@@ -24,7 +24,6 @@ export default function DescriptionField({ prefix }: { prefix: string }) {
           label={t(`${prefix}.description`)}
           value={field.value}
           setValue={field.onChange}
-          maxLength={OPPORTUNITY_DESCRIPTION_MAX_LENGTH}
           hint={t(`${prefix}.descriptionHint`, { max: OPPORTUNITY_DESCRIPTION_MAX_LENGTH })}
           errorMessage={errors.description?.message}
         />

@@ -52,7 +52,7 @@ export const cancelLogout = (): void => {
 const isSessionRejected = (refreshError: unknown) =>
   axios.isAxiosError(refreshError) && SESSION_REJECTED_STATUSES.includes(refreshError.response?.status ?? 0);
 
-export const getActiveLanguage = (): Lang => {
+const getActiveLanguage = (): Lang => {
   if (typeof window !== "undefined") {
     const routeLanguage = getPathLanguage(window.location.pathname);
     if (routeLanguage) return routeLanguage;

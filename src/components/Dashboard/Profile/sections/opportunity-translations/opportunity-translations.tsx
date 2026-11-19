@@ -23,7 +23,7 @@ import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import { z } from "zod";
 import { getLocalizedErrorMessage, isSilentError } from "@/utils/apiErrors";
-import { allowedTextLength, textLength } from "@/utils/opportunity-text-limits";
+import { getTextLimitIssue, textLimit } from "@/utils/opportunity-text-limits";
 import { SectionEmptyState } from "../shared/styles";
 import {
   getRegenerationState,
@@ -116,12 +116,16 @@ function TranslationReview({
           for (const field of ["title", "info"] as const) {
             const current = defaultValues?.[field] ?? "";
             if (draft[field].trim() === current.trim()) continue;
-            const maxLength = allowedTextLength(OPPORTUNITY_TRANSLATION_MAX_LENGTH[field], current);
-            const message = !draft[field].trim()
-              ? t("opportunityTranslations.required")
-              : textLength(draft[field]) > maxLength
-                ? t("opportunityTranslations.tooLong", { count: maxLength })
-                : null;
+            const limit = textLimit(OPPORTUNITY_TRANSLATION_MAX_LENGTH[field], current);
+            const issue = draft[field].trim() ? getTextLimitIssue(draft[field], limit) : "required";
+            const message =
+              issue === "required"
+                ? t("opportunityTranslations.required")
+                : issue === "tooLong"
+                  ? t("opportunityTranslations.tooLong", { count: limit.max })
+                  : issue === "shortenOnly"
+                    ? t("opportunityTranslations.shortenOnly", { max: limit.max, count: limit.allowed })
+                    : null;
             if (message) context.addIssue({ code: "custom", path: [field], message });
           }
         }),

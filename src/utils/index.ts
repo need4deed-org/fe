@@ -1,5 +1,4 @@
 export * from "./helpers";
-export * from "./opportunity-text-limits";
 
 import { cloudfrontURL } from "@/config/constants";
 import { DocumentStatusType } from "need4deed-sdk";

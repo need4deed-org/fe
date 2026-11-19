@@ -16,7 +16,7 @@ import {
 import { createMapping } from "@/components/Dashboard/Profile/sections/VolunteerProfile/mappingUtils";
 import { useUpdateOpportunityDetails } from "@/hooks/useUpdateOpportunityDetails";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { getActiveLanguage } from "@/config/axios";
+import { useRouteLang } from "@/hooks/use-route-lang";
 import { getOpportunityTextLimits } from "@/utils/opportunity-text-limits";
 import { de, enUS } from "date-fns/locale";
 import { ApiOpportunityGet, Lang, LangPurpose, VolunteerStateTypeType } from "need4deed-sdk";
@@ -48,6 +48,7 @@ type Props = {
 export function OpportunityDetailsEdit({ opportunity, onCancel }: Props) {
   const { t, i18n } = useTranslation();
   const lang = i18n.language;
+  const routeLang = useRouteLang();
   const locale = lang === "de" ? de : enUS;
   const opp = opportunity as OpportunityWithDetails;
   const prefix = "dashboard.opportunityProfile.opportunityDetails";
@@ -84,7 +85,7 @@ export function OpportunityDetailsEdit({ opportunity, onCancel }: Props) {
     currentEventDateTime = dateFromDateTimeUTCStrings(opp.event.date, opp.event.time);
   }
 
-  const textLimits = getOpportunityTextLimits(opp, getActiveLanguage());
+  const textLimits = getOpportunityTextLimits(opp, routeLang);
   const schema = createOpportunityDetailsSchema(t, getMainCommunicationLanguageOptions(apiLanguages), textLimits);
   const methods = useForm<OpportunityDetailsFormData>({
     resolver: zodResolver(schema),
@@ -158,6 +159,7 @@ export function OpportunityDetailsEdit({ opportunity, onCancel }: Props) {
                 label={t(`${prefix}.opportunityName`)}
                 value={field.value}
                 setValue={field.onChange}
+                hint={t(`${prefix}.descriptionHint`, { max: textLimits.title.max })}
                 errorMessage={errors.title?.message}
               />
             )}
@@ -174,8 +176,7 @@ export function OpportunityDetailsEdit({ opportunity, onCancel }: Props) {
                 label={t(`${prefix}.description`)}
                 value={field.value}
                 setValue={field.onChange}
-                maxLength={textLimits.description}
-                hint={t(`${prefix}.descriptionHint`, { max: textLimits.description })}
+                hint={t(`${prefix}.descriptionHint`, { max: textLimits.description.max })}
                 errorMessage={errors.description?.message}
               />
             )}

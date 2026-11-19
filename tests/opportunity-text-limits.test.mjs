@@ -1,23 +1,10 @@
 import assert from "node:assert/strict";
-import fs from "node:fs";
-import path from "node:path";
 import test from "node:test";
-import { createRequire } from "node:module";
-import { fileURLToPath } from "node:url";
-import ts from "typescript";
+import { loadModule } from "./helpers/load-module.mjs";
 
-const packageRequire = createRequire(import.meta.url);
-const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-
-function loadModule(file) {
-  const source = fs.readFileSync(path.join(root, file), "utf8");
-  const output = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS } }).outputText;
-  const loadedModule = { exports: {} };
-  new Function("require", "module", "exports", output)(packageRequire, loadedModule, loadedModule.exports);
-  return loadedModule.exports;
-}
-
-const { textLength, allowedTextLength, getOpportunityTextLimits } = loadModule("src/utils/opportunity-text-limits.ts");
+const { textLength, textLimit, getTextLimitIssue, getOpportunityTextLimits } = loadModule(
+  "src/utils/opportunity-text-limits.ts",
+);
 
 const opportunity = (overrides = {}) => ({
   title: "Garden help",
@@ -26,6 +13,7 @@ const opportunity = (overrides = {}) => ({
   originalLanguage: "de",
   ...overrides,
 });
+const limit = (max, allowed = max) => ({ max, allowed });
 
 test("counts code points and ignores surrounding whitespace, like be", () => {
   assert.equal(textLength("  abc \n"), 3);
@@ -33,39 +21,55 @@ test("counts code points and ignores surrounding whitespace, like be", () => {
   assert.equal(textLength(null), 0);
 });
 
-test("text over the limit keeps its own length as the limit", () => {
-  assert.equal(allowedTextLength(500, "a".repeat(1322)), 1322);
-  assert.equal(allowedTextLength(500, "a".repeat(10)), 500);
-  assert.equal(allowedTextLength(500), 500);
+test("text over the limit keeps its own length as the allowance", () => {
+  assert.deepEqual(textLimit(500, "a".repeat(1322)), limit(500, 1322));
+  assert.deepEqual(textLimit(500, "a".repeat(10)), limit(500));
+  assert.deepEqual(textLimit(500), limit(500));
+});
+
+test("text within the limit is fine; over it is too long", () => {
+  assert.equal(getTextLimitIssue("a".repeat(500), limit(500)), null);
+  assert.equal(getTextLimitIssue(`${"a".repeat(500)}  `, limit(500)), null);
+  assert.equal(getTextLimitIssue("a".repeat(501), limit(500)), "tooLong");
+});
+
+test("over-limit text may stay or shrink, but not grow", () => {
+  const legacy = limit(500, 1322);
+  assert.equal(getTextLimitIssue("a".repeat(1322), legacy), null);
+  assert.equal(getTextLimitIssue("a".repeat(800), legacy), null);
+  assert.equal(getTextLimitIssue("a".repeat(1323), legacy), "shortenOnly");
 });
 
 test("editing in the original language uses the source limits", () => {
-  assert.deepEqual(getOpportunityTextLimits(opportunity(), "de"), { title: 150, description: 500 });
+  assert.deepEqual(getOpportunityTextLimits(opportunity(), "de"), { title: limit(150), description: limit(500) });
 });
 
 test("an opportunity without an original language counts as German, like be", () => {
   assert.deepEqual(getOpportunityTextLimits(opportunity({ originalLanguage: undefined }), "de"), {
-    title: 150,
-    description: 500,
+    title: limit(150),
+    description: limit(500),
   });
 });
 
 test("editing a regular or events opportunity in another language uses the translation caps", () => {
-  assert.deepEqual(getOpportunityTextLimits(opportunity(), "en"), { title: 300, description: 2000 });
-  assert.deepEqual(getOpportunityTextLimits(opportunity({ volunteerType: "events" }), "en"), {
-    title: 300,
-    description: 2000,
-  });
+  const expected = { title: limit(300), description: limit(2000) };
+  assert.deepEqual(getOpportunityTextLimits(opportunity(), "en"), expected);
+  assert.deepEqual(getOpportunityTextLimits(opportunity({ volunteerType: "events" }), "en"), expected);
 });
 
 test("an accompanying description is never translated, so it keeps the source limit", () => {
   assert.deepEqual(getOpportunityTextLimits(opportunity({ volunteerType: "accompanying" }), "en"), {
-    title: 300,
-    description: 500,
+    title: limit(300),
+    description: limit(500),
   });
 });
 
-test("a legacy description over 500 stays editable at its current length", () => {
+test("a legacy source description over 500 stays editable at its current length", () => {
   const limits = getOpportunityTextLimits(opportunity({ description: "a".repeat(1322) }), "de");
-  assert.equal(limits.description, 1322);
+  assert.deepEqual(limits.description, limit(500, 1322));
+});
+
+test("a translated field gets no allowance from the text shown, which may be the source fallback", () => {
+  const limits = getOpportunityTextLimits(opportunity({ title: "a".repeat(400), description: "a".repeat(2400) }), "en");
+  assert.deepEqual(limits, { title: limit(300), description: limit(2000) });
 });
