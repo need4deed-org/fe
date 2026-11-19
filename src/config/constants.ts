@@ -107,6 +107,10 @@ export const questionMark = "?";
 
 export const supportedLangs = Object.values(Lang) as string[];
 
+export const defaultRouteLang = Lang.EN;
+
+export const langCookieName = "preferred-lang";
+
 export const EMPTY_PLACEHOLDER_VALUE = "–";
 
 export const MAX_DESCRIPTION_LENGTH = 500;

@@ -3,9 +3,9 @@
 import { Button } from "@/components/core/button";
 import { apiPathOption } from "@/config/constants";
 import { useRegisterVolunteer } from "@/hooks/useRegisterVolunteer";
-import { setAuthHint } from "@/utils/helpers";
+import { useRouteLang } from "@/hooks/use-route-lang";
+import { localizedPath, setAuthHint } from "@/utils/helpers";
 import { useForm } from "@tanstack/react-form";
-import i18next from "i18next";
 import { ApiOptionLists, ApiVolunteerRegisterNew, DocumentStatusType } from "need4deed-sdk";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -29,6 +29,7 @@ import { ApiLanguageOption } from "@/components/Dashboard/Profile/sections/Volun
 export function ProfileCompletion() {
   const { t } = useTranslation();
   const router = useRouter();
+  const lang = useRouteLang();
   const token = useSearchParams().get("token");
 
   const [step, setStep] = useState(1);
@@ -48,7 +49,7 @@ export function ProfileCompletion() {
     () => createMapping(optionLists?.activity as ApiLanguageOption[]),
     [optionLists?.activity],
   );
-  const skillMapping = useMemo(() => createMapping(optionLists?.skill as ApiLanguageOption[]), [optionLists?.language]);
+  const skillMapping = useMemo(() => createMapping(optionLists?.skill as ApiLanguageOption[]), [optionLists?.skill]);
 
   const leadMapping = useMemo(
     () => createMapping(optionLists?.lead_from as ApiLanguageOption[]),
@@ -80,7 +81,7 @@ export function ProfileCompletion() {
     token,
     onSuccess: () => {
       setAuthHint();
-      router.push(`/${i18next.language}/dashboard`);
+      router.push(localizedPath(lang, "/dashboard"));
     },
   });
 

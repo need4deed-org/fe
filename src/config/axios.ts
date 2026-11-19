@@ -1,9 +1,9 @@
 import axios, { InternalAxiosRequestConfig } from "axios";
 import i18next from "i18next";
-import { Lang } from "need4deed-sdk";
+import type { Lang } from "need4deed-sdk";
 import { toast } from "react-toastify";
 import { getLocalizedErrorMessage, markSessionExpired, rememberSessionExpired } from "@/utils/apiErrors";
-import { clearAuthHint, getLoginPath, getPathLanguage, isValidLanguage, setAuthHint } from "@/utils/helpers";
+import { clearAuthHint, getLoginPath, getPathLanguage, resolveLanguage, setAuthHint } from "@/utils/helpers";
 import { apiPathAuthRefresh, apiPathLogin, apiPathPasswordReset, apiPathRequestPasswordReset } from "./constants";
 
 const noRefreshPaths = [apiPathAuthRefresh, apiPathLogin, apiPathRequestPasswordReset, apiPathPasswordReset];
@@ -59,7 +59,7 @@ const getActiveLanguage = (): Lang => {
   }
 
   const i18nLanguage = (i18next.resolvedLanguage ?? i18next.language)?.split("-")[0];
-  return isValidLanguage(i18nLanguage) ? i18nLanguage : Lang.EN;
+  return resolveLanguage(i18nLanguage);
 };
 
 axios.interceptors.request.use((config) => {

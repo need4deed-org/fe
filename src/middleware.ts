@@ -1,19 +1,18 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { userAgent } from "next/server";
-import { Lang, UserRole } from "need4deed-sdk";
+import { UserRole } from "need4deed-sdk";
+import { langCookieName } from "./config/constants";
 import {
   decodeJwtPayload,
   getPathLanguage,
   getPathLanguagePrefix,
-  isValidLanguage,
   localizedPath,
+  getPreferredLanguage,
 } from "./utils/helpers";
 
-const DEFAULT_LOCALE = Lang.EN;
 const DEFAULT_DEVICE_TYPE = "desktop";
 const DEVICE_HEADER_NAME = "x-device-type";
-const LANG_COOKIE = "preferred-lang";
 const REFRESH = "refresh";
 
 const authorizedRoutes = {
@@ -25,21 +24,21 @@ const authorizedRoutes = {
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const currentLocale = getPathLanguage(pathname);
+  const locale = getPreferredLanguage(pathname, request.cookies.get(langCookieName)?.value);
+
+  const redirectTo = (path: string, { clearSearch = false } = {}) => {
+    const url = request.nextUrl.clone();
+    if (clearSearch) url.search = "";
+    url.pathname = localizedPath(locale, path);
+    return NextResponse.redirect(url);
+  };
 
   const token = request.cookies.get(REFRESH)?.value;
 
   if (!token) {
-    const url = request.nextUrl.clone();
-    const dashboardMatch = pathname.match(authorizedRoutes.DASHBOARD.regex);
-    const newOppMatch = pathname.match(authorizedRoutes.NEW_OPPORTUNITIES.regex);
-    if (dashboardMatch) {
-      url.search = "";
-      url.pathname = localizedPath(currentLocale, "/login");
-      return NextResponse.redirect(url);
-    }
-    if (newOppMatch) {
-      url.pathname = localizedPath(currentLocale, "/login");
-      return NextResponse.redirect(url);
+    const isDashboard = authorizedRoutes.DASHBOARD.regex.test(pathname);
+    if (isDashboard || authorizedRoutes.NEW_OPPORTUNITIES.regex.test(pathname)) {
+      return redirectTo("/login", { clearSearch: isDashboard });
     }
   }
 
@@ -51,49 +50,33 @@ export function middleware(request: NextRequest) {
     // Allowlist: any other role or an undecodable token is sent away.
     const adminRegex = /^(?:\/[a-z]{2})?\/dashboard\/admin(?:\/|$)/;
     if (!isAuthorized && adminRegex.test(pathname)) {
-      const url = request.nextUrl.clone();
-      url.pathname = localizedPath(currentLocale, "/dashboard");
-      return NextResponse.redirect(url);
+      return redirectTo("/dashboard");
     }
 
     const volunteerRestrictedRegex = /^(?:\/[a-z]{2})?\/dashboard\/(volunteers|agents|posts|calendar)(?:\/|$)/;
     if (userObject?.role === UserRole.VOLUNTEER && volunteerRestrictedRegex.test(pathname)) {
-      const url = request.nextUrl.clone();
-      url.pathname = localizedPath(currentLocale, "/dashboard");
-      return NextResponse.redirect(url);
+      return redirectTo("/dashboard");
     }
 
-    const match = pathname.match(authorizedRoutes.AGENT.regex);
-    if (match) {
-      if (isAuthorized || userObject?.role === UserRole.AGENT) {
-        return NextResponse.next();
-      }
-      const url = request.nextUrl.clone();
-      url.pathname = localizedPath(currentLocale, authorizedRoutes.AGENT.redirect);
-      const redirectResponse = NextResponse.redirect(url);
-      return redirectResponse;
+    const isAgentDetail = authorizedRoutes.AGENT.regex.test(pathname);
+    if (isAgentDetail && !isAuthorized && userObject?.role !== UserRole.AGENT) {
+      return redirectTo(authorizedRoutes.AGENT.redirect);
     }
 
     const agentRestrictedRegex = /^(?:\/[a-z]{2})?\/dashboard\/calendar(?:\/|$)/;
     if (userObject?.role === UserRole.AGENT && agentRestrictedRegex.test(pathname)) {
-      const url = request.nextUrl.clone();
-      url.pathname = localizedPath(currentLocale, "/dashboard");
-      return NextResponse.redirect(url);
+      return redirectTo("/dashboard");
     }
   }
 
   if (!currentLocale) {
-    const cookieLang = request.cookies.get(LANG_COOKIE)?.value;
-    const preferredLocale = isValidLanguage(cookieLang) ? cookieLang : DEFAULT_LOCALE;
     const unsupportedPrefix = getPathLanguagePrefix(pathname);
     const unprefixedPath = unsupportedPrefix ? pathname.slice(unsupportedPrefix.length + 1) : pathname;
-    const url = request.nextUrl.clone();
-    url.pathname = localizedPath(preferredLocale, unprefixedPath);
-    return NextResponse.redirect(url);
+    return redirectTo(unprefixedPath);
   }
 
   const response = NextResponse.next();
-  response.cookies.set(LANG_COOKIE, currentLocale, {
+  response.cookies.set(langCookieName, currentLocale, {
     path: "/",
     maxAge: 60 * 60 * 24 * 365,
     sameSite: "lax",

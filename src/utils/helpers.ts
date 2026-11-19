@@ -4,6 +4,8 @@ import {
   AUTH_HINT_COOKIE_NAME,
   AUTH_HINT_MAX_AGE,
   cloudfrontURL,
+  defaultRouteLang,
+  langCookieName,
   supportedLangs,
 } from "@/config/constants";
 
@@ -35,10 +37,16 @@ export const getPathLanguage = (pathname: string): Lang | undefined => {
   return isValidLanguage(language) ? language : undefined;
 };
 
-export const localizedPath = (language: Lang | undefined, path: string): string =>
-  language ? `/${language}${path}` : path;
+export const resolveLanguage = (language: string | undefined): Lang =>
+  isValidLanguage(language) ? language : defaultRouteLang;
 
-export const getLoginPath = (pathname: string): string => localizedPath(getPathLanguage(pathname), "/login");
+export const localizedPath = (language: Lang, path: string): string => `/${language}${path}`;
+
+export const getPreferredLanguage = (pathname: string, savedLanguage: string | undefined): Lang =>
+  getPathLanguage(pathname) ?? resolveLanguage(savedLanguage);
+
+export const getLoginPath = (pathname: string): string =>
+  localizedPath(getPreferredLanguage(pathname, getCookie(langCookieName)), "/login");
 
 export const getCookie = (name: string): string | undefined => {
   if (typeof document === "undefined") return undefined;
