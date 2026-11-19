@@ -109,14 +109,14 @@ export default function EmojiPicker({
     <>
       <PickerSearch
         autoFocus={placement === "reaction"}
-        aria-label={t("dashboard.posts.searchEmoji")}
+        aria-label={t("dashboard.discussions.searchEmoji")}
         value={query}
         onChange={(event) => setQuery(event.target.value)}
-        placeholder={t("dashboard.posts.searchEmoji")}
+        placeholder={t("dashboard.discussions.searchEmoji")}
       />
       {!query && (
         <>
-          <EmojiSectionLabel>{t("dashboard.posts.quickEmoji")}</EmojiSectionLabel>
+          <EmojiSectionLabel>{t("dashboard.discussions.quickEmoji")}</EmojiSectionLabel>
           <EmojiGrid>
             {quickEmojis.map((emoji) => (
               <PickerItem key={emoji} type="button" onClick={() => onChoose(emoji)}>
@@ -124,7 +124,7 @@ export default function EmojiPicker({
               </PickerItem>
             ))}
           </EmojiGrid>
-          <EmojiSectionLabel>{t("dashboard.posts.browseEmoji")}</EmojiSectionLabel>
+          <EmojiSectionLabel>{t("dashboard.discussions.browseEmoji")}</EmojiSectionLabel>
           <EmojiGrid>
             {emojiCategories.map(({ icon }, index) => (
               <EmojiCategoryButton

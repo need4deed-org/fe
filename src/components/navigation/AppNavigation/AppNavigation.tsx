@@ -20,6 +20,7 @@ export const AppNavigation = ({ children }: AppNavigationProps) => {
 const Frame = styled.div`
   display: -webkit-flex;
   display: flex;
+  z-index: 0;
   padding-left: var(--sidebar-width);
   background: var(--sand-25);
 
@@ -31,6 +32,7 @@ const Frame = styled.div`
 `;
 
 const PageContainer = styled.main`
+  z-index: 1;
   width: 100%;
   min-height: 100vh;
 `;

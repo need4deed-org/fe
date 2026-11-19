@@ -33,6 +33,7 @@ const Background = styled.aside<{ $breakpoint: number }>`
   display: -webkit-flex;
   display: flex;
   flex-direction: column;
+  z-index: 2;
   width: var(--sidebar-width);
   position: fixed;
   top: 0;

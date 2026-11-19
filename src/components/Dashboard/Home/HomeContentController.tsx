@@ -7,7 +7,6 @@ import { AgentHomeContent } from "./agent";
 import { CoordinatorHomeContent } from "./coordinator";
 import { VolunteerHomeContent } from "./volunteer";
 import { HomeSkeleton } from "./HomeSkeleton";
-import { LogoutButton } from "./LogoutButton";
 import { LinkButton } from "@/components/fields/LinkButton";
 import { routes } from "@/constants/routes";
 import { useTranslation } from "react-i18next";
@@ -37,12 +36,8 @@ export default function HomeContentController() {
   return (
     <DashboardContentContainer>
       <ButtonContainer>
-        <LogoutButton />
         {[UserRole.COORDINATOR, UserRole.ADMIN].includes(user.role) && (
           <LinkButton inline href={routes.statistics(language)} label={t("dashboard.home.statistics")} />
-        )}
-        {[UserRole.COORDINATOR, UserRole.ADMIN].includes(user.role) && (
-          <LinkButton inline href={routes.ngoVolunteers(language)} label={t("dashboard.home.ngoVolunteers")} />
         )}
       </ButtonContainer>
       <DashboardContentController volunteerId={user?.volunteerId} />

@@ -10,7 +10,7 @@ interface Props {
 
 export default function PostsSearch({ value, onChange }: Props) {
   const { t } = useTranslation();
-  const label = t("dashboard.posts.searchPosts");
+  const label = t("dashboard.discussions.searchDiscussions");
 
   return (
     <SearchField role="search">
@@ -23,7 +23,11 @@ export default function PostsSearch({ value, onChange }: Props) {
         onChange={(event) => onChange(event.target.value)}
       />
       {value && (
-        <SearchClearButton type="button" aria-label={t("dashboard.posts.clearSearch")} onClick={() => onChange("")}>
+        <SearchClearButton
+          type="button"
+          aria-label={t("dashboard.discussions.clearSearch")}
+          onClick={() => onChange("")}
+        >
           <XIcon size={18} aria-hidden="true" />
         </SearchClearButton>
       )}

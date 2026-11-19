@@ -22,7 +22,7 @@ import {
 } from "../styled";
 
 const STEPS = ["request", "prepare", "match", "introduction", "noMatch", "afterMatch"];
-const DASHBOARD_FEATURES = ["volunteers", "hours", "posts", "openSource"];
+const DASHBOARD_FEATURES = ["volunteers", "hours", "discussions", "openSource"];
 
 function ForOrganizations() {
   const { t, i18n } = useTranslation();

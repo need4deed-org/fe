@@ -1,5 +1,5 @@
 import { Posts } from "@/components/Dashboard";
 
-export default function PostsPage() {
+export default function DiscussionsPage() {
   return <Posts />;
 }

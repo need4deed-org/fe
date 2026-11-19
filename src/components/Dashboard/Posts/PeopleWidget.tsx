@@ -121,25 +121,29 @@ export default function PeopleWidget({ selectedPersonId, onSelect }: Props) {
           <UsersIcon size={24} aria-hidden="true" />
         )}
         <PeopleFilterButtonText>
-          <span>{t("dashboard.posts.postedBy")}</span>
-          <strong>{selectedPerson?.fullName ?? t("dashboard.posts.anyone")}</strong>
+          <span>{t("dashboard.discussions.startedBy")}</span>
+          <strong>{selectedPerson?.fullName ?? t("dashboard.discussions.anyone")}</strong>
         </PeopleFilterButtonText>
         <CaretDownIcon size={18} aria-hidden="true" />
       </PeopleFilterButton>
 
       {isOpen && (
-        <PeopleDropdown id="posts-people-filter" role="dialog" aria-label={t("dashboard.posts.peopleDescription")}>
+        <PeopleDropdown
+          id="posts-people-filter"
+          role="dialog"
+          aria-label={t("dashboard.discussions.peopleDescription")}
+        >
           <PeopleDropdownHeader>
-            <strong>{t("dashboard.posts.postedBy")}</strong>
-            <PeopleDescription>{t("dashboard.posts.peopleDescription")}</PeopleDescription>
+            <strong>{t("dashboard.discussions.startedBy")}</strong>
+            <PeopleDescription>{t("dashboard.discussions.peopleDescription")}</PeopleDescription>
           </PeopleDropdownHeader>
           <PeopleSearchField>
             <MagnifyingGlassIcon size={18} aria-hidden="true" />
             <PeopleSearchInput
               type="search"
               autoFocus
-              aria-label={t("dashboard.posts.findPerson")}
-              placeholder={t("dashboard.posts.findPerson")}
+              aria-label={t("dashboard.discussions.findPerson")}
+              placeholder={t("dashboard.discussions.findPerson")}
               value={query}
               onChange={(event) => setQuery(event.target.value)}
             />
@@ -156,8 +160,8 @@ export default function PeopleWidget({ selectedPersonId, onSelect }: Props) {
                 <UsersIcon size={18} />
               </PeopleAvatarInitials>
               <PeopleText>
-                <strong>{t("dashboard.posts.anyone")}</strong>
-                <span>{t("dashboard.posts.everyoneDescription")}</span>
+                <strong>{t("dashboard.discussions.anyone")}</strong>
+                <span>{t("dashboard.discussions.everyoneDescription")}</span>
               </PeopleText>
               {!selectedPersonId && <CheckIcon size={20} aria-hidden="true" />}
             </PeopleItem>
@@ -166,7 +170,7 @@ export default function PeopleWidget({ selectedPersonId, onSelect }: Props) {
             ) : isError ? (
               <PeopleEmptyState role="alert">{t("message.errorGeneric")}</PeopleEmptyState>
             ) : people.length === 0 ? (
-              <PeopleEmptyState>{t("dashboard.posts.noPeople")}</PeopleEmptyState>
+              <PeopleEmptyState>{t("dashboard.discussions.noPeople")}</PeopleEmptyState>
             ) : (
               people.map((person) => (
                 <PeopleItem
@@ -183,7 +187,7 @@ export default function PeopleWidget({ selectedPersonId, onSelect }: Props) {
                   )}
                   <PeopleText>
                     <strong>{person.fullName}</strong>
-                    <span>{t(`dashboard.posts.roles.${person.role}`)}</span>
+                    <span>{t(`dashboard.discussions.roles.${person.role}`)}</span>
                   </PeopleText>
                   {selectedPersonId === person.personId && <CheckIcon size={20} aria-hidden="true" />}
                 </PeopleItem>

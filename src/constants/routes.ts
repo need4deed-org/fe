@@ -32,14 +32,14 @@ export const routes = {
   newOpportunity: (lang: string) => `/${lang}/opportunities/new`,
   organizations: (lang: string) => `/${lang}/organizations`,
   organizationDetail: (lang: string, id: Id) => `/${lang}/organizations/${id}`,
-  posts: (lang: string) => `/${lang}/posts`,
+  discussions: (lang: string) => `/${lang}/discussions`,
   calendar: (lang: string) => `/${lang}/calendar`,
   calendarCreate: (lang: string) => `/${lang}/calendar/create`,
   calendarEdit: (lang: string, id: Id) => `/${lang}/calendar/${id}/edit`,
   admin: (lang: string) => `/${lang}/admin`,
-  profile: (lang: string) => `/${lang}/profile`,
+  account: (lang: string) => `/${lang}/account`,
   domains: (lang: string) => `/${lang}/organizations/domains`,
-  ngoVolunteers: (lang: string) => `/${lang}/dashboard/ngo-volunteers`,
+  ngoVolunteers: (lang: string) => `/${lang}/organizations/volunteers`,
 } as const;
 
 export type RouteBuilder = (lang: string) => string;

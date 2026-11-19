@@ -65,7 +65,7 @@ export default function PostReactions({ itemId, myReaction, reactions, postId, a
   };
 
   return (
-    <ReactionControls role="group" aria-label={t("dashboard.posts.reactions")}>
+    <ReactionControls role="group" aria-label={t("dashboard.discussions.reactions")}>
       {reactions.length > 0 && (
         <ReactionSummary>
           {reactions.map(({ emoji, count }) => (
@@ -75,8 +75,8 @@ export default function PostReactions({ itemId, myReaction, reactions, postId, a
               $selected={myReaction === emoji}
               disabled={isPending || Boolean(myReaction && myReaction !== emoji)}
               aria-pressed={myReaction === emoji}
-              aria-label={t("dashboard.posts.reactionCount", { emoji, count })}
-              title={myReaction && myReaction !== emoji ? t("dashboard.posts.removeReactionFirst") : undefined}
+              aria-label={t("dashboard.discussions.reactionCount", { emoji, count })}
+              title={myReaction && myReaction !== emoji ? t("dashboard.discussions.removeReactionFirst") : undefined}
               onClick={() => chooseReaction(emoji)}
             >
               <span aria-hidden="true">{emoji}</span>
@@ -90,8 +90,8 @@ export default function PostReactions({ itemId, myReaction, reactions, postId, a
           type="button"
           $selected={false}
           disabled={isPending || Boolean(myReaction)}
-          aria-label={t("dashboard.posts.chooseReaction")}
-          title={myReaction ? t("dashboard.posts.removeReactionFirst") : undefined}
+          aria-label={t("dashboard.discussions.chooseReaction")}
+          title={myReaction ? t("dashboard.discussions.removeReactionFirst") : undefined}
           aria-expanded={pickerMode !== "closed"}
           onClick={() => setPickerMode((mode) => (mode === "closed" ? "quick" : "closed"))}
         >
@@ -103,7 +103,7 @@ export default function PostReactions({ itemId, myReaction, reactions, postId, a
           </ReactionAddIcon>
         </ReactionTrigger>
         {pickerMode === "quick" ? (
-          <ReactionMenu $align={align} role="group" aria-label={t("dashboard.posts.quickReactions")}>
+          <ReactionMenu $align={align} role="group" aria-label={t("dashboard.discussions.quickReactions")}>
             {quickReactions.map((emoji) => (
               <ReactionQuickButton
                 key={emoji}
@@ -111,9 +111,12 @@ export default function PostReactions({ itemId, myReaction, reactions, postId, a
                 $selected={myReaction === emoji}
                 disabled={isPending || Boolean(myReaction && myReaction !== emoji)}
                 aria-pressed={myReaction === emoji}
-                aria-label={t(myReaction === emoji ? "dashboard.posts.removeReaction" : "dashboard.posts.addReaction", {
-                  emoji,
-                })}
+                aria-label={t(
+                  myReaction === emoji ? "dashboard.discussions.removeReaction" : "dashboard.discussions.addReaction",
+                  {
+                    emoji,
+                  },
+                )}
                 onClick={() => chooseReaction(emoji)}
               >
                 <span aria-hidden="true">{emoji}</span>
@@ -123,7 +126,7 @@ export default function PostReactions({ itemId, myReaction, reactions, postId, a
               type="button"
               $selected={false}
               disabled={isPending || Boolean(myReaction)}
-              aria-label={t("dashboard.posts.moreReactions")}
+              aria-label={t("dashboard.discussions.moreReactions")}
               onClick={() => {
                 setPickerMode("full");
               }}

@@ -51,17 +51,19 @@
   /* Text */
   --font-size: 16px; /* Font size of body text, text inputs, and buttons */
   --heading-font-size: 24px; /* For section/card headings */
-  --sans-serif: "Figtree", sans-serif; /* The primary font */
+  --sans-serif: var(--font-figtree), sans-serif;
+  --condensed-sans-serif: var(--font-barlow-condensed), sans-serif;
   --bold: bolder;
 
   /* Sizes */
+  --very-small-spacing: 4px; /* For gaps where --small-spacing looks too large */
   --small-spacing: 8px; /* For inner gaps between list items or buttons in fields */
   --medium-spacing: 18px; /* For "normal" spacing, left/right padding in text fields, and padding around fields */
   --large-spacing: 28px; /* For spacious spacing and left/right padding in buttons */
   --field-size: 44px; /* The height for form fields or the height and width of square buttons */
   --border-width: 1.8px; /* The border width of inputs */
   --sidebar-width: 300px; /* Main navigation sidebar width on desktop view */
-  --header-height: 74px; /* Main navigational header height */
+  --header-height: 86px; /* Main navigational header height */
   --field-icon-size: 20px; /* For icons in a field like a search icon in a search bar */
   --heading-icon-size: 32px; /* For icons paired with section/card headings */
   --tag-size: 36px; /* Height of tags/chips with text/icons on them or height and width of square tags */
@@ -75,11 +77,12 @@
   --header-logo-height: 32px;
   --mobile-menu-width: 320px;
   --mobile-menu-logo-height: 24px;
-  --mobile-footer-menu-height: 74px;
+  --mobile-footer-menu-height: 86px;
   --mobile-menu-font-size: 10px;
   --notification-badge-size: 24px; /* For notification badges on app navigation sidebar items */
   --notification-badge-side-spacing: 6px;
   --notification-badge-border-radius: calc(var(--notification-badge-size) / 2);
+  --mobile-menu-icon-size: 24px;
 
   /* Miscellaneous */
   --short-transition: 0.15s ease-in-out; /* For short animations */

@@ -574,9 +574,9 @@
         "opportunities": "Opportunities",
         "organizations": "Organizations",
         "racs": "RAC's",
-        "posts": "Posts",
+        "discussions": "Discussions",
         "calendar": "Calendar",
-        "profile": "Profile",
+        "account": "Account",
         "more": "More",
         "admin": "Admin"
       },
@@ -627,18 +627,18 @@
       "otherRacs": "Toggle other Refugee Accommodation Centers",
       "errorRac": "Error occurred when fetching Berlin RACs"
     },
-    "posts": {
-      "searchPosts": "Search posts, replies, people, and opportunities",
+    "discussions": {
+      "searchDiscussions": "Search discussions, replies, people, and opportunities",
       "clearSearch": "Clear search",
-      "noSearchResults": "No matching posts found.",
+      "noSearchResults": "No matching discussions found.",
       "peopleTitle": "People here",
-      "peopleDescription": "Filter posts by community member",
-      "postedBy": "Posted by",
+      "peopleDescription": "Filter discussions by community member",
+      "startedBy": "Started by",
       "anyone": "Anyone",
-      "everyoneDescription": "Show posts from everyone",
+      "everyoneDescription": "Show discussions from everyone",
       "findPerson": "Find a person",
       "noPeople": "No matching people found.",
-      "allPosts": "All posts",
+      "allDiscussions": "All discussions",
       "roles": {
         "agent": "NGO",
         "coordinator": "Coordinator",
@@ -646,12 +646,12 @@
       },
       "inputPlaceholder": "Type a message...",
       "send": "Send",
-      "addBookmark": "Save post for later",
-      "removeBookmark": "Remove post from saved items",
-      "bookmarkAdded": "Post saved for later",
-      "bookmarkRemoved": "Post removed from saved items",
+      "addBookmark": "Save discussion for later",
+      "removeBookmark": "Remove discussion from saved items",
+      "bookmarkAdded": "Discussion saved for later",
+      "bookmarkRemoved": "Discussion removed from saved items",
       "sendReply": "Send reply",
-      "created": "Post created successfully",
+      "created": "Discussion created successfully",
       "reply": "Reply",
       "replyingTo": "Replying to {{name}}",
       "cancelReply": "Cancel reply",
@@ -686,18 +686,18 @@
       "everyone": "Everyone",
       "removeOpportunity": "Remove opportunity",
       "noOpportunities": "No opportunities found",
-      "empty": "No posts yet. Be the first to post a message.",
-      "options": "Post options",
-      "edit": "Edit post",
-      "delete": "Delete post",
+      "empty": "No discussions yet. Be the first to start one.",
+      "options": "Discussion options",
+      "edit": "Edit discussion",
+      "delete": "Delete discussion",
       "save": "Save",
       "cancel": "Cancel",
-      "updated": "Post updated successfully",
-      "deleted": "Post deleted successfully",
+      "updated": "Discussion updated successfully",
+      "deleted": "Discussion deleted successfully",
       "unknownUser": "user",
       "deleteDialog": {
-        "title": "Delete post?",
-        "message": "This post will be permanently deleted."
+        "title": "Delete discussion?",
+        "message": "This discussion will be permanently deleted."
       },
       "deleteReplyDialog": {
         "title": "Delete reply?",
@@ -2687,9 +2687,9 @@
           "title": "Hours and appreciation",
           "body": "Log the hours a volunteer has volunteered for each match, and keep track of appreciation such as certificates."
         },
-        "posts": {
-          "title": "Posts and tagging",
-          "body": "Write general questions or searches in the posts, reply to each other and tag each other. Whoever is tagged gets an email."
+        "discussions": {
+          "title": "Discussions and tagging",
+          "body": "Write general questions or searches in the discussions, reply to each other and tag each other. Whoever is tagged gets an email."
         },
         "openSource": {
           "title": "Open source, hosted in Switzerland",

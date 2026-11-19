@@ -15,7 +15,7 @@ export default async function DashboardAgentPage({ params }: { params: Promise<{
   const user = await getServerUser(cookieHeader);
 
   if (user?.role === UserRole.AGENT && !isOwnProfile(user, { agentId: id })) {
-    redirect(routes.organizations(lang));
+    redirect(routes.dashboard(lang));
   }
   return <ProfileLayout entityId={id} entityType="agent" />;
 }

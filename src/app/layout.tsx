@@ -7,7 +7,7 @@ import { DeviceProvider } from "@/context/DeviceContext";
 import StyledComponentsRegistry from "@/lib/styled-components-registry";
 import QueryProvider from "@/utils/QueryProvider";
 import type { Metadata } from "next";
-import { Figtree } from "next/font/google";
+import { Figtree, Barlow_Condensed } from "next/font/google";
 import { headers } from "next/headers";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -17,6 +17,12 @@ import { ReactNode } from "react";
 const figtree = Figtree({
   subsets: ["latin"],
   variable: "--font-figtree",
+});
+
+const barlowCondensed = Barlow_Condensed({
+  subsets: ["latin", "latin-ext"],
+  weight: ["500", "600", "700"],
+  variable: "--font-barlow-condensed",
 });
 
 export const metadata: Metadata = {
@@ -45,7 +51,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
 
   const initialScreenType = await getInitialDeviceType();
   return (
-    <html lang="en">
+    <html lang="en" className={`${figtree.variable} ${barlowCondensed.variable}`}>
       <head>
         <link
           href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
@@ -55,7 +61,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         />
       </head>
       <AxiosInitializer />
-      <body className={figtree.variable}>
+      <body>
         <StyledComponentsRegistry>
           <QueryProvider>
             <DeviceProvider initialScreenType={initialScreenType}>{children}</DeviceProvider>

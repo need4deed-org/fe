@@ -580,9 +580,9 @@
         "opportunities": "Ehrenamtsbedarfe",
         "organizations": "Organisationen",
         "racs": "RACs",
-        "posts": "Beiträge",
+        "discussions": "Diskussionen",
         "calendar": "Kalender",
-        "profile": "Profil",
+        "account": "Konto",
         "more": "Mehr",
         "admin": "Admin"
       },
@@ -633,18 +633,18 @@
       "otherRacs": "Weitere Berliner Unterkünfte für Geflüchtete umschalten",
       "errorRac": "Fehler beim Abrufen der Berliner Unterkünfte für Geflüchtete"
     },
-    "posts": {
-      "searchPosts": "Beiträge, Antworten, Personen und Ehrenamtsbedarfe suchen",
+    "discussions": {
+      "searchDiscussions": "Diskussionen, Antworten, Personen und Ehrenamtsbedarfe suchen",
       "clearSearch": "Suche löschen",
-      "noSearchResults": "Keine passenden Beiträge gefunden.",
+      "noSearchResults": "Keine passenden Diskussionen gefunden.",
       "peopleTitle": "Personen",
-      "peopleDescription": "Beiträge nach Community-Mitglied filtern",
-      "postedBy": "Verfasst von",
+      "peopleDescription": "Diskussionen nach Community-Mitglied filtern",
+      "startedBy": "Gestartet von",
       "anyone": "Alle",
-      "everyoneDescription": "Beiträge von allen anzeigen",
+      "everyoneDescription": "Diskussionen von allen anzeigen",
       "findPerson": "Person suchen",
       "noPeople": "Keine passenden Personen gefunden.",
-      "allPosts": "Alle Beiträge",
+      "allDiscussions": "Alle Diskussionen",
       "roles": {
         "agent": "Einrichtung/Projekt",
         "coordinator": "Koordination",
@@ -652,12 +652,12 @@
       },
       "inputPlaceholder": "Nachricht eingeben...",
       "send": "Senden",
-      "addBookmark": "Beitrag für später speichern",
-      "removeBookmark": "Beitrag aus gespeicherten Elementen entfernen",
-      "bookmarkAdded": "Beitrag für später gespeichert",
-      "bookmarkRemoved": "Beitrag aus gespeicherten Elementen entfernt",
+      "addBookmark": "Diskussion für später speichern",
+      "removeBookmark": "Diskussion aus gespeicherten Elementen entfernen",
+      "bookmarkAdded": "Diskussion für später gespeichert",
+      "bookmarkRemoved": "Diskussion aus gespeicherten Elementen entfernt",
       "sendReply": "Antwort senden",
-      "created": "Beitrag erfolgreich erstellt",
+      "created": "Diskussion erfolgreich erstellt",
       "reply": "Antworten",
       "replyingTo": "Antwort an {{name}}",
       "cancelReply": "Antwort abbrechen",
@@ -692,18 +692,18 @@
       "everyone": "Alle",
       "removeOpportunity": "Ehrenamtsbedarf entfernen",
       "noOpportunities": "Keine Ehrenamtsbedarfe gefunden",
-      "empty": "Noch keine Beiträge. Sei der Erste, der eine Nachricht postet.",
-      "options": "Beitragsoptionen",
-      "edit": "Beitrag bearbeiten",
-      "delete": "Beitrag löschen",
+      "empty": "Noch keine Diskussionen. Starte die erste.",
+      "options": "Diskussionsoptionen",
+      "edit": "Diskussion bearbeiten",
+      "delete": "Diskussion löschen",
       "save": "Speichern",
       "cancel": "Abbrechen",
-      "updated": "Beitrag erfolgreich aktualisiert",
-      "deleted": "Beitrag erfolgreich gelöscht",
+      "updated": "Diskussion erfolgreich aktualisiert",
+      "deleted": "Diskussion erfolgreich gelöscht",
       "unknownUser": "Benutzer",
       "deleteDialog": {
-        "title": "Beitrag löschen?",
-        "message": "Dieser Beitrag wird unwiderruflich gelöscht."
+        "title": "Diskussion löschen?",
+        "message": "Diese Diskussion wird unwiderruflich gelöscht."
       },
       "deleteReplyDialog": {
         "title": "Antwort löschen?",
@@ -3042,9 +3042,9 @@
           "title": "Stunden und Anerkennung",
           "body": "Trage für jede Vermittlung die Stunden ein, die eine freiwillige Person geleistet hat, und behalte Anerkennungen wie Zertifikate im Blick."
         },
-        "posts": {
-          "title": "Posts und Markierungen",
-          "body": "Stelle allgemeine Fragen oder Gesuche in die Posts, antwortet Euch gegenseitig und markiert Euch. Wer markiert wird, bekommt eine E-Mail."
+        "discussions": {
+          "title": "Diskussionen und Markierungen",
+          "body": "Stelle allgemeine Fragen oder Gesuche in die Diskussionen, antwortet Euch gegenseitig und markiert Euch. Wer markiert wird, bekommt eine E-Mail."
         },
         "openSource": {
           "title": "Open Source, gehostet in der Schweiz",

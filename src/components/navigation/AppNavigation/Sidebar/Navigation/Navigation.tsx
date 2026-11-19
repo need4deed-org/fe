@@ -5,9 +5,9 @@ import { routes } from "@/constants/routes";
 import { useTranslation } from "react-i18next";
 import {
   BuildingsIcon,
-  CalendarDotIcon,
+  CalendarDotsIcon,
+  ChatsCircleIcon,
   HandHeartIcon,
-  NotepadIcon,
   SquaresFourIcon,
   UsersThreeIcon,
   UserCircleIcon,
@@ -16,8 +16,9 @@ import { useCurrentUser } from "@/hooks/useCurrentUser";
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
 import { NotificationBadge } from "./NotificationBadge";
+import { MoreButton } from "./MoreButton";
 
-type MenuLink = IconLink & {
+export type MenuLink = IconLink & {
   roles: UserRole[];
 };
 
@@ -55,44 +56,47 @@ export const Navigation = ({ breakpoint }: NavigationProps) => {
       route: routes.organizations(language),
       Icon: BuildingsIcon,
       label: t("dashboard.home.sidebar.organizations"),
-      roles: [UserRole.AGENT, UserRole.USER, UserRole.COORDINATOR, UserRole.ADMIN],
+      roles: [UserRole.USER, UserRole.COORDINATOR, UserRole.ADMIN],
     },
     {
-      route: routes.posts(language),
-      Icon: NotepadIcon,
-      label: t("dashboard.home.sidebar.posts"),
+      route: routes.discussions(language),
+      Icon: ChatsCircleIcon,
+      label: t("dashboard.home.sidebar.discussions"),
       roles: [UserRole.AGENT, UserRole.USER, UserRole.COORDINATOR, UserRole.ADMIN],
     },
     {
       route: routes.calendar(language),
-      Icon: CalendarDotIcon,
+      Icon: CalendarDotsIcon,
       label: t("dashboard.home.sidebar.calendar"),
       roles: [UserRole.USER, UserRole.COORDINATOR, UserRole.ADMIN],
     },
     {
-      route: routes.profile(language),
+      route: routes.account(language),
       Icon: UserCircleIcon,
-      label: t("dashboard.home.sidebar.profile"),
+      label: t("dashboard.home.sidebar.account"),
       roles: [UserRole.VOLUNTEER, UserRole.AGENT, UserRole.USER, UserRole.COORDINATOR, UserRole.ADMIN],
     },
   ];
 
   if (!user) return;
+  const roleLinks = links.filter(({ roles }) => roles.includes(user.role));
+  const MAX_MOBILE_ITEMS = 5;
+  const mainLinks = roleLinks.length > MAX_MOBILE_ITEMS ? roleLinks.slice(0, MAX_MOBILE_ITEMS - 1) : roleLinks;
+  const moreLinks = roleLinks.length > MAX_MOBILE_ITEMS ? roleLinks.slice(MAX_MOBILE_ITEMS - 1) : [];
 
   return (
     <Background $breakpoint={breakpoint} area-label="Main Navigation">
       <List $breakpoint={breakpoint}>
-        {links
-          .filter(({ roles }) => roles.includes(user.role))
-          .map(({ route, Icon, label }) => (
-            <ListItem key={route}>
-              <Link href={route} $selected={pathname.startsWith(route)} $breakpoint={breakpoint}>
-                <Icon />
-                <Label $breakpoint={breakpoint}>{label}</Label>
-                {route === routes.dashboard(language) && <NotificationBadge breakpoint={breakpoint} />}
-              </Link>
-            </ListItem>
-          ))}
+        {mainLinks.map(({ route, Icon, label }) => (
+          <ListItem key={route}>
+            <Link href={route} $selected={pathname.startsWith(route)} $breakpoint={breakpoint}>
+              <Icon />
+              {label}
+              {route === routes.dashboard(language) && <NotificationBadge breakpoint={breakpoint} />}
+            </Link>
+          </ListItem>
+        ))}
+        {moreLinks.length ? <MoreButton breakpoint={breakpoint} links={moreLinks} /> : null}
       </List>
     </Background>
   );
@@ -121,8 +125,7 @@ const List = styled.ul<{ $breakpoint: number }>`
     flex-direction: row;
     width: 100%;
     height: 100%;
-    padding-left: var(--small-spacing);
-    padding-right: var(--small-spacing);
+    padding: var(--small-spacing);
   }
 `;
 
@@ -142,8 +145,10 @@ const Link = styled(NextLink)<{ $selected: boolean; $breakpoint: number }>`
   padding-right: var(--large-spacing);
   background-color: ${({ $selected }) => ($selected ? "var(--blue-100) !important" : "transparent")};
   border-radius: var(--field-border-radius);
+  font-weight: var(--bold);
   color: var(--white);
-  transition: var(--short-transition);
+  white-space: nowrap;
+  transition: color var(--short-transition);
 
   &:hover,
   &:active,
@@ -155,36 +160,23 @@ const Link = styled(NextLink)<{ $selected: boolean; $breakpoint: number }>`
     width: var(--field-icon-size);
     height: var(--field-icon-size);
     fill: var(--white);
-    transition: var(--short-transition);
+    transition: fill var(--short-transition);
   }
 
   @media screen and (max-width: ${({ $breakpoint }) => $breakpoint}px) {
     flex-direction: column;
     justify-content: center;
-    padding: 0;
+    gap: var(--very-small-spacing);
+    padding: var(--small-spacing);
     width: 100%;
     height: 100%;
-    background-color: transparent !important;
+    font-family: var(--condensed-sans-serif);
+    font-size: var(--mobile-menu-font-size);
+    text-transform: uppercase;
 
-    svg {
-      fill: ${({ $selected }) => ($selected ? "var(--blue-100) !important" : "var(--white)")};
+    > svg {
+      width: var(--mobile-menu-icon-size);
+      height: var(--mobile-menu-icon-size);
     }
-
-    &:hover > svg,
-    &:active > svg,
-    &:focus > svg {
-      fill: var(--blue-75);
-    }
-  }
-`;
-
-const Label = styled.span<{ $breakpoint: number }>`
-  font-weight: var(--bold);
-  color: var(--white);
-  white-space: nowrap;
-  transition: color var(--short-transition);
-
-  @media screen and (max-width: ${({ $breakpoint }) => $breakpoint}px) {
-    display: none;
   }
 `;

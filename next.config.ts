@@ -53,7 +53,12 @@ const nextConfig: NextConfig = {
       { source: "/vpa", destination: "/agreement", permanent: true },
     ];
 
-    return [...formRedirects, ...pageRedirects, ...vpaRedirects];
+    const discussionsRedirects = [
+      { source: "/:lng(de|en)/posts", destination: "/:lng/discussions", permanent: true },
+      { source: "/posts", destination: "/discussions", permanent: true },
+    ];
+
+    return [...formRedirects, ...pageRedirects, ...vpaRedirects, ...discussionsRedirects];
   },
   async rewrites() {
     return [{ source: `/${apiPrefix}/:path*`, destination: `${apiURL}/:path*` }];

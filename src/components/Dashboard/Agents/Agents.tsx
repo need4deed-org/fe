@@ -133,11 +133,14 @@ export const Agents = () => {
   return (
     <>
       <AgentsContainer data-testid="agents-container">
-        {[UserRole.COORDINATOR, UserRole.ADMIN].includes(user.role) && (
-          <DomainsButtonContainer>
+        <ButtonContainer>
+          {[UserRole.COORDINATOR, UserRole.ADMIN].includes(user.role) && (
             <LinkButton href={routes.domains(i18n.language)} inline label={t("dashboard.agents.trustedDomains")} />
-          </DomainsButtonContainer>
-        )}
+          )}
+          {[UserRole.COORDINATOR, UserRole.ADMIN].includes(user.role) && (
+            <LinkButton inline href={routes.ngoVolunteers(i18n.language)} label={t("dashboard.home.ngoVolunteers")} />
+          )}
+        </ButtonContainer>
         <CardsHeader
           header={
             transferOpportunityId
@@ -205,8 +208,9 @@ export const Agents = () => {
   );
 };
 
-const DomainsButtonContainer = styled.div`
+const ButtonContainer = styled.div`
   display: -webkit-flex;
   display: flex;
-  justify-content: right;
+  gap: var(--small-spacing);
+  flex-wrap: wrap;
 `;

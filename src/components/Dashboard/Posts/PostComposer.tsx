@@ -184,13 +184,13 @@ export default function PostComposer({ replyTarget, onCancelReply }: Props) {
       {replyTarget && (
         <ReplyContext>
           <div>
-            <strong>{t("dashboard.posts.replyingTo", { name: replyTarget.authorName })}</strong>
+            <strong>{t("dashboard.discussions.replyingTo", { name: replyTarget.authorName })}</strong>
             <span>{new Date(replyTarget.createdAt).toLocaleString(i18n.language)}</span>
             <p>{replyTarget.text}</p>
           </div>
           <ReplyContextClose
             type="button"
-            aria-label={t("dashboard.posts.cancelReply")}
+            aria-label={t("dashboard.discussions.cancelReply")}
             onClick={() => cancelReplyMode(false)}
           >
             ×
@@ -204,7 +204,7 @@ export default function PostComposer({ replyTarget, onCancelReply }: Props) {
           textAreaRef={textareaRef}
           users={mention.users}
           onSelectAll={selectAll}
-          allLabel={t("dashboard.posts.everyone")}
+          allLabel={t("dashboard.discussions.everyone")}
         />
       )}
       <ComposerTextArea
@@ -216,7 +216,7 @@ export default function PostComposer({ replyTarget, onCancelReply }: Props) {
           setEmojiOpen(false);
         }}
         onKeyDown={mention.handleKeyDown}
-        placeholder={t("dashboard.posts.inputPlaceholder")}
+        placeholder={t("dashboard.discussions.inputPlaceholder")}
       />
       {selected.length > 0 && (
         <OpportunityList>
@@ -225,7 +225,7 @@ export default function PostComposer({ replyTarget, onCancelReply }: Props) {
               as="button"
               key={String(item.id)}
               type="button"
-              aria-label={`${t("dashboard.posts.removeOpportunity")}: ${item.title}`}
+              aria-label={`${t("dashboard.discussions.removeOpportunity")}: ${item.title}`}
               onClick={() => setSelected((all) => all.filter(({ id }) => id !== item.id))}
             >
               {item.title} ×
@@ -244,7 +244,7 @@ export default function PostComposer({ replyTarget, onCancelReply }: Props) {
               setShowAutocomplete(false);
             }}
           >
-            {t("dashboard.posts.linkOpportunity")}
+            {t("dashboard.discussions.linkOpportunity")}
           </ComposerButton>
         )}
         {!replyTarget && (
@@ -258,12 +258,12 @@ export default function PostComposer({ replyTarget, onCancelReply }: Props) {
               setShowAutocomplete(false);
             }}
           >
-            {t("dashboard.posts.tagNgo")}
+            {t("dashboard.discussions.tagNgo")}
           </ComposerButton>
         )}
         <ComposerButton
           type="button"
-          aria-label={t("dashboard.posts.addEmoji")}
+          aria-label={t("dashboard.discussions.addEmoji")}
           aria-expanded={emojiOpen}
           onClick={() => {
             setEmojiOpen((open) => !open);
@@ -279,7 +279,7 @@ export default function PostComposer({ replyTarget, onCancelReply }: Props) {
           disabled={!text.trim() || createPost.isPending || createReply.isPending}
           onClick={submit}
         >
-          {t(replyTarget ? "dashboard.posts.sendReply" : "dashboard.posts.send")}
+          {t(replyTarget ? "dashboard.discussions.sendReply" : "dashboard.discussions.send")}
         </ComposerButton>
       </ComposerActions>
       {opportunityOpen && (
@@ -287,7 +287,7 @@ export default function PostComposer({ replyTarget, onCancelReply }: Props) {
           <PickerSearch
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder={t("dashboard.posts.searchOpportunities")}
+            placeholder={t("dashboard.discussions.searchOpportunities")}
           />
           <PickerResults>
             {filtered.map((item) => (
@@ -305,10 +305,10 @@ export default function PostComposer({ replyTarget, onCancelReply }: Props) {
                 {selected.some(({ id }) => id === item.id) ? " ✓" : ""}
               </PickerItem>
             ))}
-            {filtered.length === 0 && <PickerEmpty>{t("dashboard.posts.noOpportunities")}</PickerEmpty>}
+            {filtered.length === 0 && <PickerEmpty>{t("dashboard.discussions.noOpportunities")}</PickerEmpty>}
           </PickerResults>
           <ComposerButton type="button" $primary onClick={closeOpportunityPicker}>
-            {t("dashboard.posts.done")}
+            {t("dashboard.discussions.done")}
           </ComposerButton>
         </OpportunityPickerPanel>
       )}
@@ -317,7 +317,7 @@ export default function PostComposer({ replyTarget, onCancelReply }: Props) {
           <PickerSearch
             value={agentQuery}
             onChange={(e) => setAgentQuery(e.target.value)}
-            placeholder={t("dashboard.posts.searchNgos")}
+            placeholder={t("dashboard.discussions.searchNgos")}
           />
           <PickerResults>
             {agentCandidates.map((agent) => (
@@ -334,7 +334,7 @@ export default function PostComposer({ replyTarget, onCancelReply }: Props) {
                 {agent.district?.title?.de ? ` · ${agent.district.title.de}` : ""}
               </PickerItem>
             ))}
-            {agentCandidates.length === 0 && <PickerEmpty>{t("dashboard.posts.noNgos")}</PickerEmpty>}
+            {agentCandidates.length === 0 && <PickerEmpty>{t("dashboard.discussions.noNgos")}</PickerEmpty>}
           </PickerResults>
         </OpportunityPickerPanel>
       )}

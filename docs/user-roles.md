@@ -32,8 +32,8 @@ Names differ between the screen and the code:
 | Dashboard         |   ✓   |      ✓      | ✓                    | ✓         |
 | Volunteers        |   ✓   |      ✓      | ✓ own + shared       | —         |
 | Opportunities     |   ✓   |      ✓      | ✓ creates their own  | ✓ browses |
-| Organizations     |   ✓   |      ✓      | List only, own page  | —         |
-| Posts             |   ✓   |      ✓      | ✓                    | —         |
+| Organizations     |   ✓   |      ✓      | Own page only        | —         |
+| Discussions       |   ✓   |      ✓      | ✓                    | —         |
 | Calendar (events) |   ✓   |      ✓      | —                    | —         |
 | Account / profile |   ✓   |      ✓      | ✓ their organization | ✓ own     |
 
@@ -58,13 +58,13 @@ A person working at one or more partner organizations.
 - Creates and manages their organization's opportunities
 - Sees their organization's volunteers, plus volunteers shared by other organizations
 - Suggests volunteers for their opportunities
-- Posts and replies on the shared message board, and edits their own posts
-- Cannot open any other organization's page
+- Posts and replies in Discussions, the shared message board, and edits their own posts
+- Cannot open the organizations list or any other organization's page
 
 ### Volunteer
 
 - Sees their dashboard, browses opportunities, and edits their own profile
-- Has no access to Volunteers, Organizations, Posts or Calendar
+- Has no access to Volunteers, Organizations, Discussions or Calendar
 
 ### User
 
@@ -91,7 +91,7 @@ Operator (Träger)                 a label, nothing more
 
 1. **Shared volunteers.** An organization that turns on _Shares volunteers_ can see, and suggest, the volunteers of every other organization that has it on too. This works across operators.
 2. **Same operator.** Sites run by the same _Träger_ share a label and nothing else.
-3. **Posts.** Organizations can tag each other on the message board.
+3. **Discussions.** Organizations can tag each other on the shared message board.
 
 **Staff ↔ everyone.** Coordinators and admins sit above the whole structure. They don't belong to any organization, and they can act on all of them.
 

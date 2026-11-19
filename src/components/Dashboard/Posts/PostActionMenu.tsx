@@ -34,10 +34,10 @@ export function PostActionMenu({ isOpen, onClose, onEdit, onDelete }: Props) {
   return (
     <ActionMenu ref={menuRef} role="menu">
       <ActionMenuItem role="menuitem" onClick={onEdit}>
-        {t("dashboard.posts.edit")}
+        {t("dashboard.discussions.edit")}
       </ActionMenuItem>
       <ActionMenuItem role="menuitem" $danger onClick={onDelete}>
-        {t("dashboard.posts.delete")}
+        {t("dashboard.discussions.delete")}
       </ActionMenuItem>
     </ActionMenu>
   );
