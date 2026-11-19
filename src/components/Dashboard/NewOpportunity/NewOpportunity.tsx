@@ -139,12 +139,10 @@ export function NewOpportunity() {
     defaultValues: {
       appointmentAddress: accompanyingInitValues?.appointmentAddress ?? "",
       appointmentPostcode: accompanyingInitValues?.appointmentPostcode ?? "",
-      appointmentDate: accompanyingInitValues?.appointmentDate
-        ? new Date(`${accompanyingInitValues?.appointmentDate}`)
-        : null,
-      appointmentTime: accompanyingInitValues?.appointmentTime ?? "",
-      refugeeNumber: accompanyingInitValues?.refugeeNumber ?? "",
-      refugeeName: accompanyingInitValues?.refugeeName ?? "",
+      appointmentDate: null,
+      appointmentTime: "",
+      refugeeNumber: "",
+      refugeeName: "",
       refugeeLanguage: accompanyingInitValues?.refugeeLanguage ?? [],
       appointmentLanguage: accompanyingInitValues?.appointmentLanguage ?? undefined,
     },
