@@ -1,9 +1,9 @@
 import AxiosInitializer from "@/components/hepler/AxiosInitializer";
 import "@/config/axios";
-import { deviceTypeHeaderName } from "@/config/constants";
 import { DeviceProvider } from "@/context/DeviceContext";
 import StyledComponentsRegistry from "@/lib/styled-components-registry";
-import { toScreenType } from "@/utils/helpers";
+import { resolveLanguage } from "@/utils/helpers";
+import { getScreenType } from "@/utils/screen-type";
 import QueryProvider from "@/utils/QueryProvider";
 import type { Metadata } from "next";
 import { Figtree } from "next/font/google";
@@ -33,9 +33,9 @@ export default async function RootLayout({
   const resolvedParams = await params;
   const { lang } = resolvedParams;
 
-  const initialScreenType = toScreenType((await headers()).get(deviceTypeHeaderName));
+  const initialScreenType = getScreenType(await headers());
   return (
-    <html lang="en">
+    <html lang={resolveLanguage(lang)}>
       <head>
         <link
           href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"

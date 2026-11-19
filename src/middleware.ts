@@ -1,15 +1,13 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { userAgent } from "next/server";
 import { UserRole } from "need4deed-sdk";
-import { deviceTypeHeaderName, langCookieName } from "./config/constants";
+import { langCookieName } from "./config/constants";
 import {
   decodeJwtPayload,
   getPathLanguage,
   getPathLanguagePrefix,
   localizedPath,
   getPreferredLanguage,
-  toScreenType,
 } from "./utils/helpers";
 
 const REFRESH = "refresh";
@@ -74,10 +72,7 @@ export function middleware(request: NextRequest) {
     return redirectTo(unprefixedPath);
   }
 
-  const requestHeaders = new Headers(request.headers);
-  requestHeaders.set(deviceTypeHeaderName, toScreenType(userAgent(request).device.type));
-
-  const response = NextResponse.next({ request: { headers: requestHeaders } });
+  const response = NextResponse.next();
   response.cookies.set(langCookieName, currentLocale, {
     path: "/",
     maxAge: 60 * 60 * 24 * 365,

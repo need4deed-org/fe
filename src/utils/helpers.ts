@@ -4,7 +4,6 @@ import {
   AUTH_HINT_COOKIE_NAME,
   AUTH_HINT_MAX_AGE,
   cloudfrontURL,
-  ScreenTypes,
   defaultRouteLang,
   langCookieName,
   supportedLangs,
@@ -48,17 +47,6 @@ export const getPreferredLanguage = (pathname: string, savedLanguage: string | u
 
 export const getLoginPath = (pathname: string): string =>
   localizedPath(getPreferredLanguage(pathname, getCookie(langCookieName)), "/login");
-
-export const toScreenType = (deviceType: string | null | undefined): ScreenTypes => {
-  switch (deviceType) {
-    case ScreenTypes.MOBILE:
-      return ScreenTypes.MOBILE;
-    case ScreenTypes.TABLET:
-      return ScreenTypes.TABLET;
-    default:
-      return ScreenTypes.DESKTOP;
-  }
-};
 
 export const getCookie = (name: string): string | undefined => {
   if (typeof document === "undefined") return undefined;
