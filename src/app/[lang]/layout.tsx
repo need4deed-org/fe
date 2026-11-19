@@ -2,6 +2,7 @@ import AxiosInitializer from "@/components/hepler/AxiosInitializer";
 import "@/config/axios";
 import { DeviceProvider } from "@/context/DeviceContext";
 import StyledComponentsRegistry from "@/lib/styled-components-registry";
+import { resolveLanguage } from "@/utils/helpers";
 import { getScreenType } from "@/utils/screen-type";
 import QueryProvider from "@/utils/QueryProvider";
 import type { Metadata } from "next";
@@ -29,12 +30,11 @@ export default async function RootLayout({
   children: React.ReactNode;
   params: Promise<{ lang: string }>;
 }>) {
-  const resolvedParams = await params;
-  const { lang } = resolvedParams;
+  const language = resolveLanguage((await params).lang);
 
   const initialScreenType = getScreenType(await headers());
   return (
-    <html lang="en">
+    <html lang={language}>
       <head>
         <link
           href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
@@ -48,7 +48,7 @@ export default async function RootLayout({
         <StyledComponentsRegistry>
           <QueryProvider>
             <DeviceProvider initialScreenType={initialScreenType}>
-              <I18nProvider initialLang={lang}>{children}</I18nProvider>
+              <I18nProvider initialLang={language}>{children}</I18nProvider>
             </DeviceProvider>
           </QueryProvider>
         </StyledComponentsRegistry>
