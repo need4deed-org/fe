@@ -16,7 +16,8 @@ import {
 import { createMapping } from "@/components/Dashboard/Profile/sections/VolunteerProfile/mappingUtils";
 import { useUpdateOpportunityDetails } from "@/hooks/useUpdateOpportunityDetails";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { MAX_DESCRIPTION_LENGTH } from "@/config/constants";
+import { useRouteLang } from "@/hooks/use-route-lang";
+import { getOpportunityTextLimits } from "@/utils/opportunity-text-limits";
 import { de, enUS } from "date-fns/locale";
 import { ApiOpportunityGet, Lang, LangPurpose, VolunteerStateTypeType } from "need4deed-sdk";
 import { Controller, FormProvider, useForm } from "react-hook-form";
@@ -47,6 +48,7 @@ type Props = {
 export function OpportunityDetailsEdit({ opportunity, onCancel }: Props) {
   const { t, i18n } = useTranslation();
   const lang = i18n.language;
+  const routeLang = useRouteLang();
   const locale = lang === "de" ? de : enUS;
   const opp = opportunity as OpportunityWithDetails;
   const prefix = "dashboard.opportunityProfile.opportunityDetails";
@@ -83,7 +85,8 @@ export function OpportunityDetailsEdit({ opportunity, onCancel }: Props) {
     currentEventDateTime = dateFromDateTimeUTCStrings(opp.event.date, opp.event.time);
   }
 
-  const schema = createOpportunityDetailsSchema(t, getMainCommunicationLanguageOptions(apiLanguages));
+  const textLimits = getOpportunityTextLimits(opp, routeLang);
+  const schema = createOpportunityDetailsSchema(t, getMainCommunicationLanguageOptions(apiLanguages), textLimits);
   const methods = useForm<OpportunityDetailsFormData>({
     resolver: zodResolver(schema),
     mode: "onChange",
@@ -121,8 +124,8 @@ export function OpportunityDetailsEdit({ opportunity, onCancel }: Props) {
 
     updateOpportunityDetails(
       {
-        ...(dirtyFields.title ? { title: values.title } : {}),
-        ...(dirtyFields.description ? { description: values.description } : {}),
+        ...(dirtyFields.title ? { title: values.title.trim() } : {}),
+        ...(dirtyFields.description ? { description: values.description.trim() } : {}),
         numberVolunteers: Number(values.numberOfVolunteers),
         languagesMain: toLangOptionItems(values.mainCommunication, apiLanguages, t),
         languagesResidents: toLangOptionItems(values.residentsSpeak, apiLanguages, t),
@@ -156,6 +159,7 @@ export function OpportunityDetailsEdit({ opportunity, onCancel }: Props) {
                 label={t(`${prefix}.opportunityName`)}
                 value={field.value}
                 setValue={field.onChange}
+                hint={t(`${prefix}.maxCharsHint`, { max: textLimits.title.max })}
                 errorMessage={errors.title?.message}
               />
             )}
@@ -172,8 +176,7 @@ export function OpportunityDetailsEdit({ opportunity, onCancel }: Props) {
                 label={t(`${prefix}.description`)}
                 value={field.value}
                 setValue={field.onChange}
-                maxLength={MAX_DESCRIPTION_LENGTH}
-                hint={t(`${prefix}.descriptionHint`, { max: MAX_DESCRIPTION_LENGTH })}
+                hint={t(`${prefix}.maxCharsHint`, { max: textLimits.description.max })}
                 errorMessage={errors.description?.message}
               />
             )}

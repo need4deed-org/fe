@@ -118,9 +118,9 @@ export function buildCreatePayload(
       : undefined;
 
   return {
-    title: headerData.title,
+    title: headerData.title.trim(),
     opportunity_type: isAccompanying ? OpportunityLegacyType.ACCOMPANYING : OpportunityLegacyType.VOLUNTEERING,
-    vo_information: detailsData.description || undefined,
+    vo_information: detailsData.description.trim() || undefined,
     volunteers_number: Number(detailsData.numberOfVolunteers) || 1,
     languageIds,
     activityIds,
