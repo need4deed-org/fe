@@ -84,6 +84,6 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!_next(?:/|$)|api(?:/|$)|health(?:/|$)|\\.well-known(?:/|$)|robots\\.txt$|sitemap\\.xml$|.*\\.(?:png|jpe?g|svg|webp|ico)$).*)",
+    "/((?!_next(?:/|$)|api(?:/|$)|health(?:/|$)|\\.well-known(?:/|$)|.*\\.(?:png|jpe?g|gif|svg|webp|avif|ico|json|webmanifest|txt|xml|woff2?|pdf)$).*)",
   ],
 };
