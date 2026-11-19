@@ -42,8 +42,11 @@ export const resolveLanguage = (language: string | undefined): Lang =>
 
 export const localizedPath = (language: Lang, path: string): string => `/${language}${path}`;
 
+export const getPreferredLanguage = (pathname: string, savedLanguage: string | undefined): Lang =>
+  getPathLanguage(pathname) ?? resolveLanguage(savedLanguage);
+
 export const getLoginPath = (pathname: string): string =>
-  localizedPath(getPathLanguage(pathname) ?? resolveLanguage(getCookie(langCookieName)), "/login");
+  localizedPath(getPreferredLanguage(pathname, getCookie(langCookieName)), "/login");
 
 export const getCookie = (name: string): string | undefined => {
   if (typeof document === "undefined") return undefined;

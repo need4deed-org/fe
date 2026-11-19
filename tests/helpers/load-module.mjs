@@ -24,7 +24,7 @@ export function loadModule(file, dependencies = {}) {
     const loaded = { exports: {} };
     cache.set(absolutePath, loaded);
     const localRequire = (id) => {
-      if (id in dependencies) return dependencies[id];
+      if (Object.hasOwn(dependencies, id)) return dependencies[id];
       const base = id.startsWith("@/")
         ? path.join(root, "src", id.slice(2))
         : id.startsWith(".")

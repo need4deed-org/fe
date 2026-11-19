@@ -8,7 +8,7 @@ import {
   getPathLanguage,
   getPathLanguagePrefix,
   localizedPath,
-  resolveLanguage,
+  getPreferredLanguage,
 } from "./utils/helpers";
 
 const DEFAULT_DEVICE_TYPE = "desktop";
@@ -24,7 +24,7 @@ const authorizedRoutes = {
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const currentLocale = getPathLanguage(pathname);
-  const locale = currentLocale ?? resolveLanguage(request.cookies.get(langCookieName)?.value);
+  const locale = getPreferredLanguage(pathname, request.cookies.get(langCookieName)?.value);
 
   const redirectTo = (path: string, { clearSearch = false } = {}) => {
     const url = request.nextUrl.clone();
