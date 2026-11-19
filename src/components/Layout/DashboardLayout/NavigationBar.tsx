@@ -162,7 +162,7 @@ interface StyledParagraphProps {
 const StyledParagraph = ({ label, isSelected }: StyledParagraphProps) => {
   return (
     <NavLabel
-      color={isSelected ? "var(--color-orchid)" : "var(--color-midnight)"}
+      color={isSelected ? "var(--color-black)" : "var(--color-midnight)"}
       fontSize="var(--dashboard-navigation-bar-option-text-size)"
       fontWeight="var(--dashboard-navigation-bar-option-text-weight)"
       letterSpacing="var(--dashboard-navigation-bar-option-text-letter-spacing)"
