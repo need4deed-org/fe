@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { userAgent } from "next/server";
 import { UserRole } from "need4deed-sdk";
 import { langCookieName } from "./config/constants";
 import {
@@ -11,8 +10,6 @@ import {
   getPreferredLanguage,
 } from "./utils/helpers";
 
-const DEFAULT_DEVICE_TYPE = "desktop";
-const DEVICE_HEADER_NAME = "x-device-type";
 const REFRESH = "refresh";
 
 const authorizedRoutes = {
@@ -81,12 +78,6 @@ export function middleware(request: NextRequest) {
     maxAge: 60 * 60 * 24 * 365,
     sameSite: "lax",
   });
-
-  const { device } = userAgent({ headers: request.headers });
-
-  const deviceType = device.type || DEFAULT_DEVICE_TYPE;
-
-  response.headers.set(DEVICE_HEADER_NAME, deviceType);
 
   return response;
 }

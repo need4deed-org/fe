@@ -78,14 +78,13 @@ test("role redirects without a supported route language reach the localized dest
   assertRedirect("/dashboard/agents/42", undefined, "/en/dashboard/agents", roleToken(UserRole.USER));
 });
 
-test("allowed agent-detail requests pass through the shared language and device handling", () => {
+test("allowed agent-detail requests pass through the shared language handling", () => {
   const origin = "http://localhost:3000";
   for (const role of [UserRole.ADMIN, UserRole.COORDINATOR, UserRole.AGENT]) {
     const headers = { cookie: `preferred-lang=en; refresh=${roleToken(role)}` };
     const response = middleware(new NextRequest(`${origin}/de/dashboard/agents/42`, { headers }));
     assert.equal(response.status, 200);
     assert.equal(response.cookies.get("preferred-lang")?.value, "de");
-    assert.equal(response.headers.get("x-device-type"), "desktop");
 
     assertRedirect("/dashboard/agents/42", "de", "/de/dashboard/agents/42", roleToken(role));
   }
