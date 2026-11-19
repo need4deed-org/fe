@@ -5,7 +5,6 @@ import { apiPathAgentRegister, apiPathOption } from "@/config/constants";
 import { useGetQuery } from "@/hooks";
 import { getLocalizedErrorMessage } from "@/utils/apiErrors";
 import axios from "axios";
-import i18next from "i18next";
 import {
   ApiAgentAddressConflict,
   ApiAgentRegisterConflict,
@@ -43,7 +42,8 @@ import { defaultProfileCompletionData, ProfileCompletionData, TOTAL_COMPLETION_S
 import { CheckMark, MatchBanner, MatchActions, MatchListCopy, MatchRow } from "./styled";
 import { useAgentAddressLookup } from "./useAgentAddressLookup";
 import { useGetRegistrationOrganizations } from "@/hooks/useGetRegistrationOrganizations";
-import { setAuthHint } from "@/utils/helpers";
+import { useRouteLang } from "@/hooks/useRouteLang";
+import { localizedPath, setAuthHint } from "@/utils/helpers";
 
 function buildNewAgent(formData: ProfileCompletionData, organizationId?: number): ApiAgentRegisterNew {
   return {
@@ -61,6 +61,7 @@ function buildNewAgent(formData: ProfileCompletionData, organizationId?: number)
 
 export function ProfileCompletion() {
   const { t } = useTranslation();
+  const lang = useRouteLang();
   const router = useRouter();
   const token = useSearchParams().get("token");
 
@@ -146,7 +147,7 @@ export function ProfileCompletion() {
         return;
       }
       setAuthHint();
-      router.push(`/${i18next.language}/dashboard`);
+      router.push(localizedPath(lang, "/dashboard"));
     } catch (err) {
       if (axios.isAxiosError(err) && err.response?.status === 409) {
         const data = err.response.data as Partial<ApiAgentRegisterConflict> | undefined;
@@ -236,7 +237,7 @@ export function ProfileCompletion() {
             </SuccessText>
             <Button
               text={t("agentRegistration.completed.continue")}
-              onClick={() => router.replace(`/${i18next.language}/${currentUser ? "dashboard" : "login"}`)}
+              onClick={() => router.replace(localizedPath(lang, currentUser ? "/dashboard" : "/login"))}
             />
           </SuccessWrapper>
         </Card>

@@ -1,13 +1,15 @@
 import Link from "next/link";
+import { resolveLanguage, localizedPath } from "@/utils/helpers";
 import styles from "./page.module.css";
 
-export default async function Home() {
+export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
+  const lang = resolveLanguage((await params).lang);
   return (
     <div className={styles.page}>
       <header>HEADER</header>
       <main className={styles.main}>
         <div className={styles.ctas}>
-          <Link href="/login" className={styles.secondary}>
+          <Link href={localizedPath(lang, "/login")} className={styles.secondary}>
             Login
           </Link>
           <Link href="/persons" className={styles.secondary}>

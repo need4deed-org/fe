@@ -1,28 +1,16 @@
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import test from "node:test";
-import ts from "typescript";
 import { UserRole } from "need4deed-sdk";
+import { loadModule } from "./helpers/load-module.mjs";
 
 const packageRequire = createRequire(import.meta.url);
 const { NextRequest } = packageRequire("next/server");
 
-function loadModule(path, dependencies = {}) {
-  const source = readFileSync(new URL(`../src/${path}.ts`, import.meta.url), "utf8");
-  const output = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS } }).outputText;
-  const module = { exports: {} };
-  const require = (id) => dependencies[id] ?? packageRequire(id);
-  new Function("require", "module", "exports", output)(require, module, module.exports);
-  return module.exports;
-}
+const helpers = loadModule("src/utils/helpers.ts");
+const { middleware } = loadModule("src/middleware.ts");
 
-const constants = loadModule("config/constants");
-const helpers = loadModule("utils/helpers", { "@/config/constants": constants });
-const { middleware } = loadModule("middleware", {
-  "./config/constants": constants,
-  "./utils/helpers": helpers,
-});
+const roleToken = (role) => `header.${Buffer.from(JSON.stringify({ role })).toString("base64url")}.signature`;
 
 function assertRedirect(path, preference, expectedPath, token) {
   const origin = "http://localhost:3000";
@@ -43,9 +31,15 @@ test("signed-out redirects preserve the route language when the saved preference
   }
 });
 
-test("login redirects without a supported route language still use the existing preference and default", () => {
-  assertRedirect("/dashboard", "de", "/login");
-  assertRedirect("/fr/dashboard", "de", "/login");
+test("signed-out redirects without a supported route language go to the saved or default language in one hop", () => {
+  assertRedirect("/dashboard?tab=open", "de", "/de/login");
+  assertRedirect("/fr/dashboard", "de", "/de/login");
+  assertRedirect("/dashboard", undefined, "/en/login");
+  assertRedirect("/forms/opportunity?ref=form", "de", "/de/login?ref=form");
+  assertRedirect("/fr/forms/opportunity", "fr", "/en/login");
+});
+
+test("paths without a supported route language get the saved or default language", () => {
   assertRedirect("/login", "de", "/de/login");
   assertRedirect("/login", undefined, "/en/login");
   assertRedirect("/fr/login?ref=test", "de", "/de/login?ref=test");
@@ -65,7 +59,7 @@ test("role redirects retain the route language and query through the destination
     ["en", "de"],
   ]) {
     for (const [role, from, to] of cases) {
-      const token = `header.${Buffer.from(JSON.stringify({ role })).toString("base64url")}.signature`;
+      const token = roleToken(role);
       const destination = `/${language}${to}?ref=test`;
       assertRedirect(`/${language}${from}?ref=test`, preference, destination, token);
       const response = middleware(
@@ -79,9 +73,41 @@ test("role redirects retain the route language and query through the destination
   }
 });
 
-test("login paths for client redirects use only supported URL languages", () => {
+test("role redirects without a supported route language reach the localized destination in one hop", () => {
+  assertRedirect("/dashboard/admin", "de", "/de/dashboard", roleToken(UserRole.AGENT));
+  assertRedirect("/dashboard/agents/42", undefined, "/en/dashboard/agents", roleToken(UserRole.USER));
+});
+
+test("allowed agent-detail requests pass through the shared language and device handling", () => {
+  const origin = "http://localhost:3000";
+  for (const role of [UserRole.ADMIN, UserRole.COORDINATOR, UserRole.AGENT]) {
+    const headers = { cookie: `preferred-lang=en; refresh=${roleToken(role)}` };
+    const response = middleware(new NextRequest(`${origin}/de/dashboard/agents/42`, { headers }));
+    assert.equal(response.status, 200);
+    assert.equal(response.cookies.get("preferred-lang")?.value, "de");
+    assert.equal(response.headers.get("x-device-type"), "desktop");
+
+    assertRedirect("/dashboard/agents/42", "de", "/de/dashboard/agents/42", roleToken(role));
+  }
+});
+
+test("login paths for client redirects keep a supported URL language, else fall back", () => {
   assert.equal(helpers.getLoginPath("/de/persons"), "/de/login");
   assert.equal(helpers.getLoginPath("/en/persons"), "/en/login");
-  assert.equal(helpers.getLoginPath("/fr/persons"), "/login");
-  assert.equal(helpers.getLoginPath("/persons"), "/login");
+  assert.equal(helpers.getLoginPath("/fr/persons"), "/en/login");
+  assert.equal(helpers.getLoginPath("/persons"), "/en/login");
+});
+
+test("login paths fall back to the saved language cookie before the default", () => {
+  const previous = globalThis.document;
+  try {
+    globalThis.document = { cookie: "auth_hint=true; preferred-lang=de" };
+    assert.equal(helpers.getLoginPath("/persons"), "/de/login");
+    assert.equal(helpers.getLoginPath("/en/persons"), "/en/login");
+    globalThis.document = { cookie: "preferred-lang=fr" };
+    assert.equal(helpers.getLoginPath("/persons"), "/en/login");
+  } finally {
+    if (previous === undefined) delete globalThis.document;
+    else globalThis.document = previous;
+  }
 });

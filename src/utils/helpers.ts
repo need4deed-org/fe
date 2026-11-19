@@ -4,6 +4,8 @@ import {
   AUTH_HINT_COOKIE_NAME,
   AUTH_HINT_MAX_AGE,
   cloudfrontURL,
+  DEFAULT_LANG,
+  LANG_COOKIE_NAME,
   supportedLangs,
 } from "@/config/constants";
 
@@ -35,10 +37,14 @@ export const getPathLanguage = (pathname: string): Lang | undefined => {
   return isValidLanguage(language) ? language : undefined;
 };
 
-export const localizedPath = (language: Lang | undefined, path: string): string =>
-  language ? `/${language}${path}` : path;
+export const resolveLanguage = (language: string | undefined): Lang =>
+  isValidLanguage(language) ? language : DEFAULT_LANG;
 
-export const getLoginPath = (pathname: string): string => localizedPath(getPathLanguage(pathname), "/login");
+export const localizedPath = (language: Lang, path: string): string => `/${language}${path}`;
+
+// The route language wins; otherwise the saved preference, then the default.
+export const getLoginPath = (pathname: string): string =>
+  localizedPath(getPathLanguage(pathname) ?? resolveLanguage(getCookie(LANG_COOKIE_NAME)), "/login");
 
 export const getCookie = (name: string): string | undefined => {
   if (typeof document === "undefined") return undefined;
