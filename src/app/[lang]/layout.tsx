@@ -2,12 +2,13 @@ import AxiosInitializer from "@/components/hepler/AxiosInitializer";
 import "@/config/axios";
 import { DeviceProvider } from "@/context/DeviceContext";
 import StyledComponentsRegistry from "@/lib/styled-components-registry";
-import { resolveLanguage } from "@/utils/helpers";
+import { isValidLanguage } from "@/utils/helpers";
 import { getScreenType } from "@/utils/screen-type";
 import QueryProvider from "@/utils/QueryProvider";
 import type { Metadata } from "next";
 import { Figtree } from "next/font/google";
 import { headers } from "next/headers";
+import { notFound } from "next/navigation";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { I18nProvider } from "../../config/i18next";
@@ -30,7 +31,8 @@ export default async function RootLayout({
   children: React.ReactNode;
   params: Promise<{ lang: string }>;
 }>) {
-  const language = resolveLanguage((await params).lang);
+  const { lang: language } = await params;
+  if (!isValidLanguage(language)) notFound();
 
   const initialScreenType = getScreenType(await headers());
   return (
