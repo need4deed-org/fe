@@ -4,7 +4,7 @@ import { OpportunityTextLimits, refineTextLimit, SOURCE_TEXT_LIMITS } from "@/ut
 import { z } from "zod";
 import { resolveFormLanguageToOption } from "./formatters";
 
-const i18nPrefix = "dashboard.opportunityProfile.opportunityDetails.validation";
+export const i18nPrefix = "dashboard.opportunityProfile.opportunityDetails.validation";
 
 const languageObjectSchema = z.object({
   id: z.number(),
@@ -29,7 +29,7 @@ export function getMainCommunicationLanguageOptions<T extends MainCommunicationL
 
 type Translate = (key: string, options?: Record<string, unknown>) => string;
 
-const lengthMessages = (tooLongKey: string) => ({
+export const lengthMessages = (tooLongKey: string) => ({
   tooLong: tooLongKey,
   shortenOnly: `${i18nPrefix}.shortenOnly`,
 });
@@ -42,6 +42,7 @@ export const createOpportunityDetailsSchema = (
   z.object({
     title: z
       .string()
+      .trim()
       .min(1, t(`${i18nPrefix}.opportunityNameRequired`))
       .superRefine(refineTextLimit(t, limits.title, lengthMessages(`${i18nPrefix}.opportunityNameTooLong`))),
     description: z

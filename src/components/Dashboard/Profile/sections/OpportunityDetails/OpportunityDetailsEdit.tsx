@@ -176,7 +176,7 @@ export function OpportunityDetailsEdit({ opportunity, onCancel }: Props) {
                 label={t(`${prefix}.description`)}
                 value={field.value}
                 setValue={field.onChange}
-                hint={t(`${prefix}.descriptionHint`, { max: textLimits.description.max })}
+                hint={t(`${prefix}.maxCharsHint`, { max: textLimits.description.max })}
                 errorMessage={errors.description?.message}
               />
             )}

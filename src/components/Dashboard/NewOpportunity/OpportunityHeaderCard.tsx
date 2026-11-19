@@ -11,7 +11,8 @@ import {
 import { ShootingStarIcon } from "@phosphor-icons/react";
 import { useFormContext, Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { ApiAgentMembershipSummary, OPPORTUNITY_TITLE_MAX_LENGTH, VolunteerStateTypeType } from "need4deed-sdk";
+import { ApiAgentMembershipSummary, VolunteerStateTypeType } from "need4deed-sdk";
+import { SOURCE_TEXT_LIMITS } from "@/utils/opportunity-text-limits";
 import { VolunteerTypeRow, TypeButtons, TypeButton, NGOTypeRow, NGOnonEditableRow, NGOPickerColumn } from "./styled";
 import { Heading3, Heading4 } from "@/components/styled/text";
 import { createVolunteerTypeLabelMap } from "@/components/Dashboard/Profile/sections/ProfileHeader/common/labelMaps";
@@ -63,7 +64,7 @@ export default function OpportunityHeaderCard({ selectedType, agentTitles, canPi
                   value={field.value}
                   setValue={field.onChange}
                   hint={t("dashboard.opportunityProfile.opportunityDetails.maxCharsHint", {
-                    max: OPPORTUNITY_TITLE_MAX_LENGTH,
+                    max: SOURCE_TEXT_LIMITS.title.max,
                   })}
                   errorMessage={errors.title?.message}
                 />

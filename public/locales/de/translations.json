@@ -1784,7 +1784,6 @@
         "numberOfVolunteers": "Anzahl der Ehrenamtlichen",
         "activities": "Aktivitäten",
         "skills": "Fähigkeiten & Erfahrung",
-        "descriptionHint": "Max. {{max}} Zeichen",
         "maxCharsHint": "Max. {{max}} Zeichen",
         "cancel": "Abbrechen",
         "saveChanges": "Änderungen speichern",
