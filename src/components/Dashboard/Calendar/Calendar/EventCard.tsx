@@ -90,18 +90,16 @@ export function EventCard({ event, variant = "card", onEdit, onDelete, onPublica
         </Registration>
       </Meta>
       <Actions>
-        {!hasExternalRegistration && (
-          <Button
-            text={t("dashboard.calendar.registrations.open")}
-            onClick={() => setIsRegistrationsOpen(true)}
-            width="auto"
-            textFontSize="var(--font-size-sm)"
-            padding="var(--spacing-8) var(--spacing-16)"
-            backgroundcolor="transparent"
-            border="var(--border-width-medium) solid var(--color-aubergine)"
-            textColor="var(--color-aubergine)"
-          />
-        )}
+        <Button
+          text={t("dashboard.calendar.registrations.open")}
+          onClick={() => setIsRegistrationsOpen(true)}
+          width="auto"
+          textFontSize="var(--font-size-sm)"
+          padding="var(--spacing-8) var(--spacing-16)"
+          backgroundcolor="transparent"
+          border="var(--border-width-medium) solid var(--color-aubergine)"
+          textColor="var(--color-aubergine)"
+        />
         <Button
           text={publicationActionLabel}
           onClick={() => onPublicationChange(event)}

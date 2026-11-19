@@ -161,6 +161,7 @@ function getEventTypeLabel(type: EventN4DType, t: TFunction) {
 function EventDetails({ event }: { event: ApiEventN4DGetList }) {
   const { t, i18n } = useTranslation();
   const externalRegistrationUrl = getHttpUrl(event.linkRSVP);
+  const isOver = new Date(event.dateEnd ?? event.date) < new Date();
   const eventTypeLabel = getEventTypeLabel(event.type, t);
 
   return (
@@ -185,7 +186,7 @@ function EventDetails({ event }: { event: ApiEventN4DGetList }) {
               </AdditionalInfo>
             </>
           ) : null}
-          {!externalRegistrationUrl && <EventRegistrationForm event={event} />}
+          {!externalRegistrationUrl && !isOver && <EventRegistrationForm event={event} />}
         </section>
 
         <Details aria-label={t("eventPage.details")}>
