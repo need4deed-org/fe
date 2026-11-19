@@ -16,7 +16,8 @@ import {
 import { createMapping } from "@/components/Dashboard/Profile/sections/VolunteerProfile/mappingUtils";
 import { useUpdateOpportunityDetails } from "@/hooks/useUpdateOpportunityDetails";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { MAX_DESCRIPTION_LENGTH } from "@/config/constants";
+import { getActiveLanguage } from "@/config/axios";
+import { getOpportunityTextLimits } from "@/utils/opportunity-text-limits";
 import { de, enUS } from "date-fns/locale";
 import { ApiOpportunityGet, Lang, LangPurpose, VolunteerStateTypeType } from "need4deed-sdk";
 import { Controller, FormProvider, useForm } from "react-hook-form";
@@ -83,7 +84,8 @@ export function OpportunityDetailsEdit({ opportunity, onCancel }: Props) {
     currentEventDateTime = dateFromDateTimeUTCStrings(opp.event.date, opp.event.time);
   }
 
-  const schema = createOpportunityDetailsSchema(t, getMainCommunicationLanguageOptions(apiLanguages));
+  const textLimits = getOpportunityTextLimits(opp, getActiveLanguage());
+  const schema = createOpportunityDetailsSchema(t, getMainCommunicationLanguageOptions(apiLanguages), textLimits);
   const methods = useForm<OpportunityDetailsFormData>({
     resolver: zodResolver(schema),
     mode: "onChange",
@@ -172,8 +174,8 @@ export function OpportunityDetailsEdit({ opportunity, onCancel }: Props) {
                 label={t(`${prefix}.description`)}
                 value={field.value}
                 setValue={field.onChange}
-                maxLength={MAX_DESCRIPTION_LENGTH}
-                hint={t(`${prefix}.descriptionHint`, { max: MAX_DESCRIPTION_LENGTH })}
+                maxLength={textLimits.description}
+                hint={t(`${prefix}.descriptionHint`, { max: textLimits.description })}
                 errorMessage={errors.description?.message}
               />
             )}

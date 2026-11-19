@@ -1777,6 +1777,7 @@
         "saveSuccess": "Opportunity updated successfully",
         "validation": {
           "opportunityNameRequired": "Name is required",
+          "opportunityNameTooLong": "Name is too long",
           "descriptionRequired": "Description is required",
           "descriptionTooLong": "Description is too long",
           "numberOfVolunteersRequired": "Number of volunteers must be at least 1",

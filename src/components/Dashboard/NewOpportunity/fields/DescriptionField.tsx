@@ -2,7 +2,7 @@ import { opportunityFieldStackingThreshold } from "@/config/constants";
 import { useFormContext, Controller } from "react-hook-form";
 import { OpportunityDetailsFormData } from "../../Profile/sections/OpportunityDetails/opportunityDetailsSchema";
 import { EditableField } from "@/components/EditableField/EditableField";
-import { MAX_DESCRIPTION_LENGTH } from "@/config/constants";
+import { OPPORTUNITY_DESCRIPTION_MAX_LENGTH } from "need4deed-sdk";
 import { useTranslation } from "react-i18next";
 
 export default function DescriptionField({ prefix }: { prefix: string }) {
@@ -24,8 +24,8 @@ export default function DescriptionField({ prefix }: { prefix: string }) {
           label={t(`${prefix}.description`)}
           value={field.value}
           setValue={field.onChange}
-          maxLength={MAX_DESCRIPTION_LENGTH}
-          hint={t(`${prefix}.descriptionHint`, { max: MAX_DESCRIPTION_LENGTH })}
+          maxLength={OPPORTUNITY_DESCRIPTION_MAX_LENGTH}
+          hint={t(`${prefix}.descriptionHint`, { max: OPPORTUNITY_DESCRIPTION_MAX_LENGTH })}
           errorMessage={errors.description?.message}
         />
       )}

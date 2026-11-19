@@ -1789,6 +1789,7 @@
         "saveSuccess": "Ehrenamtliche Tätigkeit erfolgreich aktualisiert",
         "validation": {
           "opportunityNameRequired": "Name ist erforderlich",
+          "opportunityNameTooLong": "Name ist zu lang",
           "descriptionRequired": "Beschreibung ist erforderlich",
           "descriptionTooLong": "Beschreibung ist zu lang",
           "numberOfVolunteersRequired": "Anzahl der Ehrenamtlichen muss mindestens 1 sein",
