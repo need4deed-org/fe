@@ -51,6 +51,8 @@ export enum ScreenTypes {
   DESKTOP = "desktop",
 }
 
+export const deviceTypeHeaderName = "x-device-type";
+
 export const screenSizeThresholds = {
   tablet: 768,
   desktop: 1440,

@@ -2,17 +2,16 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { userAgent } from "next/server";
 import { UserRole } from "need4deed-sdk";
-import { langCookieName } from "./config/constants";
+import { deviceTypeHeaderName, langCookieName } from "./config/constants";
 import {
   decodeJwtPayload,
   getPathLanguage,
   getPathLanguagePrefix,
   localizedPath,
   getPreferredLanguage,
+  toScreenType,
 } from "./utils/helpers";
 
-const DEFAULT_DEVICE_TYPE = "desktop";
-const DEVICE_HEADER_NAME = "x-device-type";
 const REFRESH = "refresh";
 
 const authorizedRoutes = {
@@ -75,18 +74,15 @@ export function middleware(request: NextRequest) {
     return redirectTo(unprefixedPath);
   }
 
-  const response = NextResponse.next();
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set(deviceTypeHeaderName, toScreenType(userAgent(request).device.type));
+
+  const response = NextResponse.next({ request: { headers: requestHeaders } });
   response.cookies.set(langCookieName, currentLocale, {
     path: "/",
     maxAge: 60 * 60 * 24 * 365,
     sameSite: "lax",
   });
-
-  const { device } = userAgent({ headers: request.headers });
-
-  const deviceType = device.type || DEFAULT_DEVICE_TYPE;
-
-  response.headers.set(DEVICE_HEADER_NAME, deviceType);
 
   return response;
 }

@@ -1,8 +1,9 @@
 import AxiosInitializer from "@/components/hepler/AxiosInitializer";
 import "@/config/axios";
-import { ScreenTypes } from "@/config/constants";
+import { deviceTypeHeaderName } from "@/config/constants";
 import { DeviceProvider } from "@/context/DeviceContext";
 import StyledComponentsRegistry from "@/lib/styled-components-registry";
+import { toScreenType } from "@/utils/helpers";
 import QueryProvider from "@/utils/QueryProvider";
 import type { Metadata } from "next";
 import { Figtree } from "next/font/google";
@@ -32,21 +33,7 @@ export default async function RootLayout({
   const resolvedParams = await params;
   const { lang } = resolvedParams;
 
-  const getInitialDeviceType = async () => {
-    const headersList = await headers();
-    const deviceTypeHeader = headersList.get("x-device-type");
-
-    switch (deviceTypeHeader) {
-      case "mobile":
-        return ScreenTypes.MOBILE;
-      case "tablet":
-        return ScreenTypes.TABLET;
-      default:
-        return ScreenTypes.DESKTOP;
-    }
-  };
-
-  const initialScreenType = await getInitialDeviceType();
+  const initialScreenType = toScreenType((await headers()).get(deviceTypeHeaderName));
   return (
     <html lang="en">
       <head>

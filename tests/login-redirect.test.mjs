@@ -85,7 +85,7 @@ test("allowed agent-detail requests pass through the shared language and device 
     const response = middleware(new NextRequest(`${origin}/de/dashboard/agents/42`, { headers }));
     assert.equal(response.status, 200);
     assert.equal(response.cookies.get("preferred-lang")?.value, "de");
-    assert.equal(response.headers.get("x-device-type"), "desktop");
+    assert.equal(response.headers.get("x-middleware-request-x-device-type"), "desktop");
 
     assertRedirect("/dashboard/agents/42", "de", "/de/dashboard/agents/42", roleToken(role));
   }
