@@ -35,7 +35,7 @@ To pick up a new SDK release: `yarn upgrade need4deed-sdk --latest` (see API con
 
 **Stack:** Next.js 15 App Router, React 19, TypeScript strict, Styled Components, TanStack Query v5, React Hook Form + TanStack Form, Zod, Axios, i18next (en/de).
 
-**Routing:** All routes are under `src/app/[lang]/` — the middleware injects the language prefix automatically from the `preferred-lang` cookie. Device type (mobile/tablet/desktop) is also detected in middleware and available via `DeviceContext`.
+**Routing:** All routes are under `src/app/[lang]/` — the middleware injects the language prefix automatically from the `preferred-lang` cookie. The initial device type (mobile/tablet/desktop) comes from `user-agent` in the root layout (`src/utils/screen-type.ts`) and is available via `DeviceContext`, which updates it from the viewport width on the client.
 
 **API layer:**
 

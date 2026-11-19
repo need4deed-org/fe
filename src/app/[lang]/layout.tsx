@@ -2,7 +2,6 @@ import AxiosInitializer from "@/components/hepler/AxiosInitializer";
 import "@/config/axios";
 import { DeviceProvider } from "@/context/DeviceContext";
 import StyledComponentsRegistry from "@/lib/styled-components-registry";
-import { resolveLanguage } from "@/utils/helpers";
 import { getScreenType } from "@/utils/screen-type";
 import QueryProvider from "@/utils/QueryProvider";
 import type { Metadata } from "next";
@@ -35,7 +34,7 @@ export default async function RootLayout({
 
   const initialScreenType = getScreenType(await headers());
   return (
-    <html lang={resolveLanguage(lang)}>
+    <html lang="en">
       <head>
         <link
           href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"

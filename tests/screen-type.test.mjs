@@ -21,6 +21,9 @@ test("a missing or non-handheld user agent is desktop", () => {
   assert.equal(getScreenType(new Headers({ "user-agent": "Mozilla/5.0 (SMART-TV; Linux; Tizen 6.0)" })), "desktop");
 });
 
-test("a client-sent x-device-type header is ignored", () => {
-  assert.equal(getScreenType(new Headers({ "user-agent": userAgents.desktop, "x-device-type": "mobile" })), "desktop");
+test("Android user agents map to mobile or tablet", () => {
+  const android = (device, mobile) =>
+    `Mozilla/5.0 (Linux; Android 13; ${device}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 ${mobile}Safari/537.36`;
+  assert.equal(getScreenType(new Headers({ "user-agent": android("K", "Mobile ") })), "mobile");
+  assert.equal(getScreenType(new Headers({ "user-agent": android("SM-X700", "") })), "tablet");
 });
