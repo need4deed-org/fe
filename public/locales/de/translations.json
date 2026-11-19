@@ -1815,7 +1815,8 @@
         "city": "Stadt",
         "required": "Pflichtfeld",
         "postcodeInvalid": "Bitte eine 5-stellige deutsche PLZ eingeben"
-      }
+      },
+      "duplicateOpportunity": "Ehrenamtsbedarf duplizieren"
     },
     "racTitle": "Geflüchtetenunterkunft",
     "rac": {

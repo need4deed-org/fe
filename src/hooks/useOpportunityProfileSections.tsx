@@ -27,7 +27,7 @@ export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | u
   const { t, i18n } = useTranslation();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { isAuthorized, isOwnProfile, isUserLoaded } = useAuth({ agentId: opportunity?.agent?.id });
+  const { isAuthorized, isOwnProfile, isUserLoaded, isAgent } = useAuth({ agentId: opportunity?.agent?.id });
   const hasEditingRights = isAuthorized || isOwnProfile;
 
   const opportunityContactDetailsRef = useRef<EditableSectionRef>(null);
@@ -189,6 +189,16 @@ export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | u
         ),
       },
     );
+  }
+
+  if (isAgent && isOwnProfile) {
+    sections.push({
+      iconName: IconName.ShootingStar,
+      title: t("dashboard.opportunityProfile.duplicateOpportunity"),
+      headerButtonName: t("dashboard.opportunityProfile.duplicateOpportunity"),
+      onHeaderButtonClick: () =>
+        router.push(`/${i18n.language}/dashboard/opportunities/new?duplicateOpportunityId=${opportunity.id}`),
+    });
   }
 
   if (isAuthorized) {

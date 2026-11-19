@@ -1803,7 +1803,8 @@
         "city": "City",
         "required": "Required",
         "postcodeInvalid": "Enter a 5-digit German postcode"
-      }
+      },
+      "duplicateOpportunity": "Duplicate opportunity"
     },
     "racTitle": "Refugee accommodation centre",
     "rac": {
