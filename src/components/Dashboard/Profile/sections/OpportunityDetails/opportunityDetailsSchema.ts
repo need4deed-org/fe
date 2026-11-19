@@ -1,11 +1,6 @@
 import { Availability } from "@/components/forms/types";
 import { LanguageLevel } from "@/types";
-import {
-  getTextLimitIssue,
-  OpportunityTextLimits,
-  SOURCE_TEXT_LIMITS,
-  TextLimit,
-} from "@/utils/opportunity-text-limits";
+import { OpportunityTextLimits, refineTextLimit, SOURCE_TEXT_LIMITS } from "@/utils/opportunity-text-limits";
 import { z } from "zod";
 import { resolveFormLanguageToOption } from "./formatters";
 
@@ -34,20 +29,10 @@ export function getMainCommunicationLanguageOptions<T extends MainCommunicationL
 
 type Translate = (key: string, options?: Record<string, unknown>) => string;
 
-/** be's rule in the form: over the cap is an error, unless the text was already over it and isn't growing. */
-export function refineTextLimit(t: Translate, limit: TextLimit, tooLongKey: string) {
-  return (value: string, ctx: z.RefinementCtx) => {
-    const issue = getTextLimitIssue(value, limit);
-    if (!issue) return;
-    ctx.addIssue({
-      code: "custom",
-      message:
-        issue === "tooLong"
-          ? t(tooLongKey, { max: limit.max })
-          : t(`${i18nPrefix}.shortenOnly`, { max: limit.max, count: limit.allowed }),
-    });
-  };
-}
+const lengthMessages = (tooLongKey: string) => ({
+  tooLong: tooLongKey,
+  shortenOnly: `${i18nPrefix}.shortenOnly`,
+});
 
 export const createOpportunityDetailsSchema = (
   t: Translate,
@@ -58,8 +43,10 @@ export const createOpportunityDetailsSchema = (
     title: z
       .string()
       .min(1, t(`${i18nPrefix}.opportunityNameRequired`))
-      .superRefine(refineTextLimit(t, limits.title, `${i18nPrefix}.opportunityNameTooLong`)),
-    description: z.string().superRefine(refineTextLimit(t, limits.description, `${i18nPrefix}.descriptionTooLong`)),
+      .superRefine(refineTextLimit(t, limits.title, lengthMessages(`${i18nPrefix}.opportunityNameTooLong`))),
+    description: z
+      .string()
+      .superRefine(refineTextLimit(t, limits.description, lengthMessages(`${i18nPrefix}.descriptionTooLong`))),
     numberOfVolunteers: z.string(),
     mainCommunication: z.array(languageObjectSchema).superRefine((langs, ctx) => {
       const selected = langs.filter(({ language }) => !!language);

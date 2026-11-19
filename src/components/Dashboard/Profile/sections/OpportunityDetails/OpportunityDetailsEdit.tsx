@@ -124,8 +124,8 @@ export function OpportunityDetailsEdit({ opportunity, onCancel }: Props) {
 
     updateOpportunityDetails(
       {
-        ...(dirtyFields.title ? { title: values.title } : {}),
-        ...(dirtyFields.description ? { description: values.description } : {}),
+        ...(dirtyFields.title ? { title: values.title.trim() } : {}),
+        ...(dirtyFields.description ? { description: values.description.trim() } : {}),
         numberVolunteers: Number(values.numberOfVolunteers),
         languagesMain: toLangOptionItems(values.mainCommunication, apiLanguages, t),
         languagesResidents: toLangOptionItems(values.residentsSpeak, apiLanguages, t),
@@ -159,7 +159,7 @@ export function OpportunityDetailsEdit({ opportunity, onCancel }: Props) {
                 label={t(`${prefix}.opportunityName`)}
                 value={field.value}
                 setValue={field.onChange}
-                hint={t(`${prefix}.descriptionHint`, { max: textLimits.title.max })}
+                hint={t(`${prefix}.maxCharsHint`, { max: textLimits.title.max })}
                 errorMessage={errors.title?.message}
               />
             )}

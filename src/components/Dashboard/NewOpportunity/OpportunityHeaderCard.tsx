@@ -62,7 +62,7 @@ export default function OpportunityHeaderCard({ selectedType, agentTitles, canPi
                   label={t("dashboard.newOpportunity.fields.title")}
                   value={field.value}
                   setValue={field.onChange}
-                  hint={t("dashboard.opportunityProfile.opportunityDetails.descriptionHint", {
+                  hint={t("dashboard.opportunityProfile.opportunityDetails.maxCharsHint", {
                     max: OPPORTUNITY_TITLE_MAX_LENGTH,
                   })}
                   errorMessage={errors.title?.message}
