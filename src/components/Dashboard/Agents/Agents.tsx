@@ -21,7 +21,6 @@ import { getClearFilter, getClearSingleFilter } from "../common/CardsFilter/help
 import { withOptionFilters } from "../common/CardsFilter/selectionFilters";
 import { agentFilterConfigs } from "./Filters/config";
 import { deserializeAgentFilters, serializeAgentFilters } from "./helpers";
-import Filters from "../common/CardsFilter/Filters";
 import FiltersContent from "./Filters/FiltersContent";
 import { ViewMode } from "../common/types";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
@@ -36,7 +35,6 @@ export const Agents = () => {
   const screenType = useScreenType();
   const canCreateAgent = user?.role === UserRole.COORDINATOR || user?.role === UserRole.ADMIN;
   const { t, i18n } = useTranslation();
-  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [isCreateAgentOpen, setIsCreateAgentOpen] = useState(false);
   const [sortOrder, setSortOrder] = useState(SortOrder.NewToOld);
   const [numOfAgents, setNumOfAgents] = useState(0);
@@ -106,7 +104,7 @@ export const Agents = () => {
   };
 
   const handleClearAllFilters = () => {
-    const cleared = getClearFilter<AgentCardsFilter>(cardsFilter);
+    const cleared = { ...getClearFilter(cardsFilter), search: cardsFilter.search };
     setCardsFilter(cleared);
     router.push(pathname + questionMark + serializeAgentFilters(cleared, searchParams));
   };
@@ -141,7 +139,8 @@ export const Agents = () => {
           tabs={tabs}
           selectedTabIndex={selectedTabIndex}
           setSelectedTabIndex={handleTabChange}
-          setIsFiltersOpen={setIsFiltersOpen}
+          showSort={viewMode !== ViewMode.MAP}
+          filtersContent={<FiltersContent setFilter={handleFilterUpdate} filter={cardsFilter} />}
           onSearchInputChange={handleSearchInputChange}
           searchValue={cardsFilter.search}
           searchPlaceholder={t("dashboard.agents.card.search")}
@@ -172,11 +171,6 @@ export const Agents = () => {
             apiFilterOptions={apiFilterOptions}
             viewMode={viewMode}
             onSelect={transferOpportunityId ? setAgentToTransferTo : undefined}
-          />
-          <Filters
-            isFiltersOpen={isFiltersOpen}
-            setIsFiltersOpen={setIsFiltersOpen}
-            filtersContent={<FiltersContent setFilter={handleFilterUpdate} filter={cardsFilter} viewMode={viewMode} />}
           />
         </ContentRow>
       </AgentsContainer>

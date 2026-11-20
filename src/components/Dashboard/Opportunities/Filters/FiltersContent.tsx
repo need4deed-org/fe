@@ -4,26 +4,23 @@ import AccordionFilter from "../../common/CardsFilter/AccordionFilter";
 import { getVisibleSelectionFilterSections } from "../../common/CardsFilter/selectionFilters";
 import { SetFilter } from "../../common/CardsFilter/types";
 import { createAvailabilityFilterItems, createOpportunityFilterSections } from "./helpers";
-import { FiltersContentContainer } from "./styles";
+import { FiltersContentContainer, FullWidthFilter } from "../../common/CardsFilter/Filters";
 import { useAuth } from "@/hooks/useAuth";
-import { ViewMode } from "../../common/types";
 import { QueryParamsKeys } from "need4deed-sdk";
 import { createCommuteMinutesFilterItems } from "../../common/CardsFilter/matchingPrefill";
 
 type Props = {
   filter: OpportunityCardsFilter;
   setFilter: SetFilter<OpportunityCardsFilter>;
-  viewMode: ViewMode;
   isMatchMode: boolean;
 };
 
-export default function FiltersContent({ setFilter, filter, viewMode, isMatchMode }: Props) {
+export default function FiltersContent({ setFilter, filter, isMatchMode }: Props) {
   const { t } = useTranslation();
   const { isAuthorized, isAgent, isVolunteer } = useAuth();
   const canSeeFullView = isAuthorized || isAgent;
 
   const sections = getVisibleSelectionFilterSections(createOpportunityFilterSections(filter, setFilter, t), {
-    viewMode,
     isAuthorized,
     isAgent,
     isVolunteer,
@@ -42,7 +39,7 @@ export default function FiltersContent({ setFilter, filter, viewMode, isMatchMod
         />
       )}
       {canSeeFullView && (
-        <AccordionFilter
+        <FullWidthFilter
           header={t("dashboard.opportunities.filters.schedule.header")}
           groupedItems={availabilityFilters}
           groupedItemsDisplayType="button"

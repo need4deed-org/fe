@@ -1,7 +1,6 @@
 import { TFunction } from "i18next";
 import { ApiOptionLists, EntityTableName } from "need4deed-sdk";
 import { ReadonlyURLSearchParams } from "next/navigation";
-import { ViewMode } from "../types";
 import { createFilterFromOption, generateNestedFilterControlItems } from "./helpers";
 import { FilterItem, SelectionMap, SetFilter } from "./types";
 
@@ -11,7 +10,6 @@ export type SelectionFilterKey<TFilter> = {
   string;
 
 export type FilterVisibilityContext = {
-  viewMode: ViewMode;
   isAuthorized: boolean;
   isAgent: boolean;
   isVolunteer: boolean;
