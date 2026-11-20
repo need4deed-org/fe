@@ -208,7 +208,7 @@
     "viewDetails": "Veranstaltungsdetails ansehen",
     "backToEvents": "Zurück zu allen kommenden Veranstaltungen",
     "register": "Jetzt anmelden",
-    "registrationUnavailable": "Die Anmeldung ist noch nicht verfügbar.",
+    "registrationUnavailable": "Die Anmeldung ist nicht verfügbar.",
     "loading": "Veranstaltung wird geladen…",
     "loadError": "Die Veranstaltung konnte nicht geladen werden. Bitte versuche es erneut.",
     "empty": "Keine kommende Veranstaltung",
@@ -652,7 +652,11 @@
         "error": "Beim Laden der Seite ist ein Fehler aufgetreten. Bitte aktualisieren Sie die Seite.",
         "mostRelevantOpp": "Relevanteste Angebote",
         "mostRelevantOppDesc": "(basierend auf Bezirk und Verfügbarkeit)",
-        "mostRelevantNoResults": "Es werden keine Ergebnisse angezeigt. Versuchen Sie, Ihre Verfügbarkeit oder Ihren Bezirk in Ihrem Profil anzupassen, um mehr Ergebnisse zu sehen."
+        "mostRelevantNoResults": "Es werden keine Ergebnisse angezeigt. Versuchen Sie, Ihre Verfügbarkeit oder Ihren Bezirk in Ihrem Profil anzupassen, um mehr Ergebnisse zu sehen.",
+        "myActivity": "Meine letzten Aktivitäten",
+        "noActivity": "Noch keine Kommentare oder Änderungen von dir",
+        "noActivityThisWeek": "Diese Woche noch nichts von dir",
+        "earlierActivity": "Früher ({{count}})"
       },
       "sidebar": {
         "home": "Startseite",
@@ -1926,7 +1930,6 @@
       "deleteEvent": "Veranstaltung löschen",
       "openRegistration": "Anmeldelink öffnen",
       "hostedBy": "Veranstaltet von {{name}}",
-      "registrationUnavailable": "Anmeldelink nicht verfügbar",
       "editLoading": "Veranstaltung wird geladen…",
       "editLoadError": "Diese Veranstaltung konnte nicht geladen werden. Möglicherweise wurde sie gelöscht.",
       "backToCalendar": "Zurück zum Kalender",
@@ -1978,7 +1981,20 @@
         "next": "Weiter",
         "saveDraft": "Als Entwurf speichern",
         "saveChanges": "Änderungen speichern",
-        "locationHelper": "z.B. Elsenstr., Nr. 87, 12435"
+        "locationHelper": "z.B. Elsenstr., Nr. 87, 12435",
+        "registrationLinkHelper": "Optional. Leer lassen, um das eigene Anmeldeformular von need4deed zu nutzen."
+      },
+      "openInternalRegistration": "Anmeldeformular öffnen",
+      "registrations": {
+        "open": "Anmeldungen",
+        "title": "Anmeldungen: {{title}}",
+        "summary_one": "{{count}} Anmeldung, {{people}} Personen",
+        "summary_other": "{{count}} Anmeldungen, {{people}} Personen",
+        "export": "CSV exportieren",
+        "empty": "Noch keine Anmeldungen",
+        "people": "Personen",
+        "volunteer": "Ehrenamtlich mit Geflüchteten",
+        "attended": "Teilgenommen"
       }
     },
     "newOpportunity": {
@@ -2139,6 +2155,14 @@
     "recommended": {
       "volunteersTitle": "Empfohlene Ehrenamtliche",
       "opportunitiesTitle": "Empfohlene Ehrenamtsbedarfe"
+    },
+    "volunteerEvents": {
+      "title": "Veranstaltungen",
+      "emptyState": "Noch keine Anmeldungen zu Veranstaltungen",
+      "loadError": "Die Anmeldungen zu Veranstaltungen konnten nicht geladen werden.",
+      "event": "Veranstaltung",
+      "date": "Datum",
+      "attended": "Teilgenommen"
     }
   },
   "aboutus": {
@@ -3162,5 +3186,33 @@
     "openCalendar": "Kalender öffnen",
     "invalidDate": "Bitte ein gültiges Datum eingeben (TT.MM.JJJJ).",
     "beforeMinYear": "Daten vor {{year}} werden nicht unterstützt."
+  },
+  "eventRegistration": {
+    "thanks": "Danke! Du bist angemeldet, bis bald.",
+    "submit": "Anmelden",
+    "yes": "Ja",
+    "no": "Nein",
+    "fields": {
+      "fullName": "Vollständiger Name",
+      "email": "E-Mail",
+      "phone": "Telefon",
+      "numberOfPeople": "Anzahl Personen",
+      "languagePreference": "Bevorzugte Sprache",
+      "message": "Nachricht",
+      "isVolunteer": "Ich engagiere mich ehrenamtlich mit Geflüchteten",
+      "volunteerTypes": "In welcher Form?"
+    },
+    "volunteerTypes": {
+      "events": "Veranstaltungen",
+      "regular": "Regelmäßig",
+      "accompanying": "Begleitung"
+    },
+    "errors": {
+      "required": "Pflichtfeld",
+      "email": "Bitte eine gültige E-Mail eingeben",
+      "people": "Bitte eine Zahl von 1 bis 1000 eingeben",
+      "message": "Höchstens 500 Zeichen"
+    },
+    "title": "Anmeldung"
   }
 }

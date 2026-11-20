@@ -4,6 +4,7 @@ import { NewestTaggedComments } from "./NewestTaggedComments";
 import { DashboardCardContainer } from "../styles";
 import { NewestOpportunities } from "./NewestOpportunities";
 import { NewestVolunteers } from "./NewestVolunteers";
+import { MyRecentActivity } from "./MyRecentActivity";
 import { useTranslation } from "react-i18next";
 
 export function CoordinatorHomeContent() {
@@ -12,6 +13,9 @@ export function CoordinatorHomeContent() {
     <>
       <Heading3>{t("dashboard.home.content.newTags")}</Heading3>
       <NewestTaggedComments />
+
+      <Heading3>{t("dashboard.home.content.myActivity")}</Heading3>
+      <MyRecentActivity />
 
       <Heading3>{t("dashboard.home.content.newOpportunities")}</Heading3>
       <DashboardCardContainer>

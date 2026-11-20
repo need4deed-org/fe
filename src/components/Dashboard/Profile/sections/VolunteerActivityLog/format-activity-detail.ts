@@ -2,7 +2,10 @@ import { TFunction } from "i18next";
 import { ApiVolunteerAuditLogGet, VolunteerAuditLogType } from "need4deed-sdk";
 import { parseMatchDetail } from "./parse-match-detail";
 
-export function formatActivityDetail({ type, detail }: ApiVolunteerAuditLogGet, t: TFunction): string {
+export function formatActivityDetail(
+  { type, detail }: Pick<ApiVolunteerAuditLogGet, "type" | "detail">,
+  t: TFunction,
+): string {
   const match = type === VolunteerAuditLogType.OPPORTUNITY_STATUS_CHANGED ? parseMatchDetail(detail) : null;
   if (!match) {
     return detail;
