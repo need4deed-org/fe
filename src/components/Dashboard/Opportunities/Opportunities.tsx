@@ -71,7 +71,6 @@ export function Opportunities() {
 
   const isAgent = user?.role === UserRole.AGENT;
   const isVolunteer = user?.role === UserRole.VOLUNTEER;
-  const isStaff = user?.role === UserRole.COORDINATOR || user?.role === UserRole.ADMIN;
   const tabs = !user
     ? []
     : [
