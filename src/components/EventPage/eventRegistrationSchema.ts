@@ -7,7 +7,10 @@ export const VOLUNTEER_TYPES = Object.values(OpportunityType) as VolunteerType[]
 export const createEventRegistrationSchema = (t: TFunction) =>
   z.object({
     fullName: z.string().trim().min(1, t("eventRegistration.errors.required")),
-    email: z.string().trim().email(t("eventRegistration.errors.email")),
+    email: z
+      .string()
+      .trim()
+      .pipe(z.email(t("eventRegistration.errors.email"))),
     phone: z.string().trim(),
     numberOfPeople: z
       .number()

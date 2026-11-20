@@ -3,6 +3,7 @@
 import Button from "@/components/core/button/Button/Button";
 import { Checkbox } from "@/components/core/button/Checkbox/Checkbox";
 import { EditableField } from "@/components/EditableField/EditableField";
+import { eventRegisterAnchor } from "@/config/constants";
 import { Heading2, Paragraph } from "@/components/styled/text";
 import { useRegisterForEvent } from "@/hooks/useEventRegistrations";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -10,37 +11,8 @@ import type { ApiEventN4DGetList } from "need4deed-sdk";
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import styled from "styled-components";
 import { createEventRegistrationSchema, EventRegistrationFormData, VOLUNTEER_TYPES } from "./eventRegistrationSchema";
-
-const emptyValues: EventRegistrationFormData = {
-  fullName: "",
-  email: "",
-  phone: "",
-  numberOfPeople: 1,
-  languagePreference: "",
-  message: "",
-  isVolunteer: false,
-  volunteerTypes: [],
-};
-
-const REGISTER_ANCHOR = "register";
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-20);
-  width: 100%;
-  margin-top: var(--spacing-32);
-  scroll-margin-top: var(--spacing-80, 80px);
-`;
-
-const VolunteerTypes = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-12);
-  padding-left: var(--spacing-32);
-`;
+import { Form, VolunteerTypes } from "./styles";
 
 export function EventRegistrationForm({ event }: { event: ApiEventN4DGetList }) {
   const { t } = useTranslation();
@@ -55,17 +27,26 @@ export function EventRegistrationForm({ event }: { event: ApiEventN4DGetList }) 
   } = useForm<EventRegistrationFormData>({
     resolver: zodResolver(createEventRegistrationSchema(t)),
     mode: "onTouched",
-    defaultValues: emptyValues,
+    defaultValues: {
+      fullName: "",
+      email: "",
+      phone: "",
+      numberOfPeople: 1,
+      languagePreference: "",
+      message: "",
+      isVolunteer: false,
+      volunteerTypes: [],
+    },
   });
   const isVolunteer = watch("isVolunteer");
 
   useEffect(() => {
-    if (isSent) document.getElementById(REGISTER_ANCHOR)?.scrollIntoView({ block: "center" });
+    if (isSent) document.getElementById(eventRegisterAnchor)?.scrollIntoView({ block: "center" });
   }, [isSent]);
 
   if (isSent) {
     return (
-      <Form as="div" id={REGISTER_ANCHOR} role="status">
+      <Form as="div" id={eventRegisterAnchor} role="status">
         <Heading2>{t("eventRegistration.title")}</Heading2>
         <Paragraph>{t("eventRegistration.thanks")}</Paragraph>
       </Form>
@@ -104,7 +85,7 @@ export function EventRegistrationForm({ event }: { event: ApiEventN4DGetList }) 
   );
 
   return (
-    <Form id={REGISTER_ANCHOR} onSubmit={handleSubmit(onSubmit)} noValidate>
+    <Form id={eventRegisterAnchor} onSubmit={handleSubmit(onSubmit)} noValidate>
       <Heading2>{t("eventRegistration.title")}</Heading2>
       {text("fullName", true)}
       {text("email", true)}

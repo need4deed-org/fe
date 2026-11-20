@@ -14,6 +14,7 @@ export const apiPathActivityLog = `/${apiPrefix}/activity-log`;
 export const apiPathPostcodeCheck = `/${apiPrefix}/postcode/check`;
 export const apiPathEvent = `/${apiPrefix}/event`;
 export const apiPathEventRegistration = `/${apiPrefix}/event-registration`;
+export const eventRegisterAnchor = "register";
 export const apiPathPost = `/${apiPrefix}/post`;
 export const apiPathLogin = `/${apiPrefix}/auth/login`;
 export const apiPathAuthRefresh = `/${apiPrefix}/auth/refresh`;
