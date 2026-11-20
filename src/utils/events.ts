@@ -22,7 +22,7 @@ export function formatEventDate(event: ApiEventN4DGetList, locale: string) {
   return start === end ? start : `${start} – ${end}`;
 }
 
-export function getHttpUrl(value?: string) {
+export function getHttpUrl(value?: string | null) {
   if (!value) return undefined;
 
   try {

@@ -111,7 +111,7 @@ export function CreateEvent({ eventId }: Props) {
       description: editingEvent.description,
       hostName: editingEvent.hostName ?? "",
       ...parseAddress(editingEvent.address),
-      registrationLink: editingEvent.linkRSVP,
+      registrationLink: editingEvent.linkRSVP ?? "",
       startDate: start.date,
       startTime: start.time,
       endDate: end.date,

@@ -8,7 +8,7 @@ import { PLZChip } from "@/components/core/common";
 import { useGetQuery } from "@/hooks";
 import { usePLZField } from "@/hooks/use-plz-field";
 import { useCreateAgent } from "@/hooks/useCreateAgent";
-import { ApiAgentGet, ApiAgentRegisterConflict } from "need4deed-sdk";
+import { ApiAgentAddressConflict, ApiAgentGet } from "need4deed-sdk";
 import Link from "next/link";
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -27,7 +27,7 @@ const emptyValues: CreateAgentFormData = { title: "", addressStreet: "", address
 
 export const CreateAgentDialog = ({ isOpen, onClose }: Props) => {
   const { t, i18n } = useTranslation();
-  const [conflict, setConflict] = useState<ApiAgentRegisterConflict | null>(null);
+  const [conflict, setConflict] = useState<ApiAgentAddressConflict | null>(null);
   const { mutate: createAgent, isPending } = useCreateAgent(setConflict);
 
   const { data: conflictAgent } = useGetQuery<ApiAgentGet>({
@@ -124,20 +124,18 @@ export const CreateAgentDialog = ({ isOpen, onClose }: Props) => {
       </FormDetails>
       {conflict && (
         <ConflictBox role="alert">
-          <span>{t(`dashboard.agents.createAgent.conflict.${conflict.conflict}`)}</span>
+          <span>{t("dashboard.agents.createAgent.conflict.address")}</span>
           {conflictAgent?.title && <strong>{conflictAgent.title}</strong>}
           <Link href={`/${i18n.language}/dashboard/agents/${conflict.agentId}`} onClick={handleClose}>
             {t("dashboard.agents.createAgent.conflict.open")}
           </Link>
-          {conflict.conflict === "address" && (
-            <ConflictAction
-              type="button"
-              onClick={handleSubmit(onSubmitAtSharedAddress)}
-              disabled={isPending || plz.blocksSubmit}
-            >
-              {t("dashboard.agents.createAgent.conflict.createAnyway")}
-            </ConflictAction>
-          )}
+          <ConflictAction
+            type="button"
+            onClick={handleSubmit(onSubmitAtSharedAddress)}
+            disabled={isPending || plz.blocksSubmit}
+          >
+            {t("dashboard.agents.createAgent.conflict.createAnyway")}
+          </ConflictAction>
         </ConflictBox>
       )}
       <ButtonRow>
