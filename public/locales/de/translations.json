@@ -15,7 +15,8 @@
     "dialogBody": "Wählen Sie die Sprache, in der der Originaltext verfasst wurde. Dies ändert die Ausgangssprache des Angebots, nicht die Oberflächensprache.",
     "replaceWarning": "Alle Übersetzungen, auch von Menschen bearbeitete, werden neu erstellt. Prüfen Sie sie anschließend erneut.",
     "required": "Bitte geben Sie eine Übersetzung ein.",
-    "tooLong": "Verwenden Sie höchstens {{count}} Zeichen.",
+    "tooLong": "Verwenden Sie höchstens {{max}} Zeichen (aktuell {{count}}).",
+    "shortenOnly": "Bereits über {{max}} Zeichen; kürzen Sie auf höchstens {{allowed}} (aktuell {{count}}).",
     "changedBeforeConfirm": "Seit dem Öffnen der Prüfung wurde eine Übersetzung geändert. Prüfen Sie den aktuellen Text vor dem Bestätigen.",
     "changedDuringEdit": "Das Original oder die Übersetzung wurde während Ihrer Bearbeitung geändert. Brechen Sie ab und prüfen Sie den aktuellen Text vor dem Speichern.",
     "staleError": "Die Übersetzungen konnten nicht aktualisiert werden. Der angezeigte Text ist möglicherweise veraltet. Ihre ungespeicherten Änderungen bleiben erhalten; versuchen Sie es vor dem Speichern oder Bestätigen erneut.",
@@ -216,8 +217,9 @@
   "form": {
     "error": {
       "required": "Dieses Feld ist erforderlich",
-      "postcode": "Bitte nur die PLZ eintragen (keine Buchstaben, nur Zahlen)",
       "postcodeGermany": "Bitte eine gültige deutsche PLZ eintragen (5 Ziffern)",
+      "postcodeUnknown": "Diese PLZ konnten wir nicht finden. Bitte überprüfe sie.",
+      "postcodeBerlin": "Bitte eine gültige Berliner PLZ eintragen",
       "email": "Muss eine gültige E-Mail-Adresse sein",
       "badEmail": "Keine gültige Betreiber E-Mail",
       "location": "Bitte wähle mindestens einen Standort aus",
@@ -228,6 +230,7 @@
       "language": "Bitte wähle mindestens eine Sprache aus",
       "number": "Bitte gib eine Nummer ein"
     },
+    "postcodeChecking": "PLZ wird geprüft…",
     "button": {
       "more": "mehr...",
       "submit": "Senden"
@@ -1734,7 +1737,6 @@
         "cancel": "Abbrechen",
         "saveChanges": "Änderungen speichern",
         "saveSuccess": "Details zur Begleitung erfolgreich aktualisiert",
-        "notAccompanyingMessage": "Diese ehrenamtliche Tätigkeit ist nicht als Begleitung markiert. Ändern Sie diesen Status in der oberen Karte, wenn Sie die Begleitinformationen ausfüllen müssen (Terminadresse, Angaben zu Geflüchteten usw.).",
         "validation": {
           "invalidTimeFormat": "Ungültiges Zeitformat (verwenden Sie HH:MM)",
           "addressRequired": "Terminadresse ist erforderlich",
@@ -1782,14 +1784,16 @@
         "numberOfVolunteers": "Anzahl der Ehrenamtlichen",
         "activities": "Aktivitäten",
         "skills": "Fähigkeiten & Erfahrung",
-        "descriptionHint": "Max. {{max}} Zeichen",
+        "maxCharsHint": "Max. {{max}} Zeichen",
         "cancel": "Abbrechen",
         "saveChanges": "Änderungen speichern",
         "saveSuccess": "Ehrenamtliche Tätigkeit erfolgreich aktualisiert",
         "validation": {
           "opportunityNameRequired": "Name ist erforderlich",
+          "opportunityNameTooLong": "Name ist zu lang (max. {{max}} Zeichen)",
+          "shortenOnly": "Bereits über {{max}} Zeichen; kürzen Sie auf höchstens {{allowed}} (aktuell {{count}}).",
           "descriptionRequired": "Beschreibung ist erforderlich",
-          "descriptionTooLong": "Beschreibung ist zu lang",
+          "descriptionTooLong": "Beschreibung ist zu lang (max. {{max}} Zeichen)",
           "numberOfVolunteersRequired": "Anzahl der Ehrenamtlichen muss mindestens 1 sein",
           "languageRequired": "Mindestens eine Sprache ist erforderlich",
           "mainCommunicationInvalid": "Hauptkommunikation muss Deutsch, Englisch oder beides sein",
@@ -1813,7 +1817,8 @@
         "city": "Stadt",
         "required": "Pflichtfeld",
         "postcodeInvalid": "Bitte eine 5-stellige deutsche PLZ eingeben"
-      }
+      },
+      "duplicateOpportunity": "Ehrenamtsbedarf duplizieren"
     },
     "racTitle": "Geflüchtetenunterkunft",
     "rac": {
@@ -1988,7 +1993,9 @@
       "agentSection": "Eure Organisation",
       "submit": "Möglichkeit erstellen",
       "addressMissing": "Im Profil Eurer Organisation fehlt noch die Postleitzahl, daher kann diese Tätigkeit nicht erstellt werden. Eure Eingaben hier bleiben erhalten.",
-      "addressMissingLink": "Adresse im Organisationsprofil ergänzen (öffnet in neuem Tab)"
+      "addressMissingLink": "Adresse im Organisationsprofil ergänzen (öffnet in neuem Tab)",
+      "agentUnavailable": "Diese Einrichtung konnte nicht geladen werden. Bitte erneut oder eine andere auswählen.",
+      "agentInactive": "Diese Einrichtung ist inaktiv, daher kann keine Möglichkeit für sie erstellt werden."
     },
     "admin": {
       "title": "Admin",
@@ -2052,7 +2059,8 @@
       "nav": {
         "domains": "Domains",
         "stats": "Statistiken",
-        "ngoVolunteers": "Freiwillige der NGOs"
+        "ngoVolunteers": "Freiwillige der NGOs",
+        "accounts": "Konten"
       },
       "ngoVolunteers": {
         "helper": "Wählen Sie eine NGO, um ihren Freiwilligen einen Registrierungslink zu geben oder ihre bestehenden Freiwilligen zu importieren.",
@@ -2105,6 +2113,27 @@
             "otherPerson": "E-Mail gehört zu einer anderen Person"
           }
         }
+      },
+      "accounts": {
+        "helper": "Konten von Koordinator*innen, NGOs und Admins. Hier lässt sich der Name einer Person ändern.",
+        "role": "Rolle",
+        "search": "Nach Name suchen",
+        "loadError": "Konten konnten nicht geladen werden.",
+        "empty": "Keine Konten gefunden.",
+        "name": "Name",
+        "email": "E-Mail",
+        "status": "Status",
+        "active": "Aktiv",
+        "inactive": "Deaktiviert",
+        "edit": "Name bearbeiten",
+        "editAria": "Name von {{email}} bearbeiten",
+        "editTitle": "Name bearbeiten",
+        "firstName": "Vorname",
+        "lastName": "Nachname",
+        "save": "Speichern",
+        "renamed": "Name aktualisiert",
+        "personLoadError": "Diese Person konnte nicht geladen werden, der Name lässt sich gerade nicht bearbeiten.",
+        "truncated": "Es werden nur die neuesten Konten angezeigt. Suche, um weitere zu finden."
       }
     },
     "recommended": {

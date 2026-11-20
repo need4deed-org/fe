@@ -1,4 +1,5 @@
-import { isValidPLZ } from "@/components/forms/utils";
+import { TypePLZ } from "@/components/forms/types";
+import { isEmptyOrValidPLZ, isValidPLZ } from "@/components/forms/utils";
 import { format, isSameDay } from "date-fns";
 import { MIN_APPOINTMENT_WORKING_DAYS, TranslatedIntoType } from "need4deed-sdk";
 import { z } from "zod";
@@ -16,6 +17,7 @@ export const createAccompanyingDetailsSchema = (
   required: boolean,
   minAppointmentDate?: Date,
   currentAppointmentDate?: Date | null,
+  currentAppointmentPostcode?: string,
 ) => {
   const dateTooSoonMessage =
     minAppointmentDate &&
@@ -32,8 +34,14 @@ export const createAccompanyingDetailsSchema = (
       ? z
           .string()
           .min(1, t(`${i18nPrefix}.postcodeRequired`))
-          .refine(isValidPLZ, t("form.error.postcode"))
-      : z.string().optional(),
+          .refine(isValidPLZ, t("form.error.postcodeBerlin"))
+      : z
+          .string()
+          .optional()
+          .refine(
+            (code) => isEmptyOrValidPLZ(code, TypePLZ.BERLIN, currentAppointmentPostcode),
+            t("form.error.postcodeBerlin"),
+          ),
     appointmentDate: required
       ? z.date({ message: t(`${i18nPrefix}.dateRequired`) }).refine(notTooSoon, dateTooSoonMessage)
       : z.date().nullable().optional().refine(notTooSoon, dateTooSoonMessage),

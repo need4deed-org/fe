@@ -1,17 +1,15 @@
-import { Id, UserRole } from "need4deed-sdk";
+import { UserRole } from "need4deed-sdk";
 import { useCurrentUser } from "./useCurrentUser";
+import { isOwnProfile as isOwnProfileOf, ProfileOwner } from "@/utils/is-own-profile";
 
-export const useAuth = (compareId?: Id) => {
+export const useAuth = (owner?: ProfileOwner) => {
   const user = useCurrentUser();
-  const personId = user?.personId;
-  const agentId = user?.agentId;
   const isAgent = user?.role === UserRole.AGENT;
   const isVolunteer = user?.role === UserRole.VOLUNTEER;
 
   const isAdmin = user?.role === UserRole.ADMIN;
   const isAuthorized = isAdmin || user?.role === UserRole.COORDINATOR;
-  const isOwnProfile =
-    (user?.role === UserRole.VOLUNTEER && personId === compareId) || (isAgent && agentId === compareId);
+  const isOwnProfile = isOwnProfileOf(user, owner);
 
   return { isAdmin, isAuthorized, isOwnProfile, isAgent, isVolunteer, isUserLoaded: Boolean(user) };
 };

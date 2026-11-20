@@ -3,6 +3,8 @@ import { Button } from "@/components/core/button";
 import { PageLayout } from "@/components/Layout";
 import { apiPathUser, DashboardRoutes } from "@/config/constants";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { useRouteLang } from "@/hooks/use-route-lang";
+import { localizedPath } from "@/utils/helpers";
 import { getLocalizedErrorMessage } from "@/utils/apiErrors";
 import axios from "axios";
 import { UserRole } from "need4deed-sdk";
@@ -37,7 +39,8 @@ const isLinkTokenExpired = (token: string): boolean => {
 };
 
 export function VolunteerRegistration() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
+  const lang = useRouteLang();
   const router = useRouter();
   const ngoToken = useSearchParams().get("ngo") || undefined;
   const user = useCurrentUser(true);
@@ -49,8 +52,8 @@ export function VolunteerRegistration() {
 
   useEffect(() => {
     if (!user || ngoToken) return;
-    router.push(`/${i18n.language}${DashboardRoutes.Home}`);
-  }, [user, ngoToken, i18n.language, router]);
+    router.push(localizedPath(lang, DashboardRoutes.Home));
+  }, [user, ngoToken, lang, router]);
 
   const update = (fields: Partial<AccountRegistrationData>) => {
     setFormData((prev) => ({ ...prev, ...fields }));
@@ -111,7 +114,7 @@ export function VolunteerRegistration() {
             <SuccessWrapper>
               <SuccessText>{ngoLinkMessage}</SuccessText>
               {user && (
-                <Link href={`/${i18n.language}${DashboardRoutes.Home}`}>{t("volunteerRegistration.toDashboard")}</Link>
+                <Link href={localizedPath(lang, DashboardRoutes.Home)}>{t("volunteerRegistration.toDashboard")}</Link>
               )}
             </SuccessWrapper>
           </Card>
@@ -149,7 +152,7 @@ export function VolunteerRegistration() {
 
           <ExistingUserWrapper>
             <ExistingUserText>{t("volunteerRegistration.alreadyUser")}</ExistingUserText>
-            <Link href="/login">{t("volunteerRegistration.loginLink")}</Link>
+            <Link href={localizedPath(lang, "/login")}>{t("volunteerRegistration.loginLink")}</Link>
           </ExistingUserWrapper>
 
           {submitError && <ErrorBanner>{submitError}</ErrorBanner>}

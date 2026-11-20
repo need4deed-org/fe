@@ -1,10 +1,12 @@
+import { TypePLZ } from "@/components/forms/types";
+import { isValidOrSavedPLZ } from "@/components/forms/utils";
 import { TFunction } from "i18next";
 import { ApiOpportunityAddress } from "need4deed-sdk";
 import { z } from "zod";
 
 const i18nPrefix = "dashboard.opportunityProfile.opportunityAddress";
 
-export const createOpportunityAddressSchema = (t: TFunction) =>
+export const createOpportunityAddressSchema = (t: TFunction, savedPostcode?: string) =>
   z
     .object({
       notMyLocation: z.boolean(),
@@ -16,7 +18,7 @@ export const createOpportunityAddressSchema = (t: TFunction) =>
       if (!data.notMyLocation) return;
       if (!data.street.trim()) ctx.addIssue({ code: "custom", path: ["street"], message: t(`${i18nPrefix}.required`) });
       if (!data.city.trim()) ctx.addIssue({ code: "custom", path: ["city"], message: t(`${i18nPrefix}.required`) });
-      if (!/^(?!00)\d{5}$/.test(data.postcode.trim()))
+      if (!isValidOrSavedPLZ(data.postcode, TypePLZ.GERMANY, savedPostcode))
         ctx.addIssue({ code: "custom", path: ["postcode"], message: t(`${i18nPrefix}.postcodeInvalid`) });
     });
 

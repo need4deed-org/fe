@@ -5,7 +5,6 @@ import { apiPathAgentRegister, apiPathOption } from "@/config/constants";
 import { useGetQuery } from "@/hooks";
 import { getLocalizedErrorMessage } from "@/utils/apiErrors";
 import axios from "axios";
-import i18next from "i18next";
 import {
   ApiAgentAddressConflict,
   ApiAgentRegisterConflict,
@@ -13,6 +12,7 @@ import {
   ApiAgentTitleConflict,
   ApiOptionLists,
 } from "need4deed-sdk";
+import { useCheckPLZ } from "@/hooks/use-check-plz";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { AgentMembershipStatus, ApiAgentRegister, ApiAgentRegisterNew, ApiAgentRegisterResponse } from "../types";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -42,7 +42,8 @@ import { defaultProfileCompletionData, ProfileCompletionData, TOTAL_COMPLETION_S
 import { CheckMark, MatchBanner, MatchActions, MatchListCopy, MatchRow } from "./styled";
 import { useAgentAddressLookup } from "./useAgentAddressLookup";
 import { useGetRegistrationOrganizations } from "@/hooks/useGetRegistrationOrganizations";
-import { setAuthHint } from "@/utils/helpers";
+import { useRouteLang } from "@/hooks/use-route-lang";
+import { localizedPath, setAuthHint } from "@/utils/helpers";
 
 function buildNewAgent(formData: ProfileCompletionData, organizationId?: number): ApiAgentRegisterNew {
   return {
@@ -60,6 +61,7 @@ function buildNewAgent(formData: ProfileCompletionData, organizationId?: number)
 
 export function ProfileCompletion() {
   const { t } = useTranslation();
+  const lang = useRouteLang();
   const router = useRouter();
   const token = useSearchParams().get("token");
 
@@ -100,6 +102,8 @@ export function ProfileCompletion() {
     token,
     (m) => m.title && update({ addressStreet: m.title }),
   );
+
+  const plz = useCheckPLZ(formData.addressPostcode);
 
   const showSubmitError = useCallback((message: string) => {
     setSubmitError(message);
@@ -143,7 +147,7 @@ export function ProfileCompletion() {
         return;
       }
       setAuthHint();
-      router.push(`/${i18next.language}/dashboard`);
+      router.push(localizedPath(lang, "/dashboard"));
     } catch (err) {
       if (axios.isAxiosError(err) && err.response?.status === 409) {
         const data = err.response.data as Partial<ApiAgentRegisterConflict> | undefined;
@@ -183,6 +187,10 @@ export function ProfileCompletion() {
     const stepErrors = validateCompletionStep(step, formData, t, operatorTitles, operatorListState);
     if (Object.keys(stepErrors).length > 0) {
       setErrors(stepErrors);
+      return;
+    }
+    if (plz.blocksSubmit) {
+      setStep(1);
       return;
     }
     submit({ agent: buildNewAgent(formData, operatorId) });
@@ -229,7 +237,7 @@ export function ProfileCompletion() {
             </SuccessText>
             <Button
               text={t("agentRegistration.completed.continue")}
-              onClick={() => router.replace(`/${i18next.language}/${currentUser ? "dashboard" : "login"}`)}
+              onClick={() => router.replace(localizedPath(lang, currentUser ? "/dashboard" : "/login"))}
             />
           </SuccessWrapper>
         </Card>
@@ -301,7 +309,7 @@ export function ProfileCompletion() {
                 <Button
                   text={t("agentRegistration.completion.createAtSharedAddress")}
                   onClick={submitAtSharedAddress}
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || plz.blocksSubmit}
                   backgroundcolor="var(--color-white)"
                   textColor="var(--color-aubergine)"
                   border="var(--border-width-medium) solid var(--color-aubergine)"
@@ -369,7 +377,7 @@ export function ProfileCompletion() {
                   </>
                 )}
               </FieldWrapper>
-              <AddressStep data={formData} onChange={update} errors={errors} hideStreet />
+              <AddressStep data={formData} onChange={update} errors={errors} hideStreet plzStatus={plz.status} />
             </div>
           ))}
 
@@ -412,7 +420,7 @@ export function ProfileCompletion() {
               backgroundcolor="var(--color-aubergine)"
               textColor="var(--color-white)"
               onClick={handleNext}
-              disabled={tokenMissing || (step === 1 && showBanner)}
+              disabled={tokenMissing || (step === 1 && (showBanner || plz.blocksSubmit))}
             />
           )}
         </Actions>

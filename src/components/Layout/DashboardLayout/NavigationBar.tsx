@@ -74,7 +74,7 @@ const MoreMenu = styled.div`
     right: 12px;
     bottom: calc(var(--dashboard-navigation-bar-mobile-height) + 8px);
     left: 12px;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 8px;
     padding: 12px;
     border: 1px solid var(--color-orchid-subtle);
@@ -112,7 +112,7 @@ const MoreButton = styled.button`
 
   @media (max-width: 767px) {
     display: flex;
-    order: 4;
+    order: 2;
     flex: 1 1 0;
     min-width: 0;
     flex-direction: column;
@@ -162,7 +162,7 @@ interface StyledParagraphProps {
 const StyledParagraph = ({ label, isSelected }: StyledParagraphProps) => {
   return (
     <NavLabel
-      color={isSelected ? "var(--color-orchid)" : "var(--color-midnight)"}
+      color={isSelected ? "var(--color-black)" : "var(--color-midnight)"}
       fontSize="var(--dashboard-navigation-bar-option-text-size)"
       fontWeight="var(--dashboard-navigation-bar-option-text-weight)"
       letterSpacing="var(--dashboard-navigation-bar-option-text-letter-spacing)"
@@ -176,8 +176,7 @@ const StyledParagraph = ({ label, isSelected }: StyledParagraphProps) => {
 
 const NavLabel = styled(Paragraph)`
   text-align: center;
-  overflow-wrap: break-word;
-  word-break: break-word;
+  overflow-wrap: anywhere;
   width: 100%;
 `;
 
@@ -189,15 +188,17 @@ interface BarOptions {
 }
 
 export default function NavigationBar() {
+  const [isMoreOpen, setIsMoreOpen] = useState(false);
+
   const { t, i18n } = useTranslation();
   const currentPathname = usePathname();
   const user = useCurrentUser();
+  const navigationRef = useRef<HTMLDivElement>(null);
+
   const isAgent = user?.role === UserRole.AGENT;
   const isVolunteer = user?.role === UserRole.VOLUNTEER;
   const canSeeStaffNav = !isAgent && !isVolunteer;
   const isStaff = user?.role === UserRole.COORDINATOR || user?.role === UserRole.ADMIN;
-  const navigationRef = useRef<HTMLDivElement>(null);
-  const [isMoreOpen, setIsMoreOpen] = useState(false);
 
   const userInitials = user?.fullName
     ? user.fullName
@@ -268,14 +269,9 @@ export default function NavigationBar() {
     },
   ];
 
-  const coordinatorPrimaryRoutes = [
-    DashboardRoutes.Home,
-    DashboardRoutes.Volunteers,
-    DashboardRoutes.Opportunities,
-    DashboardRoutes.Posts,
-  ];
-  const hasMoreMenu = canSeeStaffNav;
-  const moreOptions = hasMoreMenu ? options.filter(({ route }) => !coordinatorPrimaryRoutes.includes(route)) : [];
+  const primaryRoutes = [DashboardRoutes.Home, isStaff ? DashboardRoutes.Admin : DashboardRoutes.Profile];
+
+  const moreOptions = options.filter(({ route }) => !primaryRoutes.includes(route));
   const moreIsSelected = moreOptions.some(({ route }) => {
     const localizedRoute = `/${i18n.language}${route}`;
     return currentPathname === localizedRoute || currentPathname.startsWith(`${localizedRoute}/`);
@@ -298,7 +294,6 @@ export default function NavigationBar() {
       document.removeEventListener("keydown", closeOnEscape);
     };
   }, [closeMoreMenu, isMoreOpen]);
-
   return (
     <NavigationWrapper ref={navigationRef}>
       {isMoreOpen && (
@@ -325,16 +320,16 @@ export default function NavigationBar() {
         </MoreMenu>
       )}
       <BarContainer>
-        {options.map(({ label, Icon, text, route }, index) => {
+        {options.map(({ label, Icon, text, route }) => {
           const localizedRoute = `/${i18n.language}${route}`;
           const isSelected =
             currentPathname === localizedRoute ||
             (route !== DashboardRoutes.Home && currentPathname.startsWith(`${localizedRoute}/`));
-          const mobileOrder = hasMoreMenu ? coordinatorPrimaryRoutes.indexOf(route) : index;
+          const mobileOrder = primaryRoutes.indexOf(route);
 
           return (
             <Option
-              $hideOnMobile={hasMoreMenu && mobileOrder === -1}
+              $hideOnMobile={mobileOrder === -1}
               $mobileOrder={mobileOrder}
               href={localizedRoute}
               aria-current={isSelected ? "page" : undefined}
@@ -350,22 +345,20 @@ export default function NavigationBar() {
             </Option>
           );
         })}
-        {hasMoreMenu && (
-          <MoreButton
-            type="button"
-            aria-expanded={isMoreOpen}
-            aria-label={t("dashboard.home.sidebar.more")}
-            onClick={() => setIsMoreOpen((isOpen) => !isOpen)}
-          >
-            <IconDiv $isSelected={moreIsSelected || isMoreOpen}>
-              <DotsThreeCircleIcon
-                size={24}
-                color={moreIsSelected || isMoreOpen ? "var(--color-orchid)" : "var(--color-midnight)"}
-              />
-            </IconDiv>
-            <StyledParagraph isSelected={moreIsSelected} label={t("dashboard.home.sidebar.more")} />
-          </MoreButton>
-        )}
+        <MoreButton
+          type="button"
+          aria-expanded={isMoreOpen}
+          aria-label={t("dashboard.home.sidebar.more")}
+          onClick={() => setIsMoreOpen((isOpen) => !isOpen)}
+        >
+          <IconDiv $isSelected={moreIsSelected || isMoreOpen}>
+            <DotsThreeCircleIcon
+              size={24}
+              color={moreIsSelected || isMoreOpen ? "var(--color-orchid)" : "var(--color-midnight)"}
+            />
+          </IconDiv>
+          <StyledParagraph isSelected={moreIsSelected} label={t("dashboard.home.sidebar.more")} />
+        </MoreButton>
       </BarContainer>
     </NavigationWrapper>
   );

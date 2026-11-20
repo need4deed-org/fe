@@ -46,6 +46,7 @@ export const OrganisationDetails = forwardRef<EditableSectionRef, Props>(functio
   const schema = createOrganisationDetailsSchema(
     t,
     organizations?.map((org) => org.title),
+    details?.addressPostcode ?? "",
   );
 
   const initialFormValues = useMemo(

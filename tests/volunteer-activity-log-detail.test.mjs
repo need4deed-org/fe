@@ -2,30 +2,18 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import test from "node:test";
-import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
-import ts from "typescript";
 import i18next from "i18next";
 import { OpportunityVolunteerStatusType as Status, VolunteerAuditLogType } from "need4deed-sdk";
+import { loadModule } from "./helpers/load-module.mjs";
 
-const packageRequire = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const root = path.resolve(__dirname, "..");
 const dir = "src/components/Dashboard/Profile/sections/VolunteerActivityLog";
 
-function loadModule(file, dependencies = {}) {
-  const source = fs.readFileSync(path.join(root, dir, file), "utf8");
-  const output = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS } }).outputText;
-  const loadedModule = { exports: {} };
-  const localRequire = (id) => dependencies[id] ?? packageRequire(id);
-  new Function("require", "module", "exports", output)(localRequire, loadedModule, loadedModule.exports);
-  return loadedModule.exports;
-}
-
-const parser = loadModule("parse-match-detail.ts");
-const { parseMatchDetail } = parser;
-const { formatActivityDetail } = loadModule("format-activity-detail.ts", { "./parse-match-detail": parser });
+const { parseMatchDetail } = loadModule(`${dir}/parse-match-detail.ts`);
+const { formatActivityDetail } = loadModule(`${dir}/format-activity-detail.ts`);
 
 const translations = (lng) =>
   JSON.parse(fs.readFileSync(path.join(root, "public/locales", lng, "translations.json"), "utf8"));

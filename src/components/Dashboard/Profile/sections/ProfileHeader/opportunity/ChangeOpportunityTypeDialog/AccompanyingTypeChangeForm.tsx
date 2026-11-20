@@ -12,6 +12,7 @@ import {
   AccompanyingDetailsFormData,
 } from "../../../AccompanyingDetails/createAccompanyingDetailsSchema";
 import { buildAccompanyingPayload, getInitialFormValues } from "../../../AccompanyingDetails/helpers";
+import { useAppointmentPLZ } from "../../../AccompanyingDetails/use-appointment-plz";
 import { useApiLanguages } from "../../../VolunteerProfile/hooks";
 import { useMinAppointmentDate } from "@/hooks/useMinAppointmentDate";
 import { useUpdateOpportunityType } from "@/hooks/useUpdateOpportunityType";
@@ -54,6 +55,8 @@ export const AccompanyingTypeChangeForm = ({ opportunityId, locale, onCancel }: 
     defaultValues: getInitialFormValues(undefined),
   });
 
+  const plz = useAppointmentPLZ(methods.control);
+
   useEffect(() => {
     methods.reset(getInitialFormValues(undefined));
   }, [methods]);
@@ -88,6 +91,7 @@ export const AccompanyingTypeChangeForm = ({ opportunityId, locale, onCancel }: 
             onSubmit={() => {}}
             isPending={false}
             minAppointmentDate={minAppointmentDate}
+            plzStatus={plz.status}
             hideButtons
           />
         </FormProvider>
@@ -98,6 +102,7 @@ export const AccompanyingTypeChangeForm = ({ opportunityId, locale, onCancel }: 
         cancelLabel={t("dashboard.opportunityProfile.typeModal.cancel")}
         saveLabel={t("dashboard.opportunityProfile.typeModal.save")}
         loading={isPending}
+        saveDisabled={plz.blocksSubmit}
       />
     </>
   );

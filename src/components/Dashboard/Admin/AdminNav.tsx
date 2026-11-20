@@ -10,6 +10,7 @@ const NAV_ITEMS = [
   { route: DashboardRoutes.AdminDomains, labelKey: "dashboard.admin.nav.domains" },
   { route: DashboardRoutes.AdminStatistics, labelKey: "dashboard.admin.nav.stats" },
   { route: DashboardRoutes.AdminNgoVolunteers, labelKey: "dashboard.admin.nav.ngoVolunteers" },
+  { route: DashboardRoutes.AdminAccounts, labelKey: "dashboard.admin.nav.accounts" },
 ];
 
 export function AdminNav() {
