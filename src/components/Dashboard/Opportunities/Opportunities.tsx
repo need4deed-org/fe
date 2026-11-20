@@ -15,7 +15,7 @@ import { ApiOptionLists, LangProficiency, QueryParamsKeys, UserRole } from "need
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Filters from "../common/CardsFilter/Filters";
 import CardsHeader from "../common/CardsHeader/CardsHeader";
-import { getClearFilter, getClearSingleFilter } from "../common/CardsFilter/helpers";
+import { EMPTY_LIST, getClearFilter, getClearSingleFilter } from "../common/CardsFilter/helpers";
 import {
   applyMatchingPrefill,
   clearCommutePrefill,
@@ -51,7 +51,7 @@ import { ViewMode } from "../common/types";
 import { useAuth } from "@/hooks/useAuth";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { useScreenType } from "@/context/DeviceContext";
-import { EMPTY_LIST, usePrefillFilters } from "../common/CardsFilter/usePrefillFilters";
+import { usePrefillFilters } from "../common/CardsFilter/usePrefillFilters";
 
 export function Opportunities() {
   const user = useCurrentUser(true);
@@ -69,6 +69,7 @@ export function Opportunities() {
   const volunteerFilter = useGetVolunteer(volunteerId);
   const prefilledForRef = useRef<string | null>(null);
 
+  const OTHER_OPPORTUNITIES_VIEW = "other";
   const isAgent = user?.role === UserRole.AGENT;
   const isVolunteer = user?.role === UserRole.VOLUNTEER;
   const tabs = !user
@@ -94,31 +95,18 @@ export function Opportunities() {
       ? DEFAULT_STAFF_OPPORTUNITY_STATUSES
       : EMPTY_LIST;
 
-  const { cardsFilter, defaultStatuses, defaultAppliedRef, hasInitialFilterParams } = usePrefillFilters({
+  const { cardsFilter, defaultStatuses, defaultAppliedRef, serializeWithDefaultMarker } = usePrefillFilters({
     searchParams,
     apiFilterOptions,
     defaultCardsFilter: defaultOpportunityCardsFilter,
     filterConfigs: opportunityFilterConfigs,
     deserializeFilters: deserializeOpportunityFilters,
+    serializeFilters: serializeOpportunityFilters,
     defaultStatuses: DEFAULT_OPPORTUNITY_STATUSES,
     roleDefaultStatuses,
     skipDefaults: Boolean(volunteerId || isOtherTab),
+    isReady: Boolean(user),
   });
-
-  useEffect(() => {
-    if (!user || defaultAppliedRef.current || volunteerId || isOtherTab || roleDefaultStatuses.length === 0) return;
-    if (hasInitialFilterParams) {
-      defaultAppliedRef.current = true;
-      return;
-    }
-
-    const nextFilter = structuredClone(defaultOpportunityCardsFilter);
-    roleDefaultStatuses.forEach((status) => {
-      nextFilter.status[status] = true;
-    });
-    const query = serializeOpportunityFilters(nextFilter, searchParams);
-    router.replace(query ? pathname + questionMark + query : pathname, { scroll: false });
-  }, [hasInitialFilterParams, isOtherTab, pathname, roleDefaultStatuses, router, searchParams, user, volunteerId]);
 
   useEffect(() => {
     if (!volunteerId || !volunteerFilter || !apiFilterOptions) return;
@@ -182,7 +170,7 @@ export function Opportunities() {
   ) => {
     defaultAppliedRef.current = true;
     const updatedFilter = typeof newFilter === "function" ? newFilter(cardsFilter) : newFilter;
-    pushFilterUrl(serializeOpportunityFilters(updatedFilter, searchParams));
+    pushFilterUrl(serializeWithDefaultMarker(updatedFilter));
   };
 
   const handleRemoveVolunteerFilter = () => {
@@ -205,13 +193,13 @@ export function Opportunities() {
       filterKey === QueryParamsKeys.COMMUTE_VOLUNTEER_ID
         ? clearCommutePrefill(cardsFilter)
         : getClearSingleFilter(cardsFilter, filterKey, parentKey);
-    pushFilterUrl(serializeOpportunityFilters(cleared, searchParams));
+    pushFilterUrl(serializeWithDefaultMarker(cleared));
   };
 
   const handleClearAllFilters = () => {
     defaultAppliedRef.current = true;
     const cleared = getClearFilter(cardsFilter);
-    const params = serializeOpportunityFilters(cleared, searchParams, false);
+    const params = serializeWithDefaultMarker(cleared);
     params.delete(SORT_PARAM);
     pushFilterUrl(params);
   };
@@ -288,5 +276,3 @@ export function Opportunities() {
     </DashboardLayout>
   );
 }
-
-const OTHER_OPPORTUNITIES_VIEW = "other";

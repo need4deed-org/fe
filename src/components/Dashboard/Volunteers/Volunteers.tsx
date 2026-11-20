@@ -24,7 +24,7 @@ import {
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Filters from "../common/CardsFilter/Filters";
 import CardsHeader from "../common/CardsHeader/CardsHeader";
-import { getClearFilter, getClearSingleFilter } from "../common/CardsFilter/helpers";
+import { EMPTY_LIST, getClearFilter, getClearSingleFilter } from "../common/CardsFilter/helpers";
 import {
   applyMatchingPrefill,
   clearCommutePrefill,
@@ -37,6 +37,7 @@ import { volunteerFilterConfigs } from "./Filters/config";
 import {
   DEFAULT_NGO_VOLUNTEER_ENGAGEMENTS,
   DEFAULT_STAFF_VOLUNTEER_ENGAGEMENTS,
+  DEFAULT_VOLUNTEER_ENGAGEMENTS,
   defaultVolunteerCardsFilter,
 } from "./Filters/constants";
 import FiltersContent from "./Filters/FiltersContent";
@@ -50,7 +51,7 @@ import { DashboardListLoading } from "../common/DashboardListLoading";
 import { ErrorMessage } from "@/components/core/common";
 import { Button } from "@/components/core/button";
 import { useScreenType } from "@/context/DeviceContext";
-import { EMPTY_LIST, usePrefillFilters } from "../common/CardsFilter/usePrefillFilters";
+import { usePrefillFilters } from "../common/CardsFilter/usePrefillFilters";
 
 export function Volunteers() {
   const { data: user, isLoading: isUserLoading, isError: isUserError } = useCurrentUserQuery(true, false);
@@ -69,21 +70,26 @@ export function Volunteers() {
   const opportunityFilter = useGetOpportunity(opportunityId);
   const prefilledForRef = useRef<string | null>(null);
 
+  const isExplicitEngagementClear = searchParams.getAll(QueryParamsKeys.ENGAGEMENT).includes("");
+
   const isStaff = user?.role === UserRole.COORDINATOR || user?.role === UserRole.ADMIN;
   const roleDefaultEngagements = isAgent
     ? DEFAULT_NGO_VOLUNTEER_ENGAGEMENTS
     : isStaff
       ? DEFAULT_STAFF_VOLUNTEER_ENGAGEMENTS
       : EMPTY_LIST;
-  const { cardsFilter, defaultAppliedRef, hasInitialFilterParams, defaultEngagements } = usePrefillFilters({
+
+  const { cardsFilter, defaultAppliedRef, defaultEngagements, serializeWithDefaultMarker } = usePrefillFilters({
     searchParams,
     apiFilterOptions,
     defaultCardsFilter: defaultVolunteerCardsFilter,
     filterConfigs: volunteerFilterConfigs,
     deserializeFilters: deserializeVolunteerFilters,
-    defaultStatuses: [],
+    serializeFilters,
+    defaultEngagements: DEFAULT_VOLUNTEER_ENGAGEMENTS,
     roleDefaultEngagements,
-    skipDefaults: Boolean(opportunityId),
+    skipDefaults: Boolean(opportunityId || isExplicitEngagementClear),
+    isReady: Boolean(user),
   });
 
   const tabs = !user
@@ -130,7 +136,7 @@ export function Volunteers() {
     defaultAppliedRef.current = true;
     const updatedFilter = typeof newFilter === "function" ? newFilter(cardsFilter) : newFilter;
 
-    pushFilterUrl(serializeFilters(updatedFilter, searchParams));
+    pushFilterUrl(serializeWithDefaultMarker(updatedFilter));
   };
 
   const handleRemoveOpportunityFilter = () => {
@@ -153,29 +159,14 @@ export function Volunteers() {
       filterKey === QueryParamsKeys.COMMUTE_OPPORTUNITY_ID
         ? clearCommutePrefill(cardsFilter)
         : getClearSingleFilter(cardsFilter, filterKey, parentKey);
-    pushFilterUrl(serializeFilters(cleared, searchParams));
+    pushFilterUrl(serializeWithDefaultMarker(cleared));
   };
 
   const handleClearAllFilters = () => {
     defaultAppliedRef.current = true;
     const cleared = getClearFilter(cardsFilter);
-    pushFilterUrl(serializeFilters(cleared, searchParams));
+    pushFilterUrl(serializeWithDefaultMarker(cleared));
   };
-
-  useEffect(() => {
-    if (!user || defaultAppliedRef.current || opportunityId || roleDefaultEngagements.length === 0) return;
-    if (hasInitialFilterParams) {
-      defaultAppliedRef.current = true;
-      return;
-    }
-
-    const nextFilter = structuredClone(defaultVolunteerCardsFilter);
-    roleDefaultEngagements.forEach((engagement) => {
-      nextFilter[QueryParamsKeys.ENGAGEMENT][engagement] = true;
-    });
-    const query = serializeFilters(nextFilter, searchParams);
-    router.replace(query ? pathname + questionMark + query : pathname, { scroll: false });
-  }, [hasInitialFilterParams, opportunityId, pathname, roleDefaultEngagements, router, searchParams, user]);
 
   useEffect(() => {
     if (!user || !opportunityId || !opportunityFilter || !apiFilterOptions) return;
