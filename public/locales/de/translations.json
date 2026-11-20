@@ -652,7 +652,11 @@
         "error": "Beim Laden der Seite ist ein Fehler aufgetreten. Bitte aktualisieren Sie die Seite.",
         "mostRelevantOpp": "Relevanteste Angebote",
         "mostRelevantOppDesc": "(basierend auf Bezirk und Verfügbarkeit)",
-        "mostRelevantNoResults": "Es werden keine Ergebnisse angezeigt. Versuchen Sie, Ihre Verfügbarkeit oder Ihren Bezirk in Ihrem Profil anzupassen, um mehr Ergebnisse zu sehen."
+        "mostRelevantNoResults": "Es werden keine Ergebnisse angezeigt. Versuchen Sie, Ihre Verfügbarkeit oder Ihren Bezirk in Ihrem Profil anzupassen, um mehr Ergebnisse zu sehen.",
+        "myActivity": "Meine letzten Aktivitäten",
+        "noActivity": "Noch keine Kommentare oder Änderungen von dir",
+        "noActivityThisWeek": "Diese Woche noch nichts von dir",
+        "earlierActivity": "Früher ({{count}})"
       },
       "sidebar": {
         "home": "Startseite",
