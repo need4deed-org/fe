@@ -59,7 +59,7 @@ export function Opportunities() {
   const volunteerId = searchParams.get("volunteer") ?? undefined;
   const volunteerFilter = useGetVolunteer(volunteerId);
   const prefilledForRef = useRef<string | null>(null);
-  // const defaultAppliedRef = useRef(false);
+
   const isAgent = user?.role === UserRole.AGENT;
   const isVolunteer = user?.role === UserRole.VOLUNTEER;
   const isStaff = user?.role === UserRole.COORDINATOR || user?.role === UserRole.ADMIN;
