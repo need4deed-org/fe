@@ -9,15 +9,16 @@ import { useGetMyActivity } from "@/hooks/useGetMyActivity";
 import { formatDateTime } from "../../Profile/sections/shared/utils/formatDateTime";
 import { formatActivityDetail } from "../../Profile/sections/VolunteerActivityLog/format-activity-detail";
 import { processEntity } from "../helpers";
-import { ActivityDate, EarlierActivity, EarlierActivityRows, TagContainer, TagRow } from "../styles";
+import { ActivityDate, ActivityText, EarlierActivity, EarlierActivityRows, TagContainer, TagRow } from "../styles";
 
-const MENTION_TOKEN = /<@\d+>\s*/g;
+const LEADING_MENTION = /^<@\d+>\s*/;
+const MENTION = /<@\d+>/g;
 
 function activityText(item: ApiMyActivityItem, t: TFunction): string {
   if (item.kind === MyActivityKind.CHANGE && item.changeType) {
     return formatActivityDetail({ type: item.changeType, detail: item.text }, t);
   }
-  return item.text.replace(MENTION_TOKEN, "");
+  return item.text.replace(LEADING_MENTION, "").replace(MENTION, "@");
 }
 
 function ActivityRow({ item }: { item: ApiMyActivityItem }) {
@@ -26,11 +27,18 @@ function ActivityRow({ item }: { item: ApiMyActivityItem }) {
 
   return (
     <TagRow $isRead>
-      <Link href={`/${i18n.language}${processEntity[item.entityType].linkUrl}/${item.entityId}`}>
+      <Link
+        href={{
+          pathname: `/${i18n.language}${processEntity[item.entityType].linkUrl}/${item.entityId}`,
+          query: item.kind === MyActivityKind.COMMENT ? { scrollTo: "coordinator-comments" } : undefined,
+        }}
+      >
         <Icon size={22} />
-        <Heading4>
-          <strong>{item.entityTitle}</strong>: {activityText(item, t)}
-        </Heading4>
+        <ActivityText>
+          <Heading4>
+            <strong>{item.entityTitle}</strong>: {activityText(item, t)}
+          </Heading4>
+        </ActivityText>
         <ActivityDate>{formatDateTime(new Date(item.occurredAt))}</ActivityDate>
       </Link>
     </TagRow>

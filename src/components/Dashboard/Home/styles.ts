@@ -75,6 +75,17 @@ export const StyledLink = styled(Link)`
   }
 `;
 
+export const ActivityText = styled.div`
+  flex: 1;
+  min-width: 0;
+  & h4 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+`;
+
 export const ActivityDate = styled.span`
   margin-left: auto;
   white-space: nowrap;
