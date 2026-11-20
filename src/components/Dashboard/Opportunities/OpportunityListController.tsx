@@ -4,13 +4,20 @@ import { apiPathOpportunity, AUTH_HINT_COOKIE_NAME, cacheTTL, CARD_LIMIT, TABLE_
 import { useGetQuery, usePageParam } from "@/hooks";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { getCookie } from "@/utils/helpers";
-import { ApiVolunteerOpportunityGetList, ApiOptionLists, QueryParamsKeys, SortOrder, UserRole } from "need4deed-sdk";
+import {
+  ApiVolunteerOpportunityGetList,
+  ApiOptionLists,
+  OpportunityStatusType,
+  QueryParamsKeys,
+  SortOrder,
+  UserRole,
+} from "need4deed-sdk";
 import { OpportunityCardsFilter } from "./Filters/types";
 import { AppointmentSort, isAppointmentSort, serializeOpportunityFilters } from "./helpers";
 import { OpportunityCardList } from "./OpportunityCardList";
 import { ViewMode } from "../common/types";
 import { OpportunityTableList } from "./OpportunityTableList";
-import { DEFAULT_OPPORTUNITY_STATUSES, STATUS_PARAM, VOLUNTEER_OPPORTUNITY_STATUSES } from "./Filters/constants";
+import { STATUS_PARAM, VOLUNTEER_OPPORTUNITY_STATUSES } from "./Filters/constants";
 import { createOpportunityFilterSections } from "./Filters/helpers";
 import { getSectionItems } from "../common/CardsFilter/selectionFilters";
 import { useTranslation } from "react-i18next";
@@ -50,6 +57,7 @@ type Props = {
   volunteerId?: string;
   viewMode: ViewMode;
   volunteerFilter: SingleFilter | undefined;
+  defaultStatuses: OpportunityStatusType[];
 };
 
 export function OpportunityListController(props: Props) {
@@ -65,6 +73,7 @@ function OpportunityListControllerContent({
   volunteerId,
   viewMode,
   volunteerFilter,
+  defaultStatuses,
 }: Props) {
   const { currentPage, setCurrentPage } = usePageParam();
   const { t, i18n } = useTranslation();
@@ -92,7 +101,7 @@ function OpportunityListControllerContent({
     serializedFilter.delete(STATUS_PARAM);
     VOLUNTEER_OPPORTUNITY_STATUSES.forEach((status) => serializedFilter.append(STATUS_PARAM, status));
   } else if (!serializedFilter.has(STATUS_PARAM)) {
-    DEFAULT_OPPORTUNITY_STATUSES.forEach((defaultStatus) => serializedFilter.append(STATUS_PARAM, defaultStatus));
+    defaultStatuses.forEach((defaultStatus) => serializedFilter.append(STATUS_PARAM, defaultStatus));
   }
 
   const backendSortOrder = isAppointmentSort(sortOrder) ? SortOrder.NewToOld : (sortOrder as SortOrder);
