@@ -11,8 +11,8 @@ import {
 } from "@/components/core/common/Table";
 import { Modal } from "@/components/core/modal/Modal";
 import { Heading3, Paragraph } from "@/components/styled/text";
-import { apiPathEvent, DashboardRoutes } from "@/config/constants";
-import { useEventRegistrations, useSetAttended } from "@/hooks/useEventRegistrations";
+import { DashboardRoutes } from "@/config/constants";
+import { useEventRegistrations, useExportEventRegistrations, useSetAttended } from "@/hooks/useEventRegistrations";
 import type { ApiEventN4DGetList, ApiEventN4DRegistrationGet } from "need4deed-sdk";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
@@ -22,6 +22,15 @@ type Props = {
   event: ApiEventN4DGetList;
   onClose: () => void;
 };
+
+const ExportButton = styled.button`
+  background: none;
+  border: none;
+  padding: 0;
+  color: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+`;
 
 const Summary = styled.div`
   display: flex;
@@ -33,7 +42,8 @@ const Summary = styled.div`
 export function EventRegistrationsDialog({ event, onClose }: Props) {
   const { t, i18n } = useTranslation();
   const { data, isLoading } = useEventRegistrations(event.id);
-  const { mutate: setAttended } = useSetAttended();
+  const { mutate: setAttended, isPending: isSavingAttended } = useSetAttended();
+  const { mutate: exportCsv, isPending: isExporting } = useExportEventRegistrations(event.id);
   const registrations = data?.registrations ?? [];
 
   const volunteerCell = (registration: ApiEventN4DRegistrationGet) => {
@@ -57,9 +67,9 @@ export function EventRegistrationsDialog({ event, onClose }: Props) {
             people: data?.totalPeople ?? 0,
           })}
         </Paragraph>
-        <a href={`${apiPathEvent}/${event.id}/registrations/export`} download>
+        <ExportButton type="button" onClick={() => exportCsv()} disabled={isExporting}>
           {t("dashboard.calendar.registrations.export")}
-        </a>
+        </ExportButton>
       </Summary>
       {isLoading ? (
         <Paragraph>{t("dashboard.home.content.loading")}</Paragraph>
@@ -91,7 +101,9 @@ export function EventRegistrationsDialog({ event, onClose }: Props) {
                       width="20px"
                       height="20px"
                       checked={registration.attended}
-                      onChange={(attended) => setAttended({ registrationId: registration.id, attended })}
+                      onChange={(attended) =>
+                        !isSavingAttended && setAttended({ registrationId: registration.id, attended })
+                      }
                     />
                   </TableCell>
                 </TableRow>

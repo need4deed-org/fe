@@ -208,6 +208,7 @@
     "viewDetails": "Veranstaltungsdetails ansehen",
     "backToEvents": "Zurück zu allen kommenden Veranstaltungen",
     "register": "Jetzt anmelden",
+    "registrationUnavailable": "Die Anmeldung ist nicht verfügbar.",
     "loading": "Veranstaltung wird geladen…",
     "loadError": "Die Veranstaltung konnte nicht geladen werden. Bitte versuche es erneut.",
     "empty": "Keine kommende Veranstaltung",
@@ -1983,7 +1984,8 @@
       "registrations": {
         "open": "Anmeldungen",
         "title": "Anmeldungen: {{title}}",
-        "summary": "{{count}} Anmeldungen, {{people}} Personen",
+        "summary_one": "{{count}} Anmeldung, {{people}} Personen",
+        "summary_other": "{{count}} Anmeldungen, {{people}} Personen",
         "export": "CSV exportieren",
         "empty": "Noch keine Anmeldungen",
         "people": "Personen",
@@ -2153,6 +2155,7 @@
     "volunteerEvents": {
       "title": "Veranstaltungen",
       "emptyState": "Noch keine Anmeldungen zu Veranstaltungen",
+      "loadError": "Die Anmeldungen zu Veranstaltungen konnten nicht geladen werden.",
       "event": "Veranstaltung",
       "date": "Datum",
       "attended": "Teilgenommen"

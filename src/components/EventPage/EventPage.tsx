@@ -162,6 +162,7 @@ function EventDetails({ event }: { event: ApiEventN4DGetList }) {
   const { t, i18n } = useTranslation();
   const externalRegistrationUrl = getHttpUrl(event.linkRSVP);
   const isOver = new Date(event.dateEnd ?? event.date) < new Date();
+  const canSignUpHere = !event.linkRSVP && event.active && !isOver;
   const eventTypeLabel = getEventTypeLabel(event.type, t);
 
   return (
@@ -186,7 +187,7 @@ function EventDetails({ event }: { event: ApiEventN4DGetList }) {
               </AdditionalInfo>
             </>
           ) : null}
-          {!externalRegistrationUrl && !isOver && <EventRegistrationForm event={event} />}
+          {canSignUpHere && <EventRegistrationForm event={event} />}
         </section>
 
         <Details aria-label={t("eventPage.details")}>
@@ -208,12 +209,14 @@ function EventDetails({ event }: { event: ApiEventN4DGetList }) {
               )}
             </span>
           </Detail>
-          {externalRegistrationUrl && (
+          {externalRegistrationUrl ? (
             <Button
               text={t("eventPage.register")}
               width="100%"
               onClick={() => window.open(externalRegistrationUrl, "_blank", "noopener,noreferrer")}
             />
+          ) : (
+            !canSignUpHere && <Paragraph>{t("eventPage.registrationUnavailable")}</Paragraph>
           )}
         </Details>
       </Body>

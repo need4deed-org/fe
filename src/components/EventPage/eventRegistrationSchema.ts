@@ -13,7 +13,7 @@ export const createEventRegistrationSchema = (t: TFunction) =>
       .pipe(z.email(t("eventRegistration.errors.email"))),
     phone: z.string().trim(),
     numberOfPeople: z
-      .number()
+      .number({ error: t("eventRegistration.errors.people") })
       .int()
       .min(1, t("eventRegistration.errors.people"))
       .max(1000, t("eventRegistration.errors.people")),

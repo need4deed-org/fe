@@ -9,13 +9,21 @@ import { TableHeader, TableRow } from "../VolunteerProfileDocument/styles";
 
 export const VolunteerEvents = ({ volunteerId }: { volunteerId: number }) => {
   const { t } = useTranslation();
-  const { data: events = [] } = useVolunteerEvents(volunteerId);
-  const { mutate: setAttended } = useSetAttended();
+  const { data: events = [], isLoading, isError } = useVolunteerEvents(volunteerId);
+  const { mutate: setAttended, isPending } = useSetAttended();
 
-  if (events.length === 0) {
+  const emptyText = isLoading
+    ? t("dashboard.home.content.loading")
+    : isError
+      ? t("dashboard.volunteerEvents.loadError")
+      : events.length === 0
+        ? t("dashboard.volunteerEvents.emptyState")
+        : null;
+
+  if (emptyText) {
     return (
       <SectionWrapper>
-        <SectionEmptyState>{t("dashboard.volunteerEvents.emptyState")}</SectionEmptyState>
+        <SectionEmptyState>{emptyText}</SectionEmptyState>
       </SectionWrapper>
     );
   }
@@ -41,7 +49,9 @@ export const VolunteerEvents = ({ volunteerId }: { volunteerId: number }) => {
                     width="20px"
                     height="20px"
                     checked={event.attended}
-                    onChange={(attended) => setAttended({ registrationId: event.registrationId, attended })}
+                    onChange={(attended) =>
+                      !isPending && setAttended({ registrationId: event.registrationId, attended })
+                    }
                   />
                 </TableCell>
               </TableRow>

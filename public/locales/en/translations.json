@@ -210,6 +210,7 @@
     "viewDetails": "View event details",
     "backToEvents": "Back to all upcoming events",
     "register": "Register now",
+    "registrationUnavailable": "Registration is not available.",
     "loading": "Loading event…",
     "loadError": "The event could not be loaded. Please try again.",
     "empty": "No upcoming event",
@@ -1971,7 +1972,8 @@
       "registrations": {
         "open": "Sign-ups",
         "title": "Sign-ups: {{title}}",
-        "summary": "{{count}} sign-ups, {{people}} people",
+        "summary_one": "{{count}} sign-up, {{people}} people",
+        "summary_other": "{{count}} sign-ups, {{people}} people",
         "export": "Export CSV",
         "empty": "No sign-ups yet",
         "people": "People",
@@ -2141,6 +2143,7 @@
     "volunteerEvents": {
       "title": "Events",
       "emptyState": "No event sign-ups yet",
+      "loadError": "Event sign-ups could not be loaded.",
       "event": "Event",
       "date": "Date",
       "attended": "Attended"

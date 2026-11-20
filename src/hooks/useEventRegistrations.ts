@@ -1,4 +1,5 @@
 import { apiPathEvent, apiPathEventRegistration, apiPathVolunteer } from "@/config/constants";
+import axios from "axios";
 import type {
   ApiEventN4DRegistrationListGet,
   ApiEventN4DRegistrationPost,
@@ -10,11 +11,10 @@ import { mutateData, useMutationQuery } from "./useMutationQuery";
 
 const REGISTRATIONS_QUERY_KEY = ["event-registrations"];
 
-export function useEventRegistrations(eventId: number, enabled = true) {
+export function useEventRegistrations(eventId: number) {
   return useGetQuery<ApiEventN4DRegistrationListGet>({
     queryKey: [...REGISTRATIONS_QUERY_KEY, "event", String(eventId)],
     apiPath: `${apiPathEvent}/${eventId}/registrations`,
-    enabled,
   });
 }
 
@@ -30,6 +30,24 @@ export function useSetAttended() {
     mutationFn: ({ registrationId, attended }) =>
       mutateData(`${apiPathEventRegistration}/${registrationId}`, "patch", { attended }),
     queryKeyToInvalidate: REGISTRATIONS_QUERY_KEY,
+    noToast: true,
+  });
+}
+
+export function useExportEventRegistrations(eventId: number) {
+  return useMutationQuery<void, unknown>({
+    mutationFn: async () => {
+      const { data } = await axios.get<Blob>(`${apiPathEvent}/${eventId}/registrations/export`, {
+        responseType: "blob",
+      });
+      const url = URL.createObjectURL(data);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `registrations-event-${eventId}.csv`;
+      link.click();
+      URL.revokeObjectURL(url);
+    },
+    noToast: true,
   });
 }
 
