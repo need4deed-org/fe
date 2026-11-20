@@ -66,14 +66,16 @@ const ContainerLogo = styled.div<{ $breakpoint: number }>`
 `;
 
 const HomeLink = styled(NextLink)`
-  svg {
+  > svg {
     height: var(--header-logo-height);
     fill: var(--blue-100);
     transition: var(--short-transition);
   }
 
-  svg:hover {
-    fill: var(--blue-75);
+  &:hover > svg,
+  &:active > svg,
+  &:focus > svg {
+    fill: var(--blue-80);
   }
 `;
 

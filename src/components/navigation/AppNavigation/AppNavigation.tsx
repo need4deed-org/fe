@@ -22,12 +22,11 @@ const Frame = styled.div`
   display: flex;
   z-index: 0;
   padding-left: var(--sidebar-width);
-  background: var(--sand-25);
+  background: var(--sand-20);
 
   @media screen and (max-width: ${BREAKPOINT}px) {
     display: block;
     padding: 0;
-    padding-bottom: var(--mobile-footer-menu-height);
   }
 `;
 
@@ -35,4 +34,5 @@ const PageContainer = styled.main`
   z-index: 1;
   width: 100%;
   min-height: 100vh;
+  padding-bottom: var(--mobile-footer-menu-height);
 `;

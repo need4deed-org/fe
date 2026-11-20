@@ -1,4 +1,8 @@
 {
+  "notFound": {
+    "message": "Seite Nicht Gefunden",
+    "goHome": "Zur Startseite"
+  },
   "website": {
     "header": {
       "about": "Über",
@@ -577,7 +581,7 @@
       "sidebar": {
         "dashboard": "Dashboard",
         "volunteers": "Ehrenamtliche",
-        "opportunities": "Ehrenamtsbedarfe",
+        "opportunities": "Einsätze",
         "organizations": "Organisationen",
         "racs": "RACs",
         "discussions": "Diskussionen",

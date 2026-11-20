@@ -23,14 +23,14 @@ const Button = styled.button<{ $selected: boolean }>`
   align-items: center;
   width: var(--field-size);
   height: var(--field-size);
-  background-color: ${({ $selected }) => ($selected ? "var(--blue-75)" : "var(--blue-100)")};
+  background-color: ${({ $selected }) => ($selected ? "var(--lavender-80)" : "var(--lavender-100)")};
   border-radius: 50%;
   transition: var(--short-transition);
 
   &:hover,
   &:active,
   &:focus {
-    background-color: var(--blue-75);
+    background-color: var(--lavender-80);
   }
 
   svg {

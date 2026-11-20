@@ -25,7 +25,7 @@ const nextConfig: NextConfig = {
   async redirects() {
     const legacyForms = [
       { from: "volunteer-form", to: "forms/volunteer" },
-      { from: "opportunity-form", to: "register/agent" },
+      { from: "opportunity-form", to: "register/organization" },
     ];
     const formRedirects = legacyForms.flatMap(({ from, to }) => [
       { source: `/${from}/:lng(de|en)`, destination: `/:lng/${to}`, permanent: true },
@@ -33,18 +33,18 @@ const nextConfig: NextConfig = {
       { source: `/${from}/:rest*`, destination: `/${to}`, permanent: true },
     ]);
     const pages = [
-      "about",
-      "faq",
-      "agreement",
-      "legal-notice",
-      "data-privacy",
-      "rac-guidelines",
-      "announcement",
-      "event-page",
+      { from: "about", to: "about" },
+      { from: "faq", to: "faq" },
+      { from: "agreement", to: "agreement" },
+      { from: "legal-notice", to: "legal" },
+      { from: "data-privacy", to: "privacy" },
+      { from: "rac-guidelines", to: "rac-guidelines" },
+      { from: "announcement", to: "announcement" },
+      { from: "event-page", to: "events" },
     ];
-    const pageRedirects = pages.map((page) => ({
-      source: `/${page}/:lng(de|en)`,
-      destination: `/:lng/${page}`,
+    const pageRedirects = pages.map(({ from, to }) => ({
+      source: `/${from}/:lng(de|en)`,
+      destination: `/:lng/${to}`,
       permanent: true,
     }));
     const vpaRedirects = [
@@ -58,7 +58,33 @@ const nextConfig: NextConfig = {
       { source: "/posts", destination: "/discussions", permanent: true },
     ];
 
-    return [...formRedirects, ...pageRedirects, ...vpaRedirects, ...discussionsRedirects];
+    const renamedRoutes = [
+      { from: "dashboard/admin/ngo-volunteers", to: "organizations/volunteers" },
+      { from: "dashboard/admin/domains", to: "organizations/domains" },
+      { from: "dashboard/admin/statistics", to: "dashboard/statistics" },
+      { from: "dashboard/admin", to: "dashboard" },
+      { from: "dashboard/profile", to: "account" },
+      { from: "dashboard/posts", to: "discussions" },
+      { from: "dashboard/agents/:path*", to: "organizations/:path*" },
+      { from: "dashboard/calendar/:path*", to: "calendar/:path*" },
+      { from: "dashboard/opportunities/:path*", to: "opportunities/:path*" },
+      { from: "dashboard/volunteers/:path*", to: "volunteers/:path*" },
+      { from: "forgotten-password", to: "forgot-password" },
+      { from: "register/agent/:path*", to: "register/organization/:path*" },
+      { from: "legal-notice", to: "legal" },
+      { from: "data-privacy", to: "privacy" },
+      { from: "event-page/:path*", to: "events/:path*" },
+      { from: "opportunity-cards", to: "volunteer" },
+      { from: "for-organisations", to: "for-organizations" },
+      { from: "forms/opportunity", to: "dashboard" },
+    ];
+    const renamedRouteRedirects = renamedRoutes.map(({ from, to }) => ({
+      source: `/:lng(de|en)/${from}`,
+      destination: `/:lng/${to}`,
+      permanent: true,
+    }));
+
+    return [...formRedirects, ...pageRedirects, ...vpaRedirects, ...discussionsRedirects, ...renamedRouteRedirects];
   },
   async rewrites() {
     return [{ source: `/${apiPrefix}/:path*`, destination: `${apiURL}/:path*` }];

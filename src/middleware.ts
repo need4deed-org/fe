@@ -12,7 +12,7 @@ const DEVICE_HEADER_NAME = "x-device-type";
 const LANG_COOKIE = "preferred-lang";
 const REFRESH = "refresh";
 
-const appSections = "dashboard|opportunities|volunteers|organizations|discussions|calendar|profile";
+const appSections = "dashboard|opportunities|volunteers|organizations|discussions|calendar|account";
 const localePrefixRegex = /^\/([a-z]{2})(?:\/|$)/i;
 
 const authorizedRoutes: Record<string, { regex: RegExp; redirect: RouteBuilder }> = {
@@ -71,6 +71,13 @@ export function middleware(request: NextRequest) {
     const isAuthorized =
       (userObject && userObject.role === UserRole.ADMIN) || (userObject && userObject.role === UserRole.COORDINATOR);
 
+    const adminOnlyRegex = /^(?:\/[a-z]{2})?\/(?:dashboard\/statistics|organizations\/(?:domains|volunteers))(?:\/|$)/;
+    if (!isAuthorized && adminOnlyRegex.test(pathname)) {
+      const url = request.nextUrl.clone();
+      url.pathname = routes.dashboard(lang);
+      return NextResponse.redirect(url);
+    }
+
     const volunteerRestrictedRegex = /^(?:\/[a-z]{2})?\/(volunteers|organizations|discussions|calendar)(?:\/|$)/;
     if (userObject?.role === UserRole.VOLUNTEER && volunteerRestrictedRegex.test(pathname)) {
       const url = request.nextUrl.clone();
@@ -80,7 +87,7 @@ export function middleware(request: NextRequest) {
 
     const match = pathname.match(authorizedRoutes.AGENT.regex);
     if (match) {
-      if (isAuthorized || userObject.role === UserRole.AGENT) {
+      if (isAuthorized || userObject?.role === UserRole.AGENT) {
         return NextResponse.next();
       }
       const url = request.nextUrl.clone();

@@ -4,20 +4,19 @@ import styled from "styled-components";
 type ButtonProps = {
   label: string;
   inline?: boolean;
-  selected?: boolean;
   disabled?: boolean;
   onClick?: () => void;
 };
 
-export const Button = ({ label, inline = false, selected = false, disabled = false, onClick }: ButtonProps) => {
+export const Button = ({ label, inline = false, disabled = false, onClick }: ButtonProps) => {
   return (
-    <ButtonElement $inline={inline} $selected={selected} disabled={disabled} onClick={() => onClick && onClick()}>
+    <ButtonElement $inline={inline} disabled={disabled} onClick={() => onClick && onClick()}>
       {label}
     </ButtonElement>
   );
 };
 
-const ButtonElement = styled.button<{ $inline: boolean; $selected: boolean }>`
+const ButtonElement = styled.button<{ $inline: boolean }>`
   display: ${({ $inline }) => ($inline ? "-webkit-inline-flex" : "-webkit-flex")};
   display: ${({ $inline }) => ($inline ? "inline-flex" : "flex")};
   justify-content: center;
@@ -26,7 +25,7 @@ const ButtonElement = styled.button<{ $inline: boolean; $selected: boolean }>`
   height: var(--field-size);
   padding-left: var(--large-spacing);
   padding-right: var(--large-spacing);
-  background-color: ${({ $selected }) => ($selected ? "var(--blue-75)" : "var(--blue-100)")};
+  background-color: var(--lavender-100);
   border-radius: var(--field-border-radius);
   font-weight: var(--bold);
   color: var(--white);
@@ -37,11 +36,11 @@ const ButtonElement = styled.button<{ $inline: boolean; $selected: boolean }>`
   &:hover,
   &:active,
   &:focus {
-    background-color: var(--blue-75);
+    background-color: var(--lavender-80);
   }
 
   &:disabled {
-    background-color: var(--blue-75);
-    color: var(--blue-25);
+    background-color: var(--lavender-80);
+    color: var(--lavender-20);
   }
 `;

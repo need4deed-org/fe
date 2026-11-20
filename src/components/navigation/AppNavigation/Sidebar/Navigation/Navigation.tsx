@@ -153,7 +153,7 @@ const Link = styled(NextLink)<{ $selected: boolean; $breakpoint: number }>`
   &:hover,
   &:active,
   &:focus {
-    background-color: var(--blue-75);
+    background-color: var(--blue-80);
   }
 
   svg {

@@ -1,4 +1,8 @@
 {
+  "notFound": {
+    "message": "Page Not Found",
+    "goHome": "Go Home"
+  },
   "website": {
     "header": {
       "about": "About",

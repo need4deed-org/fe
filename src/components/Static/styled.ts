@@ -152,6 +152,7 @@ export const BulletList = styled.ul`
   letter-spacing: 0.1px;
   margin: 0;
   padding-left: 20px;
+  list-style-type: disc;
 
   li + li {
     margin-top: 4px;

@@ -4,49 +4,46 @@
 
   /* Number in color variable names is the percentage of that color mixed with pure white */
   --grey-100: rgb(102, 112, 133);
-  --grey-75: color-mix(in srgb, var(--grey-100) 75%, white);
-  --grey-50: color-mix(in srgb, var(--grey-100) 50%, white);
-  --grey-25: color-mix(in srgb, var(--grey-100) 25%, white);
+  --grey-80: color-mix(in srgb, var(--grey-100) 80%, white);
+  --grey-60: color-mix(in srgb, var(--grey-100) 60%, white);
+  --grey-40: color-mix(in srgb, var(--grey-100) 40%, white);
+  --grey-20: color-mix(in srgb, var(--grey-100) 20%, white);
 
-  --midnight-100: rgb(26, 38, 132);
-  --midnight-75: color-mix(in srgb, var(--midnight-100) 75%, white);
-  --midnight-50: color-mix(in srgb, var(--midnight-100) 50%, white);
-  --midnight-25: color-mix(in srgb, var(--midnight-100) 25%, white);
+  --blue-100: rgb(5, 64, 242);
+  --blue-80: color-mix(in srgb, var(--blue-100) 80%, white);
+  --blue-60: color-mix(in srgb, var(--blue-100) 60%, white);
+  --blue-40: color-mix(in srgb, var(--blue-100) 40%, white);
+  --blue-20: color-mix(in srgb, var(--blue-100) 20%, white);
 
-  --blue-100: rgb(26, 72, 242);
-  --blue-75: color-mix(in srgb, var(--blue-100) 75%, white);
-  --blue-50: color-mix(in srgb, var(--blue-100) 50%, white);
-  --blue-25: color-mix(in srgb, var(--blue-100) 25%, white);
-
-  --orchid-100: rgb(220, 161, 232);
-  --orchid-75: color-mix(in srgb, var(--orchid-100) 75%, white);
-  --orchid-50: color-mix(in srgb, var(--orchid-100) 50%, white);
-  --orchid-25: color-mix(in srgb, var(--orchid-100) 25%, white);
-
-  --lavender-100: rgb(138, 100, 233);
-  --lavender-75: color-mix(in srgb, var(--lavender-100) 75%, white);
-  --lavender-50: color-mix(in srgb, var(--lavender-100) 50%, white);
-  --lavender-25: color-mix(in srgb, var(--lavender-100) 25%, white);
+  --lavender-100: rgb(145, 99, 242);
+  --lavender-80: color-mix(in srgb, var(--lavender-100) 80%, white);
+  --lavender-60: color-mix(in srgb, var(--lavender-100) 60%, white);
+  --lavender-40: color-mix(in srgb, var(--lavender-100) 40%, white);
+  --lavender-20: color-mix(in srgb, var(--lavender-100) 20%, white);
 
   --coral-100: rgb(255, 125, 104);
-  --coral-75: color-mix(in srgb, var(--coral-100) 75%, white);
-  --coral-50: color-mix(in srgb, var(--coral-100) 50%, white);
-  --coral-25: color-mix(in srgb, var(--coral-100) 25%, white);
+  --coral-80: color-mix(in srgb, var(--coral-100) 80%, white);
+  --coral-60: color-mix(in srgb, var(--coral-100) 60%, white);
+  --coral-40: color-mix(in srgb, var(--coral-100) 40%, white);
+  --coral-20: color-mix(in srgb, var(--coral-100) 20%, white);
 
-  --mint-100: rgb(0, 201, 128);
-  --mint-75: color-mix(in srgb, var(--mint-100) 75%, white);
-  --mint-50: color-mix(in srgb, var(--mint-100) 50%, white);
-  --mint-25: color-mix(in srgb, var(--mint-100) 25%, white);
+  --mint-100: rgb(65, 242, 141);
+  --mint-80: color-mix(in srgb, var(--mint-100) 80%, white);
+  --mint-60: color-mix(in srgb, var(--mint-100) 60%, white);
+  --mint-40: color-mix(in srgb, var(--mint-100) 40%, white);
+  --mint-20: color-mix(in srgb, var(--mint-100) 20%, white);
 
   --raspberry-100: rgb(197, 15, 82);
-  --raspberry-75: color-mix(in srgb, var(--raspberry-100) 75%, white);
-  --raspberry-50: color-mix(in srgb, var(--raspberry-100) 50%, white);
-  --raspberry-25: color-mix(in srgb, var(--raspberry-100) 25%, white);
+  --raspberry-80: color-mix(in srgb, var(--raspberry-100) 80%, white);
+  --raspberry-60: color-mix(in srgb, var(--raspberry-100) 60%, white);
+  --raspberry-40: color-mix(in srgb, var(--raspberry-100) 40%, white);
+  --raspberry-20: color-mix(in srgb, var(--raspberry-100) 20%, white);
 
   --sand-100: rgb(242, 226, 211);
-  --sand-75: color-mix(in srgb, var(--sand-100) 75%, white);
-  --sand-50: color-mix(in srgb, var(--sand-100) 50%, white);
-  --sand-25: color-mix(in srgb, var(--sand-100) 25%, white);
+  --sand-80: color-mix(in srgb, var(--sand-100) 80%, white);
+  --sand-60: color-mix(in srgb, var(--sand-100) 60%, white);
+  --sand-40: color-mix(in srgb, var(--sand-100) 40%, white);
+  --sand-20: color-mix(in srgb, var(--sand-100) 20%, white);
 
   /* Text */
   --font-size: 16px; /* Font size of body text, text inputs, and buttons */
@@ -86,4 +83,5 @@
 
   /* Miscellaneous */
   --short-transition: 0.15s ease-in-out; /* For short animations */
+  --medium-transition: 0.25s ease-in-out; /* For medium length animations */
 }

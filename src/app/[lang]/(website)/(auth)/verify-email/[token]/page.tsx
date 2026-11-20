@@ -1,5 +1,5 @@
 "use client";
-
+import styled from "styled-components";
 import { routes } from "@/constants/routes";
 import { ACCOUNT_READY_NOTICE, getCookie, rememberNotice } from "@/utils/helpers";
 import { ApiUserVerifyEmail } from "need4deed-sdk";
@@ -64,8 +64,13 @@ export default function Page() {
 
   return (
     <div>
-      <h1>Email Verification</h1>
+      <Heading>Email Verification</Heading>
       {verifying ? "Verifying..." : <p>{verified ? "Redirecting…" : "Verification failed. Please try again."}</p>}
     </div>
   );
 }
+
+const Heading = styled.h1`
+  font-size: 28px;
+  font-weight: bolder;
+`;

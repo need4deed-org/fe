@@ -128,19 +128,19 @@ export const Agents = () => {
 
   const activeFilters = createSelectedAgentFiltersAsFlatArray(cardsFilter, setCardsFilter, t);
 
-  if (!user) return;
-
   return (
     <>
       <AgentsContainer data-testid="agents-container">
-        <ButtonContainer>
-          {[UserRole.COORDINATOR, UserRole.ADMIN].includes(user.role) && (
-            <LinkButton href={routes.domains(i18n.language)} inline label={t("dashboard.agents.trustedDomains")} />
-          )}
-          {[UserRole.COORDINATOR, UserRole.ADMIN].includes(user.role) && (
-            <LinkButton inline href={routes.ngoVolunteers(i18n.language)} label={t("dashboard.home.ngoVolunteers")} />
-          )}
-        </ButtonContainer>
+        {user && (
+          <ButtonContainer>
+            {[UserRole.COORDINATOR, UserRole.ADMIN].includes(user.role) && (
+              <LinkButton href={routes.domains(i18n.language)} inline label={t("dashboard.agents.trustedDomains")} />
+            )}
+            {[UserRole.COORDINATOR, UserRole.ADMIN].includes(user.role) && (
+              <LinkButton inline href={routes.ngoVolunteers(i18n.language)} label={t("dashboard.home.ngoVolunteers")} />
+            )}
+          </ButtonContainer>
+        )}
         <CardsHeader
           header={
             transferOpportunityId

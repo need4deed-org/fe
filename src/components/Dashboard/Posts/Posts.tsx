@@ -1,7 +1,6 @@
 "use client";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useCallback, useState } from "react";
-
 import PostFeed from "./PostFeed";
 import PostComposer from "./PostComposer";
 import PeopleWidget from "./PeopleWidget";

@@ -18,14 +18,13 @@ export const LinkButton = ({ href, inline = false, label }: LinkButtonProps) => 
 const Button = styled(Link)<{ $inline: boolean }>`
   display: ${({ $inline }) => ($inline ? "-webkit-inline-flex" : "-webkit-flex")};
   display: ${({ $inline }) => ($inline ? "inline-flex" : "flex")};
-  display: inline-flex;
   justify-content: center;
   align-items: center;
   width: ${({ $inline }) => ($inline ? "auto" : "100%")};
   height: var(--field-size);
   padding-left: var(--large-spacing);
   padding-right: var(--large-spacing);
-  background-color: var(--blue-100);
+  background-color: var(--lavender-100);
   border-radius: var(--field-border-radius);
   font-weight: var(--bold);
   color: var(--white);
@@ -36,6 +35,6 @@ const Button = styled(Link)<{ $inline: boolean }>`
   &:hover,
   &:active,
   &:focus {
-    background-color: var(--blue-75);
+    background-color: var(--lavender-80);
   }
 `;

@@ -21,7 +21,7 @@ export const WebsiteNavigation = ({ children }: WebsiteNavigationProps) => {
 const Frame = styled.div`
   padding-top: var(--header-height);
   z-index: 1;
-  background: var(--sand-25);
+  background: var(--sand-20);
 `;
 
 const PageContainer = styled.main``;

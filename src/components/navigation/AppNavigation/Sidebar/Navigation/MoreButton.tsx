@@ -77,7 +77,7 @@ const Button = styled.button<{ $breakpoint: number; $selected: boolean }>`
     &:hover,
     &:active,
     &:focus {
-      background-color: var(--blue-75);
+      background-color: var(--blue-80);
     }
 
     > svg {
@@ -118,7 +118,7 @@ const Menu = styled.div<{ $breakpoint: number }>`
     bottom: var(--small-spacing);
     padding: var(--medium-spacing);
     z-index: 2;
-    background-color: var(--blue-50);
+    background-color: var(--blue-40);
     border-radius: var(--surface-border-radius);
   }
 `;
@@ -151,8 +151,8 @@ const Link = styled(NextLink)<{ $breakpoint: number; $selected: boolean }>`
 
   &:hover,
   &:active,
-  &focus {
-    background-color: var(--blue-75);
+  &:focus {
+    background-color: var(--blue-80);
   }
 
   > svg {

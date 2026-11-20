@@ -53,13 +53,13 @@ const ListItem = styled.li``;
 
 const LinkElement = styled(NextLink)<{ $selected: boolean }>`
   font-weight: var(--bold);
-  color: ${({ $selected }) => ($selected ? "var(--blue-100) !important" : "var(--white)")};
+  color: ${({ $selected }) => ($selected ? "var(--lavender-100) !important" : "var(--white)")};
   text-transform: capitalize;
   transition: var(--short-transition);
 
   &:hover,
   &:active,
   &:focus {
-    color: var(--blue-75);
+    color: var(--lavender-80);
   }
 `;

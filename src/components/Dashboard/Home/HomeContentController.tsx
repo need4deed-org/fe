@@ -31,15 +31,15 @@ export default function HomeContentController() {
     i18n: { language },
   } = useTranslation();
 
-  if (!user) return;
-
   return (
     <DashboardContentContainer>
-      <ButtonContainer>
-        {[UserRole.COORDINATOR, UserRole.ADMIN].includes(user.role) && (
-          <LinkButton inline href={routes.statistics(language)} label={t("dashboard.home.statistics")} />
-        )}
-      </ButtonContainer>
+      {user && (
+        <ButtonContainer>
+          {[UserRole.COORDINATOR, UserRole.ADMIN].includes(user.role) && (
+            <LinkButton inline href={routes.statistics(language)} label={t("dashboard.home.statistics")} />
+          )}
+        </ButtonContainer>
+      )}
       <DashboardContentController volunteerId={user?.volunteerId} />
     </DashboardContentContainer>
   );

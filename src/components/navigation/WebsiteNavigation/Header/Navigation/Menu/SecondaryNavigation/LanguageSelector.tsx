@@ -7,8 +7,7 @@ import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 import { Lang } from "need4deed-sdk";
 import { useSearchParams } from "next/navigation";
-import { IconButton } from "@/components/fields/IconButton";
-import { Button } from "@/components/fields/Button";
+import { IconButton } from "@/components/navigation/WebsiteNavigation/Header/Navigation/Menu/SecondaryNavigation/IconButton";
 
 type LanguageSelectorProps = {
   breakpoint: number;
@@ -45,10 +44,14 @@ export const LanguageSelector = ({ breakpoint }: LanguageSelectorProps) => {
         <OverlayCloseButton onClick={() => setOpen(false)} />
         <Menu $breakpoint={breakpoint}>
           <li>
-            <Button label="Deutsch" selected={language === Lang.DE} onClick={() => handleLanguageChange(Lang.DE)} />
+            <Button $selected={language === Lang.DE} onClick={() => handleLanguageChange(Lang.DE)}>
+              Deutsch
+            </Button>
           </li>
           <li>
-            <Button label="English" selected={language === Lang.EN} onClick={() => handleLanguageChange(Lang.EN)} />
+            <Button $selected={language === Lang.EN} onClick={() => handleLanguageChange(Lang.EN)}>
+              English
+            </Button>
           </li>
         </Menu>
       </MenuWrapper>
@@ -93,7 +96,7 @@ const Menu = styled.ul<{ $breakpoint: number }>`
   margin: 0;
   margin-top: var(--small-spacing);
   z-index: 2;
-  background-color: var(--blue-50);
+  background-color: var(--lavender-60);
   border-radius: var(--surface-border-radius);
   list-style: none;
   list-style-type: none;
@@ -103,5 +106,26 @@ const Menu = styled.ul<{ $breakpoint: number }>`
     left: 0;
     bottom: var(--small-spacing);
     margin: 0;
+  }
+`;
+
+const Button = styled.button<{ $selected: boolean }>`
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: var(--field-size);
+  padding-left: var(--large-spacing);
+  padding-right: var(--large-spacing);
+  background-color: ${({ $selected }) => ($selected ? "var(--lavender-100) !important" : "transparent")};
+  border-radius: var(--field-border-radius);
+  font-weight: var(--bold);
+  color: var(--white);
+  transition: background-color var(--sort-transition);
+
+  &:hover,
+  &:active,
+  &:focus {
+    background-color: var(--lavender-80);
   }
 `;
