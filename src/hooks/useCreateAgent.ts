@@ -6,9 +6,7 @@ import { ApiAgentCreateResponse, ApiAgentRegisterConflict, ApiAgentRegisterNew }
 export const getAgentConflict = (error: unknown): ApiAgentRegisterConflict | null => {
   if (!axios.isAxiosError(error) || error.response?.status !== 409) return null;
   const data = error.response.data as Partial<ApiAgentRegisterConflict> | undefined;
-  return data?.agentId && (data.conflict === "title" || data.conflict === "address")
-    ? (data as ApiAgentRegisterConflict)
-    : null;
+  return data?.agentId && data.conflict === "address" ? (data as ApiAgentRegisterConflict) : null;
 };
 
 export const useCreateAgent = (onConflict?: (conflict: ApiAgentRegisterConflict) => void) => {
