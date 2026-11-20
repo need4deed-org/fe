@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { DashboardLayout } from "@/components/Layout";
 import { apiPathOption, DEFAULT_MAX_COMMUTE_MINUTES, questionMark, ScreenTypes } from "@/config/constants";
@@ -23,6 +23,7 @@ import {
   DEFAULT_OPPORTUNITY_STATUSES,
   DEFAULT_STAFF_OPPORTUNITY_STATUSES,
   defaultOpportunityCardsFilter,
+  EMPTY_STATUSES,
   MATCHING_OPPORTUNITY_STATUSES,
   STATUS_PARAM,
 } from "./Filters/constants";
@@ -42,6 +43,7 @@ import { ContentRow, OpportunitiesContainer } from "./styles";
 import { ViewMode } from "../common/types";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { useScreenType } from "@/context/DeviceContext";
+import { usePrefillFilters } from "../common/CardsFilter/usePrefillFilters";
 
 export function Opportunities() {
   const user = useCurrentUser(true);
@@ -57,7 +59,7 @@ export function Opportunities() {
   const volunteerId = searchParams.get("volunteer") ?? undefined;
   const volunteerFilter = useGetVolunteer(volunteerId);
   const prefilledForRef = useRef<string | null>(null);
-  const defaultAppliedRef = useRef(false);
+  // const defaultAppliedRef = useRef(false);
   const isAgent = user?.role === UserRole.AGENT;
   const isVolunteer = user?.role === UserRole.VOLUNTEER;
   const isStaff = user?.role === UserRole.COORDINATOR || user?.role === UserRole.ADMIN;
@@ -82,34 +84,18 @@ export function Opportunities() {
     ? DEFAULT_NGO_OPPORTUNITY_STATUSES
     : isStaff
       ? DEFAULT_STAFF_OPPORTUNITY_STATUSES
-      : [];
-  const hasValidStatusParam = Object.keys(defaultOpportunityCardsFilter.status).some((key) =>
-    searchParams.getAll(STATUS_PARAM).includes(key),
-  );
-  const hasInitialFilterParams =
-    hasFilterParams(
-      searchParams,
-      Object.keys(opportunityFilterConfigs).filter((key) => key !== STATUS_PARAM),
-    ) || hasValidStatusParam;
-  const shouldApplyDefaultStatuses =
-    !defaultAppliedRef.current &&
-    !volunteerId &&
-    !isOtherTab &&
-    !hasInitialFilterParams &&
-    roleDefaultStatuses.length > 0;
-  const defaultStatuses = shouldApplyDefaultStatuses ? roleDefaultStatuses : DEFAULT_OPPORTUNITY_STATUSES;
-  const cardsFilter = useMemo(() => {
-    const baseFilters = apiFilterOptions
-      ? withOptionFilters(opportunityFilterConfigs, defaultOpportunityCardsFilter, apiFilterOptions)
-      : structuredClone(defaultOpportunityCardsFilter);
-    const filter = deserializeOpportunityFilters(baseFilters, searchParams);
-    if (shouldApplyDefaultStatuses) {
-      roleDefaultStatuses.forEach((status) => {
-        filter.status[status] = true;
-      });
-    }
-    return filter;
-  }, [apiFilterOptions, roleDefaultStatuses, searchParams, shouldApplyDefaultStatuses]);
+      : EMPTY_STATUSES;
+
+  const { cardsFilter, defaultStatuses, defaultAppliedRef, hasInitialFilterParams } = usePrefillFilters({
+    searchParams,
+    apiFilterOptions,
+    defaultCardsFilter: defaultOpportunityCardsFilter,
+    filterConfigs: opportunityFilterConfigs,
+    deserializeFilters: deserializeOpportunityFilters,
+    defaultStatuses: DEFAULT_OPPORTUNITY_STATUSES,
+    roleDefaultStatuses,
+    skipDefaults: Boolean(volunteerId || isOtherTab),
+  });
 
   useEffect(() => {
     if (!user || defaultAppliedRef.current || volunteerId || isOtherTab || roleDefaultStatuses.length === 0) return;

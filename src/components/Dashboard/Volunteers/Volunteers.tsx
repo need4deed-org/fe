@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { DashboardLayout } from "@/components/Layout";
@@ -37,7 +37,6 @@ import { volunteerFilterConfigs } from "./Filters/config";
 import {
   DEFAULT_NGO_VOLUNTEER_ENGAGEMENTS,
   DEFAULT_STAFF_VOLUNTEER_ENGAGEMENTS,
-  DEFAULT_VOLUNTEER_ENGAGEMENTS,
   defaultVolunteerCardsFilter,
 } from "./Filters/constants";
 import FiltersContent from "./Filters/FiltersContent";
@@ -51,6 +50,7 @@ import { DashboardListLoading } from "../common/DashboardListLoading";
 import { ErrorMessage } from "@/components/core/common";
 import { Button } from "@/components/core/button";
 import { useScreenType } from "@/context/DeviceContext";
+import { usePrefillFilters } from "../common/CardsFilter/usePrefillFilters";
 
 export function Volunteers() {
   const { data: user, isLoading: isUserLoading, isError: isUserError } = useCurrentUserQuery(true, false);
@@ -68,39 +68,24 @@ export function Volunteers() {
   const opportunityId = searchParams.get("opportunity") ?? undefined;
   const opportunityFilter = useGetOpportunity(opportunityId);
   const prefilledForRef = useRef<string | null>(null);
-  const defaultAppliedRef = useRef(false);
+
   const isStaff = user?.role === UserRole.COORDINATOR || user?.role === UserRole.ADMIN;
   const roleDefaultEngagements = isAgent
     ? DEFAULT_NGO_VOLUNTEER_ENGAGEMENTS
     : isStaff
       ? DEFAULT_STAFF_VOLUNTEER_ENGAGEMENTS
       : [];
-  const hasValidEngagementParam = Object.keys(defaultVolunteerCardsFilter[QueryParamsKeys.ENGAGEMENT]).some((key) =>
-    searchParams.getAll(QueryParamsKeys.ENGAGEMENT).includes(key.replace(/^vol-/, "")),
-  );
-  const hasInitialFilterParams =
-    hasFilterParams(
-      searchParams,
-      Object.keys(volunteerFilterConfigs).filter((key) => key !== QueryParamsKeys.ENGAGEMENT),
-    ) || hasValidEngagementParam;
-  const shouldApplyDefaultEngagements =
-    !defaultAppliedRef.current && !opportunityId && !hasInitialFilterParams && roleDefaultEngagements.length > 0;
-  const defaultEngagements = shouldApplyDefaultEngagements ? roleDefaultEngagements : DEFAULT_VOLUNTEER_ENGAGEMENTS;
-  const cardsFilter = useMemo(() => {
-    const baseFilters = apiFilterOptions
-      ? withOptionFilters(volunteerFilterConfigs, defaultVolunteerCardsFilter, apiFilterOptions)
-      : structuredClone(defaultVolunteerCardsFilter);
-    const filter = deserializeVolunteerFilters(baseFilters, searchParams);
-    if (isAgent) {
-      filter.search = "";
-    }
-    if (shouldApplyDefaultEngagements) {
-      roleDefaultEngagements.forEach((engagement) => {
-        filter[QueryParamsKeys.ENGAGEMENT][engagement] = true;
-      });
-    }
-    return filter;
-  }, [apiFilterOptions, isAgent, roleDefaultEngagements, searchParams, shouldApplyDefaultEngagements]);
+  const { cardsFilter, defaultAppliedRef, hasInitialFilterParams, defaultEngagements } = usePrefillFilters({
+    searchParams,
+    apiFilterOptions,
+    defaultCardsFilter: defaultVolunteerCardsFilter,
+    filterConfigs: volunteerFilterConfigs,
+    deserializeFilters: deserializeVolunteerFilters,
+    defaultStatuses: [],
+    roleDefaultEngagements,
+    skipDefaults: Boolean(opportunityId),
+  });
+
   const tabs = !user
     ? []
     : [
