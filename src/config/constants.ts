@@ -113,8 +113,6 @@ export const langCookieName = "preferred-lang";
 
 export const EMPTY_PLACEHOLDER_VALUE = "–";
 
-export const MAX_DESCRIPTION_LENGTH = 500;
-
 export const PHONE_NUMBER_REGEX = /^[+\d\s\-()/]+$/;
 
 export const REFRESH_TOKEN_MAX_AGE_S = 60 * 60 * 24 * 7;

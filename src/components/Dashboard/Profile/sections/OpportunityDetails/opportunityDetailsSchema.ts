@@ -1,6 +1,13 @@
 import { Availability } from "@/components/forms/types";
-import { MAX_DESCRIPTION_LENGTH } from "@/config/constants";
 import { LanguageLevel } from "@/types";
+import {
+  OPPORTUNITY_DESCRIPTION_MESSAGES,
+  OPPORTUNITY_TITLE_MESSAGES,
+  OpportunityTextLimits,
+  refineTextLimit,
+  SOURCE_TEXT_LIMITS,
+  Translate,
+} from "@/utils/opportunity-text-limits";
 import { z } from "zod";
 import { resolveFormLanguageToOption } from "./formatters";
 
@@ -28,12 +35,17 @@ export function getMainCommunicationLanguageOptions<T extends MainCommunicationL
 }
 
 export const createOpportunityDetailsSchema = (
-  t: (key: string) => string,
+  t: Translate,
   mainCommunicationLanguageOptions: MainCommunicationLanguageOption[] = [],
+  limits: OpportunityTextLimits = SOURCE_TEXT_LIMITS,
 ) =>
   z.object({
-    title: z.string().min(1, t(`${i18nPrefix}.opportunityNameRequired`)),
-    description: z.string().max(MAX_DESCRIPTION_LENGTH, t(`${i18nPrefix}.descriptionTooLong`)),
+    title: z
+      .string()
+      .trim()
+      .min(1, t(`${i18nPrefix}.opportunityNameRequired`))
+      .superRefine(refineTextLimit(t, limits.title, OPPORTUNITY_TITLE_MESSAGES)),
+    description: z.string().superRefine(refineTextLimit(t, limits.description, OPPORTUNITY_DESCRIPTION_MESSAGES)),
     numberOfVolunteers: z.string(),
     mainCommunication: z.array(languageObjectSchema).superRefine((langs, ctx) => {
       const selected = langs.filter(({ language }) => !!language);
@@ -66,7 +78,7 @@ export const createOpportunityDetailsSchema = (
 export type OpportunityDetailsFormData = z.infer<ReturnType<typeof createOpportunityDetailsSchema>>;
 
 export const createNewOpportunityDetailsSchema = (
-  t: (key: string) => string,
+  t: Translate,
   mainCommunicationLanguageOptions: MainCommunicationLanguageOption[] = [],
 ) => createOpportunityDetailsSchema(t, mainCommunicationLanguageOptions).omit({ title: true });
 
