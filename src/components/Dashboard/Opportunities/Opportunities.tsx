@@ -2,7 +2,14 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { DashboardLayout } from "@/components/Layout";
-import { apiPathOption, DEFAULT_MAX_COMMUTE_MINUTES, questionMark, ScreenTypes } from "@/config/constants";
+import {
+  apiPathOption,
+  DashboardRoutes,
+  DEFAULT_MAX_COMMUTE_MINUTES,
+  questionMark,
+  ScreenTypes,
+} from "@/config/constants";
+import { PlusIcon } from "@phosphor-icons/react";
 import { useGetVolunteer, useGetQuery } from "@/hooks";
 import { ApiOptionLists, LangProficiency, QueryParamsKeys, UserRole } from "need4deed-sdk";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -39,8 +46,10 @@ import {
 } from "./helpers";
 import { OpportunityListController } from "./OpportunityListController";
 import { OtherOpportunities } from "./OtherOpportunities";
+import { CircleIconLink } from "@/components/styled/circle-icon-button";
 import { ContentRow, OpportunitiesContainer } from "./styles";
 import { ViewMode } from "../common/types";
+import { useAuth } from "@/hooks/useAuth";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { useScreenType } from "@/context/DeviceContext";
 import { usePrefillFilters } from "../common/CardsFilter/usePrefillFilters";
@@ -48,13 +57,14 @@ import { usePrefillFilters } from "../common/CardsFilter/usePrefillFilters";
 export function Opportunities() {
   const user = useCurrentUser(true);
   const screenType = useScreenType();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [numOfOpps, setNumOfOpps] = useState(0);
   const { data: apiFilterOptions } = useGetQuery<ApiOptionLists>({ queryKey: ["options"], apiPath: apiPathOption });
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
+  const { isAuthorized: isStaff } = useAuth();
   const sortOrder = parseSortParam(searchParams.get(SORT_PARAM));
   const volunteerId = searchParams.get("volunteer") ?? undefined;
   const volunteerFilter = useGetVolunteer(volunteerId);
@@ -236,6 +246,16 @@ export function Opportunities() {
             volunteerFilter && !isOtherTab ? { ...volunteerFilter, onRemove: handleRemoveVolunteerFilter } : undefined
           }
           showListControls={!isOtherTab}
+          headerAction={
+            isStaff && (
+              <CircleIconLink
+                href={`/${i18n.language}${DashboardRoutes.Opportunities}/new`}
+                aria-label={t("dashboard.home.createOpportunity")}
+              >
+                <PlusIcon size={16} weight="bold" />
+              </CircleIconLink>
+            )
+          }
         />
         {isOtherTab ? (
           <OtherOpportunities search={cardsFilter.search} setCount={setNumOfOpps} />

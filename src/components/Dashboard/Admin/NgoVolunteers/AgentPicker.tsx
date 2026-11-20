@@ -14,12 +14,14 @@ const i18nPrefix = "dashboard.admin.ngoVolunteers";
 type Props = {
   selected?: AgentOption;
   onSelect: (agent?: AgentOption) => void;
+  hideInactive?: boolean;
 };
 
-export function AgentPicker({ selected, onSelect }: Props) {
+export function AgentPicker({ selected, onSelect, hideInactive }: Props) {
   const { t } = useTranslation();
   const [search, setSearch] = useState("");
-  const { agents, isSettled } = useAgentSearch(search, !selected);
+  const { agents: found, isSettled } = useAgentSearch(search, !selected);
+  const agents = hideInactive ? found.filter(({ isInactive }) => !isInactive) : found;
 
   if (selected) {
     return (

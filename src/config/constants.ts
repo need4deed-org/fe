@@ -11,6 +11,7 @@ export const apiPathComment = `/${apiPrefix}/comment`;
 export const apiPathCommunication = `/${apiPrefix}/communication`;
 export const apiPathAppreciation = `/${apiPrefix}/appreciation`;
 export const apiPathActivityLog = `/${apiPrefix}/activity-log`;
+export const apiPathPostcodeCheck = `/${apiPrefix}/postcode/check`;
 export const apiPathEvent = `/${apiPrefix}/event`;
 export const apiPathPost = `/${apiPrefix}/post`;
 export const apiPathLogin = `/${apiPrefix}/auth/login`;
@@ -99,15 +100,18 @@ export enum DashboardRoutes {
   AdminDomains = "/dashboard/admin/domains",
   AdminStatistics = "/dashboard/admin/statistics",
   AdminNgoVolunteers = "/dashboard/admin/ngo-volunteers",
+  AdminAccounts = "/dashboard/admin/accounts",
 }
 
 export const questionMark = "?";
 
 export const supportedLangs = Object.values(Lang) as string[];
 
-export const EMPTY_PLACEHOLDER_VALUE = "–";
+export const defaultRouteLang = Lang.EN;
 
-export const MAX_DESCRIPTION_LENGTH = 500;
+export const langCookieName = "preferred-lang";
+
+export const EMPTY_PLACEHOLDER_VALUE = "–";
 
 export const PHONE_NUMBER_REGEX = /^[+\d\s\-()/]+$/;
 

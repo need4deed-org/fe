@@ -4,10 +4,11 @@ import { EditableField } from "@/components/EditableField/EditableField";
 import { Locale } from "date-fns";
 import { Controller, ControllerFieldState, ControllerRenderProps, useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { ErrorMessage } from "@/components/core/common";
+import { ErrorMessage, PLZChip } from "@/components/core/common";
 
 import { ButtonRow, DateFieldRow, DatePickerContainer, Details, TimeInput, TimeInputWrapper } from "./styles";
 import { AccompanyingDetailsFormData } from "./createAccompanyingDetailsSchema";
+import { PLZCheckStatus } from "@/utils/plz-check";
 
 type Props = {
   locale: Locale;
@@ -21,6 +22,8 @@ type Props = {
   onSubmit: () => void;
   isPending: boolean;
   minAppointmentDate?: Date;
+  plzStatus: PLZCheckStatus;
+  saveDisabled?: boolean;
   hideButtons?: boolean;
 };
 
@@ -36,6 +39,8 @@ export const AccompanyingDetailsEdit = ({
   onSubmit,
   isPending,
   minAppointmentDate,
+  plzStatus,
+  saveDisabled = false,
   hideButtons = false,
 }: Props) => {
   const { t } = useTranslation();
@@ -73,6 +78,7 @@ export const AccompanyingDetailsEdit = ({
               value={field.value || ""}
               setValue={field.onChange}
               errorMessage={errors.appointmentPostcode?.message}
+              supportingContent={<PLZChip status={plzStatus} />}
             />
           )}
         />
@@ -213,7 +219,7 @@ export const AccompanyingDetailsEdit = ({
             onClick={onSubmit}
             width="auto"
             padding="var(--volunteer-profile-section-card-header-button-padding)"
-            disabled={!isDirty || !isValid || isPending}
+            disabled={!isDirty || !isValid || isPending || saveDisabled}
           />
         </ButtonRow>
       )}

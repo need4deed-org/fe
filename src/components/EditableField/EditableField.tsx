@@ -3,7 +3,7 @@ import { EMPTY_PLACEHOLDER_VALUE, screenSizeThresholds } from "@/config/constant
 import { fieldSupportingTextStyles, stackedFieldStyles } from "@/components/styled/mixins";
 import { HasError, HasHint } from "@/types";
 import { MinusIcon, PlusIcon, XCircleIcon } from "@phosphor-icons/react";
-import { forwardRef, useEffect, useImperativeHandle, useRef, useState, useId } from "react";
+import { forwardRef, ReactNode, useEffect, useImperativeHandle, useRef, useState, useId } from "react";
 import { useTranslation } from "react-i18next";
 import { IoIosArrowDown } from "react-icons/io";
 import styled from "styled-components";
@@ -229,7 +229,7 @@ const HintText = styled.span`
   flex: 1;
 `;
 
-const FieldError = styled.div<{ $stacked?: boolean; $stackAt: number }>`
+const FieldSupport = styled.div<{ $stacked?: boolean; $stackAt: number }>`
   ${fieldSupportingTextStyles}
 `;
 
@@ -305,6 +305,7 @@ interface EditableFieldProps<T = string | number | string[]> {
   dropdownDirection?: "up" | "down";
   stacked?: boolean;
   stackAt?: number;
+  supportingContent?: ReactNode;
 }
 
 export const EditableField = forwardRef(function EditableField<T extends string | number | string[]>(
@@ -327,6 +328,7 @@ export const EditableField = forwardRef(function EditableField<T extends string 
     dropdownDirection = "down",
     stacked = false,
     stackAt = screenSizeThresholds.tablet,
+    supportingContent,
   }: EditableFieldProps<T>,
   ref: React.Ref<EditableFieldRef<T>>,
 ) {
@@ -622,14 +624,19 @@ export const EditableField = forwardRef(function EditableField<T extends string 
         )}
       </FieldWrapper>
       {error && (
-        <FieldError $stacked={stacked} $stackAt={stackAt}>
+        <FieldSupport $stacked={stacked} $stackAt={stackAt}>
           <ErrorMessage message={error} />
-        </FieldError>
+        </FieldSupport>
       )}
       {errorMessage && (
-        <FieldError id={errorId} $stacked={stacked} $stackAt={stackAt}>
+        <FieldSupport id={errorId} $stacked={stacked} $stackAt={stackAt}>
           <ErrorMessage message={errorMessage} />
-        </FieldError>
+        </FieldSupport>
+      )}
+      {supportingContent && (
+        <FieldSupport $stacked={stacked} $stackAt={stackAt}>
+          {supportingContent}
+        </FieldSupport>
       )}
       {hint && (
         <HintWrapper $stacked={stacked} $stackAt={stackAt} data-testid="editable-field-hint">

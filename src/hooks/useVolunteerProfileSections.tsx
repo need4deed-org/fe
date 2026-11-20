@@ -44,7 +44,7 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
   const { t, i18n } = useTranslation();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { isAuthorized, isOwnProfile } = useAuth(volunteer?.person.id);
+  const { isAuthorized, isOwnProfile } = useAuth({ personId: volunteer?.person.id });
   const hasEditingRights = isAuthorized || isOwnProfile;
   const { data: currentUser, isLoading: isCurrentUserLoading } = useCurrentUserQuery();
   const isAgent = currentUser?.role === UserRole.AGENT;
