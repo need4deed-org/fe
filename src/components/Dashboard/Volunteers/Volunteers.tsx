@@ -50,7 +50,7 @@ import { DashboardListLoading } from "../common/DashboardListLoading";
 import { ErrorMessage } from "@/components/core/common";
 import { Button } from "@/components/core/button";
 import { useScreenType } from "@/context/DeviceContext";
-import { usePrefillFilters } from "../common/CardsFilter/usePrefillFilters";
+import { EMPTY_LIST, usePrefillFilters } from "../common/CardsFilter/usePrefillFilters";
 
 export function Volunteers() {
   const { data: user, isLoading: isUserLoading, isError: isUserError } = useCurrentUserQuery(true, false);
@@ -74,7 +74,7 @@ export function Volunteers() {
     ? DEFAULT_NGO_VOLUNTEER_ENGAGEMENTS
     : isStaff
       ? DEFAULT_STAFF_VOLUNTEER_ENGAGEMENTS
-      : [];
+      : EMPTY_LIST;
   const { cardsFilter, defaultAppliedRef, hasInitialFilterParams, defaultEngagements } = usePrefillFilters({
     searchParams,
     apiFilterOptions,

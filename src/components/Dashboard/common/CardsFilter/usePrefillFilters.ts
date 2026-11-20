@@ -5,7 +5,7 @@ import { useMemo, useRef } from "react";
 import { OpportunityCardsFilter } from "../../Opportunities/Filters/types";
 import { VolunteerCardsFilter } from "../../Volunteers/Filters/types";
 
-const EMPTY_LIST: string[] = [];
+export const EMPTY_LIST = [];
 
 export const STATUS_PARAM = "status";
 

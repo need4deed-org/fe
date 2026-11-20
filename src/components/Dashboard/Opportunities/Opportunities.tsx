@@ -23,7 +23,6 @@ import {
   DEFAULT_OPPORTUNITY_STATUSES,
   DEFAULT_STAFF_OPPORTUNITY_STATUSES,
   defaultOpportunityCardsFilter,
-  EMPTY_STATUSES,
   MATCHING_OPPORTUNITY_STATUSES,
   STATUS_PARAM,
 } from "./Filters/constants";
@@ -43,7 +42,7 @@ import { ContentRow, OpportunitiesContainer } from "./styles";
 import { ViewMode } from "../common/types";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { useScreenType } from "@/context/DeviceContext";
-import { usePrefillFilters } from "../common/CardsFilter/usePrefillFilters";
+import { EMPTY_LIST, usePrefillFilters } from "../common/CardsFilter/usePrefillFilters";
 
 export function Opportunities() {
   const user = useCurrentUser(true);
@@ -84,7 +83,7 @@ export function Opportunities() {
     ? DEFAULT_NGO_OPPORTUNITY_STATUSES
     : isStaff
       ? DEFAULT_STAFF_OPPORTUNITY_STATUSES
-      : EMPTY_STATUSES;
+      : EMPTY_LIST;
 
   const { cardsFilter, defaultStatuses, defaultAppliedRef, hasInitialFilterParams } = usePrefillFilters({
     searchParams,
