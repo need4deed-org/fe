@@ -74,7 +74,7 @@ const HomeLink = styled(NextLink)`
 
   &:hover > svg,
   &:active > svg,
-  &:focus > svg {
+  &:focus-visible > svg {
     fill: var(--blue-80);
   }
 `;

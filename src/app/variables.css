@@ -80,6 +80,8 @@
   --notification-badge-side-spacing: 6px;
   --notification-badge-border-radius: calc(var(--notification-badge-size) / 2);
   --mobile-menu-icon-size: 24px;
+  --outline: 1px dashed var(--grey-100);
+  --outline-offset: 2px;
 
   /* Miscellaneous */
   --short-transition: 0.15s ease-in-out; /* For short animations */

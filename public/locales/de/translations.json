@@ -10,7 +10,11 @@
       "events": "Veranstaltungen",
       "login": "Anmelden",
       "dashboard": "Dashboard",
-      "logout": "Abmelden"
+      "logout": "Abmelden",
+      "openMenu": "Menü öffnen",
+      "closeMenu": "Menü schließen",
+      "language": "Sprache",
+      "mainNavigation": "Hauptnavigation"
     },
     "footer": {
       "about": "ÜBER",
@@ -588,7 +592,9 @@
         "calendar": "Kalender",
         "account": "Konto",
         "more": "Mehr",
-        "admin": "Admin"
+        "admin": "Admin",
+        "unreadMentions_one": "1 ungelesene Erwähnung",
+        "unreadMentions_other": "{{count}} ungelesene Erwähnungen"
       },
       "createOpportunity": "Neue Möglichkeit erstellen"
     },

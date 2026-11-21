@@ -23,11 +23,15 @@ export const MainNavigation = ({ breakpoint }: MainNavigationProps) => {
   ];
 
   return (
-    <Background area-label="Main Navigation">
+    <Background aria-label={t("website.header.mainNavigation")}>
       <List $breakpoint={breakpoint}>
         {links.map(({ route, label }) => (
           <ListItem key={route}>
-            <LinkElement href={route} $selected={route === pathname}>
+            <LinkElement
+              href={route}
+              aria-current={route === pathname ? "page" : undefined}
+              $selected={route === pathname}
+            >
               {label}
             </LinkElement>
           </ListItem>
@@ -59,7 +63,7 @@ const LinkElement = styled(NextLink)<{ $selected: boolean }>`
 
   &:hover,
   &:active,
-  &:focus {
+  &:focus-visible {
     color: var(--lavender-80);
   }
 `;

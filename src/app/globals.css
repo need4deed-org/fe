@@ -1,3 +1,10 @@
+a:focus-visible,
+button:focus-visible,
+select:focus-visible {
+  outline: var(--outline);
+  outline-offset: var(--outline-offset);
+}
+
 body {
   font-family: "Figtree", sans-serif !important;
   width: 100%;

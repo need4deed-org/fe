@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { useTranslation } from "react-i18next";
 import { routes } from "@/constants/routes";
-import { LinkButton } from "@/components/fields/LinkButton";
 import Link from "next/link";
 
 export const AuthButton = () => {
@@ -37,7 +36,7 @@ const Button = styled(Link)`
 
   &:hover,
   &:active,
-  &:focus {
+  &:focus-visible {
     background-color: var(--lavender-80);
   }
 `;

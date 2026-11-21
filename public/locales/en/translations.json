@@ -10,7 +10,11 @@
       "events": "Events",
       "login": "Login",
       "dashboard": "Dashboard",
-      "logout": "Logout"
+      "logout": "Logout",
+      "openMenu": "Open menu",
+      "closeMenu": "Close menu",
+      "language": "Language",
+      "mainNavigation": "Main navigation"
     },
     "footer": {
       "about": "ABOUT",
@@ -582,7 +586,9 @@
         "calendar": "Calendar",
         "account": "Account",
         "more": "More",
-        "admin": "Admin"
+        "admin": "Admin",
+        "unreadMentions_one": "1 unread mention",
+        "unreadMentions_other": "{{count}} unread mentions"
       },
       "createOpportunity": "Create New Opportunity"
     },

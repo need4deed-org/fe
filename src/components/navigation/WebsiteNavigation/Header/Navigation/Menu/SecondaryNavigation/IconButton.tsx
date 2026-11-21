@@ -1,17 +1,30 @@
 "use client";
 import styled from "styled-components";
 import { Icon } from "@phosphor-icons/react";
+import type { Ref } from "react";
 
 type IconButtonProps = {
   Icon: Icon;
+  label: string;
   selected?: boolean;
+  expanded?: boolean;
+  controls?: string;
   onClick?: () => void;
+  ref?: Ref<HTMLButtonElement>;
 };
 
-export const IconButton = ({ Icon, selected = false, onClick }: IconButtonProps) => {
+export const IconButton = ({ Icon, label, selected = false, expanded, controls, onClick, ref }: IconButtonProps) => {
   return (
-    <Button $selected={selected} onClick={() => onClick && onClick()}>
-      {<Icon />}
+    <Button
+      ref={ref}
+      type="button"
+      aria-label={label}
+      aria-expanded={expanded}
+      aria-controls={controls}
+      $selected={selected}
+      onClick={() => onClick && onClick()}
+    >
+      <Icon aria-hidden />
     </Button>
   );
 };
@@ -29,11 +42,11 @@ const Button = styled.button<{ $selected: boolean }>`
 
   &:hover,
   &:active,
-  &:focus {
+  &:focus-visible {
     background-color: var(--lavender-80);
   }
 
-  svg {
+  > svg {
     width: var(--field-icon-size);
     height: var(--field-icon-size);
     fill: var(--white);

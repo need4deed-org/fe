@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { useGetTaggedComments } from "@/hooks/useGetTaggedComments";
 
@@ -7,6 +8,7 @@ type NotificationBadgeProps = {
 };
 
 export const NotificationBadge = ({ breakpoint }: NotificationBadgeProps) => {
+  const { t } = useTranslation();
   const user = useCurrentUser();
   const personId = (user as typeof user & { personId?: number })?.personId ?? -1;
   const { tagComments, isLoading, isError } = useGetTaggedComments(personId);
@@ -17,10 +19,14 @@ export const NotificationBadge = ({ breakpoint }: NotificationBadgeProps) => {
 
   if (isLoading || isError || count === 0) return;
 
-  return <Badge $breakpoint={breakpoint}>{count}</Badge>;
+  return (
+    <>
+      <Badge aria-label={`, ${t("dashboard.home.sidebar.unreadMentions", { count })}`}>{count}</Badge>
+    </>
+  );
 };
 
-const Badge = styled.span<{ $breakpoint: number }>`
+const Badge = styled.span`
   display: -webkit-flex;
   display: flex;
   justify-content: center;
@@ -34,8 +40,6 @@ const Badge = styled.span<{ $breakpoint: number }>`
   padding-right: var(--notification-badge-side-spacing);
   background-color: var(--raspberry-100);
   border-radius: var(--notification-badge-border-radius);
-
-  @media screen and (max-width: ${({ $breakpoint }) => $breakpoint}px) {
-    top: var(--small-spacing);
-  }
+  font-size: var(--font-size);
+  font-weight: normal;
 `;

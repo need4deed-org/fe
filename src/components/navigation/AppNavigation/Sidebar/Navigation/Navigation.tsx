@@ -85,17 +85,25 @@ export const Navigation = ({ breakpoint }: NavigationProps) => {
   const moreLinks = roleLinks.length > MAX_MOBILE_ITEMS ? roleLinks.slice(MAX_MOBILE_ITEMS - 1) : [];
 
   return (
-    <Background $breakpoint={breakpoint} area-label="Main Navigation">
+    <Background $breakpoint={breakpoint} aria-label={t("website.header.mainNavigation")}>
       <List $breakpoint={breakpoint}>
-        {mainLinks.map(({ route, Icon, label }) => (
-          <ListItem key={route}>
-            <Link href={route} $selected={pathname.startsWith(route)} $breakpoint={breakpoint}>
-              <Icon />
-              {label}
-              {route === routes.dashboard(language) && <NotificationBadge breakpoint={breakpoint} />}
-            </Link>
-          </ListItem>
-        ))}
+        {mainLinks.map(({ route, Icon, label }) => {
+          const selected = pathname.startsWith(route);
+          return (
+            <ListItem key={route}>
+              <Link
+                href={route}
+                aria-current={selected ? "page" : undefined}
+                $selected={selected}
+                $breakpoint={breakpoint}
+              >
+                <Icon aria-hidden />
+                {label}
+                {route === routes.dashboard(language) && <NotificationBadge breakpoint={breakpoint} />}
+              </Link>
+            </ListItem>
+          );
+        })}
         {moreLinks.length ? <MoreButton breakpoint={breakpoint} links={moreLinks} /> : null}
       </List>
     </Background>
@@ -152,7 +160,7 @@ const Link = styled(NextLink)<{ $selected: boolean; $breakpoint: number }>`
 
   &:hover,
   &:active,
-  &:focus {
+  &:focus-visible {
     background-color: var(--blue-80);
   }
 

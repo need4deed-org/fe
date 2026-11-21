@@ -1,6 +1,6 @@
 "use client";
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useId, useRef, useState, type FocusEvent, type KeyboardEvent } from "react";
 import { ListIcon } from "@phosphor-icons/react";
 import { MenuLink } from "./Navigation";
 import NextLink from "next/link";
@@ -16,30 +16,82 @@ export const MoreButton = ({ breakpoint, links }: MoreButtonProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
   const { t } = useTranslation();
+  const listId = useId();
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const listRef = useRef<HTMLUListElement>(null);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    listRef.current?.querySelector<HTMLAnchorElement>("a[href]")?.focus();
+
+    const mobileQuery = window.matchMedia(`(max-width: ${breakpoint}px)`);
+    const closeOnDesktop = () => {
+      if (!mobileQuery.matches) setMenuOpen(false);
+    };
+    mobileQuery.addEventListener("change", closeOnDesktop);
+    return () => mobileQuery.removeEventListener("change", closeOnDesktop);
+  }, [menuOpen, breakpoint]);
+
+  const closeAndFocusToggle = () => {
+    setMenuOpen(false);
+    toggleRef.current?.focus();
+  };
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLLIElement>) => {
+    if (menuOpen && e.key === "Escape") {
+      e.stopPropagation();
+      closeAndFocusToggle();
+    }
+  };
+
+  const handleBlur = (e: FocusEvent<HTMLLIElement>) => {
+    if (!e.currentTarget.contains(e.relatedTarget)) {
+      setMenuOpen(false);
+    }
+  };
 
   return (
-    <Container>
-      <Button $breakpoint={breakpoint} $selected={menuOpen} onClick={() => setMenuOpen(true)}>
-        <ListIcon />
+    <Container onKeyDown={handleKeyDown} onBlur={handleBlur}>
+      <Button
+        ref={toggleRef}
+        type="button"
+        aria-expanded={menuOpen}
+        aria-controls={listId}
+        $breakpoint={breakpoint}
+        $selected={menuOpen}
+        onClick={() => setMenuOpen(!menuOpen)}
+      >
+        <ListIcon aria-hidden />
         {t("dashboard.home.sidebar.more")}
       </Button>
       <MenuWrapper $breakpoint={breakpoint} $open={menuOpen}>
-        <OverlayCloseButton $breakpoint={breakpoint} onClick={() => setMenuOpen(false)} />
+        <OverlayCloseButton
+          type="button"
+          tabIndex={-1}
+          aria-hidden
+          $breakpoint={breakpoint}
+          onClick={closeAndFocusToggle}
+        />
         <Menu $breakpoint={breakpoint}>
-          <List>
-            {links.map(({ route, Icon, label }) => (
-              <ListItem key={route}>
-                <Link
-                  href={route}
-                  $breakpoint={breakpoint}
-                  $selected={pathname.startsWith(route)}
-                  onClick={() => setMenuOpen(false)}
-                >
-                  <Icon />
-                  {label}
-                </Link>
-              </ListItem>
-            ))}
+          <List ref={listRef} id={listId}>
+            {links.map(({ route, Icon, label }) => {
+              const selected = pathname.startsWith(route);
+              return (
+                <ListItem key={route}>
+                  <Link
+                    href={route}
+                    aria-current={selected ? "page" : undefined}
+                    $breakpoint={breakpoint}
+                    $selected={selected}
+                    onClick={closeAndFocusToggle}
+                  >
+                    <Icon aria-hidden />
+                    {label}
+                  </Link>
+                </ListItem>
+              );
+            })}
           </List>
         </Menu>
       </MenuWrapper>
@@ -76,7 +128,7 @@ const Button = styled.button<{ $breakpoint: number; $selected: boolean }>`
 
     &:hover,
     &:active,
-    &:focus {
+    &:focus-visible {
       background-color: var(--blue-80);
     }
 
@@ -151,7 +203,7 @@ const Link = styled(NextLink)<{ $breakpoint: number; $selected: boolean }>`
 
   &:hover,
   &:active,
-  &:focus {
+  &:focus-visible {
     background-color: var(--blue-80);
   }
 

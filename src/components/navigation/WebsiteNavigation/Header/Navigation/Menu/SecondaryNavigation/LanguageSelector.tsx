@@ -1,7 +1,7 @@
 "use client";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
+import { useEffect, useId, useRef, useState, type FocusEvent, type KeyboardEvent } from "react";
 import { TranslateIcon } from "@phosphor-icons/react";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
@@ -15,12 +15,45 @@ type LanguageSelectorProps = {
 
 export const LanguageSelector = ({ breakpoint }: LanguageSelectorProps) => {
   const {
+    t,
     i18n: { language },
   } = useTranslation();
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const listId = useId();
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const listRef = useRef<HTMLUListElement>(null);
+
+  useEffect(() => {
+    if (open) {
+      listRef.current?.querySelector<HTMLButtonElement>("button")?.focus();
+    }
+  }, [open]);
+
+  const closeAndFocusToggle = () => {
+    setOpen(false);
+    toggleRef.current?.focus();
+  };
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
+    if (open && e.key === "Escape") {
+      e.stopPropagation();
+      closeAndFocusToggle();
+    }
+  };
+
+  const handleBlur = (e: FocusEvent<HTMLDivElement>) => {
+    if (!e.currentTarget.contains(e.relatedTarget)) {
+      setOpen(false);
+    }
+  };
+
+  const selectLanguage = (newLang: Lang) => {
+    handleLanguageChange(newLang);
+    closeAndFocusToggle();
+  };
 
   const handleLanguageChange = (newLang: Lang) => {
     const currentLang = language;
@@ -38,18 +71,38 @@ export const LanguageSelector = ({ breakpoint }: LanguageSelectorProps) => {
   };
 
   return (
-    <Wrapper>
-      <IconButton Icon={TranslateIcon} selected={open} onClick={() => setOpen(true)} />
+    <Wrapper onKeyDown={handleKeyDown} onBlur={handleBlur}>
+      <IconButton
+        ref={toggleRef}
+        Icon={TranslateIcon}
+        label={t("website.header.language")}
+        selected={open}
+        expanded={open}
+        controls={listId}
+        onClick={() => setOpen(!open)}
+      />
       <MenuWrapper $open={open} $breakpoint={breakpoint}>
-        <OverlayCloseButton onClick={() => setOpen(false)} />
-        <Menu $breakpoint={breakpoint}>
+        <OverlayCloseButton type="button" tabIndex={-1} aria-hidden onClick={closeAndFocusToggle} />
+        <Menu ref={listRef} id={listId} $breakpoint={breakpoint}>
           <li>
-            <Button $selected={language === Lang.DE} onClick={() => handleLanguageChange(Lang.DE)}>
+            <Button
+              type="button"
+              lang={Lang.DE}
+              aria-current={language === Lang.DE}
+              $selected={language === Lang.DE}
+              onClick={() => selectLanguage(Lang.DE)}
+            >
               Deutsch
             </Button>
           </li>
           <li>
-            <Button $selected={language === Lang.EN} onClick={() => handleLanguageChange(Lang.EN)}>
+            <Button
+              type="button"
+              lang={Lang.EN}
+              aria-current={language === Lang.EN}
+              $selected={language === Lang.EN}
+              onClick={() => selectLanguage(Lang.EN)}
+            >
               English
             </Button>
           </li>
@@ -83,7 +136,6 @@ const OverlayCloseButton = styled.button`
   z-index: 1;
   background-color: transparent;
   border: none;
-  outline: none;
 `;
 
 const Menu = styled.ul<{ $breakpoint: number }>`
@@ -121,11 +173,11 @@ const Button = styled.button<{ $selected: boolean }>`
   border-radius: var(--field-border-radius);
   font-weight: var(--bold);
   color: var(--white);
-  transition: background-color var(--sort-transition);
+  transition: background-color var(--short-transition);
 
   &:hover,
   &:active,
-  &:focus {
+  &:focus-visible {
     background-color: var(--lavender-80);
   }
 `;

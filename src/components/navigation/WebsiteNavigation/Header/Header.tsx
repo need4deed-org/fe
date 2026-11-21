@@ -44,7 +44,9 @@ const HomeLink = styled(NextLink)`
     transition: var(--short-transition);
   }
 
-  svg:hover {
+  &:hover > svg,
+  &:active > svg,
+  &:focus-visible > svg {
     fill: var(--lavender-80);
   }
 `;

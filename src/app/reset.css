@@ -71,8 +71,7 @@ html body :where(fieldset) {
   border: 0;
 }
 
-html body :where(a),
-html body a:hover {
+html body :where(a) {
   outline: none;
   text-decoration: none;
 }

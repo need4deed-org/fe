@@ -35,7 +35,7 @@ const ButtonElement = styled.button<{ $inline: boolean }>`
 
   &:hover,
   &:active,
-  &:focus {
+  &:focus-visible {
     background-color: var(--lavender-80);
   }
 
