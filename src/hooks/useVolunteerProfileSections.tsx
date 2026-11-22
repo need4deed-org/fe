@@ -116,7 +116,7 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
 
   if (!volunteer) return null;
 
-  const volunteerFullName = `${volunteer.person.firstName} ${volunteer.person.lastName}`;
+  const volunteerFullName = [volunteer.person.firstName, volunteer.person.lastName].filter(Boolean).join(" ");
 
   const handleRequestSelect = (opportunity: Pick<ApiOpportunityGetList, "id" | "title">) => {
     if (ownsVolunteer) {
