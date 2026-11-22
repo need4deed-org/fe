@@ -148,7 +148,7 @@ const Menu = styled.ul<{ $breakpoint: number }>`
   margin: 0;
   margin-top: var(--small-spacing);
   z-index: 2;
-  background-color: var(--lavender-60);
+  background-color: var(--lavender-40);
   border-radius: var(--surface-border-radius);
   list-style: none;
   list-style-type: none;
@@ -169,15 +169,15 @@ const Button = styled.button<{ $selected: boolean }>`
   height: var(--field-size);
   padding-left: var(--large-spacing);
   padding-right: var(--large-spacing);
-  background-color: ${({ $selected }) => ($selected ? "var(--lavender-100) !important" : "transparent")};
+  background-color: ${({ $selected }) => ($selected ? "var(--white) !important" : "transparent")};
   border-radius: var(--field-border-radius);
   font-weight: var(--bold);
-  color: var(--white);
+  color: var(--black);
   transition: background-color var(--short-transition);
 
   &:hover,
   &:active,
   &:focus-visible {
-    background-color: var(--lavender-80);
+    background-color: var(--lavender-20);
   }
 `;

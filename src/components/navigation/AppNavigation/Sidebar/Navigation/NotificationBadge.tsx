@@ -3,11 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { useGetTaggedComments } from "@/hooks/useGetTaggedComments";
 
-type NotificationBadgeProps = {
-  breakpoint: number;
-};
-
-export const NotificationBadge = ({ breakpoint }: NotificationBadgeProps) => {
+export const NotificationBadge = () => {
   const { t } = useTranslation();
   const user = useCurrentUser();
   const personId = (user as typeof user & { personId?: number })?.personId ?? -1;

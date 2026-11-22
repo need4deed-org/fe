@@ -17,7 +17,7 @@
       "mainNavigation": "Main navigation"
     },
     "footer": {
-      "about": "ABOUT",
+      "about": "About",
       "faq": "FAQ",
       "legalNotice": "Legal notice",
       "vpa": "Volunteer Participation Agreement",
@@ -32,7 +32,7 @@
         "legalNotice": "Legal notice",
         "cookies": "Cookies"
       },
-      "forOrganizations": "FOR ORGANIZATIONS"
+      "forOrganizations": "For Organizations"
     },
     "iframeTitles": {
       "howToVolunteer": "How you can support refugees in your community"

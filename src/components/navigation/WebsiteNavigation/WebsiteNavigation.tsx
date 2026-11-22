@@ -1,8 +1,9 @@
 "use client";
 import { ReactNode } from "react";
 import styled from "styled-components";
-import { Footer } from "./Footer";
+import { Footer as Footer1 } from "./Footer1";
 import { Header } from "./Header";
+import { Footer } from "./Footer";
 
 type WebsiteNavigationProps = {
   children: ReactNode;
@@ -13,6 +14,7 @@ export const WebsiteNavigation = ({ children }: WebsiteNavigationProps) => {
     <Frame>
       <Header />
       <PageContainer>{children}</PageContainer>
+      <Footer1 />
       <Footer />
     </Frame>
   );

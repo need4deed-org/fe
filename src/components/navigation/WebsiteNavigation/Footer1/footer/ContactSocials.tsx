@@ -62,13 +62,13 @@ function Contact() {
 function Socials() {
   return (
     <SocialsContainer>
-      <ATag href="https://www.linkedin.com/company/need4deed/">
+      <ATag href="https://www.linkedin.com/company/need4deed/" target="_blank">
         <LinkedinLogoIcon size={40} weight="fill" color="var(--color-orchid-light)" />
       </ATag>
-      <ATag href="https://www.facebook.com/need4deedberlin/">
+      <ATag href="https://www.facebook.com/need4deedberlin/" target="_blank">
         <FacebookLogoIcon size={40} weight="fill" color="var(--color-orchid-light)" />
       </ATag>
-      <ATag href="https://www.instagram.com/need4deed/">
+      <ATag href="https://www.instagram.com/need4deed/" target="_blank">
         <InstagramLogoIcon weight="bold" size={40} color="var(--color-orchid-light)" />
       </ATag>
     </SocialsContainer>

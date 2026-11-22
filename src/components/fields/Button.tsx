@@ -26,7 +26,7 @@ const ButtonElement = styled.button<{ $inline: boolean }>`
   padding-left: var(--large-spacing);
   padding-right: var(--large-spacing);
   background-color: var(--lavender-100);
-  border-radius: var(--field-border-radius);
+  border-radius: var(--pill-field-border-radius);
   font-weight: var(--bold);
   color: var(--white);
   text-transform: capitalize;

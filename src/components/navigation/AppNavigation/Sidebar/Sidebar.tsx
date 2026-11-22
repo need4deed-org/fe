@@ -39,7 +39,8 @@ const Background = styled.aside<{ $breakpoint: number }>`
   top: 0;
   bottom: 0;
   left: 0;
-  background-color: var(--mint-100);
+  background-color: var(--lavender-20);
+  overflow: scroll;
 
   @media screen and (max-width: ${({ $breakpoint }) => $breakpoint}px) {
     left: 0;
@@ -48,12 +49,14 @@ const Background = styled.aside<{ $breakpoint: number }>`
     bottom: 0;
     width: 100%;
     height: var(--mobile-footer-menu-height);
+    overflow: visible;
   }
 `;
 
 const ContainerLogo = styled.div<{ $breakpoint: number }>`
   display: -webkit-flex;
   display: flex;
+  flex-shrink: 0;
   justify-content: center;
   align-items: center;
   height: var(--header-height);
@@ -68,14 +71,14 @@ const ContainerLogo = styled.div<{ $breakpoint: number }>`
 const HomeLink = styled(NextLink)`
   > svg {
     height: var(--header-logo-height);
-    fill: var(--blue-100);
+    fill: var(--lavender-100);
     transition: var(--short-transition);
   }
 
   &:hover > svg,
   &:active > svg,
   &:focus-visible > svg {
-    fill: var(--blue-80);
+    fill: var(--lavender-80);
   }
 `;
 

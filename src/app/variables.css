@@ -1,6 +1,7 @@
 :root {
   /* Colors */
   --white: #ffffff;
+  --black: #000000;
 
   /* Number in color variable names is the percentage of that color mixed with pure white */
   --grey-100: rgb(102, 112, 133);
@@ -68,6 +69,7 @@
   --modal-height: 500px; /* Height of modal window */
   --dialog-width: 300px;
   --field-border-radius: 8px; /* Border radius of fields */
+  --pill-field-border-radius: calc(var(--field-size) / 2);
   --surface-border-radius: calc(
     var(--field-border-radius) + var(--medium-spacing)
   ); /* Outer border radius of the containing surface behind the fields */

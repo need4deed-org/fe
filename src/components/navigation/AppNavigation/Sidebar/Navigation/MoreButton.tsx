@@ -117,7 +117,7 @@ const Button = styled.button<{ $breakpoint: number; $selected: boolean }>`
     padding: var(--small-spacing);
     width: 100%;
     height: 100%;
-    background-color: ${({ $selected }) => ($selected ? "var(--blue-100) !important" : "transparent")};
+    background-color: ${({ $selected }) => ($selected ? "var(--lavender-100) !important" : "transparent")};
     border-radius: var(--field-border-radius);
     font-family: var(--condensed-sans-serif);
     font-size: var(--mobile-menu-font-size);
@@ -129,7 +129,7 @@ const Button = styled.button<{ $breakpoint: number; $selected: boolean }>`
     &:hover,
     &:active,
     &:focus-visible {
-      background-color: var(--blue-80);
+      background-color: var(--lavender-80);
     }
 
     > svg {
@@ -170,7 +170,7 @@ const Menu = styled.div<{ $breakpoint: number }>`
     bottom: var(--small-spacing);
     padding: var(--medium-spacing);
     z-index: 2;
-    background-color: var(--blue-40);
+    background-color: var(--lavender-40);
     border-radius: var(--surface-border-radius);
   }
 `;
@@ -194,8 +194,8 @@ const Link = styled(NextLink)<{ $breakpoint: number; $selected: boolean }>`
   height: var(--field-size);
   padding-left: var(--large-spacing);
   padding-right: var(--large-spacing);
-  background-color: ${({ $selected }) => ($selected ? "var(--blue-100) !important" : "transparent")};
-  border-radius: var(--field-border-radius);
+  background-color: ${({ $selected }) => ($selected ? "var(--lavender-100) !important" : "transparent")};
+  border-radius: var(--pill-field-border-radius);
   font-weight: var(--bold);
   color: var(--white);
   white-space: nowrap;
@@ -204,7 +204,7 @@ const Link = styled(NextLink)<{ $breakpoint: number; $selected: boolean }>`
   &:hover,
   &:active,
   &:focus-visible {
-    background-color: var(--blue-80);
+    background-color: var(--lavender-80);
   }
 
   > svg {
@@ -217,5 +217,6 @@ const Link = styled(NextLink)<{ $breakpoint: number; $selected: boolean }>`
   @media screen and (max-width: ${({ $breakpoint }) => $breakpoint}px) {
     display: -webkit-flex;
     display: flex;
+    border-radius: var(--field-border-radius);
   }
 `;

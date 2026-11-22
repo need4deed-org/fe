@@ -5,7 +5,7 @@
   },
   "website": {
     "header": {
-      "about": "Über",
+      "about": "Über Uns",
       "volunteer": "Ehrenamtsbedarfe",
       "events": "Veranstaltungen",
       "login": "Anmelden",
@@ -17,7 +17,7 @@
       "mainNavigation": "Hauptnavigation"
     },
     "footer": {
-      "about": "ÜBER",
+      "about": "Über",
       "faq": "FAQ",
       "legalNotice": "Rechtlicher Hinweis",
       "privacy": "Datenschutz",
@@ -30,7 +30,7 @@
         "agreement": "Ehrenamtliche Vereinbarung",
         "cookies": "Cookies"
       },
-      "forOrganizations": "FÜR ORGANISATIONEN"
+      "forOrganizations": "Für Organisationen"
     },
     "iframeTitles": {
       "howToVolunteer": "Wie Du Geflüchtete in Deiner Nachbarschaft unterstützen können"

@@ -99,7 +99,7 @@ export const Navigation = ({ breakpoint }: NavigationProps) => {
               >
                 <Icon aria-hidden />
                 {label}
-                {route === routes.dashboard(language) && <NotificationBadge breakpoint={breakpoint} />}
+                {route === routes.dashboard(language) && <NotificationBadge />}
               </Link>
             </ListItem>
           );
@@ -151,17 +151,17 @@ const Link = styled(NextLink)<{ $selected: boolean; $breakpoint: number }>`
   height: var(--field-size);
   padding-left: var(--large-spacing);
   padding-right: var(--large-spacing);
-  background-color: ${({ $selected }) => ($selected ? "var(--blue-100) !important" : "transparent")};
-  border-radius: var(--field-border-radius);
+  background-color: ${({ $selected }) => ($selected ? "var(--lavender-100) !important" : "transparent")};
+  border-radius: var(--pill-field-border-radius);
   font-weight: var(--bold);
   color: var(--white);
   white-space: nowrap;
-  transition: color var(--short-transition);
+  transition: background-color var(--short-transition);
 
   &:hover,
   &:active,
   &:focus-visible {
-    background-color: var(--blue-80);
+    background-color: var(--lavender-80);
   }
 
   svg {
@@ -178,6 +178,7 @@ const Link = styled(NextLink)<{ $selected: boolean; $breakpoint: number }>`
     padding: var(--small-spacing);
     width: 100%;
     height: 100%;
+    border-radius: var(--field-border-radius);
     font-family: var(--condensed-sans-serif);
     font-size: var(--mobile-menu-font-size);
     text-transform: uppercase;
