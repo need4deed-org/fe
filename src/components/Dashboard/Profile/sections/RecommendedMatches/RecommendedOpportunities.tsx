@@ -1,21 +1,13 @@
 import { Button } from "@/components/core/button";
-import { Heading4 } from "@/components/styled/text";
-import { apiPathOption } from "@/config/constants";
-import { useGetQuery } from "@/hooks";
+import { Heading4, Paragraph } from "@/components/styled/text";
 import { recommendedOpportunitiesKey, useRecommendedOpportunities } from "@/hooks/useRecommendedMatches";
 import { useSuggestVolunteerOpportunity } from "@/hooks/useSuggestVolunteerOpportunity";
 import { useQueryClient } from "@tanstack/react-query";
-import {
-  ApiOpportunityGetList,
-  ApiOptionLists,
-  ApiVolunteerOpportunityGetList,
-  Id,
-  OpportunityVolunteerStatusType,
-} from "need4deed-sdk";
+import { ApiRecommendedOpportunity, Id, OpportunityVolunteerStatusType } from "need4deed-sdk";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { OpportunityCard } from "../../../Opportunities/OpportunityCard";
+import { CommuteBadge } from "../../common/CommuteBadge";
 import { Accordion } from "../shared/Accordion";
 import { SuggestDialog } from "../VolunteerOpportunities/SuggestDialog";
 import { RecommendedContainer } from "./styles";
@@ -29,9 +21,8 @@ export function RecommendedOpportunities({ volunteerId, volunteerName }: Props) 
   const { t, i18n } = useTranslation();
   const router = useRouter();
   const queryClient = useQueryClient();
-  const [selected, setSelected] = useState<ApiOpportunityGetList>();
+  const [selected, setSelected] = useState<ApiRecommendedOpportunity>();
   const { data: opportunities = [] } = useRecommendedOpportunities(volunteerId, true);
-  const { data: options } = useGetQuery<ApiOptionLists>({ queryKey: ["options"], apiPath: apiPathOption });
 
   const { mutate: suggest, isPending } = useSuggestVolunteerOpportunity(() => {
     setSelected(undefined);
@@ -50,11 +41,14 @@ export function RecommendedOpportunities({ volunteerId, volunteerName }: Props) 
           key={opportunity.id}
           data-testid="recommended-opportunity"
           headerLeft={
-            <Heading4 margin={0} color="var(--color-midnight)">
-              {opportunity.title}
-            </Heading4>
+            <>
+              <Heading4 margin={0} color="var(--color-midnight)">
+                {opportunity.title}
+              </Heading4>
+              {opportunity.agentTitle && <Paragraph margin={0}>{opportunity.agentTitle}</Paragraph>}
+              <CommuteBadge min={opportunity.commute?.min ?? null} max={opportunity.commute?.max ?? null} />
+            </>
           }
-          subtitle={opportunity.agentTitle}
           onGoToProfile={() =>
             router.push(`/${i18n.language}/dashboard/opportunities/${opportunity.id}?volunteer=${volunteerId}`)
           }
@@ -66,14 +60,7 @@ export function RecommendedOpportunities({ volunteerId, volunteerName }: Props) 
               padding="0 var(--spacing-16)"
             />
           }
-        >
-          <OpportunityCard
-            opportunity={opportunity as ApiVolunteerOpportunityGetList}
-            volunteerId={String(volunteerId)}
-            activitiesList={options?.activity ?? undefined}
-            districtsList={options?.district ?? undefined}
-          />
-        </Accordion>
+        />
       ))}
       {selected && (
         <SuggestDialog

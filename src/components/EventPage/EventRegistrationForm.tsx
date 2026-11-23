@@ -7,7 +7,7 @@ import { eventRegisterAnchor } from "@/config/constants";
 import { Heading2, Paragraph } from "@/components/styled/text";
 import { useRegisterForEvent } from "@/hooks/useEventRegistrations";
 import { zodResolver } from "@hookform/resolvers/zod";
-import type { ApiEventN4DGetList } from "need4deed-sdk";
+import { EVENT_SIGN_UP_ANSWER_MAX_LENGTH, type ApiEventN4DGetList } from "need4deed-sdk";
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -30,15 +30,15 @@ export function EventRegistrationForm({ event }: { event: ApiEventN4DGetList }) 
     defaultValues: {
       fullName: "",
       email: "",
-      phone: "",
       numberOfPeople: 1,
-      languagePreference: "",
+      signUpAnswer: "",
       message: "",
       isVolunteer: false,
       volunteerTypes: [],
     },
   });
   const isVolunteer = watch("isVolunteer");
+  const signUpQuestion = event.signUpQuestion?.trim();
 
   useEffect(() => {
     if (isSent) document.getElementById(eventRegisterAnchor)?.scrollIntoView({ block: "center" });
@@ -58,15 +58,14 @@ export function EventRegistrationForm({ event }: { event: ApiEventN4DGetList }) 
       eventId: event.id,
       fullName: values.fullName,
       email: values.email,
-      phone: values.phone || null,
       numberOfPeople: values.numberOfPeople,
-      languagePreference: values.languagePreference || null,
+      ...(signUpQuestion ? { signUpAnswer: values.signUpAnswer || null } : {}),
       message: values.message || null,
       isVolunteer: values.isVolunteer,
       volunteerTypes: values.isVolunteer ? values.volunteerTypes : [],
     });
 
-  const text = (name: "fullName" | "email" | "phone" | "languagePreference", required = false) => (
+  const requiredText = (name: "fullName" | "email") => (
     <Controller
       name={name}
       control={control}
@@ -75,7 +74,7 @@ export function EventRegistrationForm({ event }: { event: ApiEventN4DGetList }) 
           mode="edit"
           stacked
           type="text"
-          label={`${t(`eventRegistration.fields.${name}`)}${required ? " *" : ""}`}
+          label={`${t(`eventRegistration.fields.${name}`)} *`}
           value={field.value}
           setValue={field.onChange}
           errorMessage={errors[name]?.message}
@@ -87,9 +86,8 @@ export function EventRegistrationForm({ event }: { event: ApiEventN4DGetList }) 
   return (
     <Form id={eventRegisterAnchor} onSubmit={handleSubmit(onSubmit)} noValidate>
       <Heading2>{t("eventRegistration.title")}</Heading2>
-      {text("fullName", true)}
-      {text("email", true)}
-      {text("phone")}
+      {requiredText("fullName")}
+      {requiredText("email")}
       <Controller
         name="numberOfPeople"
         control={control}
@@ -105,7 +103,24 @@ export function EventRegistrationForm({ event }: { event: ApiEventN4DGetList }) 
           />
         )}
       />
-      {text("languagePreference")}
+      {signUpQuestion && (
+        <Controller
+          name="signUpAnswer"
+          control={control}
+          render={({ field }) => (
+            <EditableField
+              mode="edit"
+              stacked
+              type="textarea"
+              label={signUpQuestion}
+              value={field.value}
+              setValue={field.onChange}
+              maxLength={EVENT_SIGN_UP_ANSWER_MAX_LENGTH}
+              errorMessage={errors.signUpAnswer?.message}
+            />
+          )}
+        />
+      )}
       <Controller
         name="message"
         control={control}

@@ -247,7 +247,7 @@ export function VolunteerProfileDocument({ volunteer, isAuthorized }: Props) {
             <>
               {t("dashboard.documentSection.applicationEmail.dialog.message", {
                 name: [volunteer.person.firstName, volunteer.person.lastName].filter(Boolean).join(" "),
-                email: volunteer.person.email,
+                email: volunteer.person.email ?? "",
               })}
               {applicationEmailSentAt &&
                 ` ${t("dashboard.documentSection.applicationEmail.dialog.alreadySent", {

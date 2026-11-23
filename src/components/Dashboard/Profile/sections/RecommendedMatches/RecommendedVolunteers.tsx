@@ -6,22 +6,22 @@ import { useRequestVolunteerSuggestion } from "@/hooks/useRequestVolunteerSugges
 import { useSuggestVolunteerOpportunity } from "@/hooks/useSuggestVolunteerOpportunity";
 import { getImageUrl } from "@/utils";
 import { useQueryClient } from "@tanstack/react-query";
-import { ApiVolunteerGetList, Id, OpportunityVolunteerStatusType } from "need4deed-sdk";
+import { ApiRecommendedVolunteer, Id, OpportunityVolunteerStatusType } from "need4deed-sdk";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { VolunteerCard } from "../../../Volunteers/VolunteerCard";
+import { CommuteBadge } from "../../common/CommuteBadge";
 import { AvatarImg } from "../OpportunityVolunteers/styles";
 import { SuggestDialog } from "../OpportunityVolunteers/SuggestDialog";
 import { Accordion } from "../shared/Accordion";
 import { RecommendedContainer } from "./styles";
 
 type RowProps = {
-  volunteer: ApiVolunteerGetList;
+  volunteer: ApiRecommendedVolunteer;
   opportunityId: Id;
   opportunityTitle: string;
   canSuggest: boolean;
-  onSuggest: (volunteer: ApiVolunteerGetList) => void;
+  onSuggest: (volunteer: ApiRecommendedVolunteer) => void;
 };
 
 function RecommendedVolunteerRow({ volunteer, opportunityId, opportunityTitle, canSuggest, onSuggest }: RowProps) {
@@ -38,9 +38,9 @@ function RecommendedVolunteerRow({ volunteer, opportunityId, opportunityTitle, c
           <Heading4 margin={0} color="var(--color-midnight)">
             {volunteer.name}
           </Heading4>
+          <CommuteBadge min={volunteer.commute?.min ?? null} max={volunteer.commute?.max ?? null} />
         </>
       }
-      subtitle=""
       onGoToProfile={() =>
         router.push(`/${i18n.language}/dashboard/volunteers/${volunteer.id}?opportunity=${opportunityId}`)
       }
@@ -62,9 +62,7 @@ function RecommendedVolunteerRow({ volunteer, opportunityId, opportunityTitle, c
           />
         )
       }
-    >
-      <VolunteerCard volunteer={volunteer} opportunityId={String(opportunityId)} />
-    </Accordion>
+    />
   );
 }
 
@@ -77,7 +75,7 @@ type Props = {
 export function RecommendedVolunteers({ opportunityId, opportunityTitle, canSuggest }: Props) {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
-  const [selected, setSelected] = useState<ApiVolunteerGetList>();
+  const [selected, setSelected] = useState<ApiRecommendedVolunteer>();
   const { data: volunteers = [] } = useRecommendedVolunteers(opportunityId, true);
 
   const { mutate: suggest, isPending } = useSuggestVolunteerOpportunity(() => {

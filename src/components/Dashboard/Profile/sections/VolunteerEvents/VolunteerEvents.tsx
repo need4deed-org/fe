@@ -1,11 +1,10 @@
 import { Checkbox } from "@/components/core/button/Checkbox/Checkbox";
-import { Table, TableBody, TableCell, TableHeaderCell } from "@/components/core/common/Table";
+import { Table, TableBody, TableCell, TableHeader, TableHeaderCell, TableRow } from "@/components/core/common/Table";
 import { useSetAttended, useVolunteerEvents } from "@/hooks/useEventRegistrations";
 import { useTranslation } from "react-i18next";
 import { SectionEmptyState, SectionWrapper } from "../shared/styles";
 import { formatDate } from "../shared/utils/formatDate";
 import { VolunteerActivityLogTableContainer } from "../VolunteerActivityLog/styles";
-import { TableHeader, TableRow } from "../VolunteerProfileDocument/styles";
 
 export const VolunteerEvents = ({ volunteerId }: { volunteerId: number }) => {
   const { t } = useTranslation();
