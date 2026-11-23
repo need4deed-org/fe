@@ -9,7 +9,6 @@ import {
   ApiAgentAddressConflict,
   ApiAgentRegisterConflict,
   ApiAgentRegisterStatus,
-  ApiAgentTitleConflict,
   ApiOptionLists,
 } from "need4deed-sdk";
 import { useCheckPLZ } from "@/hooks/use-check-plz";
@@ -81,7 +80,7 @@ export function ProfileCompletion() {
     toastOnError: false,
   });
   const registration = submittedRegistration ?? registrationQuery.data;
-  const [conflict, setConflict] = useState<ApiAgentTitleConflict | ApiAgentAddressConflict | null>(null);
+  const [conflict, setConflict] = useState<ApiAgentAddressConflict | null>(null);
   const errorBannerRef = useRef<HTMLDivElement>(null);
 
   const { data: optionLists } = useGetQuery<ApiOptionLists>({
@@ -159,11 +158,11 @@ export function ProfileCompletion() {
           });
           return;
         }
-        if (data?.agentId) {
+        if (data?.conflict === "address" && data.agentId) {
           setConflict({
-            conflict: data.conflict === "address" ? "address" : "title",
+            conflict: "address",
             agentId: data.agentId,
-            agentTitle: "agentTitle" in data ? data.agentTitle : undefined,
+            agentTitle: data.agentTitle,
           });
           return;
         }
@@ -291,12 +290,9 @@ export function ProfileCompletion() {
           <>
             <MatchBanner $matched={false} role="alert">
               <span>
-                {t(
-                  `agentRegistration.completion.${conflict.conflict === "address" ? "addressTaken" : "titleTaken"}${
-                    conflict.agentTitle ? "Named" : ""
-                  }`,
-                  { name: conflict.agentTitle },
-                )}{" "}
+                {t(`agentRegistration.completion.addressTaken${conflict.agentTitle ? "Named" : ""}`, {
+                  name: conflict.agentTitle,
+                })}{" "}
                 {t("agentRegistration.completion.joinDescription")}
               </span>
             </MatchBanner>
@@ -305,16 +301,14 @@ export function ProfileCompletion() {
                 text={t("agentRegistration.completion.joinInstead")}
                 onClick={() => submitJoin(conflict.agentId)}
               />
-              {conflict.conflict === "address" && (
-                <Button
-                  text={t("agentRegistration.completion.createAtSharedAddress")}
-                  onClick={submitAtSharedAddress}
-                  disabled={isSubmitting || plz.blocksSubmit}
-                  backgroundcolor="var(--color-white)"
-                  textColor="var(--color-aubergine)"
-                  border="var(--border-width-medium) solid var(--color-aubergine)"
-                />
-              )}
+              <Button
+                text={t("agentRegistration.completion.createAtSharedAddress")}
+                onClick={submitAtSharedAddress}
+                disabled={isSubmitting || plz.blocksSubmit}
+                backgroundcolor="var(--color-white)"
+                textColor="var(--color-aubergine)"
+                border="var(--border-width-medium) solid var(--color-aubergine)"
+              />
               <Button
                 text={t("agentRegistration.completion.editDetails")}
                 onClick={() => setConflict(null)}

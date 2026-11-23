@@ -1191,7 +1191,6 @@
         "submit": "Erstellen",
         "success": "NGO erfolgreich erstellt",
         "conflict": {
-          "title": "Eine NGO mit diesem Namen existiert bereits.",
           "address": "An dieser Adresse gibt es bereits eine NGO.",
           "open": "Bestehende NGO öffnen",
           "createAnyway": "Andere NGO? Trotzdem erstellen"
@@ -2892,9 +2891,7 @@
       "matchesFound_one": "Wir haben {{count}} Organisation gefunden, die zu dieser Adresse passt. Wählen Sie Ihre aus oder erstellen Sie eine neue.",
       "matchesFound_other": "Wir haben {{count}} Organisationen gefunden, die zu dieser Adresse passen. Wählen Sie Ihre aus oder erstellen Sie eine neue.",
       "skip": "Manuell eingeben",
-      "titleTaken": "Eine Organisation mit diesem Namen existiert bereits.",
       "addressTaken": "An dieser Adresse ist bereits eine Organisation registriert.",
-      "titleTakenNamed": "„{{name}}“ existiert bereits.",
       "addressTakenNamed": "An dieser Adresse ist bereits „{{name}}“ registriert.",
       "createAtSharedAddress": "Andere Organisation erstellen",
       "editDetails": "Angaben ändern",
