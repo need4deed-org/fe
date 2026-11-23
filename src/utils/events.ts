@@ -1,3 +1,4 @@
+import { eventRegisterAnchor } from "@/config/constants";
 import type { ApiEventN4DGetList } from "need4deed-sdk";
 
 export function getUpcomingEvents(events?: ApiEventN4DGetList[]) {
@@ -31,4 +32,8 @@ export function getHttpUrl(value?: string | null) {
   } catch {
     return undefined;
   }
+}
+
+export function getEventRegistrationHref(event: Pick<ApiEventN4DGetList, "id" | "linkRSVP">, language: string) {
+  return getHttpUrl(event.linkRSVP) ?? `/${language}/event-page/${event.id}#${eventRegisterAnchor}`;
 }

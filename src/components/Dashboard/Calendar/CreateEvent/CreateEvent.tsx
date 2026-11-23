@@ -168,7 +168,7 @@ export function CreateEvent({ eventId }: Props) {
     date: new Date(`${formData.startDate}T${formData.startTime}`),
     dateEnd: new Date(`${formData.endDate}T${formData.endTime}`),
     type: formData.type,
-    linkRSVP: formData.registrationLink,
+    linkRSVP: formData.registrationLink.trim() || null,
     address,
   });
   const hostName = formData.hostName.trim();
@@ -203,7 +203,9 @@ export function CreateEvent({ eventId }: Props) {
         formData.street.trim().length > 0 &&
         (formData.unstructuredAddress ||
           (formData.houseNumber.trim().length > 0 && postcode.length > 0 && isPostcodeValid && !plz.blocksSubmit)) &&
-        (formData.registrationLink === editingEvent?.linkRSVP || isHttpUrl(formData.registrationLink))
+        (!formData.registrationLink.trim() ||
+          formData.registrationLink === editingEvent?.linkRSVP ||
+          isHttpUrl(formData.registrationLink))
       );
     if (step === 3) {
       const start = new Date(`${formData.startDate}T${formData.startTime}`);

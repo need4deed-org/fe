@@ -91,9 +91,9 @@ export function StepLocation({
           type="url"
           value={registrationLink}
           placeholder="https://…"
-          aria-required="true"
           onChange={(e) => onChange({ registrationLink: e.target.value })}
         />
+        <HelperText>{t("dashboard.calendar.createForm.registrationLinkHelper")}</HelperText>
       </FieldGroup>
 
       <HelperText>{t("dashboard.calendar.createForm.locationHelper")}</HelperText>

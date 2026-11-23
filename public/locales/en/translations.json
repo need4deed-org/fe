@@ -210,7 +210,7 @@
     "viewDetails": "View event details",
     "backToEvents": "Back to all upcoming events",
     "register": "Register now",
-    "registrationUnavailable": "Registration is not available yet.",
+    "registrationUnavailable": "Registration is not available.",
     "loading": "Loading event…",
     "loadError": "The event could not be loaded. Please try again.",
     "empty": "No upcoming event",
@@ -646,7 +646,11 @@
         "error": "There was an error when loading the page. Please refresh",
         "mostRelevantOpp": "Most relevant opportunities",
         "mostRelevantOppDesc": "(based on district and availability)",
-        "mostRelevantNoResults": "No results are showing. Try adjusting your availability or district on your profile to see more results"
+        "mostRelevantNoResults": "No results are showing. Try adjusting your availability or district on your profile to see more results",
+        "myActivity": "My recent activity",
+        "noActivity": "No comments or changes from you yet",
+        "noActivityThisWeek": "Nothing from you this week yet",
+        "earlierActivity": "Earlier ({{count}})"
       },
       "sidebar": {
         "home": "Home",
@@ -1913,7 +1917,6 @@
       "deleteEvent": "Delete event",
       "openRegistration": "Open registration link",
       "hostedBy": "Hosted by {{name}}",
-      "registrationUnavailable": "Registration link unavailable",
       "editLoading": "Loading event…",
       "editLoadError": "This event could not be loaded. It may have been deleted.",
       "backToCalendar": "Back to calendar",
@@ -1965,7 +1968,20 @@
         "next": "Next",
         "saveDraft": "Save as draft",
         "saveChanges": "Save changes",
-        "locationHelper": "e.g. Elsenstr., No. 87, 12435"
+        "locationHelper": "e.g. Elsenstr., No. 87, 12435",
+        "registrationLinkHelper": "Optional. Leave empty to use need4deed's own sign-up form."
+      },
+      "openInternalRegistration": "Open sign-up form",
+      "registrations": {
+        "open": "Sign-ups",
+        "title": "Sign-ups: {{title}}",
+        "summary_one": "{{count}} sign-up, {{people}} people",
+        "summary_other": "{{count}} sign-ups, {{people}} people",
+        "export": "Export CSV",
+        "empty": "No sign-ups yet",
+        "people": "People",
+        "volunteer": "Volunteers with refugees",
+        "attended": "Attended"
       }
     },
     "newOpportunity": {
@@ -2126,6 +2142,14 @@
     "recommended": {
       "volunteersTitle": "Recommended volunteers",
       "opportunitiesTitle": "Recommended opportunities"
+    },
+    "volunteerEvents": {
+      "title": "Events",
+      "emptyState": "No event sign-ups yet",
+      "loadError": "Event sign-ups could not be loaded.",
+      "event": "Event",
+      "date": "Date",
+      "attended": "Attended"
     }
   },
   "aboutus": {
@@ -2804,5 +2828,33 @@
     "openCalendar": "Open calendar",
     "invalidDate": "Enter a valid date (dd.mm.yyyy).",
     "beforeMinYear": "Dates before {{year}} are not supported."
+  },
+  "eventRegistration": {
+    "thanks": "Thank you! You're signed up, see you there.",
+    "submit": "Sign up",
+    "yes": "Yes",
+    "no": "No",
+    "fields": {
+      "fullName": "Full name",
+      "email": "Email",
+      "phone": "Phone",
+      "numberOfPeople": "Number of people",
+      "languagePreference": "Preferred language",
+      "message": "Message",
+      "isVolunteer": "I volunteer with refugees",
+      "volunteerTypes": "Which kinds?"
+    },
+    "volunteerTypes": {
+      "events": "Events",
+      "regular": "Regular",
+      "accompanying": "Accompanying"
+    },
+    "errors": {
+      "required": "Required",
+      "email": "Enter a valid email",
+      "people": "Enter a number from 1 to 1000",
+      "message": "At most 500 characters"
+    },
+    "title": "Sign up"
   }
 }
