@@ -1969,7 +1969,9 @@
         "saveDraft": "Save as draft",
         "saveChanges": "Save changes",
         "locationHelper": "e.g. Elsenstr., No. 87, 12435",
-        "registrationLinkHelper": "Optional. Leave empty to use need4deed's own sign-up form."
+        "registrationLinkHelper": "Optional. Leave empty to use need4deed's own sign-up form.",
+        "signUpQuestion": "Question for sign-ups",
+        "signUpQuestionHelper": "Optional. Shown on need4deed's own sign-up form as an extra field."
       },
       "openInternalRegistration": "Open sign-up form",
       "registrations": {
@@ -2835,11 +2837,9 @@
     "yes": "Yes",
     "no": "No",
     "fields": {
-      "fullName": "Full name",
+      "fullName": "Name",
       "email": "Email",
-      "phone": "Phone",
       "numberOfPeople": "Number of people",
-      "languagePreference": "Preferred language",
       "message": "Message",
       "isVolunteer": "I volunteer with refugees",
       "volunteerTypes": "Which kinds?"

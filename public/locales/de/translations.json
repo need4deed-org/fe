@@ -1981,7 +1981,9 @@
         "saveDraft": "Als Entwurf speichern",
         "saveChanges": "Änderungen speichern",
         "locationHelper": "z.B. Elsenstr., Nr. 87, 12435",
-        "registrationLinkHelper": "Optional. Leer lassen, um das eigene Anmeldeformular von need4deed zu nutzen."
+        "registrationLinkHelper": "Optional. Leer lassen, um das eigene Anmeldeformular von need4deed zu nutzen.",
+        "signUpQuestion": "Frage für Anmeldungen",
+        "signUpQuestionHelper": "Optional. Erscheint als zusätzliches Feld im eigenen Anmeldeformular von need4deed."
       },
       "openInternalRegistration": "Anmeldeformular öffnen",
       "registrations": {
@@ -3190,11 +3192,9 @@
     "yes": "Ja",
     "no": "Nein",
     "fields": {
-      "fullName": "Vollständiger Name",
+      "fullName": "Name",
       "email": "E-Mail",
-      "phone": "Telefon",
       "numberOfPeople": "Anzahl Personen",
-      "languagePreference": "Bevorzugte Sprache",
       "message": "Nachricht",
       "isVolunteer": "Ich engagiere mich ehrenamtlich mit Geflüchteten",
       "volunteerTypes": "In welcher Form?"
