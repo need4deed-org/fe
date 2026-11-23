@@ -45,6 +45,7 @@ export function EventRegistrationsDialog({ event, onClose }: Props) {
   const { mutate: setAttended, isPending: isSavingAttended } = useSetAttended();
   const { mutate: exportCsv, isPending: isExporting } = useExportEventRegistrations(event.id);
   const registrations = data?.registrations ?? [];
+  const signUpQuestion = event.signUpQuestion?.trim();
 
   const volunteerCell = (registration: ApiEventN4DRegistrationGet) => {
     if (!registration.isVolunteer) return t("eventRegistration.no");
@@ -82,6 +83,7 @@ export function EventRegistrationsDialog({ event, onClose }: Props) {
               <TableHeaderCell>{t("eventRegistration.fields.fullName")}</TableHeaderCell>
               <TableHeaderCell>{t("eventRegistration.fields.email")}</TableHeaderCell>
               <TableHeaderCell $width="72px">{t("dashboard.calendar.registrations.people")}</TableHeaderCell>
+              {signUpQuestion && <TableHeaderCell>{signUpQuestion}</TableHeaderCell>}
               <TableHeaderCell>{t("dashboard.calendar.registrations.volunteer")}</TableHeaderCell>
               <TableHeaderCell $width="96px">{t("dashboard.calendar.registrations.attended")}</TableHeaderCell>
             </TableHeader>
@@ -95,6 +97,11 @@ export function EventRegistrationsDialog({ event, onClose }: Props) {
                     <WrappedText>{registration.email}</WrappedText>
                   </TableCell>
                   <TableCell $width="72px">{registration.numberOfPeople}</TableCell>
+                  {signUpQuestion && (
+                    <TableCell>
+                      <WrappedText>{registration.signUpAnswer}</WrappedText>
+                    </TableCell>
+                  )}
                   <TableCell>{volunteerCell(registration)}</TableCell>
                   <TableCell $width="96px">
                     <Checkbox

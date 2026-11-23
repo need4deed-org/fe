@@ -25,6 +25,7 @@ export interface EventFormData {
   houseNumber: string;
   postcode: string;
   registrationLink: string;
+  signUpQuestion: string;
   startDate: string;
   startTime: string;
   endDate: string;
@@ -92,6 +93,7 @@ export function CreateEvent({ eventId }: Props) {
     houseNumber: "",
     postcode: "",
     registrationLink: "",
+    signUpQuestion: "",
     startDate: prefilledDate,
     startTime: "",
     endDate: prefilledDate,
@@ -112,6 +114,7 @@ export function CreateEvent({ eventId }: Props) {
       hostName: editingEvent.hostName ?? "",
       ...parseAddress(editingEvent.address),
       registrationLink: editingEvent.linkRSVP ?? "",
+      signUpQuestion: editingEvent.signUpQuestion ?? "",
       startDate: start.date,
       startTime: start.time,
       endDate: end.date,
@@ -172,9 +175,11 @@ export function CreateEvent({ eventId }: Props) {
     address,
   });
   const hostName = formData.hostName.trim();
+  const signUpQuestion = formData.signUpQuestion.trim();
   const toCreatePayload = (): ApiEventN4DCreate => ({
     ...toBasePayload(),
     ...(hostName ? { hostName } : {}),
+    ...(signUpQuestion ? { signUpQuestion } : {}),
     active: false,
     translations: [translation],
   });
@@ -185,6 +190,9 @@ export function CreateEvent({ eventId }: Props) {
     return {
       ...toBasePayload(),
       ...(hostName !== (editingEvent?.hostName ?? "").trim() ? { hostName: hostName || null } : {}),
+      ...(signUpQuestion !== (editingEvent?.signUpQuestion ?? "").trim()
+        ? { signUpQuestion: signUpQuestion || null }
+        : {}),
       ...(translationChanged ? { translations: [translation] } : {}),
     };
   };
@@ -270,6 +278,7 @@ export function CreateEvent({ eventId }: Props) {
               plzStatus={plz.status}
               showPostcodeError={showPostcodeError}
               registrationLink={formData.registrationLink}
+              signUpQuestion={formData.signUpQuestion}
               onChange={update}
               onNext={handleNext}
               onBack={handleBack}

@@ -1191,7 +1191,6 @@
         "submit": "Erstellen",
         "success": "NGO erfolgreich erstellt",
         "conflict": {
-          "title": "Eine NGO mit diesem Namen existiert bereits.",
           "address": "An dieser Adresse gibt es bereits eine NGO.",
           "open": "Bestehende NGO öffnen",
           "createAnyway": "Andere NGO? Trotzdem erstellen"
@@ -1982,7 +1981,9 @@
         "saveDraft": "Als Entwurf speichern",
         "saveChanges": "Änderungen speichern",
         "locationHelper": "z.B. Elsenstr., Nr. 87, 12435",
-        "registrationLinkHelper": "Optional. Leer lassen, um das eigene Anmeldeformular von need4deed zu nutzen."
+        "registrationLinkHelper": "Optional. Leer lassen, um das eigene Anmeldeformular von need4deed zu nutzen.",
+        "signUpQuestion": "Frage für Anmeldungen",
+        "signUpQuestionHelper": "Optional. Erscheint als zusätzliches Feld im eigenen Anmeldeformular von need4deed."
       },
       "openInternalRegistration": "Anmeldeformular öffnen",
       "registrations": {
@@ -2892,9 +2893,7 @@
       "matchesFound_one": "Wir haben {{count}} Organisation gefunden, die zu dieser Adresse passt. Wählen Sie Ihre aus oder erstellen Sie eine neue.",
       "matchesFound_other": "Wir haben {{count}} Organisationen gefunden, die zu dieser Adresse passen. Wählen Sie Ihre aus oder erstellen Sie eine neue.",
       "skip": "Manuell eingeben",
-      "titleTaken": "Eine Organisation mit diesem Namen existiert bereits.",
       "addressTaken": "An dieser Adresse ist bereits eine Organisation registriert.",
-      "titleTakenNamed": "„{{name}}“ existiert bereits.",
       "addressTakenNamed": "An dieser Adresse ist bereits „{{name}}“ registriert.",
       "createAtSharedAddress": "Andere Organisation erstellen",
       "editDetails": "Angaben ändern",
@@ -3193,11 +3192,9 @@
     "yes": "Ja",
     "no": "Nein",
     "fields": {
-      "fullName": "Vollständiger Name",
+      "fullName": "Name",
       "email": "E-Mail",
-      "phone": "Telefon",
       "numberOfPeople": "Anzahl Personen",
-      "languagePreference": "Bevorzugte Sprache",
       "message": "Nachricht",
       "isVolunteer": "Ich engagiere mich ehrenamtlich mit Geflüchteten",
       "volunteerTypes": "In welcher Form?"
