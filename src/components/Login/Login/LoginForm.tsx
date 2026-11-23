@@ -1,6 +1,7 @@
-import { useForm } from "@tanstack/react-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import { useId, useState } from "react";
+import { useId, useMemo, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import { FormInput } from "../../core/common";
@@ -11,6 +12,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { FormActions } from "../styles";
 import { FieldGroup, FieldLabel, LoginFormLayout, SubmitRow } from "./login-styles";
+import { createLoginSchema, LoginFormData } from "./loginSchema";
 
 interface LoginData {
   email: string;
@@ -64,36 +66,29 @@ export const LoginForm = ({ onLoginSuccess }: LoginFormProps) => {
   const fieldId = useId();
   const [rememberMeChecked, setRememberMeChecked] = useState(false);
 
-  const form = useForm({
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-    onSubmit: async ({ value }) => {
-      login(value);
-    },
+  const schema = useMemo(() => createLoginSchema(t), [t]);
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormData>({
+    resolver: zodResolver(schema),
+    mode: "onTouched",
+    defaultValues: { email: "", password: "" },
   });
+  const canSubmit = Object.keys(errors).length === 0 && !isPending;
 
   return (
     <LoginFormLayout
       onSubmit={(e) => {
-        e.preventDefault();
         e.stopPropagation();
-        form.handleSubmit();
+        handleSubmit((values) => login(values))(e);
       }}
     >
-      <form.Field
+      <Controller
         name="email"
-        validators={{
-          onChange: ({ value }) => (!value ? t("dashboard.login.emailMissing") : undefined),
-          onChangeAsyncDebounceMs: 500,
-          onChangeAsync: async ({ value }) => {
-            await new Promise((resolve) => setTimeout(resolve, 500));
-            return value.includes("@") ? undefined : t("dashboard.login.emailMissingAtChar");
-          },
-        }}
-      >
-        {(field) => (
+        control={control}
+        render={({ field, fieldState }) => (
           <FieldGroup>
             <FieldLabel htmlFor={`${fieldId}-email`}>{t("dashboard.login.email")}</FieldLabel>
             <FormInput
@@ -101,22 +96,20 @@ export const LoginForm = ({ onLoginSuccess }: LoginFormProps) => {
               type="email"
               name="email"
               autoComplete="username"
-              value={field.state.value}
-              onInputChange={field.handleChange}
+              value={field.value}
+              onInputChange={field.onChange}
+              onBlur={field.onBlur}
               placeHolder=""
-              errors={field.state.meta.errors}
+              errors={fieldState.error?.message ? [fieldState.error.message] : []}
             />
           </FieldGroup>
         )}
-      </form.Field>
+      />
 
-      <form.Field
+      <Controller
         name="password"
-        validators={{
-          onChange: ({ value }) => (!value ? t("dashboard.login.passwordMissing") : undefined),
-        }}
-      >
-        {(field) => (
+        control={control}
+        render={({ field, fieldState }) => (
           <FieldGroup>
             <FieldLabel htmlFor={`${fieldId}-password`}>{t("dashboard.login.password")}</FieldLabel>
             <FormInput
@@ -124,14 +117,15 @@ export const LoginForm = ({ onLoginSuccess }: LoginFormProps) => {
               type="password"
               name="password"
               autoComplete="current-password"
-              value={field.state.value}
-              onInputChange={field.handleChange}
+              value={field.value}
+              onInputChange={field.onChange}
+              onBlur={field.onBlur}
               placeHolder=""
-              errors={field.state.meta.errors}
+              errors={fieldState.error?.message ? [fieldState.error.message] : []}
             />
           </FieldGroup>
         )}
-      </form.Field>
+      />
 
       <FormActions>
         <Checkbox
@@ -146,19 +140,15 @@ export const LoginForm = ({ onLoginSuccess }: LoginFormProps) => {
       </FormActions>
 
       <SubmitRow>
-        <form.Subscribe selector={(state) => state}>
-          {() => (
-            <Button
-              type="submit"
-              width="100%"
-              text={t("dashboard.login.login")}
-              backgroundcolor={form.state.canSubmit && !isPending ? "var(--color-aubergine)" : "var(--color-grey-50)"}
-              textColor={form.state.canSubmit && !isPending ? "var(--color-white)" : "var(--color-grey-400)"}
-              textHoverColor="var(--color-magnolia)"
-              disabled={!form.state.canSubmit || isPending}
-            />
-          )}
-        </form.Subscribe>
+        <Button
+          type="submit"
+          width="100%"
+          text={t("dashboard.login.login")}
+          backgroundcolor={canSubmit ? "var(--color-aubergine)" : "var(--color-grey-50)"}
+          textColor={canSubmit ? "var(--color-white)" : "var(--color-grey-400)"}
+          textHoverColor="var(--color-magnolia)"
+          disabled={!canSubmit}
+        />
       </SubmitRow>
     </LoginFormLayout>
   );

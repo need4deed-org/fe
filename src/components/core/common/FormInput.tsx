@@ -71,6 +71,7 @@ interface Props {
   autoComplete?: string;
   placeHolder?: string;
   onInputChange: (input: string) => void;
+  onBlur?: () => void;
   width?: string;
   backgroundColor?: string;
   value?: string;
@@ -85,6 +86,7 @@ export function FormInput({
   value = "",
   type = "input",
   onInputChange,
+  onBlur,
   width,
   backgroundColor,
   errors,
@@ -114,6 +116,7 @@ export function FormInput({
           placeholder={placeHolder}
           value={value}
           onChange={handleInputChange}
+          onBlur={onBlur}
           type={inputType}
           width={width}
           $backgroundColor={backgroundColor}
