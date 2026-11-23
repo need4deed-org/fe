@@ -1,5 +1,5 @@
 import { TFunction } from "i18next";
-import { OpportunityType, VolunteerType } from "need4deed-sdk";
+import { EVENT_SIGN_UP_ANSWER_MAX_LENGTH, OpportunityType, VolunteerType } from "need4deed-sdk";
 import { z } from "zod";
 
 export const VOLUNTEER_TYPES = Object.values(OpportunityType) as VolunteerType[];
@@ -11,13 +11,12 @@ export const createEventRegistrationSchema = (t: TFunction) =>
       .string()
       .trim()
       .pipe(z.email(t("eventRegistration.errors.email"))),
-    phone: z.string().trim(),
     numberOfPeople: z
       .number({ error: t("eventRegistration.errors.people") })
       .int()
       .min(1, t("eventRegistration.errors.people"))
       .max(1000, t("eventRegistration.errors.people")),
-    languagePreference: z.string().trim(),
+    signUpAnswer: z.string().trim().max(EVENT_SIGN_UP_ANSWER_MAX_LENGTH, t("eventRegistration.errors.message")),
     message: z.string().trim().max(500, t("eventRegistration.errors.message")),
     isVolunteer: z.boolean(),
     volunteerTypes: z.array(z.enum(VOLUNTEER_TYPES as [VolunteerType, ...VolunteerType[]])),
