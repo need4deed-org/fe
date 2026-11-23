@@ -1907,6 +1907,7 @@
       "noPastEvents": "No past events to display.",
       "published": "Published",
       "draft": "Draft",
+      "unlisted": "Unlisted",
       "publishEvent": "Publish event",
       "unpublishEvent": "Unpublish",
       "publishConfirmTitle": "Publish this event?",
@@ -1971,9 +1972,14 @@
         "locationHelper": "e.g. Elsenstr., No. 87, 12435",
         "registrationLinkHelper": "Optional. Leave empty to use need4deed's own sign-up form.",
         "signUpQuestion": "Question for sign-ups",
-        "signUpQuestionHelper": "Optional. Shown on need4deed's own sign-up form as an extra field."
+        "signUpQuestionHelper": "Optional. Shown on need4deed's own sign-up form as an extra field.",
+        "listed": "Show on the public event page",
+        "listedHelper": "Off: the event is not listed, but anyone with the link can still sign up. Copy the link from the event card in the calendar."
       },
       "openInternalRegistration": "Open sign-up form",
+      "copySignUpLink": "Copy sign-up link",
+      "signUpLinkCopied": "Sign-up link copied",
+      "signUpLinkCopyFailed": "Could not copy the link",
       "registrations": {
         "open": "Sign-ups",
         "title": "Sign-ups: {{title}}",
