@@ -1,12 +1,10 @@
 import { TFunction } from "i18next";
 import { z } from "zod";
+import { createLoginEmailSchema } from "../Login/loginSchema";
 
 export const createForgotPasswordSchema = (t: TFunction) =>
   z.object({
-    email: z
-      .string()
-      .min(1, t("dashboard.login.emailMissing"))
-      .refine((value) => value.includes("@"), t("dashboard.login.emailMissingAtChar")),
+    email: createLoginEmailSchema(t),
   });
 
 export type ForgotPasswordFormData = z.infer<ReturnType<typeof createForgotPasswordSchema>>;

@@ -1,12 +1,15 @@
 import { TFunction } from "i18next";
 import { z } from "zod";
 
+export const createLoginEmailSchema = (t: TFunction) =>
+  z
+    .string()
+    .min(1, t("dashboard.login.emailMissing"))
+    .refine((value) => value.includes("@"), t("dashboard.login.emailMissingAtChar"));
+
 export const createLoginSchema = (t: TFunction) =>
   z.object({
-    email: z
-      .string()
-      .min(1, t("dashboard.login.emailMissing"))
-      .refine((value) => value.includes("@"), t("dashboard.login.emailMissingAtChar")),
+    email: createLoginEmailSchema(t),
     password: z.string().min(1, t("dashboard.login.passwordMissing")),
   });
 
