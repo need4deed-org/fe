@@ -19,13 +19,13 @@ export enum LeadFromEnum {
 }
 
 export const LeadIconMap = {
-  [LeadFromEnum.PLATFORM]: <BrowserIcon size={44} />,
-  [LeadFromEnum.MEDIA]: <MonitorPlayIcon size={44} />,
-  [LeadFromEnum.NEWSLETTER]: <NewspaperClippingIcon size={44} />,
-  [LeadFromEnum.SEARCH]: <MagnifyingGlassIcon size={44} />,
-  [LeadFromEnum.FRIENDS]: <UsersThreeIcon size={44} />,
-  [LeadFromEnum.FAIR]: <StorefrontIcon size={44} />,
-  [LeadFromEnum.FLYER]: <ArticleIcon size={44} />,
+  [LeadFromEnum.PLATFORM]: <BrowserIcon size={43} />,
+  [LeadFromEnum.MEDIA]: <MonitorPlayIcon size={43} />,
+  [LeadFromEnum.NEWSLETTER]: <NewspaperClippingIcon size={43} />,
+  [LeadFromEnum.SEARCH]: <MagnifyingGlassIcon size={43} />,
+  [LeadFromEnum.FRIENDS]: <UsersThreeIcon size={43} />,
+  [LeadFromEnum.FAIR]: <StorefrontIcon size={43} />,
+  [LeadFromEnum.FLYER]: <ArticleIcon size={43} />,
 };
 
 export type LeadIconKey = keyof typeof LeadIconMap;
