@@ -40,6 +40,7 @@ import { useCallback, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "./useAuth";
 import { VolunteerActivityLog } from "@/components/Dashboard/Profile/sections/VolunteerActivityLog";
+import { LeadFrom } from "@/components/Dashboard/Profile/sections/LeadFrom/LeadFrom";
 
 export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefined) => {
   const { t, i18n } = useTranslation();
@@ -301,6 +302,11 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
       iconName: IconName.ChatCircleDots,
       title: `${t("dashboard.volunteerProfile.coordinatorComments")} • ${volunteer.comments?.length ?? 0}`,
       subComponent: <Comments volunteer={volunteer} />,
+    });
+    sections.push({
+      iconName: IconName.ChatCircleDots,
+      title: `${t("dashboard.volunteerProfile.leadFrom")}`,
+      subComponent: <LeadFrom volunteer={volunteer} />,
     });
     sections.push({
       iconName: IconName.Trash,
