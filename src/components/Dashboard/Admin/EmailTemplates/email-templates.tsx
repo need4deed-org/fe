@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { inAppPathOf, isTemplateName, sortByLabel, templateLabelKey } from "./helpers";
+import { inAppPathOf, isAppPath, isTemplateName, sortByLabel, templateLabelKey } from "./helpers";
 import { TemplateEditor } from "./template-editor";
 
 type Pending = { template: EmailTemplateName } | { path: string };
@@ -30,7 +30,8 @@ export function EmailTemplates() {
       if (event.defaultPrevented || event.button !== 0) return;
       if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
       const anchor = (event.target as Element | null)?.closest?.("a[href]");
-      if (!(anchor instanceof HTMLAnchorElement) || (anchor.target && anchor.target !== "_self")) return;
+      if (!(anchor instanceof HTMLAnchorElement) || anchor.hasAttribute("download")) return;
+      if (anchor.target && anchor.target !== "_self") return;
       const path = inAppPathOf(anchor.href, window.location.href);
       if (path === null) return;
       event.preventDefault();
@@ -54,7 +55,8 @@ export function EmailTemplates() {
     setDirty(false);
     setPending(undefined);
     if ("template" in pending) setSelected(pending.template);
-    else router.push(pending.path);
+    else if (isAppPath(pending.path)) router.push(pending.path);
+    else window.location.assign(pending.path);
   };
 
   return (

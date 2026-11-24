@@ -173,6 +173,7 @@ test("a version conflict gets its own view", () => {
 test("known placeholders without a language ask for one", () => {
   assert.deepEqual(view({ code: "unknown_placeholder", placeholders: ["link"] }), {
     kind: "message",
+    code: "unknown_placeholder",
     key: key("needsLanguage"),
     params: { placeholders: "{{ link }}", example: "{{ link.de }} / {{ link.en }}" },
     lang: undefined,
@@ -195,6 +196,7 @@ test("missing placeholders and blank fields keep the language and fields", () =>
   const blank = view({ code: "blank_field", fields: ["subject", "labels.someone"], lang: "de" });
   assert.deepEqual(blank, {
     kind: "message",
+    code: "blank_field",
     key: key("blank_field"),
     lang: "de",
     fields: ["subject", "labels.someone"],
@@ -236,4 +238,12 @@ test("inAppPathOf returns the path of a same-origin link to another page", () =>
   assert.equal(editorHelpers.inAppPathOf("https://example.org/en", here), null);
   assert.equal(editorHelpers.inAppPathOf(here, here), null);
   assert.equal(editorHelpers.inAppPathOf("#top", here), null);
+});
+
+test("isAppPath tells app pages from other same-origin paths", () => {
+  assert.equal(editorHelpers.isAppPath("/en/dashboard/admin/accounts"), true);
+  assert.equal(editorHelpers.isAppPath("/de"), true);
+  assert.equal(editorHelpers.isAppPath("/swagger"), false);
+  assert.equal(editorHelpers.isAppPath("/api/x"), false);
+  assert.equal(editorHelpers.isAppPath("/end"), false);
 });

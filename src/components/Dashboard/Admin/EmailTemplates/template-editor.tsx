@@ -61,7 +61,10 @@ export function TemplateEditor({ template, onDirtyChange }: Props) {
 
   useEffect(() => {
     if (!dirty) return;
-    const warn = (event: BeforeUnloadEvent) => event.preventDefault();
+    const warn = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      event.returnValue = "";
+    };
     window.addEventListener("beforeunload", warn);
     return () => window.removeEventListener("beforeunload", warn);
   }, [dirty]);
@@ -85,6 +88,7 @@ export function TemplateEditor({ template, onDirtyChange }: Props) {
       if (view.kind === "message" && view.lang) switchLang(view.lang);
     },
   });
+  const locked = readOnly || isSaving;
 
   const switchLang = (next: Lang) => {
     insertTarget.current = null;
@@ -132,6 +136,7 @@ export function TemplateEditor({ template, onDirtyChange }: Props) {
 
   const fieldError = (field: string) =>
     error?.kind === "message" &&
+    error.code === "blank_field" &&
     error.fields.includes(field) &&
     (!isPerLanguage || !error.lang || error.lang === lang) ? (
       <ErrorMessage message={t("dashboard.admin.emailTemplates.errors.fieldBlank")} />
@@ -145,7 +150,7 @@ export function TemplateEditor({ template, onDirtyChange }: Props) {
           <Select
             id="email-template-layout"
             value={draft.layout}
-            disabled={readOnly}
+            disabled={locked}
             onChange={(event) => edit(switchLayout(draft, event.target.value as EmailTemplateLayout, lang))}
           >
             <option value={EmailTemplateLayout.SINGLE}>{t("dashboard.admin.emailTemplates.layoutSingle")}</option>
@@ -178,19 +183,19 @@ export function TemplateEditor({ template, onDirtyChange }: Props) {
           label={t("dashboard.admin.emailTemplates.subject")}
           value={text.subject}
           rows={2}
-          disabled={readOnly}
+          disabled={locked}
           onFocus={rememberTarget("subject")}
           onChange={(value) => edit(updateText(draft, lang, { subject: toSingleLine(value) }))}
         />
         {fieldError("subject")}
       </Field>
-      <PlaceholderChips placeholders={base.placeholders} disabled={readOnly} onInsert={insertPlaceholder} />
+      <PlaceholderChips placeholders={base.placeholders} disabled={locked} onInsert={insertPlaceholder} />
       <Field>
         <TextArea
           label={t("dashboard.admin.emailTemplates.text")}
           value={text.text}
           rows={16}
-          disabled={readOnly}
+          disabled={locked}
           onFocus={rememberTarget("text")}
           onChange={(value) => edit(updateText(draft, lang, { text: value }))}
         />
@@ -207,7 +212,7 @@ export function TemplateEditor({ template, onDirtyChange }: Props) {
                 label={t(`dashboard.admin.emailTemplates.labelNames.${key}`, { defaultValue: key })}
                 value={text.labels?.[key] ?? ""}
                 rows={1}
-                disabled={readOnly}
+                disabled={locked}
                 onFocus={() => {
                   insertTarget.current = null;
                 }}

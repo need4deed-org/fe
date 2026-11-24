@@ -6,6 +6,7 @@ import {
   ApiEmailTemplateText,
   EmailTemplateLayout,
   EmailTemplateName,
+  EmailTemplateSaveErrorCode,
   Lang,
 } from "need4deed-sdk";
 
@@ -100,7 +101,14 @@ export const isDirty = (saved: ApiEmailTemplateContent, draft: ApiEmailTemplateC
 
 export type SaveErrorView =
   | { kind: "conflict" }
-  | { kind: "message"; key: string; params?: Record<string, string>; lang?: Lang; fields: string[] };
+  | {
+      kind: "message";
+      code: EmailTemplateSaveErrorCode;
+      key: string;
+      params?: Record<string, string>;
+      lang?: Lang;
+      fields: string[];
+    };
 
 const errorKey = (code: string) => `dashboard.admin.emailTemplates.errors.${code}`;
 const listOf = (names: string[]) => names.map(placeholderSnippet).join(", ");
@@ -109,7 +117,7 @@ export function toSaveErrorView(error: ApiEmailTemplateSaveError, placeholderNam
   if (error.code === "version_conflict") return { kind: "conflict" };
 
   const placeholders = error.placeholders ?? [];
-  const base = { kind: "message" as const, lang: error.lang, fields: error.fields ?? [] };
+  const base = { kind: "message" as const, code: error.code, lang: error.lang, fields: error.fields ?? [] };
 
   if (error.code === "unknown_placeholder") {
     const needsLanguage = placeholders.length > 0 && placeholders.every((name) => placeholderNames.includes(name));
@@ -138,6 +146,8 @@ export function toSaveErrorView(error: ApiEmailTemplateSaveError, placeholderNam
 }
 
 export const cacheMinutes = (seconds: number) => Math.max(1, Math.ceil(seconds / 60));
+
+export const isAppPath = (path: string) => /^\/(en|de)(\/|$|\?|#)/.test(path);
 
 export function inAppPathOf(href: string, currentHref: string): string | null {
   const target = new URL(href, currentHref);
