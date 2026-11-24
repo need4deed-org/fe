@@ -35,7 +35,7 @@ export function TemplateEditor({ template, onDirtyChange }: Props) {
   const { t } = useTranslation();
   const [base, setBase] = useState(template);
   const [draft, setDraft] = useState(template.template);
-  const [propVersion, setPropVersion] = useState(template.version);
+  const [staleVersion, setStaleVersion] = useState<string | null>(null);
   const [lang, setLang] = useState(Lang.DE);
   const [error, setError] = useState<SaveErrorView | null>(null);
   const [savedMinutes, setSavedMinutes] = useState<number | null>(null);
@@ -46,14 +46,11 @@ export function TemplateEditor({ template, onDirtyChange }: Props) {
   const text = textOf(draft, lang);
   const dirty = isDirty(base.template, draft);
   const isConflict = error?.kind === "conflict";
-  const hasNewerVersion = template.version !== base.version;
+  const hasNewerVersion = template.version !== base.version && template.version !== staleVersion;
 
-  if (template.version !== propVersion) {
-    setPropVersion(template.version);
-    if (!dirty && !isConflict) {
-      setBase(template);
-      setDraft(template.template);
-    }
+  if (hasNewerVersion && !dirty && !isConflict) {
+    setBase(template);
+    setDraft(template.template);
   }
 
   useEffect(() => onDirtyChange(dirty), [dirty, onDirtyChange]);
@@ -72,6 +69,7 @@ export function TemplateEditor({ template, onDirtyChange }: Props) {
   const reload = useReloadEmailTemplate();
   const { saveTemplate, isSaving } = useSaveEmailTemplate({
     onSaved: (saved) => {
+      setStaleVersion(base.version);
       setBase(saved);
       setDraft(saved.template);
       setError(null);
@@ -84,7 +82,8 @@ export function TemplateEditor({ template, onDirtyChange }: Props) {
       );
       setError(view);
       setSavedMinutes(null);
-      if (view.kind === "message" && view.lang) switchLang(view.lang);
+      if (saveError.code === "not_editable") setBase({ ...base, editable: false });
+      if (view.kind === "message" && view.lang && isPerLanguage) switchLang(view.lang);
     },
   });
   const locked = readOnly || isSaving;
@@ -97,10 +96,12 @@ export function TemplateEditor({ template, onDirtyChange }: Props) {
   const edit = (next: ApiEmailTemplateContent) => {
     setDraft(next);
     setSavedMinutes(null);
-    if (error?.kind === "message") setError(null);
   };
 
-  const save = () => saveTemplate({ name: base.name, body: { version: base.version, template: toSaveContent(draft) } });
+  const save = () => {
+    if (error?.kind === "message") setError(null);
+    saveTemplate({ name: base.name, body: { version: base.version, template: toSaveContent(draft) } });
+  };
 
   const loadLatest = () => {
     setBase(template);
@@ -268,7 +269,7 @@ export function TemplateEditor({ template, onDirtyChange }: Props) {
             <div role="alert">
               <ErrorMessage
                 message={
-                  error.lang
+                  error.lang && isPerLanguage
                     ? `${t(`dashboard.admin.emailTemplates.languages.${error.lang}`)}: ${t(error.key, error.params)}`
                     : t(error.key, error.params)
                 }

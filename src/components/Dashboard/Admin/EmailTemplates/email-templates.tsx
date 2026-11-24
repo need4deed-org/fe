@@ -35,7 +35,6 @@ export function EmailTemplates() {
       const path = inAppPathOf(anchor.href, window.location.href);
       if (path === null) return;
       event.preventDefault();
-      event.stopPropagation();
       setPending({ path });
     };
     document.addEventListener("click", confirmLeaving, true);
