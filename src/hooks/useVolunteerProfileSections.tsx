@@ -304,7 +304,7 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
       subComponent: <Comments volunteer={volunteer} />,
     });
     sections.push({
-      iconName: IconName.ChatCircleDots,
+      iconName: IconName.Ear,
       title: `${t("dashboard.volunteerProfile.leadFrom")}`,
       subComponent: <LeadFrom volunteer={volunteer} />,
     });

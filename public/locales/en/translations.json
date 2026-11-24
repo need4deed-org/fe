@@ -1054,6 +1054,16 @@
           "skillsRequired": "Please select at least one skill"
         }
       },
+      "leadFromOptions": {
+        "platform": "Platform",
+        "media": "Media",
+        "newsletter": "Newsletter",
+        "search": "Search",
+        "Friends": "Friends",
+        "fair": "Fair",
+        "Flyer": "Flyer",
+        "none": "No answer given"
+      },
       "dangerZone": {
         "title": "Danger zone",
         "deleteButton": "Delete volunteer",

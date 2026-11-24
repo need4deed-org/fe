@@ -1,12 +1,12 @@
-import {
-  ArticleIcon,
-  BrowserIcon,
-  MagnifyingGlassIcon,
-  MonitorPlayIcon,
-  NewspaperClippingIcon,
-  StorefrontIcon,
-  UsersThreeIcon,
-} from "@phosphor-icons/react";
+import { JSX } from "react";
+import { iconNameMap } from "../../common/icon";
+import { IconName } from "../../types";
+
+export type LeadIconMap = {
+  [key in LeadFromEnum]: JSX.Element | undefined;
+};
+
+export const i18nPrefix = "dashboard.volunteerProfile.leadFromOptions";
 
 export enum LeadFromEnum {
   PLATFORM = "platform",
@@ -16,16 +16,18 @@ export enum LeadFromEnum {
   FRIENDS = "Friends",
   FAIR = "fair",
   FLYER = "Flyer",
+  NONE = "none",
 }
 
-export const LeadIconMap = {
-  [LeadFromEnum.PLATFORM]: <BrowserIcon size={43} />,
-  [LeadFromEnum.MEDIA]: <MonitorPlayIcon size={43} />,
-  [LeadFromEnum.NEWSLETTER]: <NewspaperClippingIcon size={43} />,
-  [LeadFromEnum.SEARCH]: <MagnifyingGlassIcon size={43} />,
-  [LeadFromEnum.FRIENDS]: <UsersThreeIcon size={43} />,
-  [LeadFromEnum.FAIR]: <StorefrontIcon size={43} />,
-  [LeadFromEnum.FLYER]: <ArticleIcon size={43} />,
+export const LeadIconMap: LeadIconMap = {
+  [LeadFromEnum.PLATFORM]: iconNameMap[IconName.Browser],
+  [LeadFromEnum.MEDIA]: iconNameMap[IconName.Monitor],
+  [LeadFromEnum.NEWSLETTER]: iconNameMap[IconName.Newspaper],
+  [LeadFromEnum.SEARCH]: iconNameMap[IconName.MagnifyingGlass],
+  [LeadFromEnum.FRIENDS]: iconNameMap[IconName.UsersThree],
+  [LeadFromEnum.FAIR]: iconNameMap[IconName.Storefront],
+  [LeadFromEnum.FLYER]: iconNameMap[IconName.Article],
+  [LeadFromEnum.NONE]: undefined,
 };
 
 export type LeadIconKey = keyof typeof LeadIconMap;

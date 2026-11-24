@@ -1061,6 +1061,16 @@
           "skillsRequired": "Fähigkeiten sind erforderlich"
         }
       },
+      "leadFromOptions": {
+        "platform": "Plattform",
+        "media": "Medien",
+        "newsletter": "Newsletter",
+        "search": "Websuche",
+        "Friends": "Freunde",
+        "fair": "Freiwilligenmesse",
+        "Flyer": "Flyer",
+        "none": "Keine Antwort"
+      },
       "dangerZone": {
         "title": "Gefahrenzone",
         "deleteButton": "Freiwillige:n löschen",
