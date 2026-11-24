@@ -2101,6 +2101,13 @@
         "text": "Text",
         "labels": "Bezeichnungen",
         "labelsHint": "Kurze Texte, die die Plattform in die E-Mail einsetzt, zum Beispiel wo jemand markiert wurde oder das Wort, wenn ein Name fehlt.",
+        "placeholders": "Platzhalter",
+        "placeholdersHint": "Klicken Sie auf einen Platzhalter, um ihn an der Cursorposition im Betreff oder Text einzufügen. Die Plattform ersetzt ihn beim Versand durch den echten Wert.",
+        "placeholdersReadOnlyHint": "Die Plattform ersetzt diese beim Versand durch die echten Werte.",
+        "placeholderRequired": "Wird in der aktuellen E-Mail verwendet und muss bleiben",
+        "placeholderRequiredLegend": "* Wird in der aktuellen E-Mail verwendet: Lassen Sie ihn im Betreff oder Text stehen.",
+        "insertPlaceholder": "{{name}} einfügen",
+        "insertRequiredPlaceholder": "{{name}} einfügen (muss in der E-Mail bleiben)",
         "labelNames": {
           "commentOnVolunteer": "Markiert in: Kommentar zu einer freiwilligen Person",
           "commentOnOpportunity": "Markiert in: Kommentar zu einem Gesuch",

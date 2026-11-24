@@ -4,10 +4,23 @@ import { TextArea } from "@/components/core/common";
 import { Select } from "@/components/core/common/select";
 import { Paragraph } from "@/components/styled/text";
 import { ApiEmailTemplateGet, EmailTemplateLayout, Lang } from "need4deed-sdk";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { isPerLanguageAllowed, LANGS, switchLayout, textOf, toSingleLine, updateLabel, updateText } from "./helpers";
+import {
+  insertAt,
+  isPerLanguageAllowed,
+  LANGS,
+  placeholderSnippet,
+  switchLayout,
+  textOf,
+  toSingleLine,
+  updateLabel,
+  updateText,
+} from "./helpers";
+import { PlaceholderChips } from "./PlaceholderChips";
+
+type InsertTarget = { field: "subject" | "text"; element: HTMLTextAreaElement };
 
 type Props = { template: ApiEmailTemplateGet };
 
@@ -18,6 +31,27 @@ export function TemplateEditor({ template }: Props) {
   const readOnly = !template.editable;
   const isPerLanguage = draft.layout === EmailTemplateLayout.PER_LANGUAGE;
   const text = textOf(draft, lang);
+  const insertTarget = useRef<InsertTarget | null>(null);
+
+  const rememberTarget = (field: InsertTarget["field"]) => (event: { currentTarget: HTMLTextAreaElement }) => {
+    insertTarget.current = { field, element: event.currentTarget };
+  };
+
+  const insertPlaceholder = (name: string) => {
+    const target = insertTarget.current;
+    const field = target?.field ?? "text";
+    const current = text[field];
+    const start = target?.element.selectionStart ?? current.length;
+    const end = target?.element.selectionEnd ?? current.length;
+    const { value, caret } = insertAt(current, start, end, placeholderSnippet(name));
+    setDraft(updateText(draft, lang, { [field]: value }));
+    requestAnimationFrame(() => {
+      const element = target?.element;
+      if (!element?.isConnected) return;
+      element.focus();
+      element.setSelectionRange(caret, caret);
+    });
+  };
 
   return (
     <Editor>
@@ -60,13 +94,16 @@ export function TemplateEditor({ template }: Props) {
         value={text.subject}
         rows={2}
         disabled={readOnly}
+        onFocus={rememberTarget("subject")}
         onChange={(value) => setDraft(updateText(draft, lang, { subject: toSingleLine(value) }))}
       />
+      <PlaceholderChips placeholders={template.placeholders} disabled={readOnly} onInsert={insertPlaceholder} />
       <TextArea
         label={t("dashboard.admin.emailTemplates.text")}
         value={text.text}
         rows={16}
         disabled={readOnly}
+        onFocus={rememberTarget("text")}
         onChange={(value) => setDraft(updateText(draft, lang, { text: value }))}
       />
 

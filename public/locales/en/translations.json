@@ -2089,6 +2089,13 @@
         "text": "Text",
         "labels": "Labels",
         "labelsHint": "Short texts the platform puts into the email, for example where someone was tagged or the word used when a name is missing.",
+        "placeholders": "Placeholders",
+        "placeholdersHint": "Click one to insert it where the cursor is in the subject or the text. The platform replaces it with the real value when it sends the email.",
+        "placeholdersReadOnlyHint": "The platform replaces these with the real values when it sends the email.",
+        "placeholderRequired": "Used in the current email, so it must stay",
+        "placeholderRequiredLegend": "* Used in the current email: keep it in the subject or the text.",
+        "insertPlaceholder": "Insert {{name}}",
+        "insertRequiredPlaceholder": "Insert {{name}} (must stay in the email)",
         "labelNames": {
           "commentOnVolunteer": "Tagged in: a comment on a volunteer",
           "commentOnOpportunity": "Tagged in: a comment on an opportunity",

@@ -122,3 +122,18 @@ test("every label key the be sends has an en and de caption", () => {
     }
   }
 });
+
+test("insertAt puts the snippet at the cursor and moves the cursor after it", () => {
+  const snippet = editorHelpers.placeholderSnippet("link");
+  assert.equal(snippet, "{{ link }}");
+  assert.deepEqual(editorHelpers.insertAt("Hi !", 3, 3, snippet), { value: "Hi {{ link }}!", caret: 13 });
+});
+
+test("insertAt replaces the selected text", () => {
+  assert.deepEqual(editorHelpers.insertAt("Hi NAME!", 3, 7, "{{ name }}"), { value: "Hi {{ name }}!", caret: 13 });
+});
+
+test("insertAt clamps a cursor outside the text", () => {
+  assert.deepEqual(editorHelpers.insertAt("ab", 9, 12, "X"), { value: "abX", caret: 3 });
+  assert.deepEqual(editorHelpers.insertAt("ab", -1, 1, "X"), { value: "Xb", caret: 1 });
+});

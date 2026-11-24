@@ -61,3 +61,11 @@ export const updateLabel = (content: ApiEmailTemplateContent, lang: Lang, key: s
   updateText(content, lang, { labels: { ...textOf(content, lang).labels, [key]: value } });
 
 export const toSingleLine = (value: string) => value.replace(/\r?\n/g, " ");
+
+export const placeholderSnippet = (name: string) => `{{ ${name} }}`;
+
+export function insertAt(value: string, start: number, end: number, snippet: string) {
+  const from = Math.max(0, Math.min(start, value.length));
+  const to = Math.max(from, Math.min(end, value.length));
+  return { value: value.slice(0, from) + snippet + value.slice(to), caret: from + snippet.length };
+}
