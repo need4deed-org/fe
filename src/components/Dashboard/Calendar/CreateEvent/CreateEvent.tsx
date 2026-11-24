@@ -31,6 +31,7 @@ export interface EventFormData {
   endDate: string;
   endTime: string;
   unstructuredAddress: boolean;
+  listed: boolean;
 }
 
 const TOTAL_STEPS = 3;
@@ -99,6 +100,7 @@ export function CreateEvent({ eventId }: Props) {
     endDate: prefilledDate,
     endTime: "",
     unstructuredAddress: false,
+    listed: true,
   });
   const [initializedEventId, setInitializedEventId] = useState<number | null>(null);
   const { data: editingEvent, isLoading, isError } = useEvent(eventId);
@@ -119,6 +121,7 @@ export function CreateEvent({ eventId }: Props) {
       startTime: start.time,
       endDate: end.date,
       endTime: end.time,
+      listed: editingEvent.listed ?? true,
     });
     setInitializedEventId(eventId);
   }, [editingEvent, eventId, initializedEventId]);
@@ -181,6 +184,7 @@ export function CreateEvent({ eventId }: Props) {
     ...(hostName ? { hostName } : {}),
     ...(signUpQuestion ? { signUpQuestion } : {}),
     active: false,
+    listed: formData.listed,
     translations: [translation],
   });
   const toUpdatePayload = (): ApiEventN4DPatch => {
@@ -193,6 +197,7 @@ export function CreateEvent({ eventId }: Props) {
       ...(signUpQuestion !== (editingEvent?.signUpQuestion ?? "").trim()
         ? { signUpQuestion: signUpQuestion || null }
         : {}),
+      ...(formData.listed !== (editingEvent?.listed ?? true) ? { listed: formData.listed } : {}),
       ...(translationChanged ? { translations: [translation] } : {}),
     };
   };
@@ -291,6 +296,7 @@ export function CreateEvent({ eventId }: Props) {
               startTime={formData.startTime}
               endDate={formData.endDate}
               endTime={formData.endTime}
+              listed={formData.listed}
               onChange={update}
               onBack={handleBack}
               onSubmit={handleSubmit}
