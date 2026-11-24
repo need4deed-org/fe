@@ -1,3 +1,4 @@
+import { supportedLangs } from "@/config/constants";
 import {
   ApiEmailTemplateContent,
   ApiEmailTemplateLayouts,
@@ -147,12 +148,13 @@ export function toSaveErrorView(error: ApiEmailTemplateSaveError, placeholderNam
 
 export const cacheMinutes = (seconds: number) => Math.max(1, Math.ceil(seconds / 60));
 
-export const isAppPath = (path: string) => /^\/(en|de)(\/|$|\?|#)/.test(path);
+export const isAppPath = (path: string) => supportedLangs.includes(path.split(/[/?#]/)[1] ?? "");
 
 export function inAppPathOf(href: string, currentHref: string): string | null {
   const target = new URL(href, currentHref);
   const current = new URL(currentHref);
   if (target.origin !== current.origin) return null;
   if (target.pathname === current.pathname && target.search === current.search) return null;
-  return `${target.pathname}${target.search}${target.hash}`;
+  const path = `${target.pathname}${target.search}${target.hash}`;
+  return isAppPath(path) ? path : null;
 }

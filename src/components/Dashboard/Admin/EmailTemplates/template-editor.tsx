@@ -35,7 +35,7 @@ export function TemplateEditor({ template, onDirtyChange }: Props) {
   const { t } = useTranslation();
   const [base, setBase] = useState(template);
   const [draft, setDraft] = useState(template.template);
-  const [seenVersion, setSeenVersion] = useState(template.version);
+  const [propVersion, setPropVersion] = useState(template.version);
   const [lang, setLang] = useState(Lang.DE);
   const [error, setError] = useState<SaveErrorView | null>(null);
   const [savedMinutes, setSavedMinutes] = useState<number | null>(null);
@@ -48,8 +48,8 @@ export function TemplateEditor({ template, onDirtyChange }: Props) {
   const isConflict = error?.kind === "conflict";
   const hasNewerVersion = template.version !== base.version;
 
-  if (template.version !== seenVersion) {
-    setSeenVersion(template.version);
+  if (template.version !== propVersion) {
+    setPropVersion(template.version);
     if (!dirty && !isConflict) {
       setBase(template);
       setDraft(template.template);
@@ -74,7 +74,6 @@ export function TemplateEditor({ template, onDirtyChange }: Props) {
     onSaved: (saved) => {
       setBase(saved);
       setDraft(saved.template);
-      setSeenVersion(saved.version);
       setError(null);
       setSavedMinutes(cacheMinutes(saved.cdnCacheSeconds));
     },

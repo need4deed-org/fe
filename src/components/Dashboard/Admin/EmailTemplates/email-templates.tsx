@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { inAppPathOf, isAppPath, isTemplateName, sortByLabel, templateLabelKey } from "./helpers";
+import { inAppPathOf, isTemplateName, sortByLabel, templateLabelKey } from "./helpers";
 import { TemplateEditor } from "./template-editor";
 
 type Pending = { template: EmailTemplateName } | { path: string };
@@ -55,8 +55,7 @@ export function EmailTemplates() {
     setDirty(false);
     setPending(undefined);
     if ("template" in pending) setSelected(pending.template);
-    else if (isAppPath(pending.path)) router.push(pending.path);
-    else window.location.assign(pending.path);
+    else router.push(pending.path);
   };
 
   return (
