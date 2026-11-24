@@ -4,7 +4,7 @@ import { Button } from "@/components/core/button";
 import { ErrorMessage, TextArea } from "@/components/core/common";
 import { Select } from "@/components/core/common/select";
 import { Paragraph } from "@/components/styled/text";
-import { useSaveEmailTemplate } from "@/hooks/use-email-templates";
+import { useReloadEmailTemplate, useSaveEmailTemplate } from "@/hooks/use-email-templates";
 import { ApiEmailTemplateContent, ApiEmailTemplateGet, EmailTemplateLayout, Lang } from "need4deed-sdk";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -25,7 +25,7 @@ import {
   updateLabel,
   updateText,
 } from "./helpers";
-import { PlaceholderChips } from "./PlaceholderChips";
+import { PlaceholderChips } from "./placeholder-chips";
 
 type InsertTarget = { field: "subject" | "text"; element: HTMLTextAreaElement };
 
@@ -57,6 +57,7 @@ export function TemplateEditor({ template, onDirtyChange }: Props) {
   }
 
   useEffect(() => onDirtyChange(dirty), [dirty, onDirtyChange]);
+  useEffect(() => () => onDirtyChange(false), [onDirtyChange]);
 
   useEffect(() => {
     if (!dirty) return;
@@ -65,6 +66,7 @@ export function TemplateEditor({ template, onDirtyChange }: Props) {
     return () => window.removeEventListener("beforeunload", warn);
   }, [dirty]);
 
+  const reload = useReloadEmailTemplate();
   const { saveTemplate, isSaving } = useSaveEmailTemplate({
     onSaved: (saved) => {
       setBase(saved);
@@ -80,9 +82,14 @@ export function TemplateEditor({ template, onDirtyChange }: Props) {
       );
       setError(view);
       setSavedMinutes(null);
-      if (view.kind === "message" && view.lang) setLang(view.lang);
+      if (view.kind === "message" && view.lang) switchLang(view.lang);
     },
   });
+
+  const switchLang = (next: Lang) => {
+    insertTarget.current = null;
+    setLang(next);
+  };
 
   const edit = (next: ApiEmailTemplateContent) => {
     setDraft(next);
@@ -139,7 +146,7 @@ export function TemplateEditor({ template, onDirtyChange }: Props) {
             id="email-template-layout"
             value={draft.layout}
             disabled={readOnly}
-            onChange={(event) => edit(switchLayout(draft, event.target.value as EmailTemplateLayout))}
+            onChange={(event) => edit(switchLayout(draft, event.target.value as EmailTemplateLayout, lang))}
           >
             <option value={EmailTemplateLayout.SINGLE}>{t("dashboard.admin.emailTemplates.layoutSingle")}</option>
             <option value={EmailTemplateLayout.PER_LANGUAGE}>
@@ -159,7 +166,7 @@ export function TemplateEditor({ template, onDirtyChange }: Props) {
       {isPerLanguage && (
         <LangTabs role="group" aria-label={t("dashboard.admin.emailTemplates.language")}>
           {LANGS.map((value) => (
-            <LangTab key={value} type="button" aria-pressed={lang === value} onClick={() => setLang(value)}>
+            <LangTab key={value} type="button" aria-pressed={lang === value} onClick={() => switchLang(value)}>
               {t(`dashboard.admin.emailTemplates.languages.${value}`)}
             </LangTab>
           ))}
@@ -201,6 +208,9 @@ export function TemplateEditor({ template, onDirtyChange }: Props) {
                 value={text.labels?.[key] ?? ""}
                 rows={1}
                 disabled={readOnly}
+                onFocus={() => {
+                  insertTarget.current = null;
+                }}
                 onChange={(value) => edit(updateLabel(draft, lang, key, toSingleLine(value)))}
               />
               {fieldError(`labels.${key}`)}
@@ -218,7 +228,19 @@ export function TemplateEditor({ template, onDirtyChange }: Props) {
           {isConflict && (
             <Notice role="alert">
               <Paragraph margin="0">{t("dashboard.admin.emailTemplates.conflict")}</Paragraph>
+              {!hasNewerVersion && (
+                <Paragraph margin="0" color="var(--color-grey-500)">
+                  {t("dashboard.admin.emailTemplates.conflictLoading")}
+                </Paragraph>
+              )}
               <Actions>
+                {!hasNewerVersion && (
+                  <Button
+                    text={t("dashboard.admin.emailTemplates.checkAgain")}
+                    width="auto"
+                    onClick={() => reload(base.name)}
+                  />
+                )}
                 <Button
                   text={t("dashboard.admin.emailTemplates.loadLatest")}
                   width="auto"
@@ -263,7 +285,7 @@ export function TemplateEditor({ template, onDirtyChange }: Props) {
               disabled={!dirty || isSaving || isConflict}
               onClick={save}
             />
-            {dirty && (
+            {dirty && !isConflict && (
               <Button
                 text={t("dashboard.admin.emailTemplates.discard")}
                 width="auto"

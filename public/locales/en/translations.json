@@ -2079,7 +2079,7 @@
         "layoutSingle": "One text for all recipients",
         "layoutPerLanguage": "Separate German and English texts",
         "layoutSingleHint": "Everyone gets this text. Recipients who chose English get the English values of placeholders that have two languages.",
-        "layoutPerLanguageHint": "Recipients get the German or the English text, depending on their language.",
+        "layoutPerLanguageHint": "Recipients get the German or the English text, depending on their language. Switching back to one text keeps the language shown.",
         "language": "Language",
         "languages": {
           "de": "German",
@@ -2117,6 +2117,10 @@
           "needsLanguage": "This email doesn't know the recipient's language, so these placeholders need one: {{placeholders}}. For example {{example}}.",
           "missing_placeholder": "Put these placeholders back: {{placeholders}}."
         },
+        "conflictLoading": "Getting the saved version… If this takes long, check again.",
+        "checkAgain": "Check again",
+        "unsavedLeaveMessage": "This template has changes that are not saved. They will be lost if you leave this page.",
+        "unsavedLeaveConfirm": "Discard and leave",
         "labelNames": {
           "commentOnVolunteer": "Tagged in: a comment on a volunteer",
           "commentOnOpportunity": "Tagged in: a comment on an opportunity",

@@ -60,7 +60,7 @@ test("isPerLanguageAllowed reads allowedLayouts", () => {
 
 test("switching single to per-language copies the text into both languages", () => {
   const draft = single("S", "T", { someone: "Jemand" });
-  const split = editorHelpers.switchLayout(draft, EmailTemplateLayout.PER_LANGUAGE);
+  const split = editorHelpers.switchLayout(draft, EmailTemplateLayout.PER_LANGUAGE, "de");
 
   assert.equal(split.layout, EmailTemplateLayout.PER_LANGUAGE);
   assert.deepEqual(split.content.de, draft.content);
@@ -71,21 +71,26 @@ test("switching single to per-language copies the text into both languages", () 
   assert.equal(draft.content.labels.someone, "Jemand");
 });
 
-test("switching per-language to single keeps the German text", () => {
+test("switching per-language to single keeps the language shown", () => {
   const draft = {
     layout: EmailTemplateLayout.PER_LANGUAGE,
     content: { de: { subject: "Betreff", text: "Hallo" }, en: { subject: "Subject", text: "Hi" } },
   };
-  assert.deepEqual(editorHelpers.switchLayout(draft, EmailTemplateLayout.SINGLE), single("Betreff", "Hallo"));
+  assert.deepEqual(editorHelpers.switchLayout(draft, EmailTemplateLayout.SINGLE, "de"), single("Betreff", "Hallo"));
+  assert.deepEqual(editorHelpers.switchLayout(draft, EmailTemplateLayout.SINGLE, "en"), single("Subject", "Hi"));
 });
 
 test("switching to the current layout returns the same draft", () => {
   const draft = single("S", "T");
-  assert.equal(editorHelpers.switchLayout(draft, EmailTemplateLayout.SINGLE), draft);
+  assert.equal(editorHelpers.switchLayout(draft, EmailTemplateLayout.SINGLE, "de"), draft);
 });
 
 test("updateText and updateLabel change only the edited language", () => {
-  const draft = editorHelpers.switchLayout(single("S", "T", { someone: "Jemand" }), EmailTemplateLayout.PER_LANGUAGE);
+  const draft = editorHelpers.switchLayout(
+    single("S", "T", { someone: "Jemand" }),
+    EmailTemplateLayout.PER_LANGUAGE,
+    "de",
+  );
 
   const edited = editorHelpers.updateLabel(
     editorHelpers.updateText(draft, "en", { subject: "New" }),
@@ -151,7 +156,10 @@ test("isDirty ignores label order and blank labels, but sees real edits", () => 
   assert.equal(editorHelpers.isDirty(saved, single("S", "T", { b: "2", a: "1" })), false);
   assert.equal(editorHelpers.isDirty(single("S", "T"), single("S", "T", { a: "" })), false);
   assert.equal(editorHelpers.isDirty(saved, single("S", "T!", { a: "1", b: "2" })), true);
-  assert.equal(editorHelpers.isDirty(saved, editorHelpers.switchLayout(saved, EmailTemplateLayout.PER_LANGUAGE)), true);
+  assert.equal(
+    editorHelpers.isDirty(saved, editorHelpers.switchLayout(saved, EmailTemplateLayout.PER_LANGUAGE, "de")),
+    true,
+  );
 });
 
 const names = ["recipientName", "link"];
@@ -219,4 +227,13 @@ test("cacheMinutes rounds up to whole minutes", () => {
   assert.equal(editorHelpers.cacheMinutes(300), 5);
   assert.equal(editorHelpers.cacheMinutes(301), 6);
   assert.equal(editorHelpers.cacheMinutes(0), 1);
+});
+
+test("inAppPathOf returns the path of a same-origin link to another page", () => {
+  const here = "https://app.need4deed.org/en/dashboard/admin/email-templates";
+  assert.equal(editorHelpers.inAppPathOf("/en/dashboard/admin/accounts", here), "/en/dashboard/admin/accounts");
+  assert.equal(editorHelpers.inAppPathOf("https://app.need4deed.org/de/x?a=1#b", here), "/de/x?a=1#b");
+  assert.equal(editorHelpers.inAppPathOf("https://example.org/en", here), null);
+  assert.equal(editorHelpers.inAppPathOf(here, here), null);
+  assert.equal(editorHelpers.inAppPathOf("#top", here), null);
 });

@@ -33,7 +33,11 @@ const copyText = ({ subject, text, labels }: ApiEmailTemplateText): ApiEmailTemp
   ...(labels ? { labels: { ...labels } } : {}),
 });
 
-export function switchLayout(content: ApiEmailTemplateContent, to: EmailTemplateLayout): ApiEmailTemplateContent {
+export function switchLayout(
+  content: ApiEmailTemplateContent,
+  to: EmailTemplateLayout,
+  keepLang: Lang,
+): ApiEmailTemplateContent {
   if (content.layout === to) return content;
   if (content.layout === EmailTemplateLayout.SINGLE) {
     return {
@@ -41,7 +45,7 @@ export function switchLayout(content: ApiEmailTemplateContent, to: EmailTemplate
       content: { [Lang.DE]: copyText(content.content), [Lang.EN]: copyText(content.content) },
     };
   }
-  return { layout: EmailTemplateLayout.SINGLE, content: copyText(content.content[Lang.DE]) };
+  return { layout: EmailTemplateLayout.SINGLE, content: copyText(content.content[keepLang]) };
 }
 
 export const textOf = (content: ApiEmailTemplateContent, lang: Lang): ApiEmailTemplateText =>
@@ -134,3 +138,11 @@ export function toSaveErrorView(error: ApiEmailTemplateSaveError, placeholderNam
 }
 
 export const cacheMinutes = (seconds: number) => Math.max(1, Math.ceil(seconds / 60));
+
+export function inAppPathOf(href: string, currentHref: string): string | null {
+  const target = new URL(href, currentHref);
+  const current = new URL(currentHref);
+  if (target.origin !== current.origin) return null;
+  if (target.pathname === current.pathname && target.search === current.search) return null;
+  return `${target.pathname}${target.search}${target.hash}`;
+}

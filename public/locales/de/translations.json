@@ -2091,7 +2091,7 @@
         "layoutSingle": "Ein Text für alle Empfänger*innen",
         "layoutPerLanguage": "Getrennte Texte auf Deutsch und Englisch",
         "layoutSingleHint": "Alle erhalten diesen Text. Wer Englisch gewählt hat, bekommt bei zweisprachigen Platzhaltern die englischen Werte.",
-        "layoutPerLanguageHint": "Empfänger*innen erhalten je nach ihrer Sprache den deutschen oder den englischen Text.",
+        "layoutPerLanguageHint": "Empfänger*innen erhalten je nach ihrer Sprache den deutschen oder den englischen Text. Beim Wechsel zurück zu einem Text bleibt die angezeigte Sprache erhalten.",
         "language": "Sprache",
         "languages": {
           "de": "Deutsch",
@@ -2129,6 +2129,10 @@
           "needsLanguage": "Diese E-Mail kennt die Sprache der empfangenden Person nicht, daher brauchen diese Platzhalter eine Sprache: {{placeholders}}. Zum Beispiel {{example}}.",
           "missing_placeholder": "Fügen Sie diese Platzhalter wieder ein: {{placeholders}}."
         },
+        "conflictLoading": "Die gespeicherte Fassung wird geladen … Wenn das lange dauert, prüfen Sie erneut.",
+        "checkAgain": "Erneut prüfen",
+        "unsavedLeaveMessage": "Diese Vorlage hat ungespeicherte Änderungen. Sie gehen verloren, wenn Sie diese Seite verlassen.",
+        "unsavedLeaveConfirm": "Verwerfen und verlassen",
         "labelNames": {
           "commentOnVolunteer": "Markiert in: Kommentar zu einer freiwilligen Person",
           "commentOnOpportunity": "Markiert in: Kommentar zu einem Gesuch",

@@ -1,1 +1,1 @@
-export * from "./EmailTemplates";
+export * from "./email-templates";
