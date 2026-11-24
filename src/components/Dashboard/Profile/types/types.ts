@@ -1,16 +1,36 @@
-import { ApiOpportunityGet, ApiVolunteerGet } from "need4deed-sdk";
+import { ApiOpportunityGet, ApiOrganizationGet, ApiVolunteerGet } from "need4deed-sdk";
 import { ApiAgentProfileGet } from "./agent";
 
-export type EntityType = "volunteer" | "opportunity" | "agent";
+export type EntityType = "volunteer" | "opportunity" | "agent" | "organization";
 
 export type ProfileEntityProps =
-  | { volunteer: ApiVolunteerGet; opportunity?: never; agent?: never; handleProfileNavigation?: never }
-  | { opportunity: ApiOpportunityGet; volunteer?: never; agent?: never; handleProfileNavigation?: never }
+  | {
+      volunteer: ApiVolunteerGet;
+      opportunity?: never;
+      agent?: never;
+      organization?: never;
+      handleProfileNavigation?: never;
+    }
+  | {
+      opportunity: ApiOpportunityGet;
+      volunteer?: never;
+      agent?: never;
+      organization?: never;
+      handleProfileNavigation?: never;
+    }
   | {
       agent: ApiAgentProfileGet;
       volunteer?: never;
       opportunity?: never;
+      organization?: never;
       handleProfileNavigation?: (direction: ProfileNavigationDirection) => void;
+    }
+  | {
+      organization: ApiOrganizationGet;
+      agent?: never;
+      volunteer?: never;
+      opportunity?: never;
+      handleProfileNavigation?: never;
     };
 
 export enum ProfileCardTypes {

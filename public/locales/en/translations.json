@@ -1624,6 +1624,47 @@
         "deleteSuccess": "NGO deleted successfully"
       }
     },
+    "organizationProfile": {
+      "title": "Träger Profile",
+      "contactDetails": {
+        "title": "Contact details",
+        "contactPerson": "Contact person",
+        "email": "E-mail",
+        "phone": "Phone",
+        "edit": "Edit",
+        "cancel": "Cancel",
+        "saveChanges": "Save changes",
+        "saveSuccess": "Contact details updated successfully",
+        "validation": {
+          "emailInvalid": "Please enter a valid email address",
+          "phoneInvalid": "Phone number may only contain digits, +, spaces, hyphens and parentheses"
+        }
+      },
+      "organisationDetails": {
+        "title": "Träger details",
+        "orgTitle": "Name",
+        "edit": "Edit",
+        "about": "About",
+        "website": "Website",
+        "address": "Address",
+        "addressStreet": "Street",
+        "addressPostcode": "Postcode",
+        "services": "Services",
+        "cancel": "Cancel",
+        "saveChanges": "Save changes",
+        "saveSuccess": "Träger details updated successfully",
+        "validation": {
+          "required": "This field is required",
+          "aboutMaxLength": "Maximum {{max}} characters allowed",
+          "websiteInvalid": "Website must start with http:// or https://",
+          "postcodeRequiredWithStreet": "Postcode is required when a street address is provided"
+        }
+      },
+      "agents": {
+        "title": "NGOs",
+        "emptyState": "No NGOs linked to this Träger yet."
+      }
+    },
     "opportunityProfile": {
       "opportunityProfile": "Opportunity's profile",
       "postedOn": "Posted on",
