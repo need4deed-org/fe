@@ -2079,7 +2079,7 @@
         "empty": "Keine Daten für diesen Zeitraum.",
         "loadError": "Die Statistiken konnten nicht geladen werden. Bitte laden Sie die Seite neu.",
         "overlapNote": "Manche Einträge zählen zu mehreren Gruppen, daher können die Segmente zusammen mehr als die Gesamtzahl ergeben.",
-        "snapshotNote": "Zählt die Freiwilligen, die am Ende des Zeitraums diesen Status hatten; beim laufenden Quartal oder Jahr am Ende des letzten abgeschlossenen Monats. Zeiträume vor Beginn der Erfassung sind leer.",
+        "snapshotNote": "Zählt die Freiwilligen, die am Monatsende diesen Status hatten; Quartal oder Jahr zeigen den letzten Monatsendstand. Ein Monat wird erst nach seinem Ende gezählt, Zeiträume vor Beginn der Erfassung sind leer.",
         "allTime": {
           "title": "Gesamtzahlen seit Beginn",
           "tracked": "Seit Beginn der Erfassung",

@@ -115,7 +115,7 @@ export function Statistics() {
             {showTable && <StatisticsTable rows={chart.rows} series={chart.series} caption={title} />}
           </>
         )}
-        {metricOption.noteKey && <Note>{t(metricOption.noteKey)}</Note>}
+        {metricOption.noteKey && isRangeValid && !isLoading && !isError && <Note>{t(metricOption.noteKey)}</Note>}
       </Card>
 
       {metricOption.allTimeTotalsBy && <AllTimeTotals metric={metric} groupBy={metricOption.allTimeTotalsBy} />}
