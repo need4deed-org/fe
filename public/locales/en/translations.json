@@ -1641,7 +1641,7 @@
         }
       },
       "organisationDetails": {
-        "title": "Träger details",
+        "title": "Organization details",
         "orgTitle": "Name",
         "edit": "Edit",
         "about": "About",
