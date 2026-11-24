@@ -2444,10 +2444,10 @@ natural-compare@^1.4.0:
   resolved "https://registry.npmjs.org/natural-compare/-/natural-compare-1.4.0.tgz"
   integrity sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==
 
-need4deed-sdk@0.0.225:
-  version "0.0.225"
-  resolved "https://registry.yarnpkg.com/need4deed-sdk/-/need4deed-sdk-0.0.225.tgz#2b6bc3735cccc72e76253b54e2b97fea77490554"
-  integrity sha512-M/0p63ebrYoWwGOGqrvovduJVNZZHNpcZN9ACEY3358WoEgvBhXX1CYc9phsMF3VZX934b7MJqN4VPXK13g1NQ==
+need4deed-sdk@0.0.227:
+  version "0.0.227"
+  resolved "https://registry.yarnpkg.com/need4deed-sdk/-/need4deed-sdk-0.0.227.tgz#9779af3f8e85b5f67c325ef08bf5394a2234928d"
+  integrity sha512-H7WM7zsN4tMpvALs6r3Xc6MIdeyOparJJC3g9pHz9Qwr9Ir8R5PUKX6f37Ahcck/S8ltUOkdYtsgE1tcNeIA/Q==
   dependencies:
     "@types/geojson" "^7946.0.16"
 

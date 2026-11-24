@@ -112,6 +112,7 @@ export function Statistics() {
             )}
             <StatisticsChart rows={chart.rows} series={chart.series} ariaLabel={title} />
             {chart.hasOverlappingGroups && <Note>{t("dashboard.admin.stats.overlapNote")}</Note>}
+            {metricOption.noteKey && <Note>{t(metricOption.noteKey)}</Note>}
             {showTable && <StatisticsTable rows={chart.rows} series={chart.series} caption={title} />}
           </>
         )}
