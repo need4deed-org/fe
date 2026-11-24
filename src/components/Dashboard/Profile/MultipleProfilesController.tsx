@@ -1,30 +1,51 @@
-import React, { useCallback, useState } from "react";
+import { useGetCurrentAgent } from "@/hooks/useGetCurrentAgent";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import React, { useCallback, useMemo } from "react";
 import ProfileLayout from "./ProfileLayout";
-import { ProfileNavigationDirection } from "./types";
+import { ProfileNavigation, ProfileNavigationDirection } from "./types";
+
+export const NGO_PROFILE_PARAM = "ngo";
 
 type Props = {
   agentIds: Array<number>;
 };
 
 export const MultipleProfilesController = ({ agentIds }: Props) => {
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
+  const { currentAgents } = useGetCurrentAgent();
 
-  const handleProfileNavigation = useCallback(
-    (direction: ProfileNavigationDirection): void => {
-      if (direction === ProfileNavigationDirection.LEFT) {
-        return currentIndex !== 0 ? setCurrentIndex((n) => n - 1) : setCurrentIndex(agentIds.length - 1);
-      } else if (direction === ProfileNavigationDirection.RIGHT) {
-        return currentIndex !== agentIds.length - 1 ? setCurrentIndex((n) => n + 1) : setCurrentIndex(0);
-      }
-      return;
+  const requestedId = Number(searchParams.get(NGO_PROFILE_PARAM));
+  const currentIndex = Math.max(agentIds.indexOf(requestedId), 0);
+  const selectedId = agentIds[currentIndex];
+
+  const onSelect = useCallback(
+    (id: number) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set(NGO_PROFILE_PARAM, String(id));
+      router.replace(`${pathname}?${params.toString()}`, { scroll: false });
     },
-    [currentIndex],
+    [pathname, router, searchParams],
   );
-  return (
-    <ProfileLayout
-      entityId={String(agentIds[currentIndex])}
-      entityType={"agent"}
-      handleProfileNavigation={handleProfileNavigation}
-    />
+
+  const onStep = useCallback(
+    (direction: ProfileNavigationDirection) => {
+      const step = direction === ProfileNavigationDirection.LEFT ? -1 : 1;
+      onSelect(agentIds[(currentIndex + step + agentIds.length) % agentIds.length]);
+    },
+    [agentIds, currentIndex, onSelect],
   );
+
+  const options = useMemo(
+    () =>
+      agentIds
+        .map((id) => ({ id, title: currentAgents.find((agent) => agent?.id === id)?.title ?? String(id) }))
+        .sort((a, b) => a.title.localeCompare(b.title)),
+    [agentIds, currentAgents],
+  );
+
+  const profileNavigation: ProfileNavigation = { options, selectedId, onSelect, onStep };
+
+  return <ProfileLayout entityId={String(selectedId)} entityType="agent" profileNavigation={profileNavigation} />;
 };
