@@ -13,6 +13,8 @@ export const createOrganizationContactDetailsSchema = (t: (key: string) => strin
       }),
     phone: z
       .string()
+      .min(7)
+      .max(20)
       .trim()
       .refine((val) => !val || PHONE_NUMBER_REGEX.test(val), {
         message: t(`${i18nPrefix}.phoneInvalid`),

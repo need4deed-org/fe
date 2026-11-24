@@ -10,6 +10,6 @@ export const useUpdateOrganization = (
     apiPath: `${apiPathOrganization}${organizationId}`,
     method: "patch",
     successMessage,
-    queryKeyToInvalidate: [["organization", organizationId], ["organization"]],
+    queryKeyToInvalidate: [["organization", organizationId], ["organization"], ["agent"]],
   });
 };

@@ -1648,7 +1648,7 @@
         "saveChanges": "Änderungen speichern",
         "saveSuccess": "Kontaktdaten erfolgreich aktualisiert",
         "validation": {
-          "emailInvalid": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+          "emailInvalid": "Bitte gib eine gültige E-Mail-Adresse ein",
           "phoneInvalid": "Die Telefonnummer darf nur Ziffern, +, Leerzeichen, Bindestriche und Klammern enthalten"
         }
       },
