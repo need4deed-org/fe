@@ -1,15 +1,17 @@
 "use client";
 import Button from "@/components/core/button/Button/Button";
+import { Checkbox } from "@/components/core/button/Checkbox/Checkbox";
 import { Heading2 } from "@/components/styled/text";
 import { useTranslation } from "react-i18next";
 import { EventFormData } from "./CreateEvent";
-import { ButtonRow, FieldGroup, FieldRow, FieldRowLabel, StyledInput } from "./styles";
+import { ButtonRow, FieldGroup, FieldRow, FieldRowLabel, HelperText, StyledInput } from "./styles";
 
 interface Props {
   startDate: string;
   startTime: string;
   endDate: string;
   endTime: string;
+  listed: boolean;
   onChange: (fields: Partial<EventFormData>) => void;
   onBack: () => void;
   onSubmit: () => void;
@@ -22,6 +24,7 @@ export function StepDateTime({
   startTime,
   endDate,
   endTime,
+  listed,
   onChange,
   onBack,
   onSubmit,
@@ -54,6 +57,18 @@ export function StepDateTime({
           <FieldRowLabel>{t("dashboard.calendar.createForm.endTime")}</FieldRowLabel>
           <StyledInput type="time" value={endTime} onChange={(e) => onChange({ endTime: e.target.value })} />
         </FieldRow>
+      </FieldGroup>
+
+      <FieldGroup>
+        <Checkbox
+          width="24px"
+          height="24px"
+          label={t("dashboard.calendar.createForm.listed")}
+          labelLineHeight="var(--line-height-24)"
+          checked={listed}
+          onChange={(checked) => onChange({ listed: checked })}
+        />
+        <HelperText>{t("dashboard.calendar.createForm.listedHelper")}</HelperText>
       </FieldGroup>
 
       <ButtonRow>

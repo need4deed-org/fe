@@ -6,7 +6,7 @@ export function getUpcomingEvents(events?: ApiEventN4DGetList[]) {
   today.setHours(0, 0, 0, 0);
 
   return (events ?? [])
-    .filter((event) => event.active && new Date(event.dateEnd ?? event.date) >= today)
+    .filter((event) => event.active && event.listed !== false && new Date(event.dateEnd ?? event.date) >= today)
     .sort((first, second) => new Date(first.date).getTime() - new Date(second.date).getTime());
 }
 

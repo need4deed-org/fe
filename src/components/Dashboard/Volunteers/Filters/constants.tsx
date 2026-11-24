@@ -63,6 +63,11 @@ export const defaultVolunteerCardsFilter: VolunteerCardsFilter = {
 
 export const DEFAULT_NGO_VOLUNTEER_ENGAGEMENTS = [VolunteerStateEngagementType.AVAILABLE];
 
+export const DEFAULT_STAFF_VOLUNTEER_ENGAGEMENTS = [
+  VolunteerStateEngagementType.AVAILABLE,
+  VolunteerStateEngagementType.NEW,
+];
+
 export const DEFAULT_VOLUNTEER_ENGAGEMENTS = Object.values(VolunteerStateEngagementType).filter(
   (engagement) => engagement !== VolunteerStateEngagementType.INACTIVE,
 );

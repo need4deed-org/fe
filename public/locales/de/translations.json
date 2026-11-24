@@ -1930,6 +1930,7 @@
       "noPastEvents": "Keine vergangenen Veranstaltungen vorhanden.",
       "published": "Veröffentlicht",
       "draft": "Entwurf",
+      "unlisted": "Nicht gelistet",
       "publishEvent": "Veranstaltung veröffentlichen",
       "unpublishEvent": "Veröffentlichung aufheben",
       "publishConfirmTitle": "Diese Veranstaltung veröffentlichen?",
@@ -1994,9 +1995,14 @@
         "locationHelper": "z.B. Elsenstr., Nr. 87, 12435",
         "registrationLinkHelper": "Optional. Leer lassen, um das eigene Anmeldeformular von need4deed zu nutzen.",
         "signUpQuestion": "Frage für Anmeldungen",
-        "signUpQuestionHelper": "Optional. Erscheint als zusätzliches Feld im eigenen Anmeldeformular von need4deed."
+        "signUpQuestionHelper": "Optional. Erscheint als zusätzliches Feld im eigenen Anmeldeformular von need4deed.",
+        "listed": "Auf der öffentlichen Veranstaltungsseite zeigen",
+        "listedHelper": "Aus: Die Veranstaltung wird nicht aufgelistet, aber alle mit dem Link können sich weiterhin anmelden. Den Link findest Du auf der Veranstaltungskarte im Kalender."
       },
       "openInternalRegistration": "Anmeldeformular öffnen",
+      "copySignUpLink": "Anmeldelink kopieren",
+      "signUpLinkCopied": "Anmeldelink kopiert",
+      "signUpLinkCopyFailed": "Link konnte nicht kopiert werden",
       "registrations": {
         "open": "Anmeldungen",
         "title": "Anmeldungen: {{title}}",

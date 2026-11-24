@@ -11,11 +11,12 @@ export function useEvents() {
 }
 
 export function useEvent(id?: number) {
-  const query = useEvents();
-  return {
-    ...query,
-    data: id !== undefined ? query.data?.find((event) => event.id === id) : undefined,
-  };
+  return useGetQuery<ApiEventN4DGet>({
+    queryKey: [...EVENT_QUERY_KEY, String(id)],
+    apiPath: `${apiPathEvent}/${id}`,
+    enabled: id !== undefined,
+    toastOnError: false,
+  });
 }
 
 export function useCreateEvent(onSuccess: (event: ApiEventN4DGet) => void) {

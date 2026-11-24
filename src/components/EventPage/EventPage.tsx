@@ -227,8 +227,9 @@ function EventDetails({ event }: { event: ApiEventN4DGetList }) {
 export function EventPage({ eventId }: EventPageProps) {
   const { t, i18n } = useTranslation();
   const hasEventId = eventId !== undefined;
-  const { data: events, isError, isLoading } = useEvents();
-  const { data: linkedEvent } = useEvent(eventId);
+  const { data: events, isError, isLoading: isListLoading } = useEvents();
+  const { data: linkedEvent, isLoading: isLinkedLoading } = useEvent(eventId);
+  const isLoading = isListLoading || isLinkedLoading;
   const upcomingEvents = useMemo(() => getUpcomingEvents(events), [events]);
   const selectedEvent = hasEventId ? linkedEvent : upcomingEvents[0];
   const additionalEvents = hasEventId ? [] : upcomingEvents.slice(1);
