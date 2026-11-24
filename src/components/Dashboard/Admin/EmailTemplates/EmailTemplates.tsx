@@ -3,17 +3,19 @@
 import { Select } from "@/components/core/common/select";
 import { DashboardListLoading } from "@/components/Dashboard/common/DashboardListLoading";
 import { Paragraph } from "@/components/styled/text";
-import { useEmailTemplates } from "@/hooks/use-email-templates";
+import { useEmailTemplate, useEmailTemplates } from "@/hooks/use-email-templates";
 import { EmailTemplateName } from "need4deed-sdk";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { isTemplateName, sortByLabel, templateLabelKey } from "./helpers";
+import { TemplateEditor } from "./TemplateEditor";
 
 export function EmailTemplates() {
   const { t, i18n } = useTranslation();
   const { list, isLoading, isError } = useEmailTemplates();
   const [selected, setSelected] = useState<EmailTemplateName>();
+  const { template, isLoading: isTemplateLoading, isError: isTemplateError } = useEmailTemplate(selected);
 
   if (isLoading) return <DashboardListLoading />;
   if (isError || !list) {
@@ -47,6 +49,15 @@ export function EmailTemplates() {
           </option>
         ))}
       </Select>
+
+      {selected &&
+        (isTemplateLoading ? (
+          <DashboardListLoading />
+        ) : isTemplateError || !template ? (
+          <Paragraph color="var(--color-grey-500)">{t("dashboard.admin.emailTemplates.templateLoadError")}</Paragraph>
+        ) : (
+          <TemplateEditor key={`${template.name}:${template.version}`} template={template} />
+        ))}
     </Container>
   );
 }

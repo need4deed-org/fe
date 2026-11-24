@@ -2086,6 +2086,30 @@
         "readOnly": "Auf diesem Server ist das Bearbeiten nicht eingerichtet, die Vorlagen sind daher schreibgeschützt.",
         "template": "E-Mail-Vorlage",
         "choose": "Vorlage wählen",
+        "templateLoadError": "Diese Vorlage konnte nicht geladen werden. Bitte versuchen Sie es erneut.",
+        "layout": "Sprachen",
+        "layoutSingle": "Ein Text für alle Empfänger*innen",
+        "layoutPerLanguage": "Getrennte Texte auf Deutsch und Englisch",
+        "layoutSingleHint": "Alle erhalten diesen Text. Wer Englisch gewählt hat, bekommt bei zweisprachigen Platzhaltern die englischen Werte.",
+        "layoutPerLanguageHint": "Empfänger*innen erhalten je nach ihrer Sprache den deutschen oder den englischen Text.",
+        "language": "Sprache",
+        "languages": {
+          "de": "Deutsch",
+          "en": "Englisch"
+        },
+        "subject": "Betreff",
+        "text": "Text",
+        "labels": "Bezeichnungen",
+        "labelsHint": "Kurze Texte, die die Plattform in die E-Mail einsetzt, zum Beispiel wo jemand markiert wurde oder das Wort, wenn ein Name fehlt.",
+        "labelNames": {
+          "commentOnVolunteer": "Markiert in: Kommentar zu einer freiwilligen Person",
+          "commentOnOpportunity": "Markiert in: Kommentar zu einem Gesuch",
+          "commentOnAgent": "Markiert in: Kommentar zu einer Einrichtung",
+          "comment": "Markiert in: Kommentar",
+          "post": "Markiert in: Beitrag",
+          "someone": "Name, wenn der Name der absendenden Person unbekannt ist",
+          "noName": "Anrede, wenn der Name der empfangenden Person unbekannt ist"
+        },
         "names": {
           "accompanymatch": "Begleitung vermittelt",
           "accompanymatchvolunteer": "Begleitung vermittelt (an Freiwillige)",
