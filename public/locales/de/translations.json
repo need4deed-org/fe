@@ -2082,7 +2082,29 @@
       "emailTemplates": {
         "helper": "Bearbeiten Sie die E-Mails, die die Plattform verschickt. Gespeicherte Änderungen gelten nach wenigen Minuten für neue E-Mails.",
         "loadError": "Die E-Mail-Vorlagen konnten nicht geladen werden. Bitte laden Sie die Seite neu.",
-        "saved": "E-Mail-Vorlage gespeichert"
+        "saved": "E-Mail-Vorlage gespeichert",
+        "readOnly": "Auf diesem Server ist das Bearbeiten nicht eingerichtet, die Vorlagen sind daher schreibgeschützt.",
+        "template": "E-Mail-Vorlage",
+        "choose": "Vorlage wählen",
+        "names": {
+          "accompanymatch": "Begleitung vermittelt",
+          "accompanymatchvolunteer": "Begleitung vermittelt (an Freiwillige)",
+          "accompanynotfound": "Keine Begleitung gefunden",
+          "cgcapplication": "Antrag auf Führungszeugnis",
+          "checkup": "Nachfrage nach einer Vermittlung",
+          "confirmation": "Bestätigung eines neuen Angebots",
+          "confirmationaccompanying": "Bestätigung einer neuen Begleitung",
+          "introduction": "Vorstellung bei einer Vermittlung",
+          "password-reset": "Passwort zurücksetzen",
+          "registration": "Registrierung von Freiwilligen",
+          "stale": "Erinnerung bei ruhender Vermittlung",
+          "suggestion": "Vorschlag eines Angebots",
+          "suggestion-request": "Anfrage nach Vorschlägen",
+          "suggestionaccompanying": "Vorschlag einer Begleitung",
+          "tagged": "In einem Kommentar markiert",
+          "update": "Aktualisierung eines Angebots",
+          "verification": "E-Mail-Bestätigung"
+        }
       },
       "nav": {
         "domains": "Domains",
