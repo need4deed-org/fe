@@ -131,7 +131,11 @@ export function toSaveErrorView(error: ApiEmailTemplateSaveError, placeholderNam
             example: `${placeholderSnippet(`${placeholders[0]}.de`)} / ${placeholderSnippet(`${placeholders[0]}.en`)}`,
           },
         }
-      : { ...base, key: errorKey(error.code), params: { placeholders: placeholders.join(", ") } };
+      : {
+          ...base,
+          key: errorKey(error.code),
+          params: { placeholders: placeholders.map((p) => (p.includes("{{") ? p : placeholderSnippet(p))).join(", ") },
+        };
   }
   if (error.code === "missing_placeholder") {
     return { ...base, key: errorKey(error.code), params: { placeholders: listOf(placeholders) } };

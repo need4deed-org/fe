@@ -43,11 +43,13 @@ export function TemplateEditor({ template, onDirtyChange }: Props) {
 
   const readOnly = !base.editable;
   const isPerLanguage = draft.layout === EmailTemplateLayout.PER_LANGUAGE;
+  const perLanguageAllowed = isPerLanguageAllowed(base.allowedLayouts);
   const text = textOf(draft, lang);
   const dirty = isDirty(base.template, draft);
   const isConflict = error?.kind === "conflict";
   const hasNewerVersion = template.version !== base.version && template.version !== staleVersion;
 
+  if (staleVersion !== null && template.version === base.version) setStaleVersion(null);
   if (hasNewerVersion && !dirty && !isConflict) {
     setBase(template);
     setDraft(template.template);
@@ -82,7 +84,6 @@ export function TemplateEditor({ template, onDirtyChange }: Props) {
       );
       setError(view);
       setSavedMinutes(null);
-      if (saveError.code === "not_editable") setBase({ ...base, editable: false });
       if (view.kind === "message" && view.lang && isPerLanguage) switchLang(view.lang);
     },
   });
@@ -144,7 +145,7 @@ export function TemplateEditor({ template, onDirtyChange }: Props) {
 
   return (
     <Editor>
-      {isPerLanguageAllowed(base.allowedLayouts) && (
+      {(perLanguageAllowed || isPerLanguage) && (
         <Field>
           <FieldLabel htmlFor="email-template-layout">{t("dashboard.admin.emailTemplates.layout")}</FieldLabel>
           <Select
@@ -154,7 +155,7 @@ export function TemplateEditor({ template, onDirtyChange }: Props) {
             onChange={(event) => edit(switchLayout(draft, event.target.value as EmailTemplateLayout, lang))}
           >
             <option value={EmailTemplateLayout.SINGLE}>{t("dashboard.admin.emailTemplates.layoutSingle")}</option>
-            <option value={EmailTemplateLayout.PER_LANGUAGE}>
+            <option value={EmailTemplateLayout.PER_LANGUAGE} disabled={!perLanguageAllowed}>
               {t("dashboard.admin.emailTemplates.layoutPerLanguage")}
             </option>
           </Select>

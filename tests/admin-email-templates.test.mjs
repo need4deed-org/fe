@@ -184,7 +184,7 @@ test("known placeholders without a language ask for one", () => {
 test("unknown placeholders are listed as sent", () => {
   const result = view({ code: "unknown_placeholder", placeholders: ["link.fr", "{{ x"] });
   assert.equal(result.key, key("unknown_placeholder"));
-  assert.deepEqual(result.params, { placeholders: "link.fr, {{ x" });
+  assert.deepEqual(result.params, { placeholders: "{{ link.fr }}, {{ x" });
 });
 
 test("missing placeholders and blank fields keep the language and fields", () => {
