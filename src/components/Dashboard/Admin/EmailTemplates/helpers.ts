@@ -2,6 +2,7 @@ import {
   ApiEmailTemplateContent,
   ApiEmailTemplateLayouts,
   ApiEmailTemplateListItem,
+  ApiEmailTemplateSaveError,
   ApiEmailTemplateText,
   EmailTemplateLayout,
   EmailTemplateName,
@@ -69,3 +70,67 @@ export function insertAt(value: string, start: number, end: number, snippet: str
   const to = Math.max(from, Math.min(end, value.length));
   return { value: value.slice(0, from) + snippet + value.slice(to), caret: from + snippet.length };
 }
+
+const withoutBlankLabels = ({ subject, text, labels }: ApiEmailTemplateText): ApiEmailTemplateText => {
+  const kept = Object.entries(labels ?? {})
+    .filter(([, value]) => value.trim())
+    .sort(([a], [b]) => a.localeCompare(b));
+  return { subject, text, ...(kept.length > 0 ? { labels: Object.fromEntries(kept) } : {}) };
+};
+
+export function toSaveContent(content: ApiEmailTemplateContent): ApiEmailTemplateContent {
+  if (content.layout === EmailTemplateLayout.SINGLE) {
+    return { layout: content.layout, content: withoutBlankLabels(content.content) };
+  }
+  return {
+    layout: content.layout,
+    content: {
+      [Lang.DE]: withoutBlankLabels(content.content[Lang.DE]),
+      [Lang.EN]: withoutBlankLabels(content.content[Lang.EN]),
+    },
+  };
+}
+
+export const isDirty = (saved: ApiEmailTemplateContent, draft: ApiEmailTemplateContent) =>
+  JSON.stringify(toSaveContent(saved)) !== JSON.stringify(toSaveContent(draft));
+
+export type SaveErrorView =
+  | { kind: "conflict" }
+  | { kind: "message"; key: string; params?: Record<string, string>; lang?: Lang; fields: string[] };
+
+const errorKey = (code: string) => `dashboard.admin.emailTemplates.errors.${code}`;
+const listOf = (names: string[]) => names.map(placeholderSnippet).join(", ");
+
+export function toSaveErrorView(error: ApiEmailTemplateSaveError, placeholderNames: string[]): SaveErrorView {
+  if (error.code === "version_conflict") return { kind: "conflict" };
+
+  const placeholders = error.placeholders ?? [];
+  const base = { kind: "message" as const, lang: error.lang, fields: error.fields ?? [] };
+
+  if (error.code === "unknown_placeholder") {
+    const needsLanguage = placeholders.length > 0 && placeholders.every((name) => placeholderNames.includes(name));
+    return needsLanguage
+      ? {
+          ...base,
+          key: errorKey("needsLanguage"),
+          params: {
+            placeholders: listOf(placeholders),
+            example: `${placeholderSnippet(`${placeholders[0]}.de`)} / ${placeholderSnippet(`${placeholders[0]}.en`)}`,
+          },
+        }
+      : { ...base, key: errorKey(error.code), params: { placeholders: placeholders.join(", ") } };
+  }
+  if (error.code === "missing_placeholder") {
+    return { ...base, key: errorKey(error.code), params: { placeholders: listOf(placeholders) } };
+  }
+  if (error.code === "unknown_label") {
+    return {
+      ...base,
+      key: errorKey(error.code),
+      params: { labels: base.fields.map((f) => f.replace(/^labels\./, "")).join(", ") },
+    };
+  }
+  return { ...base, key: errorKey(error.code) };
+}
+
+export const cacheMinutes = (seconds: number) => Math.max(1, Math.ceil(seconds / 60));

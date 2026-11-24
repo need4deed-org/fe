@@ -1,6 +1,7 @@
 import { apiPathEmailTemplates } from "@/config/constants";
 import { useGetQuery } from "@/hooks/useGetQuery";
 import { useMutationQuery } from "@/hooks/useMutationQuery";
+import { useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import {
   ApiEmailTemplateGet,
@@ -46,6 +47,7 @@ export const useSaveEmailTemplate = ({
   onSaved: (saved: ApiEmailTemplatePutResponse) => void;
   onSaveError: (error: ApiEmailTemplateSaveError) => void;
 }) => {
+  const queryClient = useQueryClient();
   const { mutate: saveTemplate, isPending: isSaving } = useMutationQuery<SaveInput, ApiEmailTemplatePutResponse>({
     mutationFn: ({ name, body }) =>
       axios
@@ -54,9 +56,12 @@ export const useSaveEmailTemplate = ({
     successMessage: "dashboard.admin.emailTemplates.saved",
     queryKeyToInvalidate: emailTemplatesQueryKey,
     onSuccessCallback: onSaved,
-    onErrorCallback: (error) => {
+    onErrorCallback: (error, { name }) => {
       const saveError = toSaveError(error);
       if (!saveError) return false;
+      if (saveError.code === "version_conflict") {
+        queryClient.invalidateQueries({ queryKey: [...emailTemplatesQueryKey, name] });
+      }
       onSaveError(saveError);
       return true;
     },

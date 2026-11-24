@@ -1,5 +1,6 @@
 "use client";
 
+import { ConfirmationDialog } from "@/components/core/common/ConfirmationDialog";
 import { Select } from "@/components/core/common/select";
 import { DashboardListLoading } from "@/components/Dashboard/common/DashboardListLoading";
 import { Paragraph } from "@/components/styled/text";
@@ -15,6 +16,8 @@ export function EmailTemplates() {
   const { t, i18n } = useTranslation();
   const { list, isLoading, isError } = useEmailTemplates();
   const [selected, setSelected] = useState<EmailTemplateName>();
+  const [dirty, setDirty] = useState(false);
+  const [pending, setPending] = useState<EmailTemplateName>();
   const { template, isLoading: isTemplateLoading, isError: isTemplateError } = useEmailTemplate(selected);
 
   if (isLoading) return <DashboardListLoading />;
@@ -37,7 +40,9 @@ export function EmailTemplates() {
         value={selected ?? ""}
         onChange={(event) => {
           const { value } = event.target;
-          if (isTemplateName(value)) setSelected(value);
+          if (!isTemplateName(value)) return;
+          if (dirty) setPending(value);
+          else setSelected(value);
         }}
       >
         <option value="" disabled>
@@ -56,8 +61,22 @@ export function EmailTemplates() {
         ) : isTemplateError || !template ? (
           <Paragraph color="var(--color-grey-500)">{t("dashboard.admin.emailTemplates.templateLoadError")}</Paragraph>
         ) : (
-          <TemplateEditor key={`${template.name}:${template.version}`} template={template} />
+          <TemplateEditor key={template.name} template={template} onDirtyChange={setDirty} />
         ))}
+
+      {pending && (
+        <ConfirmationDialog
+          title={t("dashboard.admin.emailTemplates.unsavedTitle")}
+          message={t("dashboard.admin.emailTemplates.unsavedMessage")}
+          confirmText={t("dashboard.admin.emailTemplates.unsavedConfirm")}
+          onCancel={() => setPending(undefined)}
+          onConfirm={() => {
+            setDirty(false);
+            setSelected(pending);
+            setPending(undefined);
+          }}
+        />
+      )}
     </Container>
   );
 }

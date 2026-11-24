@@ -137,3 +137,86 @@ test("insertAt clamps a cursor outside the text", () => {
   assert.deepEqual(editorHelpers.insertAt("ab", 9, 12, "X"), { value: "abX", caret: 3 });
   assert.deepEqual(editorHelpers.insertAt("ab", -1, 1, "X"), { value: "Xb", caret: 1 });
 });
+
+test("toSaveContent drops blank labels so the default text is used", () => {
+  assert.deepEqual(
+    editorHelpers.toSaveContent(single("S", "T", { someone: " ", noName: "zusammen" })),
+    single("S", "T", { noName: "zusammen" }),
+  );
+  assert.deepEqual(editorHelpers.toSaveContent(single("S", "T", { someone: "" })), single("S", "T"));
+});
+
+test("isDirty ignores label order and blank labels, but sees real edits", () => {
+  const saved = single("S", "T", { a: "1", b: "2" });
+  assert.equal(editorHelpers.isDirty(saved, single("S", "T", { b: "2", a: "1" })), false);
+  assert.equal(editorHelpers.isDirty(single("S", "T"), single("S", "T", { a: "" })), false);
+  assert.equal(editorHelpers.isDirty(saved, single("S", "T!", { a: "1", b: "2" })), true);
+  assert.equal(editorHelpers.isDirty(saved, editorHelpers.switchLayout(saved, EmailTemplateLayout.PER_LANGUAGE)), true);
+});
+
+const names = ["recipientName", "link"];
+const view = (error) => editorHelpers.toSaveErrorView({ message: "m", ...error }, names);
+const key = (code) => `dashboard.admin.emailTemplates.errors.${code}`;
+
+test("a version conflict gets its own view", () => {
+  assert.deepEqual(view({ code: "version_conflict" }), { kind: "conflict" });
+});
+
+test("known placeholders without a language ask for one", () => {
+  assert.deepEqual(view({ code: "unknown_placeholder", placeholders: ["link"] }), {
+    kind: "message",
+    key: key("needsLanguage"),
+    params: { placeholders: "{{ link }}", example: "{{ link.de }} / {{ link.en }}" },
+    lang: undefined,
+    fields: [],
+  });
+});
+
+test("unknown placeholders are listed as sent", () => {
+  const result = view({ code: "unknown_placeholder", placeholders: ["link.fr", "{{ x"] });
+  assert.equal(result.key, key("unknown_placeholder"));
+  assert.deepEqual(result.params, { placeholders: "link.fr, {{ x" });
+});
+
+test("missing placeholders and blank fields keep the language and fields", () => {
+  const missing = view({ code: "missing_placeholder", placeholders: ["recipientName", "link"], lang: "en" });
+  assert.equal(missing.key, key("missing_placeholder"));
+  assert.equal(missing.params.placeholders, "{{ recipientName }}, {{ link }}");
+  assert.equal(missing.lang, "en");
+
+  const blank = view({ code: "blank_field", fields: ["subject", "labels.someone"], lang: "de" });
+  assert.deepEqual(blank, {
+    kind: "message",
+    key: key("blank_field"),
+    lang: "de",
+    fields: ["subject", "labels.someone"],
+  });
+});
+
+test("unknown labels are named without the labels. prefix", () => {
+  assert.deepEqual(view({ code: "unknown_label", fields: ["labels.foo"] }).params, { labels: "foo" });
+});
+
+test("every save error has an en and de message", () => {
+  const codes = [
+    "not_editable",
+    "layout_not_allowed",
+    "missing_placeholder",
+    "unknown_placeholder",
+    "blank_field",
+    "unknown_label",
+    "needsLanguage",
+    "fieldBlank",
+  ];
+  for (const lng of ["en", "de"]) {
+    for (const code of codes) {
+      assert.equal(typeof lookup(translations(lng), key(code)), "string", `${lng}: ${code}`);
+    }
+  }
+});
+
+test("cacheMinutes rounds up to whole minutes", () => {
+  assert.equal(editorHelpers.cacheMinutes(300), 5);
+  assert.equal(editorHelpers.cacheMinutes(301), 6);
+  assert.equal(editorHelpers.cacheMinutes(0), 1);
+});
