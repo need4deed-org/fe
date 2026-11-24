@@ -1,4 +1,3 @@
-import { supportedLangs } from "@/config/constants";
 import {
   ApiEmailTemplateContent,
   ApiEmailTemplateLayouts,
@@ -24,7 +23,7 @@ export function sortByLabel(
   return [...templates].sort((a, b) => labelOf(a.name).localeCompare(labelOf(b.name), locale));
 }
 
-export const LANGS = [Lang.DE, Lang.EN];
+export const editorLangs = [Lang.DE, Lang.EN];
 
 export const isPerLanguageAllowed = (allowedLayouts: ApiEmailTemplateLayouts) =>
   (allowedLayouts as EmailTemplateLayout[]).includes(EmailTemplateLayout.PER_LANGUAGE);
@@ -152,13 +151,13 @@ export function toSaveErrorView(error: ApiEmailTemplateSaveError, placeholderNam
 
 export const cacheMinutes = (seconds: number) => Math.max(1, Math.ceil(seconds / 60));
 
-export const isAppPath = (path: string) => supportedLangs.includes(path.split(/[/?#]/)[1] ?? "");
+export const isAppPath = (pathname: string) =>
+  !/^\/(api|_next|health|\.well-known|swagger)(\/|$)/.test(pathname) && !/\.[a-z0-9]+$/i.test(pathname);
 
 export function inAppPathOf(href: string, currentHref: string): string | null {
   const target = new URL(href, currentHref);
   const current = new URL(currentHref);
   if (target.origin !== current.origin) return null;
   if (target.pathname === current.pathname && target.search === current.search) return null;
-  const path = `${target.pathname}${target.search}${target.hash}`;
-  return isAppPath(path) ? path : null;
+  return isAppPath(target.pathname) ? `${target.pathname}${target.search}${target.hash}` : null;
 }

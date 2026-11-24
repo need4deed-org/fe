@@ -239,12 +239,15 @@ test("inAppPathOf returns the path of a same-origin link to another page", () =>
   assert.equal(editorHelpers.inAppPathOf(here, here), null);
   assert.equal(editorHelpers.inAppPathOf("#top", here), null);
   assert.equal(editorHelpers.inAppPathOf("/swagger", here), null);
+  assert.equal(editorHelpers.inAppPathOf("/about", here), "/about");
 });
 
-test("isAppPath tells app pages from other same-origin paths", () => {
+test("isAppPath leaves out paths the app does not serve", () => {
   assert.equal(editorHelpers.isAppPath("/en/dashboard/admin/accounts"), true);
-  assert.equal(editorHelpers.isAppPath("/de"), true);
+  assert.equal(editorHelpers.isAppPath("/about"), true);
+  assert.equal(editorHelpers.isAppPath("/"), true);
   assert.equal(editorHelpers.isAppPath("/swagger"), false);
   assert.equal(editorHelpers.isAppPath("/api/x"), false);
-  assert.equal(editorHelpers.isAppPath("/end"), false);
+  assert.equal(editorHelpers.isAppPath("/_next/static/x.js"), false);
+  assert.equal(editorHelpers.isAppPath("/files/report.pdf"), false);
 });

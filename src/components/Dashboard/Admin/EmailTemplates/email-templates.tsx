@@ -4,7 +4,8 @@ import { ConfirmationDialog } from "@/components/core/common/ConfirmationDialog"
 import { Select } from "@/components/core/common/select";
 import { DashboardListLoading } from "@/components/Dashboard/common/DashboardListLoading";
 import { Paragraph } from "@/components/styled/text";
-import { useEmailTemplate, useEmailTemplates } from "@/hooks/use-email-templates";
+import { Button } from "@/components/core/button";
+import { useEmailTemplate, useEmailTemplates, useReloadEmailTemplate } from "@/hooks/use-email-templates";
 import { EmailTemplateName } from "need4deed-sdk";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -21,11 +22,13 @@ export function EmailTemplates() {
   const { list, isLoading } = useEmailTemplates();
   const [selected, setSelected] = useState<EmailTemplateName>();
   const [dirty, setDirty] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const reload = useReloadEmailTemplate();
   const [pending, setPending] = useState<Pending>();
   const { template, isLoading: isTemplateLoading } = useEmailTemplate(selected);
 
   useEffect(() => {
-    if (!dirty) return;
+    if (!dirty && !saving) return;
     const confirmLeaving = (event: MouseEvent) => {
       if (event.defaultPrevented || event.button !== 0) return;
       if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
@@ -35,11 +38,11 @@ export function EmailTemplates() {
       const path = inAppPathOf(anchor.href, window.location.href);
       if (path === null) return;
       event.preventDefault();
-      setPending({ path });
+      if (!saving) setPending({ path });
     };
     document.addEventListener("click", confirmLeaving, true);
     return () => document.removeEventListener("click", confirmLeaving, true);
-  }, [dirty]);
+  }, [dirty, saving]);
 
   if (isLoading) return <DashboardListLoading />;
   if (!list) {
@@ -71,6 +74,7 @@ export function EmailTemplates() {
       <Select
         aria-label={t("dashboard.admin.emailTemplates.template")}
         value={selected ?? ""}
+        disabled={saving}
         onChange={(event) => {
           const { value } = event.target;
           if (!isTemplateName(value)) return;
@@ -90,11 +94,14 @@ export function EmailTemplates() {
 
       {selected &&
         (template ? (
-          <TemplateEditor key={template.name} template={template} onDirtyChange={setDirty} />
+          <TemplateEditor key={template.name} template={template} onDirtyChange={setDirty} onSavingChange={setSaving} />
         ) : isTemplateLoading ? (
           <DashboardListLoading />
         ) : (
-          <Paragraph color="var(--color-grey-500)">{t("dashboard.admin.emailTemplates.templateLoadError")}</Paragraph>
+          <LoadError>
+            <Paragraph color="var(--color-grey-500)">{t("dashboard.admin.emailTemplates.templateLoadError")}</Paragraph>
+            <Button text={t("dashboard.admin.emailTemplates.retry")} width="auto" onClick={() => reload(selected)} />
+          </LoadError>
         ))}
 
       {pending && (
@@ -125,4 +132,11 @@ const Container = styled.div`
   flex-direction: column;
   gap: var(--spacing-24);
   max-width: 960px;
+`;
+
+const LoadError = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-12);
 `;

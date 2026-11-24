@@ -14,7 +14,7 @@ import {
   insertAt,
   isDirty,
   isPerLanguageAllowed,
-  LANGS,
+  editorLangs,
   placeholderSnippet,
   SaveErrorView,
   switchLayout,
@@ -29,9 +29,13 @@ import { PlaceholderChips } from "./placeholder-chips";
 
 type InsertTarget = { field: "subject" | "text"; element: HTMLTextAreaElement };
 
-type Props = { template: ApiEmailTemplateGet; onDirtyChange: (dirty: boolean) => void };
+type Props = {
+  template: ApiEmailTemplateGet;
+  onDirtyChange: (dirty: boolean) => void;
+  onSavingChange: (saving: boolean) => void;
+};
 
-export function TemplateEditor({ template, onDirtyChange }: Props) {
+export function TemplateEditor({ template, onDirtyChange, onSavingChange }: Props) {
   const { t } = useTranslation();
   const [base, setBase] = useState(template);
   const [draft, setDraft] = useState(template.template);
@@ -51,6 +55,7 @@ export function TemplateEditor({ template, onDirtyChange }: Props) {
   if (hasNewerVersion && !dirty && !isConflict) {
     setBase(template);
     setDraft(template.template);
+    setSavedMinutes(null);
     if (error?.kind === "message") setError(null);
   }
 
@@ -87,6 +92,9 @@ export function TemplateEditor({ template, onDirtyChange }: Props) {
   });
   const locked = readOnly || isSaving;
 
+  useEffect(() => onSavingChange(isSaving), [isSaving, onSavingChange]);
+  useEffect(() => () => onSavingChange(false), [onSavingChange]);
+
   const switchLang = (next: Lang) => {
     insertTarget.current = null;
     setLang(next);
@@ -103,6 +111,7 @@ export function TemplateEditor({ template, onDirtyChange }: Props) {
   };
 
   const loadLatest = () => {
+    setSavedMinutes(null);
     setBase(template);
     setDraft(template.template);
     setError(null);
@@ -169,7 +178,7 @@ export function TemplateEditor({ template, onDirtyChange }: Props) {
 
       {isPerLanguage && (
         <LangTabs role="group" aria-label={t("dashboard.admin.emailTemplates.language")}>
-          {LANGS.map((value) => (
+          {editorLangs.map((value) => (
             <LangTab key={value} type="button" aria-pressed={lang === value} onClick={() => switchLang(value)}>
               {t(`dashboard.admin.emailTemplates.languages.${value}`)}
             </LangTab>

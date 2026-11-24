@@ -2120,6 +2120,7 @@
         "checkAgain": "Check again",
         "unsavedLeaveMessage": "This template has changes that are not saved. They will be lost if you leave this page.",
         "unsavedLeaveConfirm": "Discard and leave",
+        "retry": "Try again",
         "labelNames": {
           "commentOnVolunteer": "Tagged in: a comment on a volunteer",
           "commentOnOpportunity": "Tagged in: a comment on an opportunity",

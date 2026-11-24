@@ -2132,6 +2132,7 @@
         "checkAgain": "Erneut prüfen",
         "unsavedLeaveMessage": "Diese Vorlage hat ungespeicherte Änderungen. Sie gehen verloren, wenn Sie diese Seite verlassen.",
         "unsavedLeaveConfirm": "Verwerfen und verlassen",
+        "retry": "Erneut versuchen",
         "labelNames": {
           "commentOnVolunteer": "Markiert in: Kommentar zu einer freiwilligen Person",
           "commentOnOpportunity": "Markiert in: Kommentar zu einem Gesuch",
