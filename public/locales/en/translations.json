@@ -2068,7 +2068,7 @@
         }
       },
       "emailTemplates": {
-        "helper": "Edit the emails the platform sends. Saved changes reach the senders within about 5 minutes.",
+        "helper": "Edit the emails the platform sends. Saved changes are used for new emails within a few minutes.",
         "loadError": "Could not load the email templates. Please reload the page.",
         "saved": "Email template saved"
       },

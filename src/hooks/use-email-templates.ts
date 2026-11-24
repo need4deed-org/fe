@@ -1,7 +1,7 @@
 import { apiPathEmailTemplates } from "@/config/constants";
 import { useGetQuery } from "@/hooks/useGetQuery";
 import { useMutationQuery } from "@/hooks/useMutationQuery";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import {
   ApiEmailTemplateGet,
   ApiEmailTemplateList,
@@ -9,6 +9,7 @@ import {
   ApiEmailTemplatePutResponse,
   ApiEmailTemplateSaveError,
   EmailTemplateName,
+  EmailTemplateSaveErrorCode,
 } from "need4deed-sdk";
 
 const emailTemplatesQueryKey = ["email-templates"];
@@ -25,7 +26,7 @@ export const useEmailTemplates = () => {
 };
 
 export const useEmailTemplate = (name: EmailTemplateName | undefined) => {
-  const { data, isLoading, isError, refetch } = useGetQuery<ApiEmailTemplateGet>({
+  const { data, isLoading, isError } = useGetQuery<ApiEmailTemplateGet>({
     queryKey: [...emailTemplatesQueryKey, name ?? ""],
     apiPath: `${apiPathEmailTemplates}/${name}`,
     enabled: name !== undefined,
@@ -33,7 +34,7 @@ export const useEmailTemplate = (name: EmailTemplateName | undefined) => {
     toastOnError: false,
   });
 
-  return { template: data, isLoading, isError, refetch };
+  return { template: data, isLoading, isError };
 };
 
 type SaveInput = { name: EmailTemplateName; body: ApiEmailTemplatePut };
@@ -64,9 +65,23 @@ export const useSaveEmailTemplate = ({
   return { saveTemplate, isSaving };
 };
 
+const saveErrorCodes: Record<EmailTemplateSaveErrorCode, true> = {
+  not_editable: true,
+  version_conflict: true,
+  layout_not_allowed: true,
+  missing_placeholder: true,
+  unknown_placeholder: true,
+  blank_field: true,
+  unknown_label: true,
+};
+
+const isSaveErrorCode = (code: unknown): code is EmailTemplateSaveErrorCode =>
+  typeof code === "string" && Object.hasOwn(saveErrorCodes, code);
+
 function toSaveError(error: unknown): ApiEmailTemplateSaveError | undefined {
-  const data = (error as AxiosError<Partial<ApiEmailTemplateSaveError>>)?.response?.data;
-  return axios.isAxiosError(error) && typeof data?.code === "string" && typeof data.message === "string"
+  if (!axios.isAxiosError<Partial<ApiEmailTemplateSaveError>>(error)) return undefined;
+  const data = error.response?.data;
+  return isSaveErrorCode(data?.code) && typeof data.message === "string"
     ? (data as ApiEmailTemplateSaveError)
     : undefined;
 }
