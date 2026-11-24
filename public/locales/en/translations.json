@@ -2070,7 +2070,6 @@
       "emailTemplates": {
         "helper": "Edit the emails the platform sends. Saved changes are used for new emails within a few minutes.",
         "loadError": "Could not load the email templates. Please reload the page.",
-        "saved": "Email template saved",
         "readOnly": "Editing is not set up on this server, so the templates are read-only.",
         "template": "Email template",
         "choose": "Choose a template",

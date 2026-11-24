@@ -47,7 +47,11 @@ export function EmailTemplates() {
   }
 
   const labelOf = (name: EmailTemplateName) => t(templateLabelKey(name));
-  const templates = sortByLabel(list.templates, labelOf, i18n.language);
+  const templates = sortByLabel(
+    list.templates.filter(({ name }) => isTemplateName(name)),
+    labelOf,
+    i18n.language,
+  );
 
   const confirmPending = () => {
     if (!pending) return;

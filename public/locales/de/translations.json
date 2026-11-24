@@ -2082,7 +2082,6 @@
       "emailTemplates": {
         "helper": "Bearbeiten Sie die E-Mails, die die Plattform verschickt. Gespeicherte Änderungen gelten nach wenigen Minuten für neue E-Mails.",
         "loadError": "Die E-Mail-Vorlagen konnten nicht geladen werden. Bitte laden Sie die Seite neu.",
-        "saved": "E-Mail-Vorlage gespeichert",
         "readOnly": "Auf diesem Server ist das Bearbeiten nicht eingerichtet, die Vorlagen sind daher schreibgeschützt.",
         "template": "E-Mail-Vorlage",
         "choose": "Vorlage wählen",

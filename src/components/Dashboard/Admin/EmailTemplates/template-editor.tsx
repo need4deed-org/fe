@@ -35,7 +35,6 @@ export function TemplateEditor({ template, onDirtyChange }: Props) {
   const { t } = useTranslation();
   const [base, setBase] = useState(template);
   const [draft, setDraft] = useState(template.template);
-  const [staleVersion, setStaleVersion] = useState<string | null>(null);
   const [lang, setLang] = useState(Lang.DE);
   const [error, setError] = useState<SaveErrorView | null>(null);
   const [savedMinutes, setSavedMinutes] = useState<number | null>(null);
@@ -47,12 +46,12 @@ export function TemplateEditor({ template, onDirtyChange }: Props) {
   const text = textOf(draft, lang);
   const dirty = isDirty(base.template, draft);
   const isConflict = error?.kind === "conflict";
-  const hasNewerVersion = template.version !== base.version && template.version !== staleVersion;
+  const hasNewerVersion = template.version !== base.version;
 
-  if (staleVersion !== null && template.version === base.version) setStaleVersion(null);
   if (hasNewerVersion && !dirty && !isConflict) {
     setBase(template);
     setDraft(template.template);
+    if (error?.kind === "message") setError(null);
   }
 
   useEffect(() => onDirtyChange(dirty), [dirty, onDirtyChange]);
@@ -71,7 +70,6 @@ export function TemplateEditor({ template, onDirtyChange }: Props) {
   const reload = useReloadEmailTemplate();
   const { saveTemplate, isSaving } = useSaveEmailTemplate({
     onSaved: (saved) => {
-      setStaleVersion(base.version);
       setBase(saved);
       setDraft(saved.template);
       setError(null);
@@ -299,7 +297,10 @@ export function TemplateEditor({ template, onDirtyChange }: Props) {
                 textColor="var(--color-midnight)"
                 border="1px solid var(--color-midnight)"
                 disabled={isSaving}
-                onClick={() => edit(base.template)}
+                onClick={() => {
+                  edit(base.template);
+                  setError(null);
+                }}
               />
             )}
           </Actions>

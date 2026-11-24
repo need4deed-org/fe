@@ -52,15 +52,22 @@ export const useSaveEmailTemplate = ({
   onSaved: (saved: ApiEmailTemplatePutResponse) => void;
   onSaveError: (error: ApiEmailTemplateSaveError) => void;
 }) => {
+  const queryClient = useQueryClient();
   const reload = useReloadEmailTemplate();
   const { mutate: saveTemplate, isPending: isSaving } = useMutationQuery<SaveInput, ApiEmailTemplatePutResponse>({
     mutationFn: ({ name, body }) =>
       axios
         .put<{ data: ApiEmailTemplatePutResponse }>(`${apiPathEmailTemplates}/${name}`, body)
         .then((res) => res.data.data),
-    successMessage: "dashboard.admin.emailTemplates.saved",
+    noToast: true,
     queryKeyToInvalidate: emailTemplatesQueryKey,
-    onSuccessCallback: onSaved,
+    onSuccessCallback: (saved) => {
+      queryClient.setQueriesData<{ data: ApiEmailTemplateGet }>(
+        { queryKey: [...emailTemplatesQueryKey, saved.name] },
+        (cached) => (cached ? { ...cached, data: saved } : cached),
+      );
+      onSaved(saved);
+    },
     onErrorCallback: (error, { name }) => {
       const saveError = toSaveError(error);
       if (!saveError) return false;
