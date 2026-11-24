@@ -12,11 +12,11 @@ export const PROJECT_PARAM = "project";
 
 export function useProjectParam() {
   const searchParams = useSearchParams();
-  const { agentIds, userRole } = useGetCurrentAgent();
+  const { agentIds, traegerId, userRole } = useGetCurrentAgent();
   const requested = Number(searchParams.get(PROJECT_PARAM));
-  const isMultiNgoUser = userRole === UserRole.AGENT && agentIds.length > 1;
-  const projectId = isMultiNgoUser && agentIds.includes(requested) ? requested : undefined;
-  return { projectId, isMultiNgoUser };
+  const isTraegerUser = userRole === UserRole.AGENT && Boolean(traegerId);
+  const projectId = isTraegerUser && agentIds.includes(requested) ? requested : undefined;
+  return { projectId, isTraegerUser };
 }
 
 export function ProjectPicker() {
@@ -25,7 +25,7 @@ export function ProjectPicker() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { agentIds, currentAgents } = useGetCurrentAgent();
-  const { projectId, isMultiNgoUser } = useProjectParam();
+  const { projectId, isTraegerUser } = useProjectParam();
 
   const options = useMemo(
     () =>
@@ -35,7 +35,7 @@ export function ProjectPicker() {
     [agentIds, currentAgents],
   );
 
-  if (!isMultiNgoUser) return null;
+  if (!isTraegerUser) return null;
 
   const handleChange = (value: string) => {
     const params = new URLSearchParams(searchParams.toString());
