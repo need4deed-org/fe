@@ -2067,7 +2067,7 @@
         "empty": "No data for this period.",
         "loadError": "Could not load the statistics. Please reload the page.",
         "overlapNote": "Some entries count towards more than one group, so the segments can add up to more than the total.",
-        "snapshotNote": "Counts volunteers in this status at the end of each month (for a quarter or year: at its end). Periods before recording started are empty.",
+        "snapshotNote": "Counts volunteers in this status at the end of each period; for the current quarter or year, at the end of its last completed month. Periods before recording started are empty.",
         "allTime": {
           "title": "All-time totals",
           "tracked": "Since tracking started",

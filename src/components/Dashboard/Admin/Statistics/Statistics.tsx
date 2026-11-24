@@ -112,10 +112,10 @@ export function Statistics() {
             )}
             <StatisticsChart rows={chart.rows} series={chart.series} ariaLabel={title} />
             {chart.hasOverlappingGroups && <Note>{t("dashboard.admin.stats.overlapNote")}</Note>}
-            {metricOption.noteKey && <Note>{t(metricOption.noteKey)}</Note>}
             {showTable && <StatisticsTable rows={chart.rows} series={chart.series} caption={title} />}
           </>
         )}
+        {metricOption.noteKey && <Note>{t(metricOption.noteKey)}</Note>}
       </Card>
 
       {metricOption.allTimeTotalsBy && <AllTimeTotals metric={metric} groupBy={metricOption.allTimeTotalsBy} />}
