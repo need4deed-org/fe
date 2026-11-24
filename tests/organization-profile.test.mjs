@@ -137,10 +137,10 @@ test("organization details schema validates title, about, website, and street/po
   );
 });
 
-test("organization contact details schema allows empty values and validates non-empty email and phone", () => {
+test("organization contact details schema does not allow empty values and validates non-empty email and phone", () => {
   const schema = contactSchemaModule.createOrganizationContactDetailsSchema(t);
 
-  assert.equal(schema.safeParse({ email: "", phone: "" }).success, true);
+  assert.equal(schema.safeParse({ email: "", phone: "" }).success, false);
   assert.equal(schema.safeParse({ email: "info@traeger.de", phone: "+49 30 123456" }).success, true);
   assert.equal(schema.safeParse({ email: "invalid-email", phone: "" }).success, false);
   assert.equal(schema.safeParse({ email: "", phone: "abc-not-phone" }).success, false);
