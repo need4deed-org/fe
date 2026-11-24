@@ -52,6 +52,10 @@ export const defaultOpportunityCardsFilter: OpportunityCardsFilter = {
   maxCommuteMinutes: 0,
 };
 
+export const DEFAULT_NGO_OPPORTUNITY_STATUSES = [OpportunityStatusType.SEARCHING];
+
+export const DEFAULT_STAFF_OPPORTUNITY_STATUSES = [OpportunityStatusType.NEW, OpportunityStatusType.SEARCHING];
+
 export const DEFAULT_OPPORTUNITY_STATUSES = Object.values(OpportunityStatusType).filter(
   (status) => status !== OpportunityStatusType.INACTIVE,
 );
