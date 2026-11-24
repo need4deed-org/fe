@@ -251,3 +251,18 @@ test("isAppPath leaves out paths the app does not serve", () => {
   assert.equal(editorHelpers.isAppPath("/_next/static/x.js"), false);
   assert.equal(editorHelpers.isAppPath("/files/report.pdf"), false);
 });
+
+test("placeholder errors without a list use a message without one", () => {
+  assert.equal(view({ code: "unknown_placeholder" }).key, key("unknownPlaceholderGeneric"));
+  assert.equal(view({ code: "missing_placeholder", placeholders: [] }).key, key("missingPlaceholderGeneric"));
+});
+
+test("isAppPath keeps app routes whose last segment has a dot", () => {
+  assert.equal(editorHelpers.isAppPath("/de/verify-email/a.b.c"), true);
+  assert.equal(editorHelpers.isAppPath("/logo.png"), false);
+});
+
+test("inAppPathOf ignores links to the same page", () => {
+  const here = "https://app.need4deed.org/en/dashboard/admin/email-templates";
+  assert.equal(editorHelpers.inAppPathOf(`${here}?x=1`, here), null);
+});

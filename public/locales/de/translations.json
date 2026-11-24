@@ -2119,6 +2119,8 @@
         "unsavedMessage": "Diese Vorlage hat ungespeicherte Änderungen. Sie gehen verloren, wenn Sie eine andere Vorlage öffnen.",
         "unsavedConfirm": "Verwerfen und öffnen",
         "errors": {
+          "unknownPlaceholderGeneric": "Der Text enthält Platzhalter, die die Plattform nicht kennt. Verwenden Sie die oben aufgeführten Platzhalter.",
+          "missingPlaceholderGeneric": "Einige Platzhalter, die die E-Mail braucht, fehlen. Fügen Sie die mit * markierten wieder ein.",
           "fieldBlank": "Darf nicht leer sein.",
           "not_editable": "Auf diesem Server ist das Bearbeiten nicht eingerichtet.",
           "layout_not_allowed": "Diese Vorlage kann keine getrennten Texte auf Deutsch und Englisch haben.",

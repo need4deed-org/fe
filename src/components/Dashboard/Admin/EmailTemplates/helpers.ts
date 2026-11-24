@@ -130,13 +130,18 @@ export function toSaveErrorView(error: ApiEmailTemplateSaveError, placeholderNam
             example: `${placeholderSnippet(`${placeholders[0]}.de`)} / ${placeholderSnippet(`${placeholders[0]}.en`)}`,
           },
         }
-      : {
-          ...base,
-          key: errorKey(error.code),
-          params: { placeholders: placeholders.map((p) => (p.includes("{{") ? p : placeholderSnippet(p))).join(", ") },
-        };
+      : placeholders.length === 0
+        ? { ...base, key: errorKey("unknownPlaceholderGeneric") }
+        : {
+            ...base,
+            key: errorKey(error.code),
+            params: {
+              placeholders: placeholders.map((p) => (p.includes("{{") ? p : placeholderSnippet(p))).join(", "),
+            },
+          };
   }
   if (error.code === "missing_placeholder") {
+    if (placeholders.length === 0) return { ...base, key: errorKey("missingPlaceholderGeneric") };
     return { ...base, key: errorKey(error.code), params: { placeholders: listOf(placeholders) } };
   }
   if (error.code === "unknown_label") {
@@ -152,12 +157,13 @@ export function toSaveErrorView(error: ApiEmailTemplateSaveError, placeholderNam
 export const cacheMinutes = (seconds: number) => Math.max(1, Math.ceil(seconds / 60));
 
 export const isAppPath = (pathname: string) =>
-  !/^\/(api|_next|health|\.well-known|swagger)(\/|$)/.test(pathname) && !/\.[a-z0-9]+$/i.test(pathname);
+  !/^\/(api|_next|health|\.well-known|swagger)(\/|$)/.test(pathname) &&
+  !/\.(png|jpe?g|gif|svg|ico|webp|avif|json|txt|xml|pdf|csv|css|js|map|woff2?|ttf|webmanifest)$/i.test(pathname);
 
 export function inAppPathOf(href: string, currentHref: string): string | null {
   const target = new URL(href, currentHref);
   const current = new URL(currentHref);
   if (target.origin !== current.origin) return null;
-  if (target.pathname === current.pathname && target.search === current.search) return null;
+  if (target.pathname === current.pathname) return null;
   return isAppPath(target.pathname) ? `${target.pathname}${target.search}${target.hash}` : null;
 }

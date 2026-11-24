@@ -1,7 +1,7 @@
 import { apiPathEmailTemplates } from "@/config/constants";
 import { useGetQuery } from "@/hooks/useGetQuery";
 import { useMutationQuery } from "@/hooks/useMutationQuery";
-import { useQueryClient } from "@tanstack/react-query";
+import { useIsFetching, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import {
   ApiEmailTemplateGet,
@@ -35,7 +35,8 @@ export const useEmailTemplate = (name: EmailTemplateName | undefined) => {
     toastOnError: false,
   });
 
-  return { template: data, isLoading };
+  const isFetching = useIsFetching({ queryKey: [...emailTemplatesQueryKey, name ?? ""] }) > 0;
+  return { template: data, isLoading: isLoading || (isFetching && !data) };
 };
 
 export const useReloadEmailTemplate = () => {

@@ -2107,6 +2107,8 @@
         "unsavedMessage": "This template has changes that are not saved. They will be lost if you open another template.",
         "unsavedConfirm": "Discard and open",
         "errors": {
+          "unknownPlaceholderGeneric": "The text has placeholders the platform doesn't know. Use the placeholders listed above.",
+          "missingPlaceholderGeneric": "Some placeholders the email needs are missing. Put back the ones marked with *.",
           "fieldBlank": "This can't be empty.",
           "not_editable": "Editing is not set up on this server.",
           "layout_not_allowed": "This template can't have separate German and English texts.",
