@@ -8,9 +8,10 @@ export const NGO_PROFILE_PARAM = "ngo";
 
 type Props = {
   agentIds: Array<number>;
+  showList: boolean;
 };
 
-export const MultipleProfilesController = ({ agentIds }: Props) => {
+export const MultipleProfilesController = ({ agentIds, showList }: Props) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
@@ -39,10 +40,10 @@ export const MultipleProfilesController = ({ agentIds }: Props) => {
 
   const options = useMemo(
     () =>
-      agentIds
+      (showList ? agentIds : [])
         .map((id) => ({ id, title: currentAgents.find((agent) => agent?.id === id)?.title ?? String(id) }))
         .sort((a, b) => a.title.localeCompare(b.title)),
-    [agentIds, currentAgents],
+    [agentIds, currentAgents, showList],
   );
 
   const profileNavigation: ProfileNavigation = { options, selectedId, onSelect, onStep };

@@ -44,20 +44,22 @@ const ProfilePage = (props: ProfileEntityProps) => {
             <ArrowLeftIcon size={24} />
             {t("dashboard.profile.prevNgoProfile")}
           </ProfileNavigatorContainer>
-          <Select
-            aria-label={t("dashboard.profile.selectNgoProfile")}
-            value={navigation.selectedId}
-            onChange={(event) => {
-              const id = Number(event.target.value);
-              navigateWithFade(() => navigation.onSelect(id));
-            }}
-          >
-            {navigation.options.map((option) => (
-              <option key={option.id} value={option.id}>
-                {option.title}
-              </option>
-            ))}
-          </Select>
+          {navigation.options.length > 0 && (
+            <Select
+              aria-label={t("dashboard.profile.selectNgoProfile")}
+              value={navigation.selectedId}
+              onChange={(event) => {
+                const id = Number(event.target.value);
+                navigateWithFade(() => navigation.onSelect(id));
+              }}
+            >
+              {navigation.options.map((option) => (
+                <option key={option.id} value={option.id}>
+                  {option.title}
+                </option>
+              ))}
+            </Select>
+          )}
           <ProfileNavigatorContainer
             onClick={() => navigateWithFade(() => navigation.onStep(ProfileNavigationDirection.RIGHT))}
           >

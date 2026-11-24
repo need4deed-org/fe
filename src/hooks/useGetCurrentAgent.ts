@@ -40,12 +40,16 @@ export const useGetCurrentAgent = () => {
   });
 
   const currentAgents = agentQueries.map((q) => q.data?.data);
+  const traegerIds = new Set(currentAgents.map((agent) => agent?.organization?.id ?? null));
+  const [sharedTraegerId] = traegerIds;
+  const traegerId = agentIds.length > 1 && traegerIds.size === 1 && sharedTraegerId ? sharedTraegerId : undefined;
 
   return {
     agentId,
     agentIds,
     isLoading: userLoading || agentQueries.some((q) => q.isLoading),
     currentAgents,
+    traegerId,
     volunteerId,
     userRole,
   };
