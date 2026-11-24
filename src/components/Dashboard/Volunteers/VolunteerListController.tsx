@@ -36,6 +36,7 @@ interface VolunteerListControllerProps {
   viewMode: ViewMode;
   opportunityFilter: SingleFilter | undefined;
   defaultEngagements: VolunteerStateEngagementType[];
+  ownerAgentId?: number;
 }
 
 export function VolunteerListController(props: VolunteerListControllerProps) {
@@ -52,6 +53,7 @@ function VolunteerListControllerContent({
   viewMode,
   opportunityFilter,
   defaultEngagements,
+  ownerAgentId,
 }: VolunteerListControllerProps) {
   const user = useCurrentUser();
   const isListView = viewMode === ViewMode.LIST;
@@ -78,6 +80,10 @@ function VolunteerListControllerContent({
 
   if (opportunityId) {
     serializedFilter.set("opportunity", opportunityId);
+  }
+
+  if (ownerAgentId) {
+    serializedFilter.set(QueryParamsKeys.OWNER_AGENT, String(ownerAgentId));
   }
 
   const emailsFilter = new URLSearchParams(serializedFilter);

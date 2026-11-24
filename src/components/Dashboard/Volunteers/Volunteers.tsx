@@ -52,6 +52,7 @@ import { ErrorMessage } from "@/components/core/common";
 import { Button } from "@/components/core/button";
 import { useScreenType } from "@/context/DeviceContext";
 import { usePrefillFilters } from "../common/CardsFilter/usePrefillFilters";
+import { ProjectPicker, useProjectParam } from "../common/ProjectPicker/ProjectPicker";
 
 export function Volunteers() {
   const { data: user, isLoading: isUserLoading, isError: isUserError } = useCurrentUserQuery(true, false);
@@ -66,6 +67,7 @@ export function Volunteers() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
+  const { projectId } = useProjectParam();
   const opportunityId = searchParams.get("opportunity") ?? undefined;
   const opportunityFilter = useGetOpportunity(opportunityId);
   const prefilledForRef = useRef<string | null>(null);
@@ -254,6 +256,7 @@ export function Volunteers() {
             opportunityFilter ? { ...opportunityFilter, onRemove: handleRemoveOpportunityFilter } : undefined
           }
         />
+        <ProjectPicker />
         <ContentRow>
           <VolunteerListController
             setNumOfVols={setNumOfVols}
@@ -265,6 +268,7 @@ export function Volunteers() {
             viewMode={viewMode}
             opportunityFilter={opportunityFilter}
             defaultEngagements={defaultEngagements}
+            ownerAgentId={projectId}
           />
           <Filters
             isFiltersOpen={isFiltersOpen}

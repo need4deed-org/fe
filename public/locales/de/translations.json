@@ -503,6 +503,10 @@
     }
   },
   "dashboard": {
+    "projectPicker": {
+      "label": "Projekt",
+      "all": "Alle Projekte"
+    },
     "emailNote": {
       "label": "Text zur E-Mail hinzufügen (optional)",
       "placeholder": "Dieser Text wird der E-Mail hinzugefügt."

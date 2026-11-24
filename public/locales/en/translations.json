@@ -497,6 +497,10 @@
     }
   },
   "dashboard": {
+    "projectPicker": {
+      "label": "Project",
+      "all": "All projects"
+    },
     "emailNote": {
       "label": "Add a note to the email (optional)",
       "placeholder": "This text is added to the email."
