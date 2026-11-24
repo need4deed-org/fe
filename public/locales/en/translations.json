@@ -2067,11 +2067,17 @@
           "beforeTrackingNote": "\"Before tracking started\" counts answers collected before we recorded when they were given, so they are not part of the chart above."
         }
       },
+      "emailTemplates": {
+        "helper": "Edit the emails the platform sends. Saved changes reach the senders within about 5 minutes.",
+        "loadError": "Could not load the email templates. Please reload the page.",
+        "saved": "Email template saved"
+      },
       "nav": {
         "domains": "Domains",
         "stats": "Statistics",
         "ngoVolunteers": "NGO volunteers",
-        "accounts": "Accounts"
+        "accounts": "Accounts",
+        "emailTemplates": "Email templates"
       },
       "ngoVolunteers": {
         "helper": "Pick an NGO to give its volunteers a registration link or to import its existing volunteers.",

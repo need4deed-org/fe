@@ -2079,11 +2079,17 @@
           "beforeTrackingNote": "„Vor Beginn der Erfassung“ umfasst Antworten, die gesammelt wurden, bevor wir festgehalten haben, wann sie gegeben wurden. Sie sind daher nicht im Diagramm oben enthalten."
         }
       },
+      "emailTemplates": {
+        "helper": "Bearbeiten Sie die E-Mails, die die Plattform verschickt. Gespeicherte Änderungen werden innerhalb von etwa 5 Minuten verwendet.",
+        "loadError": "Die E-Mail-Vorlagen konnten nicht geladen werden. Bitte laden Sie die Seite neu.",
+        "saved": "E-Mail-Vorlage gespeichert"
+      },
       "nav": {
         "domains": "Domains",
         "stats": "Statistiken",
         "ngoVolunteers": "Freiwillige der NGOs",
-        "accounts": "Konten"
+        "accounts": "Konten",
+        "emailTemplates": "E-Mail-Vorlagen"
       },
       "ngoVolunteers": {
         "helper": "Wählen Sie eine NGO, um ihren Freiwilligen einen Registrierungslink zu geben oder ihre bestehenden Freiwilligen zu importieren.",
