@@ -1625,7 +1625,7 @@
       }
     },
     "organizationProfile": {
-      "title": "Träger Profile",
+      "title": "Operator Profile",
       "contactDetails": {
         "title": "Contact details",
         "contactPerson": "Contact person",
@@ -1641,7 +1641,7 @@
         }
       },
       "organisationDetails": {
-        "title": "Organization details",
+        "title": "Operator details",
         "orgTitle": "Name",
         "edit": "Edit",
         "about": "About",
@@ -1652,7 +1652,7 @@
         "services": "Services",
         "cancel": "Cancel",
         "saveChanges": "Save changes",
-        "saveSuccess": "Träger details updated successfully",
+        "saveSuccess": "Operator details updated successfully",
         "validation": {
           "required": "This field is required",
           "aboutMaxLength": "Maximum {{max}} characters allowed",
