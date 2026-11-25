@@ -22,8 +22,20 @@ import {
   TextLink,
 } from "../styled";
 
-const STEPS = ["request", "prepare", "match", "introduction", "noMatch", "afterMatch"];
-const DASHBOARD_FEATURES = ["volunteers", "hours", "posts", "openSource"];
+const STEPS = ["request", "search", "prepare", "match", "introduction", "noMatch", "afterMatch"];
+const DASHBOARD_FEATURES = [
+  "matched",
+  "import",
+  "link",
+  "hours",
+  "appreciation",
+  "feedback",
+  "export",
+  "traeger",
+  "efz",
+  "posts",
+  "openSource",
+];
 
 function ForOrganisations() {
   const { t, i18n } = useTranslation();
@@ -39,6 +51,7 @@ function ForOrganisations() {
 
           <SectionBlock>
             <SectionHeader>{t("forOrganisationsPage.stepsHeading")}</SectionHeader>
+            <NoteText>{t("forOrganisationsPage.stepsIntro")}</NoteText>
             <ItemsList>
               {STEPS.map((step, index) => (
                 <Item key={step}>
