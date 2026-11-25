@@ -863,6 +863,7 @@
       "volunteerProfile": "Freiwilligenprofil",
       "opportunities": "Ehrenamtliche Tätigkeiten",
       "leadFrom": "Wie hast du von uns erfahren?",
+      "leadFromEmpty": "Keine Antwort",
       "coordinatorComments": "Kommentare der Koordination",
       "documents": "Dokumente",
       "activityLog": "Aktivitätsprotokoll",
@@ -1060,16 +1061,6 @@
           "activitiesRequired": "Bitte wähle mindestens eine Aktivität aus",
           "skillsRequired": "Fähigkeiten sind erforderlich"
         }
-      },
-      "leadFromOptions": {
-        "platform": "Plattform",
-        "media": "Medien",
-        "newsletter": "Newsletter",
-        "search": "Websuche",
-        "Friends": "Freunde",
-        "fair": "Freiwilligenmesse",
-        "Flyer": "Flyer",
-        "none": "Keine Antwort"
       },
       "dangerZone": {
         "title": "Gefahrenzone",

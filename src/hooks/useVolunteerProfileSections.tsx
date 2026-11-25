@@ -305,7 +305,7 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
     });
     sections.push({
       iconName: IconName.Ear,
-      title: `${t("dashboard.volunteerProfile.leadFrom")}`,
+      title: t("dashboard.volunteerProfile.leadFrom"),
       subComponent: <LeadFrom volunteer={volunteer} />,
     });
     sections.push({

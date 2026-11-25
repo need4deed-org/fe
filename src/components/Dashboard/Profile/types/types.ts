@@ -29,10 +29,8 @@ export interface ProfileCardProps {
 }
 
 export enum IconName {
-  Article = "article",
   Baby = "baby",
   Bicycle = "bicycle",
-  Browser = "browser",
   CalendarStar = "calendarStar",
   ChartLine = "chartLine",
   ChatCircleDots = "chatCircleDots",
@@ -42,13 +40,9 @@ export enum IconName {
   Ear = "ear",
   Gift = "gift",
   House = "house",
-  MagnifyingGlass = "magnifyingGlass",
-  Monitor = "monitor",
-  Newspaper = "newspaper",
   PingPong = "pingPong",
   ShootingStar = "shootingStar",
   Sparkle = "sparkle",
-  Storefront = "storefront",
   Trash = "trash",
   UserCheck = "userCheck",
   UserCircle = "userCircle",

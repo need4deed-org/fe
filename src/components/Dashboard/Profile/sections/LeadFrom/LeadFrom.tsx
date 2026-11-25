@@ -1,10 +1,12 @@
+"use client";
+
+import { Tags } from "@/components/core/common/Tags";
 import { ApiVolunteerGet } from "need4deed-sdk";
-import React from "react";
-import { i18nPrefix, LeadFromEnum, LeadIconKey, LeadIconMap } from "./helper";
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { Paragraph } from "@/components/styled/text";
-import { IconDiv } from "@/components/styled/container";
-import { LeadFromContainer } from "./styles";
+import { SectionEmptyState, SectionWrapper } from "../shared/styles";
+import { useApiLeadFrom } from "../VolunteerProfile/hooks";
+import { resolveLeadFromTitles } from "./helper";
 
 type Props = {
   volunteer: ApiVolunteerGet;
@@ -12,13 +14,24 @@ type Props = {
 
 export const LeadFrom = ({ volunteer }: Props) => {
   const { t } = useTranslation();
-  const lead = String(volunteer?.leadFrom ?? LeadFromEnum.NONE) as LeadIconKey;
+  const { data: leadFromOptions = [] } = useApiLeadFrom();
+
+  const titles = useMemo(
+    () => resolveLeadFromTitles(volunteer.leadFrom, leadFromOptions),
+    [volunteer.leadFrom, leadFromOptions],
+  );
+
+  if (titles.length === 0) {
+    return (
+      <SectionEmptyState data-testid="lead-from-empty">
+        {t("dashboard.volunteerProfile.leadFromEmpty")}
+      </SectionEmptyState>
+    );
+  }
+
   return (
-    <LeadFromContainer>
-      <IconDiv>{LeadIconMap[lead]}</IconDiv>
-      <Paragraph fontSize="1.5rem" fontWeight={600}>
-        {t(`${i18nPrefix}.${lead}`)}
-      </Paragraph>
-    </LeadFromContainer>
+    <SectionWrapper data-testid="lead-from-container">
+      <Tags tags={titles} backgroundColor="var(--color-pink-50)" />
+    </SectionWrapper>
   );
 };
