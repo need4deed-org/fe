@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/core/button";
 import { PageLayout } from "@/components/Layout";
+import { Card, CardGrid } from "@/components/styled/card-grid";
 import { Body, Description, Detail, Details, EventCard, Hero, PageContent } from "@/components/styled/eventPageLayout";
 import { Heading1, Heading2, Paragraph } from "@/components/styled/text";
 import { useEvent, useEvents } from "@/hooks/useEvents";
@@ -72,29 +73,6 @@ const MoreEvents = styled.section`
   flex-direction: column;
   min-width: 0;
   gap: var(--spacing-20);
-`;
-
-const UpcomingGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
-  gap: var(--spacing-20);
-`;
-
-const UpcomingCard = styled.article`
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  gap: var(--spacing-16);
-  padding: clamp(20px, 4vw, 28px);
-  border: 1px solid var(--color-orchid-light, var(--color-orchid));
-  border-radius: 20px;
-  background: var(--color-white);
-  box-shadow: 0 10px 28px rgb(40 25 47 / 8%);
-
-  @media (max-width: 480px) {
-    padding: 20px;
-    border-radius: 16px;
-  }
 `;
 
 const UpcomingMeta = styled.div`
@@ -265,9 +243,9 @@ export function EventPage({ eventId }: EventPageProps) {
             {additionalEvents.length > 0 && (
               <MoreEvents>
                 <ResponsiveHeading2 margin={0}>{t("eventPage.moreEvents")}</ResponsiveHeading2>
-                <UpcomingGrid>
+                <CardGrid>
                   {additionalEvents.map((event) => (
-                    <UpcomingCard key={event.id}>
+                    <Card key={event.id}>
                       <EventType>{getEventTypeLabel(event.type, t)}</EventType>
                       <ResponsiveHeading2 margin={0}>{event.title}</ResponsiveHeading2>
                       <Paragraph margin={0}>{event.shortDescription}</Paragraph>
@@ -287,9 +265,9 @@ export function EventPage({ eventId }: EventPageProps) {
                         {t("eventPage.viewDetails")}
                         <ArrowRightIcon size={18} aria-hidden />
                       </DetailsLink>
-                    </UpcomingCard>
+                    </Card>
                   ))}
-                </UpcomingGrid>
+                </CardGrid>
               </MoreEvents>
             )}
           </EventStack>
