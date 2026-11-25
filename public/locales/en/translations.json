@@ -2028,7 +2028,14 @@
         "metricLabel": "Metric",
         "metric": {
           "newVolunteers": "New volunteers",
-          "requests": "Requests",
+          "matchedVolunteers": "Matched volunteers",
+          "activeVolunteers": "Active volunteers",
+          "availableVolunteers": "Available volunteers",
+          "newOpportunities": "New requests",
+          "validatedOpportunities": "Validated requests",
+          "matchedOpportunities": "Matched requests",
+          "unmatchedOpportunities": "Requests never matched",
+          "pastOpportunities": "Past requests",
           "leadFrom": "Where did you hear about us"
         },
         "granularityLabel": "Period",
@@ -2060,6 +2067,7 @@
         "empty": "No data for this period.",
         "loadError": "Could not load the statistics. Please reload the page.",
         "overlapNote": "Some entries count towards more than one group, so the segments can add up to more than the total.",
+        "snapshotNote": "Counts volunteers in this status at the end of each month; a quarter or year shows its latest month-end count. A month is counted once it ends, and periods before recording started are empty.",
         "allTime": {
           "title": "All-time totals",
           "tracked": "Since tracking started",

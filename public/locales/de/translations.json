@@ -2040,7 +2040,14 @@
         "metricLabel": "Kennzahl",
         "metric": {
           "newVolunteers": "Neue Freiwillige",
-          "requests": "Anfragen",
+          "matchedVolunteers": "Vermittelte Freiwillige",
+          "activeVolunteers": "Aktive Freiwillige",
+          "availableVolunteers": "Verfügbare Freiwillige",
+          "newOpportunities": "Neue Anfragen",
+          "validatedOpportunities": "Validierte Anfragen",
+          "matchedOpportunities": "Vermittelte Anfragen",
+          "unmatchedOpportunities": "Nie vermittelte Anfragen",
+          "pastOpportunities": "Vergangene Anfragen",
           "leadFrom": "Wie haben Sie von uns erfahren"
         },
         "granularityLabel": "Zeitraum",
@@ -2072,6 +2079,7 @@
         "empty": "Keine Daten für diesen Zeitraum.",
         "loadError": "Die Statistiken konnten nicht geladen werden. Bitte laden Sie die Seite neu.",
         "overlapNote": "Manche Einträge zählen zu mehreren Gruppen, daher können die Segmente zusammen mehr als die Gesamtzahl ergeben.",
+        "snapshotNote": "Zählt die Freiwilligen, die am Monatsende diesen Status hatten; Quartal oder Jahr zeigen den letzten Monatsendstand. Ein Monat wird erst nach seinem Ende gezählt, Zeiträume vor Beginn der Erfassung sind leer.",
         "allTime": {
           "title": "Gesamtzahlen seit Beginn",
           "tracked": "Seit Beginn der Erfassung",
