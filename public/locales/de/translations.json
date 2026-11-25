@@ -3221,37 +3221,37 @@
   },
   "forOrganisationsPage": {
     "heading": "Für Organisationen",
-    "intro": "Für Einrichtungen, die Geflüchtete in Berlin unterstützen: Finde Freiwillige und verwalte Deine eigenen, an einem Ort und kostenlos.",
+    "intro": "Für Einrichtungen, die Geflüchtete in Berlin unterstützen: Finde Ehrenamtliche für Deine Einrichtung und verwalte Deine eigenen, an einem Ort und kostenlos.",
     "stepsHeading": "Teil 1: Vermittlung",
-    "stepsIntro": "Freiwillige finden, selbst oder mit uns.",
+    "stepsIntro": "Finde Ehrenamtliche, selbst oder mit unserer Hilfe.",
     "steps": {
       "request": {
         "title": "Möglichkeit erstellen",
-        "body": "Registriere Deine Organisation und veröffentliche ein Engagement, eine Begleitung oder ein Event. Begleitungen bitte mindestens 7 Werktage vorher."
+        "body": "Registriere Deine Organisation und veröffentliche ein regelmäßiges Engagement, eine Begleitung oder ein Event. Begleitungen fragst Du bitte mindestens 7 Werktage vor dem Termin an."
       },
       "search": {
         "title": "Selbst suchen",
-        "body": "Filtere Freiwillige nach Sprache, Bezirk oder Fähigkeiten und frag einen Vorschlag an."
+        "body": "Filtere die Ehrenamtlichen nach Sprache, Bezirk oder Fähigkeiten und klick bei passenden Personen auf „Vorschlag anfragen“."
       },
       "prepare": {
         "title": "Wir bereiten vor",
-        "body": "Wir lernen alle Freiwilligen kennen und helfen beim erweiterten Führungszeugnis."
+        "body": "Wir lernen alle neuen Ehrenamtlichen persönlich kennen und helfen beim erweiterten Führungszeugnis (EFZ)."
       },
       "match": {
         "title": "Wir vermitteln",
-        "body": "Wir suchen passende Personen nach Sprache, Bezirk, Zeit und Tätigkeit."
+        "body": "Wir suchen die passende Person nach Sprache, Bezirk, Verfügbarkeit und Tätigkeit."
       },
       "introduction": {
         "title": "Ihr lernt Euch kennen",
-        "body": "Wir stellen Euch per E-Mail vor. Lade die Person innerhalb von 5 bis 7 Werktagen ein."
+        "body": "Wir stellen Euch per E-Mail einander vor. Lade die Person bitte innerhalb von 5 bis 7 Werktagen zu einem ersten Treffen ein."
       },
       "noMatch": {
-        "title": "Niemand gefunden?",
-        "body": "Bei Begleitungen sagen wir spätestens 4 Werktage vorher Bescheid."
+        "title": "Wenn niemand passt",
+        "body": "Bei Begleitungen sagen wir Dir spätestens 4 Werktage vor dem Termin Bescheid."
       },
       "afterMatch": {
         "title": "Wir bleiben in Kontakt",
-        "body": "Etwa einmal im Monat fragen wir nach, wie es läuft."
+        "body": "Etwa einmal im Monat fragen wir nach, wie es läuft. Hört jemand auf, suchen wir neu."
       }
     },
     "goodToKnow": {
@@ -3265,51 +3265,51 @@
     },
     "dashboard": {
       "heading": "Teil 2: Verwaltung",
-      "intro": "Alle Deine Freiwilligen an einem Ort, vermittelte und eigene.",
+      "intro": "Betreue alle Deine Ehrenamtlichen an einem Ort, vermittelte und eigene.",
       "features": {
         "matched": {
-          "title": "Vermittelte Freiwillige",
-          "body": "Mit allen Infos, direkt im Dashboard."
+          "title": "Vermittelte Ehrenamtliche",
+          "body": "Von uns vermittelte Ehrenamtliche siehst Du direkt im Dashboard, mit allen Informationen."
         },
         "import": {
-          "title": "Eigene Freiwillige importieren",
-          "body": "Tabelle hochladen oder uns schicken. Die Profile seht nur Ihr. Bitte informiere Deine Freiwilligen vorher."
+          "title": "Eigene Ehrenamtliche importieren",
+          "body": "Lade Deine Tabelle hoch oder schick sie uns. Die Profile sieht nur Deine Einrichtung. Bitte informiere Deine Ehrenamtlichen vorher."
         },
         "link": {
           "title": "Mit Möglichkeiten verknüpfen",
-          "body": "Behalte im Blick, wer wo im Einsatz ist."
+          "body": "Verknüpfe Ehrenamtliche mit Deinen Möglichkeiten und behalte im Blick, wer wo im Einsatz ist."
         },
         "hours": {
-          "title": "Einsatzzeiten",
-          "body": "Datum und Stunden eintragen, praktisch für Berichte und Förderungen."
+          "title": "Einsatzzeiten erfassen",
+          "body": "Trag Datum und Stunden ein, praktisch für Nachweise, Berichte und Förderanträge."
         },
         "appreciation": {
-          "title": "Anerkennung",
-          "body": "Zertifikate und Dank für Deine Freiwilligen festhalten."
+          "title": "Anerkennung nachhalten",
+          "body": "Halte fest, wie Du Deinen Ehrenamtlichen dankst, zum Beispiel mit Zertifikaten."
         },
         "feedback": {
           "title": "Feedback",
-          "body": "Lies, was Freiwillige zu Deinen Möglichkeiten sagen."
+          "body": "Lies, was Ehrenamtliche über Deine Möglichkeiten schreiben."
         },
         "export": {
           "title": "CSV-Export",
-          "body": "Deine Freiwilligen und Möglichkeiten jederzeit als Datei."
+          "body": "Lade Deine Ehrenamtlichen und Möglichkeiten jederzeit als CSV-Datei herunter."
         },
         "traeger": {
           "title": "Für Träger",
-          "body": "Mehrere Einrichtungen unter einem Konto. Melde Dich, wir richten es ein."
+          "body": "Verwalte mehrere Einrichtungen unter einem Konto. Melde Dich bei uns, wir richten es ein."
         },
         "efz": {
-          "title": "Führungszeugnis (EFZ)",
-          "body": "Wir helfen bei der Anfrage. Melde Dich einfach."
+          "title": "Erweitertes Führungszeugnis",
+          "body": "Wir unterstützen Dich bei der Anfrage. Melde Dich einfach bei uns."
         },
         "posts": {
-          "title": "Posts",
+          "title": "Beiträge",
           "body": "Tausch Dich mit anderen Einrichtungen und mit uns aus."
         },
         "openSource": {
           "title": "Open Source",
-          "body": "100 % in Europa, gehostet in der Schweiz, DSGVO-konform."
+          "body": "Läuft zu 100 % in Europa, gehostet in der Schweiz und DSGVO-konform."
         }
       }
     }
