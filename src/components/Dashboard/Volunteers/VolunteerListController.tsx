@@ -60,6 +60,7 @@ function VolunteerListControllerContent({
   const isMapView = viewMode === ViewMode.MAP;
   const hasUnsupportedMapFilters =
     isMapView && (Boolean(filter.search) || hasUnsupportedDistrictMapFilter(filter.district));
+  const hasNoOwnerAgents = ownerAgents?.length === 0;
   const limit = isListView ? TABLE_LIMIT : isMapView ? 1 : CARD_LIMIT;
   const { currentPage, setCurrentPage } = usePageParam();
   const { t, i18n } = useTranslation();
@@ -104,28 +105,30 @@ function VolunteerListControllerContent({
     apiPath: apiPathVolunteer,
     params,
     staleTime: cacheTTL,
-    enabled: !isMapView || hasUnsupportedMapFilters,
+    enabled: !hasNoOwnerAgents && (!isMapView || hasUnsupportedMapFilters),
     keepPreviousData: isMapView,
   });
-  const volunteers = data || [];
+  const volunteers = hasNoOwnerAgents ? [] : data || [];
+  const volunteerCount = hasNoOwnerAgents ? 0 : count;
   const { handleCopyEmails, isCopying } = useCopyEmails(apiPathVolunteer, "volunteer-emails", emailsFilter);
   const canSeeContactColumns = user?.role === UserRole.COORDINATOR || user?.role === UserRole.ADMIN;
 
   const opportunityMarker = createSingleOpportunityMarker(opportunityFilter, t, i18n.language);
 
   useEffect(() => {
-    if (!isMapView || hasUnsupportedMapFilters) setNumOfVols(count);
-  }, [count, hasUnsupportedMapFilters, isMapView, setNumOfVols]);
+    if (!isMapView || hasUnsupportedMapFilters || hasNoOwnerAgents) setNumOfVols(volunteerCount);
+  }, [volunteerCount, hasNoOwnerAgents, hasUnsupportedMapFilters, isMapView, setNumOfVols]);
 
-  if (isLoading && isMapView) return <LoadingMapView />;
-  if (isLoading && !isListView) return <DashboardListLoading />;
+  const isFetching = isLoading && !hasNoOwnerAgents;
+  if (isFetching && isMapView) return <LoadingMapView />;
+  if (isFetching && !isListView) return <DashboardListLoading />;
 
   if (isListView) {
     return (
       <VolunteerTableList
-        isLoading={isLoading}
+        isLoading={isFetching}
         volunteers={volunteers}
-        count={count}
+        count={volunteerCount}
         itemsPerPage={limit}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
@@ -139,7 +142,7 @@ function VolunteerListControllerContent({
     );
   }
 
-  if (isMapView) {
+  if (isMapView && !hasNoOwnerAgents) {
     return (
       <VolunteerMapView filter={serializedFilter} onCountChange={setNumOfVols} opportunityMarker={opportunityMarker} />
     );

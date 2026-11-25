@@ -104,7 +104,7 @@ export default function CardsHeader({
                 $isSelected={selectedHeadline === option.key}
                 onClick={() => onHeadlineChange?.(option.key)}
               >
-                <HyphenatedHeading2>{option.label}</HyphenatedHeading2>
+                <HyphenatedHeading2 as="span">{option.label}</HyphenatedHeading2>
               </TabHeading>
             ))}
           </Tabs>
