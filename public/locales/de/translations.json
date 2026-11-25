@@ -617,7 +617,9 @@
         }
       },
       "retry": "Erneut versuchen",
-      "agentHeadline": "Ehrenamtliche, die wir für Sie kontaktieren können",
+      "myVolunteers": "Meine Ehrenamtlichen",
+      "need4deedVolunteers": "need4deed-Ehrenamtliche",
+      "askNeed4deedToContact": "Frag need4deed, sie für dich zu kontaktieren.",
       "volunteers": "Ehrenamtliche",
       "languages": "Sprachen",
       "activities": "Aktivitäten",
