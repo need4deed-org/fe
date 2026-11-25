@@ -1,4 +1,4 @@
-import { routes } from "@/constants/routes";
+import { ROUTES } from "@/constants/routes";
 import { SectionCardProps } from "@/components/Dashboard/Profile/common/SectionCard";
 import { AgentOpportunities } from "@/components/Dashboard/Profile/sections/AgentOpportunities";
 import { Comments } from "@/components/Dashboard/Profile/sections/Comments";
@@ -35,7 +35,7 @@ export const useAgentProfileSections = (agent: ApiAgentProfileGet | undefined) =
   const handleOrgEditingChange = useCallback((editing: boolean) => setIsOrgEditing(editing), []);
 
   const { mutate: deleteMutate, isPending: isDeleting } = useDeleteAgent(agent?.id ?? 0, () => {
-    router.replace(routes.organizations(i18n.language));
+    router.replace(ROUTES.organizations(i18n.language));
   });
 
   if (!agent) return null;
@@ -68,7 +68,7 @@ export const useAgentProfileSections = (agent: ApiAgentProfileGet | undefined) =
       title: t("dashboard.volunteerProfile.opportunities"),
       ...(isOwnProfile && {
         headerButtonName: t("dashboard.agentProfile.opportunitiesSec.postOpportunity"),
-        onHeaderButtonClick: () => router.push(`${routes.newOpportunity(i18n.language)}?agentId=${agent.id}`),
+        onHeaderButtonClick: () => router.push(`${ROUTES.newOpportunity(i18n.language)}?agentId=${agent.id}`),
       }),
       subComponent: <AgentOpportunities agentId={agent.id} />,
     },

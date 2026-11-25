@@ -1,7 +1,7 @@
 "use client";
-import { routes } from "@/constants/routes";
+import { ROUTES } from "@/constants/routes";
 import { useTranslation } from "react-i18next";
-import { CONTACT_EMAIL } from "@/config/constants";
+import { EMAILS } from "@/constants/emails";
 import {
   AnswerRow,
   Badge,
@@ -81,17 +81,17 @@ function ForOrganizations() {
           <NoteText>{t("forOrganizationsPage.goodToKnow.free")}</NoteText>
           <NoteText>
             {t("forOrganizationsPage.goodToKnow.register")}{" "}
-            <TextLink href={routes.registerOrganization(lang)}>
+            <TextLink href={ROUTES.registerOrganization(lang)}>
               {t("forOrganizationsPage.goodToKnow.registerLink")}
             </TextLink>
           </NoteText>
           <NoteText>
             {t("forOrganizationsPage.goodToKnow.guidelines")}{" "}
-            <TextLink href={routes.racGuidelines(lang)}>{t("forOrganizationsPage.goodToKnow.guidelinesLink")}</TextLink>
+            <TextLink href={ROUTES.racGuidelines(lang)}>{t("forOrganizationsPage.goodToKnow.guidelinesLink")}</TextLink>
           </NoteText>
           <NoteText>
             {t("forOrganizationsPage.goodToKnow.contact")}{" "}
-            <TextLink href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</TextLink>
+            <TextLink href={`mailto: ${EMAILS.contact}`}>{EMAILS.contact}</TextLink>
           </NoteText>
         </SectionBlock>
       </ContentSection>

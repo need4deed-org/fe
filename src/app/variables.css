@@ -1,7 +1,6 @@
 :root {
   /* Colors */
   --white: #ffffff;
-  --black: #000000;
 
   /* Number in color variable names is the percentage of that color mixed with pure white */
   --grey-100: rgb(102, 112, 133);
@@ -47,22 +46,24 @@
   --sand-20: color-mix(in srgb, var(--sand-100) 20%, white);
 
   /* Text */
-  --font-size: 16px; /* Font size of body text, text inputs, and buttons */
+  --font-size: 18px; /* Font size of body text, text inputs, and buttons */
   --heading-font-size: 24px; /* For section/card headings */
   --sans-serif: var(--font-figtree), sans-serif;
   --condensed-sans-serif: var(--font-barlow-condensed), sans-serif;
-  --bold: bolder;
+  --bold: 600;
+  --line-height: 1.4;
 
   /* Sizes */
   --very-small-spacing: 4px; /* For gaps where --small-spacing looks too large */
   --small-spacing: 8px; /* For inner gaps between list items or buttons in fields */
   --medium-spacing: 18px; /* For "normal" spacing, left/right padding in text fields, and padding around fields */
   --large-spacing: 28px; /* For spacious spacing and left/right padding in buttons */
+  --very-large-spacing: 56px; /* For when --large-spacing is too crowded */
   --field-size: 44px; /* The height for form fields or the height and width of square buttons */
-  --border-width: 1.8px; /* The border width of inputs */
+  --border-width: 2px; /* The border width of inputs */
   --sidebar-width: 300px; /* Main navigation sidebar width on desktop view */
   --header-height: 86px; /* Main navigational header height */
-  --field-icon-size: 20px; /* For icons in a field like a search icon in a search bar */
+  --field-icon-size: 22px; /* For icons in a field like a search icon in a search bar */
   --heading-icon-size: 32px; /* For icons paired with section/card headings */
   --tag-size: 36px; /* Height of tags/chips with text/icons on them or height and width of square tags */
   --modal-width: 600px; /* Width of modal window */

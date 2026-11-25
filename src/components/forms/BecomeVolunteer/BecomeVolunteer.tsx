@@ -1,5 +1,5 @@
 "use client";
-import { routes } from "@/constants/routes";
+import { ROUTES } from "@/constants/routes";
 import { useForm } from "@tanstack/react-form";
 import { validate as validateEmail } from "email-validator";
 import { Lang } from "need4deed-sdk";
@@ -99,7 +99,7 @@ export default function BecomeVolunteer() {
 
       const { success } = await postRequest(data);
       if (success) {
-        navigate.push(`${routes.announcement(i18n.language)}?pointer=${thankYou}`);
+        navigate.push(`${ROUTES.announcement(i18n.language)}?pointer=${thankYou}`);
       } else {
         setShowErrorAnnouncement(true);
       }
@@ -432,9 +432,9 @@ export default function BecomeVolunteer() {
                   <label htmlFor="consent">{getTickMark(!!fieldConsent.state.value)}</label>
                   <span>
                     {t("form.becomeVolunteer.fields.consent.header")}{" "}
-                    <a href={routes.privacy(i18n.language)}>{t("website.footer.legal.dataPrivacy")}</a>{" "}
+                    <a href={ROUTES.privacy(i18n.language)}>{t("form.consent.dataPrivacy")}</a>{" "}
                     {t("form.becomeVolunteer.fields.consent.and")}{" "}
-                    <a href={routes.agreement(i18n.language)}>{t("website.footer.legal.agreement")}</a>
+                    <a href={ROUTES.agreement(i18n.language)}>{t("website.footer.agreement")}</a>
                   </span>
                 </div>
                 <FieldInfo field={fieldConsent} />

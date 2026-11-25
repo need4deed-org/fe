@@ -8,7 +8,7 @@ import { CoordinatorHomeContent } from "./coordinator";
 import { VolunteerHomeContent } from "./volunteer";
 import { HomeSkeleton } from "./HomeSkeleton";
 import { LinkButton } from "@/components/fields/LinkButton";
-import { routes } from "@/constants/routes";
+import { ROUTES } from "@/constants/routes";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
@@ -36,7 +36,7 @@ export default function HomeContentController() {
       {user && (
         <ButtonContainer>
           {[UserRole.COORDINATOR, UserRole.ADMIN].includes(user.role) && (
-            <LinkButton inline href={routes.statistics(language)} label={t("dashboard.home.statistics")} />
+            <LinkButton inline href={ROUTES.statistics(language)} label={t("dashboard.home.statistics")} />
           )}
         </ButtonContainer>
       )}

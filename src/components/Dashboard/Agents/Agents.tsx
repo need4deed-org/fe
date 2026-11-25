@@ -1,5 +1,5 @@
 "use client";
-import { routes } from "@/constants/routes";
+import { ROUTES } from "@/constants/routes";
 import { PlusIcon } from "@phosphor-icons/react";
 import { AgentListController } from "./AgentListController";
 import { CreateAgentDialog } from "./CreateAgentDialog/CreateAgentDialog";
@@ -52,7 +52,7 @@ export const Agents = () => {
 
   const { mutate: transferMutate } = useTransferOpportunityToAgent(Number(transferOpportunityId), () => {
     setAgentToTransferTo(undefined);
-    if (transferOpportunityId) router.push(routes.opportunityDetail(i18n.language, transferOpportunityId));
+    if (transferOpportunityId) router.push(ROUTES.opportunityDetail(i18n.language, Number(transferOpportunityId)));
   });
 
   const handleTransferConfirm = () => {
@@ -113,7 +113,7 @@ export const Agents = () => {
 
   const handleCancelTransfer = () => {
     setAgentToTransferTo(undefined);
-    if (transferOpportunityId) router.push(routes.opportunityDetail(i18n.language, transferOpportunityId));
+    if (transferOpportunityId) router.push(ROUTES.opportunityDetail(i18n.language, Number(transferOpportunityId)));
   };
 
   useEffect(() => {
@@ -134,10 +134,10 @@ export const Agents = () => {
         {user && (
           <ButtonContainer>
             {[UserRole.COORDINATOR, UserRole.ADMIN].includes(user.role) && (
-              <LinkButton href={routes.domains(i18n.language)} inline label={t("dashboard.agents.trustedDomains")} />
+              <LinkButton href={ROUTES.domains(i18n.language)} inline label={t("dashboard.agents.trustedDomains")} />
             )}
             {[UserRole.COORDINATOR, UserRole.ADMIN].includes(user.role) && (
-              <LinkButton inline href={routes.ngoVolunteers(i18n.language)} label={t("dashboard.home.ngoVolunteers")} />
+              <LinkButton inline href={ROUTES.ngoVolunteers(i18n.language)} label={t("dashboard.home.ngoVolunteers")} />
             )}
           </ButtonContainer>
         )}

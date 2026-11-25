@@ -1,5 +1,5 @@
 "use client";
-import { routes } from "@/constants/routes";
+import { ROUTES } from "@/constants/routes";
 import { Button } from "@/components/core/button";
 import { apiPathUser } from "@/config/constants";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
@@ -42,7 +42,7 @@ export function AgentRegistration() {
 
   useEffect(() => {
     if (!user) return;
-    router.push(routes.dashboard(i18n.language));
+    router.push(ROUTES.dashboard(i18n.language));
   }, [user, i18n.language, router]);
 
   const update = (fields: Partial<AgentRegistrationData>) => {
@@ -120,7 +120,7 @@ export function AgentRegistration() {
 
         <ExistingUserWrapper>
           <ExistingUserText>{t("agentRegistration.alreadyUser")}</ExistingUserText>
-          <Link href={routes.login(i18n.language)}>{t("agentRegistration.loginLink")}</Link>
+          <Link href={ROUTES.login(i18n.language)}>{t("agentRegistration.loginLink")}</Link>
         </ExistingUserWrapper>
 
         {submitError && <ErrorBanner>{submitError}</ErrorBanner>}

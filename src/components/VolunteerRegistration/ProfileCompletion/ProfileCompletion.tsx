@@ -1,6 +1,6 @@
 "use client";
 
-import { routes } from "@/constants/routes";
+import { ROUTES } from "@/constants/routes";
 import { Button } from "@/components/core/button";
 import { apiPathOption } from "@/config/constants";
 import { useRegisterVolunteer } from "@/hooks/useRegisterVolunteer";
@@ -80,7 +80,7 @@ export function ProfileCompletion() {
     token,
     onSuccess: () => {
       setAuthHint();
-      router.push(routes.dashboard(i18next.language));
+      router.push(ROUTES.dashboard(i18next.language));
     },
   });
 

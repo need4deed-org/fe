@@ -1,7 +1,7 @@
 "use client";
 import styled from "styled-components";
 import { LinkButton } from "./fields/LinkButton";
-import { routes } from "@/constants/routes";
+import { ROUTES } from "@/constants/routes";
 import { useTranslation } from "react-i18next";
 
 export const NotFound = () => {
@@ -14,7 +14,7 @@ export const NotFound = () => {
     <Background>
       <Heading>404</Heading>
       <Message>{t("notFound.message")}</Message>
-      <LinkButton inline href={routes.home(language)} label={t("notFound.goHome")} />
+      <LinkButton inline href={ROUTES.home(language)} label={t("notFound.goHome")} />
     </Background>
   );
 };

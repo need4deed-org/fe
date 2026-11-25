@@ -1,4 +1,4 @@
-import { routes } from "@/constants/routes";
+import { ROUTES } from "@/constants/routes";
 import { CheckCircleIcon, CheckIcon, FlagIcon, HourglassIcon, SealCheckIcon, SparkleIcon } from "@phosphor-icons/react";
 import {
   ApiVolunteerGetList,
@@ -62,7 +62,7 @@ export function VolunteerCard({ volunteer, opportunityId, selectedDistrictIds = 
     if (!id) return;
 
     const params = opportunityId ? `?opportunity=${opportunityId}` : "";
-    router.push(`${routes.volunteerDetail(i18n.language, id)}${params}`);
+    router.push(`${ROUTES.volunteerDetail(i18n.language, id)}${params}`);
   };
 
   return (

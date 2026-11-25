@@ -1,4 +1,4 @@
-import { routes } from "@/constants/routes";
+import { ROUTES } from "@/constants/routes";
 import { apiPathAgent, apiPathOpportunity, apiPathVolunteer } from "@/config/constants";
 import { DashboardEntityType } from "@/hooks/useGetEntityTitle";
 import { ApiAgentGet, ApiOpportunityGet, ApiVolunteerGet } from "need4deed-sdk";
@@ -11,18 +11,18 @@ export type ApiEntityGet = {
 
 export const processEntity: Record<
   DashboardEntityType,
-  { linkUrl: (lang: string, id: string | number) => string; path: string }
+  { linkUrl: (lang: string, id: number) => string; path: string }
 > = {
   agent: {
-    linkUrl: routes.organizationDetail,
+    linkUrl: ROUTES.organizationDetail,
     path: apiPathAgent,
   },
   opportunity: {
-    linkUrl: routes.opportunityDetail,
+    linkUrl: ROUTES.opportunityDetail,
     path: apiPathOpportunity,
   },
   volunteer: {
-    linkUrl: routes.volunteerDetail,
+    linkUrl: ROUTES.volunteerDetail,
     path: apiPathVolunteer,
   },
 };

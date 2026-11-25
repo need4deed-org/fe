@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { IconLink } from "@/types/Link";
 import { UserRole } from "need4deed-sdk";
-import { routes } from "@/constants/routes";
+import { ROUTES } from "@/constants/routes";
 import { useTranslation } from "react-i18next";
 import {
   BuildingsIcon,
@@ -35,43 +35,43 @@ export const Navigation = ({ breakpoint }: NavigationProps) => {
   const pathname = usePathname();
   const links: MenuLink[] = [
     {
-      route: routes.dashboard(language),
+      route: ROUTES.dashboard(language),
       Icon: SquaresFourIcon,
       label: t("dashboard.home.sidebar.dashboard"),
       roles: [UserRole.VOLUNTEER, UserRole.AGENT, UserRole.USER, UserRole.COORDINATOR, UserRole.ADMIN],
     },
     {
-      route: routes.volunteers(language),
+      route: ROUTES.volunteers(language),
       Icon: UsersThreeIcon,
       label: t("dashboard.home.sidebar.volunteers"),
       roles: [UserRole.AGENT, UserRole.USER, UserRole.COORDINATOR, UserRole.ADMIN],
     },
     {
-      route: routes.opportunities(language),
+      route: ROUTES.opportunities(language),
       Icon: HandHeartIcon,
       label: t("dashboard.home.sidebar.opportunities"),
       roles: [UserRole.VOLUNTEER, UserRole.AGENT, UserRole.USER, UserRole.COORDINATOR, UserRole.ADMIN],
     },
     {
-      route: routes.organizations(language),
+      route: ROUTES.organizations(language),
       Icon: BuildingsIcon,
       label: t("dashboard.home.sidebar.organizations"),
       roles: [UserRole.USER, UserRole.COORDINATOR, UserRole.ADMIN],
     },
     {
-      route: routes.discussions(language),
+      route: ROUTES.discussions(language),
       Icon: ChatsCircleIcon,
       label: t("dashboard.home.sidebar.discussions"),
       roles: [UserRole.AGENT, UserRole.USER, UserRole.COORDINATOR, UserRole.ADMIN],
     },
     {
-      route: routes.calendar(language),
+      route: ROUTES.calendar(language),
       Icon: CalendarDotsIcon,
       label: t("dashboard.home.sidebar.calendar"),
       roles: [UserRole.USER, UserRole.COORDINATOR, UserRole.ADMIN],
     },
     {
-      route: routes.account(language),
+      route: ROUTES.account(language),
       Icon: UserCircleIcon,
       label: t("dashboard.home.sidebar.account"),
       roles: [UserRole.VOLUNTEER, UserRole.AGENT, UserRole.USER, UserRole.COORDINATOR, UserRole.ADMIN],
@@ -99,7 +99,7 @@ export const Navigation = ({ breakpoint }: NavigationProps) => {
               >
                 <Icon aria-hidden />
                 {label}
-                {route === routes.dashboard(language) && <NotificationBadge />}
+                {route === ROUTES.dashboard(language) && <NotificationBadge />}
               </Link>
             </ListItem>
           );
@@ -151,24 +151,33 @@ const Link = styled(NextLink)<{ $selected: boolean; $breakpoint: number }>`
   height: var(--field-size);
   padding-left: var(--large-spacing);
   padding-right: var(--large-spacing);
-  background-color: ${({ $selected }) => ($selected ? "var(--lavender-100) !important" : "transparent")};
+  background-color: ${({ $selected }) => ($selected ? "var(--blue-100) !important" : "transparent")};
   border-radius: var(--pill-field-border-radius);
   font-weight: var(--bold);
-  color: var(--white);
+  color: ${({ $selected }) => ($selected ? "var(--white)" : "var(--blue-100)")};
   white-space: nowrap;
-  transition: background-color var(--short-transition);
+  transition:
+    background-color var(--short-transition),
+    color var(--short-transition);
 
   &:hover,
   &:active,
   &:focus-visible {
-    background-color: var(--lavender-80);
+    background-color: var(--blue-80);
+    color: var(--white);
   }
 
-  svg {
+  > svg {
     width: var(--field-icon-size);
     height: var(--field-icon-size);
-    fill: var(--white);
+    fill: ${({ $selected }) => ($selected ? "var(--white)" : "var(--blue-100)")};
     transition: fill var(--short-transition);
+  }
+
+  &:hover > svg,
+  &:active > svg,
+  &:focus-visible > svg {
+    fill: var(--white);
   }
 
   @media screen and (max-width: ${({ $breakpoint }) => $breakpoint}px) {

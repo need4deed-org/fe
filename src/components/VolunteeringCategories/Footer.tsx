@@ -1,4 +1,4 @@
-import { routes } from "@/constants/routes";
+import { ROUTES } from "@/constants/routes";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "next/navigation";
 
@@ -13,7 +13,7 @@ export default function Footer() {
     <BaseFooterContainer id="footer-container">
       <Button
         onClick={() => {
-          router.push(routes.volunteer(i18n.language));
+          router.push(ROUTES.volunteer(i18n.language));
         }}
         text={t("website.volunteeringCategories.footerButton")}
       />

@@ -1,6 +1,6 @@
 "use client";
 import styled from "styled-components";
-import { routes } from "@/constants/routes";
+import { ROUTES } from "@/constants/routes";
 import { usePathname } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import { Link } from "@/types/Link";
@@ -17,9 +17,9 @@ export const MainNavigation = ({ breakpoint }: MainNavigationProps) => {
   } = useTranslation();
   const pathname = usePathname();
   const links: Link[] = [
-    { route: routes.about(language), label: t("website.header.about") },
-    { route: routes.volunteer(language), label: t("website.header.volunteer") },
-    { route: routes.events(language), label: t("website.header.events") },
+    { route: ROUTES.about(language), label: t("website.header.about") },
+    { route: ROUTES.volunteer(language), label: t("website.header.volunteer") },
+    { route: ROUTES.events(language), label: t("website.header.events") },
   ];
 
   return (
@@ -56,14 +56,16 @@ const List = styled.ul<{ $breakpoint: number }>`
 const ListItem = styled.li``;
 
 const LinkElement = styled(NextLink)<{ $selected: boolean }>`
+  background-color: ${({ $selected }) => ($selected ? "var(--blue-100) !important" : "transparent")};
   font-weight: var(--bold);
-  color: ${({ $selected }) => ($selected ? "var(--black) !important" : "var(--white)")};
+  color: ${({ $selected }) => ($selected ? "var(--white) !important" : "var(--blue-100)")};
   text-transform: capitalize;
   transition: var(--short-transition);
 
   &:hover,
   &:active,
   &:focus-visible {
-    color: var(--lavender-20);
+    background-color: var(--blue-80);
+    color: var(--white);
   }
 `;

@@ -1,4 +1,4 @@
-import { routes } from "@/constants/routes";
+import { ROUTES } from "@/constants/routes";
 import { ApiVolunteerOpportunityGetList, LangPurpose, OptionItem, ProfileVolunteeringType } from "need4deed-sdk";
 import { useTranslation } from "react-i18next";
 import { Paragraph } from "@/components/styled/text";
@@ -40,7 +40,7 @@ export function OpportunityReadOnlyCard({ opportunity, districtsList }: Props) {
   const districtTitle = getDistrictTitle(district, districtsList);
   const location = formatLocation(opportunity.postcode, districtTitle);
 
-  const profileUrl = id ? routes.opportunityDetail(i18n.language, id) : "";
+  const profileUrl = id ? ROUTES.opportunityDetail(i18n.language, Number(id)) : "";
 
   return (
     <Card as={Link} data-testid="opportunity-card" href={profileUrl}>

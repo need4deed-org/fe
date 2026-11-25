@@ -1,22 +1,22 @@
 import type { MetadataRoute } from "next";
 import { siteURL, supportedLangs } from "@/config/constants";
-import { RouteBuilder, routes } from "@/constants/routes";
+import { ROUTES } from "@/constants/routes";
 
-const publicPages: RouteBuilder[] = [
-  routes.home,
-  routes.about,
-  routes.faq,
-  routes.volunteer,
-  routes.volunteerForm,
-  routes.events,
-  routes.racGuidelines,
-  routes.forOrganizations,
-  routes.agreement,
-  routes.legal,
-  routes.privacy,
+const publicPages: ((lang: string) => string)[] = [
+  ROUTES.home,
+  ROUTES.about,
+  ROUTES.faq,
+  ROUTES.volunteer,
+  ROUTES.volunteerForm,
+  ROUTES.events,
+  ROUTES.racGuidelines,
+  ROUTES.forOrganizations,
+  ROUTES.agreement,
+  ROUTES.legal,
+  ROUTES.privacy,
 ];
 
-const pageURL = (lang: string, page: RouteBuilder) => `${siteURL}${page(lang)}`;
+const pageURL = (lang: string, page: (lang: string) => string) => `${siteURL}${page(lang)}`;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return publicPages.flatMap((page) =>

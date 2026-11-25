@@ -11,6 +11,9 @@
 
 - Global constants belong in the [/constants](../src/constants/) directory
 - Modules should be domain-specific
+- File names should use kebab case
+- Constant object variable names should use Screaming Snake Case
+- Constant objects should be declared "as const" so types scan be read using typeof
 
 ## Types
 
@@ -19,7 +22,7 @@
 
 ## Routing
 
-All routing must use constructor methods in [/constants/routes.ts](../src/constants/routes.ts)
+All routing must use constructor methods in [/constants/ROUTES.ts](../src/constants/ROUTES.ts)
 
 ## Component File Structure
 

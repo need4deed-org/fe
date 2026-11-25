@@ -1,6 +1,6 @@
 "use client";
 
-import { routes } from "@/constants/routes";
+import { ROUTES } from "@/constants/routes";
 import { type ApiVolunteerOpportunityGetList, type OptionItem } from "need4deed-sdk";
 import { useTranslation } from "react-i18next";
 import { ClickableRow, TableCell } from "@/components/core/common/Table";
@@ -26,7 +26,7 @@ export function OpportunityReadOnlyTableRow({ opportunity, isLast, districtsList
   const districtText =
     formatLocation(opportunity.postcode, districtTitle ? abbreviateDistrict(districtTitle) : null) || "—";
 
-  const profileUrl = id ? routes.opportunityDetail(i18n.language, id) : "";
+  const profileUrl = id ? ROUTES.opportunityDetail(i18n.language, Number(id)) : "";
   return (
     <ClickableRow as={Link} href={profileUrl} $isLast={isLast} $cursor="pointer" data-testid={`opportunity-row-${id}`}>
       <TableCell data-testid={`opportunity-title-${id}`} $width={OPPORTUNITY_READ_ONLY_COL_WIDTHS.title}>

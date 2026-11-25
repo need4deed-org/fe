@@ -2,7 +2,7 @@
 import styled from "styled-components";
 import { InlineNeed4DeedLogo } from "@/components/svg/Need4DeedLogo";
 import { useTranslation } from "react-i18next";
-import { routes } from "@/constants/routes";
+import { ROUTES } from "@/constants/routes";
 import NextLink from "next/link";
 import { Navigation } from "./Navigation";
 
@@ -18,7 +18,7 @@ export const Sidebar = ({ breakpoint }: SidebarProps) => {
   return (
     <Background $breakpoint={breakpoint}>
       <ContainerLogo $breakpoint={breakpoint}>
-        <HomeLink href={routes.home(language)}>
+        <HomeLink href={ROUTES.home(language)}>
           <InlineNeed4DeedLogo />
         </HomeLink>
       </ContainerLogo>
@@ -71,14 +71,14 @@ const ContainerLogo = styled.div<{ $breakpoint: number }>`
 const HomeLink = styled(NextLink)`
   > svg {
     height: var(--header-logo-height);
-    fill: var(--lavender-100);
+    fill: var(--blue-100);
     transition: var(--short-transition);
   }
 
   &:hover > svg,
   &:active > svg,
   &:focus-visible > svg {
-    fill: var(--lavender-80);
+    fill: var(--blue-80);
   }
 `;
 

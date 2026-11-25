@@ -1,5 +1,5 @@
 "use client";
-import { routes } from "@/constants/routes";
+import { ROUTES } from "@/constants/routes";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import Link from "next/link";
@@ -79,7 +79,7 @@ function LegalNotice() {
         <li>Adobe Stock</li>
       </ul>
       <p>{t("legal.notice.photoCredit.clubDialog")}</p>
-      <StyledLink href={routes.privacy(i18n.language)}>{t("legal.notice.dataProtectionLink")}</StyledLink>
+      <StyledLink href={ROUTES.privacy(i18n.language)}>{t("legal.notice.dataProtectionLink")}</StyledLink>
       <h6>{t("legal.notice.dataProtectionOfficer")}</h6>
       <LegalSection>
         <p>WS Datenschutz GmbH</p>

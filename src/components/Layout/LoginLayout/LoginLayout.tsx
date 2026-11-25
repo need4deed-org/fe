@@ -1,5 +1,5 @@
 "use client";
-import { routes } from "@/constants/routes";
+import { ROUTES } from "@/constants/routes";
 import Image from "next/image";
 import { getImageUrl } from "@/utils";
 import { ArrowRight } from "@phosphor-icons/react";
@@ -49,11 +49,11 @@ export function LoginLayout({ children, heading, showRegistration = false }: Pro
           <>
             <RegistrationHeading id={registrationHeadingId}>{t("dashboard.login.newToNeed4Deed")}</RegistrationHeading>
             <RegistrationLinks>
-              <RegistrationLink href={routes.registerOrganization(lang)}>
+              <RegistrationLink href={ROUTES.registerOrganization(lang)}>
                 {t("dashboard.login.createNgoAccount")}
                 <ArrowRight size={28} aria-hidden="true" />
               </RegistrationLink>
-              <RegistrationLink href={routes.registerVolunteer(lang)}>
+              <RegistrationLink href={ROUTES.registerVolunteer(lang)}>
                 {t("dashboard.login.createVolunteerAccount")}
                 <ArrowRight size={28} aria-hidden="true" />
               </RegistrationLink>

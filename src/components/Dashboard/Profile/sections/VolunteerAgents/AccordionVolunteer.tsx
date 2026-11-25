@@ -1,4 +1,4 @@
-import { routes } from "@/constants/routes";
+import { ROUTES } from "@/constants/routes";
 import { EmailNoteControl, MatchHandler } from "../shared/types";
 import { CirclePic } from "@/components/styled/img";
 import { Heading4 } from "@/components/styled/text";
@@ -36,7 +36,7 @@ export const AccordionVolunteer = ({
   const router = useRouter();
 
   const handleGoToProfile = () => {
-    router.push(routes.volunteerDetail(i18n.language, volunteer.volunteerId));
+    router.push(ROUTES.volunteerDetail(i18n.language, volunteer.volunteerId));
   };
 
   const engagementStatusLabels = createEngagementStatusLabelMap(t);

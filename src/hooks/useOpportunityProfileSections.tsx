@@ -1,4 +1,4 @@
-import { routes } from "@/constants/routes";
+import { ROUTES } from "@/constants/routes";
 import { SectionCardProps } from "@/components/Dashboard/Profile/common/SectionCard";
 import { AccompanyingDetails } from "@/components/Dashboard/Profile/sections/AccompanyingDetails";
 import { Comments } from "@/components/Dashboard/Profile/sections/Comments";
@@ -55,12 +55,12 @@ export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | u
 
   const { mutate: suggestMutate, isPending: isSuggesting } = useSuggestVolunteerOpportunity(() => {
     setIsSuggestDialogOpen(false);
-    if (volunteerId) router.push(routes.volunteerDetail(i18n.language, volunteerId));
+    if (volunteerId) router.push(ROUTES.volunteerDetail(i18n.language, parseInt(volunteerId)));
   }, ["volunteer-opportunities", String(volunteerId)]);
 
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const { mutate: deleteMutate, isPending: isDeleting } = useDeleteOpportunity(opportunity?.id ?? 0, () => {
-    router.replace(routes.opportunities(i18n.language));
+    router.replace(ROUTES.opportunities(i18n.language));
   });
 
   if (!opportunity) return null;
@@ -160,7 +160,7 @@ export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | u
               : t("dashboard.opportunityProfile.volunteersSec.findVolunteers"),
             onHeaderButtonClick: volunteerId
               ? () => setIsSuggestDialogOpen(true)
-              : () => router.push(`${routes.volunteers(i18n.language)}?opportunity=${opportunity.id}`),
+              : () => router.push(`${ROUTES.volunteers(i18n.language)}?opportunity=${opportunity.id}`),
           }),
         subComponent: (
           <>
@@ -214,7 +214,7 @@ export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | u
             deleteDisabled={isDeleting}
             transferButtonText={t("dashboard.opportunityProfile.dangerZone.transferButton")}
             onTransferClick={() =>
-              router.push(`${routes.organizations(i18n.language)}?transferOpportunity=${opportunity.id}`)
+              router.push(`${ROUTES.organizations(i18n.language)}?transferOpportunity=${opportunity.id}`)
             }
           />
           {isDeleteDialogOpen && (

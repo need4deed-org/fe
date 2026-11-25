@@ -1,5 +1,5 @@
 "use client";
-import { routes } from "@/constants/routes";
+import { ROUTES } from "@/constants/routes";
 import { Button } from "@/components/core/button";
 import { Body, Description, Detail, Details, EventCard, Hero, PageContent } from "@/components/styled/eventPageLayout";
 import { Heading1, Heading2, Paragraph } from "@/components/styled/text";
@@ -241,7 +241,7 @@ export function EventPage({ eventId }: EventPageProps) {
       ) : selectedEvent ? (
         <EventStack>
           {hasEventId ? (
-            <BackLink href={routes.events(i18n.language)}>
+            <BackLink href={ROUTES.events(i18n.language)}>
               <ArrowLeftIcon size={18} aria-hidden />
               {t("eventPage.backToEvents")}
             </BackLink>
@@ -276,7 +276,7 @@ export function EventPage({ eventId }: EventPageProps) {
                         <span>{event.address}</span>
                       </MetaRow>
                     </UpcomingMeta>
-                    <DetailsLink href={routes.event(i18n.language, event.id)}>
+                    <DetailsLink href={ROUTES.event(i18n.language, event.id)}>
                       {t("eventPage.viewDetails")}
                       <ArrowRightIcon size={18} aria-hidden />
                     </DetailsLink>

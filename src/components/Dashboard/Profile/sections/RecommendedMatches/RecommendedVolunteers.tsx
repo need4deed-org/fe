@@ -1,4 +1,4 @@
-import { routes } from "@/constants/routes";
+import { ROUTES } from "@/constants/routes";
 import { Button } from "@/components/core/button";
 import { Heading4 } from "@/components/styled/text";
 import { defaultAvatarVolunteerProfile } from "@/config/constants";
@@ -43,7 +43,7 @@ function RecommendedVolunteerRow({ volunteer, opportunityId, opportunityTitle, c
       }
       subtitle=""
       onGoToProfile={() =>
-        router.push(`${routes.volunteerDetail(i18n.language, volunteer.id)}?opportunity=${opportunityId}`)
+        router.push(`${ROUTES.volunteerDetail(i18n.language, volunteer.id)}?opportunity=${opportunityId}`)
       }
       headerAction={
         canSuggest ? (

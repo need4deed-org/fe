@@ -1,7 +1,7 @@
 "use client";
-import { RouteBuilder, routes } from "@/constants/routes";
+import { ROUTES } from "@/constants/routes";
 import { useTranslation } from "react-i18next";
-import { CONTACT_EMAIL } from "@/config/constants";
+import { EMAILS } from "@/constants/emails";
 import {
   AnswerRow,
   Badge,
@@ -20,15 +20,15 @@ import {
   TextLink,
 } from "../styled";
 
-type FaqItem = { key: string; link?: RouteBuilder | string };
+type FaqItem = { key: string; link?: ((lang: string) => string) | string };
 
-const MAILTO = `mailto:${CONTACT_EMAIL}`;
+const MAILTO = `mailto: ${EMAILS.contact}`;
 
 const SECTIONS: { key: string; items: FaqItem[] }[] = [
   {
     key: "volunteers",
     items: [
-      { key: "register", link: routes.registerVolunteer },
+      { key: "register", link: ROUTES.registerVolunteer },
       { key: "afterRegistration" },
       { key: "documents" },
       { key: "accompaniment" },
@@ -37,22 +37,22 @@ const SECTIONS: { key: string; items: FaqItem[] }[] = [
       { key: "skills" },
       { key: "age" },
       { key: "changes" },
-      { key: "login", link: routes.forgotPassword },
-      { key: "events", link: routes.events },
+      { key: "login", link: ROUTES.forgotPassword },
+      { key: "events", link: ROUTES.events },
       { key: "groups", link: MAILTO },
     ],
   },
   {
     key: "organisations",
     items: [
-      { key: "register", link: routes.registerOrganization },
+      { key: "register", link: ROUTES.registerOrganization },
       { key: "request" },
       { key: "afterRequest" },
       { key: "noMatch" },
       { key: "ownVolunteers" },
       { key: "dashboard" },
       { key: "costs" },
-      { key: "more", link: routes.forOrganizations },
+      { key: "more", link: ROUTES.forOrganizations },
     ],
   },
 ];
@@ -88,7 +88,7 @@ function FAQs() {
                           <>
                             {" "}
                             <TextLink href={typeof item.link === "string" ? item.link : item.link(lang)}>
-                              {item.link === MAILTO ? CONTACT_EMAIL : t(`${prefix}.link`)}
+                              {item.link === MAILTO ? EMAILS.contact : t(`${prefix}.link`)}
                             </TextLink>
                           </>
                         )}

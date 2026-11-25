@@ -1,5 +1,5 @@
 "use client";
-import { routes } from "@/constants/routes";
+import { ROUTES } from "@/constants/routes";
 import { SectionCard } from "@/components/Dashboard/Profile/common/SectionCard";
 import {
   useApiActivities,
@@ -145,7 +145,7 @@ export function NewOpportunity() {
     apiPath: `${apiPathOpportunity}/`,
     method: "post",
     onSuccessCallback: () => {
-      router.push(routes.dashboard(lang));
+      router.push(ROUTES.dashboard(lang));
     },
     queryKeyToInvalidate: [
       ["agent-opportunities", String(selectedAgentId)],
@@ -244,7 +244,7 @@ export function NewOpportunity() {
       {isAgentAddressMissing && (
         <AddressWarning role="alert">
           {t("dashboard.newOpportunity.addressMissing")}{" "}
-          <Link href={routes.organizationDetail(lang, selectedAgentId)} target="_blank" rel="noopener noreferrer">
+          <Link href={ROUTES.organizationDetail(lang, selectedAgentId)} target="_blank" rel="noopener noreferrer">
             {t("dashboard.newOpportunity.addressMissingLink")}
           </Link>
         </AddressWarning>

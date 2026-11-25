@@ -1,5 +1,5 @@
 "use client";
-import { routes } from "@/constants/routes";
+import { ROUTES } from "@/constants/routes";
 import { FormInput } from "@/components/core/common";
 import { useTranslation } from "react-i18next";
 import { AgentRegistrationData } from "../types";
@@ -111,10 +111,10 @@ export function AccountStep({ data, onChange, errors, namespace = "agentRegistra
           />
           <span>
             {t(`${namespace}.fields.consent.header`)}{" "}
-            <a href={routes.privacy(i18n.language)}>{t("website.footer.legal.dataPrivacy")}</a>,{" "}
-            <a href={routes.racGuidelines(i18n.language)}>{t("website.footer.legal.guidelines")}</a>{" "}
+            <a href={ROUTES.privacy(i18n.language)}>{t("form.consent.dataPrivacy")}</a>,{" "}
+            <a href={ROUTES.racGuidelines(i18n.language)}>{t("form.consent.guidelines")}</a>{" "}
             {t(`${namespace}.fields.consent.and`)}{" "}
-            <a href={routes.agreement(i18n.language)}>{t("website.footer.legal.agreement")}</a>{" "}
+            <a href={ROUTES.agreement(i18n.language)}>{t("website.footer.agreement")}</a>{" "}
           </span>
         </FieldConsent>
         {errors.consent && (

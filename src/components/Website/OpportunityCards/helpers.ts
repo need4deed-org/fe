@@ -1,4 +1,4 @@
-import { routes } from "@/constants/routes";
+import { ROUTES } from "@/constants/routes";
 import { TFunction } from "i18next";
 import { Lang, OpportunityLegacyType, TranslatedIntoType } from "need4deed-sdk";
 import { IconName } from "@/components/VolunteeringCategories/types";
@@ -83,7 +83,7 @@ export const formatAccompanyingDate = (date: Date, lang: Lang): string => {
 };
 
 export const getRegisterCtaUrl = (lang: Lang, { id, title }: Pick<Opportunity, "id" | "title">) =>
-  `${routes.volunteerForm(lang)}?id=${id}&title=${encodeURIComponent(title)}`;
+  `${ROUTES.volunteerForm(lang)}?id=${id}&title=${encodeURIComponent(title)}`;
 
 const dayEnumMap: Record<number, DaysKeys> = {
   1: "monday",

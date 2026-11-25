@@ -1,6 +1,6 @@
 "use client";
 import styled from "styled-components";
-import { routes } from "@/constants/routes";
+import { ROUTES } from "@/constants/routes";
 import { ACCOUNT_READY_NOTICE, getCookie, rememberNotice } from "@/utils/helpers";
 import { ApiUserVerifyEmail } from "need4deed-sdk";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
@@ -22,7 +22,7 @@ export default function Page() {
 
     const goToLogin = () => {
       rememberNotice(ACCOUNT_READY_NOTICE);
-      router.push(routes.login(lang));
+      router.push(ROUTES.login(lang));
     };
 
     fetch(`/api/user/verify-email`, {
@@ -50,11 +50,11 @@ export default function Page() {
         const pendingRole = getCookie("n4d_pending_role");
         if (roleFromUrl === "agent" || pendingRole === "agent") {
           document.cookie = "n4d_pending_role=; path=/; max-age=0";
-          router.push(`${routes.registerOrganizationComplete(lang)}?token=${encodeURIComponent(token)}`);
+          router.push(`${ROUTES.registerOrganizationComplete(lang)}?token=${encodeURIComponent(token)}`);
         } else if (roleFromUrl === "volunteer") {
-          router.push(`${routes.registerVolunteerComplete(lang)}?token=${encodeURIComponent(token)}`);
+          router.push(`${ROUTES.registerVolunteerComplete(lang)}?token=${encodeURIComponent(token)}`);
         } else {
-          router.push(routes.dashboard(lang));
+          router.push(ROUTES.dashboard(lang));
         }
       })
       .catch(() => {

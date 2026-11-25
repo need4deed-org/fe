@@ -1,6 +1,6 @@
 "use client";
 
-import { routes } from "@/constants/routes";
+import { ROUTES } from "@/constants/routes";
 import type {
   createEngagementStatusLabelMap,
   createMatchStatusLabelMap,
@@ -73,7 +73,7 @@ export function VolunteerTableRow({
   const showBriefedCheck = isBriefedAccompanying(statusType, statusCommunication ?? undefined);
 
   const params = opportunityId ? `?opportunity=${opportunityId}` : "";
-  const profileUrl = id ? `${routes.volunteerDetail(i18n.language, id)}${params}` : "";
+  const profileUrl = id ? `${ROUTES.volunteerDetail(i18n.language, id)}${params}` : "";
 
   return (
     <ClickableRow as={Link} href={profileUrl} $isLast={isLast} data-testid={`volunteer-row-${id}`}>

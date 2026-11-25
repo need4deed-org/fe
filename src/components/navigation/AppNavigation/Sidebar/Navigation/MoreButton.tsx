@@ -117,24 +117,34 @@ const Button = styled.button<{ $breakpoint: number; $selected: boolean }>`
     padding: var(--small-spacing);
     width: 100%;
     height: 100%;
-    background-color: ${({ $selected }) => ($selected ? "var(--lavender-100) !important" : "transparent")};
+    background-color: ${({ $selected }) => ($selected ? "var(--blue-100) !important" : "transparent")};
     border-radius: var(--field-border-radius);
     font-family: var(--condensed-sans-serif);
     font-size: var(--mobile-menu-font-size);
     font-weight: var(--bold);
-    color: var(--white);
+    color: ${({ $selected }) => ($selected ? "var(--white)" : "var(--blue-100)")};
     text-transform: uppercase;
-    transition: background-color var(--short-transition);
+    transition:
+      background-color var(--short-transition),
+      color var(--short-transition);
 
     &:hover,
     &:active,
     &:focus-visible {
-      background-color: var(--lavender-80);
+      background-color: var(--blue-80);
+      color: var(--white);
     }
 
     > svg {
       width: var(--mobile-menu-icon-size);
       height: var(--mobile-menu-icon-size);
+      fill: ${({ $selected }) => ($selected ? "var(--white)" : "var(--blue-100)")};
+      transition: fill var(--short-transition);
+    }
+
+    &:hover > svg,
+    &:active > svg,
+    &:focus-visible > svg {
       fill: var(--white);
     }
   }
@@ -170,7 +180,7 @@ const Menu = styled.div<{ $breakpoint: number }>`
     bottom: var(--small-spacing);
     padding: var(--medium-spacing);
     z-index: 2;
-    background-color: var(--lavender-40);
+    background-color: var(--blue-20);
     border-radius: var(--surface-border-radius);
   }
 `;
@@ -194,23 +204,33 @@ const Link = styled(NextLink)<{ $breakpoint: number; $selected: boolean }>`
   height: var(--field-size);
   padding-left: var(--large-spacing);
   padding-right: var(--large-spacing);
-  background-color: ${({ $selected }) => ($selected ? "var(--lavender-100) !important" : "transparent")};
+  background-color: ${({ $selected }) => ($selected ? "var(--blue-100) !important" : "transparent")};
   border-radius: var(--pill-field-border-radius);
   font-weight: var(--bold);
-  color: var(--white);
+  color: ${({ $selected }) => ($selected ? "var(--white)" : "var(--blue-100)")};
   white-space: nowrap;
-  transition: background-color var(--short-transition);
+  transition:
+    background-color var(--short-transition),
+    color var(--short-transition);
 
   &:hover,
   &:active,
   &:focus-visible {
-    background-color: var(--lavender-80);
+    background-color: var(--blue-80);
+    color: var(--white);
   }
 
   > svg {
     flex-shrink: 0;
     width: 20px;
     height: 20px;
+    fill: ${({ $selected }) => ($selected ? "var(--white)" : "var(--blue-100)")};
+    transition: fill var(--short-transition);
+  }
+
+  &:hover > svg,
+  &:active > svg,
+  &:focus-visible > svg {
     fill: var(--white);
   }
 

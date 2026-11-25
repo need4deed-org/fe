@@ -1,4 +1,4 @@
-import { routes } from "@/constants/routes";
+import { ROUTES } from "@/constants/routes";
 import ProfileLayout from "@/components/Dashboard/Profile/ProfileLayout";
 import { getServerUser } from "@/hooks/api/getUser";
 import { isOwnProfile } from "@/utils/is-own-profile";
@@ -15,7 +15,7 @@ export default async function DashboardAgentPage({ params }: { params: Promise<{
   const user = await getServerUser(cookieHeader);
 
   if (user?.role === UserRole.AGENT && !isOwnProfile(user, { agentId: id })) {
-    redirect(routes.dashboard(lang));
+    redirect(ROUTES.dashboard(lang));
   }
   return <ProfileLayout entityId={id} entityType="agent" />;
 }

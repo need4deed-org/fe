@@ -17,22 +17,14 @@
       "mainNavigation": "Main navigation"
     },
     "footer": {
+      "runBy": "Run By",
       "about": "About",
+      "forOrganizations": "For Organizations",
       "faq": "FAQ",
-      "legalNotice": "Legal notice",
-      "vpa": "Volunteer Participation Agreement",
+      "legal": "Legal",
       "privacy": "Privacy",
-      "contact": "Contact",
-      "legal": {
-        "legalHeading": "Legal",
-        "impressum": "Legal notice",
-        "dataPrivacy": "Privacy",
-        "agreement": "Voluntary Participation Agreement",
-        "guidelines": "Need4Deed Guidelines",
-        "legalNotice": "Legal notice",
-        "cookies": "Cookies"
-      },
-      "forOrganizations": "For Organizations"
+      "agreement": "Volunteer Participation Agreement",
+      "contact": "Contact"
     },
     "iframeTitles": {
       "howToVolunteer": "How you can support refugees in your community"
@@ -162,6 +154,10 @@
     "button": {
       "more": "more...",
       "submit": "Submit"
+    },
+    "consent": {
+      "dataPrivacy": "Privacy",
+      "guidelines": "Need4Deed Guidelines"
     },
     "schedule": {
       "1": "Mon",

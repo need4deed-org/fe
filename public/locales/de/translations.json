@@ -17,20 +17,14 @@
       "mainNavigation": "Hauptnavigation"
     },
     "footer": {
-      "about": "Über",
+      "runBy": "Träger",
+      "about": "Über Uns",
+      "forOrganizations": "Für Organisationen",
       "faq": "FAQ",
-      "legalNotice": "Rechtlicher Hinweis",
+      "legal": "Rechtliches",
       "privacy": "Datenschutz",
-      "vpa": "Ehrenamtliche Vereinbarung",
-      "contact": "Kontakt",
-      "legal": {
-        "guidelines": "Need4Deed Richtlinien",
-        "legalNotice": "Rechtlicher Hinweis",
-        "dataPrivacy": "Datenschutz",
-        "agreement": "Ehrenamtliche Vereinbarung",
-        "cookies": "Cookies"
-      },
-      "forOrganizations": "Für Organisationen"
+      "agreement": "Ehrenamtliche Vereinbarung",
+      "contact": "Kontakt"
     },
     "iframeTitles": {
       "howToVolunteer": "Wie Du Geflüchtete in Deiner Nachbarschaft unterstützen können"
@@ -160,6 +154,10 @@
     "button": {
       "more": "mehr...",
       "submit": "Senden"
+    },
+    "consent": {
+      "dataPrivacy": "Datenschutz",
+      "guidelines": "Need4Deed Richtlinien"
     },
     "schedule": {
       "0": "Andere",

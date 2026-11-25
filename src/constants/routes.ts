@@ -1,12 +1,10 @@
-type Id = string | number;
-
-export const routes = {
+export const ROUTES = {
   home: (lang: string) => `/${lang}`,
   about: (lang: string) => `/${lang}/about`,
   volunteer: (lang: string) => `/${lang}/volunteer`,
   volunteerForm: (lang: string) => `/${lang}/forms/volunteer`,
   events: (lang: string) => `/${lang}/events`,
-  event: (lang: string, id: Id) => `/${lang}/event-page/${id}`,
+  event: (lang: string, id: number) => `/${lang}/event-page/${id}`,
   announcement: (lang: string) => `/${lang}/announcement`,
   forOrganizations: (lang: string) => `/${lang}/for-organizations`,
   faq: (lang: string) => `/${lang}/faq`,
@@ -26,19 +24,17 @@ export const routes = {
   dashboard: (lang: string) => `/${lang}/dashboard`,
   statistics: (lang: string) => `/${lang}/dashboard/statistics`,
   volunteers: (lang: string) => `/${lang}/volunteers`,
-  volunteerDetail: (lang: string, id: Id) => `/${lang}/volunteers/${id}`,
+  volunteerDetail: (lang: string, id: number) => `/${lang}/volunteers/${id}`,
   opportunities: (lang: string) => `/${lang}/opportunities`,
-  opportunityDetail: (lang: string, id: Id) => `/${lang}/opportunities/${id}`,
+  opportunityDetail: (lang: string, id: number) => `/${lang}/opportunities/${id}`,
   newOpportunity: (lang: string) => `/${lang}/opportunities/new`,
   organizations: (lang: string) => `/${lang}/organizations`,
-  organizationDetail: (lang: string, id: Id) => `/${lang}/organizations/${id}`,
+  organizationDetail: (lang: string, id: number) => `/${lang}/organizations/${id}`,
   discussions: (lang: string) => `/${lang}/discussions`,
   calendar: (lang: string) => `/${lang}/calendar`,
   calendarCreate: (lang: string) => `/${lang}/calendar/create`,
-  calendarEdit: (lang: string, id: Id) => `/${lang}/calendar/${id}/edit`,
+  calendarEdit: (lang: string, id: number) => `/${lang}/calendar/${id}/edit`,
   account: (lang: string) => `/${lang}/account`,
   domains: (lang: string) => `/${lang}/organizations/domains`,
   ngoVolunteers: (lang: string) => `/${lang}/organizations/volunteers`,
 } as const;
-
-export type RouteBuilder = (lang: string) => string;

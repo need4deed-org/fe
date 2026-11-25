@@ -1,4 +1,4 @@
-import { routes } from "@/constants/routes";
+import { ROUTES } from "@/constants/routes";
 import N4DLogoFlat from "@/components/svg/N4DLogoFlat";
 import { ScreenTypes } from "@/config/constants";
 import { useScreenType } from "@/context/DeviceContext";
@@ -37,7 +37,7 @@ export function N4DLogo() {
       width={logoWidth}
       height={logoHeight}
       onClick={() => {
-        router.push(routes.home(i18n.language));
+        router.push(ROUTES.home(i18n.language));
       }}
     />
   );

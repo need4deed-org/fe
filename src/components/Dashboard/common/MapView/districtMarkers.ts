@@ -1,13 +1,13 @@
-import { routes } from "@/constants/routes";
+import { ROUTES } from "@/constants/routes";
 import { ApiDistrictMarker, Lang } from "need4deed-sdk";
 import { TFunction } from "i18next";
 import { formatAvailabilityItem } from "../../Profile/sections/VolunteerProfile/formatters";
 import { MapEntity } from "./types";
 
-const profileRoute: Record<MapEntity, (lang: string, id: number | string) => string> = {
-  [MapEntity.AGENT]: routes.organizationDetail,
-  [MapEntity.OPPORTUNITY]: routes.opportunityDetail,
-  [MapEntity.VOLUNTEER]: routes.volunteerDetail,
+const profileRoute: Record<MapEntity, (lang: string, id: number) => string> = {
+  [MapEntity.AGENT]: ROUTES.organizationDetail,
+  [MapEntity.OPPORTUNITY]: ROUTES.opportunityDetail,
+  [MapEntity.VOLUNTEER]: ROUTES.volunteerDetail,
 };
 
 const markerLabelKey: Record<MapEntity, string> = {
@@ -37,7 +37,7 @@ export const createDistrictMarkers = (
         children: marker.children.map((child) => ({
           id: child.id,
           title: child.title,
-          link: profileRoute[entity](lang, child.id),
+          link: profileRoute[entity](lang, Number(child.id)),
           language: child.languages
             ?.map(({ title }) => title)
             .filter(Boolean)

@@ -2,7 +2,7 @@
 import styled from "styled-components";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { useTranslation } from "react-i18next";
-import { routes } from "@/constants/routes";
+import { ROUTES } from "@/constants/routes";
 import Link from "next/link";
 
 export const AuthButton = () => {
@@ -13,9 +13,9 @@ export const AuthButton = () => {
   const user = useCurrentUser();
 
   return user ? (
-    <Button href={routes.dashboard(language)}>{t("website.header.dashboard")}</Button>
+    <Button href={ROUTES.dashboard(language)}>{t("website.header.dashboard")}</Button>
   ) : (
-    <Button href={routes.login(language)}>{t("website.header.login")}</Button>
+    <Button href={ROUTES.login(language)}>{t("website.header.login")}</Button>
   );
 };
 
@@ -28,15 +28,15 @@ const Button = styled(Link)`
   height: var(--field-size);
   padding-left: var(--large-spacing);
   padding-right: var(--large-spacing);
-  background-color: var(--white);
+  background-color: var(--blue-100);
   border-radius: var(--pill-field-border-radius);
   font-weight: var(--bold);
-  color: var(--black);
+  color: var(--white);
   transition: background-color var(--short-transition);
 
   &:hover,
   &:active,
   &:focus-visible {
-    background-color: var(--lavender-20);
+    background-color: var(--blue-80);
   }
 `;

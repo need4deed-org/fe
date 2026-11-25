@@ -1,5 +1,5 @@
 "use client";
-import { routes } from "@/constants/routes";
+import { ROUTES } from "@/constants/routes";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -126,14 +126,14 @@ export function CreateEvent({ eventId }: Props) {
   const handleNext = () => setStep((s) => Math.min(s + 1, TOTAL_STEPS));
   const handleBack = () => {
     if (step === 1) {
-      router.push(routes.calendar(i18n.language));
+      router.push(ROUTES.calendar(i18n.language));
     } else {
       setStep((s) => s - 1);
     }
   };
-  const handleCancel = () => router.push(routes.calendar(i18n.language));
+  const handleCancel = () => router.push(ROUTES.calendar(i18n.language));
 
-  const returnToEvents = () => router.push(routes.calendar(i18n.language));
+  const returnToEvents = () => router.push(ROUTES.calendar(i18n.language));
   const createEvent = useCreateEvent(returnToEvents);
   const updateEvent = useUpdateEvent(eventId ?? 0, returnToEvents);
 

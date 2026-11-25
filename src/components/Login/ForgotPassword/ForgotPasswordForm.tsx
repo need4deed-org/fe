@@ -1,4 +1,4 @@
-import { routes } from "@/constants/routes";
+import { ROUTES } from "@/constants/routes";
 import React from "react";
 import { useForm } from "@tanstack/react-form";
 import { FormInput } from "../../core/common";
@@ -87,7 +87,7 @@ export function ForgotPasswordForm({ onSuccess }: Props) {
             />
           )}
         </form.Subscribe>
-        <Link href={routes.login(lang)}>{t("dashboard.login.backToLogin")}</Link>
+        <Link href={ROUTES.login(lang)}>{t("dashboard.login.backToLogin")}</Link>
       </EmailButtonDiv>
     </StyledForm>
   );

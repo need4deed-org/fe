@@ -1,4 +1,4 @@
-import { routes } from "@/constants/routes";
+import { ROUTES } from "@/constants/routes";
 import axios, { InternalAxiosRequestConfig } from "axios";
 import i18next from "i18next";
 import { Lang } from "need4deed-sdk";
@@ -130,7 +130,7 @@ axios.interceptors.response.use(
         if (isRedirecting) {
           rememberSessionExpired();
           markSessionExpired(error);
-          window.location.href = routes.login(getActiveLanguage());
+          window.location.href = ROUTES.login(getActiveLanguage());
         }
 
         return Promise.reject(error);

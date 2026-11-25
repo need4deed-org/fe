@@ -1,5 +1,5 @@
 "use client";
-import { routes } from "@/constants/routes";
+import { ROUTES } from "@/constants/routes";
 import { Button } from "@/components/core/button";
 import { ImageWithGradient } from "@/components/core/image";
 import { FullWidthContainer, OverlayingSectionContainer } from "@/components/styled/container";
@@ -144,7 +144,7 @@ export function EventsSection() {
                       ? t("website.events.viewAll", { count: upcomingEvents.length })
                       : t("website.events.button")
                   }
-                  onClick={() => window.location.assign(routes.events(i18n.language))}
+                  onClick={() => window.location.assign(ROUTES.events(i18n.language))}
                 />
               </ButtonContainer>
             )}

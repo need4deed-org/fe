@@ -4,7 +4,7 @@ import { userAgent } from "next/server";
 import { supportedLangs } from "./config/constants";
 import { Lang, UserRole } from "need4deed-sdk";
 import { decodeJwtPayload } from "./utils";
-import { RouteBuilder, routes } from "./constants/routes";
+import { ROUTES } from "./constants/routes";
 
 const DEFAULT_LOCALE = Lang.EN;
 const DEFAULT_DEVICE_TYPE = "desktop";
@@ -15,10 +15,10 @@ const REFRESH = "refresh";
 const appSections = "dashboard|opportunities|volunteers|organizations|discussions|calendar|account";
 const localePrefixRegex = /^\/([a-z]{2})(?:\/|$)/i;
 
-const authorizedRoutes: Record<string, { regex: RegExp; redirect: RouteBuilder }> = {
-  AGENT: { regex: /^(?:\/[a-z]{2})?\/organizations\/([0-9]+)$/, redirect: routes.organizations },
-  NEW_OPPORTUNITIES: { regex: /^(?:\/[a-z]{2})?\/forms\/opportunity(?:\/|$)/, redirect: routes.login },
-  DASHBOARD: { regex: new RegExp(`^(?:/[a-z]{2})?/(?:${appSections})(?:/|$)`), redirect: routes.login },
+const authorizedRoutes: Record<string, { regex: RegExp; redirect: (lang: string) => string }> = {
+  AGENT: { regex: /^(?:\/[a-z]{2})?\/organizations\/([0-9]+)$/, redirect: ROUTES.organizations },
+  NEW_OPPORTUNITIES: { regex: /^(?:\/[a-z]{2})?\/forms\/opportunity(?:\/|$)/, redirect: ROUTES.login },
+  DASHBOARD: { regex: new RegExp(`^(?:/[a-z]{2})?/(?:${appSections})(?:/|$)`), redirect: ROUTES.login },
 };
 
 function getAcceptLanguageLocale(header: string | null): string | null {
@@ -74,14 +74,14 @@ export function middleware(request: NextRequest) {
     const adminOnlyRegex = /^(?:\/[a-z]{2})?\/(?:dashboard\/statistics|organizations\/(?:domains|volunteers))(?:\/|$)/;
     if (!isAuthorized && adminOnlyRegex.test(pathname)) {
       const url = request.nextUrl.clone();
-      url.pathname = routes.dashboard(lang);
+      url.pathname = ROUTES.dashboard(lang);
       return NextResponse.redirect(url);
     }
 
     const volunteerRestrictedRegex = /^(?:\/[a-z]{2})?\/(volunteers|organizations|discussions|calendar)(?:\/|$)/;
     if (userObject?.role === UserRole.VOLUNTEER && volunteerRestrictedRegex.test(pathname)) {
       const url = request.nextUrl.clone();
-      url.pathname = routes.dashboard(lang);
+      url.pathname = ROUTES.dashboard(lang);
       return NextResponse.redirect(url);
     }
 
@@ -99,7 +99,7 @@ export function middleware(request: NextRequest) {
     const agentRestrictedRegex = /^(?:\/[a-z]{2})?\/(?:calendar(?:\/|$)|organizations\/?$)/;
     if (userObject?.role === UserRole.AGENT && agentRestrictedRegex.test(pathname)) {
       const url = request.nextUrl.clone();
-      url.pathname = routes.dashboard(lang);
+      url.pathname = ROUTES.dashboard(lang);
       return NextResponse.redirect(url);
     }
   }

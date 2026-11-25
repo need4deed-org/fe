@@ -1,5 +1,5 @@
 "use client";
-import { routes } from "@/constants/routes";
+import { ROUTES } from "@/constants/routes";
 import { Button } from "@/components/core/button";
 import { apiPathUser } from "@/config/constants";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
@@ -49,7 +49,7 @@ export function VolunteerRegistration() {
 
   useEffect(() => {
     if (!user || ngoToken) return;
-    router.push(routes.dashboard(i18n.language));
+    router.push(ROUTES.dashboard(i18n.language));
   }, [user, ngoToken, i18n.language, router]);
 
   const update = (fields: Partial<AccountRegistrationData>) => {
@@ -109,7 +109,7 @@ export function VolunteerRegistration() {
         <Card>
           <SuccessWrapper>
             <SuccessText>{ngoLinkMessage}</SuccessText>
-            {user && <Link href={routes.dashboard(i18n.language)}>{t("volunteerRegistration.toDashboard")}</Link>}
+            {user && <Link href={ROUTES.dashboard(i18n.language)}>{t("volunteerRegistration.toDashboard")}</Link>}
           </SuccessWrapper>
         </Card>
       </PageWrapper>
@@ -142,7 +142,7 @@ export function VolunteerRegistration() {
 
         <ExistingUserWrapper>
           <ExistingUserText>{t("volunteerRegistration.alreadyUser")}</ExistingUserText>
-          <Link href={routes.login(i18n.language)}>{t("volunteerRegistration.loginLink")}</Link>
+          <Link href={ROUTES.login(i18n.language)}>{t("volunteerRegistration.loginLink")}</Link>
         </ExistingUserWrapper>
 
         {submitError && <ErrorBanner>{submitError}</ErrorBanner>}

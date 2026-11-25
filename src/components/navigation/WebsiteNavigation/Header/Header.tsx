@@ -2,7 +2,7 @@
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import NextLink from "next/link";
-import { routes } from "@/constants/routes";
+import { ROUTES } from "@/constants/routes";
 import { InlineNeed4DeedLogo } from "@/components/svg/Need4DeedLogo";
 import { Navigation } from "./Navigation";
 
@@ -13,7 +13,7 @@ export const Header = () => {
 
   return (
     <HeaderElement>
-      <HomeLink href={routes.home(language)}>
+      <HomeLink href={ROUTES.home(language)}>
         <InlineNeed4DeedLogo />
       </HomeLink>
       <Navigation />
@@ -34,19 +34,19 @@ const HeaderElement = styled.header`
   height: var(--header-height);
   padding-left: var(--large-spacing);
   padding-right: var(--large-spacing);
-  background-color: var(--lavender-100);
+  background-color: var(--lavender-20);
 `;
 
 const HomeLink = styled(NextLink)`
   svg {
     height: var(--header-logo-height);
-    fill: var(--white);
+    fill: var(--blue-100);
     transition: var(--short-transition);
   }
 
   &:hover > svg,
   &:active > svg,
   &:focus-visible > svg {
-    fill: var(--lavender-20);
+    fill: var(--blue-80);
   }
 `;
