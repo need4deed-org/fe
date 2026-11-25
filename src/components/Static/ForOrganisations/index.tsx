@@ -52,7 +52,7 @@ function ForOrganisations() {
                 <Card key={step}>
                   <QuestionRow>
                     <Badge>{index + 1}</Badge>
-                    <SectionHeader>{t(`forOrganisationsPage.steps.${step}.title`)}</SectionHeader>
+                    <SectionHeader as="h4">{t(`forOrganisationsPage.steps.${step}.title`)}</SectionHeader>
                   </QuestionRow>
                   <NoteText>{t(`forOrganisationsPage.steps.${step}.body`)}</NoteText>
                 </Card>
@@ -66,7 +66,7 @@ function ForOrganisations() {
             <CardGrid>
               {DASHBOARD_FEATURES.map((feature) => (
                 <Card key={feature}>
-                  <SectionHeader>{t(`forOrganisationsPage.dashboard.features.${feature}.title`)}</SectionHeader>
+                  <SectionHeader as="h4">{t(`forOrganisationsPage.dashboard.features.${feature}.title`)}</SectionHeader>
                   <NoteText>{t(`forOrganisationsPage.dashboard.features.${feature}.body`)}</NoteText>
                 </Card>
               ))}
