@@ -1,12 +1,13 @@
 import React, { useMemo } from "react";
-import { FieldApi, useForm } from "@tanstack/react-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Controller, useForm } from "react-hook-form";
 import { FormInput, VisuallyHiddenInput } from "../../core/common";
 import { useTranslation } from "react-i18next";
 import { Button } from "../../core/button";
 import { useMutationQuery } from "@/hooks";
 import { useSearchParams } from "next/navigation";
 import { apiPathPasswordReset } from "@/config/constants";
-import { createResetPasswordSchema } from "./resetPasswordSchema";
+import { createResetPasswordSchema, ResetPasswordFormData } from "./resetPasswordSchema";
 import { StyledForm } from "../styles";
 import { decodeJwtPayload } from "@/utils/helpers";
 
@@ -19,18 +20,6 @@ interface ResetPasswordData {
 interface ResetPasswordResponse {
   message: string;
 }
-
-type FieldApiType = FieldApi<
-  {
-    newPassword: string;
-    confirmPassword: string;
-    token: string;
-  },
-  "confirmPassword",
-  undefined,
-  undefined,
-  string
->;
 
 type Props = {
   onResetSuccess: () => void;
@@ -52,40 +41,25 @@ export function ResetPasswordForm({ onResetSuccess }: Props) {
   const urlTokenParam = searchParams.get("token");
   const email: string = useMemo(() => (urlTokenParam && decodeJwtPayload(urlTokenParam)?.email) || "", [urlTokenParam]);
   const { mutate: resetPassword, isPending } = useResetPasswordMutation(onResetSuccess);
-  const form = useForm({
-    defaultValues: {
-      newPassword: "",
-      confirmPassword: "",
-      token: urlTokenParam || "",
-    },
-    onSubmit: async ({ value }) => {
-      resetPassword(value);
-    },
+  const schema = useMemo(() => createResetPasswordSchema(t), [t]);
+  const {
+    control,
+    handleSubmit,
+    trigger,
+    getFieldState,
+    formState: { errors },
+  } = useForm<ResetPasswordFormData>({
+    resolver: zodResolver(schema),
+    mode: "onTouched",
+    defaultValues: { newPassword: "", confirmPassword: "" },
   });
-  const schema = createResetPasswordSchema(t);
+  const canSubmit = Object.keys(errors).length === 0 && !isPending;
 
-  const handleValidation = (value: string, fieldApi?: FieldApiType) => {
-    const result = schema.shape.newPassword.safeParse(value);
-    if (!result.success) {
-      return result.error.issues[0].message;
-    }
-    if (fieldApi) {
-      const result = schema.safeParse(fieldApi.form.state.values);
-      if (!result.success) {
-        const confirmError = result.error.issues.find((i) => i.path.includes("confirmPassword"));
-        if (confirmError) {
-          return confirmError.message;
-        }
-      }
-    }
-    return undefined;
-  };
   return (
     <StyledForm
       onSubmit={(e) => {
-        e.preventDefault();
         e.stopPropagation();
-        form.handleSubmit();
+        handleSubmit((values) => resetPassword({ ...values, token: urlTokenParam || "" }))(e);
       }}
     >
       {email && (
@@ -99,54 +73,49 @@ export function ResetPasswordForm({ onResetSuccess }: Props) {
           aria-hidden="true"
         />
       )}
-      <form.Field
+      <Controller
         name="newPassword"
-        validators={{
-          onChange: ({ value }) => handleValidation(value),
-        }}
-      >
-        {(field) => (
+        control={control}
+        render={({ field, fieldState }) => (
           <FormInput
             type="password"
             name="newPassword"
             autoComplete="new-password"
-            value={field.state.value}
-            onInputChange={field.handleChange}
+            value={field.value}
+            onInputChange={(value) => {
+              field.onChange(value);
+              if (getFieldState("confirmPassword").isTouched) trigger("confirmPassword");
+            }}
+            onBlur={field.onBlur}
             placeHolder={t("dashboard.login.newPassword")}
-            errors={field.state.meta.errors}
+            errors={fieldState.error?.message ? [fieldState.error.message] : []}
           />
         )}
-      </form.Field>
-      <form.Field
+      />
+      <Controller
         name="confirmPassword"
-        validators={{
-          onChange: ({ value, fieldApi }) => handleValidation(value, fieldApi),
-        }}
-      >
-        {(field) => (
+        control={control}
+        render={({ field, fieldState }) => (
           <FormInput
             type="password"
             name="confirmPassword"
             autoComplete="new-password"
-            value={field.state.value}
-            onInputChange={field.handleChange}
+            value={field.value}
+            onInputChange={field.onChange}
+            onBlur={field.onBlur}
             placeHolder={t("dashboard.login.confirmPassword")}
-            errors={field.state.meta.errors}
+            errors={fieldState.error?.message ? [fieldState.error.message] : []}
           />
         )}
-      </form.Field>
-      <form.Subscribe selector={(state) => state}>
-        {() => (
-          <Button
-            type="submit"
-            text={t("dashboard.login.resetPassword")}
-            backgroundcolor={form.state.canSubmit && !isPending ? "var(--color-aubergine)" : "var(--color-grey-50)"}
-            textColor={form.state.canSubmit && !isPending ? "var(--color-white)" : "var(--color-grey-400)"}
-            textHoverColor="var(--color-magnolia)"
-            disabled={!form.state.canSubmit || isPending}
-          />
-        )}
-      </form.Subscribe>
+      />
+      <Button
+        type="submit"
+        text={t("dashboard.login.resetPassword")}
+        backgroundcolor={canSubmit ? "var(--color-aubergine)" : "var(--color-grey-50)"}
+        textColor={canSubmit ? "var(--color-white)" : "var(--color-grey-400)"}
+        textHoverColor="var(--color-magnolia)"
+        disabled={!canSubmit}
+      />
     </StyledForm>
   );
 }

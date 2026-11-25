@@ -1,0 +1,169 @@
+import {
+  ApiEmailTemplateContent,
+  ApiEmailTemplateLayouts,
+  ApiEmailTemplateListItem,
+  ApiEmailTemplateSaveError,
+  ApiEmailTemplateText,
+  EmailTemplateLayout,
+  EmailTemplateName,
+  EmailTemplateSaveErrorCode,
+  Lang,
+} from "need4deed-sdk";
+
+export const templateLabelKey = (name: EmailTemplateName) => `dashboard.admin.emailTemplates.names.${name}`;
+
+export const isTemplateName = (value: string): value is EmailTemplateName =>
+  (Object.values(EmailTemplateName) as string[]).includes(value);
+
+export function sortByLabel(
+  templates: ApiEmailTemplateListItem[],
+  labelOf: (name: EmailTemplateName) => string,
+  locale: string,
+): ApiEmailTemplateListItem[] {
+  return [...templates].sort((a, b) => labelOf(a.name).localeCompare(labelOf(b.name), locale));
+}
+
+export const editorLangs = [Lang.DE, Lang.EN];
+
+export const isPerLanguageAllowed = (allowedLayouts: ApiEmailTemplateLayouts) =>
+  (allowedLayouts as EmailTemplateLayout[]).includes(EmailTemplateLayout.PER_LANGUAGE);
+
+const copyText = ({ subject, text, labels }: ApiEmailTemplateText): ApiEmailTemplateText => ({
+  subject,
+  text,
+  ...(labels ? { labels: { ...labels } } : {}),
+});
+
+export function switchLayout(
+  content: ApiEmailTemplateContent,
+  to: EmailTemplateLayout,
+  keepLang: Lang,
+): ApiEmailTemplateContent {
+  if (content.layout === to) return content;
+  if (content.layout === EmailTemplateLayout.SINGLE) {
+    return {
+      layout: EmailTemplateLayout.PER_LANGUAGE,
+      content: { [Lang.DE]: copyText(content.content), [Lang.EN]: copyText(content.content) },
+    };
+  }
+  return { layout: EmailTemplateLayout.SINGLE, content: copyText(content.content[keepLang]) };
+}
+
+export const textOf = (content: ApiEmailTemplateContent, lang: Lang): ApiEmailTemplateText =>
+  content.layout === EmailTemplateLayout.SINGLE ? content.content : content.content[lang];
+
+export function updateText(
+  content: ApiEmailTemplateContent,
+  lang: Lang,
+  patch: Partial<ApiEmailTemplateText>,
+): ApiEmailTemplateContent {
+  if (content.layout === EmailTemplateLayout.SINGLE) {
+    return { ...content, content: { ...content.content, ...patch } };
+  }
+  return { ...content, content: { ...content.content, [lang]: { ...content.content[lang], ...patch } } };
+}
+
+export const updateLabel = (content: ApiEmailTemplateContent, lang: Lang, key: string, value: string) =>
+  updateText(content, lang, { labels: { ...textOf(content, lang).labels, [key]: value } });
+
+export const toSingleLine = (value: string) => value.replace(/\r?\n/g, " ");
+
+export const placeholderSnippet = (name: string) => `{{ ${name} }}`;
+
+export function insertAt(value: string, start: number, end: number, snippet: string) {
+  const from = Math.max(0, Math.min(start, value.length));
+  const to = Math.max(from, Math.min(end, value.length));
+  return { value: value.slice(0, from) + snippet + value.slice(to), caret: from + snippet.length };
+}
+
+const withoutBlankLabels = ({ subject, text, labels }: ApiEmailTemplateText): ApiEmailTemplateText => {
+  const kept = Object.entries(labels ?? {})
+    .filter(([, value]) => value.trim())
+    .sort(([a], [b]) => a.localeCompare(b));
+  return { subject, text, ...(kept.length > 0 ? { labels: Object.fromEntries(kept) } : {}) };
+};
+
+export function toSaveContent(content: ApiEmailTemplateContent): ApiEmailTemplateContent {
+  if (content.layout === EmailTemplateLayout.SINGLE) {
+    return { layout: content.layout, content: withoutBlankLabels(content.content) };
+  }
+  return {
+    layout: content.layout,
+    content: {
+      [Lang.DE]: withoutBlankLabels(content.content[Lang.DE]),
+      [Lang.EN]: withoutBlankLabels(content.content[Lang.EN]),
+    },
+  };
+}
+
+export const isDirty = (saved: ApiEmailTemplateContent, draft: ApiEmailTemplateContent) =>
+  JSON.stringify(toSaveContent(saved)) !== JSON.stringify(toSaveContent(draft));
+
+export type SaveErrorView =
+  | { kind: "conflict" }
+  | {
+      kind: "message";
+      code: EmailTemplateSaveErrorCode;
+      key: string;
+      params?: Record<string, string>;
+      lang?: Lang;
+      fields: string[];
+    };
+
+const errorKey = (code: string) => `dashboard.admin.emailTemplates.errors.${code}`;
+const listOf = (names: string[]) => names.map(placeholderSnippet).join(", ");
+
+export function toSaveErrorView(error: ApiEmailTemplateSaveError, placeholderNames: string[]): SaveErrorView {
+  if (error.code === "version_conflict") return { kind: "conflict" };
+
+  const placeholders = error.placeholders ?? [];
+  const base = { kind: "message" as const, code: error.code, lang: error.lang, fields: error.fields ?? [] };
+
+  if (error.code === "unknown_placeholder") {
+    const needsLanguage = placeholders.length > 0 && placeholders.every((name) => placeholderNames.includes(name));
+    return needsLanguage
+      ? {
+          ...base,
+          key: errorKey("needsLanguage"),
+          params: {
+            placeholders: listOf(placeholders),
+            example: `${placeholderSnippet(`${placeholders[0]}.de`)} / ${placeholderSnippet(`${placeholders[0]}.en`)}`,
+          },
+        }
+      : placeholders.length === 0
+        ? { ...base, key: errorKey("unknownPlaceholderGeneric") }
+        : {
+            ...base,
+            key: errorKey(error.code),
+            params: {
+              placeholders: placeholders.map((p) => (p.includes("{{") ? p : placeholderSnippet(p))).join(", "),
+            },
+          };
+  }
+  if (error.code === "missing_placeholder") {
+    if (placeholders.length === 0) return { ...base, key: errorKey("missingPlaceholderGeneric") };
+    return { ...base, key: errorKey(error.code), params: { placeholders: listOf(placeholders) } };
+  }
+  if (error.code === "unknown_label") {
+    return {
+      ...base,
+      key: errorKey(error.code),
+      params: { labels: base.fields.map((f) => f.replace(/^labels\./, "")).join(", ") },
+    };
+  }
+  return { ...base, key: errorKey(error.code) };
+}
+
+export const cacheMinutes = (seconds: number) => Math.max(1, Math.ceil(seconds / 60));
+
+export const isAppPath = (pathname: string) =>
+  !/^\/(api|_next|health|\.well-known|swagger)(\/|$)/.test(pathname) &&
+  !/\.(png|jpe?g|gif|svg|ico|webp|avif|json|txt|xml|pdf|csv|css|js|map|woff2?|ttf|webmanifest)$/i.test(pathname);
+
+export function inAppPathOf(href: string, currentHref: string): string | null {
+  const target = new URL(href, currentHref);
+  const current = new URL(currentHref);
+  if (target.origin !== current.origin) return null;
+  if (target.pathname === current.pathname) return null;
+  return isAppPath(target.pathname) ? `${target.pathname}${target.search}${target.hash}` : null;
+}

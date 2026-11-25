@@ -2030,7 +2030,14 @@
         "metricLabel": "Metric",
         "metric": {
           "newVolunteers": "New volunteers",
-          "requests": "Requests",
+          "matchedVolunteers": "Matched volunteers",
+          "activeVolunteers": "Active volunteers",
+          "availableVolunteers": "Available volunteers",
+          "newOpportunities": "New requests",
+          "validatedOpportunities": "Validated requests",
+          "matchedOpportunities": "Matched requests",
+          "unmatchedOpportunities": "Requests never matched",
+          "pastOpportunities": "Past requests",
           "leadFrom": "Where did you hear about us"
         },
         "granularityLabel": "Period",
@@ -2062,6 +2069,7 @@
         "empty": "No data for this period.",
         "loadError": "Could not load the statistics. Please reload the page.",
         "overlapNote": "Some entries count towards more than one group, so the segments can add up to more than the total.",
+        "snapshotNote": "Counts volunteers in this status at the end of each month; a quarter or year shows its latest month-end count. A month is counted once it ends, and periods before recording started are empty.",
         "allTime": {
           "title": "All-time totals",
           "tracked": "Since tracking started",
@@ -2069,11 +2077,97 @@
           "beforeTrackingNote": "\"Before tracking started\" counts answers collected before we recorded when they were given, so they are not part of the chart above."
         }
       },
+      "emailTemplates": {
+        "helper": "Edit the emails the platform sends. Saved changes are used for new emails within a few minutes.",
+        "loadError": "Could not load the email templates. Please reload the page.",
+        "readOnly": "Editing is not set up on this server, so the templates are read-only.",
+        "template": "Email template",
+        "choose": "Choose a template",
+        "templateLoadError": "Could not load this template. Please try again.",
+        "layout": "Languages",
+        "layoutSingle": "One text for all recipients",
+        "layoutPerLanguage": "Separate German and English texts",
+        "layoutSingleHint": "Everyone gets this text. Recipients who chose English get the English values of placeholders that have two languages.",
+        "layoutPerLanguageHint": "Recipients get the German or the English text, depending on their language. Switching back to one text keeps the language shown.",
+        "language": "Language",
+        "languages": {
+          "de": "German",
+          "en": "English"
+        },
+        "subject": "Subject",
+        "text": "Text",
+        "labels": "Labels",
+        "labelsHint": "Short texts the platform puts into the email, for example where someone was tagged or the word used when a name is missing. Leave one empty to use the default text.",
+        "placeholders": "Placeholders",
+        "placeholdersHint": "Click one to insert it where the cursor is in the subject or the text. The platform replaces it with the real value when it sends the email.",
+        "placeholdersReadOnlyHint": "The platform replaces these with the real values when it sends the email.",
+        "placeholderRequired": "Used in the current email, so it must stay",
+        "placeholderRequiredLegend": "* Used in the current email: keep it in the subject or the text.",
+        "insertPlaceholder": "Insert {{name}}",
+        "insertRequiredPlaceholder": "Insert {{name}} (must stay in the email)",
+        "save": "Save",
+        "discard": "Discard changes",
+        "hasHtmlWarning": "This email also has a formatted (HTML) version. Saving replaces it with this plain text.",
+        "savedNote_one": "Saved. New emails use it within about {{count}} minute.",
+        "savedNote_other": "Saved. New emails use it within about {{count}} minutes.",
+        "conflict": "Someone else saved this template after you opened it, so it wasn't saved. Your changes are still here. Load the saved version to start over from it, or keep your changes and save them over it.",
+        "loadLatest": "Load the saved version",
+        "keepMine": "Keep my changes",
+        "unsavedTitle": "Discard your changes?",
+        "unsavedMessage": "This template has changes that are not saved. They will be lost if you open another template.",
+        "unsavedConfirm": "Discard and open",
+        "errors": {
+          "unknownPlaceholderGeneric": "The text has placeholders the platform doesn't know. Use the placeholders listed above.",
+          "missingPlaceholderGeneric": "Some placeholders the email needs are missing. Put back the ones marked with *.",
+          "fieldBlank": "This can't be empty.",
+          "not_editable": "Editing is not set up on this server.",
+          "layout_not_allowed": "This template can't have separate German and English texts.",
+          "blank_field": "Fill in the empty fields.",
+          "unknown_label": "Unknown labels: {{labels}}.",
+          "unknown_placeholder": "Unknown placeholders: {{placeholders}}. Use the placeholders listed above.",
+          "needsLanguage": "This email doesn't know the recipient's language, so these placeholders need one: {{placeholders}}. For example {{example}}.",
+          "missing_placeholder": "Put these placeholders back: {{placeholders}}."
+        },
+        "conflictLoading": "Getting the saved version… If this takes long, check again.",
+        "checkAgain": "Check again",
+        "unsavedLeaveMessage": "This template has changes that are not saved. They will be lost if you leave this page.",
+        "unsavedLeaveConfirm": "Discard and leave",
+        "retry": "Try again",
+        "labelNames": {
+          "commentOnVolunteer": "Tagged in: a comment on a volunteer",
+          "commentOnOpportunity": "Tagged in: a comment on an opportunity",
+          "commentOnAgent": "Tagged in: a comment on an organisation",
+          "comment": "Tagged in: a comment",
+          "post": "Tagged in: a post",
+          "someone": "Name used when the sender's name is unknown",
+          "noName": "Greeting used when the recipient's name is unknown"
+        },
+        "names": {
+          "accompanymatch": "Accompanying matched",
+          "accompanymatchvolunteer": "Accompanying matched (to the volunteer)",
+          "accompanynotfound": "No accompanying volunteer found",
+          "cgcapplication": "Certificate of good conduct application",
+          "checkup": "Check-up after a match",
+          "confirmation": "New opportunity confirmation",
+          "confirmationaccompanying": "New accompanying confirmation",
+          "introduction": "Match introduction",
+          "password-reset": "Password reset",
+          "registration": "Volunteer registration",
+          "stale": "Inactive match reminder",
+          "suggestion": "Opportunity suggestion",
+          "suggestion-request": "Suggestion request",
+          "suggestionaccompanying": "Accompanying suggestion",
+          "tagged": "Tagged in a comment",
+          "update": "Opportunity update",
+          "verification": "Email verification"
+        }
+      },
       "nav": {
         "domains": "Domains",
         "stats": "Statistics",
         "ngoVolunteers": "NGO volunteers",
-        "accounts": "Accounts"
+        "accounts": "Accounts",
+        "emailTemplates": "Email templates"
       },
       "ngoVolunteers": {
         "helper": "Pick an NGO to give its volunteers a registration link or to import its existing volunteers.",
@@ -2774,32 +2868,37 @@
   },
   "forOrganisationsPage": {
     "heading": "For organisations",
-    "intro": "For centres and projects that support refugees in Berlin: how we work with you, from your first request to a volunteer on site.",
-    "stepsHeading": "How we match volunteers",
+    "intro": "For centres that support refugees in Berlin: find volunteers and manage your own, in one place and free of charge.",
+    "stepsHeading": "Part 1: Matching",
+    "stepsIntro": "Find volunteers, yourself or with us.",
     "steps": {
       "request": {
-        "title": "You send a request",
-        "body": "Register your organisation and create a request in the dashboard: regular volunteering, an accompaniment to an appointment or an event. Tell us what is needed, when, where and in which languages. Accompaniments need to be requested at least 7 working days before the appointment."
+        "title": "Create an opportunity",
+        "body": "Register your organisation and publish regular volunteering, an accompaniment or an event. Please request accompaniments at least 7 working days ahead."
+      },
+      "search": {
+        "title": "Search yourself",
+        "body": "Filter volunteers by language, district or skills and request a suggestion."
       },
       "prepare": {
-        "title": "We prepare the volunteers",
-        "body": "We call every new volunteer after they register, to get to know their languages, experience and what they want to do. Volunteers for accompaniments also join an online briefing. We help volunteers apply for the extended certificate of good conduct (EFZ) and check the proof of measles vaccination where needed."
+        "title": "We prepare",
+        "body": "We get to know every volunteer and help with the extended certificate of good conduct."
       },
       "match": {
         "title": "We match",
-        "body": "Our coordinators look for the right person by language and dialect, district, availability and activity, from our pool and from your own volunteers on the platform."
+        "body": "We look for the right people by language, district, time and activity."
       },
       "introduction": {
-        "title": "You get a suggestion, then an introduction",
-        "body": "When a volunteer fits, we send you and the volunteer an introduction email with everyone's contact details. Please invite the volunteer to a first meeting within 5 to 7 working days and put us in CC. If it doesn't fit, tell us and we keep looking."
+        "title": "You meet",
+        "body": "We introduce you by email. Invite the volunteer within 5 to 7 working days."
       },
       "noMatch": {
-        "title": "If we can't find anyone",
-        "body": "For accompaniments we let you know at the latest 4 working days before the appointment, so you can plan."
+        "title": "No one found?",
+        "body": "For accompaniments we let you know at least 4 working days ahead."
       },
       "afterMatch": {
-        "title": "The volunteer starts, and we stay in touch",
-        "body": "About once a month we ask whether your offers are still up to date and how it's going with the volunteers. If someone stops, we look for a new match."
+        "title": "We stay in touch",
+        "body": "About once a month we check in on how it's going."
       }
     },
     "goodToKnow": {
@@ -2812,24 +2911,52 @@
       "contact": "Questions? Write to us at"
     },
     "dashboard": {
-      "heading": "The Need4Deed dashboard",
-      "intro": "Beyond the matching, the dashboard is a tool your team can use every day, also with volunteers you found yourselves.",
+      "heading": "Part 2: Managing",
+      "intro": "All your volunteers in one place, matched and your own.",
       "features": {
-        "volunteers": {
-          "title": "Your volunteers in one place",
-          "body": "Manage your own volunteers and requests, and see volunteers from our pool. If you want, share your volunteers with other organisations, one contact at a time and only with the volunteer's consent."
+        "matched": {
+          "title": "Matched volunteers",
+          "body": "With all their details, right in the dashboard."
+        },
+        "import": {
+          "title": "Import your own volunteers",
+          "body": "Upload a spreadsheet or send it to us. Only your team sees the profiles. Please tell your volunteers first."
+        },
+        "link": {
+          "title": "Link to opportunities",
+          "body": "Keep track of who volunteers where."
         },
         "hours": {
-          "title": "Hours and appreciation",
-          "body": "Log the hours a volunteer has volunteered for each match, and keep track of appreciation such as certificates."
+          "title": "Hours",
+          "body": "Log dates and hours, handy for reports and funding."
+        },
+        "appreciation": {
+          "title": "Appreciation",
+          "body": "Record certificates and thanks for your volunteers."
+        },
+        "feedback": {
+          "title": "Feedback",
+          "body": "Read what volunteers say about your opportunities."
+        },
+        "export": {
+          "title": "CSV export",
+          "body": "Your volunteers and opportunities as a file, any time."
+        },
+        "traeger": {
+          "title": "For providers (Träger)",
+          "body": "Several centres under one account. Get in touch and we set it up."
+        },
+        "efz": {
+          "title": "Certificate of good conduct (EFZ)",
+          "body": "We help you request it. Just get in touch."
         },
         "posts": {
-          "title": "Posts and tagging",
-          "body": "Write general questions or searches in the posts, reply to each other and tag each other. Whoever is tagged gets an email."
+          "title": "Posts",
+          "body": "Talk to other centres and to us."
         },
         "openSource": {
-          "title": "Open source, hosted in Switzerland",
-          "body": "The dashboard is open source, runs 100% in Europe, hosted in Switzerland, and is GDPR compliant."
+          "title": "Open source",
+          "body": "100% in Europe, hosted in Switzerland, GDPR compliant."
         }
       }
     }
