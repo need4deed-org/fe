@@ -151,7 +151,7 @@ function VolunteerListControllerContent({
   return (
     <VolunteerCardList
       volunteers={volunteers}
-      count={count}
+      count={volunteerCount}
       itemsPerPage={limit}
       currentPage={currentPage}
       setCurrentPage={setCurrentPage}
