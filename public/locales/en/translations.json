@@ -2866,37 +2866,37 @@
   },
   "forOrganisationsPage": {
     "heading": "For organisations",
-    "intro": "For centres and projects that support refugees in Berlin. With the Need4Deed dashboard you find volunteers for your centre and manage your own volunteers, in one place and free of charge. The dashboard does two things for you: matching and managing.",
+    "intro": "For centres that support refugees in Berlin: find volunteers and manage your own, in one place and free of charge.",
     "stepsHeading": "Part 1: Matching",
-    "stepsIntro": "Create opportunities, search for volunteers yourself or let us suggest some. This is how it works:",
+    "stepsIntro": "Find volunteers, yourself or with us.",
     "steps": {
       "request": {
-        "title": "You create an opportunity",
-        "body": "Register your organisation with \"Create NGO account\", confirm your email and pick your centre. Then click \"+ Create new opportunity\" in the dashboard for regular volunteering, an accompaniment to an appointment or an event, with languages, district and a date or schedule. Accompaniments need to be requested at least 7 working days before the appointment."
+        "title": "Create an opportunity",
+        "body": "Register your organisation and publish regular volunteering, an accompaniment or an event. Please request accompaniments at least 7 working days ahead."
       },
       "search": {
-        "title": "You search yourself",
-        "body": "Under \"Volunteers\" you filter by language, district or skills and request a suggestion for a volunteer who fits. You can follow your request in the dashboard."
+        "title": "Search yourself",
+        "body": "Filter volunteers by language, district or skills and request a suggestion."
       },
       "prepare": {
-        "title": "We prepare the volunteers",
-        "body": "We call every new volunteer after they register, to get to know their languages, experience and what they want to do. Volunteers for accompaniments also join an online briefing. We help volunteers apply for the extended certificate of good conduct (EFZ) and check the proof of measles vaccination where needed."
+        "title": "We prepare",
+        "body": "We get to know every volunteer and help with the extended certificate of good conduct."
       },
       "match": {
         "title": "We match",
-        "body": "Our coordinators look for the right person by language and dialect, district, availability and activity."
+        "body": "We look for the right people by language, district, time and activity."
       },
       "introduction": {
-        "title": "You get a suggestion, then an introduction",
-        "body": "When a volunteer fits, we send you and the volunteer an introduction email with everyone's contact details. Please invite the volunteer to a first meeting within 5 to 7 working days and put us in CC. If it doesn't fit, tell us and we keep looking."
+        "title": "You meet",
+        "body": "We introduce you by email. Invite the volunteer within 5 to 7 working days."
       },
       "noMatch": {
-        "title": "If we can't find anyone",
-        "body": "For accompaniments we let you know at the latest 4 working days before the appointment, so you can plan."
+        "title": "No one found?",
+        "body": "For accompaniments we let you know at least 4 working days ahead."
       },
       "afterMatch": {
-        "title": "The volunteer starts, and we stay in touch",
-        "body": "About once a month we ask whether your offers are still up to date and how it's going with the volunteers. If someone stops, we look for a new match."
+        "title": "We stay in touch",
+        "body": "About once a month we check in on how it's going."
       }
     },
     "goodToKnow": {
@@ -2910,51 +2910,51 @@
     },
     "dashboard": {
       "heading": "Part 2: Managing",
-      "intro": "Look after your volunteers in one place, from the people we matched with you to the ones you found yourselves.",
+      "intro": "All your volunteers in one place, matched and your own.",
       "features": {
         "matched": {
-          "title": "See matched volunteers",
-          "body": "Volunteers we matched are already linked to your opportunities. You see them with all their information and can work with them right away."
+          "title": "Matched volunteers",
+          "body": "With all their details, right in the dashboard."
         },
         "import": {
           "title": "Import your own volunteers",
-          "body": "Download our template in the dashboard or upload your existing spreadsheet as CSV (for example from Excel), and map the columns while uploading. This creates profiles only your team sees, not other centres and not Need4Deed. You can also send us the spreadsheet and we import it for you. Please tell your volunteers beforehand that you upload their data or pass it on to us."
+          "body": "Upload a spreadsheet or send it to us. Only your team sees the profiles. Please tell your volunteers first."
         },
         "link": {
-          "title": "Link them to your opportunities",
-          "body": "Link your own volunteers directly to your opportunities, as matched or active. That way you always know who is volunteering where."
+          "title": "Link to opportunities",
+          "body": "Keep track of who volunteers where."
         },
         "hours": {
-          "title": "Log hours",
-          "body": "On a volunteer's profile, enter the date and hours for each match. You see all assignments and the total hours, handy for proof, reports and funding."
+          "title": "Hours",
+          "body": "Log dates and hours, handy for reports and funding."
         },
         "appreciation": {
-          "title": "Keep track of appreciation",
-          "body": "Record appreciation such as certificates for your own and your matched volunteers in the dashboard."
+          "title": "Appreciation",
+          "body": "Record certificates and thanks for your volunteers."
         },
         "feedback": {
-          "title": "Feedback on opportunities",
-          "body": "Matched volunteers can write feedback on an opportunity. You see it on the opportunity's profile and can leave your own feedback."
+          "title": "Feedback",
+          "body": "Read what volunteers say about your opportunities."
         },
         "export": {
           "title": "CSV export",
-          "body": "Download a CSV of your volunteers and opportunities at any time, with everything you are allowed to see. The file matches the import template."
+          "body": "Your volunteers and opportunities as a file, any time."
         },
         "traeger": {
-          "title": "Several centres under one provider",
-          "body": "Are you a provider (Träger) with several centres? Get in touch and we set up a shared access for you. You manage all centres under one account, each with its own opportunities, volunteers and location details."
+          "title": "For providers (Träger)",
+          "body": "Several centres under one account. Get in touch and we set it up."
         },
         "efz": {
-          "title": "Extended certificate of good conduct (EFZ)",
-          "body": "If your volunteers need an EFZ, we help you request it. Just get in touch."
+          "title": "Certificate of good conduct (EFZ)",
+          "body": "We help you request it. Just get in touch."
         },
         "posts": {
-          "title": "Posts and tagging",
-          "body": "Write questions or searches in the posts, talk to other centres and to us, and tag each other. Whoever is tagged gets an email."
+          "title": "Posts",
+          "body": "Talk to other centres and to us."
         },
         "openSource": {
-          "title": "Open source, hosted in Switzerland",
-          "body": "The dashboard is open source, runs 100% in Europe, hosted in Switzerland, and is GDPR compliant."
+          "title": "Open source",
+          "body": "100% in Europe, hosted in Switzerland, GDPR compliant."
         }
       }
     }

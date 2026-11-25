@@ -3,22 +3,17 @@ import { useTranslation } from "react-i18next";
 import { PageLayout } from "@/components/Layout";
 import { CONTACT_EMAIL } from "@/config/constants";
 import { Subpage } from "@/types";
+import { Card, CardGrid } from "@/components/styled/card-grid";
 import {
-  AnswerRow,
   Badge,
   Container,
   ContentSection,
-  Dash,
-  DashContainer,
   Heading,
-  Item,
-  ItemBody,
-  ItemsList,
-  ItemTitle,
   NoteText,
   QuestionRow,
   SectionBlock,
   SectionHeader,
+  SubHeading,
   TextLink,
 } from "../styled";
 
@@ -50,45 +45,32 @@ function ForOrganisations() {
           <NoteText>{t("forOrganisationsPage.intro")}</NoteText>
 
           <SectionBlock>
-            <SectionHeader>{t("forOrganisationsPage.stepsHeading")}</SectionHeader>
+            <SubHeading>{t("forOrganisationsPage.stepsHeading")}</SubHeading>
             <NoteText>{t("forOrganisationsPage.stepsIntro")}</NoteText>
-            <ItemsList>
+            <CardGrid>
               {STEPS.map((step, index) => (
-                <Item key={step}>
+                <Card key={step}>
                   <QuestionRow>
                     <Badge>{index + 1}</Badge>
-                    <ItemTitle>{t(`forOrganisationsPage.steps.${step}.title`)}</ItemTitle>
+                    <SectionHeader>{t(`forOrganisationsPage.steps.${step}.title`)}</SectionHeader>
                   </QuestionRow>
-                  <AnswerRow>
-                    <DashContainer>
-                      <Dash />
-                    </DashContainer>
-                    <ItemBody>{t(`forOrganisationsPage.steps.${step}.body`)}</ItemBody>
-                  </AnswerRow>
-                </Item>
+                  <NoteText>{t(`forOrganisationsPage.steps.${step}.body`)}</NoteText>
+                </Card>
               ))}
-            </ItemsList>
+            </CardGrid>
           </SectionBlock>
 
           <SectionBlock>
-            <SectionHeader>{t("forOrganisationsPage.dashboard.heading")}</SectionHeader>
+            <SubHeading>{t("forOrganisationsPage.dashboard.heading")}</SubHeading>
             <NoteText>{t("forOrganisationsPage.dashboard.intro")}</NoteText>
-            <ItemsList>
-              {DASHBOARD_FEATURES.map((feature, index) => (
-                <Item key={feature}>
-                  <QuestionRow>
-                    <Badge>{index + 1}</Badge>
-                    <ItemTitle>{t(`forOrganisationsPage.dashboard.features.${feature}.title`)}</ItemTitle>
-                  </QuestionRow>
-                  <AnswerRow>
-                    <DashContainer>
-                      <Dash />
-                    </DashContainer>
-                    <ItemBody>{t(`forOrganisationsPage.dashboard.features.${feature}.body`)}</ItemBody>
-                  </AnswerRow>
-                </Item>
+            <CardGrid>
+              {DASHBOARD_FEATURES.map((feature) => (
+                <Card key={feature}>
+                  <SectionHeader>{t(`forOrganisationsPage.dashboard.features.${feature}.title`)}</SectionHeader>
+                  <NoteText>{t(`forOrganisationsPage.dashboard.features.${feature}.body`)}</NoteText>
+                </Card>
               ))}
-            </ItemsList>
+            </CardGrid>
           </SectionBlock>
 
           <SectionBlock>

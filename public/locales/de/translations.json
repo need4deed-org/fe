@@ -3221,37 +3221,37 @@
   },
   "forOrganisationsPage": {
     "heading": "Für Organisationen",
-    "intro": "Für Einrichtungen und Projekte, die Geflüchtete in Berlin unterstützen. Mit dem Need4Deed-Dashboard findest Du Freiwillige für Deine Einrichtung und verwaltest Deine eigenen Freiwilligen, an einem Ort und kostenlos. Das Dashboard kann zwei Dinge für Dich tun: Vermittlung und Verwaltung.",
+    "intro": "Für Einrichtungen, die Geflüchtete in Berlin unterstützen: Finde Freiwillige und verwalte Deine eigenen, an einem Ort und kostenlos.",
     "stepsHeading": "Teil 1: Vermittlung",
-    "stepsIntro": "Erstelle Möglichkeiten, such selbst nach passenden Freiwilligen oder lass Dir welche von uns vorschlagen. So läuft es ab:",
+    "stepsIntro": "Freiwillige finden, selbst oder mit uns.",
     "steps": {
       "request": {
-        "title": "Du erstellst eine Möglichkeit",
-        "body": "Registriere Deine Organisation über „NGO-Konto erstellen“, bestätige Deine E-Mail und ordne Deine Einrichtung zu. Dann erstellst Du im Dashboard mit „+ Neue Möglichkeit erstellen“ ein regelmäßiges Engagement, eine Begleitung zu einem Termin oder ein Event, mit Sprachen, Bezirk und Datum oder Zeitplan. Begleitungen müssen mindestens 7 Werktage vor dem Termin angefragt werden."
+        "title": "Möglichkeit erstellen",
+        "body": "Registriere Deine Organisation und veröffentliche ein Engagement, eine Begleitung oder ein Event. Begleitungen bitte mindestens 7 Werktage vorher."
       },
       "search": {
-        "title": "Du suchst selbst",
-        "body": "Unter „Ehrenamtliche“ filterst Du nach Sprache, Bezirk oder Fähigkeiten und fragst bei einer passenden Person einen Vorschlag an. Den Stand Deiner Anfrage siehst Du im Dashboard."
+        "title": "Selbst suchen",
+        "body": "Filtere Freiwillige nach Sprache, Bezirk oder Fähigkeiten und frag einen Vorschlag an."
       },
       "prepare": {
-        "title": "Wir bereiten die Freiwilligen vor",
-        "body": "Mit allen neuen Freiwilligen telefonieren wir nach der Registrierung, um ihre Sprachen, Erfahrungen und Wünsche kennenzulernen. Freiwillige für Begleitungen nehmen zusätzlich an einer Online-Einführung teil. Wir helfen beim Beantragen des erweiterten Führungszeugnisses (EFZ) und prüfen, wo nötig, den Nachweis der Masernimpfung."
+        "title": "Wir bereiten vor",
+        "body": "Wir lernen alle Freiwilligen kennen und helfen beim erweiterten Führungszeugnis."
       },
       "match": {
         "title": "Wir vermitteln",
-        "body": "Unsere Koordinator*innen suchen die passende Person nach Sprache und Dialekt, Bezirk, Verfügbarkeit und Tätigkeit."
+        "body": "Wir suchen passende Personen nach Sprache, Bezirk, Zeit und Tätigkeit."
       },
       "introduction": {
-        "title": "Du bekommst einen Vorschlag und dann die Vorstellung",
-        "body": "Passt eine freiwillige Person, schicken wir Dir und ihr eine Vorstellungs-E-Mail mit allen Kontaktdaten. Bitte lade die Person innerhalb von 5 bis 7 Werktagen zu einem ersten Treffen ein und setze uns in CC. Passt es nicht, sag uns Bescheid, dann suchen wir weiter."
+        "title": "Ihr lernt Euch kennen",
+        "body": "Wir stellen Euch per E-Mail vor. Lade die Person innerhalb von 5 bis 7 Werktagen ein."
       },
       "noMatch": {
-        "title": "Wenn wir niemanden finden",
-        "body": "Bei Begleitungen geben wir Dir spätestens 4 Werktage vor dem Termin Bescheid, damit Du planen kannst."
+        "title": "Niemand gefunden?",
+        "body": "Bei Begleitungen sagen wir spätestens 4 Werktage vorher Bescheid."
       },
       "afterMatch": {
-        "title": "Die freiwillige Person startet, und wir bleiben in Kontakt",
-        "body": "Etwa einmal im Monat fragen wir nach, ob Deine Angebote noch aktuell sind und wie es mit den Freiwilligen läuft. Hört jemand auf, suchen wir eine neue Vermittlung."
+        "title": "Wir bleiben in Kontakt",
+        "body": "Etwa einmal im Monat fragen wir nach, wie es läuft."
       }
     },
     "goodToKnow": {
@@ -3265,51 +3265,51 @@
     },
     "dashboard": {
       "heading": "Teil 2: Verwaltung",
-      "intro": "Betreue Deine Freiwilligen an einem Ort, von den Personen, die wir Dir vermittelt haben, bis zu denen, die Ihr selbst gefunden habt.",
+      "intro": "Alle Deine Freiwilligen an einem Ort, vermittelte und eigene.",
       "features": {
         "matched": {
-          "title": "Vermittelte Freiwillige einsehen",
-          "body": "Von uns vermittelte Freiwillige sind Deinen Möglichkeiten schon zugeordnet. Du siehst sie direkt mit allen Informationen und kannst sofort mit ihnen weiterarbeiten."
+          "title": "Vermittelte Freiwillige",
+          "body": "Mit allen Infos, direkt im Dashboard."
         },
         "import": {
           "title": "Eigene Freiwillige importieren",
-          "body": "Lade im Dashboard unsere Vorlage herunter oder lade Deine bestehende Tabelle als CSV hoch (z. B. aus Excel), die Spalten ordnest Du beim Hochladen zu. Daraus entstehen Profile, die nur Ihr seht, weder andere Einrichtungen noch Need4Deed. Du kannst uns die Tabelle auch schicken, dann importieren wir sie für Dich. Bitte informiere Deine Freiwilligen vorher, dass Du ihre Daten hochlädst oder an uns weitergibst."
+          "body": "Tabelle hochladen oder uns schicken. Die Profile seht nur Ihr. Bitte informiere Deine Freiwilligen vorher."
         },
         "link": {
-          "title": "Mit Deinen Möglichkeiten verknüpfen",
-          "body": "Verknüpfe Deine eigenen Freiwilligen direkt mit Deinen Möglichkeiten, als zugeordnet oder aktiv. So weißt Du immer, wer wo im Einsatz ist."
+          "title": "Mit Möglichkeiten verknüpfen",
+          "body": "Behalte im Blick, wer wo im Einsatz ist."
         },
         "hours": {
-          "title": "Einsatzzeiten erfassen",
-          "body": "Trage im Profil einer freiwilligen Person bei der jeweiligen Vermittlung Datum und geleistete Stunden ein. Du siehst alle Einsätze und die Gesamtstunden, praktisch für Nachweise, Berichte und Förderungen."
+          "title": "Einsatzzeiten",
+          "body": "Datum und Stunden eintragen, praktisch für Berichte und Förderungen."
         },
         "appreciation": {
-          "title": "Anerkennung nachhalten",
-          "body": "Halte Anerkennungen wie Zertifikate für Deine eigenen und die vermittelten Freiwilligen im Dashboard fest."
+          "title": "Anerkennung",
+          "body": "Zertifikate und Dank für Deine Freiwilligen festhalten."
         },
         "feedback": {
-          "title": "Feedback zu Möglichkeiten",
-          "body": "Vermittelte Freiwillige können Feedback zu einer Möglichkeit schreiben. Du siehst es im Profil der Möglichkeit und kannst selbst Feedback hinterlassen."
+          "title": "Feedback",
+          "body": "Lies, was Freiwillige zu Deinen Möglichkeiten sagen."
         },
         "export": {
           "title": "CSV-Export",
-          "body": "Lade jederzeit eine CSV-Datei mit Deinen Freiwilligen und Möglichkeiten herunter, mit allem, was Du sehen darfst. Die Datei passt zur Import-Vorlage."
+          "body": "Deine Freiwilligen und Möglichkeiten jederzeit als Datei."
         },
         "traeger": {
-          "title": "Mehrere Einrichtungen als Träger",
-          "body": "Bist Du ein Träger mit mehreren Einrichtungen? Melde Dich bei uns, dann richten wir einen gemeinsamen Zugang ein. Du verwaltest alle Einrichtungen unter einem Konto, jede mit ihren eigenen Möglichkeiten, Freiwilligen und Standortdaten."
+          "title": "Für Träger",
+          "body": "Mehrere Einrichtungen unter einem Konto. Melde Dich, wir richten es ein."
         },
         "efz": {
-          "title": "Erweitertes Führungszeugnis (EFZ)",
-          "body": "Brauchen Deine Freiwilligen ein EFZ, unterstützen wir Dich bei der Anfrage. Melde Dich einfach bei uns."
+          "title": "Führungszeugnis (EFZ)",
+          "body": "Wir helfen bei der Anfrage. Melde Dich einfach."
         },
         "posts": {
-          "title": "Posts und Markierungen",
-          "body": "Stelle Fragen oder Gesuche in die Posts, tausch Dich mit anderen Einrichtungen und mit uns aus und markiert Euch gegenseitig. Wer markiert wird, bekommt eine E-Mail."
+          "title": "Posts",
+          "body": "Tausch Dich mit anderen Einrichtungen und mit uns aus."
         },
         "openSource": {
-          "title": "Open Source, gehostet in der Schweiz",
-          "body": "Das Dashboard ist Open Source, läuft zu 100 % in Europa, gehostet in der Schweiz, und ist DSGVO-konform."
+          "title": "Open Source",
+          "body": "100 % in Europa, gehostet in der Schweiz, DSGVO-konform."
         }
       }
     }
