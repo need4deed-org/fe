@@ -52,6 +52,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { useScreenType } from "@/context/DeviceContext";
 import { usePrefillFilters } from "../common/CardsFilter/usePrefillFilters";
+import { ProjectPicker, useProjectParam } from "../common/ProjectPicker/ProjectPicker";
 
 export function Opportunities() {
   const user = useCurrentUser(true);
@@ -71,6 +72,7 @@ export function Opportunities() {
 
   const OTHER_OPPORTUNITIES_VIEW = "other";
   const isAgent = user?.role === UserRole.AGENT;
+  const { projectId } = useProjectParam();
   const isVolunteer = user?.role === UserRole.VOLUNTEER;
   const tabs = !user
     ? []
@@ -243,6 +245,7 @@ export function Opportunities() {
             )
           }
         />
+        {!isOtherTab && <ProjectPicker />}
         {isOtherTab ? (
           <OtherOpportunities search={cardsFilter.search} setCount={setNumOfOpps} />
         ) : (
@@ -257,6 +260,7 @@ export function Opportunities() {
               viewMode={viewMode}
               volunteerFilter={volunteerFilter}
               defaultStatuses={defaultStatuses}
+              agentId={projectId}
             />
             <Filters
               isFiltersOpen={isFiltersOpen}
