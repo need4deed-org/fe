@@ -1,8 +1,9 @@
-type AgentLike = { id?: number; title?: string } | undefined;
+import type { ApiAgentGet, OptionItem } from "need4deed-sdk";
 
-export type AgentOption = { id: number; title: string };
-
-export function sortAgentOptions(agentIds: number[], agents: AgentLike[]): AgentOption[] {
+export function sortAgentOptions(
+  agentIds: number[],
+  agents: Array<Pick<ApiAgentGet, "id" | "title"> | undefined>,
+): OptionItem[] {
   return agentIds
     .map((id) => ({ id, title: agents.find((agent) => agent?.id === id)?.title ?? String(id) }))
     .sort((a, b) => a.title.localeCompare(b.title));
