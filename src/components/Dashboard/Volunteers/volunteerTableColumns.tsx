@@ -66,6 +66,7 @@ export const createVolunteerTableColumns = (
           triggerLabel={t("dashboard.volunteers.table.language")}
           beforeItems={
             <VolunteerLanguageMatch
+              disabled={!dropdownFilters.languageFilters.some(({ checked }) => checked)}
               matchAllLanguages={dropdownFilters.matchAllLanguages}
               setMatchAllLanguages={dropdownFilters.setMatchAllLanguages}
               t={t}

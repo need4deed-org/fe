@@ -76,7 +76,7 @@ export function serializeFilters(
 
   serializeSelectionFilters(volunteerFilterConfigs, filter, params, options);
   params.delete(QueryParamsKeys.LANGUAGE_MATCH);
-  if (filter.matchAllLanguages && (!options?.serializeToIDs || params.has(QueryParamsKeys.LANGUAGE))) {
+  if (filter.matchAllLanguages && params.has(QueryParamsKeys.LANGUAGE)) {
     params.set(QueryParamsKeys.LANGUAGE_MATCH, LanguageMatch.ALL);
   }
   serializeCommutePrefill(filter, params, QueryParamsKeys.COMMUTE_OPPORTUNITY_ID, options?.commuteSourceId);
@@ -104,7 +104,9 @@ export function deserializeVolunteerFilters(filter: VolunteerCardsFilter, search
   }
 
   deserializeSelectionFilters(volunteerFilterConfigs, newFilter, searchParams);
-  newFilter.matchAllLanguages = searchParams.get(QueryParamsKeys.LANGUAGE_MATCH) === LanguageMatch.ALL;
+  newFilter.matchAllLanguages =
+    Object.values(newFilter.language).some(Boolean) &&
+    searchParams.get(QueryParamsKeys.LANGUAGE_MATCH) === LanguageMatch.ALL;
   deserializeCommutePrefill(newFilter, searchParams, QueryParamsKeys.COMMUTE_OPPORTUNITY_ID);
 
   const queryAvailability = searchParams.getAll(QueryParamsKeys.AVAILABILITY);

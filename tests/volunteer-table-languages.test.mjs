@@ -4,7 +4,7 @@ import sdk from "need4deed-sdk";
 import { loadModule } from "./helpers/load-module.mjs";
 
 const { LangProficiency, LanguageMatch, QueryParamsKeys } = sdk;
-const { getTopLanguages, getVolunteerTableLanguages, serializeFilters } = loadModule(
+const { deserializeVolunteerFilters, getTopLanguages, getVolunteerTableLanguages, serializeFilters } = loadModule(
   "src/components/Dashboard/Volunteers/helpers.ts",
 );
 const { defaultVolunteerCardsFilter } = loadModule("src/components/Dashboard/Volunteers/Filters/constants.tsx");
@@ -27,6 +27,17 @@ test("only sends All mode to the API when it has selected language IDs", () => {
   assert.equal(all.get(QueryParamsKeys.LANGUAGE_MATCH), LanguageMatch.ALL);
   const empty = serializeFilters({ ...filter, language: {}, matchAllLanguages: true }, undefined, false, options);
   assert.equal(empty.has(QueryParamsKeys.LANGUAGE_MATCH), false);
+});
+
+test("clearing the last language removes All from the URL and stale links fall back to Any", () => {
+  const filter = { ...defaultVolunteerCardsFilter, language: { German: false } };
+  const selected = new URLSearchParams("view=map&language=German&language-match=all");
+  assert.equal(deserializeVolunteerFilters(filter, selected).matchAllLanguages, true);
+
+  const cleared = serializeFilters({ ...filter, matchAllLanguages: true }, selected, false);
+  assert.equal(cleared.toString(), "view=map");
+  const stale = new URLSearchParams("view=map&language-match=all");
+  assert.equal(deserializeVolunteerFilters(filter, stale).matchAllLanguages, false);
 });
 
 test("keeps German visible in the table without changing the card ranking", () => {

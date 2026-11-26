@@ -40,6 +40,7 @@ export default function FiltersContent({ setFilter, filter, viewMode, isMatchMod
           beforeItems={
             key === QueryParamsKeys.LANGUAGE && items.length > 0 ? (
               <VolunteerLanguageMatch
+                disabled={!items.some(({ checked }) => checked)}
                 matchAllLanguages={filter.matchAllLanguages ?? false}
                 setMatchAllLanguages={(matchAllLanguages) =>
                   setFilter((previous) => ({ ...previous, matchAllLanguages }))

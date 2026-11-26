@@ -6,12 +6,13 @@ import { FlexColumn } from "@/components/styled/FlexColumn";
 import { Paragraph } from "@/components/styled/text";
 
 interface Props {
+  disabled: boolean;
   matchAllLanguages: boolean;
   setMatchAllLanguages: (value: boolean) => void;
   t: TFunction;
 }
 
-export function VolunteerLanguageMatch({ matchAllLanguages, setMatchAllLanguages, t }: Props) {
+export function VolunteerLanguageMatch({ disabled, matchAllLanguages, setMatchAllLanguages, t }: Props) {
   const matchMode = matchAllLanguages ? LanguageMatch.ALL : LanguageMatch.ANY;
   const matchLabel = t("dashboard.volunteers.languageMatch.label");
   const matchOption = (mode: LanguageMatch) => t(`dashboard.volunteers.languageMatch.${mode}`);
@@ -21,8 +22,8 @@ export function VolunteerLanguageMatch({ matchAllLanguages, setMatchAllLanguages
       <Paragraph aria-hidden="true" fontSize="var(--checkbox-label-font-size)" fontWeight="var(--font-weight-regular)">
         {matchLabel}
       </Paragraph>
-      <Menu inFlow>
-        <Menu.Target label={`${matchLabel}: ${matchOption(matchMode)}`}>
+      <Menu key={String(disabled)} inFlow>
+        <Menu.Target disabled={disabled} label={`${matchLabel}: ${matchOption(matchMode)}`}>
           <Paragraph as="span" fontSize="var(--checkbox-label-font-size)" fontWeight="var(--font-weight-regular)">
             {matchOption(matchMode)}
           </Paragraph>

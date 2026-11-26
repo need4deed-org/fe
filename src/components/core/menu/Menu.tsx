@@ -35,6 +35,11 @@ const TargetButton = styled.button`
   display: inline-flex;
   font: inherit;
   color: inherit;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
 `;
 
 const DropdownDiv = styled.div<{ $align: "left" | "right"; $inFlow: boolean }>`
@@ -180,12 +185,13 @@ function Menu({ children, inFlow = false, closeOnSelect = true, open, onOpen, on
   );
 }
 
-function Target({ children, label }: { children: ReactNode; label?: string }) {
+function Target({ children, label, disabled }: { children: ReactNode; label?: string; disabled?: boolean }) {
   const { toggle, isOpen } = useMenuContext();
 
   return (
     <TargetButton
       type="button"
+      disabled={disabled}
       aria-label={label}
       aria-expanded={isOpen}
       aria-haspopup="menu"
