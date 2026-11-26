@@ -611,7 +611,9 @@
         }
       },
       "retry": "Try again",
-      "agentHeadline": "Volunteers you can ask us to contact",
+      "myVolunteers": "My volunteers",
+      "need4deedVolunteers": "Need4Deed volunteers",
+      "askNeed4deedToContact": "Ask Need4Deed to contact them for you.",
       "volunteers": "Volunteers",
       "languages": "Languages",
       "activities": "Activities",
