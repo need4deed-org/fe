@@ -50,7 +50,9 @@ test("role redirects retain the route language and query through the destination
   const cases = [
     [UserRole.AGENT, "/dashboard/admin", "/dashboard"],
     [UserRole.VOLUNTEER, "/dashboard/posts", "/dashboard"],
+    [UserRole.VOLUNTEER, "/dashboard/organizations/7", "/dashboard"],
     [UserRole.USER, "/dashboard/agents/42", "/dashboard/agents"],
+    [UserRole.USER, "/dashboard/organizations/7", "/dashboard"],
     [UserRole.AGENT, "/dashboard/calendar", "/dashboard"],
   ];
   const origin = "http://localhost:3000";
@@ -87,6 +89,18 @@ test("allowed agent-detail requests pass through the shared language handling", 
     assert.equal(response.cookies.get("preferred-lang")?.value, "de");
 
     assertRedirect("/dashboard/agents/42", "de", "/de/dashboard/agents/42", roleToken(role));
+  }
+});
+
+test("allowed organization-detail requests pass through the shared language handling", () => {
+  const origin = "http://localhost:3000";
+  for (const role of [UserRole.ADMIN, UserRole.COORDINATOR, UserRole.AGENT]) {
+    const headers = { cookie: `preferred-lang=en; refresh=${roleToken(role)}` };
+    const response = middleware(new NextRequest(`${origin}/de/dashboard/organizations/7`, { headers }));
+    assert.equal(response.status, 200);
+    assert.equal(response.cookies.get("preferred-lang")?.value, "de");
+
+    assertRedirect("/dashboard/organizations/7", "de", "/de/dashboard/organizations/7", roleToken(role));
   }
 });
 

@@ -621,7 +621,9 @@
         }
       },
       "retry": "Erneut versuchen",
-      "agentHeadline": "Ehrenamtliche, die wir für Sie kontaktieren können",
+      "myVolunteers": "Meine Ehrenamtlichen",
+      "need4deedVolunteers": "Need4Deed-Ehrenamtliche",
+      "askNeed4deedToContact": "Bitte Need4Deed, den Kontakt für Dich herzustellen.",
       "volunteers": "Ehrenamtliche",
       "languages": "Sprachen",
       "activities": "Aktivitäten",
@@ -866,6 +868,8 @@
       "contactDetailsTitle": "Kontaktdaten",
       "volunteerProfile": "Freiwilligenprofil",
       "opportunities": "Ehrenamtliche Tätigkeiten",
+      "leadFrom": "Wie hast du von uns erfahren?",
+      "leadFromEmpty": "Keine Antwort",
       "coordinatorComments": "Kommentare der Koordination",
       "documents": "Dokumente",
       "activityLog": "Aktivitätsprotokoll",
@@ -1640,6 +1644,47 @@
         "deleteSuccess": "Einrichtung erfolgreich gelöscht"
       }
     },
+    "organizationProfile": {
+      "title": "Trägerprofil",
+      "contactDetails": {
+        "title": "Kontaktdaten",
+        "contactPerson": "Ansprechperson",
+        "email": "E-Mail",
+        "phone": "Telefon",
+        "edit": "Bearbeiten",
+        "cancel": "Abbrechen",
+        "saveChanges": "Änderungen speichern",
+        "saveSuccess": "Kontaktdaten erfolgreich aktualisiert",
+        "validation": {
+          "emailInvalid": "Bitte gib eine gültige E-Mail-Adresse ein",
+          "phoneInvalid": "Die Telefonnummer darf nur Ziffern, +, Leerzeichen, Bindestriche und Klammern enthalten"
+        }
+      },
+      "organisationDetails": {
+        "title": "Details zum Träger",
+        "orgTitle": "Name des Trägers",
+        "edit": "Bearbeiten",
+        "about": "Über den Träger",
+        "website": "Webseite",
+        "address": "Adresse",
+        "addressStreet": "Straße",
+        "addressPostcode": "PLZ",
+        "services": "Leistungen",
+        "cancel": "Abbrechen",
+        "saveChanges": "Änderungen speichern",
+        "saveSuccess": "Details zum Träger erfolgreich aktualisiert",
+        "validation": {
+          "required": "Dieses Feld ist erforderlich",
+          "aboutMaxLength": "Maximal {{max}} Zeichen erlaubt",
+          "websiteInvalid": "Die Webseite muss mit http:// oder https:// beginnen",
+          "postcodeRequiredWithStreet": "Für eine Straßenadresse ist eine PLZ erforderlich"
+        }
+      },
+      "agents": {
+        "title": "Einrichtungen",
+        "emptyState": "Diesem Träger sind noch keine Einrichtungen zugeordnet."
+      }
+    },
     "opportunityProfile": {
       "opportunityProfile": "Profil der ehrenamtlichen Tätigkeit",
       "postedOn": "Veröffentlicht am",
@@ -2044,7 +2089,14 @@
         "metricLabel": "Kennzahl",
         "metric": {
           "newVolunteers": "Neue Freiwillige",
-          "requests": "Anfragen",
+          "matchedVolunteers": "Vermittelte Freiwillige",
+          "activeVolunteers": "Aktive Freiwillige",
+          "availableVolunteers": "Verfügbare Freiwillige",
+          "newOpportunities": "Neue Anfragen",
+          "validatedOpportunities": "Validierte Anfragen",
+          "matchedOpportunities": "Vermittelte Anfragen",
+          "unmatchedOpportunities": "Nie vermittelte Anfragen",
+          "pastOpportunities": "Vergangene Anfragen",
           "leadFrom": "Wie haben Sie von uns erfahren"
         },
         "granularityLabel": "Zeitraum",
@@ -2076,6 +2128,7 @@
         "empty": "Keine Daten für diesen Zeitraum.",
         "loadError": "Die Statistiken konnten nicht geladen werden. Bitte laden Sie die Seite neu.",
         "overlapNote": "Manche Einträge zählen zu mehreren Gruppen, daher können die Segmente zusammen mehr als die Gesamtzahl ergeben.",
+        "snapshotNote": "Zählt die Freiwilligen, die am Monatsende diesen Status hatten; Quartal oder Jahr zeigen den letzten Monatsendstand. Ein Monat wird erst nach seinem Ende gezählt, Zeiträume vor Beginn der Erfassung sind leer.",
         "allTime": {
           "title": "Gesamtzahlen seit Beginn",
           "tracked": "Seit Beginn der Erfassung",
@@ -2083,11 +2136,97 @@
           "beforeTrackingNote": "„Vor Beginn der Erfassung“ umfasst Antworten, die gesammelt wurden, bevor wir festgehalten haben, wann sie gegeben wurden. Sie sind daher nicht im Diagramm oben enthalten."
         }
       },
+      "emailTemplates": {
+        "helper": "Bearbeiten Sie die E-Mails, die die Plattform verschickt. Gespeicherte Änderungen gelten nach wenigen Minuten für neue E-Mails.",
+        "loadError": "Die E-Mail-Vorlagen konnten nicht geladen werden. Bitte laden Sie die Seite neu.",
+        "readOnly": "Auf diesem Server ist das Bearbeiten nicht eingerichtet, die Vorlagen sind daher schreibgeschützt.",
+        "template": "E-Mail-Vorlage",
+        "choose": "Vorlage wählen",
+        "templateLoadError": "Diese Vorlage konnte nicht geladen werden. Bitte versuchen Sie es erneut.",
+        "layout": "Sprachen",
+        "layoutSingle": "Ein Text für alle Empfänger*innen",
+        "layoutPerLanguage": "Getrennte Texte auf Deutsch und Englisch",
+        "layoutSingleHint": "Alle erhalten diesen Text. Wer Englisch gewählt hat, bekommt bei zweisprachigen Platzhaltern die englischen Werte.",
+        "layoutPerLanguageHint": "Empfänger*innen erhalten je nach ihrer Sprache den deutschen oder den englischen Text. Beim Wechsel zurück zu einem Text bleibt die angezeigte Sprache erhalten.",
+        "language": "Sprache",
+        "languages": {
+          "de": "Deutsch",
+          "en": "Englisch"
+        },
+        "subject": "Betreff",
+        "text": "Text",
+        "labels": "Bezeichnungen",
+        "labelsHint": "Kurze Texte, die die Plattform in die E-Mail einsetzt, zum Beispiel wo jemand markiert wurde oder das Wort, wenn ein Name fehlt. Leer lassen, um den Standardtext zu verwenden.",
+        "placeholders": "Platzhalter",
+        "placeholdersHint": "Klicken Sie auf einen Platzhalter, um ihn an der Cursorposition im Betreff oder Text einzufügen. Die Plattform ersetzt ihn beim Versand durch den echten Wert.",
+        "placeholdersReadOnlyHint": "Die Plattform ersetzt diese beim Versand durch die echten Werte.",
+        "placeholderRequired": "Wird in der aktuellen E-Mail verwendet und muss bleiben",
+        "placeholderRequiredLegend": "* Wird in der aktuellen E-Mail verwendet: Lassen Sie ihn im Betreff oder Text stehen.",
+        "insertPlaceholder": "{{name}} einfügen",
+        "insertRequiredPlaceholder": "{{name}} einfügen (muss in der E-Mail bleiben)",
+        "save": "Speichern",
+        "discard": "Änderungen verwerfen",
+        "hasHtmlWarning": "Diese E-Mail hat auch eine formatierte (HTML-)Fassung. Beim Speichern wird sie durch diesen reinen Text ersetzt.",
+        "savedNote_one": "Gespeichert. Neue E-Mails verwenden die Vorlage nach etwa {{count}} Minute.",
+        "savedNote_other": "Gespeichert. Neue E-Mails verwenden die Vorlage nach etwa {{count}} Minuten.",
+        "conflict": "Jemand anderes hat diese Vorlage gespeichert, nachdem Sie sie geöffnet haben. Deshalb wurde sie nicht gespeichert. Ihre Änderungen sind noch da. Laden Sie die gespeicherte Fassung, um von ihr neu zu beginnen, oder behalten Sie Ihre Änderungen und speichern Sie sie darüber.",
+        "loadLatest": "Gespeicherte Fassung laden",
+        "keepMine": "Meine Änderungen behalten",
+        "unsavedTitle": "Änderungen verwerfen?",
+        "unsavedMessage": "Diese Vorlage hat ungespeicherte Änderungen. Sie gehen verloren, wenn Sie eine andere Vorlage öffnen.",
+        "unsavedConfirm": "Verwerfen und öffnen",
+        "errors": {
+          "unknownPlaceholderGeneric": "Der Text enthält Platzhalter, die die Plattform nicht kennt. Verwenden Sie die oben aufgeführten Platzhalter.",
+          "missingPlaceholderGeneric": "Einige Platzhalter, die die E-Mail braucht, fehlen. Fügen Sie die mit * markierten wieder ein.",
+          "fieldBlank": "Darf nicht leer sein.",
+          "not_editable": "Auf diesem Server ist das Bearbeiten nicht eingerichtet.",
+          "layout_not_allowed": "Diese Vorlage kann keine getrennten Texte auf Deutsch und Englisch haben.",
+          "blank_field": "Füllen Sie die leeren Felder aus.",
+          "unknown_label": "Unbekannte Bezeichnungen: {{labels}}.",
+          "unknown_placeholder": "Unbekannte Platzhalter: {{placeholders}}. Verwenden Sie die oben aufgeführten Platzhalter.",
+          "needsLanguage": "Diese E-Mail kennt die Sprache der empfangenden Person nicht, daher brauchen diese Platzhalter eine Sprache: {{placeholders}}. Zum Beispiel {{example}}.",
+          "missing_placeholder": "Fügen Sie diese Platzhalter wieder ein: {{placeholders}}."
+        },
+        "conflictLoading": "Die gespeicherte Fassung wird geladen … Wenn das lange dauert, prüfen Sie erneut.",
+        "checkAgain": "Erneut prüfen",
+        "unsavedLeaveMessage": "Diese Vorlage hat ungespeicherte Änderungen. Sie gehen verloren, wenn Sie diese Seite verlassen.",
+        "unsavedLeaveConfirm": "Verwerfen und verlassen",
+        "retry": "Erneut versuchen",
+        "labelNames": {
+          "commentOnVolunteer": "Markiert in: Kommentar zu einer freiwilligen Person",
+          "commentOnOpportunity": "Markiert in: Kommentar zu einem Gesuch",
+          "commentOnAgent": "Markiert in: Kommentar zu einer Einrichtung",
+          "comment": "Markiert in: Kommentar",
+          "post": "Markiert in: Beitrag",
+          "someone": "Name, wenn der Name der absendenden Person unbekannt ist",
+          "noName": "Anrede, wenn der Name der empfangenden Person unbekannt ist"
+        },
+        "names": {
+          "accompanymatch": "Begleitung vermittelt",
+          "accompanymatchvolunteer": "Begleitung vermittelt (an Freiwillige)",
+          "accompanynotfound": "Keine Begleitung gefunden",
+          "cgcapplication": "Antrag auf Führungszeugnis",
+          "checkup": "Nachfrage nach einer Vermittlung",
+          "confirmation": "Bestätigung eines neuen Angebots",
+          "confirmationaccompanying": "Bestätigung einer neuen Begleitung",
+          "introduction": "Vorstellung bei einer Vermittlung",
+          "password-reset": "Passwort zurücksetzen",
+          "registration": "Registrierung von Freiwilligen",
+          "stale": "Erinnerung bei ruhender Vermittlung",
+          "suggestion": "Vorschlag eines Angebots",
+          "suggestion-request": "Anfrage nach Vorschlägen",
+          "suggestionaccompanying": "Vorschlag einer Begleitung",
+          "tagged": "In einem Kommentar markiert",
+          "update": "Aktualisierung eines Angebots",
+          "verification": "E-Mail-Bestätigung"
+        }
+      },
       "nav": {
         "domains": "Domains",
         "stats": "Statistiken",
         "ngoVolunteers": "Freiwillige der NGOs",
-        "accounts": "Konten"
+        "accounts": "Konten",
+        "emailTemplates": "E-Mail-Vorlagen"
       },
       "ngoVolunteers": {
         "helper": "Wählen Sie eine NGO, um ihren Freiwilligen einen Registrierungslink zu geben oder ihre bestehenden Freiwilligen zu importieren.",
@@ -3131,32 +3270,37 @@
   },
   "forOrganisationsPage": {
     "heading": "Für Organisationen",
-    "intro": "Für Einrichtungen und Projekte, die Geflüchtete in Berlin unterstützen: So arbeiten wir mit Dir zusammen, von der ersten Anfrage bis zur freiwilligen Person vor Ort.",
-    "stepsHeading": "So vermitteln wir Freiwillige",
+    "intro": "Für Einrichtungen, die Geflüchtete in Berlin unterstützen: Finde Ehrenamtliche für Deine Einrichtung und verwalte Deine eigenen, an einem Ort und kostenlos.",
+    "stepsHeading": "Teil 1: Vermittlung",
+    "stepsIntro": "Finde Ehrenamtliche, selbst oder mit unserer Hilfe.",
     "steps": {
       "request": {
-        "title": "Du sendest eine Anfrage",
-        "body": "Registriere Deine Organisation und erstelle im Dashboard eine Anfrage: regelmäßiges Engagement, eine Begleitung zu einem Termin oder ein Event. Sag uns, was gebraucht wird, wann, wo und in welchen Sprachen. Begleitungen müssen mindestens 7 Werktage vor dem Termin angefragt werden."
+        "title": "Möglichkeit erstellen",
+        "body": "Registriere Deine Organisation und veröffentliche ein regelmäßiges Engagement, eine Begleitung oder ein Event. Begleitungen fragst Du bitte mindestens 7 Werktage vor dem Termin an."
+      },
+      "search": {
+        "title": "Selbst suchen",
+        "body": "Filtere die Ehrenamtlichen nach Sprache, Bezirk oder Fähigkeiten und klick bei passenden Personen auf „Vorschlag anfragen“."
       },
       "prepare": {
-        "title": "Wir bereiten die Freiwilligen vor",
-        "body": "Mit allen neuen Freiwilligen telefonieren wir nach der Registrierung, um ihre Sprachen, Erfahrungen und Wünsche kennenzulernen. Freiwillige für Begleitungen nehmen zusätzlich an einer Online-Einführung teil. Wir helfen beim Beantragen des erweiterten Führungszeugnisses (EFZ) und prüfen, wo nötig, den Nachweis der Masernimpfung."
+        "title": "Wir bereiten vor",
+        "body": "Wir lernen alle neuen Ehrenamtlichen persönlich kennen und helfen beim erweiterten Führungszeugnis (EFZ)."
       },
       "match": {
         "title": "Wir vermitteln",
-        "body": "Unsere Koordinator*innen suchen die passende Person nach Sprache und Dialekt, Bezirk, Verfügbarkeit und Tätigkeit, aus unserem Pool und aus Deinen eigenen Freiwilligen auf der Plattform."
+        "body": "Wir suchen die passende Person nach Sprache, Bezirk, Verfügbarkeit und Tätigkeit."
       },
       "introduction": {
-        "title": "Du bekommst einen Vorschlag und dann die Vorstellung",
-        "body": "Passt eine freiwillige Person, schicken wir Dir und ihr eine Vorstellungs-E-Mail mit allen Kontaktdaten. Bitte lade die Person innerhalb von 5 bis 7 Werktagen zu einem ersten Treffen ein und setze uns in CC. Passt es nicht, sag uns Bescheid, dann suchen wir weiter."
+        "title": "Ihr lernt Euch kennen",
+        "body": "Wir stellen Euch per E-Mail einander vor. Lade die Person bitte innerhalb von 5 bis 7 Werktagen zu einem ersten Treffen ein."
       },
       "noMatch": {
-        "title": "Wenn wir niemanden finden",
-        "body": "Bei Begleitungen geben wir Dir spätestens 4 Werktage vor dem Termin Bescheid, damit Du planen kannst."
+        "title": "Wenn niemand passt",
+        "body": "Bei Begleitungen sagen wir Dir spätestens 4 Werktage vor dem Termin Bescheid."
       },
       "afterMatch": {
-        "title": "Die freiwillige Person startet, und wir bleiben in Kontakt",
-        "body": "Etwa einmal im Monat fragen wir nach, ob Deine Angebote noch aktuell sind und wie es mit den Freiwilligen läuft. Hört jemand auf, suchen wir eine neue Vermittlung."
+        "title": "Wir bleiben in Kontakt",
+        "body": "Etwa einmal im Monat fragen wir nach, wie es läuft. Hört jemand auf, suchen wir neu."
       }
     },
     "goodToKnow": {
@@ -3169,24 +3313,52 @@
       "contact": "Fragen? Schreib uns an"
     },
     "dashboard": {
-      "heading": "Das Need4Deed-Dashboard",
-      "intro": "Über die Vermittlung hinaus ist das Dashboard ein Werkzeug für den Alltag Deines Teams, auch mit Freiwilligen, die Ihr selbst gefunden habt.",
+      "heading": "Teil 2: Verwaltung",
+      "intro": "Betreue alle Deine Ehrenamtlichen an einem Ort, vermittelte und eigene.",
       "features": {
-        "volunteers": {
-          "title": "Deine Freiwilligen an einem Ort",
-          "body": "Verwalte Deine eigenen Freiwilligen und Anfragen und sieh Freiwillige aus unserem Pool. Wenn Du möchtest, teile Deine Freiwilligen mit anderen Organisationen, Kontakt für Kontakt und nur mit Einverständnis der Freiwilligen."
+        "matched": {
+          "title": "Vermittelte Ehrenamtliche",
+          "body": "Von uns vermittelte Ehrenamtliche siehst Du direkt im Dashboard, mit allen Informationen."
+        },
+        "import": {
+          "title": "Eigene Ehrenamtliche importieren",
+          "body": "Lade Deine Tabelle hoch oder schick sie uns. Die Profile sieht nur Deine Einrichtung. Bitte informiere Deine Ehrenamtlichen vorher."
+        },
+        "link": {
+          "title": "Mit Möglichkeiten verknüpfen",
+          "body": "Verknüpfe Ehrenamtliche mit Deinen Möglichkeiten und behalte im Blick, wer wo im Einsatz ist."
         },
         "hours": {
-          "title": "Stunden und Anerkennung",
-          "body": "Trage für jede Vermittlung die Stunden ein, die eine freiwillige Person geleistet hat, und behalte Anerkennungen wie Zertifikate im Blick."
+          "title": "Einsatzzeiten erfassen",
+          "body": "Trag Datum und Stunden ein, praktisch für Nachweise, Berichte und Förderanträge."
+        },
+        "appreciation": {
+          "title": "Anerkennung nachhalten",
+          "body": "Halte fest, wie Du Deinen Ehrenamtlichen dankst, zum Beispiel mit Zertifikaten."
+        },
+        "feedback": {
+          "title": "Feedback",
+          "body": "Lies, was Ehrenamtliche über Deine Möglichkeiten schreiben."
+        },
+        "export": {
+          "title": "CSV-Export",
+          "body": "Lade Deine Ehrenamtlichen und Möglichkeiten jederzeit als CSV-Datei herunter."
+        },
+        "traeger": {
+          "title": "Für Träger",
+          "body": "Verwalte mehrere Einrichtungen unter einem Konto. Melde Dich bei uns, wir richten es ein."
+        },
+        "efz": {
+          "title": "Erweitertes Führungszeugnis",
+          "body": "Wir unterstützen Dich bei der Anfrage. Melde Dich einfach bei uns."
         },
         "posts": {
-          "title": "Posts und Markierungen",
-          "body": "Stelle allgemeine Fragen oder Gesuche in die Posts, antwortet Euch gegenseitig und markiert Euch. Wer markiert wird, bekommt eine E-Mail."
+          "title": "Beiträge",
+          "body": "Tausch Dich mit anderen Einrichtungen und mit uns aus."
         },
         "openSource": {
-          "title": "Open Source, gehostet in der Schweiz",
-          "body": "Das Dashboard ist Open Source, läuft zu 100 % in Europa, gehostet in der Schweiz, und ist DSGVO-konform."
+          "title": "Open Source",
+          "body": "Läuft zu 100 % in Europa, gehostet in der Schweiz und DSGVO-konform."
         }
       }
     }

@@ -1,13 +1,15 @@
-import { ApiAgentProfileGet } from "@/components/Dashboard/Profile/types";
-import { apiPathAgent } from "@/config/constants";
+import { apiPathOrganization } from "@/config/constants";
 import { useMutationQuery } from "@/hooks";
-import { ApiAgentPatch } from "need4deed-sdk";
+import { ApiOrganizationPatch } from "need4deed-sdk";
 
-export const useUpdateOrganization = (agentId: string) => {
-  return useMutationQuery<ApiAgentPatch, ApiAgentProfileGet>({
-    apiPath: `${apiPathAgent}/${agentId}`,
+export const useUpdateOrganization = (
+  organizationId: string,
+  successMessage = "dashboard.organizationProfile.organisationDetails.saveSuccess",
+) => {
+  return useMutationQuery<ApiOrganizationPatch, unknown>({
+    apiPath: `${apiPathOrganization}${organizationId}`,
     method: "patch",
-    successMessage: "dashboard.agentProfile.organisationDetails.saveSuccess",
-    queryKeyToInvalidate: ["agent", agentId],
+    successMessage,
+    queryKeyToInvalidate: [["organization", organizationId], ["organization"], ["agent"]],
   });
 };
