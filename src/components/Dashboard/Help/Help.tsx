@@ -55,14 +55,12 @@ export function Help() {
   const nodeTitle = (id: string) => t(`dashboard.help.nodes.${id}.title`);
   const goTo = (id?: string) => router.push(id ? `${pathname}?${HELP_TOPIC_PARAM}=${id}` : pathname);
 
-  if (!user) return null;
-
   return (
     <DashboardLayout>
       <PageContainer>
         <Heading2>{t("dashboard.help.title")}</Heading2>
 
-        {!tree && (
+        {user && !tree && (
           <NoteText>
             {t("dashboard.help.noHelp")} <TextLink href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</TextLink>
           </NoteText>

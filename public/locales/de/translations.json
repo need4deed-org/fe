@@ -2675,7 +2675,7 @@
                 "Filtere nach Sprache, Bezirk, Fähigkeiten, Aktivitäten oder „Begleitung“. Bei mehreren Sprachen wählst Du, ob die Person eine davon oder alle sprechen soll.",
                 "Wechsle oben zwischen Liste, Karten und Berlin-Karte.",
                 "Klick auf eine Person, um ihr Profil zu öffnen.",
-                "Klick im Abschnitt „Möglichkeiten“ auf „Vorschlag anfragen“ und wähl Deine Möglichkeit aus.",
+                "Klick im Abschnitt „Ehrenamtliche Tätigkeiten“ auf „Vorschlag anfragen“ und wähl Deine Möglichkeit aus.",
                 "Wir bekommen die Anfrage und stellen den Kontakt her. Die Person erscheint in Deiner Möglichkeit unter „Angefragt“."
               ]
             }
@@ -2688,7 +2688,7 @@
               "steps": [
                 "Klick im Menü auf „Ehrenamtliche“ und dann auf „Meine Ehrenamtlichen“.",
                 "Öffne das Profil der Person.",
-                "Klick im Abschnitt „Möglichkeiten“ auf „Vorschlagen“ und wähl Deine Möglichkeit. Die Person sieht den Vorschlag als offen."
+                "Klick im Abschnitt „Ehrenamtliche Tätigkeiten“ auf „Vorschlagen“ und wähl Deine Möglichkeit. Die Person sieht den Vorschlag als offen."
               ]
             }
           ]
@@ -2915,7 +2915,7 @@
               "steps": [
                 "Öffne das Profil der Person.",
                 "Unter „Empfohlene Ehrenamtsbedarfe“ stehen die Bedarfe, die nach Bezirk, Sprache und Verfügbarkeit am besten passen, mit Fahrzeit.",
-                "Oder im Abschnitt „Möglichkeiten“ auf „Ehrenamtliche Tätigkeiten finden“ und selbst filtern.",
+                "Oder im Abschnitt „Ehrenamtliche Tätigkeiten“ auf „Ehrenamtliche Tätigkeiten finden“ und selbst filtern.",
                 "Achte auf die Fahrzeit (etwa 35 Minuten) und darauf, dass der Bedarf „Suche läuft“ hat."
               ]
             }
