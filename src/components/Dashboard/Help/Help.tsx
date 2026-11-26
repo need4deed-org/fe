@@ -99,7 +99,7 @@ export function Help() {
             <CardGrid>
               {choices.map((node) => (
                 <ChoiceCard key={node.id} onClick={() => goTo(node.id)}>
-                  <SectionHeader>{nodeTitle(node.id)}</SectionHeader>
+                  <SectionHeader as="span">{nodeTitle(node.id)}</SectionHeader>
                 </ChoiceCard>
               ))}
             </CardGrid>
