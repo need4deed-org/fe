@@ -8,6 +8,7 @@ import { SelectionMap, SetFilter } from "../../common/CardsFilter/types";
 import { QueryParamsKeys } from "need4deed-sdk";
 import { volunteerFilterConfigs } from "./config";
 import { createCommutePrefillItem } from "../../common/CardsFilter/matchingPrefill";
+import { getClearFilter } from "../../common/CardsFilter/helpers";
 
 export const createVolunteerFilterSections = (
   filter: VolunteerCardsFilter,
@@ -56,5 +57,17 @@ export const createSelectedFilterItemsAsFlatArray = (
     .flatMap(({ items }) => items)
     .filter((item) => item.checked);
   const commuteItem = createCommutePrefillItem(filter, setFilter, t, QueryParamsKeys.COMMUTE_OPPORTUNITY_ID);
-  return [...getSelectedSelectionFilterItems(sections), ...availabilityItems, ...(commuteItem ? [commuteItem] : [])];
+  const selectedItems = getSelectedSelectionFilterItems(sections);
+  const languages = selectedItems.filter((item) => item.parentKey === QueryParamsKeys.LANGUAGE);
+  if (languages.length > 1) {
+    const conjunction = t(`dashboard.volunteers.languageMatch.${filter.matchAllLanguages ? "and" : "or"}`);
+    const names = languages.map((item) => item.label).join(` ${conjunction} `);
+    selectedItems.splice(selectedItems.indexOf(languages[0]), languages.length, {
+      keyValue: QueryParamsKeys.LANGUAGE,
+      label: names,
+      checked: true,
+      onChange: () => setFilter((previous) => ({ ...previous, language: getClearFilter(previous.language) })),
+    });
+  }
+  return [...selectedItems, ...availabilityItems, ...(commuteItem ? [commuteItem] : [])];
 };

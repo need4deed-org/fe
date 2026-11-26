@@ -9,11 +9,13 @@ import { ClickableRow, TableCell, TruncatedText } from "@/components/core/common
 import { CirclePic } from "@/components/styled/img";
 import { defaultAvatarURL } from "@/config/constants";
 import { getImageUrl } from "@/utils";
-import { ApiVolunteerGetList } from "need4deed-sdk";
+import { ApiVolunteerGetList, Lang } from "need4deed-sdk";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { getVolunteerColWidths } from "./volunteerTableColumns";
-import { getFirstName, getTopLanguages, putSelectedFirst, truncateList } from "./helpers";
+import { getFirstName, getVolunteerTableLanguages, putSelectedFirst, truncateList } from "./helpers";
+import { languageToIsoCode } from "../NewOpportunity/helper";
+import { GermanProficiencyMarker } from "./german-proficiency";
 import { CopyEmail } from "../common/CopyEmail";
 import { CheckCircleIcon } from "@phosphor-icons/react";
 import { isBriefedAccompanying } from "../Profile/sections/ProfileHeader/common";
@@ -50,9 +52,7 @@ export function VolunteerTableRow({
   };
   const { statusMatch, email, statusCommunication } = ext;
 
-  const topLangs = getTopLanguages(languages, 2);
-  const languageText =
-    truncateList(topLangs.length ? topLangs : languages.map((l) => l.title).filter(Boolean), 2) || "—";
+  const displayedLanguages = getVolunteerTableLanguages(languages);
 
   const districtTitles = putSelectedFirst(locations, (loc) => selectedDistrictIds.includes(loc?.id))
     .map((loc) => (typeof loc === "string" ? loc : loc?.title))
@@ -93,7 +93,21 @@ export function VolunteerTableRow({
         <TruncatedText>{statusMatch ? matchLabels[statusMatch] : "—"}</TruncatedText>
       </TableCell>
       <TableCell $width={VOLUNTEER_COL_WIDTHS.language} $noWrap data-testid={`volunteer-language-${id}`}>
-        <TruncatedText>{languageText}</TruncatedText>
+        <TruncatedText>
+          {displayedLanguages.length
+            ? displayedLanguages.map(({ id, title, proficiency }, index) => (
+                <span key={`${id}-${index}`}>
+                  {index === 0 ? "" : ", "}
+                  {languageToIsoCode(title) === Lang.DE && proficiency ? (
+                    <>
+                      <GermanProficiencyMarker proficiency={proficiency} />{" "}
+                    </>
+                  ) : null}
+                  {title}
+                </span>
+              ))
+            : "—"}
+        </TruncatedText>
       </TableCell>
       <TableCell $width={VOLUNTEER_COL_WIDTHS.district} $noWrap data-testid={`volunteer-district-${id}`}>
         <TruncatedText>{districtText}</TruncatedText>

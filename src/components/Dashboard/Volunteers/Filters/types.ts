@@ -15,6 +15,7 @@ export interface VolunteerCardsFilter {
   [QueryParamsKeys.AVAILABILITY]: Availability;
   [QueryParamsKeys.DISTRICT]: SelectionMap;
   [QueryParamsKeys.LANGUAGE]: SelectionMap;
+  matchAllLanguages?: boolean;
   type: SelectionMap;
   hasCommuteSource: boolean;
   maxCommuteMinutes: number;

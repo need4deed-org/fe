@@ -19,4 +19,5 @@ export interface EntityTableListProps<T extends { id: string | number }> {
   noFixedWidth?: boolean;
   isFewResults?: boolean;
   isLoading?: boolean;
+  footer?: ReactNode;
 }

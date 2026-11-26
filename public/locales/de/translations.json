@@ -630,6 +630,18 @@
       "skillsExperience": "Fähigkeiten & Erfahrungen",
       "preferredAvailability": "Bevorzugte Verfügbarkeit",
       "preferredDistricts": "Bevorzugte Bezirke",
+      "languageMatch": {
+        "label": "Ausgewählte Sprachen",
+        "any": "Mindestens eine davon",
+        "all": "Alle davon",
+        "and": "und",
+        "or": "oder"
+      },
+      "germanProficiency": {
+        "label": "Deutschkenntnisse",
+        "fluent": "Fließend oder Muttersprache",
+        "belowFluent": "Weniger als fließend"
+      },
       "langProficiency": {
         "beginner": "Anfänger",
         "intermediate": "Mittelstufe",
