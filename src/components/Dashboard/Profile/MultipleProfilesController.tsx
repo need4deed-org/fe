@@ -1,6 +1,7 @@
 import { useGetCurrentAgent } from "@/hooks/useGetCurrentAgent";
+import { sortAgentOptions } from "@/utils/agent-options";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback } from "react";
 import ProfileLayout from "./ProfileLayout";
 import { ProfileNavigation, ProfileNavigationDirection } from "./types";
 
@@ -30,15 +31,9 @@ export const MultipleProfilesController = ({ agentIds, showList }: Props) => {
     [pathname, router, searchParams],
   );
 
-  const options = useMemo(
-    () =>
-      (showList ? agentIds : [])
-        .map((id) => ({ id, title: currentAgents.find((agent) => agent?.id === id)?.title ?? String(id) }))
-        .sort((a, b) => a.title.localeCompare(b.title)),
-    [agentIds, currentAgents, showList],
-  );
+  const options = showList ? sortAgentOptions(agentIds, currentAgents) : [];
 
-  const stepOrder = useMemo(() => (showList ? options.map(({ id }) => id) : agentIds), [agentIds, options, showList]);
+  const stepOrder = showList ? options.map(({ id }) => id) : agentIds;
 
   const onStep = useCallback(
     (direction: ProfileNavigationDirection) => {

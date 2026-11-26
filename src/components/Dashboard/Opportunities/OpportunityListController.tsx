@@ -58,6 +58,7 @@ type Props = {
   viewMode: ViewMode;
   volunteerFilter: SingleFilter | undefined;
   defaultStatuses: OpportunityStatusType[];
+  agentId?: number;
 };
 
 export function OpportunityListController(props: Props) {
@@ -74,6 +75,7 @@ function OpportunityListControllerContent({
   viewMode,
   volunteerFilter,
   defaultStatuses,
+  agentId,
 }: Props) {
   const { currentPage, setCurrentPage } = usePageParam();
   const { t, i18n } = useTranslation();
@@ -95,6 +97,10 @@ function OpportunityListControllerContent({
 
   if (volunteerId) {
     serializedFilter.set("volunteer", volunteerId);
+  }
+
+  if (agentId) {
+    serializedFilter.set(QueryParamsKeys.AGENT, String(agentId));
   }
 
   if (isVolunteer) {

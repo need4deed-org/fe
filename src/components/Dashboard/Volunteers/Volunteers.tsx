@@ -52,6 +52,7 @@ import { ErrorMessage } from "@/components/core/common";
 import { Button } from "@/components/core/button";
 import { useScreenType } from "@/context/DeviceContext";
 import { usePrefillFilters } from "../common/CardsFilter/usePrefillFilters";
+import { ProjectPicker, useProjectParam } from "../common/ProjectPicker/ProjectPicker";
 
 const SCOPE_PARAM = "scope";
 const NO_OWNER_AGENT = "none";
@@ -74,6 +75,9 @@ export function Volunteers() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
+  const { projectId: pickedProjectId } = useProjectParam();
+  const isMapView = searchParams.get("view") === ViewMode.MAP;
+  const projectId = isMapView ? undefined : pickedProjectId;
   const opportunityId = searchParams.get("opportunity") ?? undefined;
   const opportunityFilter = useGetOpportunity(opportunityId);
   const prefilledForRef = useRef<string | null>(null);
@@ -86,7 +90,9 @@ export function Volunteers() {
   const ownerAgents = !isAgent
     ? undefined
     : isMyVolunteers
-      ? (user?.agentMemberships ?? []).map(({ agentId }) => String(agentId))
+      ? projectId
+        ? [String(projectId)]
+        : (user?.agentMemberships ?? []).map(({ agentId }) => String(agentId))
       : [NO_OWNER_AGENT];
 
   const isStaff = user?.role === UserRole.COORDINATOR || user?.role === UserRole.ADMIN;
@@ -294,6 +300,7 @@ export function Volunteers() {
             opportunityFilter ? { ...opportunityFilter, onRemove: handleRemoveOpportunityFilter } : undefined
           }
         />
+        {isMyVolunteers && !isMapView && <ProjectPicker />}
         <ContentRow>
           <VolunteerListController
             setNumOfVols={setNumOfVols}

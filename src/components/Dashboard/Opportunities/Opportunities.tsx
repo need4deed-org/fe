@@ -52,6 +52,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { useScreenType } from "@/context/DeviceContext";
 import { usePrefillFilters } from "../common/CardsFilter/usePrefillFilters";
+import { ProjectPicker, useProjectParam } from "../common/ProjectPicker/ProjectPicker";
 
 export function Opportunities() {
   const user = useCurrentUser(true);
@@ -88,6 +89,9 @@ export function Opportunities() {
   const defaultTabIndex = screenType === ScreenTypes.MOBILE ? 1 : 0;
   const selectedTabIndex = isOtherTab ? VIEW_MODE_BY_TAB.length : foundIndex === -1 ? defaultTabIndex : foundIndex;
   const viewMode = VIEW_MODE_BY_TAB[isOtherTab ? defaultTabIndex : selectedTabIndex];
+  const isMapView = viewMode === ViewMode.MAP;
+  const { projectId: pickedProjectId } = useProjectParam();
+  const projectId = isMapView ? undefined : pickedProjectId;
 
   const roleDefaultStatuses = isAgent
     ? DEFAULT_NGO_OPPORTUNITY_STATUSES
@@ -243,6 +247,7 @@ export function Opportunities() {
             )
           }
         />
+        {!isOtherTab && !isMapView && <ProjectPicker />}
         {isOtherTab ? (
           <OtherOpportunities search={cardsFilter.search} setCount={setNumOfOpps} />
         ) : (
@@ -257,6 +262,7 @@ export function Opportunities() {
               viewMode={viewMode}
               volunteerFilter={volunteerFilter}
               defaultStatuses={defaultStatuses}
+              agentId={projectId}
             />
             <Filters
               isFiltersOpen={isFiltersOpen}
