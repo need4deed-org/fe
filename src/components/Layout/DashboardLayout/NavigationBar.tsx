@@ -9,6 +9,7 @@ import {
   DotsThreeCircleIcon,
   HouseIcon,
   NotepadIcon,
+  QuestionIcon,
   ShieldCheckIcon,
   ShootingStarIcon,
   UserCheckIcon,
@@ -267,6 +268,15 @@ export default function NavigationBar() {
       text: userInitials,
       route: DashboardRoutes.Profile,
     },
+    ...(isVolunteer
+      ? []
+      : [
+          {
+            label: t("dashboard.home.sidebar.help"),
+            Icon: QuestionIcon,
+            route: DashboardRoutes.Help,
+          },
+        ]),
   ];
 
   const primaryRoutes = [DashboardRoutes.Home, isStaff ? DashboardRoutes.Admin : DashboardRoutes.Profile];

@@ -5,3 +5,4 @@ export * from "./Agents";
 export * from "./Calendar";
 export * from "./Posts";
 export * from "./Admin";
+export * from "./Help";
