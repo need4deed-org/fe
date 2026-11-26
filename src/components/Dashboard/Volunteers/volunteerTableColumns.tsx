@@ -4,6 +4,7 @@ import { COLUMN_WIDTH } from "../common/EntityTableList/columnWidths";
 import { ReactNode } from "react";
 import DropdownAccordionFilter from "../common/DropDownFilter/DropdownAccordionFilter";
 import { FilterItem } from "../common/CardsFilter/types";
+import { VolunteerLanguageMatch } from "./Filters/volunteer-language-match";
 
 const FULL_WIDTHS = {
   name: COLUMN_WIDTH.SM,
@@ -33,6 +34,8 @@ export const createVolunteerTableColumns = (
     districtFilters: FilterItem[];
     engagementFilters: FilterItem[];
     languageFilters: FilterItem[];
+    matchAllLanguages: boolean;
+    setMatchAllLanguages: (value: boolean) => void;
     typeFilters: FilterItem[];
   },
 ): Column[] => {
@@ -57,7 +60,20 @@ export const createVolunteerTableColumns = (
       key: "language",
       label: t("dashboard.volunteers.table.language"),
       width: VOLUNTEER_COL_WIDTHS.language,
-      headerAction: <DropdownAccordionFilter items={dropdownFilters.languageFilters} />,
+      headerAction: (
+        <DropdownAccordionFilter
+          items={dropdownFilters.languageFilters}
+          triggerLabel={t("dashboard.volunteers.table.language")}
+          beforeItems={
+            <VolunteerLanguageMatch
+              disabled={!dropdownFilters.languageFilters.some(({ checked }) => checked)}
+              matchAllLanguages={dropdownFilters.matchAllLanguages}
+              setMatchAllLanguages={dropdownFilters.setMatchAllLanguages}
+              t={t}
+            />
+          }
+        />
+      ),
     },
     {
       key: "district",

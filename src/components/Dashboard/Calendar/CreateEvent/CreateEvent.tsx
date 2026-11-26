@@ -25,11 +25,13 @@ export interface EventFormData {
   houseNumber: string;
   postcode: string;
   registrationLink: string;
+  signUpQuestion: string;
   startDate: string;
   startTime: string;
   endDate: string;
   endTime: string;
   unstructuredAddress: boolean;
+  listed: boolean;
 }
 
 const TOTAL_STEPS = 3;
@@ -92,11 +94,13 @@ export function CreateEvent({ eventId }: Props) {
     houseNumber: "",
     postcode: "",
     registrationLink: "",
+    signUpQuestion: "",
     startDate: prefilledDate,
     startTime: "",
     endDate: prefilledDate,
     endTime: "",
     unstructuredAddress: false,
+    listed: true,
   });
   const [initializedEventId, setInitializedEventId] = useState<number | null>(null);
   const { data: editingEvent, isLoading, isError } = useEvent(eventId);
@@ -111,11 +115,13 @@ export function CreateEvent({ eventId }: Props) {
       description: editingEvent.description,
       hostName: editingEvent.hostName ?? "",
       ...parseAddress(editingEvent.address),
-      registrationLink: editingEvent.linkRSVP,
+      registrationLink: editingEvent.linkRSVP ?? "",
+      signUpQuestion: editingEvent.signUpQuestion ?? "",
       startDate: start.date,
       startTime: start.time,
       endDate: end.date,
       endTime: end.time,
+      listed: editingEvent.listed ?? true,
     });
     setInitializedEventId(eventId);
   }, [editingEvent, eventId, initializedEventId]);
@@ -168,14 +174,17 @@ export function CreateEvent({ eventId }: Props) {
     date: new Date(`${formData.startDate}T${formData.startTime}`),
     dateEnd: new Date(`${formData.endDate}T${formData.endTime}`),
     type: formData.type,
-    linkRSVP: formData.registrationLink,
+    linkRSVP: formData.registrationLink.trim() || null,
     address,
   });
   const hostName = formData.hostName.trim();
+  const signUpQuestion = formData.signUpQuestion.trim();
   const toCreatePayload = (): ApiEventN4DCreate => ({
     ...toBasePayload(),
     ...(hostName ? { hostName } : {}),
+    ...(signUpQuestion ? { signUpQuestion } : {}),
     active: false,
+    listed: formData.listed,
     translations: [translation],
   });
   const toUpdatePayload = (): ApiEventN4DPatch => {
@@ -185,6 +194,10 @@ export function CreateEvent({ eventId }: Props) {
     return {
       ...toBasePayload(),
       ...(hostName !== (editingEvent?.hostName ?? "").trim() ? { hostName: hostName || null } : {}),
+      ...(signUpQuestion !== (editingEvent?.signUpQuestion ?? "").trim()
+        ? { signUpQuestion: signUpQuestion || null }
+        : {}),
+      ...(formData.listed !== (editingEvent?.listed ?? true) ? { listed: formData.listed } : {}),
       ...(translationChanged ? { translations: [translation] } : {}),
     };
   };
@@ -203,7 +216,9 @@ export function CreateEvent({ eventId }: Props) {
         formData.street.trim().length > 0 &&
         (formData.unstructuredAddress ||
           (formData.houseNumber.trim().length > 0 && postcode.length > 0 && isPostcodeValid && !plz.blocksSubmit)) &&
-        (formData.registrationLink === editingEvent?.linkRSVP || isHttpUrl(formData.registrationLink))
+        (!formData.registrationLink.trim() ||
+          formData.registrationLink === editingEvent?.linkRSVP ||
+          isHttpUrl(formData.registrationLink))
       );
     if (step === 3) {
       const start = new Date(`${formData.startDate}T${formData.startTime}`);
@@ -268,6 +283,7 @@ export function CreateEvent({ eventId }: Props) {
               plzStatus={plz.status}
               showPostcodeError={showPostcodeError}
               registrationLink={formData.registrationLink}
+              signUpQuestion={formData.signUpQuestion}
               onChange={update}
               onNext={handleNext}
               onBack={handleBack}
@@ -280,6 +296,7 @@ export function CreateEvent({ eventId }: Props) {
               startTime={formData.startTime}
               endDate={formData.endDate}
               endTime={formData.endTime}
+              listed={formData.listed}
               onChange={update}
               onBack={handleBack}
               onSubmit={handleSubmit}

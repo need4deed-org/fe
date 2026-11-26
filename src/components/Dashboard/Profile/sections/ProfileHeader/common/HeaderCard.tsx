@@ -7,8 +7,8 @@ type Props = {
   testId: string;
   avatar: ReactNode;
   title: string;
-  subtitle: string;
-  children: ReactNode;
+  subtitle?: string;
+  children?: ReactNode;
   after?: ReactNode;
 };
 
@@ -20,9 +20,9 @@ export const HeaderCard = ({ testId, avatar, title, subtitle, children, after }:
         <ProfileInfo>
           <TitleSection>
             <Title>{title}</Title>
-            <Subtitle>{subtitle}</Subtitle>
+            {subtitle && <Subtitle>{subtitle}</Subtitle>}
           </TitleSection>
-          <StatusSection data-testid={`${testId}-status-section`}>{children}</StatusSection>
+          {children && <StatusSection data-testid={`${testId}-status-section`}>{children}</StatusSection>}
         </ProfileInfo>
       </ProfileContent>
     </Card>

@@ -5,19 +5,23 @@ export function useDropdownFocus({
   containerRef,
   triggerRef,
   close,
+  includeButtons = false,
 }: {
   ready: boolean;
   containerRef: RefObject<HTMLElement | null>;
   triggerRef: RefObject<HTMLElement | null>;
   close: () => void;
+  includeButtons?: boolean;
 }) {
+  const controlSelector = includeButtons
+    ? 'button:not(:disabled), input[type="checkbox"]:not(:disabled)'
+    : 'input[type="checkbox"]:not(:disabled)';
+
   useEffect(() => {
     if (ready) {
-      containerRef.current
-        ?.querySelector<HTMLInputElement>('input[type="checkbox"]:not(:disabled)')
-        ?.focus({ preventScroll: true });
+      containerRef.current?.querySelector<HTMLElement>(controlSelector)?.focus({ preventScroll: true });
     }
-  }, [ready, containerRef]);
+  }, [ready, containerRef, controlSelector]);
 
   return (event: KeyboardEvent<HTMLElement>) => {
     if (!ready) return;
@@ -27,9 +31,7 @@ export function useDropdownFocus({
       close();
       triggerRef.current?.focus({ preventScroll: true });
     } else if (event.key === "Tab") {
-      const controls = containerRef.current?.querySelectorAll<HTMLInputElement>(
-        'input[type="checkbox"]:not(:disabled)',
-      );
+      const controls = containerRef.current?.querySelectorAll<HTMLElement>(controlSelector);
       if (!controls?.length) return;
       if (event.shiftKey && event.target === controls[0]) {
         event.preventDefault();

@@ -26,6 +26,11 @@ import {
   RemoveFilterButton,
 } from "./styles";
 
+export type HeadlineOption = {
+  key: string;
+  label: string;
+};
+
 export type EntityFilter = {
   name: string;
   avatarUrl?: string;
@@ -54,6 +59,10 @@ type Props = {
   showSearch?: boolean;
   showListControls?: boolean;
   headerAction?: ReactNode;
+  headlineOptions?: HeadlineOption[];
+  selectedHeadline?: string;
+  onHeadlineChange?: (key: string) => void;
+  subheader?: string;
 };
 
 export default function CardsHeader({
@@ -78,6 +87,10 @@ export default function CardsHeader({
   showSearch = true,
   showListControls = true,
   headerAction,
+  headlineOptions,
+  selectedHeadline,
+  onHeadlineChange,
+  subheader,
 }: Props) {
   const { t } = useTranslation();
   const filtersId = useId();
@@ -87,9 +100,27 @@ export default function CardsHeader({
   return (
     <HeaderContainer>
       <HeaderTitleRow>
-        <HyphenatedHeading2>{header}</HyphenatedHeading2>
+        {headlineOptions?.length ? (
+          <Tabs role="tablist">
+            {headlineOptions.map((option) => (
+              <TabHeading
+                type="button"
+                role="tab"
+                key={option.key}
+                aria-selected={selectedHeadline === option.key}
+                $isSelected={selectedHeadline === option.key}
+                onClick={() => onHeadlineChange?.(option.key)}
+              >
+                <HyphenatedHeading2 as="span">{option.label}</HyphenatedHeading2>
+              </TabHeading>
+            ))}
+          </Tabs>
+        ) : (
+          <HyphenatedHeading2>{header}</HyphenatedHeading2>
+        )}
         {headerAction}
       </HeaderTitleRow>
+      {subheader && <Paragraph>{subheader}</Paragraph>}
 
       <TabsSearchBarContainer>
         <Tabs role="tablist">

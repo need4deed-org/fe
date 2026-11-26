@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/core/button";
 import { PageLayout } from "@/components/Layout";
+import { Card, CardGrid } from "@/components/styled/card-grid";
 import { Body, Description, Detail, Details, EventCard, Hero, PageContent } from "@/components/styled/eventPageLayout";
 import { Heading1, Heading2, Paragraph } from "@/components/styled/text";
 import { useEvent, useEvents } from "@/hooks/useEvents";
@@ -13,6 +14,7 @@ import type { TFunction } from "i18next";
 import Link from "next/link";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { EventRegistrationForm } from "./EventRegistrationForm";
 import styled from "styled-components";
 
 const EventType = styled.span`
@@ -71,29 +73,6 @@ const MoreEvents = styled.section`
   flex-direction: column;
   min-width: 0;
   gap: var(--spacing-20);
-`;
-
-const UpcomingGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
-  gap: var(--spacing-20);
-`;
-
-const UpcomingCard = styled.article`
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  gap: var(--spacing-16);
-  padding: clamp(20px, 4vw, 28px);
-  border: 1px solid var(--color-orchid-light, var(--color-orchid));
-  border-radius: 20px;
-  background: var(--color-white);
-  box-shadow: 0 10px 28px rgb(40 25 47 / 8%);
-
-  @media (max-width: 480px) {
-    padding: 20px;
-    border-radius: 16px;
-  }
 `;
 
 const UpcomingMeta = styled.div`
@@ -159,7 +138,9 @@ function getEventTypeLabel(type: EventN4DType, t: TFunction) {
 
 function EventDetails({ event }: { event: ApiEventN4DGetList }) {
   const { t, i18n } = useTranslation();
-  const registrationUrl = getHttpUrl(event.linkRSVP);
+  const externalRegistrationUrl = getHttpUrl(event.linkRSVP);
+  const isOver = new Date(event.dateEnd ?? event.date) < new Date();
+  const canSignUpHere = !event.linkRSVP && event.active && !isOver;
   const eventTypeLabel = getEventTypeLabel(event.type, t);
 
   return (
@@ -184,6 +165,7 @@ function EventDetails({ event }: { event: ApiEventN4DGetList }) {
               </AdditionalInfo>
             </>
           ) : null}
+          {canSignUpHere && <EventRegistrationForm event={event} />}
         </section>
 
         <Details aria-label={t("eventPage.details")}>
@@ -205,14 +187,14 @@ function EventDetails({ event }: { event: ApiEventN4DGetList }) {
               )}
             </span>
           </Detail>
-          {registrationUrl ? (
+          {externalRegistrationUrl ? (
             <Button
               text={t("eventPage.register")}
               width="100%"
-              onClick={() => window.open(registrationUrl, "_blank", "noopener,noreferrer")}
+              onClick={() => window.open(externalRegistrationUrl, "_blank", "noopener,noreferrer")}
             />
           ) : (
-            <Paragraph>{t("eventPage.registrationUnavailable")}</Paragraph>
+            !canSignUpHere && <Paragraph>{t("eventPage.registrationUnavailable")}</Paragraph>
           )}
         </Details>
       </Body>
@@ -223,8 +205,9 @@ function EventDetails({ event }: { event: ApiEventN4DGetList }) {
 export function EventPage({ eventId }: EventPageProps) {
   const { t, i18n } = useTranslation();
   const hasEventId = eventId !== undefined;
-  const { data: events, isError, isLoading } = useEvents();
-  const { data: linkedEvent } = useEvent(eventId);
+  const { data: events, isError, isLoading: isListLoading } = useEvents();
+  const { data: linkedEvent, isLoading: isLinkedLoading } = useEvent(eventId);
+  const isLoading = isListLoading || isLinkedLoading;
   const upcomingEvents = useMemo(() => getUpcomingEvents(events), [events]);
   const selectedEvent = hasEventId ? linkedEvent : upcomingEvents[0];
   const additionalEvents = hasEventId ? [] : upcomingEvents.slice(1);
@@ -260,9 +243,9 @@ export function EventPage({ eventId }: EventPageProps) {
             {additionalEvents.length > 0 && (
               <MoreEvents>
                 <ResponsiveHeading2 margin={0}>{t("eventPage.moreEvents")}</ResponsiveHeading2>
-                <UpcomingGrid>
+                <CardGrid>
                   {additionalEvents.map((event) => (
-                    <UpcomingCard key={event.id}>
+                    <Card key={event.id}>
                       <EventType>{getEventTypeLabel(event.type, t)}</EventType>
                       <ResponsiveHeading2 margin={0}>{event.title}</ResponsiveHeading2>
                       <Paragraph margin={0}>{event.shortDescription}</Paragraph>
@@ -282,9 +265,9 @@ export function EventPage({ eventId }: EventPageProps) {
                         {t("eventPage.viewDetails")}
                         <ArrowRightIcon size={18} aria-hidden />
                       </DetailsLink>
-                    </UpcomingCard>
+                    </Card>
                   ))}
-                </UpcomingGrid>
+                </CardGrid>
               </MoreEvents>
             )}
           </EventStack>

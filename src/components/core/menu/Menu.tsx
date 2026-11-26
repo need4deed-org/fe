@@ -21,9 +21,10 @@ const useMenuContext = () => {
   return ctx;
 };
 
-const Container = styled.div`
+const Container = styled.div<{ $inFlow: boolean }>`
   position: relative;
   display: inline-flex;
+  flex-direction: ${({ $inFlow }) => ($inFlow ? "column" : "row")};
 `;
 
 const TargetButton = styled.button`
@@ -34,10 +35,15 @@ const TargetButton = styled.button`
   display: inline-flex;
   font: inherit;
   color: inherit;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
 `;
 
-const DropdownDiv = styled.div<{ $align: "left" | "right" }>`
-  position: absolute;
+const DropdownDiv = styled.div<{ $align: "left" | "right"; $inFlow: boolean }>`
+  position: ${({ $inFlow }) => ($inFlow ? "static" : "absolute")};
   top: 100%;
   ${({ $align }) => ($align === "right" ? "right: 0;" : "left: 0;")}
   z-index: 10;
@@ -117,13 +123,14 @@ function ItemContentWrapper({ children }: { children: ReactNode }) {
 
 interface MenuProps {
   children: ReactNode;
+  inFlow?: boolean;
   closeOnSelect?: boolean;
   open?: boolean;
   onOpen?: () => void;
   onClose?: () => void;
 }
 
-function Menu({ children, closeOnSelect = true, open, onOpen, onClose }: MenuProps) {
+function Menu({ children, inFlow = false, closeOnSelect = true, open, onOpen, onClose }: MenuProps) {
   const isControlled = open !== undefined;
   const [internalOpen, setInternalOpen] = useState(false);
   const isOpen = isControlled ? open : internalOpen;
@@ -155,6 +162,7 @@ function Menu({ children, closeOnSelect = true, open, onOpen, onClose }: MenuPro
     (onSelect: () => void) => {
       onSelect();
       if (closeOnSelect) {
+        if (inFlow) ref.current?.querySelector<HTMLButtonElement>('button[aria-haspopup="menu"]')?.focus();
         if (isControlled) {
           onClose?.();
         } else {
@@ -163,24 +171,30 @@ function Menu({ children, closeOnSelect = true, open, onOpen, onClose }: MenuPro
         }
       }
     },
-    [closeOnSelect, isControlled, onClose],
+    [closeOnSelect, inFlow, isControlled, onClose],
   );
 
   useClickOutside(ref, close);
 
   return (
     <MenuContext.Provider value={{ isOpen, selectItem, close, toggle }}>
-      <Container ref={ref}>{children}</Container>
+      <Container ref={ref} $inFlow={inFlow}>
+        {children}
+      </Container>
     </MenuContext.Provider>
   );
 }
 
-function Target({ children }: { children: ReactNode }) {
-  const { toggle } = useMenuContext();
+function Target({ children, label, disabled }: { children: ReactNode; label?: string; disabled?: boolean }) {
+  const { toggle, isOpen } = useMenuContext();
 
   return (
     <TargetButton
       type="button"
+      disabled={disabled}
+      aria-label={label}
+      aria-expanded={isOpen}
+      aria-haspopup="menu"
       onClick={(e) => {
         e.stopPropagation();
         toggle();
@@ -194,15 +208,16 @@ function Target({ children }: { children: ReactNode }) {
 interface DropdownProps {
   children: ReactNode;
   align?: "left" | "right";
+  inFlow?: boolean;
 }
 
-function Dropdown({ children, align = "left" }: DropdownProps) {
+function Dropdown({ children, align = "left", inFlow = false }: DropdownProps) {
   const { isOpen } = useMenuContext();
 
   if (!isOpen) return null;
 
   return (
-    <DropdownDiv $align={align} role="menu">
+    <DropdownDiv $align={align} $inFlow={inFlow} role="menu">
       {children}
     </DropdownDiv>
   );

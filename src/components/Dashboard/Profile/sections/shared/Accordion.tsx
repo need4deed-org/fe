@@ -16,7 +16,7 @@ import {
 type AccordionProps = {
   headerLeft: ReactNode;
   headerAction?: ReactNode;
-  subtitle: string;
+  subtitle?: string;
   onGoToProfile: () => void;
   children?: ReactNode;
   "data-testid"?: string;
@@ -39,7 +39,7 @@ export const Accordion = ({
       <HeaderContainer>
         <HeaderInfoContainer>
           <HeaderInfoAvatarNameContainer>{headerLeft}</HeaderInfoAvatarNameContainer>
-          <Paragraph>{subtitle}</Paragraph>
+          {subtitle && <Paragraph>{subtitle}</Paragraph>}
         </HeaderInfoContainer>
 
         <HeaderButtonsContainer>

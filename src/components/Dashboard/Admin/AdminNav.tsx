@@ -11,6 +11,7 @@ const NAV_ITEMS = [
   { route: DashboardRoutes.AdminStatistics, labelKey: "dashboard.admin.nav.stats" },
   { route: DashboardRoutes.AdminNgoVolunteers, labelKey: "dashboard.admin.nav.ngoVolunteers" },
   { route: DashboardRoutes.AdminAccounts, labelKey: "dashboard.admin.nav.accounts" },
+  { route: DashboardRoutes.AdminEmailTemplates, labelKey: "dashboard.admin.nav.emailTemplates" },
 ];
 
 export function AdminNav() {

@@ -15,7 +15,8 @@
     "dialogBody": "Wählen Sie die Sprache, in der der Originaltext verfasst wurde. Dies ändert die Ausgangssprache des Angebots, nicht die Oberflächensprache.",
     "replaceWarning": "Alle Übersetzungen, auch von Menschen bearbeitete, werden neu erstellt. Prüfen Sie sie anschließend erneut.",
     "required": "Bitte geben Sie eine Übersetzung ein.",
-    "tooLong": "Verwenden Sie höchstens {{count}} Zeichen.",
+    "tooLong": "Verwenden Sie höchstens {{max}} Zeichen (aktuell {{count}}).",
+    "shortenOnly": "Bereits über {{max}} Zeichen; kürzen Sie auf höchstens {{allowed}} (aktuell {{count}}).",
     "changedBeforeConfirm": "Seit dem Öffnen der Prüfung wurde eine Übersetzung geändert. Prüfen Sie den aktuellen Text vor dem Bestätigen.",
     "changedDuringEdit": "Das Original oder die Übersetzung wurde während Ihrer Bearbeitung geändert. Brechen Sie ab und prüfen Sie den aktuellen Text vor dem Speichern.",
     "staleError": "Die Übersetzungen konnten nicht aktualisiert werden. Der angezeigte Text ist möglicherweise veraltet. Ihre ungespeicherten Änderungen bleiben erhalten; versuchen Sie es vor dem Speichern oder Bestätigen erneut.",
@@ -207,7 +208,7 @@
     "viewDetails": "Veranstaltungsdetails ansehen",
     "backToEvents": "Zurück zu allen kommenden Veranstaltungen",
     "register": "Jetzt anmelden",
-    "registrationUnavailable": "Die Anmeldung ist noch nicht verfügbar.",
+    "registrationUnavailable": "Die Anmeldung ist nicht verfügbar.",
     "loading": "Veranstaltung wird geladen…",
     "loadError": "Die Veranstaltung konnte nicht geladen werden. Bitte versuche es erneut.",
     "empty": "Keine kommende Veranstaltung",
@@ -502,6 +503,10 @@
     }
   },
   "dashboard": {
+    "projectPicker": {
+      "label": "Projekt",
+      "all": "Alle Projekte"
+    },
     "emailNote": {
       "label": "Text zur E-Mail hinzufügen (optional)",
       "placeholder": "Dieser Text wird der E-Mail hinzugefügt."
@@ -616,13 +621,27 @@
         }
       },
       "retry": "Erneut versuchen",
-      "agentHeadline": "Ehrenamtliche, die wir für Sie kontaktieren können",
+      "myVolunteers": "Meine Ehrenamtlichen",
+      "need4deedVolunteers": "Need4Deed-Ehrenamtliche",
+      "askNeed4deedToContact": "Bitte Need4Deed, den Kontakt für Dich herzustellen.",
       "volunteers": "Ehrenamtliche",
       "languages": "Sprachen",
       "activities": "Aktivitäten",
       "skillsExperience": "Fähigkeiten & Erfahrungen",
       "preferredAvailability": "Bevorzugte Verfügbarkeit",
       "preferredDistricts": "Bevorzugte Bezirke",
+      "languageMatch": {
+        "label": "Ausgewählte Sprachen",
+        "any": "Mindestens eine davon",
+        "all": "Alle davon",
+        "and": "und",
+        "or": "oder"
+      },
+      "germanProficiency": {
+        "label": "Deutschkenntnisse",
+        "fluent": "Fließend oder Muttersprache",
+        "belowFluent": "Weniger als fließend"
+      },
       "langProficiency": {
         "beginner": "Anfänger",
         "intermediate": "Mittelstufe",
@@ -651,7 +670,11 @@
         "error": "Beim Laden der Seite ist ein Fehler aufgetreten. Bitte aktualisieren Sie die Seite.",
         "mostRelevantOpp": "Relevanteste Angebote",
         "mostRelevantOppDesc": "(basierend auf Bezirk und Verfügbarkeit)",
-        "mostRelevantNoResults": "Es werden keine Ergebnisse angezeigt. Versuchen Sie, Ihre Verfügbarkeit oder Ihren Bezirk in Ihrem Profil anzupassen, um mehr Ergebnisse zu sehen."
+        "mostRelevantNoResults": "Es werden keine Ergebnisse angezeigt. Versuchen Sie, Ihre Verfügbarkeit oder Ihren Bezirk in Ihrem Profil anzupassen, um mehr Ergebnisse zu sehen.",
+        "myActivity": "Meine letzten Aktivitäten",
+        "noActivity": "Noch keine Kommentare oder Änderungen von dir",
+        "noActivityThisWeek": "Diese Woche noch nichts von dir",
+        "earlierActivity": "Früher ({{count}})"
       },
       "sidebar": {
         "home": "Startseite",
@@ -663,7 +686,8 @@
         "calendar": "Kalender",
         "profile": "Profil",
         "more": "Mehr",
-        "admin": "Admin"
+        "admin": "Admin",
+        "help": "Hilfe"
       },
       "createOpportunity": "Neue Möglichkeit erstellen"
     },
@@ -859,6 +883,8 @@
       "contactDetailsTitle": "Kontaktdaten",
       "volunteerProfile": "Freiwilligenprofil",
       "opportunities": "Ehrenamtliche Tätigkeiten",
+      "leadFrom": "Wie hast du von uns erfahren?",
+      "leadFromEmpty": "Keine Antwort",
       "coordinatorComments": "Kommentare der Koordination",
       "documents": "Dokumente",
       "activityLog": "Aktivitätsprotokoll",
@@ -1188,7 +1214,6 @@
         "submit": "Erstellen",
         "success": "NGO erfolgreich erstellt",
         "conflict": {
-          "title": "Eine NGO mit diesem Namen existiert bereits.",
           "address": "An dieser Adresse gibt es bereits eine NGO.",
           "open": "Bestehende NGO öffnen",
           "createAnyway": "Andere NGO? Trotzdem erstellen"
@@ -1471,7 +1496,8 @@
       "notSetUp": "Ihr Organisationsprofil ist noch nicht eingerichtet — bitte schließen Sie die Registrierung ab.",
       "notVolProfSetUp": "Ihr Ehrenamtsprofil ist noch nicht eingerichtet — bitte schließen Sie die Registrierung ab.",
       "nextNgoProfile": "Nächstes NGO-Profil",
-      "prevNgoProfile": "Vorheriges NGO-Profil"
+      "prevNgoProfile": "Vorheriges NGO-Profil",
+      "selectNgoProfile": "NGO-Profil auswählen"
     },
     "agentProfile": {
       "agentProfile": "Einrichtungs-/Projektprofil",
@@ -1634,6 +1660,47 @@
         "deleteSuccess": "Einrichtung erfolgreich gelöscht"
       }
     },
+    "organizationProfile": {
+      "title": "Trägerprofil",
+      "contactDetails": {
+        "title": "Kontaktdaten",
+        "contactPerson": "Ansprechperson",
+        "email": "E-Mail",
+        "phone": "Telefon",
+        "edit": "Bearbeiten",
+        "cancel": "Abbrechen",
+        "saveChanges": "Änderungen speichern",
+        "saveSuccess": "Kontaktdaten erfolgreich aktualisiert",
+        "validation": {
+          "emailInvalid": "Bitte gib eine gültige E-Mail-Adresse ein",
+          "phoneInvalid": "Die Telefonnummer darf nur Ziffern, +, Leerzeichen, Bindestriche und Klammern enthalten"
+        }
+      },
+      "organisationDetails": {
+        "title": "Details zum Träger",
+        "orgTitle": "Name des Trägers",
+        "edit": "Bearbeiten",
+        "about": "Über den Träger",
+        "website": "Webseite",
+        "address": "Adresse",
+        "addressStreet": "Straße",
+        "addressPostcode": "PLZ",
+        "services": "Leistungen",
+        "cancel": "Abbrechen",
+        "saveChanges": "Änderungen speichern",
+        "saveSuccess": "Details zum Träger erfolgreich aktualisiert",
+        "validation": {
+          "required": "Dieses Feld ist erforderlich",
+          "aboutMaxLength": "Maximal {{max}} Zeichen erlaubt",
+          "websiteInvalid": "Die Webseite muss mit http:// oder https:// beginnen",
+          "postcodeRequiredWithStreet": "Für eine Straßenadresse ist eine PLZ erforderlich"
+        }
+      },
+      "agents": {
+        "title": "Einrichtungen",
+        "emptyState": "Diesem Träger sind noch keine Einrichtungen zugeordnet."
+      }
+    },
     "opportunityProfile": {
       "opportunityProfile": "Profil der ehrenamtlichen Tätigkeit",
       "postedOn": "Veröffentlicht am",
@@ -1785,14 +1852,16 @@
         "numberOfVolunteers": "Anzahl der Ehrenamtlichen",
         "activities": "Aktivitäten",
         "skills": "Fähigkeiten & Erfahrung",
-        "descriptionHint": "Max. {{max}} Zeichen",
+        "maxCharsHint": "Max. {{max}} Zeichen",
         "cancel": "Abbrechen",
         "saveChanges": "Änderungen speichern",
         "saveSuccess": "Ehrenamtliche Tätigkeit erfolgreich aktualisiert",
         "validation": {
           "opportunityNameRequired": "Name ist erforderlich",
+          "opportunityNameTooLong": "Name ist zu lang (max. {{max}} Zeichen)",
+          "shortenOnly": "Bereits über {{max}} Zeichen; kürzen Sie auf höchstens {{allowed}} (aktuell {{count}}).",
           "descriptionRequired": "Beschreibung ist erforderlich",
-          "descriptionTooLong": "Beschreibung ist zu lang",
+          "descriptionTooLong": "Beschreibung ist zu lang (max. {{max}} Zeichen)",
           "numberOfVolunteersRequired": "Anzahl der Ehrenamtlichen muss mindestens 1 sein",
           "languageRequired": "Mindestens eine Sprache ist erforderlich",
           "mainCommunicationInvalid": "Hauptkommunikation muss Deutsch, Englisch oder beides sein",
@@ -1915,6 +1984,7 @@
       "noPastEvents": "Keine vergangenen Veranstaltungen vorhanden.",
       "published": "Veröffentlicht",
       "draft": "Entwurf",
+      "unlisted": "Nicht gelistet",
       "publishEvent": "Veranstaltung veröffentlichen",
       "unpublishEvent": "Veröffentlichung aufheben",
       "publishConfirmTitle": "Diese Veranstaltung veröffentlichen?",
@@ -1925,7 +1995,6 @@
       "deleteEvent": "Veranstaltung löschen",
       "openRegistration": "Anmeldelink öffnen",
       "hostedBy": "Veranstaltet von {{name}}",
-      "registrationUnavailable": "Anmeldelink nicht verfügbar",
       "editLoading": "Veranstaltung wird geladen…",
       "editLoadError": "Diese Veranstaltung konnte nicht geladen werden. Möglicherweise wurde sie gelöscht.",
       "backToCalendar": "Zurück zum Kalender",
@@ -1977,7 +2046,27 @@
         "next": "Weiter",
         "saveDraft": "Als Entwurf speichern",
         "saveChanges": "Änderungen speichern",
-        "locationHelper": "z.B. Elsenstr., Nr. 87, 12435"
+        "locationHelper": "z.B. Elsenstr., Nr. 87, 12435",
+        "registrationLinkHelper": "Optional. Leer lassen, um das eigene Anmeldeformular von need4deed zu nutzen.",
+        "signUpQuestion": "Frage für Anmeldungen",
+        "signUpQuestionHelper": "Optional. Erscheint als zusätzliches Feld im eigenen Anmeldeformular von need4deed.",
+        "listed": "Auf der öffentlichen Veranstaltungsseite zeigen",
+        "listedHelper": "Aus: Die Veranstaltung wird nicht aufgelistet, aber alle mit dem Link können sich weiterhin anmelden. Den Link findest Du auf der Veranstaltungskarte im Kalender."
+      },
+      "openInternalRegistration": "Anmeldeformular öffnen",
+      "copySignUpLink": "Anmeldelink kopieren",
+      "signUpLinkCopied": "Anmeldelink kopiert",
+      "signUpLinkCopyFailed": "Link konnte nicht kopiert werden",
+      "registrations": {
+        "open": "Anmeldungen",
+        "title": "Anmeldungen: {{title}}",
+        "summary_one": "{{count}} Anmeldung, {{people}} Personen",
+        "summary_other": "{{count}} Anmeldungen, {{people}} Personen",
+        "export": "CSV exportieren",
+        "empty": "Noch keine Anmeldungen",
+        "people": "Personen",
+        "volunteer": "Ehrenamtlich mit Geflüchteten",
+        "attended": "Teilgenommen"
       }
     },
     "newOpportunity": {
@@ -2016,7 +2105,14 @@
         "metricLabel": "Kennzahl",
         "metric": {
           "newVolunteers": "Neue Freiwillige",
-          "requests": "Anfragen",
+          "matchedVolunteers": "Vermittelte Freiwillige",
+          "activeVolunteers": "Aktive Freiwillige",
+          "availableVolunteers": "Verfügbare Freiwillige",
+          "newOpportunities": "Neue Anfragen",
+          "validatedOpportunities": "Validierte Anfragen",
+          "matchedOpportunities": "Vermittelte Anfragen",
+          "unmatchedOpportunities": "Nie vermittelte Anfragen",
+          "pastOpportunities": "Vergangene Anfragen",
           "leadFrom": "Wie haben Sie von uns erfahren"
         },
         "granularityLabel": "Zeitraum",
@@ -2048,6 +2144,7 @@
         "empty": "Keine Daten für diesen Zeitraum.",
         "loadError": "Die Statistiken konnten nicht geladen werden. Bitte laden Sie die Seite neu.",
         "overlapNote": "Manche Einträge zählen zu mehreren Gruppen, daher können die Segmente zusammen mehr als die Gesamtzahl ergeben.",
+        "snapshotNote": "Zählt die Freiwilligen, die am Monatsende diesen Status hatten; Quartal oder Jahr zeigen den letzten Monatsendstand. Ein Monat wird erst nach seinem Ende gezählt, Zeiträume vor Beginn der Erfassung sind leer.",
         "allTime": {
           "title": "Gesamtzahlen seit Beginn",
           "tracked": "Seit Beginn der Erfassung",
@@ -2055,11 +2152,97 @@
           "beforeTrackingNote": "„Vor Beginn der Erfassung“ umfasst Antworten, die gesammelt wurden, bevor wir festgehalten haben, wann sie gegeben wurden. Sie sind daher nicht im Diagramm oben enthalten."
         }
       },
+      "emailTemplates": {
+        "helper": "Bearbeiten Sie die E-Mails, die die Plattform verschickt. Gespeicherte Änderungen gelten nach wenigen Minuten für neue E-Mails.",
+        "loadError": "Die E-Mail-Vorlagen konnten nicht geladen werden. Bitte laden Sie die Seite neu.",
+        "readOnly": "Auf diesem Server ist das Bearbeiten nicht eingerichtet, die Vorlagen sind daher schreibgeschützt.",
+        "template": "E-Mail-Vorlage",
+        "choose": "Vorlage wählen",
+        "templateLoadError": "Diese Vorlage konnte nicht geladen werden. Bitte versuchen Sie es erneut.",
+        "layout": "Sprachen",
+        "layoutSingle": "Ein Text für alle Empfänger*innen",
+        "layoutPerLanguage": "Getrennte Texte auf Deutsch und Englisch",
+        "layoutSingleHint": "Alle erhalten diesen Text. Wer Englisch gewählt hat, bekommt bei zweisprachigen Platzhaltern die englischen Werte.",
+        "layoutPerLanguageHint": "Empfänger*innen erhalten je nach ihrer Sprache den deutschen oder den englischen Text. Beim Wechsel zurück zu einem Text bleibt die angezeigte Sprache erhalten.",
+        "language": "Sprache",
+        "languages": {
+          "de": "Deutsch",
+          "en": "Englisch"
+        },
+        "subject": "Betreff",
+        "text": "Text",
+        "labels": "Bezeichnungen",
+        "labelsHint": "Kurze Texte, die die Plattform in die E-Mail einsetzt, zum Beispiel wo jemand markiert wurde oder das Wort, wenn ein Name fehlt. Leer lassen, um den Standardtext zu verwenden.",
+        "placeholders": "Platzhalter",
+        "placeholdersHint": "Klicken Sie auf einen Platzhalter, um ihn an der Cursorposition im Betreff oder Text einzufügen. Die Plattform ersetzt ihn beim Versand durch den echten Wert.",
+        "placeholdersReadOnlyHint": "Die Plattform ersetzt diese beim Versand durch die echten Werte.",
+        "placeholderRequired": "Wird in der aktuellen E-Mail verwendet und muss bleiben",
+        "placeholderRequiredLegend": "* Wird in der aktuellen E-Mail verwendet: Lassen Sie ihn im Betreff oder Text stehen.",
+        "insertPlaceholder": "{{name}} einfügen",
+        "insertRequiredPlaceholder": "{{name}} einfügen (muss in der E-Mail bleiben)",
+        "save": "Speichern",
+        "discard": "Änderungen verwerfen",
+        "hasHtmlWarning": "Diese E-Mail hat auch eine formatierte (HTML-)Fassung. Beim Speichern wird sie durch diesen reinen Text ersetzt.",
+        "savedNote_one": "Gespeichert. Neue E-Mails verwenden die Vorlage nach etwa {{count}} Minute.",
+        "savedNote_other": "Gespeichert. Neue E-Mails verwenden die Vorlage nach etwa {{count}} Minuten.",
+        "conflict": "Jemand anderes hat diese Vorlage gespeichert, nachdem Sie sie geöffnet haben. Deshalb wurde sie nicht gespeichert. Ihre Änderungen sind noch da. Laden Sie die gespeicherte Fassung, um von ihr neu zu beginnen, oder behalten Sie Ihre Änderungen und speichern Sie sie darüber.",
+        "loadLatest": "Gespeicherte Fassung laden",
+        "keepMine": "Meine Änderungen behalten",
+        "unsavedTitle": "Änderungen verwerfen?",
+        "unsavedMessage": "Diese Vorlage hat ungespeicherte Änderungen. Sie gehen verloren, wenn Sie eine andere Vorlage öffnen.",
+        "unsavedConfirm": "Verwerfen und öffnen",
+        "errors": {
+          "unknownPlaceholderGeneric": "Der Text enthält Platzhalter, die die Plattform nicht kennt. Verwenden Sie die oben aufgeführten Platzhalter.",
+          "missingPlaceholderGeneric": "Einige Platzhalter, die die E-Mail braucht, fehlen. Fügen Sie die mit * markierten wieder ein.",
+          "fieldBlank": "Darf nicht leer sein.",
+          "not_editable": "Auf diesem Server ist das Bearbeiten nicht eingerichtet.",
+          "layout_not_allowed": "Diese Vorlage kann keine getrennten Texte auf Deutsch und Englisch haben.",
+          "blank_field": "Füllen Sie die leeren Felder aus.",
+          "unknown_label": "Unbekannte Bezeichnungen: {{labels}}.",
+          "unknown_placeholder": "Unbekannte Platzhalter: {{placeholders}}. Verwenden Sie die oben aufgeführten Platzhalter.",
+          "needsLanguage": "Diese E-Mail kennt die Sprache der empfangenden Person nicht, daher brauchen diese Platzhalter eine Sprache: {{placeholders}}. Zum Beispiel {{example}}.",
+          "missing_placeholder": "Fügen Sie diese Platzhalter wieder ein: {{placeholders}}."
+        },
+        "conflictLoading": "Die gespeicherte Fassung wird geladen … Wenn das lange dauert, prüfen Sie erneut.",
+        "checkAgain": "Erneut prüfen",
+        "unsavedLeaveMessage": "Diese Vorlage hat ungespeicherte Änderungen. Sie gehen verloren, wenn Sie diese Seite verlassen.",
+        "unsavedLeaveConfirm": "Verwerfen und verlassen",
+        "retry": "Erneut versuchen",
+        "labelNames": {
+          "commentOnVolunteer": "Markiert in: Kommentar zu einer freiwilligen Person",
+          "commentOnOpportunity": "Markiert in: Kommentar zu einem Gesuch",
+          "commentOnAgent": "Markiert in: Kommentar zu einer Einrichtung",
+          "comment": "Markiert in: Kommentar",
+          "post": "Markiert in: Beitrag",
+          "someone": "Name, wenn der Name der absendenden Person unbekannt ist",
+          "noName": "Anrede, wenn der Name der empfangenden Person unbekannt ist"
+        },
+        "names": {
+          "accompanymatch": "Begleitung vermittelt",
+          "accompanymatchvolunteer": "Begleitung vermittelt (an Freiwillige)",
+          "accompanynotfound": "Keine Begleitung gefunden",
+          "cgcapplication": "Antrag auf Führungszeugnis",
+          "checkup": "Nachfrage nach einer Vermittlung",
+          "confirmation": "Bestätigung eines neuen Angebots",
+          "confirmationaccompanying": "Bestätigung einer neuen Begleitung",
+          "introduction": "Vorstellung bei einer Vermittlung",
+          "password-reset": "Passwort zurücksetzen",
+          "registration": "Registrierung von Freiwilligen",
+          "stale": "Erinnerung bei ruhender Vermittlung",
+          "suggestion": "Vorschlag eines Angebots",
+          "suggestion-request": "Anfrage nach Vorschlägen",
+          "suggestionaccompanying": "Vorschlag einer Begleitung",
+          "tagged": "In einem Kommentar markiert",
+          "update": "Aktualisierung eines Angebots",
+          "verification": "E-Mail-Bestätigung"
+        }
+      },
       "nav": {
         "domains": "Domains",
         "stats": "Statistiken",
         "ngoVolunteers": "Freiwillige der NGOs",
-        "accounts": "Konten"
+        "accounts": "Konten",
+        "emailTemplates": "E-Mail-Vorlagen"
       },
       "ngoVolunteers": {
         "helper": "Wählen Sie eine NGO, um ihren Freiwilligen einen Registrierungslink zu geben oder ihre bestehenden Freiwilligen zu importieren.",
@@ -2138,6 +2321,887 @@
     "recommended": {
       "volunteersTitle": "Empfohlene Ehrenamtliche",
       "opportunitiesTitle": "Empfohlene Ehrenamtsbedarfe"
+    },
+    "volunteerEvents": {
+      "title": "Veranstaltungen",
+      "emptyState": "Noch keine Anmeldungen zu Veranstaltungen",
+      "loadError": "Die Anmeldungen zu Veranstaltungen konnten nicht geladen werden.",
+      "event": "Veranstaltung",
+      "date": "Datum",
+      "attended": "Teilgenommen"
+    },
+    "help": {
+      "title": "Hilfe",
+      "rootQuestion": "Wobei brauchst Du Hilfe?",
+      "back": "Zurück",
+      "related": "Siehe auch",
+      "contactNgo": "Hat nicht geholfen? Schreib uns:",
+      "contactCoordinator": "Hat nicht geholfen? Frag im Team nach.",
+      "noHelp": "Für Dein Konto gibt es hier noch keine Hilfe. Schreib uns:",
+      "nodes": {
+        "ngoMenu": {
+          "title": "Was finde ich wo im Menü?"
+        },
+        "ngoMenuHome": {
+          "title": "Startseite",
+          "blocks": [
+            {
+              "text": "Deine Ehrenamtsbedarfe als Karten auf einen Blick. Hier erstellst Du mit „+ Neue Möglichkeit erstellen“ einen neuen Bedarf."
+            }
+          ]
+        },
+        "ngoMenuVolunteers": {
+          "title": "Ehrenamtliche",
+          "blocks": [
+            {
+              "text": "Hier suchst Du Ehrenamtliche und filterst nach Sprache, Bezirk, Fähigkeiten oder Begleitung. Du siehst sie als Liste, als Karten oder auf der Berlin-Karte."
+            },
+            {
+              "list": [
+                "Meine Ehrenamtlichen: die Personen Deiner Einrichtung",
+                "Need4Deed-Ehrenamtliche: alle anderen, die Du über uns anfragen kannst"
+              ]
+            }
+          ]
+        },
+        "ngoMenuOpportunities": {
+          "title": "Ehrenamtsbedarfe",
+          "blocks": [
+            {
+              "text": "Deine eigenen Bedarfe (bei uns auch „Möglichkeiten“ genannt) mit Status, Filtern und Suche, als Liste, Karten oder Berlin-Karte. Ein Klick auf einen Bedarf öffnet die Details."
+            },
+            {
+              "text": "Im Tab „Andere Tätigkeiten“ siehst Du offene Bedarfe anderer Einrichtungen, nur mit Titel und Bezirk."
+            }
+          ]
+        },
+        "ngoMenuAgents": {
+          "title": "Einrichtungen / Projekte",
+          "blocks": [
+            {
+              "text": "Eine Übersicht aller Einrichtungen und Projekte, mit Filtern und Karte. Zu anderen Einrichtungen siehst Du nur wenige Angaben. Die Daten Deiner eigenen Einrichtung änderst Du unter „Profil“."
+            }
+          ]
+        },
+        "ngoMenuPosts": {
+          "title": "Beiträge",
+          "blocks": [
+            {
+              "text": "Der Chat mit anderen Einrichtungen und mit uns."
+            }
+          ]
+        },
+        "ngoMenuProfile": {
+          "title": "Profil",
+          "blocks": [
+            {
+              "text": "Die Daten Deiner Einrichtung: Kontakt, Adresse, Bezirk. Gehören zu Deinem Konto mehrere Einrichtungen, wechselst Du hier zwischen ihnen."
+            }
+          ]
+        },
+        "ngoAccount": {
+          "title": "Konto & Anmeldung"
+        },
+        "ngoAccountCreate": {
+          "title": "Wie erstelle ich ein Konto für meine Einrichtung?",
+          "blocks": [
+            {
+              "steps": [
+                "Öffne need4deed.org/de/login und klick auf „NGO-Konto erstellen“.",
+                "Gib Name, E-Mail, Passwort und Telefonnummer ein.",
+                "Bestätige Datenschutz, Richtlinien und die ehrenamtliche Vereinbarung und klick auf „Weiter“.",
+                "Ergänze die Daten Deiner Organisation.",
+                "Klick auf den Bestätigungslink in der E-Mail.",
+                "Gib den Standort ein (Straße, Hausnummer, PLZ, Bezirk) und ordne Deine Einrichtung zu."
+              ]
+            }
+          ]
+        },
+        "ngoAccountNoEmail": {
+          "title": "Ich habe keine Bestätigungs-E-Mail bekommen",
+          "blocks": [
+            {
+              "text": "Schau bitte im Spam-Ordner nach. Ist sie nicht da, schreib uns."
+            }
+          ]
+        },
+        "ngoAccountNoFacility": {
+          "title": "Meine Einrichtung wird nicht gefunden",
+          "blocks": [
+            {
+              "text": "Leg eine neue Einrichtung an und klick auf „Weiter“."
+            }
+          ]
+        },
+        "ngoAccountPassword": {
+          "title": "Passwort vergessen",
+          "blocks": [
+            {
+              "text": "Klick auf der Login-Seite auf „Passwort vergessen“ und folge dem Link in der E-Mail."
+            }
+          ]
+        },
+        "ngoAccountTraeger": {
+          "title": "Wir sind ein Träger mit mehreren Einrichtungen",
+          "blocks": [
+            {
+              "text": "Melde Dich bei uns, wir richten den gemeinsamen Zugang ein. Dann verwaltest Du alle Einrichtungen unter einem Konto, jede mit eigenen Bedarfen, Ehrenamtlichen und Standortdaten. Unter „Profil“ wechselst Du zwischen ihnen."
+            }
+          ]
+        },
+        "ngoCreate": {
+          "title": "Möglichkeit erstellen"
+        },
+        "ngoCreateWhichType": {
+          "title": "Welche Art passt?",
+          "blocks": [
+            {
+              "list": [
+                "Regelmäßig: wiederkehrende Unterstützung, z. B. Deutschkurs, Nachhilfe, Kinderbetreuung jeden Mittwoch",
+                "Begleitend: eine Person begleitet eine*n Geflüchtete*n zu einem einzelnen Termin, z. B. Arzt oder Amt",
+                "Veranstaltungen: ein Event an einem bestimmten Tag, z. B. Workshop, Sommerfest, Gruppenaktivität"
+              ]
+            }
+          ]
+        },
+        "ngoCreateRegular": {
+          "title": "Regelmäßige Möglichkeit erstellen",
+          "blocks": [
+            {
+              "steps": [
+                "Klick auf der Startseite auf „+ Neue Möglichkeit erstellen“.",
+                "Titel der Möglichkeit: kurz und klar, z. B. „Kinderbetreuung für 3- bis 5-Jährige“ (max. 150 Zeichen).",
+                "Art der Tätigkeit: klick auf „Regelmäßig“.",
+                "Einrichtung: ist schon ausgefüllt. Gehören mehrere Einrichtungen zu Deinem Konto, wähl die richtige aus.",
+                "Füll unter „Details zur ehrenamtlichen Tätigkeit“ alle Felder aus (siehe unten).",
+                "Klick auf „Möglichkeit erstellen“."
+              ]
+            },
+            {
+              "list": [
+                "Beschreibung: was die Person macht, mit wem, und was sie mitbringen sollte",
+                "Hauptkommunikation: Deutsch, Englisch oder beides",
+                "Geflüchtete sprechen: die Sprachen der Menschen, mit denen die Person arbeitet",
+                "Zeitplan: an welchen Tagen und zu welcher Tageszeit",
+                "Anzahl der Ehrenamtlichen: wie viele Personen Du brauchst",
+                "Aktivitäten: mindestens eine, z. B. Kinderbetreuung",
+                "Fähigkeiten & Erfahrung: mindestens eine",
+                "Adresse: standardmäßig die Adresse Deiner Einrichtung. Findet die Tätigkeit woanders statt, setz das Häkchen bei „Nicht mein Standort“ und gib Straße, PLZ und Stadt ein."
+              ]
+            }
+          ]
+        },
+        "ngoCreateAccompanying": {
+          "title": "Begleitung erstellen",
+          "blocks": [
+            {
+              "steps": [
+                "Klick auf der Startseite auf „+ Neue Möglichkeit erstellen“.",
+                "Titel, z. B. „Begleitung zum Kinderarzt, Arabisch“.",
+                "Art der Tätigkeit: klick auf „Begleitend“.",
+                "Einrichtung: prüfen oder auswählen.",
+                "Füll unter „Details zur Begleitung“ alle Felder aus (siehe unten).",
+                "Klick auf „Möglichkeit erstellen“."
+              ]
+            },
+            {
+              "list": [
+                "Terminadresse und Terminpostleitzahl",
+                "Termindatum: mindestens 7 Werktage ab heute. Früher geht nicht, das Formular zeigt Dir das erste mögliche Datum.",
+                "Terminzeit: nicht vor 9 Uhr, der Termin dauert höchstens 3 Stunden",
+                "Name und Telefonnummer der*des Geflüchteten",
+                "Sprache der*des Geflüchteten",
+                "Terminsprache: Deutsch, Deutsch und Englisch, oder keine Übersetzung",
+                "Beschreibung: worum es beim Termin geht und was die Begleitung wissen sollte"
+              ]
+            },
+            {
+              "text": "Name, Telefonnummer und Terminadresse sehen Ehrenamtliche erst, wenn sie vermittelt sind. Vorher sehen sie nur PLZ und Bezirk."
+            }
+          ]
+        },
+        "ngoCreateEvent": {
+          "title": "Veranstaltung erstellen",
+          "blocks": [
+            {
+              "steps": [
+                "Klick auf der Startseite auf „+ Neue Möglichkeit erstellen“.",
+                "Titel, z. B. „Helfer*innen für Sommerfest“.",
+                "Art der Tätigkeit: klick auf „Veranstaltungen“.",
+                "Füll dieselben Felder aus wie bei einer regelmäßigen Möglichkeit, nur statt Zeitplan gibst Du Veranstaltungsdatum und Veranstaltungszeit an.",
+                "Klick auf „Möglichkeit erstellen“."
+              ]
+            }
+          ]
+        },
+        "ngoCreateAfter": {
+          "title": "Was passiert nach dem Erstellen?",
+          "blocks": [
+            {
+              "steps": [
+                "Du landest wieder auf der Startseite. Die neue Möglichkeit hat den Status „Neu“.",
+                "Wir prüfen sie innerhalb von einem Werktag.",
+                "Ist alles in Ordnung, setzen wir sie auf „Suche läuft“. Erst dann suchen wir aktiv nach Ehrenamtlichen. Diesen Status kann nur need4deed setzen.",
+                "Fehlt etwas, schreiben wir Dir eine E-Mail."
+              ]
+            }
+          ]
+        },
+        "ngoCreateBlocked": {
+          "title": "Ich kann nicht auf „Möglichkeit erstellen“ klicken",
+          "blocks": [
+            {
+              "list": [
+                "Ein Feld ist rot markiert: füll es aus. Pflicht sind Titel, Art, Beschreibung, Sprachen, Zeitplan oder Datum, Aktivitäten und Fähigkeiten.",
+                "„Im Profil Eurer Organisation fehlt noch die Postleitzahl“: klick auf den Link in der Meldung, ergänz die Adresse im Profil und komm zurück. Deine Eingaben bleiben erhalten.",
+                "„Diese Einrichtung ist inaktiv“: schreib uns, wir schalten sie wieder frei.",
+                "Termin zu früh (Begleitung): wähl ein Datum mindestens 7 Werktage ab heute. Ist es dringender, schreib uns."
+              ]
+            }
+          ]
+        },
+        "ngoCreateDuplicate": {
+          "title": "Möglichkeit duplizieren",
+          "blocks": [
+            {
+              "text": "Praktisch, wenn Du etwas Ähnliches noch einmal brauchst, z. B. eine zweite Begleitung für dieselbe Person."
+            },
+            {
+              "steps": [
+                "Öffne die Möglichkeit: klick auf ihre Karte auf der Startseite oder unter „Ehrenamtsbedarfe“.",
+                "Scroll nach unten zu „Ehrenamtsbedarf duplizieren“ und klick auf den Knopf.",
+                "Ein neues Formular öffnet sich, fast alles ist schon ausgefüllt.",
+                "Ändere, was anders ist. Bei Begleitungen trägst Du Datum, Uhrzeit, Name und Telefonnummer neu ein.",
+                "Klick auf „Möglichkeit erstellen“. Auch die Kopie prüfen wir vorher."
+              ]
+            }
+          ]
+        },
+        "ngoCreateEdit": {
+          "title": "Möglichkeit bearbeiten, pausieren oder beenden",
+          "blocks": [
+            {
+              "steps": [
+                "Öffne die Möglichkeit über ihre Karte.",
+                "Inhalt ändern: In jedem Abschnitt (Details, Kontaktdaten, Details zur Begleitung) gibt es „Bearbeiten“. Änder die Felder und klick auf „Änderungen speichern“.",
+                "Art ändern: oben auf „Typ ändern“. Wechselst Du weg von Begleitung, passen die Begleitdetails womöglich nicht mehr.",
+                "Pausieren oder beenden: oben auf „Status ändern“ und „Inaktiv“ wählen. Löschen kann nur need4deed, schreib uns dafür."
+              ]
+            },
+            {
+              "text": "Etwa einmal im Monat fragen wir per E-Mail, ob Deine Möglichkeiten noch aktuell sind."
+            }
+          ]
+        },
+        "ngoCreateRules": {
+          "title": "Begleitungen: was geht und was nicht?",
+          "blocks": [
+            {
+              "list": [
+                "Arzttermine, außer: Charité und Vivantes, Termine vor oder nach einer OP, Chirurgie, Neurochirurgie, Anästhesiologie, Strahlentherapie",
+                "Behörden, außer Standesamt und Gericht",
+                "Beratungsstellen und Banken, keine Termine bei Anwält*innen",
+                "Kontoeröffnungen, Wohnungsbesichtigungen, Schulen und Kitas, Wegbegleitung"
+              ]
+            },
+            {
+              "text": "Fristen: mindestens 7 Werktage vorher, höchstens 3 Stunden, nicht vor 9 Uhr. Spätestens 4 Werktage vorher sagen wir Dir, ob wir jemanden gefunden haben."
+            },
+            {
+              "text": "Ehrenamtliche sind keine professionellen Dolmetscher*innen und übersetzen nach bestem Wissen. Need4Deed und die Ehrenamtlichen haften nicht für die Sprachmittlung. Sie beraten auch nicht."
+            }
+          ]
+        },
+        "ngoCreateStatuses": {
+          "title": "Was bedeuten die Zeichen auf den Karten?",
+          "blocks": [
+            {
+              "text": "Erstes Zeichen: der Stand der Möglichkeit"
+            },
+            {
+              "list": [
+                "Neu: wartet auf unsere Prüfung",
+                "Suche läuft: geprüft, wir suchen Ehrenamtliche",
+                "Aktiv: jemand ist im Einsatz",
+                "Inaktiv: pausiert oder beendet",
+                "Vergangen: der Termin ist vorbei"
+              ]
+            },
+            {
+              "text": "Zweites Zeichen: der Stand der Vermittlung"
+            },
+            {
+              "list": [
+                "Keine Zuweisungen: noch niemand vorgeschlagen",
+                "Zuordnung ausstehend: jemand ist angefragt, die Antwort fehlt noch",
+                "Zugeordnet: jemand ist vermittelt",
+                "Erneute Zuordnung erforderlich: die Person macht nicht mehr mit, wir suchen neu",
+                "Nicht zugeordnet: die Vermittlung hat nicht geklappt",
+                "Keine Vermittlung: wir haben niemanden gefunden"
+              ]
+            },
+            {
+              "text": "Das grüne Zeichen zeigt die Art: Begleitung, Regelmäßig oder Veranstaltung."
+            }
+          ]
+        },
+        "ngoFind": {
+          "title": "Ehrenamtliche finden"
+        },
+        "ngoFindByUs": {
+          "title": "Need4Deed sucht für mich",
+          "blocks": [
+            {
+              "text": "Sobald Deine Möglichkeit „Suche läuft“ hat, suchen wir. Du musst nichts weiter tun."
+            },
+            {
+              "steps": [
+                "Wir prüfen, ob alle Angaben vollständig sind, und sprechen passende Ehrenamtliche an, nach Sprache, Bezirk, Verfügbarkeit und Tätigkeit.",
+                "Wir stellen Euch per E-Mail einander vor.",
+                "Lade die Person bitte innerhalb von 5 bis 7 Werktagen zu einem ersten Treffen ein und setz uns in CC.",
+                "Die Person erscheint in Deiner Möglichkeit unter „Ehrenamtliche“, Tab „Zugeordnet“."
+              ]
+            },
+            {
+              "text": "Da alle ehrenamtlich helfen, bitten wir um etwas Geduld."
+            }
+          ]
+        },
+        "ngoFindRecommended": {
+          "title": "Passende Vorschläge zu meiner Möglichkeit",
+          "blocks": [
+            {
+              "steps": [
+                "Öffne die Möglichkeit über ihre Karte.",
+                "Scroll zum Abschnitt „Ehrenamtliche“. Darunter siehst Du Ehrenamtliche, die gut passen, mit Fahrzeit zu Deinem Standort.",
+                "Klick auf den Namen, um das Profil zu sehen.",
+                "Klick bei einer passenden Person auf „Vorschlag anfragen“. Wir bekommen Deine Anfrage und melden uns."
+              ]
+            }
+          ]
+        },
+        "ngoFindSearch": {
+          "title": "Selbst suchen",
+          "blocks": [
+            {
+              "steps": [
+                "Klick im Menü auf „Ehrenamtliche“ und dann oben auf „Need4Deed-Ehrenamtliche“.",
+                "Filtere nach Sprache, Bezirk, Fähigkeiten, Aktivitäten oder „Begleitung“. Bei mehreren Sprachen wählst Du, ob die Person eine davon oder alle sprechen soll.",
+                "Wechsle oben zwischen Liste, Karten und Berlin-Karte.",
+                "Klick auf eine Person, um ihr Profil zu öffnen.",
+                "Klick im Abschnitt „Ehrenamtliche Tätigkeiten“ auf „Vorschlag anfragen“ und wähl Deine Möglichkeit aus.",
+                "Wir bekommen die Anfrage und stellen den Kontakt her. Die Person erscheint in Deiner Möglichkeit unter „Angefragt“."
+              ]
+            }
+          ]
+        },
+        "ngoFindOwn": {
+          "title": "Eine eigene Ehrenamtliche Person einsetzen",
+          "blocks": [
+            {
+              "steps": [
+                "Klick im Menü auf „Ehrenamtliche“ und dann auf „Meine Ehrenamtlichen“.",
+                "Öffne das Profil der Person.",
+                "Klick im Abschnitt „Ehrenamtliche Tätigkeiten“ auf „Vorschlagen“ und wähl Deine Möglichkeit. Die Person sieht den Vorschlag als offen."
+              ]
+            }
+          ]
+        },
+        "ngoFindNobody": {
+          "title": "Es hat sich niemand gefunden",
+          "blocks": [
+            {
+              "text": "Bei Begleitungen sagen wir Dir spätestens 4 Werktage vor dem Termin Bescheid. Bei anderen Möglichkeiten suchen wir weiter. Schreib uns, wenn es eilt."
+            }
+          ]
+        },
+        "ngoFindNoContact": {
+          "title": "Warum sehe ich keine Kontaktdaten?",
+          "blocks": [
+            {
+              "text": "Kontaktdaten bekommst Du, wenn wir Euch einander vorstellen. Bis dahin läuft die Anfrage über uns."
+            }
+          ]
+        },
+        "ngoFindMessages": {
+          "title": "Meldungen bei „Vorschlag anfragen“",
+          "blocks": [
+            {
+              "list": [
+                "„Bereits angefragt oder verknüpft“: Du hast diese Person für diese Möglichkeit schon angefragt.",
+                "„Das Gesuch ist nicht mehr offen“: die Möglichkeit ist inaktiv oder vergangen.",
+                "„Du hast noch keine ehrenamtlichen Tätigkeiten“: erstell zuerst eine Möglichkeit.",
+                "Anfrage zurückziehen: im Profil der Person bei der Möglichkeit auf „Vorschlag zurückziehen“."
+              ]
+            }
+          ]
+        },
+        "ngoFindVetting": {
+          "title": "Wie prüft Ihr die Ehrenamtlichen?",
+          "blocks": [
+            {
+              "list": [
+                "Alle neuen Ehrenamtlichen führen ein persönliches Telefonat mit uns.",
+                "Sie beantragen ein erweitertes Führungszeugnis und weisen die Masernimpfung nach.",
+                "Wer Begleitungen übernimmt, bekommt zusätzlich eine Einführung per Video."
+              ]
+            }
+          ]
+        },
+        "ngoManage": {
+          "title": "Ehrenamtliche betreuen"
+        },
+        "ngoManageMatched": {
+          "title": "Wo finde ich vermittelte Ehrenamtliche?",
+          "blocks": [
+            {
+              "text": "Öffne Deine Möglichkeit über ihre Karte. Im Abschnitt „Ehrenamtliche“ stehen die vermittelten Personen im Tab „Zugeordnet“, wer schon im Einsatz ist unter „Aktiv“."
+            }
+          ]
+        },
+        "ngoManageAppreciation": {
+          "title": "Anerkennung",
+          "blocks": [
+            {
+              "text": "Für Ehrenamtliche, die wir vermittelt haben, kümmern wir uns um die Anerkennung."
+            }
+          ]
+        },
+        "ngoManageStops": {
+          "title": "Eine Person hört auf",
+          "blocks": [
+            {
+              "text": "Sag uns Bescheid, dann suchen wir neu. Etwa einmal im Monat fragen wir ohnehin nach, wie es läuft."
+            }
+          ]
+        },
+        "ngoEfz": {
+          "title": "Erweitertes Führungszeugnis (EFZ)",
+          "blocks": [
+            {
+              "text": "Wir fragen das EFZ für Dich an. Schreib uns einfach."
+            }
+          ]
+        },
+        "ngoPosts": {
+          "title": "Beiträge (Chat)",
+          "blocks": [
+            {
+              "steps": [
+                "Öffne den Chat über „Beiträge“ im Menü.",
+                "Schreib anderen Einrichtungen oder uns.",
+                "Absprachen, Termine und Rückfragen bleiben an einem Ort."
+              ]
+            }
+          ]
+        },
+        "ngoPrivacy": {
+          "title": "Datenschutz & Sicherheit"
+        },
+        "ngoPrivacyWhere": {
+          "title": "Wo liegen unsere Daten?",
+          "blocks": [
+            {
+              "text": "Bei Infomaniak in der Schweiz. Alle Daten bleiben dort, es gibt keinen Transfer ins Ausland. Das Dashboard ist Open Source und DSGVO-konform."
+            }
+          ]
+        },
+        "ngoPrivacySecurity": {
+          "title": "Wie sicher ist das?",
+          "blocks": [
+            {
+              "list": [
+                "Verschlüsselt bei der Übertragung (SSL/TLS) und gespeichert (AES)",
+                "Backups an mindestens 3 Standorten",
+                "Rechenzentren mit ISO 27001 und jährlichen Penetrationstests"
+              ]
+            }
+          ]
+        },
+        "ngoPrivacyAvv": {
+          "title": "Brauchen wir einen Auftragsverarbeitungsvertrag (AVV)?",
+          "blocks": [
+            {
+              "text": "Wenn Ihr einen braucht, stellen wir ihn aus. Schreib uns einfach."
+            }
+          ]
+        },
+        "ngoPrivacyPhotos": {
+          "title": "Macht Ihr Fotos in unserer Einrichtung?",
+          "blocks": [
+            {
+              "text": "Manchmal besuchen wir Einrichtungen und fotografieren die Aktivitäten, um neue Ehrenamtliche zu gewinnen. Gesichter von Kindern oder Geflüchteten sind nur mit ausdrücklicher Erlaubnis zu sehen."
+            }
+          ]
+        },
+        "coordProcess": {
+          "title": "Der Vermittlungsablauf auf einen Blick",
+          "blocks": [
+            {
+              "steps": [
+                "Neue*r Ehrenamtliche*r registriert sich und hat den Status „Neu“.",
+                "Erstgespräch am Telefon.",
+                "Wir schicken 2 bis 3 passende Ehrenamtsbedarfe.",
+                "EFZ-Antrag per E-Mail schicken, direkt nach dem Gespräch oder nach der Wahl.",
+                "Die Person sagt Ja und schickt das unterschriebene Formular und eine Ausweiskopie.",
+                "Im Dashboard zuordnen.",
+                "EFZ beantragen.",
+                "Nach einem Monat nachfragen, ob sie angefangen hat."
+              ]
+            },
+            {
+              "text": "Passt nichts, versuchen wir es in 2 Wochen erneut."
+            },
+            {
+              "text": "Immer: Jeder Kontakt (Anruf, Versuch, Nachricht, E-Mail) kommt in die Kommunikationsverfolgung im Profil der Person. Und: keine Vermittlung ohne vorheriges Telefonat."
+            }
+          ]
+        },
+        "coordCall": {
+          "title": "Erstgespräch"
+        },
+        "coordCallAsk": {
+          "title": "Was frage ich?",
+          "blocks": [
+            {
+              "list": [
+                "Wünsche: welche Tätigkeiten, mit wem (Kinder, Erwachsene, Familien)",
+                "Zeit: an welchen Tagen und wie viele Stunden",
+                "Fähigkeiten und Erfahrung",
+                "Sprachen und wie gut",
+                "Wohnort und Bezirk",
+                "Masernimpfung: liegt ein Nachweis vor?",
+                "In Berlin gemeldet? (wichtig für das EFZ)"
+              ]
+            }
+          ]
+        },
+        "coordCallExplain": {
+          "title": "Was erkläre ich?",
+          "blocks": [
+            {
+              "list": [
+                "Wir vermitteln an Unterkünfte für Geflüchtete und an Projekte.",
+                "Die Fahrzeit liegt meist bei etwa 35 Minuten.",
+                "Wir richten uns nach den Bedarfen der Einrichtungen.",
+                "Nach dem Gespräch schicken wir ein paar passende Möglichkeiten."
+              ]
+            }
+          ]
+        },
+        "coordCallRecord": {
+          "title": "Was trage ich danach im Dashboard ein?",
+          "blocks": [
+            {
+              "steps": [
+                "Öffne das Profil der Person: „Ehrenamtliche“, dann den Namen anklicken.",
+                "Kontakt eintragen: in der „Kommunikationsverfolgung“ auf „+ Kontakt registrieren“, Art „Angerufen“, Datum und kurze Notizen.",
+                "Status setzen: oben beim Engagement-Status auf „Als suchend markieren“ und „Verfügbar“ wählen.",
+                "Profil ergänzen: über „Bearbeiten“ Verfügbarkeit, bevorzugte Bezirke, Sprachen mit Niveau, Aktivitäten und Fähigkeiten nachtragen. Davon hängen die Empfehlungen ab.",
+                "Masernimpfung: liegt der Nachweis vor, im Abschnitt „Dokumente“ bei „Masernimpfung“ hochladen."
+              ]
+            }
+          ]
+        },
+        "coordCallNoAnswer": {
+          "title": "Ich erreiche die Person nicht am Telefon",
+          "blocks": [
+            {
+              "steps": [
+                "Trag jeden Versuch ein: „+ Kontakt registrieren“, Art „Versuch anzurufen“.",
+                "Schreib ihr dann über WhatsApp, Telegram, Signal oder SMS und bitte um ein Telefonat. Eintragen mit Art „SMS oder E-Mail gesendet“ und der passenden Kontaktmethode.",
+                "Kommt keine Antwort, schick eine E-Mail und trag sie genauso ein.",
+                "Nach mehreren Versuchen ohne Antwort: Engagement-Status „Nicht erreichbar“."
+              ]
+            },
+            {
+              "text": "Auch wenn die Person per Nachricht antwortet, brauchen wir vor jeder Vermittlung ein Telefonat."
+            }
+          ]
+        },
+        "coordOptions": {
+          "title": "Passende Möglichkeiten schicken"
+        },
+        "coordOptionsFind": {
+          "title": "Passende Bedarfe für eine Person finden",
+          "blocks": [
+            {
+              "steps": [
+                "Öffne das Profil der Person.",
+                "Unter „Empfohlene Ehrenamtsbedarfe“ stehen die Bedarfe, die nach Bezirk, Sprache und Verfügbarkeit am besten passen, mit Fahrzeit.",
+                "Oder im Abschnitt „Ehrenamtliche Tätigkeiten“ auf „Ehrenamtliche Tätigkeiten finden“ und selbst filtern.",
+                "Achte auf die Fahrzeit (etwa 35 Minuten) und darauf, dass der Bedarf „Suche läuft“ hat."
+              ]
+            }
+          ]
+        },
+        "coordOptionsSend": {
+          "title": "Optionen schicken",
+          "blocks": [
+            {
+              "steps": [
+                "Such 2 bis 3 passende Bedarfe aus.",
+                "Bei jedem auf „Vorschlagen“ klicken. Der Bedarf erscheint im Profil der Person unter „Angefragt“, und sie sieht den Vorschlag in ihrem Dashboard.",
+                "Schick ihr die Optionen zusätzlich per E-Mail.",
+                "„+ Kontakt registrieren“, Typ „Liste der Ehrenamtsbedarfe gesendet“."
+              ]
+            }
+          ]
+        },
+        "coordOptionsReverse": {
+          "title": "Für einen Bedarf passende Personen finden",
+          "blocks": [
+            {
+              "steps": [
+                "Öffne den Bedarf.",
+                "Unter „Empfohlene Ehrenamtliche“ siehst Du passende Personen mit Fahrzeit.",
+                "Oder im Abschnitt „Ehrenamtliche“ auf „Ehrenamtliche finden“ und selbst filtern.",
+                "Bei einer passenden Person auf „Vorschlagen“."
+              ]
+            }
+          ]
+        },
+        "coordOptionsNgoRequest": {
+          "title": "Eine Einrichtung hat „Vorschlag anfragen“ geklickt",
+          "blocks": [
+            {
+              "text": "Du bekommst eine Benachrichtigung auf der Startseite und per E-Mail. Öffne den Bedarf, sprich die Person an und schlag sie vor, wenn sie Interesse hat."
+            }
+          ]
+        },
+        "coordOptionsStale": {
+          "title": "Ein Vorschlag bleibt liegen",
+          "blocks": [
+            {
+              "text": "Hängt ein Vorschlag 2 Monate auf „Angefragt“, schickt das System der Person automatisch eine Erinnerung. Ist sie nicht mehr interessiert: im Profil auf „Vorschlag zurückziehen“."
+            }
+          ]
+        },
+        "coordEfz": {
+          "title": "Erweitertes Führungszeugnis (EFZ)"
+        },
+        "coordEfzWhen": {
+          "title": "Wann schicke ich den EFZ-Antrag?",
+          "blocks": [
+            {
+              "list": [
+                "Direkt nach dem Gespräch, wenn die Person in Berlin gemeldet ist und es so aussieht, dass sie sich engagieren wird.",
+                "Sonst erst, wenn sie sich für einen konkreten Bedarf entschieden hat."
+              ]
+            }
+          ]
+        },
+        "coordEfzSend": {
+          "title": "Wie schicke ich den Antrag?",
+          "blocks": [
+            {
+              "steps": [
+                "Öffne das Profil der Person, Abschnitt „Dokumente“.",
+                "Klick auf „E-Mail mit Antrag senden“ und bestätige mit „Senden“.",
+                "Die Person bekommt das Antragsformular und die Anleitung, community@need4deed.org in Kopie. Der Versand wird automatisch in der Kommunikationsverfolgung eingetragen."
+              ]
+            }
+          ]
+        },
+        "coordEfzReceived": {
+          "title": "Formular und Ausweis sind da",
+          "blocks": [
+            {
+              "steps": [
+                "Lade im Abschnitt „Dokumente“ den unterschriebenen „Antrag auf Führungszeugnis“ und „Reisepass / Ausweis“ hoch.",
+                "Ordne die Person zu.",
+                "Beantrage danach das EFZ.",
+                "Kommt das Führungszeugnis an, lade es bei „Führungszeugnis“ hoch."
+              ]
+            }
+          ]
+        },
+        "coordEfzNotBerlin": {
+          "title": "Die Person ist nicht in Berlin gemeldet",
+          "blocks": [
+            {
+              "list": [
+                "EFZ über eine andere Stadt: möglich, aber wie es dort genau läuft, müssen wir erst klären. Frag im Team nach.",
+                "Selbst beantragen: Wir geben der Person ein von uns unterschriebenes Schreiben. Damit beantragt sie das EFZ selbst, kostenlos statt 12 Euro."
+              ]
+            }
+          ]
+        },
+        "coordMatch": {
+          "title": "Zuordnen"
+        },
+        "coordMatchHow": {
+          "title": "Die Person hat Ja gesagt: wie ordne ich sie zu?",
+          "blocks": [
+            {
+              "text": "Voraussetzungen:"
+            },
+            {
+              "list": [
+                "Wir haben mit ihr telefoniert. Ohne Telefonat keine Vermittlung, auch wenn sie per Nachricht oder E-Mail zugesagt hat. Steht in der Kommunikationsverfolgung ein Eintrag „Angerufen“?",
+                "Sie hat einen Bedarf gewählt.",
+                "Sie hat das unterschriebene Formular und die Ausweiskopie geschickt."
+              ]
+            },
+            {
+              "steps": [
+                "Öffne den Bedarf, Abschnitt „Ehrenamtliche“, Tab „Angefragt“.",
+                "Bei der Person auf „Match“ klicken. Sie wandert in den Tab „Zugeordnet“.",
+                "Ist sie noch nicht angefragt: erst auf „Vorschlagen“, dann „Match“.",
+                "Stell Einrichtung und Person per E-Mail einander vor. Die Einrichtung lädt sie innerhalb von 5 bis 7 Werktagen ein und setzt uns in CC.",
+                "„+ Kontakt registrieren“, Typ „Vermittlungs-E-Mail gesendet“."
+              ]
+            },
+            {
+              "text": "Bei Begleitungen schickt das System der Person nach dem Match automatisch eine E-Mail mit den Termindetails. Erst dann sieht sie Name, Telefonnummer und Terminadresse."
+            }
+          ]
+        },
+        "coordMatchUndo": {
+          "title": "Doch kein Match",
+          "blocks": [
+            {
+              "text": "Im Tab „Angefragt“ auf „Kein Match“. Ist die Person schon zugeordnet: „Zuordnung aufheben“."
+            }
+          ]
+        },
+        "coordFollow": {
+          "title": "Nachfassen"
+        },
+        "coordFollowMonth": {
+          "title": "Nach einem Monat: hat die Person angefangen?",
+          "blocks": [
+            {
+              "steps": [
+                "Frag bei der Person nach, ob sie die Koordination vor Ort getroffen und angefangen hat.",
+                "„+ Kontakt registrieren“, Typ „Folgegespräch nach Zuweisung“.",
+                "Ja: im Bedarf bei der Person auf „Als aktiv markieren“. Ihr Engagement-Status wird dann „Aktiv“.",
+                "Nein: klär den Grund. Passt es nicht, Zuordnung aufheben und neue Optionen schicken."
+              ]
+            },
+            {
+              "text": "Ist eine Person 2 Monate nach dem Match noch auf „Zugeordnet“, schickt das System automatisch eine Nachfrage-E-Mail. Das ergänzt Dein eigenes Nachfragen nach einem Monat."
+            }
+          ]
+        },
+        "coordFollowStops": {
+          "title": "Die Person hört auf",
+          "blocks": [
+            {
+              "list": [
+                "Im Bedarf auf „Als vergangen markieren“.",
+                "Will sie gar nicht mehr: Engagement-Status „Inaktiv“.",
+                "Nur eine Pause: „Vorübergehend nicht verfügbar“ mit Rückkehrdatum.",
+                "Braucht die Einrichtung Ersatz, bekommt der Bedarf „Erneute Zuordnung erforderlich“. Such neu über „Empfohlene Ehrenamtliche“."
+              ]
+            }
+          ]
+        },
+        "coordNoFit": {
+          "title": "Kein passender Bedarf"
+        },
+        "coordNoFitRetry": {
+          "title": "Es passt gerade nichts (Zeiten, Sprachen, Bezirk)",
+          "blocks": [
+            {
+              "steps": [
+                "Sag der Person, dass Du Dich in etwa 2 Wochen wieder meldest.",
+                "„+ Kontakt registrieren“, Typ „Statusaktualisierung“, mit einer Notiz, warum nichts passt.",
+                "Trag Dir die Erinnerung in Deinen Kalender ein.",
+                "In 2 Wochen erneut unter „Empfohlene Ehrenamtsbedarfe“ schauen."
+              ]
+            }
+          ]
+        },
+        "coordNoFitAccompanying": {
+          "title": "Für eine Begleitung findet sich niemand",
+          "blocks": [
+            {
+              "text": "Die Einrichtung muss spätestens 4 Werktage vor dem Termin Bescheid bekommen. Das System schickt dann automatisch die E-Mail „Keine Begleitung gefunden“."
+            }
+          ]
+        },
+        "coordReview": {
+          "title": "Neue Bedarfe von Einrichtungen prüfen"
+        },
+        "coordReviewNew": {
+          "title": "Ein neuer Bedarf ist da",
+          "blocks": [
+            {
+              "steps": [
+                "Neue Bedarfe stehen auf der Startseite unter „Neueste Ehrenamtsbedarfe“ und haben den Status „Neu“.",
+                "Prüf sie innerhalb von einem Werktag: Sind Beschreibung, Sprachen, Zeiten und Adresse vollständig? Hält eine Begleitung die Regeln ein?",
+                "Alles gut: oben auf „Status ändern“ und „Validiert“ wählen. Der Bedarf bekommt „Suche läuft“.",
+                "Es fehlt etwas: schreib der Einrichtung eine E-Mail."
+              ]
+            }
+          ]
+        },
+        "coordReviewRules": {
+          "title": "Regeln für Begleitungen",
+          "blocks": [
+            {
+              "list": [
+                "Arzttermine, außer: Charité und Vivantes, Termine vor oder nach einer OP, Chirurgie, Neurochirurgie, Anästhesiologie, Strahlentherapie",
+                "Behörden, außer Standesamt und Gericht",
+                "Beratungsstellen und Banken, keine Termine bei Anwält*innen",
+                "Kontoeröffnungen, Wohnungsbesichtigungen, Schulen und Kitas, Wegbegleitung"
+              ]
+            },
+            {
+              "text": "Mindestens 7 Werktage Vorlauf, höchstens 3 Stunden, nicht vor 9 Uhr."
+            }
+          ]
+        },
+        "coordStatuses": {
+          "title": "Status-Übersicht"
+        },
+        "coordStatusesVolunteer": {
+          "title": "Engagement-Status der Ehrenamtlichen",
+          "blocks": [
+            {
+              "list": [
+                "Neu: noch nicht mit uns gesprochen",
+                "Verfügbar: Erstgespräch war, kann sich engagieren",
+                "Aktiv: ist im Einsatz (setzt das System)",
+                "Vorübergehend nicht verfügbar: Pause, mit Rückkehrdatum",
+                "Inaktiv: engagiert sich nicht mehr",
+                "Nicht erreichbar: hat nach mehreren Versuchen nicht geantwortet"
+              ]
+            }
+          ]
+        },
+        "coordStatusesMatch": {
+          "title": "Stand einer Person bei einem Bedarf",
+          "blocks": [
+            {
+              "list": [
+                "Angefragt: vorgeschlagen, wartet auf Antwort",
+                "Zugeordnet: Match ist gemacht",
+                "Aktiv: hat angefangen",
+                "Vergangen: Einsatz ist vorbei"
+              ]
+            }
+          ]
+        },
+        "coordMenu": {
+          "title": "Was finde ich wo im Menü?",
+          "blocks": [
+            {
+              "list": [
+                "Startseite: neueste Ehrenamtliche, neueste Ehrenamtsbedarfe, Kommentare, in denen Du markiert bist, und Deine letzten Aktivitäten",
+                "Ehrenamtliche: alle Ehrenamtlichen mit Filtern, als Liste, Karten oder Berlin-Karte",
+                "Ehrenamtsbedarfe: alle Bedarfe aller Einrichtungen, mit Status und Filtern",
+                "Einrichtungen / Projekte: alle Einrichtungen und Träger mit ihren Profilen",
+                "Beiträge: der Chat mit den Einrichtungen",
+                "Kalender: need4deed-Veranstaltungen erstellen und veröffentlichen",
+                "Admin: Konten, E-Mail-Vorlagen, Statistiken",
+                "Profil: Dein eigenes Konto"
+              ]
+            }
+          ]
+        }
+      }
     }
   },
   "aboutus": {
@@ -2867,9 +3931,7 @@
       "matchesFound_one": "Wir haben {{count}} Organisation gefunden, die zu dieser Adresse passt. Wählen Sie Ihre aus oder erstellen Sie eine neue.",
       "matchesFound_other": "Wir haben {{count}} Organisationen gefunden, die zu dieser Adresse passen. Wählen Sie Ihre aus oder erstellen Sie eine neue.",
       "skip": "Manuell eingeben",
-      "titleTaken": "Eine Organisation mit diesem Namen existiert bereits.",
       "addressTaken": "An dieser Adresse ist bereits eine Organisation registriert.",
-      "titleTakenNamed": "„{{name}}“ existiert bereits.",
       "addressTakenNamed": "An dieser Adresse ist bereits „{{name}}“ registriert.",
       "createAtSharedAddress": "Andere Organisation erstellen",
       "editDetails": "Angaben ändern",
@@ -3097,32 +4159,37 @@
   },
   "forOrganisationsPage": {
     "heading": "Für Organisationen",
-    "intro": "Für Einrichtungen und Projekte, die Geflüchtete in Berlin unterstützen: So arbeiten wir mit Dir zusammen, von der ersten Anfrage bis zur freiwilligen Person vor Ort.",
-    "stepsHeading": "So vermitteln wir Freiwillige",
+    "intro": "Für Einrichtungen, die Geflüchtete in Berlin unterstützen: Finde Ehrenamtliche für Deine Einrichtung und verwalte Deine eigenen, an einem Ort und kostenlos.",
+    "stepsHeading": "Teil 1: Vermittlung",
+    "stepsIntro": "Finde Ehrenamtliche, selbst oder mit unserer Hilfe.",
     "steps": {
       "request": {
-        "title": "Du sendest eine Anfrage",
-        "body": "Registriere Deine Organisation und erstelle im Dashboard eine Anfrage: regelmäßiges Engagement, eine Begleitung zu einem Termin oder ein Event. Sag uns, was gebraucht wird, wann, wo und in welchen Sprachen. Begleitungen müssen mindestens 7 Werktage vor dem Termin angefragt werden."
+        "title": "Möglichkeit erstellen",
+        "body": "Registriere Deine Organisation und veröffentliche ein regelmäßiges Engagement, eine Begleitung oder ein Event. Begleitungen fragst Du bitte mindestens 7 Werktage vor dem Termin an."
+      },
+      "search": {
+        "title": "Selbst suchen",
+        "body": "Filtere die Ehrenamtlichen nach Sprache, Bezirk oder Fähigkeiten und klick bei passenden Personen auf „Vorschlag anfragen“."
       },
       "prepare": {
-        "title": "Wir bereiten die Freiwilligen vor",
-        "body": "Mit allen neuen Freiwilligen telefonieren wir nach der Registrierung, um ihre Sprachen, Erfahrungen und Wünsche kennenzulernen. Freiwillige für Begleitungen nehmen zusätzlich an einer Online-Einführung teil. Wir helfen beim Beantragen des erweiterten Führungszeugnisses (EFZ) und prüfen, wo nötig, den Nachweis der Masernimpfung."
+        "title": "Wir bereiten vor",
+        "body": "Wir lernen alle neuen Ehrenamtlichen persönlich kennen und helfen beim erweiterten Führungszeugnis (EFZ)."
       },
       "match": {
         "title": "Wir vermitteln",
-        "body": "Unsere Koordinator*innen suchen die passende Person nach Sprache und Dialekt, Bezirk, Verfügbarkeit und Tätigkeit, aus unserem Pool und aus Deinen eigenen Freiwilligen auf der Plattform."
+        "body": "Wir suchen die passende Person nach Sprache, Bezirk, Verfügbarkeit und Tätigkeit."
       },
       "introduction": {
-        "title": "Du bekommst einen Vorschlag und dann die Vorstellung",
-        "body": "Passt eine freiwillige Person, schicken wir Dir und ihr eine Vorstellungs-E-Mail mit allen Kontaktdaten. Bitte lade die Person innerhalb von 5 bis 7 Werktagen zu einem ersten Treffen ein und setze uns in CC. Passt es nicht, sag uns Bescheid, dann suchen wir weiter."
+        "title": "Ihr lernt Euch kennen",
+        "body": "Wir stellen Euch per E-Mail einander vor. Lade die Person bitte innerhalb von 5 bis 7 Werktagen zu einem ersten Treffen ein."
       },
       "noMatch": {
-        "title": "Wenn wir niemanden finden",
-        "body": "Bei Begleitungen geben wir Dir spätestens 4 Werktage vor dem Termin Bescheid, damit Du planen kannst."
+        "title": "Wenn niemand passt",
+        "body": "Bei Begleitungen sagen wir Dir spätestens 4 Werktage vor dem Termin Bescheid."
       },
       "afterMatch": {
-        "title": "Die freiwillige Person startet, und wir bleiben in Kontakt",
-        "body": "Etwa einmal im Monat fragen wir nach, ob Deine Angebote noch aktuell sind und wie es mit den Freiwilligen läuft. Hört jemand auf, suchen wir eine neue Vermittlung."
+        "title": "Wir bleiben in Kontakt",
+        "body": "Etwa einmal im Monat fragen wir nach, wie es läuft. Hört jemand auf, suchen wir neu."
       }
     },
     "goodToKnow": {
@@ -3135,24 +4202,52 @@
       "contact": "Fragen? Schreib uns an"
     },
     "dashboard": {
-      "heading": "Das Need4Deed-Dashboard",
-      "intro": "Über die Vermittlung hinaus ist das Dashboard ein Werkzeug für den Alltag Deines Teams, auch mit Freiwilligen, die Ihr selbst gefunden habt.",
+      "heading": "Teil 2: Verwaltung",
+      "intro": "Betreue alle Deine Ehrenamtlichen an einem Ort, vermittelte und eigene.",
       "features": {
-        "volunteers": {
-          "title": "Deine Freiwilligen an einem Ort",
-          "body": "Verwalte Deine eigenen Freiwilligen und Anfragen und sieh Freiwillige aus unserem Pool. Wenn Du möchtest, teile Deine Freiwilligen mit anderen Organisationen, Kontakt für Kontakt und nur mit Einverständnis der Freiwilligen."
+        "matched": {
+          "title": "Vermittelte Ehrenamtliche",
+          "body": "Von uns vermittelte Ehrenamtliche siehst Du direkt im Dashboard, mit allen Informationen."
+        },
+        "import": {
+          "title": "Eigene Ehrenamtliche importieren",
+          "body": "Lade Deine Tabelle hoch oder schick sie uns. Die Profile sieht nur Deine Einrichtung. Bitte informiere Deine Ehrenamtlichen vorher."
+        },
+        "link": {
+          "title": "Mit Möglichkeiten verknüpfen",
+          "body": "Verknüpfe Ehrenamtliche mit Deinen Möglichkeiten und behalte im Blick, wer wo im Einsatz ist."
         },
         "hours": {
-          "title": "Stunden und Anerkennung",
-          "body": "Trage für jede Vermittlung die Stunden ein, die eine freiwillige Person geleistet hat, und behalte Anerkennungen wie Zertifikate im Blick."
+          "title": "Einsatzzeiten erfassen",
+          "body": "Trag Datum und Stunden ein, praktisch für Nachweise, Berichte und Förderanträge."
+        },
+        "appreciation": {
+          "title": "Anerkennung nachhalten",
+          "body": "Halte fest, wie Du Deinen Ehrenamtlichen dankst, zum Beispiel mit Zertifikaten."
+        },
+        "feedback": {
+          "title": "Feedback",
+          "body": "Lies, was Ehrenamtliche über Deine Möglichkeiten schreiben."
+        },
+        "export": {
+          "title": "CSV-Export",
+          "body": "Lade Deine Ehrenamtlichen und Möglichkeiten jederzeit als CSV-Datei herunter."
+        },
+        "traeger": {
+          "title": "Für Träger",
+          "body": "Verwalte mehrere Einrichtungen unter einem Konto. Melde Dich bei uns, wir richten es ein."
+        },
+        "efz": {
+          "title": "Erweitertes Führungszeugnis",
+          "body": "Wir unterstützen Dich bei der Anfrage. Melde Dich einfach bei uns."
         },
         "posts": {
-          "title": "Posts und Markierungen",
-          "body": "Stelle allgemeine Fragen oder Gesuche in die Posts, antwortet Euch gegenseitig und markiert Euch. Wer markiert wird, bekommt eine E-Mail."
+          "title": "Beiträge",
+          "body": "Tausch Dich mit anderen Einrichtungen und mit uns aus."
         },
         "openSource": {
-          "title": "Open Source, gehostet in der Schweiz",
-          "body": "Das Dashboard ist Open Source, läuft zu 100 % in Europa, gehostet in der Schweiz, und ist DSGVO-konform."
+          "title": "Open Source",
+          "body": "Läuft zu 100 % in Europa, gehostet in der Schweiz und DSGVO-konform."
         }
       }
     }
@@ -3161,5 +4256,31 @@
     "openCalendar": "Kalender öffnen",
     "invalidDate": "Bitte ein gültiges Datum eingeben (TT.MM.JJJJ).",
     "beforeMinYear": "Daten vor {{year}} werden nicht unterstützt."
+  },
+  "eventRegistration": {
+    "thanks": "Danke! Du bist angemeldet, bis bald.",
+    "submit": "Anmelden",
+    "yes": "Ja",
+    "no": "Nein",
+    "fields": {
+      "fullName": "Name",
+      "email": "E-Mail",
+      "numberOfPeople": "Anzahl Personen",
+      "message": "Nachricht",
+      "isVolunteer": "Ich engagiere mich ehrenamtlich mit Geflüchteten",
+      "volunteerTypes": "In welcher Form?"
+    },
+    "volunteerTypes": {
+      "events": "Veranstaltungen",
+      "regular": "Regelmäßig",
+      "accompanying": "Begleitung"
+    },
+    "errors": {
+      "required": "Pflichtfeld",
+      "email": "Bitte eine gültige E-Mail eingeben",
+      "people": "Bitte eine Zahl von 1 bis 1000 eingeben",
+      "message": "Höchstens 500 Zeichen"
+    },
+    "title": "Anmeldung"
   }
 }

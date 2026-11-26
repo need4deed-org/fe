@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { type ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import styled from "styled-components";
 import { ButtonSpan, Paragraph } from "@/components/styled/text";
@@ -14,6 +14,8 @@ interface Props {
   className?: string;
   groupedItemsDisplayType?: "checkbox" | "button";
   isDropdownFilter?: boolean;
+  beforeItems?: ReactNode;
+  triggerLabel?: string;
 }
 interface GroupedFilterItem {
   label: string;
@@ -49,6 +51,8 @@ export default function AccordionFilter({
   groupedItems,
   groupedItemsDisplayType = "checkbox",
   isDropdownFilter = false,
+  beforeItems,
+  triggerLabel,
 }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const [dropdownPosition, setDropdownPosition] = useState<DropdownPosition | null>(null);
@@ -72,6 +76,7 @@ export default function AccordionFilter({
     containerRef: optionsContainerRef,
     triggerRef: headerRef,
     close: closeDropdown,
+    includeButtons: Boolean(beforeItems),
   });
 
   const checkboxHeight = cssVar("--opportunities-filters-content-accordion-options-checkbox-height", "18px");
@@ -134,6 +139,7 @@ export default function AccordionFilter({
         $dropdownPosition={dropdownPosition}
         onKeyDown={handleDropdownKeyDown}
       >
+        {beforeItems}
         {items.map((item) => (
           <Checkbox
             key={item.label}
@@ -153,6 +159,7 @@ export default function AccordionFilter({
         ref={headerRef}
         type="button"
         aria-expanded={isOpen}
+        aria-label={triggerLabel}
         disabled={isDropdownFilter && !items?.length}
         onClick={() => (isOpen ? closeDropdown() : setIsOpen(true))}
         $isDropdownFilter={isDropdownFilter}
