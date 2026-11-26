@@ -7,8 +7,8 @@ import { usePLZField } from "@/hooks/use-plz-field";
 import { Controller, useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { FormButtonRow, FormDetails } from "../shared/styles";
-import { OrganisationDetailsFormData } from "./organisationDetailsSchema";
 import { useCallback } from "react";
+import { OrganisationDetailsFormData } from "./agentOrganisationDetailsSchema";
 
 const i18nPrefix = "dashboard.agentProfile.organisationDetails";
 

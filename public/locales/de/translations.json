@@ -1638,6 +1638,47 @@
         "deleteSuccess": "Einrichtung erfolgreich gelöscht"
       }
     },
+    "organizationProfile": {
+      "title": "Trägerprofil",
+      "contactDetails": {
+        "title": "Kontaktdaten",
+        "contactPerson": "Ansprechperson",
+        "email": "E-Mail",
+        "phone": "Telefon",
+        "edit": "Bearbeiten",
+        "cancel": "Abbrechen",
+        "saveChanges": "Änderungen speichern",
+        "saveSuccess": "Kontaktdaten erfolgreich aktualisiert",
+        "validation": {
+          "emailInvalid": "Bitte gib eine gültige E-Mail-Adresse ein",
+          "phoneInvalid": "Die Telefonnummer darf nur Ziffern, +, Leerzeichen, Bindestriche und Klammern enthalten"
+        }
+      },
+      "organisationDetails": {
+        "title": "Details zum Träger",
+        "orgTitle": "Name des Trägers",
+        "edit": "Bearbeiten",
+        "about": "Über den Träger",
+        "website": "Webseite",
+        "address": "Adresse",
+        "addressStreet": "Straße",
+        "addressPostcode": "PLZ",
+        "services": "Leistungen",
+        "cancel": "Abbrechen",
+        "saveChanges": "Änderungen speichern",
+        "saveSuccess": "Details zum Träger erfolgreich aktualisiert",
+        "validation": {
+          "required": "Dieses Feld ist erforderlich",
+          "aboutMaxLength": "Maximal {{max}} Zeichen erlaubt",
+          "websiteInvalid": "Die Webseite muss mit http:// oder https:// beginnen",
+          "postcodeRequiredWithStreet": "Für eine Straßenadresse ist eine PLZ erforderlich"
+        }
+      },
+      "agents": {
+        "title": "Einrichtungen",
+        "emptyState": "Diesem Träger sind noch keine Einrichtungen zugeordnet."
+      }
+    },
     "opportunityProfile": {
       "opportunityProfile": "Profil der ehrenamtlichen Tätigkeit",
       "postedOn": "Veröffentlicht am",

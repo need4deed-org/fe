@@ -6,7 +6,7 @@ import {
 } from "@/components/Dashboard/Profile/sections/VolunteerProfile/hooks";
 import { createMapping } from "@/components/Dashboard/Profile/sections/VolunteerProfile/mappingUtils";
 import { ApiAgentProfileGet } from "@/components/Dashboard/Profile/types";
-import { useUpdateOrganization } from "@/hooks/useUpdateOrganizationDetails";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
@@ -15,10 +15,11 @@ import { FormContainer } from "../shared/styles";
 import { EditableSectionProps, EditableSectionRef } from "../shared/types";
 import { useEditingChangeNotifier } from "../shared/useEditingChangeNotifier";
 import { apiLanguagesToFormValues, toLanguagesForForm } from "./formatters";
-import { OrganisationDetailsDisplay } from "./OrganisationDetailsDisplay";
-import { OrganisationDetailsEdit } from "./OrganisationDetailsEdit";
-import { createOrganisationDetailsSchema, OrganisationDetailsFormData } from "./organisationDetailsSchema";
 import { useGetOrganization } from "@/hooks/useGetOrganization";
+import { createOrganisationDetailsSchema, OrganisationDetailsFormData } from "./agentOrganisationDetailsSchema";
+import { OrganisationDetailsEdit } from "./AgentOrganisationDetailsEdit";
+import { OrganisationDetailsDisplay } from "./AgentOrganisationDetailsDisplay";
+import { useUpdateAgentOrganization } from "@/hooks/useUpdateAgentOrganizationDetails";
 
 type Props = {
   agent: ApiAgentProfileGet;
@@ -30,7 +31,7 @@ export const OrganisationDetails = forwardRef<EditableSectionRef, Props>(functio
 ) {
   const { t, i18n } = useTranslation();
   const [isEditing, setIsEditing] = useState(false);
-  const { mutate: updateOrganization } = useUpdateOrganization(String(agent?.id));
+  const { mutate: updateOrganization } = useUpdateAgentOrganization(String(agent?.id));
 
   useEditingChangeNotifier(isEditing, onEditingChange);
   const { data: apiLanguages } = useApiLanguages();
@@ -136,7 +137,11 @@ export const OrganisationDetails = forwardRef<EditableSectionRef, Props>(functio
             onSubmit={handleSubmit(onSubmit)}
           />
         ) : (
-          <OrganisationDetailsDisplay rawClientLanguages={details?.clientLanguages} address={details?.address} />
+          <OrganisationDetailsDisplay
+            rawClientLanguages={details?.clientLanguages}
+            address={details?.address}
+            organization={agent.organization}
+          />
         )}
       </FormContainer>
     </FormProvider>

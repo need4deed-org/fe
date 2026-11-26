@@ -95,6 +95,7 @@ export enum DashboardRoutes {
   Volunteers = "/dashboard/volunteers",
   Opportunities = "/dashboard/opportunities",
   Agents = "/dashboard/agents",
+  Organizations = "/dashboard/organizations",
   Racs = "/dashboard/racs",
   Posts = "/dashboard/posts",
   Calendar = "/dashboard/calendar",
