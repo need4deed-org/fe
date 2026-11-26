@@ -72,7 +72,6 @@ export function Opportunities() {
 
   const OTHER_OPPORTUNITIES_VIEW = "other";
   const isAgent = user?.role === UserRole.AGENT;
-  const { projectId } = useProjectParam();
   const isVolunteer = user?.role === UserRole.VOLUNTEER;
   const tabs = !user
     ? []
@@ -90,6 +89,9 @@ export function Opportunities() {
   const defaultTabIndex = screenType === ScreenTypes.MOBILE ? 1 : 0;
   const selectedTabIndex = isOtherTab ? VIEW_MODE_BY_TAB.length : foundIndex === -1 ? defaultTabIndex : foundIndex;
   const viewMode = VIEW_MODE_BY_TAB[isOtherTab ? defaultTabIndex : selectedTabIndex];
+  const isMapView = viewMode === ViewMode.MAP;
+  const { projectId: pickedProjectId } = useProjectParam();
+  const projectId = isMapView ? undefined : pickedProjectId;
 
   const roleDefaultStatuses = isAgent
     ? DEFAULT_NGO_OPPORTUNITY_STATUSES
@@ -245,7 +247,7 @@ export function Opportunities() {
             )
           }
         />
-        {!isOtherTab && <ProjectPicker />}
+        {!isOtherTab && !isMapView && <ProjectPicker />}
         {isOtherTab ? (
           <OtherOpportunities search={cardsFilter.search} setCount={setNumOfOpps} />
         ) : (

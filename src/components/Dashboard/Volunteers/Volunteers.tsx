@@ -75,7 +75,9 @@ export function Volunteers() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
-  const { projectId } = useProjectParam();
+  const { projectId: pickedProjectId } = useProjectParam();
+  const isMapView = searchParams.get("view") === ViewMode.MAP;
+  const projectId = isMapView ? undefined : pickedProjectId;
   const opportunityId = searchParams.get("opportunity") ?? undefined;
   const opportunityFilter = useGetOpportunity(opportunityId);
   const prefilledForRef = useRef<string | null>(null);
@@ -298,7 +300,7 @@ export function Volunteers() {
             opportunityFilter ? { ...opportunityFilter, onRemove: handleRemoveOpportunityFilter } : undefined
           }
         />
-        {isMyVolunteers && <ProjectPicker />}
+        {isMyVolunteers && !isMapView && <ProjectPicker />}
         <ContentRow>
           <VolunteerListController
             setNumOfVols={setNumOfVols}
