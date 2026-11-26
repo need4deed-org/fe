@@ -57,6 +57,7 @@ export enum IconName {
   ChatsCircle = "chatsCircle",
   ChatsTeardrop = "chatsTeardrop",
   ClipboardText = "clipboardText",
+  Ear = "ear",
   Gift = "gift",
   House = "house",
   PingPong = "pingPong",

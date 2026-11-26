@@ -7,7 +7,7 @@ export type ApiLanguageOption = {
   isoCode?: string;
 };
 
-type ResourceType = "language" | "activity" | "skill" | "district" | "agent_type" | "service";
+type ResourceType = "language" | "activity" | "skill" | "district" | "agent_type" | "service" | "lead_from";
 
 function useApiResource(resource: ResourceType) {
   const { data, isLoading, isError } = useGetQuery<Record<ResourceType, ApiLanguageOption[]>>({
@@ -29,3 +29,4 @@ export const useApiSkills = () => useApiResource("skill");
 export const useApiDistricts = () => useApiResource("district");
 export const useApiAgentTypes = () => useApiResource("agent_type");
 export const useApiServices = () => useApiResource("service");
+export const useApiLeadFrom = () => useApiResource("lead_from");
