@@ -1,3 +1,4 @@
+import { Select } from "@/components/core/common/select";
 import { Heading2 } from "@/components/styled/text";
 import { useProfileSections } from "@/hooks/useProfileSections";
 import { ArrowLeftIcon, ArrowRightIcon } from "@phosphor-icons/react";
@@ -24,10 +25,7 @@ const ProfilePage = (props: ProfileEntityProps) => {
 
   const { navigateWithFade, isFading } = useFadedNavigation(props.agent ? props.agent.id : 0);
 
-  const handleNavigate = (direction: ProfileNavigationDirection) => {
-    if (!props.handleProfileNavigation) return;
-    navigateWithFade(() => props.handleProfileNavigation!(direction));
-  };
+  const navigation = props.profileNavigation;
 
   return (
     <PageContainer>
@@ -38,13 +36,33 @@ const ProfilePage = (props: ProfileEntityProps) => {
 
       <Heading2>{heading}</Heading2>
 
-      {props.handleProfileNavigation && (
+      {navigation && (
         <ProfileNavigatorWrapper>
-          <ProfileNavigatorContainer onClick={() => handleNavigate(ProfileNavigationDirection.LEFT)}>
+          <ProfileNavigatorContainer
+            onClick={() => navigateWithFade(() => navigation.onStep(ProfileNavigationDirection.LEFT))}
+          >
             <ArrowLeftIcon size={24} />
             {t("dashboard.profile.prevNgoProfile")}
           </ProfileNavigatorContainer>
-          <ProfileNavigatorContainer onClick={() => handleNavigate(ProfileNavigationDirection.RIGHT)}>
+          {navigation.options.length > 0 && (
+            <Select
+              aria-label={t("dashboard.profile.selectNgoProfile")}
+              value={navigation.selectedId}
+              onChange={(event) => {
+                const id = Number(event.target.value);
+                navigateWithFade(() => navigation.onSelect(id));
+              }}
+            >
+              {navigation.options.map((option) => (
+                <option key={option.id} value={option.id}>
+                  {option.title}
+                </option>
+              ))}
+            </Select>
+          )}
+          <ProfileNavigatorContainer
+            onClick={() => navigateWithFade(() => navigation.onStep(ProfileNavigationDirection.RIGHT))}
+          >
             {t("dashboard.profile.nextNgoProfile")}
             <ArrowRightIcon size={24} />
           </ProfileNavigatorContainer>

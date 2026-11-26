@@ -32,7 +32,7 @@ const ProfileState = ({ children }: { children: React.ReactNode }) => (
 
 export default function DashboardProfilePage() {
   const { t } = useTranslation();
-  const { agentId, agentIds, volunteerId, userRole, isLoading } = useGetCurrentAgent();
+  const { agentId, agentIds, traegerId, volunteerId, userRole, isLoading } = useGetCurrentAgent();
 
   if (isLoading) {
     return (
@@ -63,7 +63,7 @@ export default function DashboardProfilePage() {
   }
 
   if (agentIds.length > 1) {
-    return <MultipleProfilesController agentIds={agentIds} />;
+    return <MultipleProfilesController agentIds={agentIds} showList={Boolean(traegerId)} />;
   }
 
   if (agentId) {
