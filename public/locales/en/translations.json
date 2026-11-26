@@ -668,7 +668,8 @@
         "calendar": "Calendar",
         "profile": "Profile",
         "more": "More",
-        "admin": "Admin"
+        "admin": "Admin",
+        "help": "Help"
       },
       "createOpportunity": "Create New Opportunity"
     },
@@ -2302,6 +2303,879 @@
       "event": "Event",
       "date": "Date",
       "attended": "Attended"
+    },
+    "help": {
+      "title": "Help",
+      "rootQuestion": "What do you need help with?",
+      "back": "Back",
+      "related": "See also",
+      "contactNgo": "Didn't help? Write to us:",
+      "contactCoordinator": "Didn't help? Ask the team.",
+      "noHelp": "There is no help for your account here yet. Write to us:",
+      "nodes": {
+        "ngoMenu": {
+          "title": "Where do I find what in the menu?"
+        },
+        "ngoMenuHome": {
+          "title": "Home",
+          "blocks": [
+            {
+              "text": "Your opportunities as cards at a glance. Create a new one here with \"+ Create New Opportunity\"."
+            }
+          ]
+        },
+        "ngoMenuVolunteers": {
+          "title": "Volunteers",
+          "blocks": [
+            {
+              "text": "Search for volunteers and filter by language, district, skills or accompanying. You see them as a list, as cards or on the Berlin map."
+            },
+            {
+              "list": [
+                "My volunteers: the people of your organisation",
+                "Need4Deed volunteers: everyone else, whom you can request through us"
+              ]
+            }
+          ]
+        },
+        "ngoMenuOpportunities": {
+          "title": "Opportunities",
+          "blocks": [
+            {
+              "text": "Your own opportunities with status, filters and search, as a list, cards or the Berlin map. Click one to open its details."
+            },
+            {
+              "text": "The \"Other opportunities\" tab shows open opportunities of other organisations, with title and district only."
+            }
+          ]
+        },
+        "ngoMenuAgents": {
+          "title": "NGOs",
+          "blocks": [
+            {
+              "text": "An overview of all organisations and projects, with filters and a map. You see only a little information about other organisations. You change your own organisation's details under \"Profile\"."
+            }
+          ]
+        },
+        "ngoMenuPosts": {
+          "title": "Posts",
+          "blocks": [
+            {
+              "text": "The chat with other organisations and with us."
+            }
+          ]
+        },
+        "ngoMenuProfile": {
+          "title": "Profile",
+          "blocks": [
+            {
+              "text": "Your organisation's details: contact, address, district. If your account has several organisations, you switch between them here."
+            }
+          ]
+        },
+        "ngoAccount": {
+          "title": "Account & login"
+        },
+        "ngoAccountCreate": {
+          "title": "How do I create an account for my organisation?",
+          "blocks": [
+            {
+              "steps": [
+                "Open need4deed.org/en/login and click \"Create an NGO account\".",
+                "Enter name, email, password and phone number.",
+                "Accept the privacy policy, guidelines and volunteer agreement and click \"Next\".",
+                "Add your organisation's details.",
+                "Click the confirmation link in the email.",
+                "Enter the location (street, number, postcode, district) and link your organisation."
+              ]
+            }
+          ]
+        },
+        "ngoAccountNoEmail": {
+          "title": "I didn't get a confirmation email",
+          "blocks": [
+            {
+              "text": "Please check your spam folder. If it's not there, write to us."
+            }
+          ]
+        },
+        "ngoAccountNoFacility": {
+          "title": "My organisation isn't found",
+          "blocks": [
+            {
+              "text": "Create a new organisation and click \"Next\"."
+            }
+          ]
+        },
+        "ngoAccountPassword": {
+          "title": "Forgot password",
+          "blocks": [
+            {
+              "text": "Click \"Forgot Password\" on the login page and follow the link in the email."
+            }
+          ]
+        },
+        "ngoAccountTraeger": {
+          "title": "We are a provider (Träger) with several facilities",
+          "blocks": [
+            {
+              "text": "Get in touch and we'll set up shared access. You then manage all facilities under one account, each with its own opportunities, volunteers and location. You switch between them under \"Profile\"."
+            }
+          ]
+        },
+        "ngoCreate": {
+          "title": "Create an opportunity"
+        },
+        "ngoCreateWhichType": {
+          "title": "Which type fits?",
+          "blocks": [
+            {
+              "list": [
+                "Regular: recurring support, e.g. German class, tutoring, childcare every Wednesday",
+                "Accompanying: a volunteer accompanies a refugee to a single appointment, e.g. a doctor or an authority",
+                "Events: something on a specific day, e.g. a workshop, a summer party, a group activity"
+              ]
+            }
+          ]
+        },
+        "ngoCreateRegular": {
+          "title": "Create a regular opportunity",
+          "blocks": [
+            {
+              "steps": [
+                "On Home, click \"+ Create New Opportunity\".",
+                "Opportunity title: short and clear, e.g. \"Childcare for 3 to 5 year olds\" (max. 150 characters).",
+                "Volunteering type: click \"Regular\".",
+                "NGO: already filled in. If your account has several organisations, pick the right one.",
+                "Fill in every field under \"Opportunity details\" (see below).",
+                "Click \"Create opportunity\"."
+              ]
+            },
+            {
+              "list": [
+                "Description: what the volunteer does, with whom, and what they should bring",
+                "Main communication: German, English or both",
+                "Refugees speak: the languages of the people the volunteer works with",
+                "Schedule: which days and what time of day",
+                "Number of volunteers: how many people you need",
+                "Activities: at least one, e.g. childcare",
+                "Skills & experience: at least one",
+                "Address: your organisation's address by default. If it takes place somewhere else, tick \"Not my location\" and enter street, postcode and city."
+              ]
+            }
+          ]
+        },
+        "ngoCreateAccompanying": {
+          "title": "Create an accompanying request",
+          "blocks": [
+            {
+              "steps": [
+                "On Home, click \"+ Create New Opportunity\".",
+                "Title, e.g. \"Accompanying to the paediatrician, Arabic\".",
+                "Volunteering type: click \"Accompanying\".",
+                "NGO: check or pick.",
+                "Fill in every field under \"Accompanying details\" (see below).",
+                "Click \"Create opportunity\"."
+              ]
+            },
+            {
+              "list": [
+                "Appointment address and appointment postcode",
+                "Appointment date: at least 7 working days from today. Earlier isn't possible, the form shows you the first possible date.",
+                "Appointment time: not before 9:00, at most 3 hours long",
+                "Name and phone number of the refugee",
+                "Refugee language",
+                "Appointment language: German, German and English, or no translation",
+                "Description: what the appointment is about and what the volunteer should know"
+              ]
+            },
+            {
+              "text": "Volunteers only see the name, phone number and appointment address once they are matched. Before that they see only postcode and district."
+            }
+          ]
+        },
+        "ngoCreateEvent": {
+          "title": "Create an event",
+          "blocks": [
+            {
+              "steps": [
+                "On Home, click \"+ Create New Opportunity\".",
+                "Title, e.g. \"Helpers for our summer party\".",
+                "Volunteering type: click \"Events\".",
+                "Fill in the same fields as for a regular opportunity, but enter the event date and event time instead of a schedule.",
+                "Click \"Create opportunity\"."
+              ]
+            }
+          ]
+        },
+        "ngoCreateAfter": {
+          "title": "What happens after I create it?",
+          "blocks": [
+            {
+              "steps": [
+                "You're back on Home. The new opportunity has the status \"New\".",
+                "We check it within one working day.",
+                "If everything is fine, we set it to \"Searching\". Only then do we actively look for volunteers. Only need4deed can set this status.",
+                "If something is missing, we send you an email."
+              ]
+            }
+          ]
+        },
+        "ngoCreateBlocked": {
+          "title": "I can't click \"Create opportunity\"",
+          "blocks": [
+            {
+              "list": [
+                "A field is marked red: fill it in. Required are title, type, description, languages, schedule or date, activities and skills.",
+                "\"Your organisation's profile is missing a postcode\": click the link in the message, add the address in the profile and come back. Your input is kept.",
+                "\"This organisation is inactive\": write to us and we'll reactivate it.",
+                "Appointment too early (accompanying): pick a date at least 7 working days from today. If it's more urgent, write to us."
+              ]
+            }
+          ]
+        },
+        "ngoCreateDuplicate": {
+          "title": "Duplicate an opportunity",
+          "blocks": [
+            {
+              "text": "Handy when you need something similar again, e.g. a second accompanying for the same person."
+            },
+            {
+              "steps": [
+                "Open the opportunity: click its card on Home or under \"Opportunities\".",
+                "Scroll down to \"Duplicate opportunity\" and click the button.",
+                "A new form opens with almost everything filled in.",
+                "Change what's different. For accompanying, enter date, time, name and phone number again.",
+                "Click \"Create opportunity\". We check the copy too."
+              ]
+            }
+          ]
+        },
+        "ngoCreateEdit": {
+          "title": "Edit, pause or end an opportunity",
+          "blocks": [
+            {
+              "steps": [
+                "Open the opportunity from its card.",
+                "Change content: every section (details, contact details, accompanying details) has \"Edit\". Change the fields and click \"Save changes\".",
+                "Change type: at the top, \"Change type\". If you switch away from accompanying, the accompanying details may no longer fit.",
+                "Pause or end: at the top, \"Change status\" and pick \"Inactive\". Only need4deed can delete, so write to us for that."
+              ]
+            },
+            {
+              "text": "About once a month we email you to ask whether your opportunities are still current."
+            }
+          ]
+        },
+        "ngoCreateRules": {
+          "title": "Accompanying: what's possible and what isn't?",
+          "blocks": [
+            {
+              "list": [
+                "Doctor's appointments, except: Charité and Vivantes, appointments before or after surgery, surgery, neurosurgery, anaesthesiology, radiotherapy",
+                "Authorities, except the registry office and court",
+                "Counselling centres and banks, no appointments with lawyers",
+                "Opening bank accounts, flat viewings, schools and daycare, accompanying on the way"
+              ]
+            },
+            {
+              "text": "Deadlines: at least 7 working days ahead, at most 3 hours, not before 9:00. At the latest 4 working days before, we tell you whether we found someone."
+            },
+            {
+              "text": "Volunteers aren't professional interpreters and translate to the best of their knowledge. Need4Deed and the volunteers aren't liable for the interpreting. They don't give advice either."
+            }
+          ]
+        },
+        "ngoCreateStatuses": {
+          "title": "What do the labels on the cards mean?",
+          "blocks": [
+            {
+              "text": "First label: the state of the opportunity"
+            },
+            {
+              "list": [
+                "New: waiting for our check",
+                "Searching: checked, we're looking for volunteers",
+                "Active: someone is volunteering",
+                "Inactive: paused or ended",
+                "Past: the date has passed"
+              ]
+            },
+            {
+              "text": "Second label: the state of matching"
+            },
+            {
+              "list": [
+                "No matches: nobody suggested yet",
+                "Pending match: someone was asked, no answer yet",
+                "Matched: someone is matched",
+                "Needs rematch: the volunteer stopped, we're looking again",
+                "Unmatched: the match didn't work out",
+                "No match found: we found nobody"
+              ]
+            },
+            {
+              "text": "The green label shows the type: accompanying, regular or event."
+            }
+          ]
+        },
+        "ngoFind": {
+          "title": "Find volunteers"
+        },
+        "ngoFindByUs": {
+          "title": "Need4Deed searches for me",
+          "blocks": [
+            {
+              "text": "As soon as your opportunity is \"Searching\", we search. You don't need to do anything else."
+            },
+            {
+              "steps": [
+                "We check that everything is complete and contact suitable volunteers by language, district, availability and activity.",
+                "We introduce you to each other by email.",
+                "Please invite the volunteer to a first meeting within 5 to 7 working days and CC us.",
+                "The volunteer appears in your opportunity under \"Volunteers\", tab \"Matched\"."
+              ]
+            },
+            {
+              "text": "Everyone here is a volunteer, so please be a little patient."
+            }
+          ]
+        },
+        "ngoFindRecommended": {
+          "title": "Suggestions for my opportunity",
+          "blocks": [
+            {
+              "steps": [
+                "Open the opportunity from its card.",
+                "Scroll to the \"Volunteers\" section. Below it you see well-matching volunteers, with travel time to your location.",
+                "Click a name to see the profile.",
+                "Click \"Request to suggest\" for a suitable person. We get your request and get back to you."
+              ]
+            }
+          ]
+        },
+        "ngoFindSearch": {
+          "title": "Search myself",
+          "blocks": [
+            {
+              "steps": [
+                "Click \"Volunteers\" in the menu, then \"Need4Deed volunteers\" at the top.",
+                "Filter by language, district, skills, activities or accompanying. With several languages, choose whether the volunteer should speak any or all of them.",
+                "Switch between list, cards and the Berlin map at the top.",
+                "Click a volunteer to open their profile.",
+                "In the \"Opportunities\" section, click \"Request to suggest\" and pick your opportunity.",
+                "We get the request and make the contact. The volunteer appears in your opportunity under \"Pending\"."
+              ]
+            }
+          ]
+        },
+        "ngoFindOwn": {
+          "title": "Place one of my own volunteers",
+          "blocks": [
+            {
+              "steps": [
+                "Click \"Volunteers\" in the menu, then \"My volunteers\".",
+                "Open the volunteer's profile.",
+                "In the \"Opportunities\" section, click \"Suggest\" and pick your opportunity. The volunteer sees the suggestion as open."
+              ]
+            }
+          ]
+        },
+        "ngoFindNobody": {
+          "title": "Nobody was found",
+          "blocks": [
+            {
+              "text": "For accompanying, we let you know at the latest 4 working days before the appointment. For other opportunities we keep looking. Write to us if it's urgent."
+            }
+          ]
+        },
+        "ngoFindNoContact": {
+          "title": "Why can't I see contact details?",
+          "blocks": [
+            {
+              "text": "You get contact details when we introduce you to each other. Until then, requests go through us."
+            }
+          ]
+        },
+        "ngoFindMessages": {
+          "title": "Messages when I click \"Request to suggest\"",
+          "blocks": [
+            {
+              "list": [
+                "\"Already requested or linked\": you already requested this volunteer for this opportunity.",
+                "\"The opportunity is no longer open\": it's inactive or past.",
+                "\"You don't have any opportunities yet\": create an opportunity first.",
+                "Withdraw a request: in the volunteer's profile, click \"Withdraw suggestion\" next to the opportunity."
+              ]
+            }
+          ]
+        },
+        "ngoFindVetting": {
+          "title": "How do you check volunteers?",
+          "blocks": [
+            {
+              "list": [
+                "Every new volunteer has a personal phone call with us.",
+                "They apply for an extended certificate of good conduct and show proof of measles vaccination.",
+                "Volunteers who accompany also get a video introduction."
+              ]
+            }
+          ]
+        },
+        "ngoManage": {
+          "title": "Look after volunteers"
+        },
+        "ngoManageMatched": {
+          "title": "Where do I find matched volunteers?",
+          "blocks": [
+            {
+              "text": "Open your opportunity from its card. In the \"Volunteers\" section, matched volunteers are under the \"Matched\" tab, and those already volunteering under \"Active\"."
+            }
+          ]
+        },
+        "ngoManageAppreciation": {
+          "title": "Appreciation",
+          "blocks": [
+            {
+              "text": "For volunteers we matched, we take care of appreciation."
+            }
+          ]
+        },
+        "ngoManageStops": {
+          "title": "A volunteer stops",
+          "blocks": [
+            {
+              "text": "Let us know and we'll look again. We also check in about once a month to ask how it's going."
+            }
+          ]
+        },
+        "ngoEfz": {
+          "title": "Extended certificate of good conduct (EFZ)",
+          "blocks": [
+            {
+              "text": "We request the EFZ for you. Just write to us."
+            }
+          ]
+        },
+        "ngoPosts": {
+          "title": "Posts (chat)",
+          "blocks": [
+            {
+              "steps": [
+                "Open the chat with \"Posts\" in the menu.",
+                "Write to other organisations or to us.",
+                "Arrangements, dates and questions stay in one place."
+              ]
+            }
+          ]
+        },
+        "ngoPrivacy": {
+          "title": "Data protection & security"
+        },
+        "ngoPrivacyWhere": {
+          "title": "Where is our data stored?",
+          "blocks": [
+            {
+              "text": "At Infomaniak in Switzerland. All data stays there, nothing is transferred abroad. The dashboard is open source and GDPR compliant."
+            }
+          ]
+        },
+        "ngoPrivacySecurity": {
+          "title": "How secure is it?",
+          "blocks": [
+            {
+              "list": [
+                "Encrypted in transit (SSL/TLS) and at rest (AES)",
+                "Backups in at least 3 locations",
+                "ISO 27001 data centres with yearly penetration tests"
+              ]
+            }
+          ]
+        },
+        "ngoPrivacyAvv": {
+          "title": "Do we need a data processing agreement (DPA)?",
+          "blocks": [
+            {
+              "text": "If you need one, we issue it. Just write to us."
+            }
+          ]
+        },
+        "ngoPrivacyPhotos": {
+          "title": "Do you take photos at our facility?",
+          "blocks": [
+            {
+              "text": "Sometimes we visit and photograph activities to win new volunteers. Faces of children or refugees are only shown with explicit permission."
+            }
+          ]
+        },
+        "coordProcess": {
+          "title": "The matching process at a glance",
+          "blocks": [
+            {
+              "steps": [
+                "A new volunteer registers and has the status \"New\".",
+                "First phone call.",
+                "We send 2 to 3 suitable opportunities.",
+                "Send the EFZ application by email, right after the call or after they choose.",
+                "The volunteer says yes and sends the signed form and a copy of their ID.",
+                "Match them in the dashboard.",
+                "Apply for the EFZ.",
+                "After a month, check whether they started."
+              ]
+            },
+            {
+              "text": "If nothing fits, we try again in 2 weeks."
+            },
+            {
+              "text": "Always: every contact (call, attempt, message, email) goes into the Communication Tracker in the volunteer's profile. And: no match without a phone call first."
+            }
+          ]
+        },
+        "coordCall": {
+          "title": "First call"
+        },
+        "coordCallAsk": {
+          "title": "What do I ask?",
+          "blocks": [
+            {
+              "list": [
+                "Wishes: which activities, with whom (children, adults, families)",
+                "Time: which days and how many hours",
+                "Skills and experience",
+                "Languages and how well",
+                "Home and district",
+                "Measles vaccination: do they have proof?",
+                "Registered in Berlin? (matters for the EFZ)"
+              ]
+            }
+          ]
+        },
+        "coordCallExplain": {
+          "title": "What do I explain?",
+          "blocks": [
+            {
+              "list": [
+                "We match with refugee shelters and projects.",
+                "Travel time is usually around 35 minutes.",
+                "We follow the needs of the organisations.",
+                "After the call we send a few suitable options."
+              ]
+            }
+          ]
+        },
+        "coordCallRecord": {
+          "title": "What do I enter in the dashboard afterwards?",
+          "blocks": [
+            {
+              "steps": [
+                "Open the volunteer's profile: \"Volunteers\", then click the name.",
+                "Log the contact: in the \"Communication Tracker\", click \"+ Register contact\", type \"Called\", date and short notes.",
+                "Set the status: at the top, next to the engagement status, click \"Mark as searching\" and pick \"Available\".",
+                "Complete the profile: with \"Edit\", add availability, preferred districts, languages with level, activities and skills. The recommendations depend on these.",
+                "Measles vaccination: if they have proof, upload it under \"Documents\", \"Measles vaccination\"."
+              ]
+            }
+          ]
+        },
+        "coordCallNoAnswer": {
+          "title": "I can't reach the volunteer by phone",
+          "blocks": [
+            {
+              "steps": [
+                "Log every attempt: \"+ Register contact\", type \"Tried to call\".",
+                "Then write via WhatsApp, Telegram, Signal or SMS and ask for a call. Log it as \"Texted or emailed\" with the matching contact method.",
+                "If there's no answer, send an email and log it the same way.",
+                "After several attempts without an answer: engagement status \"Unresponsive\"."
+              ]
+            },
+            {
+              "text": "Even if the volunteer answers by message, we need a phone call before any match."
+            }
+          ]
+        },
+        "coordOptions": {
+          "title": "Send suitable opportunities"
+        },
+        "coordOptionsFind": {
+          "title": "Find opportunities for a volunteer",
+          "blocks": [
+            {
+              "steps": [
+                "Open the volunteer's profile.",
+                "\"Recommended opportunities\" shows the best matches by district, language and availability, with travel time.",
+                "Or click \"Find Opportunity\" in the \"Opportunities\" section and filter yourself.",
+                "Watch the travel time (around 35 minutes) and that the opportunity is \"Searching\"."
+              ]
+            }
+          ]
+        },
+        "coordOptionsSend": {
+          "title": "Send the options",
+          "blocks": [
+            {
+              "steps": [
+                "Pick 2 to 3 suitable opportunities.",
+                "Click \"Suggest\" for each. The opportunity appears in the volunteer's profile under \"Pending\" and they see the suggestion in their dashboard.",
+                "Also send them the options by email.",
+                "\"+ Register contact\", type \"Opportunity list sent\"."
+              ]
+            }
+          ]
+        },
+        "coordOptionsReverse": {
+          "title": "Find volunteers for an opportunity",
+          "blocks": [
+            {
+              "steps": [
+                "Open the opportunity.",
+                "\"Recommended volunteers\" shows suitable people with travel time.",
+                "Or click \"Find volunteers\" in the \"Volunteers\" section and filter yourself.",
+                "Click \"Suggest\" for a suitable volunteer."
+              ]
+            }
+          ]
+        },
+        "coordOptionsNgoRequest": {
+          "title": "An NGO clicked \"Request to suggest\"",
+          "blocks": [
+            {
+              "text": "You get a notification on Home and by email. Open the opportunity, contact the volunteer and suggest them if they're interested."
+            }
+          ]
+        },
+        "coordOptionsStale": {
+          "title": "A suggestion is left hanging",
+          "blocks": [
+            {
+              "text": "If a suggestion stays \"Pending\" for 2 months, the system sends the volunteer a reminder automatically. If they're no longer interested: \"Withdraw suggestion\" in the profile."
+            }
+          ]
+        },
+        "coordEfz": {
+          "title": "Extended certificate of good conduct (EFZ)"
+        },
+        "coordEfzWhen": {
+          "title": "When do I send the EFZ application?",
+          "blocks": [
+            {
+              "list": [
+                "Right after the call, if the volunteer is registered in Berlin and looks likely to volunteer.",
+                "Otherwise only once they've chosen a specific opportunity."
+              ]
+            }
+          ]
+        },
+        "coordEfzSend": {
+          "title": "How do I send the application?",
+          "blocks": [
+            {
+              "steps": [
+                "Open the volunteer's profile, \"Documents\" section.",
+                "Click \"Send email with application\" and confirm with \"Send\".",
+                "The volunteer gets the application form and instructions, with community@need4deed.org in CC. It's logged in the Communication Tracker automatically."
+              ]
+            }
+          ]
+        },
+        "coordEfzReceived": {
+          "title": "The form and ID have arrived",
+          "blocks": [
+            {
+              "steps": [
+                "Under \"Documents\", upload the signed \"Application for certificate of good conduct\" and \"Passport / ID\".",
+                "Match the volunteer.",
+                "Then apply for the EFZ.",
+                "When the certificate arrives, upload it under \"Certificate of good conduct\"."
+              ]
+            }
+          ]
+        },
+        "coordEfzNotBerlin": {
+          "title": "The volunteer isn't registered in Berlin",
+          "blocks": [
+            {
+              "list": [
+                "EFZ through another city: possible, but we first need to find out how it works there. Ask the team.",
+                "Apply themselves: we give the volunteer a letter signed by us. With it they apply for the EFZ themselves, free instead of 12 euros."
+              ]
+            }
+          ]
+        },
+        "coordMatch": {
+          "title": "Match"
+        },
+        "coordMatchHow": {
+          "title": "The volunteer said yes: how do I match them?",
+          "blocks": [
+            {
+              "text": "First check:"
+            },
+            {
+              "list": [
+                "We spoke to them by phone. No match without a call, even if they agreed by message or email. Is there a \"Called\" entry in the Communication Tracker?",
+                "They chose an opportunity.",
+                "They sent the signed form and the copy of their ID."
+              ]
+            },
+            {
+              "steps": [
+                "Open the opportunity, \"Volunteers\" section, tab \"Pending\".",
+                "Click \"Match\" for the volunteer. They move to the \"Matched\" tab.",
+                "Not requested yet: click \"Suggest\" first, then \"Match\".",
+                "Introduce the organisation and the volunteer to each other by email. The organisation invites them within 5 to 7 working days and CCs us.",
+                "\"+ Register contact\", type \"Match email sent\"."
+              ]
+            },
+            {
+              "text": "For accompanying, the system emails the volunteer the appointment details automatically after the match. Only then do they see the name, phone number and appointment address."
+            }
+          ]
+        },
+        "coordMatchUndo": {
+          "title": "Not a match after all",
+          "blocks": [
+            {
+              "text": "In the \"Pending\" tab, click \"Not a match\". If the volunteer is already matched, unmatch them."
+            }
+          ]
+        },
+        "coordFollow": {
+          "title": "Follow up"
+        },
+        "coordFollowMonth": {
+          "title": "After a month: did the volunteer start?",
+          "blocks": [
+            {
+              "steps": [
+                "Ask the volunteer whether they met the coordinator on site and started.",
+                "\"+ Register contact\", type \"Post-match follow-up\".",
+                "Yes: in the opportunity, click \"Mark as active\" for the volunteer. Their engagement status then becomes \"Active\".",
+                "No: find out why. If it doesn't fit, unmatch and send new options."
+              ]
+            },
+            {
+              "text": "If a volunteer is still \"Matched\" 2 months after the match, the system sends a follow-up email automatically. It adds to your own check-in after a month."
+            }
+          ]
+        },
+        "coordFollowStops": {
+          "title": "The volunteer stops",
+          "blocks": [
+            {
+              "list": [
+                "In the opportunity, click \"Mark as past\".",
+                "If they don't want to volunteer at all any more: engagement status \"Inactive\".",
+                "Just a break: \"Temporarily unavailable\" with a return date.",
+                "If the organisation needs someone new, the opportunity shows \"Needs rematch\". Search again with \"Recommended volunteers\"."
+              ]
+            }
+          ]
+        },
+        "coordNoFit": {
+          "title": "Nothing fits"
+        },
+        "coordNoFitRetry": {
+          "title": "Nothing fits right now (times, languages, district)",
+          "blocks": [
+            {
+              "steps": [
+                "Tell the volunteer you'll get back to them in about 2 weeks.",
+                "\"+ Register contact\", type \"Status update\", with a note on why nothing fits.",
+                "Put the reminder in your calendar.",
+                "In 2 weeks, check \"Recommended opportunities\" again."
+              ]
+            }
+          ]
+        },
+        "coordNoFitAccompanying": {
+          "title": "Nobody is found for an accompanying request",
+          "blocks": [
+            {
+              "text": "The organisation must hear from us at the latest 4 working days before the appointment. The system then sends the \"No accompanying volunteer found\" email automatically."
+            }
+          ]
+        },
+        "coordReview": {
+          "title": "Check new opportunities from NGOs"
+        },
+        "coordReviewNew": {
+          "title": "A new opportunity came in",
+          "blocks": [
+            {
+              "steps": [
+                "New opportunities are on Home under \"Newest Opportunities\" with the status \"New\".",
+                "Check them within one working day: are description, languages, times and address complete? Does an accompanying request follow the rules?",
+                "All good: at the top, \"Change status\" and pick \"Validated\". The opportunity becomes \"Searching\".",
+                "Something is missing: email the organisation."
+              ]
+            }
+          ]
+        },
+        "coordReviewRules": {
+          "title": "Rules for accompanying",
+          "blocks": [
+            {
+              "list": [
+                "Doctor's appointments, except: Charité and Vivantes, appointments before or after surgery, surgery, neurosurgery, anaesthesiology, radiotherapy",
+                "Authorities, except the registry office and court",
+                "Counselling centres and banks, no appointments with lawyers",
+                "Opening bank accounts, flat viewings, schools and daycare, accompanying on the way"
+              ]
+            },
+            {
+              "text": "At least 7 working days ahead, at most 3 hours, not before 9:00."
+            }
+          ]
+        },
+        "coordStatuses": {
+          "title": "Status overview"
+        },
+        "coordStatusesVolunteer": {
+          "title": "Volunteer engagement status",
+          "blocks": [
+            {
+              "list": [
+                "New: hasn't talked to us yet",
+                "Available: had the first call, can volunteer",
+                "Active: volunteering (set by the system)",
+                "Temporarily unavailable: on a break, with a return date",
+                "Inactive: no longer volunteers",
+                "Unresponsive: didn't answer after several attempts"
+              ]
+            }
+          ]
+        },
+        "coordStatusesMatch": {
+          "title": "A volunteer's state for an opportunity",
+          "blocks": [
+            {
+              "list": [
+                "Pending: suggested, waiting for an answer",
+                "Matched: the match is made",
+                "Active: has started",
+                "Past: the volunteering is over"
+              ]
+            }
+          ]
+        },
+        "coordMenu": {
+          "title": "Where do I find what in the menu?",
+          "blocks": [
+            {
+              "list": [
+                "Home: newest volunteers, newest opportunities, comments you're tagged in and your recent activity",
+                "Volunteers: all volunteers with filters, as a list, cards or the Berlin map",
+                "Opportunities: all opportunities of all organisations, with status and filters",
+                "NGOs: all organisations and providers with their profiles",
+                "Posts: the chat with the organisations",
+                "Calendar: create and publish need4deed events",
+                "Admin: accounts, email templates, statistics",
+                "Profile: your own account"
+              ]
+            }
+          ]
+        }
+      }
     }
   },
   "aboutus": {

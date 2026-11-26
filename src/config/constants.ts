@@ -100,6 +100,7 @@ export enum DashboardRoutes {
   Posts = "/dashboard/posts",
   Calendar = "/dashboard/calendar",
   Profile = "/dashboard/profile",
+  Help = "/dashboard/help",
   Admin = "/dashboard/admin",
   AdminDomains = "/dashboard/admin/domains",
   AdminStatistics = "/dashboard/admin/statistics",
