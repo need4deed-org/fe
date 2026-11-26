@@ -37,6 +37,7 @@ export const apiPathRequestPasswordReset = `/${apiPrefix}/auth/request-reset`;
 export const apiPathPasswordReset = `/${apiPrefix}/auth/password-reset`;
 export const apiPathTrustedDomain = `/${apiPrefix}/trusted-domain`;
 export const apiPathStatistics = `/${apiPrefix}${Endpoint.STATISTICS}`;
+export const apiPathEmailTemplates = `/${apiPrefix}${Endpoint.ADMIN_EMAIL_TEMPLATE}`;
 export const apiPathDistrictGeometry = `/${apiPrefix}/district-geometry`;
 export const apiPathCommute = (entityId: number, entity: EntityType) => `/${apiPrefix}/${entity}/${entityId}/commute`;
 export const apiPathAggregateDistrict = (entity: DistrictMapEntity) => `/${apiPrefix}/${entity}/districts`;
@@ -94,6 +95,7 @@ export enum DashboardRoutes {
   Volunteers = "/dashboard/volunteers",
   Opportunities = "/dashboard/opportunities",
   Agents = "/dashboard/agents",
+  Organizations = "/dashboard/organizations",
   Racs = "/dashboard/racs",
   Posts = "/dashboard/posts",
   Calendar = "/dashboard/calendar",
@@ -103,6 +105,7 @@ export enum DashboardRoutes {
   AdminStatistics = "/dashboard/admin/statistics",
   AdminNgoVolunteers = "/dashboard/admin/ngo-volunteers",
   AdminAccounts = "/dashboard/admin/accounts",
+  AdminEmailTemplates = "/dashboard/admin/email-templates",
 }
 
 export const questionMark = "?";

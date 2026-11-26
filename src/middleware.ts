@@ -14,6 +14,7 @@ const REFRESH = "refresh";
 
 const authorizedRoutes = {
   AGENT: { regex: /^(?:\/[a-z]{2})?\/dashboard\/agents\/([0-9]+)$/, redirect: "/dashboard/agents" },
+  ORGANIZATION: { regex: /^(?:\/[a-z]{2})?\/dashboard\/organizations\/([0-9]+)$/, redirect: "/dashboard" },
   NEW_OPPORTUNITIES: { regex: /^(?:\/[a-z]{2})?\/forms\/opportunity(?:\/|$)/ },
   DASHBOARD: { regex: /^(?:\/[a-z]{2})?\/dashboard(?:\/|$)/ },
 };
@@ -50,7 +51,8 @@ export function middleware(request: NextRequest) {
       return redirectTo("/dashboard");
     }
 
-    const volunteerRestrictedRegex = /^(?:\/[a-z]{2})?\/dashboard\/(volunteers|agents|posts|calendar)(?:\/|$)/;
+    const volunteerRestrictedRegex =
+      /^(?:\/[a-z]{2})?\/dashboard\/(volunteers|agents|organizations|posts|calendar)(?:\/|$)/;
     if (userObject?.role === UserRole.VOLUNTEER && volunteerRestrictedRegex.test(pathname)) {
       return redirectTo("/dashboard");
     }
@@ -58,6 +60,11 @@ export function middleware(request: NextRequest) {
     const isAgentDetail = authorizedRoutes.AGENT.regex.test(pathname);
     if (isAgentDetail && !isAuthorized && userObject?.role !== UserRole.AGENT) {
       return redirectTo(authorizedRoutes.AGENT.redirect);
+    }
+
+    const isOrganizationDetail = authorizedRoutes.ORGANIZATION.regex.test(pathname);
+    if (isOrganizationDetail && !isAuthorized && userObject?.role !== UserRole.AGENT) {
+      return redirectTo(authorizedRoutes.ORGANIZATION.redirect);
     }
 
     const agentRestrictedRegex = /^(?:\/[a-z]{2})?\/dashboard\/calendar(?:\/|$)/;

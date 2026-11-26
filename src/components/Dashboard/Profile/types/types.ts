@@ -1,16 +1,36 @@
-import { ApiOpportunityGet, ApiVolunteerGet } from "need4deed-sdk";
+import { ApiOpportunityGet, ApiOrganizationGet, ApiVolunteerGet } from "need4deed-sdk";
 import { ApiAgentProfileGet } from "./agent";
 
-export type EntityType = "volunteer" | "opportunity" | "agent";
+export type EntityType = "volunteer" | "opportunity" | "agent" | "organization";
 
 export type ProfileEntityProps =
-  | { volunteer: ApiVolunteerGet; opportunity?: never; agent?: never; profileNavigation?: never }
-  | { opportunity: ApiOpportunityGet; volunteer?: never; agent?: never; profileNavigation?: never }
+  | {
+      volunteer: ApiVolunteerGet;
+      opportunity?: never;
+      agent?: never;
+      organization?: never;
+      profileNavigation?: never;
+    }
+  | {
+      opportunity: ApiOpportunityGet;
+      volunteer?: never;
+      agent?: never;
+      organization?: never;
+      profileNavigation?: never;
+    }
   | {
       agent: ApiAgentProfileGet;
       volunteer?: never;
       opportunity?: never;
+      organization?: never;
       profileNavigation?: ProfileNavigation;
+    }
+  | {
+      organization: ApiOrganizationGet;
+      agent?: never;
+      volunteer?: never;
+      opportunity?: never;
+      profileNavigation?: never;
     };
 
 export enum ProfileCardTypes {
@@ -37,6 +57,7 @@ export enum IconName {
   ChatsCircle = "chatsCircle",
   ChatsTeardrop = "chatsTeardrop",
   ClipboardText = "clipboardText",
+  Ear = "ear",
   Gift = "gift",
   House = "house",
   PingPong = "pingPong",

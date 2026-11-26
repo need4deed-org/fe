@@ -3,6 +3,7 @@ import { AgentProfileController } from "./AgentProfileController";
 import { OpportunityProfileController } from "./OpportunityProfileController";
 import { EntityType, ProfileNavigation } from "./types";
 import { VolunteerProfileController } from "./VolunteerProfileController";
+import { OrganizationProfileController } from "./OrganizationProfileController";
 
 const CONTROLLER_MAP: Record<
   EntityType,
@@ -11,6 +12,7 @@ const CONTROLLER_MAP: Record<
   volunteer: VolunteerProfileController,
   agent: AgentProfileController,
   opportunity: OpportunityProfileController,
+  organization: OrganizationProfileController,
 };
 
 type Props = {

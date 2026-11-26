@@ -53,6 +53,14 @@ import { Button } from "@/components/core/button";
 import { useScreenType } from "@/context/DeviceContext";
 import { usePrefillFilters } from "../common/CardsFilter/usePrefillFilters";
 
+const SCOPE_PARAM = "scope";
+const NO_OWNER_AGENT = "none";
+
+enum VolunteerScope {
+  MINE = "mine",
+  NEED4DEED = "need4deed",
+}
+
 export function Volunteers() {
   const { data: user, isLoading: isUserLoading, isError: isUserError } = useCurrentUserQuery(true, false);
   const queryClient = useQueryClient();
@@ -72,12 +80,23 @@ export function Volunteers() {
 
   const isExplicitEngagementClear = searchParams.getAll(QueryParamsKeys.ENGAGEMENT).includes("");
 
+  const scope =
+    searchParams.get(SCOPE_PARAM) === VolunteerScope.NEED4DEED ? VolunteerScope.NEED4DEED : VolunteerScope.MINE;
+  const isMyVolunteers = isAgent && scope === VolunteerScope.MINE;
+  const ownerAgents = !isAgent
+    ? undefined
+    : isMyVolunteers
+      ? (user?.agentMemberships ?? []).map(({ agentId }) => String(agentId))
+      : [NO_OWNER_AGENT];
+
   const isStaff = user?.role === UserRole.COORDINATOR || user?.role === UserRole.ADMIN;
-  const roleDefaultEngagements = isAgent
-    ? DEFAULT_NGO_VOLUNTEER_ENGAGEMENTS
-    : isStaff
-      ? DEFAULT_STAFF_VOLUNTEER_ENGAGEMENTS
-      : EMPTY_LIST;
+  const roleDefaultEngagements = isMyVolunteers
+    ? EMPTY_LIST
+    : isAgent
+      ? DEFAULT_NGO_VOLUNTEER_ENGAGEMENTS
+      : isStaff
+        ? DEFAULT_STAFF_VOLUNTEER_ENGAGEMENTS
+        : EMPTY_LIST;
 
   const { cardsFilter, defaultAppliedRef, defaultEngagements, serializeWithDefaultMarker } = usePrefillFilters({
     searchParams,
@@ -199,13 +218,23 @@ export function Volunteers() {
     router.replace(pathname + questionMark + withPrefilledMarker(serializeFilters(prefilled, searchParams)));
   }, [apiFilterOptions, opportunityFilter, opportunityId, pathname, router, searchParams, user]);
 
+  const handleScopeChange = (nextScope: string) => {
+    if (nextScope === scope) return;
+    const params = new URLSearchParams();
+    const view = searchParams.get("view");
+    if (view) params.set("view", view);
+    if (nextScope === VolunteerScope.NEED4DEED) params.set(SCOPE_PARAM, nextScope);
+    defaultAppliedRef.current = false;
+    pushFilterUrl(params);
+  };
+
   useEffect(() => {
-    if (!isAgent || !searchParams.has(QueryParamsKeys.SEARCH)) return;
+    if (!isAgent || isMyVolunteers || !searchParams.has(QueryParamsKeys.SEARCH)) return;
 
     const params = new URLSearchParams(searchParams.toString());
     params.delete(QueryParamsKeys.SEARCH);
     router.replace(pathname + questionMark + params.toString());
-  }, [isAgent, pathname, router, searchParams]);
+  }, [isAgent, isMyVolunteers, pathname, router, searchParams]);
 
   const activeFilters = createSelectedFilterItemsAsFlatArray(cardsFilter, handleFilterUpdate, t);
 
@@ -235,7 +264,18 @@ export function Volunteers() {
     <DashboardLayout>
       <VolunteersContainer>
         <CardsHeader
-          header={t(isAgent ? "dashboard.volunteers.agentHeadline" : "dashboard.volunteers.volunteers")}
+          header={t("dashboard.volunteers.volunteers")}
+          headlineOptions={
+            isAgent
+              ? [
+                  { key: VolunteerScope.MINE, label: t("dashboard.volunteers.myVolunteers") },
+                  { key: VolunteerScope.NEED4DEED, label: t("dashboard.volunteers.need4deedVolunteers") },
+                ]
+              : undefined
+          }
+          selectedHeadline={scope}
+          onHeadlineChange={handleScopeChange}
+          subheader={isAgent && !isMyVolunteers ? t("dashboard.volunteers.askNeed4deedToContact") : undefined}
           resultCounter={numOfVols}
           resultText={t("dashboard.home.sidebar.volunteers")}
           tabs={tabs}
@@ -244,7 +284,7 @@ export function Volunteers() {
           setIsFiltersOpen={setIsFiltersOpen}
           onSearchInputChange={handleSearchInputChange}
           searchValue={cardsFilter.search}
-          showSearch={!isAgent}
+          showSearch={!isAgent || isMyVolunteers}
           sortOrder={sortOrder}
           onSortOrderChange={handleSortChange}
           activeFilters={activeFilters}
@@ -265,6 +305,7 @@ export function Volunteers() {
             viewMode={viewMode}
             opportunityFilter={opportunityFilter}
             defaultEngagements={defaultEngagements}
+            ownerAgents={ownerAgents}
           />
           <Filters
             isFiltersOpen={isFiltersOpen}
