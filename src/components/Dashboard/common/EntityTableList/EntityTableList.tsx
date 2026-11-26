@@ -18,6 +18,7 @@ export function EntityTableList<T extends { id: string | number }>({
   noFixedWidth = false,
   isFewResults = false,
   isLoading = false,
+  footer,
 }: EntityTableListProps<T>) {
   const totalPages = Math.ceil(count / itemsPerPage);
   const goToPage = (page: number) => {
@@ -44,6 +45,7 @@ export function EntityTableList<T extends { id: string | number }>({
             )}
           </TableBody>
         </ScrollableTable>
+        {footer}
       </ScrollableTableContainer>
       {!isLoading && <PaginationNumbers currentPage={currentPage} goToPage={goToPage} totalPages={totalPages} />}
     </Wrapper>

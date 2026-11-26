@@ -4,6 +4,11 @@ import { COLUMN_WIDTH } from "../common/EntityTableList/columnWidths";
 import { ReactNode } from "react";
 import DropdownAccordionFilter from "../common/DropDownFilter/DropdownAccordionFilter";
 import { FilterItem } from "../common/CardsFilter/types";
+import { LanguageMatch } from "need4deed-sdk";
+import { Menu } from "@/components/core/menu";
+import { CaretDownIcon, CheckIcon } from "@phosphor-icons/react";
+import { FlexColumn } from "@/components/styled/FlexColumn";
+import { Paragraph } from "@/components/styled/text";
 
 const FULL_WIDTHS = {
   name: COLUMN_WIDTH.SM,
@@ -33,10 +38,15 @@ export const createVolunteerTableColumns = (
     districtFilters: FilterItem[];
     engagementFilters: FilterItem[];
     languageFilters: FilterItem[];
+    matchAllLanguages: boolean;
+    setMatchAllLanguages: (value: boolean) => void;
     typeFilters: FilterItem[];
   },
 ): Column[] => {
   const VOLUNTEER_COL_WIDTHS = getVolunteerColWidths(canSeeContactColumns);
+  const matchMode = dropdownFilters.matchAllLanguages ? LanguageMatch.ALL : LanguageMatch.ANY;
+  const matchLabel = t("dashboard.volunteers.languageMatch.label");
+  const matchOption = (mode: LanguageMatch) => t(`dashboard.volunteers.languageMatch.${mode}`);
 
   const columns: Column[] = [
     { key: "name", label: t("dashboard.volunteers.table.name"), width: VOLUNTEER_COL_WIDTHS.name },
@@ -57,7 +67,52 @@ export const createVolunteerTableColumns = (
       key: "language",
       label: t("dashboard.volunteers.table.language"),
       width: VOLUNTEER_COL_WIDTHS.language,
-      headerAction: <DropdownAccordionFilter items={dropdownFilters.languageFilters} />,
+      headerAction: (
+        <DropdownAccordionFilter
+          items={dropdownFilters.languageFilters}
+          triggerLabel={t("dashboard.volunteers.table.language")}
+          beforeItems={
+            <FlexColumn $gap="var(--spacing-8)" style={{ marginBlockEnd: "var(--spacing-8)" }}>
+              <Paragraph
+                aria-hidden="true"
+                fontSize="var(--checkbox-label-font-size)"
+                fontWeight="var(--font-weight-regular)"
+              >
+                {t("dashboard.volunteers.languageMatch.label")}
+              </Paragraph>
+              <Menu inFlow>
+                <Menu.Target label={`${matchLabel}: ${matchOption(matchMode)}`}>
+                  <Paragraph
+                    as="span"
+                    fontSize="var(--checkbox-label-font-size)"
+                    fontWeight="var(--font-weight-regular)"
+                  >
+                    {matchOption(matchMode)}
+                  </Paragraph>
+                  <CaretDownIcon size={16} aria-hidden />
+                </Menu.Target>
+                <Menu.Dropdown inFlow>
+                  {[LanguageMatch.ANY, LanguageMatch.ALL].map((mode) => (
+                    <Menu.Item
+                      key={mode}
+                      onSelect={() => dropdownFilters.setMatchAllLanguages(mode === LanguageMatch.ALL)}
+                    >
+                      <Paragraph
+                        as="span"
+                        fontSize="var(--checkbox-label-font-size)"
+                        fontWeight="var(--font-weight-regular)"
+                      >
+                        {matchOption(mode)}
+                      </Paragraph>
+                      {mode === matchMode ? <CheckIcon size={16} aria-hidden /> : null}
+                    </Menu.Item>
+                  ))}
+                </Menu.Dropdown>
+              </Menu>
+            </FlexColumn>
+          }
+        />
+      ),
     },
     {
       key: "district",

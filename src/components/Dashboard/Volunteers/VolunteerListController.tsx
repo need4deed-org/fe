@@ -70,6 +70,8 @@ function VolunteerListControllerContent({
   const dropdownFilters = {
     typeFilters: getSectionItems(filterSections, "type"),
     languageFilters: getSectionItems(filterSections, QueryParamsKeys.LANGUAGE),
+    matchAllLanguages: filter.matchAllLanguages ?? false,
+    setMatchAllLanguages: (matchAllLanguages: boolean) => setFilter((prev) => ({ ...prev, matchAllLanguages })),
     districtFilters: getSectionItems(filterSections, QueryParamsKeys.DISTRICT),
     engagementFilters: getSectionItems(filterSections, QueryParamsKeys.ENGAGEMENT),
   };

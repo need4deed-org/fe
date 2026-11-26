@@ -618,6 +618,18 @@
       "skillsExperience": "Skills & Experience",
       "preferredAvailability": "Preferred Availability",
       "preferredDistricts": "Preferred Districts",
+      "languageMatch": {
+        "label": "Match selected languages",
+        "any": "Any of them",
+        "all": "All of them",
+        "and": "and",
+        "or": "or"
+      },
+      "germanProficiency": {
+        "label": "German proficiency",
+        "fluent": "Fluent or native",
+        "belowFluent": "Below fluent"
+      },
       "langProficiency": {
         "beginner": "Beginner",
         "intermediate": "Intermediate",

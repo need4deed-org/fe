@@ -10,6 +10,7 @@ import {
 } from "@/components/Dashboard/Profile/sections/VolunteerAgents/types";
 import { createVolunteerTableColumns } from "./volunteerTableColumns";
 import { VolunteerTableRow } from "./VolunteerTableRow";
+import { GermanProficiencyLegend } from "./german-proficiency";
 import { EntityTableList } from "../common/EntityTableList";
 import { CopyButton } from "../common/CopyButton";
 import { FilterItem } from "../common/CardsFilter/types";
@@ -30,6 +31,8 @@ interface TableListProps {
     districtFilters: FilterItem[];
     engagementFilters: FilterItem[];
     languageFilters: FilterItem[];
+    matchAllLanguages: boolean;
+    setMatchAllLanguages: (value: boolean) => void;
     typeFilters: FilterItem[];
   };
 }
@@ -66,6 +69,7 @@ export function VolunteerTableList({
 
   return (
     <EntityTableList
+      footer={!isLoading && volunteers.length > 0 ? <GermanProficiencyLegend /> : undefined}
       isLoading={isLoading}
       isFewResults={volunteers.length < 5}
       columns={columns}

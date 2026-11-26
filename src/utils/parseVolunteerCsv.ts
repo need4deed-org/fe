@@ -6,14 +6,16 @@ export type VolunteerCsvResult =
   | { status: "duplicate-columns"; columns: string[] }
   | { status: "empty" };
 
-const COLUMNS: Record<string, keyof ApiVolunteerImportRow> = {
+type CsvField = keyof Pick<ApiVolunteerImportRow, "firstName" | "lastName" | "email" | "phone" | "postcode">;
+
+const COLUMNS: Partial<Record<string, CsvField>> = {
   firstname: "firstName",
   lastname: "lastName",
   email: "email",
   phone: "phone",
   postcode: "postcode",
 };
-const REQUIRED: (keyof ApiVolunteerImportRow)[] = ["firstName", "email", "postcode"];
+const REQUIRED: CsvField[] = ["firstName", "email", "postcode"];
 
 const normalizeHeader = (header: string) => header.toLowerCase().replace(/[\s_-]/g, "");
 
