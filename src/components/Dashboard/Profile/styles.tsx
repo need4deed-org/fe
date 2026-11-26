@@ -50,6 +50,9 @@ export const ProfileNavigatorWrapper = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-16);
   font-size: var(--profile-navigation-container-font-size);
 `;
 

@@ -9,28 +9,28 @@ export type ProfileEntityProps =
       opportunity?: never;
       agent?: never;
       organization?: never;
-      handleProfileNavigation?: never;
+      profileNavigation?: never;
     }
   | {
       opportunity: ApiOpportunityGet;
       volunteer?: never;
       agent?: never;
       organization?: never;
-      handleProfileNavigation?: never;
+      profileNavigation?: never;
     }
   | {
       agent: ApiAgentProfileGet;
       volunteer?: never;
       opportunity?: never;
       organization?: never;
-      handleProfileNavigation?: (direction: ProfileNavigationDirection) => void;
+      profileNavigation?: ProfileNavigation;
     }
   | {
       organization: ApiOrganizationGet;
       agent?: never;
       volunteer?: never;
       opportunity?: never;
-      handleProfileNavigation?: never;
+      profileNavigation?: never;
     };
 
 export enum ProfileCardTypes {
@@ -75,5 +75,12 @@ export enum ProfileNavigationDirection {
   LEFT = "left",
   RIGHT = "right",
 }
+
+export type ProfileNavigation = {
+  options: { id: number; title: string }[];
+  selectedId: number;
+  onSelect: (id: number) => void;
+  onStep: (direction: ProfileNavigationDirection) => void;
+};
 
 export const FadeDuration = 300;

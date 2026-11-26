@@ -1469,7 +1469,8 @@
       "notVolProfSetUp": "Your volunteer profile is not set up yet — please complete registration.",
       "notSetUp": "Your organisation profile is not set up yet — please complete registration.",
       "nextNgoProfile": "Next NGO Profile",
-      "prevNgoProfile": "Previous NGO Profile"
+      "prevNgoProfile": "Previous NGO Profile",
+      "selectNgoProfile": "Choose NGO profile"
     },
     "agentProfile": {
       "agentProfile": "NGO Profile",
