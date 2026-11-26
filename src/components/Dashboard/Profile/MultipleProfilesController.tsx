@@ -30,20 +30,23 @@ export const MultipleProfilesController = ({ agentIds, showList }: Props) => {
     [pathname, router, searchParams],
   );
 
-  const onStep = useCallback(
-    (direction: ProfileNavigationDirection) => {
-      const step = direction === ProfileNavigationDirection.LEFT ? -1 : 1;
-      onSelect(agentIds[(currentIndex + step + agentIds.length) % agentIds.length]);
-    },
-    [agentIds, currentIndex, onSelect],
-  );
-
   const options = useMemo(
     () =>
       (showList ? agentIds : [])
         .map((id) => ({ id, title: currentAgents.find((agent) => agent?.id === id)?.title ?? String(id) }))
         .sort((a, b) => a.title.localeCompare(b.title)),
     [agentIds, currentAgents, showList],
+  );
+
+  const stepOrder = useMemo(() => (showList ? options.map(({ id }) => id) : agentIds), [agentIds, options, showList]);
+
+  const onStep = useCallback(
+    (direction: ProfileNavigationDirection) => {
+      const step = direction === ProfileNavigationDirection.LEFT ? -1 : 1;
+      const index = Math.max(stepOrder.indexOf(selectedId), 0);
+      onSelect(stepOrder[(index + step + stepOrder.length) % stepOrder.length]);
+    },
+    [onSelect, selectedId, stepOrder],
   );
 
   const profileNavigation: ProfileNavigation = { options, selectedId, onSelect, onStep };
