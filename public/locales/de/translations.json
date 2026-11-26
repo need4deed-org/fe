@@ -634,7 +634,7 @@
       "germanProficiency": {
         "label": "Deutschkenntnisse",
         "fluent": "Fließend oder Muttersprache",
-        "belowFluent": "Unter fließendem Niveau"
+        "belowFluent": "Weniger als fließend"
       },
       "langProficiency": {
         "beginner": "Anfänger",
