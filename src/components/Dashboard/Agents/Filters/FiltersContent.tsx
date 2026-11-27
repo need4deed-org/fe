@@ -1,17 +1,17 @@
+import { ViewMode } from "../../common/types";
 import { useTranslation } from "react-i18next";
 import { AgentCardsFilter } from "./types";
 import AccordionFilter from "../../common/CardsFilter/AccordionFilter";
 import { getVisibleSelectionFilterSections } from "../../common/CardsFilter/selectionFilters";
 import { SetFilter } from "../../common/CardsFilter/types";
 import { createAgentFilterSections } from "./helpers";
-import { FiltersContentContainer } from "./styles";
+import { FiltersContentContainer } from "../../common/CardsFilter/Filters";
 import { useAuth } from "@/hooks/useAuth";
-import { ViewMode } from "../../common/types";
 
 type Props = {
+  viewMode: ViewMode;
   filter: AgentCardsFilter;
   setFilter: SetFilter<AgentCardsFilter>;
-  viewMode: ViewMode;
 };
 
 export default function FiltersContent({ setFilter, filter, viewMode }: Props) {

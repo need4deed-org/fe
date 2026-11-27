@@ -1,19 +1,19 @@
+import { ViewMode } from "../../common/types";
 import { useTranslation } from "react-i18next";
 import { OpportunityCardsFilter } from "./types";
 import AccordionFilter from "../../common/CardsFilter/AccordionFilter";
 import { getVisibleSelectionFilterSections } from "../../common/CardsFilter/selectionFilters";
 import { SetFilter } from "../../common/CardsFilter/types";
 import { createAvailabilityFilterItems, createOpportunityFilterSections } from "./helpers";
-import { FiltersContentContainer } from "./styles";
+import { FiltersContentContainer, FullWidthFilter } from "../../common/CardsFilter/Filters";
 import { useAuth } from "@/hooks/useAuth";
-import { ViewMode } from "../../common/types";
 import { QueryParamsKeys } from "need4deed-sdk";
 import { createCommuteMinutesFilterItems } from "../../common/CardsFilter/matchingPrefill";
 
 type Props = {
+  viewMode: ViewMode;
   filter: OpportunityCardsFilter;
   setFilter: SetFilter<OpportunityCardsFilter>;
-  viewMode: ViewMode;
   isMatchMode: boolean;
 };
 
@@ -42,7 +42,7 @@ export default function FiltersContent({ setFilter, filter, viewMode, isMatchMod
         />
       )}
       {canSeeFullView && (
-        <AccordionFilter
+        <FullWidthFilter
           header={t("dashboard.opportunities.filters.schedule.header")}
           groupedItems={availabilityFilters}
           groupedItemsDisplayType="button"

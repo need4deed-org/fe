@@ -869,8 +869,10 @@
     },
     "filters": {
       "button": "FILTER",
-      "closeFilters": "FILTER SCHLIEẞEN",
-      "clearAll": "Filter löschen",
+      "title": "Filter",
+      "closeFilters": "Filter schließen",
+      "remove": "Filter entfernen: {{label}}",
+      "clearAll": "Alle Filter löschen",
       "commute": "Max. Pendelzeit: {{minutes}} Minuten",
       "commuteMinutesHeader": "Maximale Pendelzeit",
       "commuteMinutesOption": "{{minutes}} Minuten"

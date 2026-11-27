@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import { FiltersContentContainer, FullWidthFilter } from "../../common/CardsFilter/Filters";
 import { useTranslation } from "react-i18next";
 import { QueryParamsKeys } from "need4deed-sdk";
 import { VolunteerLanguageMatch } from "./volunteer-language-match";
@@ -57,7 +57,7 @@ export default function FiltersContent({ setFilter, filter, viewMode, isMatchMod
           items={createCommuteMinutesFilterItems(filter, setFilter, t)}
         />
       )}
-      <AccordionFilter
+      <FullWidthFilter
         header={t("dashboard.volunteers.filters.preferredAv.header")}
         groupedItems={availabilityFilters}
         groupedItemsDisplayType="button"
@@ -65,12 +65,3 @@ export default function FiltersContent({ setFilter, filter, viewMode, isMatchMod
     </FiltersContentContainer>
   );
 }
-
-const FiltersContentContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: var(--opportunities-filters-content-container-width);
-  height: auto;
-  gap: var(--opportunities-filters-content-container-gap);
-  padding: var(--opportunities-filters-content-container-padding);
-`;

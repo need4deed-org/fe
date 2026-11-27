@@ -6,7 +6,7 @@ const ResultContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: var(--opportunities-header-result-gap);
+  gap: var(--opportunities-header-result-gap, var(--spacing-8));
 `;
 
 interface Props {

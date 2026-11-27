@@ -13,7 +13,6 @@ import { PlusIcon } from "@phosphor-icons/react";
 import { useGetVolunteer, useGetQuery } from "@/hooks";
 import { ApiOptionLists, LangProficiency, QueryParamsKeys, UserRole } from "need4deed-sdk";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import Filters from "../common/CardsFilter/Filters";
 import CardsHeader from "../common/CardsHeader/CardsHeader";
 import { EMPTY_LIST, getClearFilter, getClearSingleFilter } from "../common/CardsFilter/helpers";
 import {
@@ -58,7 +57,6 @@ export function Opportunities() {
   const user = useCurrentUser(true);
   const screenType = useScreenType();
   const { t, i18n } = useTranslation();
-  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [numOfOpps, setNumOfOpps] = useState(0);
   const { data: apiFilterOptions } = useGetQuery<ApiOptionLists>({ queryKey: ["options"], apiPath: apiPathOption });
   const searchParams = useSearchParams();
@@ -202,10 +200,12 @@ export function Opportunities() {
 
   const handleClearAllFilters = () => {
     defaultAppliedRef.current = true;
-    const cleared = getClearFilter(cardsFilter);
-    const params = serializeWithDefaultMarker(cleared);
-    params.delete(SORT_PARAM);
-    pushFilterUrl(params);
+    const cleared = {
+      ...getClearFilter(cardsFilter),
+      search: cardsFilter.search,
+      hasCommuteSource: cardsFilter.hasCommuteSource,
+    };
+    pushFilterUrl(serializeWithDefaultMarker(cleared));
   };
 
   const activeFilters = createSelectedOpportunityFiltersAsFlatArray(cardsFilter, handleFilterUpdate, t).filter(
@@ -222,7 +222,15 @@ export function Opportunities() {
           tabs={tabs}
           selectedTabIndex={selectedTabIndex}
           setSelectedTabIndex={handleTabChange}
-          setIsFiltersOpen={setIsFiltersOpen}
+          showSort={viewMode !== ViewMode.MAP}
+          filtersContent={
+            <FiltersContent
+              setFilter={handleFilterUpdate}
+              filter={cardsFilter}
+              viewMode={viewMode}
+              isMatchMode={!!volunteerId}
+            />
+          }
           onSearchInputChange={handleSearchInputChange}
           searchValue={cardsFilter.search}
           searchPlaceholder={t("dashboard.opportunities.card.search")}
@@ -263,18 +271,6 @@ export function Opportunities() {
               volunteerFilter={volunteerFilter}
               defaultStatuses={defaultStatuses}
               agentId={projectId}
-            />
-            <Filters
-              isFiltersOpen={isFiltersOpen}
-              setIsFiltersOpen={setIsFiltersOpen}
-              filtersContent={
-                <FiltersContent
-                  setFilter={handleFilterUpdate}
-                  filter={cardsFilter}
-                  viewMode={viewMode}
-                  isMatchMode={!!volunteerId}
-                />
-              }
             />
           </ContentRow>
         )}

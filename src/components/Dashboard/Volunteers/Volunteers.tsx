@@ -22,7 +22,6 @@ import {
   VolunteerStateEngagementType,
 } from "need4deed-sdk";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import Filters from "../common/CardsFilter/Filters";
 import CardsHeader from "../common/CardsHeader/CardsHeader";
 import { EMPTY_LIST, getClearFilter, getClearSingleFilter } from "../common/CardsFilter/helpers";
 import {
@@ -68,7 +67,6 @@ export function Volunteers() {
   const isAgent = user?.role === UserRole.AGENT;
   const screenType = useScreenType();
   const { t } = useTranslation();
-  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [numOfVols, setNumOfVols] = useState(0);
   const [sortOrder, setSortOrder] = useState(SortOrder.NewToOld);
   const { data: apiFilterOptions } = useGetQuery<ApiOptionLists>({ queryKey: ["options"], apiPath: apiPathOption });
@@ -189,7 +187,11 @@ export function Volunteers() {
 
   const handleClearAllFilters = () => {
     defaultAppliedRef.current = true;
-    const cleared = getClearFilter(cardsFilter);
+    const cleared = {
+      ...getClearFilter(cardsFilter),
+      search: cardsFilter.search,
+      hasCommuteSource: cardsFilter.hasCommuteSource,
+    };
     pushFilterUrl(serializeWithDefaultMarker(cleared));
   };
 
@@ -287,7 +289,15 @@ export function Volunteers() {
           tabs={tabs}
           selectedTabIndex={selectedTabIndex}
           setSelectedTabIndex={handleTabChange}
-          setIsFiltersOpen={setIsFiltersOpen}
+          showSort={viewMode !== ViewMode.MAP}
+          filtersContent={
+            <FiltersContent
+              setFilter={handleFilterUpdate}
+              filter={cardsFilter}
+              viewMode={viewMode}
+              isMatchMode={!!opportunityId}
+            />
+          }
           onSearchInputChange={handleSearchInputChange}
           searchValue={cardsFilter.search}
           showSearch={!isAgent || isMyVolunteers}
@@ -313,18 +323,6 @@ export function Volunteers() {
             opportunityFilter={opportunityFilter}
             defaultEngagements={defaultEngagements}
             ownerAgents={ownerAgents}
-          />
-          <Filters
-            isFiltersOpen={isFiltersOpen}
-            setIsFiltersOpen={setIsFiltersOpen}
-            filtersContent={
-              <FiltersContent
-                setFilter={handleFilterUpdate}
-                filter={cardsFilter}
-                viewMode={viewMode}
-                isMatchMode={!!opportunityId}
-              />
-            }
           />
         </ContentRow>
       </VolunteersContainer>

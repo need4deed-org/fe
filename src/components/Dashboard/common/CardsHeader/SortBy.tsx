@@ -12,7 +12,15 @@ const SortByContainer = styled.div`
   align-items: center;
   gap: var(--dashboard-cards-header-sortBy-container-gap);
   flex-shrink: 0;
-  margin-inline-start: auto;
+  @media (max-width: 767px) {
+    margin-inline-start: auto;
+  }
+`;
+
+const SortLabel = styled(Paragraph)`
+  @media (max-width: 767px) {
+    display: none;
+  }
 `;
 
 const SortBySwitcherContainer = styled.div`
@@ -86,7 +94,7 @@ export default function SortBy({ onChange, sortOrder, extraOptions }: Props) {
 
   return (
     <SortByContainer>
-      <Paragraph fontWeight={400}>{t("dashboard.sortBy.sortBy")}:</Paragraph>
+      <SortLabel fontWeight={400}>{t("dashboard.sortBy.sortBy")}:</SortLabel>
 
       <SortBySwitcherContainer>
         <Paragraph fontWeight={600}>{sortByOptions.find((o) => o.value === sortOrder)?.label}</Paragraph>
