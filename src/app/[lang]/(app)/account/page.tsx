@@ -1,6 +1,5 @@
 "use client";
 import CenteredWrapper from "@/components/core/common/CenteredWrapper";
-import { LogoutButton } from "@/components/Dashboard/Profile/LogoutButton";
 import { MultipleProfilesController } from "@/components/Dashboard/Profile/MultipleProfilesController";
 import ProfileLayout from "@/components/Dashboard/Profile/ProfileLayout";
 import { Paragraph } from "@/components/styled/text";
@@ -30,14 +29,6 @@ const ProfilePageContainer = styled.div`
   width: 100%;
 `;
 
-const LogoutRow = styled.div`
-  box-sizing: border-box;
-  display: flex;
-  width: var(--volunteer-profile-container-width);
-  max-width: 100%;
-  padding: var(--large-spacing) var(--large-spacing) 0;
-`;
-
 const ProfileState = ({ children }: { children: React.ReactNode }) => (
   <ProfileStateContainer>{children}</ProfileStateContainer>
 );
@@ -45,9 +36,6 @@ const ProfileState = ({ children }: { children: React.ReactNode }) => (
 export default function DashboardProfilePage() {
   return (
     <ProfilePageContainer>
-      <LogoutRow>
-        <LogoutButton />
-      </LogoutRow>
       <ProfileContent />
     </ProfilePageContainer>
   );

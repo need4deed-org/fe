@@ -1,7 +1,7 @@
 "use client";
 import styled from "styled-components";
 import { ClubDialogLogo } from "./ClubDialogLogo";
-import { EULogo } from "./EULogo";
+import { EULogoEN } from "./EULogoEN";
 import { BerlinLogo } from "./BerlinLogo";
 import { SchonebergHilftLogo } from "./SchonebergHilftLogo";
 
@@ -13,7 +13,7 @@ export const Logos = () => {
           <ClubDialogLogo />
         </Cell>
         <Cell>
-          <EULogo />
+          <EULogoEN />
         </Cell>
         <Cell>
           <BerlinLogo />

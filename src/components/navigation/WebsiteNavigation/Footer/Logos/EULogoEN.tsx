@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const EULogo = () => {
+export const EULogoEN = () => {
   return (
     <Icon viewBox="0 0 195 180" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g clipPath="url(#clip0_2378_8300)">

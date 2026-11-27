@@ -40,6 +40,7 @@ const Background = styled.aside<{ $breakpoint: number }>`
   bottom: 0;
   left: 0;
   background-color: var(--lavender-20);
+  border-right: var(--border-width) solid var(--lavender-40);
   overflow: scroll;
 
   @media screen and (max-width: ${({ $breakpoint }) => $breakpoint}px) {
@@ -49,11 +50,12 @@ const Background = styled.aside<{ $breakpoint: number }>`
     bottom: 0;
     width: 100%;
     height: var(--mobile-footer-menu-height);
+    border: none;
     overflow: visible;
   }
 `;
 
-const ContainerLogo = styled.div<{ $breakpoint: number }>`
+const ContainerLogo = styled.header<{ $breakpoint: number }>`
   display: -webkit-flex;
   display: flex;
   flex-shrink: 0;

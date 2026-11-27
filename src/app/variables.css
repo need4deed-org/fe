@@ -1,6 +1,7 @@
 :root {
   /* Colors */
   --white: #ffffff;
+  --scarlet: #e03100;
 
   /* Number in color variable names is the percentage of that color mixed with pure white */
   --grey-100: rgb(102, 112, 133);
@@ -33,12 +34,6 @@
   --mint-40: color-mix(in srgb, var(--mint-100) 40%, white);
   --mint-20: color-mix(in srgb, var(--mint-100) 20%, white);
 
-  --raspberry-100: rgb(197, 15, 82);
-  --raspberry-80: color-mix(in srgb, var(--raspberry-100) 80%, white);
-  --raspberry-60: color-mix(in srgb, var(--raspberry-100) 60%, white);
-  --raspberry-40: color-mix(in srgb, var(--raspberry-100) 40%, white);
-  --raspberry-20: color-mix(in srgb, var(--raspberry-100) 20%, white);
-
   --sand-100: rgb(242, 226, 211);
   --sand-80: color-mix(in srgb, var(--sand-100) 80%, white);
   --sand-60: color-mix(in srgb, var(--sand-100) 60%, white);
@@ -46,7 +41,8 @@
   --sand-20: color-mix(in srgb, var(--sand-100) 20%, white);
 
   /* Text */
-  --font-size: 18px; /* Font size of body text, text inputs, and buttons */
+  --small-font-size: 16px; /* For if --medium-font-size is too large */
+  --medium-font-size: 18px; /* Font size of body text, text inputs, and buttons */
   --heading-font-size: 24px; /* For section/card headings */
   --sans-serif: var(--font-figtree), sans-serif;
   --condensed-sans-serif: var(--font-barlow-condensed), sans-serif;
@@ -83,10 +79,10 @@
   --notification-badge-side-spacing: 6px;
   --notification-badge-border-radius: calc(var(--notification-badge-size) / 2);
   --mobile-menu-icon-size: 24px;
-  --outline: 1px dashed var(--grey-100);
   --outline-offset: 2px;
 
   /* Miscellaneous */
   --short-transition: 0.15s ease-in-out; /* For short animations */
   --medium-transition: 0.25s ease-in-out; /* For medium length animations */
+  --outline: 1px dashed var(--grey-100); /* For Keyboard Accessibility */
 }

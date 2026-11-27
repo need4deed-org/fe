@@ -589,10 +589,14 @@
         "discussions": "Diskussionen",
         "calendar": "Kalender",
         "account": "Konto",
+        "logout": "Abmelden",
         "more": "Mehr",
         "admin": "Admin",
         "unreadMentions_one": "1 ungelesene Erwähnung",
-        "unreadMentions_other": "{{count}} ungelesene Erwähnungen"
+        "unreadMentions_other": "{{count}} ungelesene Erwähnungen",
+        "legal": "Rechtliches",
+        "privacy": "Datenschutz",
+        "agreement": "Ehrenamtliche Vereinbarung"
       },
       "createOpportunity": "Neue Möglichkeit erstellen"
     },

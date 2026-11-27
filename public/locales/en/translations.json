@@ -23,7 +23,7 @@
       "faq": "FAQ",
       "legal": "Legal",
       "privacy": "Privacy",
-      "agreement": "Volunteer Participation Agreement",
+      "agreement": "Volunteer Agreement",
       "contact": "Contact"
     },
     "iframeTitles": {
@@ -581,10 +581,14 @@
         "discussions": "Discussions",
         "calendar": "Calendar",
         "account": "Account",
+        "logout": "Logout",
         "more": "More",
         "admin": "Admin",
         "unreadMentions_one": "1 unread mention",
-        "unreadMentions_other": "{{count}} unread mentions"
+        "unreadMentions_other": "{{count}} unread mentions",
+        "legal": "Legal",
+        "privacy": "Privacy",
+        "agreement": "Volunteer Agreement"
       },
       "createOpportunity": "Create New Opportunity"
     },

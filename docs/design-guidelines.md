@@ -4,7 +4,7 @@ All variables are in [variables.css](../src/app/variables.css)
 
 ## General Guidelines
 
-- Standard font size is var(--font-size)
+- Standard font size is var(--medium-font-size)
 - Standard spacing is var(--spacing-medium)
 - Surfaces behind fields have var(--spacing-medium) padding and a var(--surface-border-radius) border radius
 - Form widths are constrained by their parent component
@@ -22,7 +22,7 @@ All variables are in [variables.css](../src/app/variables.css)
 
 4. Have a var(--inner-border-radius)
    Have var(--sans-serif) font
-5. Have var(--font-size) text size
+5. Have var(--medium-font-size) text size
 6. Have var(--midnight) text color
 7.
 

@@ -10,16 +10,16 @@ import {
   HandHeartIcon,
   SquaresFourIcon,
   UsersThreeIcon,
-  UserCircleIcon,
 } from "@phosphor-icons/react";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
-import NextLink from "next/link";
-import { usePathname } from "next/navigation";
 import { NotificationBadge } from "./NotificationBadge";
 import { MoreButton } from "./MoreButton";
+import { MainLinkButton } from "./MainLinkButton";
+import { ComponentType } from "react";
 
 export type MenuLink = IconLink & {
   roles: UserRole[];
+  Badge?: ComponentType;
 };
 
 type NavigationProps = {
@@ -32,13 +32,13 @@ export const Navigation = ({ breakpoint }: NavigationProps) => {
     i18n: { language },
   } = useTranslation();
   const user = useCurrentUser();
-  const pathname = usePathname();
   const links: MenuLink[] = [
     {
       route: ROUTES.dashboard(language),
       Icon: SquaresFourIcon,
       label: t("dashboard.home.sidebar.dashboard"),
       roles: [UserRole.VOLUNTEER, UserRole.AGENT, UserRole.USER, UserRole.COORDINATOR, UserRole.ADMIN],
+      Badge: NotificationBadge,
     },
     {
       route: ROUTES.volunteers(language),
@@ -70,12 +70,6 @@ export const Navigation = ({ breakpoint }: NavigationProps) => {
       label: t("dashboard.home.sidebar.calendar"),
       roles: [UserRole.USER, UserRole.COORDINATOR, UserRole.ADMIN],
     },
-    {
-      route: ROUTES.account(language),
-      Icon: UserCircleIcon,
-      label: t("dashboard.home.sidebar.account"),
-      roles: [UserRole.VOLUNTEER, UserRole.AGENT, UserRole.USER, UserRole.COORDINATOR, UserRole.ADMIN],
-    },
   ];
 
   if (!user) return;
@@ -87,20 +81,10 @@ export const Navigation = ({ breakpoint }: NavigationProps) => {
   return (
     <Background $breakpoint={breakpoint} aria-label={t("website.header.mainNavigation")}>
       <List $breakpoint={breakpoint}>
-        {mainLinks.map(({ route, Icon, label }) => {
-          const selected = pathname.startsWith(route);
+        {mainLinks.map(({ route, Icon, label, Badge }) => {
           return (
-            <ListItem key={route}>
-              <Link
-                href={route}
-                aria-current={selected ? "page" : undefined}
-                $selected={selected}
-                $breakpoint={breakpoint}
-              >
-                <Icon aria-hidden />
-                {label}
-                {route === ROUTES.dashboard(language) && <NotificationBadge />}
-              </Link>
+            <ListItem key={route} $breakpoint={breakpoint}>
+              <MainLinkButton href={route} breakpoint={breakpoint} Icon={Icon} label={label} Badge={Badge} />
             </ListItem>
           );
         })}
@@ -116,11 +100,6 @@ const Background = styled.nav<{ $breakpoint: number }>`
   align-items: center;
   gap: var(--medium-spacing);
   height: 100%;
-  padding: var(--large-spacing);
-
-  @media screen and (max-width: ${({ $breakpoint }) => $breakpoint}px) {
-    padding: 0;
-  }
 `;
 
 const List = styled.ul<{ $breakpoint: number }>`
@@ -128,6 +107,8 @@ const List = styled.ul<{ $breakpoint: number }>`
   display: flex;
   flex-direction: column;
   gap: var(--small-spacing);
+  width: 100%;
+  padding-top: var(--medium-spacing);
 
   @media screen and (max-width: ${({ $breakpoint }) => $breakpoint}px) {
     flex-direction: row;
@@ -137,64 +118,13 @@ const List = styled.ul<{ $breakpoint: number }>`
   }
 `;
 
-const ListItem = styled.li`
+const ListItem = styled.li<{ $breakpoint: number }>`
   flex: 1;
   height: 100%;
-`;
-
-const Link = styled(NextLink)<{ $selected: boolean; $breakpoint: number }>`
-  display: -webkit-inline-flex;
-  display: inline-flex;
-  align-items: center;
-  position: relative;
-  gap: var(--small-spacing);
-  height: var(--field-size);
-  padding-left: var(--large-spacing);
-  padding-right: var(--large-spacing);
-  background-color: ${({ $selected }) => ($selected ? "var(--blue-100) !important" : "transparent")};
-  border-radius: var(--pill-field-border-radius);
-  font-weight: var(--bold);
-  color: ${({ $selected }) => ($selected ? "var(--white)" : "var(--blue-100)")};
-  white-space: nowrap;
-  transition:
-    background-color var(--short-transition),
-    color var(--short-transition);
-
-  &:hover,
-  &:active,
-  &:focus-visible {
-    background-color: var(--blue-80);
-    color: var(--white);
-  }
-
-  > svg {
-    width: var(--field-icon-size);
-    height: var(--field-icon-size);
-    fill: ${({ $selected }) => ($selected ? "var(--white)" : "var(--blue-100)")};
-    transition: fill var(--short-transition);
-  }
-
-  &:hover > svg,
-  &:active > svg,
-  &:focus-visible > svg {
-    fill: var(--white);
-  }
+  padding-left: var(--medium-spacing);
+  padding-right: var(--medium-spacing);
 
   @media screen and (max-width: ${({ $breakpoint }) => $breakpoint}px) {
-    flex-direction: column;
-    justify-content: center;
-    gap: var(--very-small-spacing);
-    padding: var(--small-spacing);
-    width: 100%;
-    height: 100%;
-    border-radius: var(--field-border-radius);
-    font-family: var(--condensed-sans-serif);
-    font-size: var(--mobile-menu-font-size);
-    text-transform: uppercase;
-
-    > svg {
-      width: var(--mobile-menu-icon-size);
-      height: var(--mobile-menu-icon-size);
-    }
+    padding: 0;
   }
 `;

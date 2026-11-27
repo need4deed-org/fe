@@ -34,8 +34,8 @@ const Badge = styled.span`
   height: var(--notification-badge-size);
   padding-left: var(--notification-badge-side-spacing);
   padding-right: var(--notification-badge-side-spacing);
-  background-color: var(--raspberry-100);
+  background-color: var(--scarlet);
   border-radius: var(--notification-badge-border-radius);
-  font-size: var(--font-size);
+  font-size: var(--small-font-size);
   font-weight: normal;
 `;
