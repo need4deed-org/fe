@@ -1782,6 +1782,7 @@
         "refugeeNumber": "Refugee number",
         "refugeeName": "Refugee name",
         "refugeeLanguage": "Refugee language",
+        "contactErased": "Deleted automatically one month after the appointment",
         "appointmentLanguage": "Appointment language",
         "appointmentLanguageOptions": {
           "deutsche": "German",
