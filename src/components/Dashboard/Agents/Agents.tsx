@@ -140,7 +140,7 @@ export const Agents = () => {
           selectedTabIndex={selectedTabIndex}
           setSelectedTabIndex={handleTabChange}
           showSort={viewMode !== ViewMode.MAP}
-          filtersContent={<FiltersContent setFilter={handleFilterUpdate} filter={cardsFilter} />}
+          filtersContent={<FiltersContent setFilter={handleFilterUpdate} filter={cardsFilter} viewMode={viewMode} />}
           onSearchInputChange={handleSearchInputChange}
           searchValue={cardsFilter.search}
           searchPlaceholder={t("dashboard.agents.card.search")}

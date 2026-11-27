@@ -18,7 +18,19 @@ export default function Filters({ id, isOpen, onClose, children }: Props) {
   const titleId = `${id}-title`;
 
   return (
-    <FiltersContainer id={id} hidden={!isOpen} role="region" aria-labelledby={isOpen ? titleId : undefined}>
+    <FiltersContainer
+      id={id}
+      hidden={!isOpen}
+      role="region"
+      aria-labelledby={isOpen ? titleId : undefined}
+      onKeyDown={(event) => {
+        if (event.key === "Escape" && !event.defaultPrevented) {
+          event.preventDefault();
+          event.stopPropagation();
+          onClose();
+        }
+      }}
+    >
       {isOpen && (
         <>
           <PanelHeader>

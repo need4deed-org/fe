@@ -7,20 +7,23 @@ import { createAvailabilityFilterItems, createVolunteerFilterSections } from "./
 import AccordionFilter from "../../common/CardsFilter/AccordionFilter";
 import { getVisibleSelectionFilterSections } from "../../common/CardsFilter/selectionFilters";
 import { SetFilter } from "../../common/CardsFilter/types";
+import { ViewMode } from "../../common/types";
 import { useAuth } from "@/hooks/useAuth";
 import { createCommuteMinutesFilterItems } from "../../common/CardsFilter/matchingPrefill";
 
 interface Props {
   filter: VolunteerCardsFilter;
   setFilter: SetFilter<VolunteerCardsFilter>;
+  viewMode: ViewMode;
   isMatchMode: boolean;
 }
 
-export default function FiltersContent({ setFilter, filter, isMatchMode }: Props) {
+export default function FiltersContent({ setFilter, filter, viewMode, isMatchMode }: Props) {
   const { t } = useTranslation();
   const { isAuthorized, isAgent, isVolunteer } = useAuth();
 
   const sections = getVisibleSelectionFilterSections(createVolunteerFilterSections(filter, setFilter, t), {
+    viewMode,
     isAuthorized,
     isAgent,
     isVolunteer,

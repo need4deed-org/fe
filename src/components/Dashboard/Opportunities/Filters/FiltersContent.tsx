@@ -1,3 +1,4 @@
+import { ViewMode } from "../../common/types";
 import { useTranslation } from "react-i18next";
 import { OpportunityCardsFilter } from "./types";
 import AccordionFilter from "../../common/CardsFilter/AccordionFilter";
@@ -10,17 +11,19 @@ import { QueryParamsKeys } from "need4deed-sdk";
 import { createCommuteMinutesFilterItems } from "../../common/CardsFilter/matchingPrefill";
 
 type Props = {
+  viewMode: ViewMode;
   filter: OpportunityCardsFilter;
   setFilter: SetFilter<OpportunityCardsFilter>;
   isMatchMode: boolean;
 };
 
-export default function FiltersContent({ setFilter, filter, isMatchMode }: Props) {
+export default function FiltersContent({ setFilter, filter, viewMode, isMatchMode }: Props) {
   const { t } = useTranslation();
   const { isAuthorized, isAgent, isVolunteer } = useAuth();
   const canSeeFullView = isAuthorized || isAgent;
 
   const sections = getVisibleSelectionFilterSections(createOpportunityFilterSections(filter, setFilter, t), {
+    viewMode,
     isAuthorized,
     isAgent,
     isVolunteer,

@@ -1,4 +1,4 @@
-import { ReactNode, useId, useRef, useState } from "react";
+import { ReactNode, useEffect, useId, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { Paragraph } from "../../../styled/text";
@@ -96,6 +96,10 @@ export default function CardsHeader({
   const filtersId = useId();
   const filtersButton = useRef<HTMLButtonElement>(null);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+
+  useEffect(() => {
+    if (!showListControls) setIsFiltersOpen(false);
+  }, [showListControls]);
 
   return (
     <HeaderContainer>

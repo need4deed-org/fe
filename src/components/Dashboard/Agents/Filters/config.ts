@@ -1,5 +1,6 @@
 import { EntityTableName, QueryParamsKeys } from "need4deed-sdk";
 import { SelectionFilterConfigs } from "../../common/CardsFilter/selectionFilters";
+import { ViewMode } from "../../common/types";
 import { AgentCardsFilter } from "./types";
 
 // `type` and `services` values are already translated titles from GET /option.
@@ -18,6 +19,7 @@ export const agentFilterConfigs: SelectionFilterConfigs<AgentCardsFilter> = {
   [QueryParamsKeys.DISTRICT]: {
     header: "dashboard.agents.filters.district.header",
     option: EntityTableName.DISTRICT,
+    isVisible: ({ viewMode }) => viewMode === ViewMode.CARDS || viewMode === ViewMode.MAP,
   },
   engagementStatus: {
     header: "dashboard.agents.filters.engagementStatus.header",

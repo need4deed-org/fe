@@ -224,7 +224,12 @@ export function Opportunities() {
           setSelectedTabIndex={handleTabChange}
           showSort={viewMode !== ViewMode.MAP}
           filtersContent={
-            <FiltersContent setFilter={handleFilterUpdate} filter={cardsFilter} isMatchMode={!!volunteerId} />
+            <FiltersContent
+              setFilter={handleFilterUpdate}
+              filter={cardsFilter}
+              viewMode={viewMode}
+              isMatchMode={!!volunteerId}
+            />
           }
           onSearchInputChange={handleSearchInputChange}
           searchValue={cardsFilter.search}

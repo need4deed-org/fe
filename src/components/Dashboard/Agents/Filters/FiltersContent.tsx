@@ -1,3 +1,4 @@
+import { ViewMode } from "../../common/types";
 import { useTranslation } from "react-i18next";
 import { AgentCardsFilter } from "./types";
 import AccordionFilter from "../../common/CardsFilter/AccordionFilter";
@@ -8,15 +9,17 @@ import { FiltersContentContainer } from "../../common/CardsFilter/Filters";
 import { useAuth } from "@/hooks/useAuth";
 
 type Props = {
+  viewMode: ViewMode;
   filter: AgentCardsFilter;
   setFilter: SetFilter<AgentCardsFilter>;
 };
 
-export default function FiltersContent({ setFilter, filter }: Props) {
+export default function FiltersContent({ setFilter, filter, viewMode }: Props) {
   const { t } = useTranslation();
   const { isAuthorized, isAgent, isVolunteer } = useAuth();
 
   const sections = getVisibleSelectionFilterSections(createAgentFilterSections(filter, setFilter, t), {
+    viewMode,
     isAuthorized,
     isAgent,
     isVolunteer,
