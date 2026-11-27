@@ -22,7 +22,6 @@ const Frame = styled.div`
   display: flex;
   z-index: 0;
   padding-left: var(--sidebar-width);
-  background: var(--sand-20);
 
   @media screen and (max-width: ${BREAKPOINT}px) {
     display: block;

@@ -46,7 +46,7 @@ export const Footer = () => {
 };
 
 export const Background = styled.footer`
-  background-color: var(--blue-100);
+  background-color: var(--blue);
 `;
 
 const LinksBackground = styled.div`
@@ -86,7 +86,7 @@ const LinksContainer = styled.div`
 const Logo = styled(N4DLogoIcon)`
   grid-area: logo;
   width: 70px;
-  fill: var(--lavender-20);
+  fill: var(--misty-lavender);
 
   @media screen and (max-width: 700px) {
     justify-self: flex-end;

@@ -34,19 +34,18 @@ const HeaderElement = styled.header`
   height: var(--header-height);
   padding-left: var(--large-spacing);
   padding-right: var(--large-spacing);
-  background-color: var(--lavender-20);
+  background-color: var(--misty-lavender);
 `;
 
 const HomeLink = styled(NextLink)`
   svg {
     height: var(--header-logo-height);
-    fill: var(--blue-100);
-    transition: var(--short-transition);
+    fill: var(--blue);
   }
 
   &:hover > svg,
   &:active > svg,
   &:focus-visible > svg {
-    fill: var(--blue-80);
+    fill: var(--medium-blue);
   }
 `;

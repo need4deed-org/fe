@@ -29,16 +29,13 @@ const Button = styled.button`
   background-color: transparent;
   border-radius: var(--field-border-radius);
   font-weight: var(--bold);
-  color: var(--blue-100);
+  color: var(--blue);
   white-space: nowrap;
-  transition:
-    background-color var(--short-transition),
-    color var(--short-transition);
 
   &:hover,
   &:active,
   &:focus-visible {
-    background-color: var(--blue-80);
+    background-color: var(--medium-blue);
     color: var(--white);
   }
 
@@ -46,8 +43,7 @@ const Button = styled.button`
     flex-shrink: 0;
     width: 20px;
     height: 20px;
-    fill: var(--blue-100);
-    transition: fill var(--short-transition);
+    fill: var(--blue);
   }
 
   &:hover > svg,

@@ -52,7 +52,7 @@ const Background = styled.div`
 
 const Heading = styled.h5`
   font-weight: var(--bold);
-  color: var(--lavender-20);
+  color: var(--misty-lavender);
 `;
 
 const Icon = styled.svg`

@@ -46,29 +46,25 @@ const ButtonElement = styled.button<{ $breakpoint: number; $selected: boolean }>
     padding: var(--small-spacing);
     width: 100%;
     height: 100%;
-    background-color: ${({ $selected }) => ($selected ? "var(--blue-100) !important" : "transparent")};
+    background-color: ${({ $selected }) => ($selected ? "var(--blue) !important" : "transparent")};
     border-radius: var(--field-border-radius);
     font-family: var(--condensed-sans-serif);
     font-size: var(--mobile-menu-font-size);
     font-weight: var(--bold);
-    color: ${({ $selected }) => ($selected ? "var(--white)" : "var(--blue-100)")};
+    color: ${({ $selected }) => ($selected ? "var(--white)" : "var(--blue)")};
     text-transform: uppercase;
-    transition:
-      background-color var(--short-transition),
-      color var(--short-transition);
 
     &:hover,
     &:active,
     &:focus-visible {
-      background-color: var(--blue-80);
+      background-color: var(--medium-blue);
       color: var(--white);
     }
 
     > svg {
       width: var(--mobile-menu-icon-size);
       height: var(--mobile-menu-icon-size);
-      fill: ${({ $selected }) => ($selected ? "var(--white)" : "var(--blue-100)")};
-      transition: fill var(--short-transition);
+      fill: ${({ $selected }) => ($selected ? "var(--white)" : "var(--blue)")};
     }
 
     &:hover > svg,

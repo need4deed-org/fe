@@ -33,6 +33,6 @@ const List = styled.ul`
 const ListItem = styled.li``;
 
 const Link = styled(NextLink)<{ $selected: boolean }>`
-  color: var(--lavender-20);
+  color: var(--misty-lavender);
   text-decoration: ${({ $selected }) => ($selected ? "underline" : "none")};
 `;

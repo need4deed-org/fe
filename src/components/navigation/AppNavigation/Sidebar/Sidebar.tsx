@@ -39,8 +39,8 @@ const Background = styled.aside<{ $breakpoint: number }>`
   top: 0;
   bottom: 0;
   left: 0;
-  background-color: var(--lavender-20);
-  border-right: var(--border-width) solid var(--lavender-40);
+  background-color: var(--misty-lavender);
+  border-right: var(--border-width) solid var(--pale-lavender);
   overflow: scroll;
 
   @media screen and (max-width: ${({ $breakpoint }) => $breakpoint}px) {
@@ -73,14 +73,13 @@ const ContainerLogo = styled.header<{ $breakpoint: number }>`
 const HomeLink = styled(NextLink)`
   > svg {
     height: var(--header-logo-height);
-    fill: var(--blue-100);
-    transition: var(--short-transition);
+    fill: var(--blue);
   }
 
   &:hover > svg,
   &:active > svg,
   &:focus-visible > svg {
-    fill: var(--blue-80);
+    fill: var(--medium-blue);
   }
 `;
 

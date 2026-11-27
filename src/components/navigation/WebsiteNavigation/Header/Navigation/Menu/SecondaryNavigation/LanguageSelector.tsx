@@ -148,7 +148,7 @@ const Menu = styled.ul<{ $breakpoint: number }>`
   margin: 0;
   margin-top: var(--small-spacing);
   z-index: 2;
-  background-color: var(--blue-20);
+  background-color: var(--misty-blue);
   border-radius: var(--surface-border-radius);
   list-style: none;
   list-style-type: none;
@@ -169,16 +169,15 @@ const Button = styled.button<{ $selected: boolean }>`
   height: var(--field-size);
   padding-left: var(--large-spacing);
   padding-right: var(--large-spacing);
-  background-color: ${({ $selected }) => ($selected ? "var(--blue-100) !important" : "transparent")};
+  background-color: ${({ $selected }) => ($selected ? "var(--blue) !important" : "transparent")};
   border-radius: var(--field-border-radius);
   font-weight: var(--bold);
-  color: ${({ $selected }) => ($selected ? "var(--white)" : "var(--blue-100)")};
-  transition: background-color var(--short-transition);
+  color: ${({ $selected }) => ($selected ? "var(--white)" : "var(--blue)")};
 
   &:hover,
   &:active,
   &:focus-visible {
-    background-color: var(--blue-80);
+    background-color: var(--medium-blue);
     color: var(--white);
   }
 `;

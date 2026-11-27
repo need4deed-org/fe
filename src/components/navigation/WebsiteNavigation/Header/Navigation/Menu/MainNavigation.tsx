@@ -56,16 +56,15 @@ const List = styled.ul<{ $breakpoint: number }>`
 const ListItem = styled.li``;
 
 const LinkElement = styled(NextLink)<{ $selected: boolean }>`
-  background-color: ${({ $selected }) => ($selected ? "var(--blue-100) !important" : "transparent")};
+  background-color: ${({ $selected }) => ($selected ? "var(--blue) !important" : "transparent")};
   font-weight: var(--bold);
-  color: ${({ $selected }) => ($selected ? "var(--white) !important" : "var(--blue-100)")};
+  color: ${({ $selected }) => ($selected ? "var(--white) !important" : "var(--blue)")};
   text-transform: capitalize;
-  transition: var(--short-transition);
 
   &:hover,
   &:active,
   &:focus-visible {
-    background-color: var(--blue-80);
+    background-color: var(--medium-blue);
     color: var(--white);
   }
 `;

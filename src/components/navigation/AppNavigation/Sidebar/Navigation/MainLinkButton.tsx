@@ -36,27 +36,23 @@ const Button = styled(Link)<{ $selected: boolean; $breakpoint: number }>`
   height: var(--field-size);
   padding-left: var(--large-spacing);
   padding-right: var(--large-spacing);
-  background-color: ${({ $selected }) => ($selected ? "var(--blue-100) !important" : "transparent")};
+  background-color: ${({ $selected }) => ($selected ? "var(--blue) !important" : "transparent")};
   border-radius: var(--field-border-radius);
   font-weight: var(--bold);
-  color: ${({ $selected }) => ($selected ? "var(--white)" : "var(--blue-100)")};
+  color: ${({ $selected }) => ($selected ? "var(--white)" : "var(--blue)")};
   white-space: nowrap;
-  transition:
-    background-color var(--short-transition),
-    color var(--short-transition);
 
   &:hover,
   &:active,
   &:focus-visible {
-    background-color: var(--blue-80);
+    background-color: var(--medium-blue);
     color: var(--white);
   }
 
   > svg {
     width: var(--field-icon-size);
     height: var(--field-icon-size);
-    fill: ${({ $selected }) => ($selected ? "var(--white)" : "var(--blue-100)")};
-    transition: fill var(--short-transition);
+    fill: ${({ $selected }) => ($selected ? "var(--white)" : "var(--blue)")};
   }
 
   &:hover > svg,

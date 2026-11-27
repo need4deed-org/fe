@@ -28,15 +28,14 @@ const Button = styled(Link)`
   height: var(--field-size);
   padding-left: var(--large-spacing);
   padding-right: var(--large-spacing);
-  background-color: var(--blue-100);
+  background-color: var(--blue);
   border-radius: var(--pill-field-border-radius);
   font-weight: var(--bold);
   color: var(--white);
-  transition: background-color var(--short-transition);
 
   &:hover,
   &:active,
   &:focus-visible {
-    background-color: var(--blue-80);
+    background-color: var(--medium-blue);
   }
 `;

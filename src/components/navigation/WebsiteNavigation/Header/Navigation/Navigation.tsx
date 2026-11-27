@@ -205,8 +205,8 @@ const MobileMenu = styled.div<{ $open: boolean; $animating: boolean }>`
     width: var(--mobile-menu-width);
     max-width: 100%;
     margin-right: ${({ $open }) => ($open ? "0" : "calc(var(--mobile-menu-width) * -1)")};
-    background-color: var(--lavender-20);
-    border-left: var(--border-width) solid var(--lavender-40);
+    background-color: var(--misty-lavender);
+    border-left: var(--border-width) solid var(--pale-lavender);
     overflow: scroll;
     transition: ${({ $animating }) => ($animating ? "margin-right var(--medium-transition)" : "none")};
   }
@@ -236,7 +236,7 @@ const LogoContainer = styled.div`
 
   svg {
     height: var(--mobile-menu-logo-height);
-    fill: var(--blue-100);
+    fill: var(--blue);
   }
 `;
 

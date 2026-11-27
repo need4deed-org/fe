@@ -131,7 +131,7 @@ const Menu = styled.div<{ $breakpoint: number }>`
     flex-shrink: 0;
     margin-top: auto;
     z-index: 2;
-    background-color: var(--lavender-20);
+    background-color: var(--misty-lavender);
     border-radius: var(--surface-border-radius);
     overflow: hidden;
   }

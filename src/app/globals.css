@@ -11,6 +11,7 @@ select:focus-visible {
 }
 
 body {
+  background-color: var(--white);
   font-family: "Figtree", sans-serif !important;
   width: 100%;
   margin: 0;

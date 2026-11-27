@@ -21,10 +21,10 @@ const Background = styled.div`
 
 const Heading = styled.h5`
   margin-bottom: var(--small-spacing);
-  color: var(--lavender-20);
+  color: var(--misty-lavender);
   font-weight: var(--bold);
 `;
 
 const Link = styled(NextLink)`
-  color: var(--lavender-20);
+  color: var(--misty-lavender);
 `;

@@ -64,7 +64,7 @@ export const UserMenu = ({ breakpoint }: UserMenuProps) => {
 
 const Background = styled.div<{ $breakpoint: number }>`
   padding: var(--medium-spacing);
-  border-top: var(--border-width) solid var(--lavender-40);
+  border-top: var(--border-width) solid var(--pale-lavender);
 
   @media screen and (max-width: ${({ $breakpoint }) => $breakpoint}px) {
     padding: var(--medium-spacing);
