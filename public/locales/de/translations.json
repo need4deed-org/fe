@@ -1794,6 +1794,7 @@
         "refugeeNumber": "Telefonnummer der*des Geflüchteten",
         "refugeeName": "Name des Geflüchteten",
         "refugeeLanguage": "Sprache der*des Geflüchteten",
+        "contactErased": "Automatisch gelöscht, einen Monat nach dem Termin",
         "appointmentLanguage": "Terminsprache",
         "appointmentLanguageOptions": {
           "deutsche": "Deutsch",

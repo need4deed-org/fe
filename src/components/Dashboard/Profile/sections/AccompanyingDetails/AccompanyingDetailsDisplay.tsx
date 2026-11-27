@@ -2,6 +2,7 @@ import { EditableField } from "@/components/EditableField/EditableField";
 import { EMPTY_PLACEHOLDER_VALUE } from "@/config/constants";
 import { format } from "date-fns";
 import { useTranslation } from "react-i18next";
+import { isContactErased } from "./contact-erased";
 import { formatTimeForDisplay } from "./helpers";
 import { DateFieldRow, Details } from "./styles";
 import { AccompanyingDetailsFormData } from "./createAccompanyingDetailsSchema";
@@ -14,6 +15,8 @@ type Props = {
 
 export const AccompanyingDetailsDisplay = ({ values, languageLabel, postcodeDisplay }: Props) => {
   const { t } = useTranslation();
+  const contactErased = isContactErased(values);
+  const erasedLabel = t("dashboard.opportunityProfile.accompanyingDetails.contactErased");
 
   return (
     <Details data-testid="accompanying-details-display">
@@ -47,7 +50,7 @@ export const AccompanyingDetailsDisplay = ({ values, languageLabel, postcodeDisp
         mode="display"
         type="text"
         label={t("dashboard.opportunityProfile.accompanyingDetails.refugeeNumber")}
-        value={values.refugeeNumber || ""}
+        value={contactErased ? erasedLabel : values.refugeeNumber || ""}
         setValue={() => {}}
       />
 
@@ -55,7 +58,7 @@ export const AccompanyingDetailsDisplay = ({ values, languageLabel, postcodeDisp
         mode="display"
         type="text"
         label={t("dashboard.opportunityProfile.accompanyingDetails.refugeeName")}
-        value={values.refugeeName || ""}
+        value={contactErased ? erasedLabel : values.refugeeName || ""}
         setValue={() => {}}
       />
 
