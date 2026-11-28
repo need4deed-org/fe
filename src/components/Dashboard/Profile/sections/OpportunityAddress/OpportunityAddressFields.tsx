@@ -1,14 +1,20 @@
 import Checkbox from "@/components/core/button/Checkbox/Checkbox";
+import { PLZChip } from "@/components/core/common";
 import { EditableField } from "@/components/EditableField/EditableField";
 import { Controller, useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { FormDetails } from "../shared/styles";
 import { OpportunityAddressFormData } from "./opportunityAddressSchema";
+import { PLZCheckStatus } from "@/utils/plz-check";
 
 const i18nPrefix = "dashboard.opportunityProfile.opportunityAddress";
 const textFields = ["street", "postcode", "city"] as const;
 
-export function OpportunityAddressFields() {
+type Props = {
+  plzStatus: PLZCheckStatus;
+};
+
+export function OpportunityAddressFields({ plzStatus }: Props) {
   const { t } = useTranslation();
   const {
     control,
@@ -46,6 +52,7 @@ export function OpportunityAddressFields() {
                 value={field.value}
                 setValue={field.onChange}
                 errorMessage={errors[name]?.message}
+                supportingContent={name === "postcode" ? <PLZChip status={plzStatus} /> : undefined}
               />
             )}
           />

@@ -1,3 +1,5 @@
+import { TypePLZ } from "@/components/forms/types";
+import { isValidPLZ } from "@/components/forms/utils";
 import { AgentRegistrationData, ProfileCompletionData } from "./types";
 
 export function validateStep(
@@ -39,6 +41,8 @@ export function validateCompletionStep(
   if (step === 1) {
     if (!data.addressStreet.trim()) errors.addressStreet = required;
     if (!data.addressPostcode.trim()) errors.addressPostcode = required;
+    else if (!isValidPLZ(data.addressPostcode, TypePLZ.GERMANY))
+      errors.addressPostcode = t("form.error.postcodeGermany");
   }
 
   if (step === 2) {

@@ -7,7 +7,7 @@ export const ClubDialogLogo = () => {
 
   return (
     <Background>
-      <Heading>{t("website.footer.runBy")}:</Heading>
+      <Heading>{t("website.footer.operator")}:</Heading>
       <Icon viewBox="0 0 317 59" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g clipPath="url(#clip0_4514_11497)">
           <path

@@ -6,14 +6,13 @@ import { apiPathAgentRegister, apiPathOption } from "@/config/constants";
 import { useGetQuery } from "@/hooks";
 import { getLocalizedErrorMessage } from "@/utils/apiErrors";
 import axios from "axios";
-import i18next from "i18next";
 import {
   ApiAgentAddressConflict,
   ApiAgentRegisterConflict,
   ApiAgentRegisterStatus,
-  ApiAgentTitleConflict,
   ApiOptionLists,
 } from "need4deed-sdk";
+import { useCheckPLZ } from "@/hooks/use-check-plz";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { AgentMembershipStatus, ApiAgentRegister, ApiAgentRegisterNew, ApiAgentRegisterResponse } from "../types";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -43,6 +42,7 @@ import { defaultProfileCompletionData, ProfileCompletionData, TOTAL_COMPLETION_S
 import { CheckMark, MatchBanner, MatchActions, MatchListCopy, MatchRow } from "./styled";
 import { useAgentAddressLookup } from "./useAgentAddressLookup";
 import { useGetRegistrationOrganizations } from "@/hooks/useGetRegistrationOrganizations";
+import { useRouteLang } from "@/hooks/use-route-lang";
 import { setAuthHint } from "@/utils/helpers";
 
 function buildNewAgent(formData: ProfileCompletionData, organizationId?: number): ApiAgentRegisterNew {
@@ -61,6 +61,7 @@ function buildNewAgent(formData: ProfileCompletionData, organizationId?: number)
 
 export function ProfileCompletion() {
   const { t } = useTranslation();
+  const lang = useRouteLang();
   const router = useRouter();
   const token = useSearchParams().get("token");
 
@@ -80,7 +81,7 @@ export function ProfileCompletion() {
     toastOnError: false,
   });
   const registration = submittedRegistration ?? registrationQuery.data;
-  const [conflict, setConflict] = useState<ApiAgentTitleConflict | ApiAgentAddressConflict | null>(null);
+  const [conflict, setConflict] = useState<ApiAgentAddressConflict | null>(null);
   const errorBannerRef = useRef<HTMLDivElement>(null);
 
   const { data: optionLists } = useGetQuery<ApiOptionLists>({
@@ -101,6 +102,8 @@ export function ProfileCompletion() {
     token,
     (m) => m.title && update({ addressStreet: m.title }),
   );
+
+  const plz = useCheckPLZ(formData.addressPostcode);
 
   const showSubmitError = useCallback((message: string) => {
     setSubmitError(message);
@@ -144,7 +147,7 @@ export function ProfileCompletion() {
         return;
       }
       setAuthHint();
-      router.push(ROUTES.dashboard(i18next.language));
+      router.push(ROUTES.dashboard(lang));
     } catch (err) {
       if (axios.isAxiosError(err) && err.response?.status === 409) {
         const data = err.response.data as Partial<ApiAgentRegisterConflict> | undefined;
@@ -156,11 +159,11 @@ export function ProfileCompletion() {
           });
           return;
         }
-        if (data?.agentId) {
+        if (data?.conflict === "address" && data.agentId) {
           setConflict({
-            conflict: data.conflict === "address" ? "address" : "title",
+            conflict: "address",
             agentId: data.agentId,
-            agentTitle: "agentTitle" in data ? data.agentTitle : undefined,
+            agentTitle: data.agentTitle,
           });
           return;
         }
@@ -184,6 +187,10 @@ export function ProfileCompletion() {
     const stepErrors = validateCompletionStep(step, formData, t, operatorTitles, operatorListState);
     if (Object.keys(stepErrors).length > 0) {
       setErrors(stepErrors);
+      return;
+    }
+    if (plz.blocksSubmit) {
+      setStep(1);
       return;
     }
     submit({ agent: buildNewAgent(formData, operatorId) });
@@ -230,7 +237,7 @@ export function ProfileCompletion() {
             </SuccessText>
             <Button
               text={t("agentRegistration.completed.continue")}
-              onClick={() => router.replace((currentUser ? ROUTES.dashboard : ROUTES.login)(i18next.language))}
+              onClick={() => router.replace((currentUser ? ROUTES.dashboard : ROUTES.login)(lang))}
             />
           </SuccessWrapper>
         </Card>
@@ -284,12 +291,9 @@ export function ProfileCompletion() {
           <>
             <MatchBanner $matched={false} role="alert">
               <span>
-                {t(
-                  `agentRegistration.completion.${conflict.conflict === "address" ? "addressTaken" : "titleTaken"}${
-                    conflict.agentTitle ? "Named" : ""
-                  }`,
-                  { name: conflict.agentTitle },
-                )}{" "}
+                {t(`agentRegistration.completion.addressTaken${conflict.agentTitle ? "Named" : ""}`, {
+                  name: conflict.agentTitle,
+                })}{" "}
                 {t("agentRegistration.completion.joinDescription")}
               </span>
             </MatchBanner>
@@ -298,16 +302,14 @@ export function ProfileCompletion() {
                 text={t("agentRegistration.completion.joinInstead")}
                 onClick={() => submitJoin(conflict.agentId)}
               />
-              {conflict.conflict === "address" && (
-                <Button
-                  text={t("agentRegistration.completion.createAtSharedAddress")}
-                  onClick={submitAtSharedAddress}
-                  disabled={isSubmitting}
-                  backgroundcolor="var(--color-white)"
-                  textColor="var(--color-aubergine)"
-                  border="var(--border-width-medium) solid var(--color-aubergine)"
-                />
-              )}
+              <Button
+                text={t("agentRegistration.completion.createAtSharedAddress")}
+                onClick={submitAtSharedAddress}
+                disabled={isSubmitting || plz.blocksSubmit}
+                backgroundcolor="var(--color-white)"
+                textColor="var(--color-aubergine)"
+                border="var(--border-width-medium) solid var(--color-aubergine)"
+              />
               <Button
                 text={t("agentRegistration.completion.editDetails")}
                 onClick={() => setConflict(null)}
@@ -370,7 +372,7 @@ export function ProfileCompletion() {
                   </>
                 )}
               </FieldWrapper>
-              <AddressStep data={formData} onChange={update} errors={errors} hideStreet />
+              <AddressStep data={formData} onChange={update} errors={errors} hideStreet plzStatus={plz.status} />
             </div>
           ))}
 
@@ -413,7 +415,7 @@ export function ProfileCompletion() {
               backgroundcolor="var(--color-aubergine)"
               textColor="var(--color-white)"
               onClick={handleNext}
-              disabled={tokenMissing || (step === 1 && showBanner)}
+              disabled={tokenMissing || (step === 1 && (showBanner || plz.blocksSubmit))}
             />
           )}
         </Actions>

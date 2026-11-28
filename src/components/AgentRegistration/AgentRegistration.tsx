@@ -3,6 +3,7 @@ import { ROUTES } from "@/constants/routes";
 import { Button } from "@/components/core/button";
 import { apiPathUser } from "@/config/constants";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { useRouteLang } from "@/hooks/use-route-lang";
 import { getLocalizedErrorMessage } from "@/utils/apiErrors";
 import axios from "axios";
 import { UserRole } from "need4deed-sdk";
@@ -31,7 +32,8 @@ import Link from "next/link";
 const PENDING_ROLE_COOKIE = "n4d_pending_role=agent; path=/; max-age=86400; SameSite=Lax; Secure";
 
 export function AgentRegistration() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
+  const lang = useRouteLang();
   const router = useRouter();
   const user = useCurrentUser(true);
   const [formData, setFormData] = useState<AgentRegistrationData>(defaultAgentRegistrationData);
@@ -42,8 +44,8 @@ export function AgentRegistration() {
 
   useEffect(() => {
     if (!user) return;
-    router.push(ROUTES.dashboard(i18n.language));
-  }, [user, i18n.language, router]);
+    router.push(ROUTES.dashboard(lang));
+  }, [user, lang, router]);
 
   const update = (fields: Partial<AgentRegistrationData>) => {
     setFormData((prev) => ({ ...prev, ...fields }));
@@ -120,7 +122,7 @@ export function AgentRegistration() {
 
         <ExistingUserWrapper>
           <ExistingUserText>{t("agentRegistration.alreadyUser")}</ExistingUserText>
-          <Link href={ROUTES.login(i18n.language)}>{t("agentRegistration.loginLink")}</Link>
+          <Link href={ROUTES.login(lang)}>{t("agentRegistration.loginLink")}</Link>
         </ExistingUserWrapper>
 
         {submitError && <ErrorBanner>{submitError}</ErrorBanner>}

@@ -1,11 +1,14 @@
 import Button from "@/components/core/button/Button/Button";
 import { CalendarBlankIcon, LinkIcon, MapPinIcon, UsersThreeIcon } from "@phosphor-icons/react";
 import type { ApiEventN4DGetList } from "need4deed-sdk";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
 import styled from "styled-components";
 
 import { eventDateRange } from "@/utils/calendar";
-import { getHttpUrl } from "@/utils/events";
+import { getEventRegistrationHref, getHttpUrl } from "@/utils/events";
+import { EventRegistrationsDialog } from "./EventRegistrationsDialog";
 
 interface Props {
   event: ApiEventN4DGetList;
@@ -17,7 +20,18 @@ interface Props {
 
 export function EventCard({ event, variant = "card", onEdit, onDelete, onPublicationChange }: Props) {
   const { t, i18n } = useTranslation();
-  const registrationUrl = getHttpUrl(event.linkRSVP);
+  const hasExternalRegistration = Boolean(getHttpUrl(event.linkRSVP));
+  const copySignUpLink = async () => {
+    try {
+      await navigator.clipboard.writeText(
+        new URL(getEventRegistrationHref(event, i18n.language), window.location.origin).href,
+      );
+      toast.success(t("dashboard.calendar.signUpLinkCopied"));
+    } catch {
+      toast.error(t("dashboard.calendar.signUpLinkCopyFailed"));
+    }
+  };
+  const [isRegistrationsOpen, setIsRegistrationsOpen] = useState(false);
   const publicationActionLabel = t(
     event.active ? "dashboard.calendar.unpublishEvent" : "dashboard.calendar.publishEvent",
   );
@@ -55,9 +69,12 @@ export function EventCard({ event, variant = "card", onEdit, onDelete, onPublica
           </EventTitleHeading>
           {event.shortDescription && <Description>{event.shortDescription}</Description>}
         </div>
-        <Status $active={event.active}>
-          {t(event.active ? "dashboard.calendar.published" : "dashboard.calendar.draft")}
-        </Status>
+        <StatusList>
+          <Status $active={event.active}>
+            {t(event.active ? "dashboard.calendar.published" : "dashboard.calendar.draft")}
+          </Status>
+          {event.listed === false && <Status $active={false}>{t("dashboard.calendar.unlisted")}</Status>}
+        </StatusList>
       </CardHeader>
       <Meta>
         <CalendarBlankIcon size={18} />
@@ -75,15 +92,33 @@ export function EventCard({ event, variant = "card", onEdit, onDelete, onPublica
       </Meta>
       <Meta>
         <LinkIcon size={18} />
-        {registrationUrl ? (
-          <Registration href={registrationUrl} target="_blank" rel="noopener noreferrer">
-            {t("dashboard.calendar.openRegistration")}
-          </Registration>
-        ) : (
-          <span>{t("dashboard.calendar.registrationUnavailable")}</span>
+        <Registration
+          href={getEventRegistrationHref(event, i18n.language)}
+          {...(hasExternalRegistration && { target: "_blank", rel: "noopener noreferrer" })}
+        >
+          {t(
+            hasExternalRegistration
+              ? "dashboard.calendar.openRegistration"
+              : "dashboard.calendar.openInternalRegistration",
+          )}
+        </Registration>
+        {!hasExternalRegistration && event.active && (
+          <TextButton type="button" onClick={copySignUpLink}>
+            {t("dashboard.calendar.copySignUpLink")}
+          </TextButton>
         )}
       </Meta>
       <Actions>
+        <Button
+          text={t("dashboard.calendar.registrations.open")}
+          onClick={() => setIsRegistrationsOpen(true)}
+          width="auto"
+          textFontSize="var(--font-size-sm)"
+          padding="var(--spacing-8) var(--spacing-16)"
+          backgroundcolor="transparent"
+          border="var(--border-width-medium) solid var(--color-aubergine)"
+          textColor="var(--color-aubergine)"
+        />
         <Button
           text={publicationActionLabel}
           onClick={() => onPublicationChange(event)}
@@ -111,6 +146,7 @@ export function EventCard({ event, variant = "card", onEdit, onDelete, onPublica
           padding="var(--spacing-8) var(--spacing-16)"
         />
       </Actions>
+      {isRegistrationsOpen && <EventRegistrationsDialog event={event} onClose={() => setIsRegistrationsOpen(false)} />}
     </Card>
   );
 }
@@ -168,6 +204,12 @@ const Meta = styled.div`
   gap: var(--spacing-8);
   margin-top: var(--spacing-8);
   color: var(--color-midnight);
+`;
+const StatusList = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-4);
+  justify-content: flex-end;
 `;
 const Registration = styled.a`
   color: var(--color-midnight);

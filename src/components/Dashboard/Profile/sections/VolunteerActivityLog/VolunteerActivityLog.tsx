@@ -3,8 +3,7 @@ import { useGetVolunteerActivityLog } from "@/hooks/useGetVolunteerActivityLog";
 import { SectionEmptyState, SectionWrapper } from "../shared/styles";
 import { useTranslation } from "react-i18next";
 import { VolunteerActivityLogTableContainer } from "./styles";
-import { Table, TableHeaderCell, TableBody, TableCell } from "@/components/core/common/Table";
-import { TableHeader, TableRow } from "../VolunteerProfileDocument/styles";
+import { Table, TableBody, TableCell, TableHeader, TableHeaderCell, TableRow } from "@/components/core/common/Table";
 import { formatDateTime } from "../shared/utils/formatDateTime";
 import { formatActivityDetail } from "./format-activity-detail";
 

@@ -11,7 +11,10 @@ export const apiPathComment = `/${apiPrefix}/comment`;
 export const apiPathCommunication = `/${apiPrefix}/communication`;
 export const apiPathAppreciation = `/${apiPrefix}/appreciation`;
 export const apiPathActivityLog = `/${apiPrefix}/activity-log`;
+export const apiPathPostcodeCheck = `/${apiPrefix}/postcode/check`;
 export const apiPathEvent = `/${apiPrefix}/event`;
+export const apiPathEventRegistration = `/${apiPrefix}/event-registration`;
+export const eventRegisterAnchor = "register";
 export const apiPathPost = `/${apiPrefix}/post`;
 export const apiPathLogin = `/${apiPrefix}/auth/login`;
 export const apiPathAuthRefresh = `/${apiPrefix}/auth/refresh`;
@@ -34,6 +37,7 @@ export const apiPathRequestPasswordReset = `/${apiPrefix}/auth/request-reset`;
 export const apiPathPasswordReset = `/${apiPrefix}/auth/password-reset`;
 export const apiPathTrustedDomain = `/${apiPrefix}/trusted-domain`;
 export const apiPathStatistics = `/${apiPrefix}${Endpoint.STATISTICS}`;
+export const apiPathEmailTemplates = `/${apiPrefix}${Endpoint.ADMIN_EMAIL_TEMPLATE}`;
 export const apiPathDistrictGeometry = `/${apiPrefix}/district-geometry`;
 export const apiPathCommute = (entityId: number, entity: EntityType) => `/${apiPrefix}/${entity}/${entityId}/commute`;
 export const apiPathAggregateDistrict = (entity: DistrictMapEntity) => `/${apiPrefix}/${entity}/districts`;
@@ -89,9 +93,11 @@ export const questionMark = "?";
 
 export const supportedLangs = Object.values(Lang) as string[];
 
-export const EMPTY_PLACEHOLDER_VALUE = "–";
+export const defaultRouteLang = Lang.EN;
 
-export const MAX_DESCRIPTION_LENGTH = 500;
+export const langCookieName = "preferred-lang";
+
+export const EMPTY_PLACEHOLDER_VALUE = "–";
 
 export const PHONE_NUMBER_REGEX = /^[+\d\s\-()/]+$/;
 

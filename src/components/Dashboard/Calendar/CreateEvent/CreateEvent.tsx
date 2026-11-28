@@ -6,7 +6,10 @@ import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { EventN4DType, Lang, type ApiEventN4DCreate, type ApiEventN4DPatch } from "need4deed-sdk";
 import Button from "@/components/core/button/Button/Button";
+import { TypePLZ } from "@/components/forms/types";
+import { isEmptyOrValidPLZ } from "@/components/forms/utils";
 import { useCreateEvent, useEvent, useUpdateEvent } from "@/hooks";
+import { useCheckPLZ } from "@/hooks/use-check-plz";
 
 import { StepDateTime } from "./StepDateTime";
 import { StepLocation } from "./StepLocation";
@@ -21,11 +24,13 @@ export interface EventFormData {
   houseNumber: string;
   postcode: string;
   registrationLink: string;
+  signUpQuestion: string;
   startDate: string;
   startTime: string;
   endDate: string;
   endTime: string;
   unstructuredAddress: boolean;
+  listed: boolean;
 }
 
 const TOTAL_STEPS = 3;
@@ -88,11 +93,13 @@ export function CreateEvent({ eventId }: Props) {
     houseNumber: "",
     postcode: "",
     registrationLink: "",
+    signUpQuestion: "",
     startDate: prefilledDate,
     startTime: "",
     endDate: prefilledDate,
     endTime: "",
     unstructuredAddress: false,
+    listed: true,
   });
   const [initializedEventId, setInitializedEventId] = useState<number | null>(null);
   const { data: editingEvent, isLoading, isError } = useEvent(eventId);
@@ -107,11 +114,13 @@ export function CreateEvent({ eventId }: Props) {
       description: editingEvent.description,
       hostName: editingEvent.hostName ?? "",
       ...parseAddress(editingEvent.address),
-      registrationLink: editingEvent.linkRSVP,
+      registrationLink: editingEvent.linkRSVP ?? "",
+      signUpQuestion: editingEvent.signUpQuestion ?? "",
       startDate: start.date,
       startTime: start.time,
       endDate: end.date,
       endTime: end.time,
+      listed: editingEvent.listed ?? true,
     });
     setInitializedEventId(eventId);
   }, [editingEvent, eventId, initializedEventId]);
@@ -122,6 +131,15 @@ export function CreateEvent({ eventId }: Props) {
       ...fields,
       unstructuredAddress: "houseNumber" in fields || "postcode" in fields ? false : prev.unstructuredAddress,
     }));
+
+  const savedPostcode = editingEvent ? parseAddress(editingEvent.address).postcode : "";
+  const plz = useCheckPLZ(formData.unstructuredAddress ? "" : formData.postcode, {
+    scope: TypePLZ.BERLIN,
+    savedPLZ: savedPostcode,
+  });
+  const postcode = formData.postcode.trim();
+  const isPostcodeValid = isEmptyOrValidPLZ(postcode, TypePLZ.BERLIN, savedPostcode);
+  const showPostcodeError = !isPostcodeValid && (postcode.length >= 5 || /\D/.test(postcode));
 
   const handleNext = () => setStep((s) => Math.min(s + 1, TOTAL_STEPS));
   const handleBack = () => {
@@ -150,19 +168,22 @@ export function CreateEvent({ eventId }: Props) {
   };
   const address = formData.unstructuredAddress
     ? formData.street.trim()
-    : `${formData.street.trim()} ${formData.houseNumber.trim()}, ${formData.postcode.trim()} Berlin`;
+    : `${formData.street.trim()} ${formData.houseNumber.trim()}, ${postcode} Berlin`;
   const toBasePayload = () => ({
     date: new Date(`${formData.startDate}T${formData.startTime}`),
     dateEnd: new Date(`${formData.endDate}T${formData.endTime}`),
     type: formData.type,
-    linkRSVP: formData.registrationLink,
+    linkRSVP: formData.registrationLink.trim() || null,
     address,
   });
   const hostName = formData.hostName.trim();
+  const signUpQuestion = formData.signUpQuestion.trim();
   const toCreatePayload = (): ApiEventN4DCreate => ({
     ...toBasePayload(),
     ...(hostName ? { hostName } : {}),
+    ...(signUpQuestion ? { signUpQuestion } : {}),
     active: false,
+    listed: formData.listed,
     translations: [translation],
   });
   const toUpdatePayload = (): ApiEventN4DPatch => {
@@ -172,6 +193,10 @@ export function CreateEvent({ eventId }: Props) {
     return {
       ...toBasePayload(),
       ...(hostName !== (editingEvent?.hostName ?? "").trim() ? { hostName: hostName || null } : {}),
+      ...(signUpQuestion !== (editingEvent?.signUpQuestion ?? "").trim()
+        ? { signUpQuestion: signUpQuestion || null }
+        : {}),
+      ...(formData.listed !== (editingEvent?.listed ?? true) ? { listed: formData.listed } : {}),
       ...(translationChanged ? { translations: [translation] } : {}),
     };
   };
@@ -189,8 +214,10 @@ export function CreateEvent({ eventId }: Props) {
       return (
         formData.street.trim().length > 0 &&
         (formData.unstructuredAddress ||
-          (formData.houseNumber.trim().length > 0 && formData.postcode.trim().length > 0)) &&
-        (formData.registrationLink === editingEvent?.linkRSVP || isHttpUrl(formData.registrationLink))
+          (formData.houseNumber.trim().length > 0 && postcode.length > 0 && isPostcodeValid && !plz.blocksSubmit)) &&
+        (!formData.registrationLink.trim() ||
+          formData.registrationLink === editingEvent?.linkRSVP ||
+          isHttpUrl(formData.registrationLink))
       );
     if (step === 3) {
       const start = new Date(`${formData.startDate}T${formData.startTime}`);
@@ -247,7 +274,10 @@ export function CreateEvent({ eventId }: Props) {
             street={formData.street}
             houseNumber={formData.houseNumber}
             postcode={formData.postcode}
+            plzStatus={plz.status}
+            showPostcodeError={showPostcodeError}
             registrationLink={formData.registrationLink}
+            signUpQuestion={formData.signUpQuestion}
             onChange={update}
             onNext={handleNext}
             onBack={handleBack}
@@ -260,6 +290,7 @@ export function CreateEvent({ eventId }: Props) {
             startTime={formData.startTime}
             endDate={formData.endDate}
             endTime={formData.endTime}
+            listed={formData.listed}
             onChange={update}
             onBack={handleBack}
             onSubmit={handleSubmit}

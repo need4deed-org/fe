@@ -6,7 +6,6 @@ import { TextArea } from "@/components/core/common/TextArea";
 import { ErrorMessage } from "@/components/core/common/ErrorMessage";
 import { ConfirmationDialog } from "@/components/core/common/ConfirmationDialog";
 import { Heading3 } from "@/components/styled/text";
-import { MAX_DESCRIPTION_LENGTH } from "@/config/constants";
 import { useAuth } from "@/hooks/useAuth";
 import { useOpportunityTranslations, type OpportunityTranslation } from "@/hooks/use-opportunity-translations";
 import {
@@ -17,13 +16,14 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { isAxiosError } from "axios";
 import { CaretDownIcon } from "@phosphor-icons/react";
-import { Id, Lang, TranslationOrigin, TranslationStatus } from "need4deed-sdk";
+import { Id, Lang, OPPORTUNITY_TRANSLATION_MAX_LENGTH, TranslationOrigin, TranslationStatus } from "need4deed-sdk";
 import { useCallback, useEffect, useId, useState } from "react";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import { z } from "zod";
 import { getLocalizedErrorMessage, isSilentError } from "@/utils/apiErrors";
+import { getTextLimitMessage, textLimit } from "@/utils/opportunity-text-limits";
 import { SectionEmptyState } from "../shared/styles";
 import {
   getRegenerationState,
@@ -113,17 +113,16 @@ function TranslationReview({
           info: z.string(),
         })
         .superRefine((draft, context) => {
-          const required = z.string().trim().min(1, t("opportunityTranslations.required"));
-          const description = required.max(
-            MAX_DESCRIPTION_LENGTH,
-            t("opportunityTranslations.tooLong", { count: MAX_DESCRIPTION_LENGTH }),
-          );
           for (const field of ["title", "info"] as const) {
-            if (draft[field].trim() === (defaultValues?.[field] ?? "").trim()) continue;
-            const result = (field === "title" ? required : description).safeParse(draft[field]);
-            if (!result.success) {
-              context.addIssue({ code: "custom", path: [field], message: result.error.issues[0].message });
-            }
+            const current = defaultValues?.[field] ?? "";
+            if (draft[field].trim() === current.trim()) continue;
+            const message = draft[field].trim()
+              ? getTextLimitMessage(t, draft[field], textLimit(OPPORTUNITY_TRANSLATION_MAX_LENGTH[field], current), {
+                  tooLong: "opportunityTranslations.tooLong",
+                  shortenOnly: "opportunityTranslations.shortenOnly",
+                })
+              : t("opportunityTranslations.required");
+            if (message) context.addIssue({ code: "custom", path: [field], message });
           }
         }),
     ),

@@ -199,6 +199,19 @@ export function isValidPLZ(code: string, scope: TypePLZ = TypePLZ.BERLIN) {
   return false;
 }
 
+export function isSavedPLZ(code: string | undefined, savedPLZ?: string) {
+  const saved = savedPLZ?.trim();
+  return Boolean(saved) && code?.trim() === saved;
+}
+
+export function isValidOrSavedPLZ(code: string | undefined, scope: TypePLZ, savedPLZ?: string) {
+  return isSavedPLZ(code, savedPLZ) || isValidPLZ(code ?? "", scope);
+}
+
+export function isEmptyOrValidPLZ(code: string | undefined, scope: TypePLZ, savedPLZ?: string) {
+  return !code?.trim() || isValidOrSavedPLZ(code, scope, savedPLZ);
+}
+
 export function getTickMark(isTicked: boolean) {
   return isTicked ? "☑" : "◻️";
 }

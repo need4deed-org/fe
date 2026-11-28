@@ -4,7 +4,8 @@ import { PlusIcon } from "@phosphor-icons/react";
 import { AgentListController } from "./AgentListController";
 import { CreateAgentDialog } from "./CreateAgentDialog/CreateAgentDialog";
 import { PendingMemberships } from "./PendingMemberships";
-import { AgentsContainer, ContentRow, CreateAgentButton } from "./styles";
+import { CircleIconButton } from "@/components/styled/circle-icon-button";
+import { AgentsContainer, ContentRow } from "./styles";
 import CardsHeader from "../common/CardsHeader/CardsHeader";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
@@ -163,13 +164,13 @@ export const Agents = () => {
           onClearFilter={handleClearFilter}
           headerAction={
             canCreateAgent && (
-              <CreateAgentButton
+              <CircleIconButton
                 type="button"
                 onClick={() => setIsCreateAgentOpen(true)}
                 aria-label={t("dashboard.agents.createAgent.button")}
               >
                 <PlusIcon size={16} weight="bold" />
-              </CreateAgentButton>
+              </CircleIconButton>
             )
           }
         />

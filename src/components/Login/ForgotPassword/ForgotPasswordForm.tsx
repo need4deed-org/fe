@@ -1,6 +1,7 @@
 import { ROUTES } from "@/constants/routes";
-import React from "react";
-import { useForm } from "@tanstack/react-form";
+import React, { useMemo } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Controller, useForm } from "react-hook-form";
 import { FormInput } from "../../core/common";
 import { useTranslation } from "react-i18next";
 import { Button } from "../../core/button";
@@ -9,6 +10,7 @@ import { apiPathRequestPasswordReset } from "@/config/constants";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { EmailButtonDiv, StyledForm } from "../styles";
+import { createForgotPasswordSchema, ForgotPasswordFormData } from "./forgotPasswordSchema";
 
 interface ForgotPasswordData {
   email: string;
@@ -36,57 +38,50 @@ export function ForgotPasswordForm({ onSuccess }: Props) {
   const { t } = useTranslation();
   const { lang } = useParams<{ lang: string }>();
   const { mutate: requestPasswordReset, isPending } = useRequestPasswordResetMutation(onSuccess);
-  const form = useForm({
-    defaultValues: {
-      email: "",
-    },
-    onSubmit: async ({ value }) => {
-      requestPasswordReset(value);
-    },
+  const schema = useMemo(() => createForgotPasswordSchema(t), [t]);
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ForgotPasswordFormData>({
+    resolver: zodResolver(schema),
+    mode: "onTouched",
+    defaultValues: { email: "" },
   });
+  const canSubmit = Object.keys(errors).length === 0 && !isPending;
+
   return (
     <StyledForm
       onSubmit={(e) => {
-        e.preventDefault();
         e.stopPropagation();
-        form.handleSubmit();
+        handleSubmit((values) => requestPasswordReset(values))(e);
       }}
     >
-      <form.Field
+      <Controller
         name="email"
-        validators={{
-          onChange: ({ value }) => {
-            if (!value) return t("dashboard.login.emailMissing");
-            if (!value.includes("@")) return t("dashboard.login.emailMissingAtChar");
-            return undefined;
-          },
-        }}
-      >
-        {(field) => (
+        control={control}
+        render={({ field, fieldState }) => (
           <FormInput
             type="email"
             name="email"
             autoComplete="username"
-            value={field.state.value}
-            onInputChange={field.handleChange}
+            value={field.value}
+            onInputChange={field.onChange}
+            onBlur={field.onBlur}
             placeHolder={t("dashboard.login.email")}
-            errors={field.state.meta.errors}
+            errors={fieldState.error?.message ? [fieldState.error.message] : []}
           />
         )}
-      </form.Field>
+      />
       <EmailButtonDiv>
-        <form.Subscribe selector={(state) => state}>
-          {() => (
-            <Button
-              type="submit"
-              text={t("dashboard.login.sendEmail")}
-              backgroundcolor={form.state.canSubmit && !isPending ? "var(--color-aubergine)" : "var(--color-grey-50)"}
-              textColor={form.state.canSubmit && !isPending ? "var(--color-white)" : "var(--color-grey-400)"}
-              textHoverColor="var(--color-magnolia)"
-              disabled={!form.state.canSubmit || isPending}
-            />
-          )}
-        </form.Subscribe>
+        <Button
+          type="submit"
+          text={t("dashboard.login.sendEmail")}
+          backgroundcolor={canSubmit ? "var(--color-aubergine)" : "var(--color-grey-50)"}
+          textColor={canSubmit ? "var(--color-white)" : "var(--color-grey-400)"}
+          textHoverColor="var(--color-magnolia)"
+          disabled={!canSubmit}
+        />
         <Link href={ROUTES.login(lang)}>{t("dashboard.login.backToLogin")}</Link>
       </EmailButtonDiv>
     </StyledForm>

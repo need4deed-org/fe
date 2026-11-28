@@ -3,6 +3,7 @@ import { ROUTES } from "@/constants/routes";
 import { Button } from "@/components/core/button";
 import { apiPathUser } from "@/config/constants";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { useRouteLang } from "@/hooks/use-route-lang";
 import { getLocalizedErrorMessage } from "@/utils/apiErrors";
 import axios from "axios";
 import { UserRole } from "need4deed-sdk";
@@ -37,7 +38,8 @@ const isLinkTokenExpired = (token: string): boolean => {
 };
 
 export function VolunteerRegistration() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
+  const lang = useRouteLang();
   const router = useRouter();
   const ngoToken = useSearchParams().get("ngo") || undefined;
   const user = useCurrentUser(true);
@@ -49,8 +51,8 @@ export function VolunteerRegistration() {
 
   useEffect(() => {
     if (!user || ngoToken) return;
-    router.push(ROUTES.dashboard(i18n.language));
-  }, [user, ngoToken, i18n.language, router]);
+    router.push(ROUTES.dashboard(lang));
+  }, [user, ngoToken, lang, router]);
 
   const update = (fields: Partial<AccountRegistrationData>) => {
     setFormData((prev) => ({ ...prev, ...fields }));
@@ -109,7 +111,7 @@ export function VolunteerRegistration() {
         <Card>
           <SuccessWrapper>
             <SuccessText>{ngoLinkMessage}</SuccessText>
-            {user && <Link href={ROUTES.dashboard(i18n.language)}>{t("volunteerRegistration.toDashboard")}</Link>}
+            {user && <Link href={ROUTES.dashboard(lang)}>{t("volunteerRegistration.toDashboard")}</Link>}
           </SuccessWrapper>
         </Card>
       </PageWrapper>
@@ -142,7 +144,7 @@ export function VolunteerRegistration() {
 
         <ExistingUserWrapper>
           <ExistingUserText>{t("volunteerRegistration.alreadyUser")}</ExistingUserText>
-          <Link href={ROUTES.login(i18n.language)}>{t("volunteerRegistration.loginLink")}</Link>
+          <Link href={ROUTES.login(lang)}>{t("volunteerRegistration.loginLink")}</Link>
         </ExistingUserWrapper>
 
         {submitError && <ErrorBanner>{submitError}</ErrorBanner>}

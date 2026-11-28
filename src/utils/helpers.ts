@@ -1,8 +1,11 @@
+import type { Lang } from "need4deed-sdk";
 import {
   AUTH_HINT_COOKIE_ATTRS,
   AUTH_HINT_COOKIE_NAME,
   AUTH_HINT_MAX_AGE,
   cloudfrontURL,
+  defaultRouteLang,
+  langCookieName,
   supportedLangs,
 } from "@/config/constants";
 
@@ -23,9 +26,27 @@ export function capitalizeFirstLetter(str: string): string {
   return firstLetter + restOfString;
 }
 
-export const isValidLanguage = (language: string) => {
-  return supportedLangs.includes(language);
+export const isValidLanguage = (language: string | undefined): language is Lang =>
+  language !== undefined && supportedLangs.includes(language);
+
+export const getPathLanguagePrefix = (pathname: string): string | undefined =>
+  pathname.match(/^\/([a-z]{2})(?:\/|$)/i)?.[1];
+
+export const getPathLanguage = (pathname: string): Lang | undefined => {
+  const language = getPathLanguagePrefix(pathname);
+  return isValidLanguage(language) ? language : undefined;
 };
+
+export const resolveLanguage = (language: string | undefined): Lang =>
+  isValidLanguage(language) ? language : defaultRouteLang;
+
+export const localizedPath = (language: Lang, path: string): string => `/${language}${path}`;
+
+export const getPreferredLanguage = (pathname: string, savedLanguage: string | undefined): Lang =>
+  getPathLanguage(pathname) ?? resolveLanguage(savedLanguage);
+
+export const getLoginPath = (pathname: string): string =>
+  localizedPath(getPreferredLanguage(pathname, getCookie(langCookieName)), "/login");
 
 export const getCookie = (name: string): string | undefined => {
   if (typeof document === "undefined") return undefined;

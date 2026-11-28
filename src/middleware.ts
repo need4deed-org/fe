@@ -1,27 +1,26 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { userAgent } from "next/server";
-import { supportedLangs } from "./config/constants";
+import { defaultRouteLang, langCookieName, supportedLangs } from "./config/constants";
 import { Lang, UserRole } from "need4deed-sdk";
-import { decodeJwtPayload } from "./utils";
+import { decodeJwtPayload, getPathLanguage, getPathLanguagePrefix, localizedPath } from "./utils/helpers";
 import { ROUTES } from "./constants/routes";
 
-const DEFAULT_LOCALE = Lang.EN;
 const DEFAULT_DEVICE_TYPE = "desktop";
 const DEVICE_HEADER_NAME = "x-device-type";
-const LANG_COOKIE = "preferred-lang";
 const REFRESH = "refresh";
 
-const appSections = "dashboard|opportunities|volunteers|organizations|discussions|calendar|account";
-const localePrefixRegex = /^\/([a-z]{2})(?:\/|$)/i;
+const appSections =
+  "dashboard|opportunities|volunteers|organizations|discussions|calendar|metrics|settings|accounts|emails|help";
 
-const authorizedRoutes: Record<string, { regex: RegExp; redirect: (lang: string) => string }> = {
+const authorizedRoutes = {
   AGENT: { regex: /^(?:\/[a-z]{2})?\/organizations\/([0-9]+)$/, redirect: ROUTES.organizations },
-  NEW_OPPORTUNITIES: { regex: /^(?:\/[a-z]{2})?\/forms\/opportunity(?:\/|$)/, redirect: ROUTES.login },
-  DASHBOARD: { regex: new RegExp(`^(?:/[a-z]{2})?/(?:${appSections})(?:/|$)`), redirect: ROUTES.login },
+  OPERATOR: { regex: /^(?:\/[a-z]{2})?\/organizations\/operators\/([0-9]+)$/, redirect: ROUTES.dashboard },
+  NEW_OPPORTUNITIES: { regex: /^(?:\/[a-z]{2})?\/forms\/opportunity(?:\/|$)/ },
+  DASHBOARD: { regex: new RegExp(`^(?:/[a-z]{2})?/(?:${appSections})(?:/|$)`) },
 };
 
-function getAcceptLanguageLocale(header: string | null): string | null {
+function getAcceptLanguageLocale(header: string | null): Lang | null {
   if (!header) return null;
 
   const ranked = header
@@ -35,34 +34,33 @@ function getAcceptLanguageLocale(header: string | null): string | null {
     .filter(({ quality }) => quality > 0)
     .sort((a, b) => b.quality - a.quality);
 
-  return ranked.find(({ lang }) => supportedLangs.includes(lang))?.lang ?? null;
+  return (ranked.find(({ lang }) => supportedLangs.includes(lang))?.lang as Lang | undefined) ?? null;
 }
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  const currentLocale = pathname.match(localePrefixRegex)?.[1] ?? null;
-  const cookieLang = request.cookies.get(LANG_COOKIE)?.value;
+  const currentLocale = getPathLanguage(pathname);
+  const cookieLang = request.cookies.get(langCookieName)?.value;
   const preferredLocale =
-    (cookieLang && supportedLangs.includes(cookieLang) ? cookieLang : null) ??
+    (cookieLang && supportedLangs.includes(cookieLang) ? (cookieLang as Lang) : null) ??
     getAcceptLanguageLocale(request.headers.get("accept-language")) ??
-    DEFAULT_LOCALE;
-  const lang = currentLocale && supportedLangs.includes(currentLocale) ? currentLocale : preferredLocale;
+    defaultRouteLang;
+  const lang = currentLocale ?? preferredLocale;
+
+  const redirectTo = (path: string, { clearSearch = false } = {}) => {
+    const url = request.nextUrl.clone();
+    if (clearSearch) url.search = "";
+    url.pathname = path;
+    return NextResponse.redirect(url);
+  };
 
   const token = request.cookies.get(REFRESH)?.value;
 
   if (!token) {
-    const url = request.nextUrl.clone();
-    const dashboardMatch = pathname.match(authorizedRoutes.DASHBOARD.regex);
-    const newOppMatch = pathname.match(authorizedRoutes.NEW_OPPORTUNITIES.regex);
-    if (dashboardMatch) {
-      url.search = "";
-      url.pathname = authorizedRoutes.DASHBOARD.redirect(lang);
-      return NextResponse.redirect(url);
-    }
-    if (newOppMatch) {
-      url.pathname = authorizedRoutes.DASHBOARD.redirect(lang);
-      return NextResponse.redirect(url);
+    const isAppRoute = authorizedRoutes.DASHBOARD.regex.test(pathname);
+    if (isAppRoute || authorizedRoutes.NEW_OPPORTUNITIES.regex.test(pathname)) {
+      return redirectTo(ROUTES.login(lang), { clearSearch: isAppRoute });
     }
   }
 
@@ -71,84 +69,54 @@ export function middleware(request: NextRequest) {
     const isAuthorized =
       (userObject && userObject.role === UserRole.ADMIN) || (userObject && userObject.role === UserRole.COORDINATOR);
 
-    const adminOnlyRegex = /^(?:\/[a-z]{2})?\/(?:dashboard\/statistics|organizations\/(?:domains|volunteers))(?:\/|$)/;
+    const adminOnlyRegex =
+      /^(?:\/[a-z]{2})?\/(?:metrics|accounts|emails|organizations\/(?:domains|volunteers))(?:\/|$)/;
     if (!isAuthorized && adminOnlyRegex.test(pathname)) {
-      const url = request.nextUrl.clone();
-      url.pathname = ROUTES.dashboard(lang);
-      return NextResponse.redirect(url);
+      return redirectTo(ROUTES.dashboard(lang));
     }
 
     const volunteerRestrictedRegex = /^(?:\/[a-z]{2})?\/(volunteers|organizations|discussions|calendar)(?:\/|$)/;
     if (userObject?.role === UserRole.VOLUNTEER && volunteerRestrictedRegex.test(pathname)) {
-      const url = request.nextUrl.clone();
-      url.pathname = ROUTES.dashboard(lang);
-      return NextResponse.redirect(url);
+      return redirectTo(ROUTES.dashboard(lang));
     }
 
-    const match = pathname.match(authorizedRoutes.AGENT.regex);
-    if (match) {
-      if (isAuthorized || userObject?.role === UserRole.AGENT) {
-        return NextResponse.next();
-      }
-      const url = request.nextUrl.clone();
-      url.pathname = authorizedRoutes.AGENT.redirect(lang);
-      const redirectResponse = NextResponse.redirect(url);
-      return redirectResponse;
+    const isAgentDetail = authorizedRoutes.AGENT.regex.test(pathname);
+    if (isAgentDetail && !isAuthorized && userObject?.role !== UserRole.AGENT) {
+      return redirectTo(authorizedRoutes.AGENT.redirect(lang));
+    }
+
+    const isOperatorDetail = authorizedRoutes.OPERATOR.regex.test(pathname);
+    if (isOperatorDetail && !isAuthorized && userObject?.role !== UserRole.AGENT) {
+      return redirectTo(authorizedRoutes.OPERATOR.redirect(lang));
     }
 
     const agentRestrictedRegex = /^(?:\/[a-z]{2})?\/(?:calendar(?:\/|$)|organizations\/?$)/;
     if (userObject?.role === UserRole.AGENT && agentRestrictedRegex.test(pathname)) {
-      const url = request.nextUrl.clone();
-      url.pathname = ROUTES.dashboard(lang);
-      return NextResponse.redirect(url);
+      return redirectTo(ROUTES.dashboard(lang));
     }
   }
 
-  let redirectNeeded = false;
-  let newPathname = pathname;
-
-  if (currentLocale) {
-    const isSupportedLocale = supportedLangs.includes(currentLocale);
-
-    if (!isSupportedLocale) {
-      const pathWithoutLocalePrefix = pathname.substring(currentLocale.length + 1);
-
-      newPathname = `/${preferredLocale}${pathWithoutLocalePrefix}`;
-      redirectNeeded = true;
-    }
-  } else {
-    newPathname = `/${preferredLocale}${pathname}`;
-    redirectNeeded = true;
-  }
-
-  if (redirectNeeded) {
-    const url = request.nextUrl.clone();
-    url.pathname = newPathname;
-    const redirectResponse = NextResponse.redirect(url);
-    return redirectResponse;
+  if (!currentLocale) {
+    const unsupportedPrefix = getPathLanguagePrefix(pathname);
+    const unprefixedPath = unsupportedPrefix ? pathname.slice(unsupportedPrefix.length + 1) : pathname;
+    return redirectTo(localizedPath(preferredLocale, unprefixedPath));
   }
 
   const response = NextResponse.next();
-
-  if (currentLocale && supportedLangs.includes(currentLocale)) {
-    response.cookies.set(LANG_COOKIE, currentLocale, {
-      path: "/",
-      maxAge: 60 * 60 * 24 * 365,
-      sameSite: "lax",
-    });
-  }
+  response.cookies.set(langCookieName, currentLocale, {
+    path: "/",
+    maxAge: 60 * 60 * 24 * 365,
+    sameSite: "lax",
+  });
 
   const { device } = userAgent({ headers: request.headers });
-
-  const deviceType = device.type || DEFAULT_DEVICE_TYPE;
-
-  response.headers.set(DEVICE_HEADER_NAME, deviceType);
+  response.headers.set(DEVICE_HEADER_NAME, device.type || DEFAULT_DEVICE_TYPE);
 
   return response;
 }
 
 export const config = {
   matcher: [
-    "/((?!_next|static|favicon.ico|api|health|.well-known|robots\\.txt|sitemap\\.xml|.*\\.png|.*\\.jpg|.*\\.jpeg|.*\\.svg|.*\\.webp|.*\\.ico).*)",
+    "/((?!_next(?:/|$)|api(?:/|$)|health(?:/|$)|\\.well-known(?:/|$)|.*\\.(?:png|jpe?g|gif|svg|webp|avif|ico|json|webmanifest|txt|xml|woff2?|pdf)$).*)",
   ],
 };

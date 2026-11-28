@@ -1,5 +1,5 @@
-import { ApiOptionLists } from "need4deed-sdk";
-import { SelectionMap, SetFilter } from "./types";
+import { ApiOptionLists, QueryParamsKeys } from "need4deed-sdk";
+import { SelectionMap, SetFilter, SupportedCardsFilter } from "./types";
 
 export const getClearFilter = <T extends object>(filter: T): T => {
   const newFilter: Record<string, string | boolean | number | object> = {};
@@ -81,4 +81,11 @@ export const generateFilterControlItem = <TFilter>(
       setFilter((prev) => ({ ...prev, [key]: checked }));
     },
   };
+};
+
+export const EMPTY_LIST: never[] = [];
+export const STATUS_PARAM = "status";
+
+export const getStatusOrEngagementMap = (filter: SupportedCardsFilter): Record<string, boolean> => {
+  return QueryParamsKeys.ENGAGEMENT in filter ? filter[QueryParamsKeys.ENGAGEMENT] : filter.status;
 };

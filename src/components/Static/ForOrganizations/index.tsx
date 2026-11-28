@@ -2,27 +2,34 @@
 import { ROUTES } from "@/constants/routes";
 import { useTranslation } from "react-i18next";
 import { EMAILS } from "@/constants/emails";
+import { Card, CardGrid } from "@/components/styled/card-grid";
 import {
-  AnswerRow,
   Badge,
   Container,
   ContentSection,
-  Dash,
-  DashContainer,
   Heading,
-  Item,
-  ItemBody,
-  ItemsList,
-  ItemTitle,
   NoteText,
   QuestionRow,
   SectionBlock,
   SectionHeader,
+  SubHeading,
   TextLink,
 } from "../styled";
 
-const STEPS = ["request", "prepare", "match", "introduction", "noMatch", "afterMatch"];
-const DASHBOARD_FEATURES = ["volunteers", "hours", "discussions", "openSource"];
+const STEPS = ["request", "search", "prepare", "match", "introduction", "noMatch", "afterMatch"];
+const DASHBOARD_FEATURES = [
+  "matched",
+  "import",
+  "link",
+  "hours",
+  "appreciation",
+  "feedback",
+  "export",
+  "traeger",
+  "efz",
+  "discussions",
+  "openSource",
+];
 
 export const ForOrganizations = () => {
   const { t, i18n } = useTranslation();
@@ -36,44 +43,32 @@ export const ForOrganizations = () => {
         <NoteText>{t("forOrganizationsPage.intro")}</NoteText>
 
         <SectionBlock>
-          <SectionHeader>{t("forOrganizationsPage.stepsHeading")}</SectionHeader>
-          <ItemsList>
+          <SubHeading>{t("forOrganizationsPage.stepsHeading")}</SubHeading>
+          <NoteText>{t("forOrganizationsPage.stepsIntro")}</NoteText>
+          <CardGrid>
             {STEPS.map((step, index) => (
-              <Item key={step}>
+              <Card key={step}>
                 <QuestionRow>
                   <Badge>{index + 1}</Badge>
-                  <ItemTitle>{t(`forOrganizationsPage.steps.${step}.title`)}</ItemTitle>
+                  <SectionHeader as="h4">{t(`forOrganizationsPage.steps.${step}.title`)}</SectionHeader>
                 </QuestionRow>
-                <AnswerRow>
-                  <DashContainer>
-                    <Dash />
-                  </DashContainer>
-                  <ItemBody>{t(`forOrganizationsPage.steps.${step}.body`)}</ItemBody>
-                </AnswerRow>
-              </Item>
+                <NoteText>{t(`forOrganizationsPage.steps.${step}.body`)}</NoteText>
+              </Card>
             ))}
-          </ItemsList>
+          </CardGrid>
         </SectionBlock>
 
         <SectionBlock>
-          <SectionHeader>{t("forOrganizationsPage.dashboard.heading")}</SectionHeader>
+          <SubHeading>{t("forOrganizationsPage.dashboard.heading")}</SubHeading>
           <NoteText>{t("forOrganizationsPage.dashboard.intro")}</NoteText>
-          <ItemsList>
-            {DASHBOARD_FEATURES.map((feature, index) => (
-              <Item key={feature}>
-                <QuestionRow>
-                  <Badge>{index + 1}</Badge>
-                  <ItemTitle>{t(`forOrganizationsPage.dashboard.features.${feature}.title`)}</ItemTitle>
-                </QuestionRow>
-                <AnswerRow>
-                  <DashContainer>
-                    <Dash />
-                  </DashContainer>
-                  <ItemBody>{t(`forOrganizationsPage.dashboard.features.${feature}.body`)}</ItemBody>
-                </AnswerRow>
-              </Item>
+          <CardGrid>
+            {DASHBOARD_FEATURES.map((feature) => (
+              <Card key={feature}>
+                <SectionHeader as="h4">{t(`forOrganizationsPage.dashboard.features.${feature}.title`)}</SectionHeader>
+                <NoteText>{t(`forOrganizationsPage.dashboard.features.${feature}.body`)}</NoteText>
+              </Card>
             ))}
-          </ItemsList>
+          </CardGrid>
         </SectionBlock>
 
         <SectionBlock>
@@ -91,7 +86,7 @@ export const ForOrganizations = () => {
           </NoteText>
           <NoteText>
             {t("forOrganizationsPage.goodToKnow.contact")}{" "}
-            <TextLink href={`mailto: ${EMAILS.contact}`}>{EMAILS.contact}</TextLink>
+            <TextLink href={`mailto:${EMAILS.contact}`}>{EMAILS.contact}</TextLink>
           </NoteText>
         </SectionBlock>
       </ContentSection>

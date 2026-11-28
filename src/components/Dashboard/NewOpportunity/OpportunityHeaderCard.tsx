@@ -12,11 +12,15 @@ import { ShootingStarIcon } from "@phosphor-icons/react";
 import { useFormContext, Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { ApiAgentMembershipSummary, VolunteerStateTypeType } from "need4deed-sdk";
-import { VolunteerTypeRow, TypeButtons, TypeButton, NGOTypeRow, NGOnonEditableRow } from "./styled";
+import { SOURCE_TEXT_LIMITS } from "@/utils/opportunity-text-limits";
+import { VolunteerTypeRow, TypeButtons, TypeButton, NGOTypeRow, NGOnonEditableRow, NGOPickerColumn } from "./styled";
 import { Heading3, Heading4 } from "@/components/styled/text";
 import { createVolunteerTypeLabelMap } from "@/components/Dashboard/Profile/sections/ProfileHeader/common/labelMaps";
 import { HeaderFormData } from "./headerSchema";
 import { ErrorMessage } from "@/components/core/common";
+import { AgentPicker } from "@/components/Dashboard/Home/NgoVolunteers/AgentPicker";
+import { AgentOption } from "@/hooks/useAgentSearch";
+import { useState } from "react";
 
 const SELECTABLE_VOLUNTEER_TYPES = [
   VolunteerStateTypeType.REGULAR,
@@ -27,9 +31,11 @@ const SELECTABLE_VOLUNTEER_TYPES = [
 type Props = {
   selectedType: VolunteerStateTypeType | undefined;
   agentTitles: ApiAgentMembershipSummary[];
+  canPickAnyNgo?: boolean;
+  selectedAgentTitle?: string;
 };
 
-export default function OpportunityHeaderCard({ selectedType, agentTitles }: Props) {
+export default function OpportunityHeaderCard({ selectedType, agentTitles, canPickAnyNgo, selectedAgentTitle }: Props) {
   const { t } = useTranslation();
   const {
     control,
@@ -37,6 +43,7 @@ export default function OpportunityHeaderCard({ selectedType, agentTitles }: Pro
     formState: { errors },
   } = useFormContext<HeaderFormData>();
   const volunteerTypeLabelMap = createVolunteerTypeLabelMap(t);
+  const [pickedAgent, setPickedAgent] = useState<AgentOption>();
   return (
     <Card>
       <ProfileContent>
@@ -56,6 +63,9 @@ export default function OpportunityHeaderCard({ selectedType, agentTitles }: Pro
                   label={t("dashboard.newOpportunity.fields.title")}
                   value={field.value}
                   setValue={field.onChange}
+                  hint={t("dashboard.opportunityProfile.opportunityDetails.maxCharsHint", {
+                    max: SOURCE_TEXT_LIMITS.title.max,
+                  })}
                   errorMessage={errors.title?.message}
                 />
               )}
@@ -88,7 +98,27 @@ export default function OpportunityHeaderCard({ selectedType, agentTitles }: Pro
               name="agentId"
               control={control}
               render={({ field }) =>
-                agentTitles.length > 1 ? (
+                canPickAnyNgo ? (
+                  <NGOPickerColumn>
+                    <Heading4>{t("dashboard.newOpportunity.fields.ngo")}</Heading4>
+                    <AgentPicker
+                      hideInactive
+                      selected={
+                        field.value
+                          ? {
+                              id: field.value,
+                              title: (pickedAgent?.id === field.value ? pickedAgent.title : selectedAgentTitle) ?? "",
+                            }
+                          : undefined
+                      }
+                      onSelect={(agent) => {
+                        setPickedAgent(agent);
+                        setValue("agentId", agent?.id ?? 0, { shouldValidate: Boolean(agent) });
+                      }}
+                    />
+                    {errors.agentId?.message && <ErrorMessage message={errors.agentId.message} />}
+                  </NGOPickerColumn>
+                ) : agentTitles.length > 1 ? (
                   <EditableField
                     stackAt={opportunityFieldStackingThreshold}
                     mode="edit"

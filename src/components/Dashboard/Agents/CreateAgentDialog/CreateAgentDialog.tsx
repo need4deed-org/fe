@@ -5,9 +5,11 @@ import Button from "@/components/core/button/Button/Button";
 import { Modal } from "@/components/core/modal/Modal";
 import { EditableField } from "@/components/EditableField/EditableField";
 import { apiPathAgent, cacheTTL } from "@/config/constants";
+import { PLZChip } from "@/components/core/common";
 import { useGetQuery } from "@/hooks";
+import { usePLZField } from "@/hooks/use-plz-field";
 import { useCreateAgent } from "@/hooks/useCreateAgent";
-import { ApiAgentGet, ApiAgentRegisterConflict } from "need4deed-sdk";
+import { ApiAgentAddressConflict, ApiAgentGet } from "need4deed-sdk";
 import Link from "next/link";
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -26,7 +28,7 @@ const emptyValues: CreateAgentFormData = { title: "", addressStreet: "", address
 
 export const CreateAgentDialog = ({ isOpen, onClose }: Props) => {
   const { t, i18n } = useTranslation();
-  const [conflict, setConflict] = useState<ApiAgentRegisterConflict | null>(null);
+  const [conflict, setConflict] = useState<ApiAgentAddressConflict | null>(null);
   const { mutate: createAgent, isPending } = useCreateAgent(setConflict);
 
   const { data: conflictAgent } = useGetQuery<ApiAgentGet>({
@@ -47,6 +49,7 @@ export const CreateAgentDialog = ({ isOpen, onClose }: Props) => {
     mode: "onChange",
     defaultValues: emptyValues,
   });
+  const plz = usePLZField(control, "addressPostcode");
 
   const handleClose = () => {
     reset(emptyValues);
@@ -115,22 +118,25 @@ export const CreateAgentDialog = ({ isOpen, onClose }: Props) => {
               value={field.value ?? ""}
               setValue={field.onChange}
               errorMessage={errors.addressPostcode?.message}
+              supportingContent={<PLZChip status={plz.status} />}
             />
           )}
         />
       </FormDetails>
       {conflict && (
         <ConflictBox role="alert">
-          <span>{t(`dashboard.agents.createAgent.conflict.${conflict.conflict}`)}</span>
+          <span>{t("dashboard.agents.createAgent.conflict.address")}</span>
           {conflictAgent?.title && <strong>{conflictAgent.title}</strong>}
           <Link href={ROUTES.organizationDetail(i18n.language, conflict.agentId)} onClick={handleClose}>
             {t("dashboard.agents.createAgent.conflict.open")}
           </Link>
-          {conflict.conflict === "address" && (
-            <ConflictAction type="button" onClick={handleSubmit(onSubmitAtSharedAddress)} disabled={isPending}>
-              {t("dashboard.agents.createAgent.conflict.createAnyway")}
-            </ConflictAction>
-          )}
+          <ConflictAction
+            type="button"
+            onClick={handleSubmit(onSubmitAtSharedAddress)}
+            disabled={isPending || plz.blocksSubmit}
+          >
+            {t("dashboard.agents.createAgent.conflict.createAnyway")}
+          </ConflictAction>
         </ConflictBox>
       )}
       <ButtonRow>
@@ -146,7 +152,7 @@ export const CreateAgentDialog = ({ isOpen, onClose }: Props) => {
           text={t("dashboard.agents.createAgent.submit")}
           onClick={handleSubmit(onSubmit)}
           width="auto"
-          disabled={!isValid || isPending}
+          disabled={!isValid || isPending || plz.blocksSubmit}
         />
       </ButtonRow>
     </Modal>

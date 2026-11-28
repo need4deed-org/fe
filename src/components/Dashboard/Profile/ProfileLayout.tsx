@@ -1,15 +1,13 @@
 "use client";
 import { ProfileController } from "./ProfileController";
-import { EntityType, ProfileNavigationDirection } from "./types/types";
+import { EntityType, ProfileNavigation } from "./types/types";
 
 interface ProfileLayoutProps {
   entityId: string;
   entityType: EntityType;
-  handleProfileNavigation?: (direction: ProfileNavigationDirection) => void;
+  profileNavigation?: ProfileNavigation;
 }
 
-export default function ProfileLayout({ entityId, entityType, handleProfileNavigation }: ProfileLayoutProps) {
-  return (
-    <ProfileController entityId={entityId} entityType={entityType} handleProfileNavigation={handleProfileNavigation} />
-  );
+export default function ProfileLayout({ entityId, entityType, profileNavigation }: ProfileLayoutProps) {
+  return <ProfileController entityId={entityId} entityType={entityType} profileNavigation={profileNavigation} />;
 }

@@ -4,11 +4,35 @@ export interface MetricOption {
   metric: StatisticsMetric;
   labelKey: string;
   allTimeTotalsBy?: StatisticsGroupBy;
+  noteKey?: string;
 }
+
+const SNAPSHOT_NOTE_KEY = "dashboard.admin.stats.snapshotNote";
 
 export const METRIC_OPTIONS: MetricOption[] = [
   { metric: StatisticsMetric.NEW_VOLUNTEERS, labelKey: "dashboard.admin.stats.metric.newVolunteers" },
-  { metric: StatisticsMetric.REQUESTS, labelKey: "dashboard.admin.stats.metric.requests" },
+  { metric: StatisticsMetric.MATCHED_VOLUNTEERS, labelKey: "dashboard.admin.stats.metric.matchedVolunteers" },
+  {
+    metric: StatisticsMetric.ACTIVE_VOLUNTEERS,
+    labelKey: "dashboard.admin.stats.metric.activeVolunteers",
+    noteKey: SNAPSHOT_NOTE_KEY,
+  },
+  {
+    metric: StatisticsMetric.AVAILABLE_VOLUNTEERS,
+    labelKey: "dashboard.admin.stats.metric.availableVolunteers",
+    noteKey: SNAPSHOT_NOTE_KEY,
+  },
+  { metric: StatisticsMetric.NEW_OPPORTUNITIES, labelKey: "dashboard.admin.stats.metric.newOpportunities" },
+  {
+    metric: StatisticsMetric.VALIDATED_OPPORTUNITIES,
+    labelKey: "dashboard.admin.stats.metric.validatedOpportunities",
+  },
+  { metric: StatisticsMetric.MATCHED_OPPORTUNITIES, labelKey: "dashboard.admin.stats.metric.matchedOpportunities" },
+  {
+    metric: StatisticsMetric.UNMATCHED_OPPORTUNITIES,
+    labelKey: "dashboard.admin.stats.metric.unmatchedOpportunities",
+  },
+  { metric: StatisticsMetric.PAST_OPPORTUNITIES, labelKey: "dashboard.admin.stats.metric.pastOpportunities" },
   {
     metric: StatisticsMetric.LEAD_FROM,
     labelKey: "dashboard.admin.stats.metric.leadFrom",

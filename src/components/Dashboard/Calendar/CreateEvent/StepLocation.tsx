@@ -1,6 +1,9 @@
 "use client";
 import Button from "@/components/core/button/Button/Button";
+import { ErrorMessage, PLZChip } from "@/components/core/common";
 import { Heading2 } from "@/components/styled/text";
+import { PLZCheckStatus } from "@/utils/plz-check";
+import { EVENT_SIGN_UP_QUESTION_MAX_LENGTH } from "need4deed-sdk";
 import { useTranslation } from "react-i18next";
 import { EventFormData } from "./CreateEvent";
 import { ButtonRow, CharCount, FieldGroup, FieldLabel, HelperText, StyledInput } from "./styles";
@@ -11,7 +14,10 @@ interface Props {
   street: string;
   houseNumber: string;
   postcode: string;
+  plzStatus: PLZCheckStatus;
+  showPostcodeError: boolean;
   registrationLink: string;
+  signUpQuestion: string;
   onChange: (fields: Partial<EventFormData>) => void;
   onNext: () => void;
   onBack: () => void;
@@ -22,7 +28,10 @@ export function StepLocation({
   street,
   houseNumber,
   postcode,
+  plzStatus,
+  showPostcodeError,
   registrationLink,
+  signUpQuestion,
   onChange,
   onNext,
   onBack,
@@ -74,6 +83,8 @@ export function StepLocation({
         <CharCount>
           {postcode.length}/{FIELD_MAX}
         </CharCount>
+        {showPostcodeError && <ErrorMessage message={t("form.error.postcodeBerlin")} />}
+        <PLZChip status={plzStatus} />
       </FieldGroup>
 
       <FieldGroup>
@@ -83,9 +94,23 @@ export function StepLocation({
           type="url"
           value={registrationLink}
           placeholder="https://…"
-          aria-required="true"
           onChange={(e) => onChange({ registrationLink: e.target.value })}
         />
+        <HelperText>{t("dashboard.calendar.createForm.registrationLinkHelper")}</HelperText>
+      </FieldGroup>
+
+      <FieldGroup>
+        <FieldLabel htmlFor="sign-up-question">{t("dashboard.calendar.createForm.signUpQuestion")}</FieldLabel>
+        <StyledInput
+          id="sign-up-question"
+          value={signUpQuestion}
+          maxLength={EVENT_SIGN_UP_QUESTION_MAX_LENGTH}
+          onChange={(e) => onChange({ signUpQuestion: e.target.value })}
+        />
+        <HelperText>{t("dashboard.calendar.createForm.signUpQuestionHelper")}</HelperText>
+        <CharCount>
+          {signUpQuestion.length}/{EVENT_SIGN_UP_QUESTION_MAX_LENGTH}
+        </CharCount>
       </FieldGroup>
 
       <HelperText>{t("dashboard.calendar.createForm.locationHelper")}</HelperText>

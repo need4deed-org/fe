@@ -8,6 +8,7 @@ import { ROUTES } from "@/constants/routes";
 import {
   BuildingsIcon,
   CalendarDotsIcon,
+  ChartLineIcon,
   ChatsCircleIcon,
   HandHeartIcon,
   Icon,
@@ -18,6 +19,9 @@ import {
   GavelIcon,
   LockKeyIcon,
   HandshakeIcon,
+  QuestionIcon,
+  GearSixIcon,
+  EnvelopeSimpleIcon,
 } from "@phosphor-icons/react";
 import { NotificationBadge } from "@/components/navigation/AppNavigation/Sidebar/Navigation/NotificationBadge";
 import { useLogout } from "./useLogout";
@@ -102,20 +106,57 @@ export const useAppNavigation = ({ t, language, user }: Props): Items => {
         label: t("dashboard.home.sidebar.calendar"),
         roles: [UserRole.USER, UserRole.COORDINATOR, UserRole.ADMIN],
       },
+      {
+        type: "link",
+        route: ROUTES.accounts(language),
+        Icon: UserCircleIcon,
+        label: t("dashboard.home.sidebar.accounts"),
+        roles: [UserRole.COORDINATOR, UserRole.ADMIN],
+      },
+      {
+        type: "link",
+        route: ROUTES.metrics(language),
+        Icon: ChartLineIcon,
+        label: t("dashboard.home.sidebar.metrics"),
+        roles: [UserRole.COORDINATOR, UserRole.ADMIN],
+      },
+      {
+        type: "link",
+        route: ROUTES.emails(language),
+        Icon: EnvelopeSimpleIcon,
+        label: t("dashboard.home.sidebar.emails"),
+        roles: [UserRole.COORDINATOR, UserRole.ADMIN],
+      },
     ];
     const roleMainItems = mainItems.filter(({ roles }) => roles.includes(user.role));
     const lists: List[] = [
       [
         {
           type: "link",
-          route: ROUTES.account(language),
-          Icon: UserCircleIcon,
-          label: t("dashboard.home.sidebar.account"),
+          route: ROUTES.settings(language),
+          Icon: GearSixIcon,
+          label: t("dashboard.home.sidebar.settings"),
         },
-        { type: "button", Icon: SignOutIcon, label: t("dashboard.home.sidebar.logout"), onClick: logout },
+        {
+          type: "button",
+          Icon: SignOutIcon,
+          label: t("dashboard.home.sidebar.logout"),
+          onClick: logout,
+        },
       ],
       [
-        { type: "link", route: ROUTES.legal(language), Icon: GavelIcon, label: t("dashboard.home.sidebar.legal") },
+        {
+          type: "link",
+          route: ROUTES.help(language),
+          Icon: QuestionIcon,
+          label: t("dashboard.home.sidebar.help"),
+        },
+        {
+          type: "link",
+          route: ROUTES.legal(language),
+          Icon: GavelIcon,
+          label: t("dashboard.home.sidebar.legal"),
+        },
         {
           type: "link",
           route: ROUTES.privacy(language),

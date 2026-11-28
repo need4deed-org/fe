@@ -7,7 +7,7 @@ import {
   CommunicationTrackerRef,
 } from "@/components/Dashboard/Profile/sections/CommunicationTracker";
 import { ContactDetails } from "@/components/Dashboard/Profile/sections/ContactDetails";
-import { OrganisationDetails } from "@/components/Dashboard/Profile/sections/OrganisationDetails";
+import { OrganisationDetails } from "@/components/Dashboard/Profile/sections/AgentOrganisationDetails";
 import { ProfileHeader } from "@/components/Dashboard/Profile/sections/ProfileHeader";
 import { ConfirmationDialog } from "@/components/core/common/ConfirmationDialog";
 import { DangerZoneButtonRow } from "@/components/Dashboard/Profile/sections/shared/DangerZoneButtonRow";

@@ -15,6 +15,7 @@ import {
   formatAddress,
   toAddressFormData,
   toApiAddress,
+  useAddressPLZ,
 } from "../OpportunityAddress";
 import { FormButtonRow } from "../shared/styles";
 import { EditableSectionProps, EditableSectionRef } from "../shared/types";
@@ -32,10 +33,12 @@ export const RefugeeAccommodationCentre = forwardRef<EditableSectionRef, Props>(
     const [isEditing, setIsEditing] = useState(false);
 
     const methods = useForm<OpportunityAddressFormData>({
-      resolver: zodResolver(createOpportunityAddressSchema(t)),
+      resolver: zodResolver(createOpportunityAddressSchema(t, opportunity.address?.postcode)),
       mode: "onChange",
       values: toAddressFormData(opportunity.address),
     });
+
+    const plz = useAddressPLZ(methods.control);
 
     const { mutate, isPending } = useMutationQuery<Pick<ApiOpportunityPatch, "address">, unknown>({
       apiPath: `${apiPathOpportunity}/${opportunity.id}`,
@@ -61,7 +64,7 @@ export const RefugeeAccommodationCentre = forwardRef<EditableSectionRef, Props>(
     if (isEditing) {
       return (
         <FormProvider {...methods}>
-          <OpportunityAddressFields />
+          <OpportunityAddressFields plzStatus={plz.status} />
           <FormButtonRow>
             <Button
               text={t("dashboard.opportunityProfile.accompanyingDetails.cancel")}
@@ -76,7 +79,7 @@ export const RefugeeAccommodationCentre = forwardRef<EditableSectionRef, Props>(
               onClick={handleSubmit}
               width="auto"
               padding="var(--volunteer-profile-section-card-header-button-padding)"
-              disabled={!methods.formState.isDirty || isPending}
+              disabled={!methods.formState.isDirty || isPending || plz.blocksSubmit}
             />
           </FormButtonRow>
         </FormProvider>

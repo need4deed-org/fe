@@ -91,7 +91,7 @@ export const VolunteerHeader = ({ volunteer }: Props) => {
   const showBriefedCheck = isBriefedAccompanying(volunteer.statusType, volunteer.statusCommunication);
 
   const fullName = hasEditingRights
-    ? `${volunteer.person.firstName} ${volunteer.person.lastName}`
+    ? [volunteer.person.firstName, volunteer.person.lastName].filter(Boolean).join(" ")
     : volunteer.person.firstName;
   const avatarUrl = getImageUrl(volunteer.person.avatarUrl || defaultAvatarVolunteerProfile);
   const subtitle = `${t("dashboard.volunteerProfile.volunteerHeader.volunteer_since")} ${formatDateTime(volunteer.createdAt)}`;

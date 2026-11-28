@@ -1,5 +1,4 @@
 import { BaseCard } from "@/components/styled/container";
-import { circleIconButtonStyles } from "@/components/styled/mixins";
 import styled from "styled-components";
 
 export const AgentsContainer = styled.div`
@@ -7,10 +6,6 @@ export const AgentsContainer = styled.div`
   flex-direction: column;
   gap: var(--dashboard-volunteers-container-gap);
   padding: var(--large-spacing);
-`;
-
-export const CreateAgentButton = styled.button`
-  ${circleIconButtonStyles}
 `;
 
 export const ContentRow = styled.div`

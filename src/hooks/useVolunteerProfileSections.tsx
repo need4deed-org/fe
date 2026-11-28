@@ -1,6 +1,7 @@
 import { ROUTES } from "@/constants/routes";
 import { SectionCardProps } from "@/components/Dashboard/Profile/common/SectionCard";
 import { Appreciation, AppreciationRef } from "@/components/Dashboard/Profile/sections/Appreciation";
+import { VolunteerEvents } from "@/components/Dashboard/Profile/sections/VolunteerEvents";
 import { Comments } from "@/components/Dashboard/Profile/sections/Comments";
 import {
   CommunicationTracker,
@@ -40,6 +41,7 @@ import { useCallback, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "./useAuth";
 import { VolunteerActivityLog } from "@/components/Dashboard/Profile/sections/VolunteerActivityLog";
+import { LeadFrom } from "@/components/Dashboard/Profile/sections/LeadFrom/LeadFrom";
 
 export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefined) => {
   const { t, i18n } = useTranslation();
@@ -116,7 +118,7 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
 
   if (!volunteer) return null;
 
-  const volunteerFullName = `${volunteer.person.firstName} ${volunteer.person.lastName}`;
+  const volunteerFullName = [volunteer.person.firstName, volunteer.person.lastName].filter(Boolean).join(" ");
 
   const handleRequestSelect = (opportunity: Pick<ApiOpportunityGetList, "id" | "title">) => {
     if (ownsVolunteer) {
@@ -260,6 +262,15 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
         }),
         subComponent: <Appreciation ref={appreciationRef} volunteer={volunteer} canEdit={isAuthorized} />,
       },
+      ...(isAuthorized
+        ? [
+            {
+              iconName: IconName.CalendarStar,
+              title: t("dashboard.volunteerEvents.title"),
+              subComponent: <VolunteerEvents volunteerId={volunteer.id} />,
+            },
+          ]
+        : []),
       {
         iconName: IconName.ChartLine,
         title: t("dashboard.volunteerProfile.activityLog"),
@@ -292,6 +303,11 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
       iconName: IconName.ChatCircleDots,
       title: `${t("dashboard.volunteerProfile.coordinatorComments")} • ${volunteer.comments?.length ?? 0}`,
       subComponent: <Comments volunteer={volunteer} />,
+    });
+    sections.push({
+      iconName: IconName.Ear,
+      title: t("dashboard.volunteerProfile.leadFrom"),
+      subComponent: <LeadFrom volunteer={volunteer} />,
     });
     sections.push({
       iconName: IconName.Trash,

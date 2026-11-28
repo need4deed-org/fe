@@ -12,7 +12,9 @@ import { apiPathVolunteer } from "../../../config/constants";
 import { getImageUrl } from "../../../utils/index";
 import UploadIcon from "../../svg/Upload";
 
+import { PLZChip } from "@/components/core/common";
 import WithParentRef from "@/components/withParentRef";
+import { useCheckPLZ } from "@/hooks/use-check-plz";
 import useList from "@/hooks/useLists";
 import usePostRequest from "@/hooks/usePostRequest";
 import { LanguageLevel } from "@/types";
@@ -106,6 +108,9 @@ export default function BecomeVolunteer() {
     },
   });
 
+  const postcode = formVolunteer.useStore((state) => state.values.postcode);
+  const plz = useCheckPLZ(postcode ?? "");
+
   if (showErrorAnnouncement) {
     return <ErrorAnnouncement copies={somethingWrong} />;
   }
@@ -128,6 +133,11 @@ export default function BecomeVolunteer() {
         onSubmit={(e) => {
           e.preventDefault();
           e.stopPropagation();
+          if (plz.status === "unknown") {
+            document.getElementById("postcode")?.focus();
+            return;
+          }
+          if (plz.blocksSubmit) return;
           formVolunteer.handleSubmit();
         }}
       >
@@ -171,6 +181,7 @@ export default function BecomeVolunteer() {
             return undefined;
           }}
         />
+        <PLZChip status={plz.status} />
         <formVolunteer.Field
           name="locations"
           validators={{
@@ -459,7 +470,11 @@ export default function BecomeVolunteer() {
               .join(", ");
             return (
               <div className={style["form-submit"]}>
-                <button className="n4d-cta" type="submit" disabled={!state.canSubmit}>
+                <button
+                  className="n4d-cta"
+                  type="submit"
+                  disabled={!state.canSubmit || (plz.blocksSubmit && plz.status !== "unknown")}
+                >
                   {state.isSubmitting ? (
                     "..."
                   ) : (

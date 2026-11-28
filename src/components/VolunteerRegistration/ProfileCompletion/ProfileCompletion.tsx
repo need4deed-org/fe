@@ -4,9 +4,9 @@ import { ROUTES } from "@/constants/routes";
 import { Button } from "@/components/core/button";
 import { apiPathOption } from "@/config/constants";
 import { useRegisterVolunteer } from "@/hooks/useRegisterVolunteer";
+import { useRouteLang } from "@/hooks/use-route-lang";
 import { setAuthHint } from "@/utils/helpers";
 import { useForm } from "@tanstack/react-form";
-import i18next from "i18next";
 import { ApiOptionLists, ApiVolunteerRegisterNew, DocumentStatusType } from "need4deed-sdk";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -18,6 +18,7 @@ import { CertificateStep } from "../steps/CertificateStep";
 import { Actions, Card, ErrorBanner, PageSubtitle, PageTitle, StepDescription, StepTitle, Wrapper } from "../styled";
 import { DefaultVolunteerRegistrationData, defaultVolunteerRegistrationData, TOTAL_COMPLETION_STEPS } from "../types";
 import { useGetQuery } from "@/hooks";
+import { useCheckPLZ } from "@/hooks/use-check-plz";
 import { formToApiAvailability } from "@/components/Dashboard/Profile/sections/VolunteerProfile/availabilityUtils";
 import { createMapping } from "@/components/Dashboard/Profile/sections/VolunteerProfile/mappingUtils";
 import {
@@ -29,6 +30,7 @@ import { ApiLanguageOption } from "@/components/Dashboard/Profile/sections/Volun
 export function ProfileCompletion() {
   const { t } = useTranslation();
   const router = useRouter();
+  const lang = useRouteLang();
   const token = useSearchParams().get("token");
 
   const [step, setStep] = useState(1);
@@ -48,7 +50,7 @@ export function ProfileCompletion() {
     () => createMapping(optionLists?.activity as ApiLanguageOption[]),
     [optionLists?.activity],
   );
-  const skillMapping = useMemo(() => createMapping(optionLists?.skill as ApiLanguageOption[]), [optionLists?.language]);
+  const skillMapping = useMemo(() => createMapping(optionLists?.skill as ApiLanguageOption[]), [optionLists?.skill]);
 
   const leadMapping = useMemo(
     () => createMapping(optionLists?.lead_from as ApiLanguageOption[]),
@@ -80,7 +82,7 @@ export function ProfileCompletion() {
     token,
     onSuccess: () => {
       setAuthHint();
-      router.push(ROUTES.dashboard(i18next.language));
+      router.push(ROUTES.dashboard(lang));
     },
   });
 
@@ -100,6 +102,9 @@ export function ProfileCompletion() {
       }
     },
   });
+
+  const postcode = formVolunteer.useStore((state) => state.values.addressPostcode);
+  const plz = useCheckPLZ(postcode ?? "");
 
   const showSubmitError = useCallback((message: string) => {
     setSubmitError(message);
@@ -151,6 +156,10 @@ export function ProfileCompletion() {
           onSubmit={(e) => {
             e.preventDefault();
             e.stopPropagation();
+            if (plz.blocksSubmit) {
+              setStep(1);
+              return;
+            }
             formVolunteer.handleSubmit();
           }}
         >
@@ -158,7 +167,7 @@ export function ProfileCompletion() {
             <div>
               <StepTitle>{t("volunteerRegistration.steps.address.title")}</StepTitle>
               <StepDescription>{t("volunteerRegistration.steps.address.description")}</StepDescription>
-              <AddressStep form={formVolunteer} optionLists={optionLists} />
+              <AddressStep form={formVolunteer} optionLists={optionLists} plzStatus={plz.status} />
             </div>
           )}
 
@@ -215,7 +224,7 @@ export function ProfileCompletion() {
                 backgroundcolor="var(--color-aubergine)"
                 textColor="var(--color-white)"
                 onClick={handleNext}
-                disabled={tokenMissing}
+                disabled={tokenMissing || (step === 1 && plz.blocksSubmit)}
               />
             )}
           </Actions>

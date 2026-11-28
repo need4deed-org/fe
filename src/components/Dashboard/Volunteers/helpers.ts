@@ -2,6 +2,8 @@ import {
   ApiLanguage,
   ApiOptionLists,
   ApiVolunteerGetList,
+  Lang,
+  LanguageMatch,
   LangProficiency,
   OptionItem,
   QueryParamsKeys,
@@ -14,6 +16,7 @@ import { FilterItem } from "../common/CardsFilter/types";
 import { deserializeSelectionFilters, serializeSelectionFilters } from "../common/CardsFilter/selectionFilters";
 import { deserializeCommutePrefill, serializeCommutePrefill } from "../common/CardsFilter/matchingPrefill";
 import { volunteerFilterConfigs } from "./Filters/config";
+import { languageToIsoCode } from "../NewOpportunity/helper";
 
 const proficiencyOrder = [
   LangProficiency.NATIVE,
@@ -72,6 +75,10 @@ export function serializeFilters(
   else params.delete(QueryParamsKeys.SEARCH);
 
   serializeSelectionFilters(volunteerFilterConfigs, filter, params, options);
+  params.delete(QueryParamsKeys.LANGUAGE_MATCH);
+  if (filter.matchAllLanguages && params.has(QueryParamsKeys.LANGUAGE)) {
+    params.set(QueryParamsKeys.LANGUAGE_MATCH, LanguageMatch.ALL);
+  }
   serializeCommutePrefill(filter, params, QueryParamsKeys.COMMUTE_OPPORTUNITY_ID, options?.commuteSourceId);
 
   params.delete(QueryParamsKeys.AVAILABILITY);
@@ -97,6 +104,9 @@ export function deserializeVolunteerFilters(filter: VolunteerCardsFilter, search
   }
 
   deserializeSelectionFilters(volunteerFilterConfigs, newFilter, searchParams);
+  newFilter.matchAllLanguages =
+    Object.values(newFilter.language).some(Boolean) &&
+    searchParams.get(QueryParamsKeys.LANGUAGE_MATCH) === LanguageMatch.ALL;
   deserializeCommutePrefill(newFilter, searchParams, QueryParamsKeys.COMMUTE_OPPORTUNITY_ID);
 
   const queryAvailability = searchParams.getAll(QueryParamsKeys.AVAILABILITY);
@@ -138,20 +148,23 @@ export function getCheckedOptionIds(items: FilterItem[], options?: OptionItem[] 
   return (options ?? []).filter((option) => checked.includes(option.title)).map((option) => option.id);
 }
 
+function rankLanguages(languages: ApiLanguage[]): ApiLanguage[] {
+  const rank = (p: LangProficiency | undefined) =>
+    p !== undefined ? proficiencyOrder.indexOf(p) : proficiencyOrder.length;
+  return [...languages].filter((language) => language.title).sort((a, b) => rank(a.proficiency) - rank(b.proficiency));
+}
+
 export function getTopLanguages(languages: ApiLanguage[], max = 2): string[] {
-  const order = [
-    LangProficiency.NATIVE,
-    LangProficiency.FLUENT,
-    LangProficiency.ADVANCED,
-    LangProficiency.INTERMEDIATE,
-    LangProficiency.BEGINNER,
-  ];
-  const rank = (p: LangProficiency | undefined) => (p !== undefined ? order.indexOf(p) : order.length);
-  return [...languages]
-    .sort((a, b) => rank(a.proficiency) - rank(b.proficiency))
+  return rankLanguages(languages)
     .map((l) => l.title)
-    .filter(Boolean)
     .slice(0, max);
+}
+
+export function getVolunteerTableLanguages(languages: ApiLanguage[]): ApiLanguage[] {
+  const ranked = rankLanguages(languages);
+  const german = ranked.find(({ title }) => languageToIsoCode(title) === Lang.DE);
+  const top = ranked.slice(0, 2);
+  return german && !top.includes(german) ? [top[0], german] : top;
 }
 
 export function getNormalizedVolunteer(volunteer: ApiVolunteerGetList): Omit<

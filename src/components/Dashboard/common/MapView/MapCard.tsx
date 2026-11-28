@@ -117,7 +117,16 @@ const MapCard = ({
     const supportedFilters: Record<MapEntity, string[]> = {
       [MapEntity.AGENT]: ["type", "status", "engagementStatus", "services", "volunteerSearch"],
       [MapEntity.OPPORTUNITY]: ["type", "status", "agentId", "match", "activity", "skill", "language", "availability"],
-      [MapEntity.VOLUNTEER]: ["type", "language", "activity", "skill", "availability", "engagement", "match"],
+      [MapEntity.VOLUNTEER]: [
+        "type",
+        "language",
+        QueryParamsKeys.LANGUAGE_MATCH,
+        "activity",
+        "skill",
+        "availability",
+        "engagement",
+        "match",
+      ],
     };
     const params = new URLSearchParams(filterString);
     const supported = new Set(supportedFilters[entity]);
