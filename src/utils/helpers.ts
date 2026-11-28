@@ -103,5 +103,8 @@ export const consumeNotice = (key: string): boolean => {
 
 export const ACCOUNT_READY_NOTICE = "n4d-account-ready";
 
+export const sameSitePath = (value: string | null): string | null =>
+  value && value.startsWith("/") && !value.startsWith("//") && !value.startsWith("/\\") ? value : null;
+
 export const formatLocation = (postcode?: string | null, district?: string | null): string | null =>
   [postcode, district].filter(Boolean).join(" ") || null;

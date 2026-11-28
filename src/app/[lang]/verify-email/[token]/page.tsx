@@ -38,22 +38,35 @@ export default function Page() {
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
         }
-        const { hasVolunteerProfile } = (await res.json().catch(() => ({}))) as Partial<ApiUserVerifyEmail>;
+        const { hasVolunteerProfile, setPassword, resetToken } = (await res
+          .json()
+          .catch(() => ({}))) as Partial<ApiUserVerifyEmail>;
         setVerified(true);
 
+        const proceed = (path: string | null) => {
+          if (setPassword && resetToken) {
+            const nextParam = path ? `&next=${encodeURIComponent(path)}` : "";
+            router.push(`/${lang}/reset-password?token=${encodeURIComponent(resetToken)}${nextParam}`);
+          } else if (path) {
+            router.push(path);
+          } else {
+            goToLogin();
+          }
+        };
+
         if (hasVolunteerProfile) {
-          goToLogin();
+          proceed(null);
           return;
         }
         const roleFromUrl = searchParams.get("role");
         const pendingRole = getCookie("n4d_pending_role");
         if (roleFromUrl === "agent" || pendingRole === "agent") {
           document.cookie = "n4d_pending_role=; path=/; max-age=0";
-          router.push(`/${lang}/register/agent/complete?token=${encodeURIComponent(token)}`);
+          proceed(`/${lang}/register/agent/complete?token=${encodeURIComponent(token)}`);
         } else if (roleFromUrl === "volunteer") {
-          router.push(`/${lang}/register/volunteer/complete?token=${encodeURIComponent(token)}`);
+          proceed(`/${lang}/register/volunteer/complete?token=${encodeURIComponent(token)}`);
         } else {
-          router.push(`/${lang}/dashboard`);
+          proceed(`/${lang}/dashboard`);
         }
       })
       .catch(() => {
