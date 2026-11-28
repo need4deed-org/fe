@@ -1,3 +1,4 @@
+import { ROUTES } from "@/constants/routes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useId, useMemo, useState } from "react";
@@ -40,7 +41,7 @@ const useLoginMutation = (onLoginSuccess: () => void) => {
       const message =
         status === 401 ? (
           <span>
-            {t(key)} <Link href={`/${lang}/forgotten-password`}>{t("dashboard.login.forgotPassword")}?</Link>
+            {t(key)} <Link href={ROUTES.forgotPassword(lang)}>{t("dashboard.login.forgotPassword")}?</Link>
           </span>
         ) : (
           t(key)
@@ -136,7 +137,7 @@ export const LoginForm = ({ onLoginSuccess }: LoginFormProps) => {
           label={t("dashboard.login.rememberMe")}
           labelFontSize="var(--dashboard-login-checkbox-label-fontSize)"
         />
-        <Link href={`/${lang}/forgotten-password`}>{t("dashboard.login.forgotPassword")}?</Link>
+        <Link href={ROUTES.forgotPassword(lang)}>{t("dashboard.login.forgotPassword")}?</Link>
       </FormActions>
 
       <SubmitRow>

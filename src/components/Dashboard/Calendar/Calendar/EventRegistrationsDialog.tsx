@@ -11,7 +11,7 @@ import {
 } from "@/components/core/common/Table";
 import { Modal } from "@/components/core/modal/Modal";
 import { Heading3, Paragraph } from "@/components/styled/text";
-import { DashboardRoutes } from "@/config/constants";
+import { ROUTES } from "@/constants/routes";
 import { useEventRegistrations, useExportEventRegistrations, useSetAttended } from "@/hooks/useEventRegistrations";
 import type { ApiEventN4DGetList, ApiEventN4DRegistrationGet } from "need4deed-sdk";
 import Link from "next/link";
@@ -52,7 +52,7 @@ export function EventRegistrationsDialog({ event, onClose }: Props) {
     const kinds = registration.volunteerTypes.map((type) => t(`eventRegistration.volunteerTypes.${type}`)).join(", ");
     const label = kinds || t("eventRegistration.yes");
     return registration.volunteerId ? (
-      <Link href={`/${i18n.language}${DashboardRoutes.Volunteers}/${registration.volunteerId}`}>{label}</Link>
+      <Link href={ROUTES.volunteerDetail(i18n.language, registration.volunteerId)}>{label}</Link>
     ) : (
       label
     );

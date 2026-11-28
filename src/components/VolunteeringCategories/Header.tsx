@@ -13,8 +13,8 @@ function HeadingSection() {
 
   return (
     <HeaderContainer id="header-container">
-      <Heading2>{t("homepage.volunteeringCategories.header")}</Heading2>
-      <Paragraph>{t("homepage.volunteeringCategories.headerParagraph")}</Paragraph>
+      <Heading2>{t("website.volunteeringCategories.header")}</Heading2>
+      <Paragraph>{t("website.volunteeringCategories.headerParagraph")}</Paragraph>
     </HeaderContainer>
   );
 }

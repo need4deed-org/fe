@@ -4,7 +4,8 @@ import { useCreateComment } from "@/hooks/useCreateComment";
 import { useDeleteComment } from "@/hooks/useDeleteComment";
 import { useUpdateComment } from "@/hooks/useUpdateComment";
 import { Id, TimedText } from "need4deed-sdk";
-import { useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Comment } from "./Comment";
 import { DeleteCommentDialog } from "./DeleteCommentDialog";
@@ -14,6 +15,9 @@ import { useCommentMenu } from "./hooks/useCommentMenu";
 import { AddCommentButton, Container, NewCommentSection, TagOverlay, TextArea } from "./styles";
 import { useCommentTag } from "./hooks/useCommentTag";
 import Autocomplete from "./Autocomplete";
+
+const COMMENTS_ANCHOR_ID = "coordinator-comments";
+const PIN_DURATION_MS = 3000;
 
 type Props = {
   entityId: Id;
@@ -28,6 +32,30 @@ export function EntityComments({ entityId, entityType, comments, testId }: Props
   const [newCommentText, setNewCommentText] = useState("");
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const scrollTo = useSearchParams().get("scrollTo");
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (scrollTo !== COMMENTS_ANCHOR_ID || !container) return;
+
+    container.scrollIntoView({ behavior: "smooth", block: "start" });
+
+    const pinToComments = () => container.scrollIntoView({ behavior: "instant", block: "start" });
+    const resizeObserver = new ResizeObserver(pinToComments);
+    resizeObserver.observe(document.body);
+
+    const userInputEvents = ["wheel", "touchstart", "keydown", "mousedown"] as const;
+    const stopPinning = () => {
+      resizeObserver.disconnect();
+      clearTimeout(timerId);
+      userInputEvents.forEach((event) => window.removeEventListener(event, stopPinning));
+    };
+    const timerId = setTimeout(stopPinning, PIN_DURATION_MS);
+    userInputEvents.forEach((event) => window.addEventListener(event, stopPinning, { passive: true }));
+
+    return stopPinning;
+  }, [scrollTo]);
 
   const edit = useCommentEdit();
   const deleteState = useCommentDelete();
@@ -142,7 +170,7 @@ export function EntityComments({ entityId, entityType, comments, testId }: Props
     menu.closeMenu();
   };
   return (
-    <Container data-testid={testId} id="coordinator-comments">
+    <Container data-testid={testId} id={COMMENTS_ANCHOR_ID} ref={containerRef}>
       {sortedComments.map((comment) => (
         <Comment
           key={comment.id}

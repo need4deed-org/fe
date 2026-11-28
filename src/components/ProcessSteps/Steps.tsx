@@ -32,50 +32,50 @@ export default function Steps() {
   const steps: Step[] = [
     {
       iconName: IconName.ListChecks,
-      title: t("homepage.processSteps.steps.1.title"),
-      week: t("homepage.processSteps.steps.1.week"),
-      infoTexts: [t("homepage.processSteps.steps.1.infoText1"), t("homepage.processSteps.steps.1.infoText2")],
+      title: t("website.processSteps.steps.1.title"),
+      week: t("website.processSteps.steps.1.week"),
+      infoTexts: [t("website.processSteps.steps.1.infoText1"), t("website.processSteps.steps.1.infoText2")],
     },
     {
       iconName: IconName.Notepad,
-      title: t("homepage.processSteps.steps.2.title"),
-      week: t("homepage.processSteps.steps.2.week"),
-      infoTexts: [t("homepage.processSteps.steps.2.infoText1"), t("homepage.processSteps.steps.2.infoText2")],
+      title: t("website.processSteps.steps.2.title"),
+      week: t("website.processSteps.steps.2.week"),
+      infoTexts: [t("website.processSteps.steps.2.infoText1"), t("website.processSteps.steps.2.infoText2")],
     },
     {
       iconName: IconName.Strategy,
-      title: t("homepage.processSteps.steps.3.title"),
-      week: t("homepage.processSteps.steps.3.week"),
-      infoTexts: [t("homepage.processSteps.steps.3.infoText1")],
+      title: t("website.processSteps.steps.3.title"),
+      week: t("website.processSteps.steps.3.week"),
+      infoTexts: [t("website.processSteps.steps.3.infoText1")],
     },
     {
       iconName: IconName.ShootingStar,
-      title: t("homepage.processSteps.steps.4.title"),
-      week: t("homepage.processSteps.steps.4.week"),
-      infoTexts: [t("homepage.processSteps.steps.4.infoText1")],
+      title: t("website.processSteps.steps.4.title"),
+      week: t("website.processSteps.steps.4.week"),
+      infoTexts: [t("website.processSteps.steps.4.infoText1")],
     },
     {
       iconName: IconName.AddressBook,
-      title: t("homepage.processSteps.steps.5.title"),
-      week: t("homepage.processSteps.steps.5.week"),
-      infoTexts: [t("homepage.processSteps.steps.5.infoText1")],
+      title: t("website.processSteps.steps.5.title"),
+      week: t("website.processSteps.steps.5.week"),
+      infoTexts: [t("website.processSteps.steps.5.infoText1")],
     },
     {
       iconName: IconName.HandHeart,
-      title: t("homepage.processSteps.steps.6.title"),
-      week: t("homepage.processSteps.steps.6.week"),
-      infoTexts: [t("homepage.processSteps.steps.6.infoText1")],
+      title: t("website.processSteps.steps.6.title"),
+      week: t("website.processSteps.steps.6.week"),
+      infoTexts: [t("website.processSteps.steps.6.infoText1")],
     },
   ];
 
   const cards = steps.map((step, index) => <StepCard key={step.title} index={index + 1} {...step} />);
   cards.push(
-    <LastStepCard key="last-step" iconName={IconName.Sparkle} text={t("homepage.processSteps.steps.lastStep.text")} />,
+    <LastStepCard key="last-step" iconName={IconName.Sparkle} text={t("website.processSteps.steps.lastStep.text")} />,
   );
 
   return (
     <StepsContainer>
-      <Heading1>{t("homepage.processSteps.stepsHeadline")}</Heading1>
+      <Heading1>{t("website.processSteps.stepsHeadline")}</Heading1>
       <PaginatedCards
         cardsPerPageMap={cardsPerPageMap}
         cards={cards}

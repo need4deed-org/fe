@@ -48,12 +48,16 @@ test("paths without a supported route language get the saved or default language
 
 test("role redirects retain the route language and query through the destination", () => {
   const cases = [
-    [UserRole.AGENT, "/dashboard/admin", "/dashboard"],
-    [UserRole.VOLUNTEER, "/dashboard/posts", "/dashboard"],
-    [UserRole.VOLUNTEER, "/dashboard/organizations/7", "/dashboard"],
-    [UserRole.USER, "/dashboard/agents/42", "/dashboard/agents"],
-    [UserRole.USER, "/dashboard/organizations/7", "/dashboard"],
-    [UserRole.AGENT, "/dashboard/calendar", "/dashboard"],
+    [UserRole.AGENT, "/accounts", "/dashboard"],
+    [UserRole.AGENT, "/metrics", "/dashboard"],
+    [UserRole.VOLUNTEER, "/metrics", "/dashboard"],
+    [UserRole.AGENT, "/emails", "/dashboard"],
+    [UserRole.VOLUNTEER, "/emails", "/dashboard"],
+    [UserRole.VOLUNTEER, "/discussions", "/dashboard"],
+    [UserRole.VOLUNTEER, "/organizations/operators/7", "/dashboard"],
+    [UserRole.USER, "/organizations/42", "/organizations"],
+    [UserRole.USER, "/organizations/operators/7", "/dashboard"],
+    [UserRole.AGENT, "/calendar", "/dashboard"],
   ];
   const origin = "http://localhost:3000";
   for (const [language, preference] of [
@@ -75,32 +79,46 @@ test("role redirects retain the route language and query through the destination
   }
 });
 
-test("role redirects without a supported route language reach the localized destination in one hop", () => {
-  assertRedirect("/dashboard/admin", "de", "/de/dashboard", roleToken(UserRole.AGENT));
-  assertRedirect("/dashboard/agents/42", undefined, "/en/dashboard/agents", roleToken(UserRole.USER));
+test("signed-out visitors to metrics go to login", () => {
+  assertRedirect("/de/metrics?metric=newVolunteers", "en", "/de/login");
+  assertRedirect("/metrics", undefined, "/en/login");
 });
 
-test("allowed agent-detail requests pass through the shared language handling", () => {
+test("staff reach metrics", () => {
   const origin = "http://localhost:3000";
-  for (const role of [UserRole.ADMIN, UserRole.COORDINATOR, UserRole.AGENT]) {
+  for (const role of [UserRole.ADMIN, UserRole.COORDINATOR]) {
     const headers = { cookie: `preferred-lang=en; refresh=${roleToken(role)}` };
-    const response = middleware(new NextRequest(`${origin}/de/dashboard/agents/42`, { headers }));
+    const response = middleware(new NextRequest(`${origin}/de/metrics`, { headers }));
     assert.equal(response.status, 200);
-    assert.equal(response.cookies.get("preferred-lang")?.value, "de");
-
-    assertRedirect("/dashboard/agents/42", "de", "/de/dashboard/agents/42", roleToken(role));
   }
 });
 
-test("allowed organization-detail requests pass through the shared language handling", () => {
+test("role redirects without a supported route language reach the localized destination in one hop", () => {
+  assertRedirect("/accounts", "de", "/de/dashboard", roleToken(UserRole.AGENT));
+  assertRedirect("/organizations/42", undefined, "/en/organizations", roleToken(UserRole.USER));
+});
+
+test("allowed NGO-detail requests pass through the shared language handling", () => {
   const origin = "http://localhost:3000";
   for (const role of [UserRole.ADMIN, UserRole.COORDINATOR, UserRole.AGENT]) {
     const headers = { cookie: `preferred-lang=en; refresh=${roleToken(role)}` };
-    const response = middleware(new NextRequest(`${origin}/de/dashboard/organizations/7`, { headers }));
+    const response = middleware(new NextRequest(`${origin}/de/organizations/42`, { headers }));
     assert.equal(response.status, 200);
     assert.equal(response.cookies.get("preferred-lang")?.value, "de");
 
-    assertRedirect("/dashboard/organizations/7", "de", "/de/dashboard/organizations/7", roleToken(role));
+    assertRedirect("/organizations/42", "de", "/de/organizations/42", roleToken(role));
+  }
+});
+
+test("allowed operator-detail requests pass through the shared language handling", () => {
+  const origin = "http://localhost:3000";
+  for (const role of [UserRole.ADMIN, UserRole.COORDINATOR, UserRole.AGENT]) {
+    const headers = { cookie: `preferred-lang=en; refresh=${roleToken(role)}` };
+    const response = middleware(new NextRequest(`${origin}/de/organizations/operators/7`, { headers }));
+    assert.equal(response.status, 200);
+    assert.equal(response.cookies.get("preferred-lang")?.value, "de");
+
+    assertRedirect("/organizations/operators/7", "de", "/de/organizations/operators/7", roleToken(role));
   }
 });
 

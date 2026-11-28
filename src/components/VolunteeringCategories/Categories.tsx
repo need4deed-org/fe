@@ -14,33 +14,33 @@ function Categories() {
   const categories: Category[] = [
     {
       iconName: IconName.ChatsTeardrop,
-      title: t("homepage.volunteeringCategories.card.germanLanguageSupport"),
-      description: t("homepage.volunteeringCategories.card.germanLanguageSupportInfo"),
+      title: t("website.volunteeringCategories.card.germanLanguageSupport"),
+      description: t("website.volunteeringCategories.card.germanLanguageSupportInfo"),
     },
     {
       iconName: IconName.Baby,
-      title: t("homepage.volunteeringCategories.card.childcare"),
-      description: t("homepage.volunteeringCategories.card.childcareInfo"),
+      title: t("website.volunteeringCategories.card.childcare"),
+      description: t("website.volunteeringCategories.card.childcareInfo"),
     },
     {
       iconName: IconName.Bicycle,
-      title: t("homepage.volunteeringCategories.card.skillsBasedVolunteering"),
-      description: t("homepage.volunteeringCategories.card.skillsBasedVolunteeringInfo"),
+      title: t("website.volunteeringCategories.card.skillsBasedVolunteering"),
+      description: t("website.volunteeringCategories.card.skillsBasedVolunteeringInfo"),
     },
     {
       iconName: IconName.CalendarStar,
-      title: t("homepage.volunteeringCategories.card.events"),
-      description: t("homepage.volunteeringCategories.card.eventsInfo"),
+      title: t("website.volunteeringCategories.card.events"),
+      description: t("website.volunteeringCategories.card.eventsInfo"),
     },
     {
       iconName: IconName.PingPong,
-      title: t("homepage.volunteeringCategories.card.sportsActivities"),
-      description: t("homepage.volunteeringCategories.card.sportsActivitiesInfo"),
+      title: t("website.volunteeringCategories.card.sportsActivities"),
+      description: t("website.volunteeringCategories.card.sportsActivitiesInfo"),
     },
     {
       iconName: IconName.Users,
-      title: t("homepage.volunteeringCategories.card.accompanyARefugee"),
-      description: t("homepage.volunteeringCategories.card.accompanyARefugeeInfo"),
+      title: t("website.volunteeringCategories.card.accompanyARefugee"),
+      description: t("website.volunteeringCategories.card.accompanyARefugeeInfo"),
     },
   ];
 

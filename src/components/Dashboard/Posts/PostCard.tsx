@@ -1,3 +1,4 @@
+import { ROUTES } from "@/constants/routes";
 import { ConfirmationDialog } from "@/components/core/common/ConfirmationDialog";
 import { apiPathUser, cacheTTL, MAX_PAGE_LIMIT } from "@/config/constants";
 import { useDeletePost, useGetQuery, useTogglePostBookmark, useUpdatePost } from "@/hooks";
@@ -115,7 +116,7 @@ export function PostCard({ post, isRepliesExpanded, onReply, onToggleReplies }: 
       if (!match) return <Fragment key={`${post.id}-text-${index}`}>{part}</Fragment>;
       return (
         <strong className="tag" key={`${post.id}-tag-${index}`}>
-          @{resolveMentionName(match) ?? t("dashboard.posts.unknownUser")}
+          @{resolveMentionName(match) ?? t("dashboard.discussions.unknownUser")}
         </strong>
       );
     });
@@ -126,7 +127,7 @@ export function PostCard({ post, isRepliesExpanded, onReply, onToggleReplies }: 
       post.text.replace(POST_MENTION_TOKEN, (token) => {
         const match = token.match(EXACT_POST_MENTION_TOKEN);
         if (!match) return token;
-        return `@${resolveMentionName(match) ?? t("dashboard.posts.unknownUser")}`;
+        return `@${resolveMentionName(match) ?? t("dashboard.discussions.unknownUser")}`;
       }),
     [post.text, resolveMentionName, t],
   );
@@ -171,7 +172,9 @@ export function PostCard({ post, isRepliesExpanded, onReply, onToggleReplies }: 
         <PostHeaderActions>
           <BookmarkButton
             type="button"
-            aria-label={t(post.bookmarked ? "dashboard.posts.removeBookmark" : "dashboard.posts.addBookmark")}
+            aria-label={t(
+              post.bookmarked ? "dashboard.discussions.removeBookmark" : "dashboard.discussions.addBookmark",
+            )}
             aria-pressed={post.bookmarked}
             disabled={toggleBookmark.isPending}
             onClick={() => toggleBookmark.mutate()}
@@ -182,7 +185,7 @@ export function PostCard({ post, isRepliesExpanded, onReply, onToggleReplies }: 
             <PostMenuWrapper>
               <PostMenuButton
                 type="button"
-                aria-label={t("dashboard.posts.options")}
+                aria-label={t("dashboard.discussions.options")}
                 aria-expanded={isMenuOpen}
                 onMouseDown={(event) => event.stopPropagation()}
                 onClick={(event) => {
@@ -212,10 +215,10 @@ export function PostCard({ post, isRepliesExpanded, onReply, onToggleReplies }: 
             <EditTextArea value={editText} onChange={(event) => setEditText(event.target.value)} autoFocus />
             <EditActions>
               <EditButton type="button" disabled={updatePost.isPending} onClick={closeEdit}>
-                {t("dashboard.posts.cancel")}
+                {t("dashboard.discussions.cancel")}
               </EditButton>
               <EditButton type="button" $primary disabled={!editText.trim() || updatePost.isPending} onClick={saveEdit}>
-                {t("dashboard.posts.save")}
+                {t("dashboard.discussions.save")}
               </EditButton>
             </EditActions>
           </>
@@ -226,11 +229,7 @@ export function PostCard({ post, isRepliesExpanded, onReply, onToggleReplies }: 
         {post.linkedOpportunities.length > 0 && (
           <OpportunityList>
             {post.linkedOpportunities.map((opportunity) => (
-              <OpportunityChip
-                as={Link}
-                key={opportunity.id}
-                href={`/${lang}/dashboard/opportunities/${opportunity.id}`}
-              >
+              <OpportunityChip as={Link} key={opportunity.id} href={ROUTES.opportunityDetail(lang, opportunity.id)}>
                 {opportunity.title}
               </OpportunityChip>
             ))}
@@ -240,7 +239,7 @@ export function PostCard({ post, isRepliesExpanded, onReply, onToggleReplies }: 
           <PostReactions itemId={post.id} reactions={post.reactions} myReaction={post.myReaction} />
           {(post.replyCount > 0 || isRepliesExpanded) && (
             <EditButton type="button" onClick={onToggleReplies}>
-              {t(isRepliesExpanded ? "dashboard.posts.hideReplies" : "dashboard.posts.showReplies", {
+              {t(isRepliesExpanded ? "dashboard.discussions.hideReplies" : "dashboard.discussions.showReplies", {
                 count: post.replyCount,
               })}
             </EditButton>
@@ -257,7 +256,7 @@ export function PostCard({ post, isRepliesExpanded, onReply, onToggleReplies }: 
               })
             }
           >
-            {t("dashboard.posts.reply")}
+            {t("dashboard.discussions.reply")}
           </EditButton>
         </PostReplyActions>
         {isRepliesExpanded && <RepliesThread postId={post.id} onReply={onReply} />}
@@ -265,10 +264,10 @@ export function PostCard({ post, isRepliesExpanded, onReply, onToggleReplies }: 
 
       {isDeleteOpen && (
         <ConfirmationDialog
-          title={t("dashboard.posts.deleteDialog.title")}
-          message={t("dashboard.posts.deleteDialog.message")}
-          confirmText={t("dashboard.posts.delete")}
-          cancelText={t("dashboard.posts.cancel")}
+          title={t("dashboard.discussions.deleteDialog.title")}
+          message={t("dashboard.discussions.deleteDialog.message")}
+          confirmText={t("dashboard.discussions.delete")}
+          cancelText={t("dashboard.discussions.cancel")}
           onCancel={() => setIsDeleteOpen(false)}
           onConfirm={() => {
             if (!deletePost.isPending) deletePost.mutate();

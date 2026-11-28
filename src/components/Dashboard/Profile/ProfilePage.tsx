@@ -1,3 +1,4 @@
+import { ROUTES } from "@/constants/routes";
 import { Select } from "@/components/core/common/select";
 import { Heading2 } from "@/components/styled/text";
 import { useProfileSections } from "@/hooks/useProfileSections";
@@ -14,7 +15,6 @@ import {
 } from "./styles";
 import { ProfileEntityProps, ProfileNavigationDirection } from "./types";
 import { useFadedNavigation } from "./useFadedNavigation";
-import { DashboardRoutes } from "@/config/constants";
 
 const FADE_DURATION = 300;
 
@@ -29,7 +29,7 @@ const ProfilePage = (props: ProfileEntityProps) => {
 
   return (
     <PageContainer>
-      <BackButton onClick={() => router.push(`/${i18n.language}${DashboardRoutes.Home}`)}>
+      <BackButton onClick={() => router.push(ROUTES.dashboard(i18n.language))}>
         <ArrowLeftIcon size={24} />
         {t("dashboard.volunteerProfile.backToDashboard")}
       </BackButton>

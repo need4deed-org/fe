@@ -3,12 +3,11 @@ import { ArrowLeftIcon, ArrowRightIcon } from "@phosphor-icons/react";
 import { UserRole } from "need4deed-sdk";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useTranslation } from "react-i18next";
-import { DashboardLayout } from "@/components/Layout";
 import { BackButton, PageContainer } from "@/components/Dashboard/Profile/styles";
 import { BulletList, NoteText, SectionHeader, TextLink } from "@/components/Static/styled";
 import { Card, CardGrid } from "@/components/styled/card-grid";
 import { Heading2, Heading3 } from "@/components/styled/text";
-import { CONTACT_EMAIL } from "@/config/constants";
+import { EMAILS } from "@/constants/emails";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { coordinatorHelpTree, findHelpPath, HelpBlock, HelpNode, ngoHelpTree } from "./help-tree";
 import { Breadcrumbs, ChoiceCard, RelatedLinks } from "./styles";
@@ -56,84 +55,80 @@ export function Help() {
   const goTo = (id?: string) => router.push(id ? `${pathname}?${HELP_TOPIC_PARAM}=${id}` : pathname);
 
   return (
-    <DashboardLayout>
-      <PageContainer>
-        <Heading2>{t("dashboard.help.title")}</Heading2>
+    <PageContainer>
+      <Heading2>{t("dashboard.help.title")}</Heading2>
 
-        {user && !tree && (
-          <NoteText>
-            {t("dashboard.help.noHelp")} <TextLink href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</TextLink>
-          </NoteText>
-        )}
+      {user && !tree && (
+        <NoteText>
+          {t("dashboard.help.noHelp")} <TextLink href={`mailto:${EMAILS.contact}`}>{EMAILS.contact}</TextLink>
+        </NoteText>
+      )}
 
-        {current && (
-          <>
-            <BackButton onClick={() => goTo(path.at(-2)?.id)}>
-              <ArrowLeftIcon size={24} />
-              {t("dashboard.help.back")}
-            </BackButton>
-            <nav aria-label={t("dashboard.help.title")}>
-              <Breadcrumbs>
-                <li>
-                  <BackButton onClick={() => goTo()}>{t("dashboard.help.title")}</BackButton>
+      {current && (
+        <>
+          <BackButton onClick={() => goTo(path.at(-2)?.id)}>
+            <ArrowLeftIcon size={24} />
+            {t("dashboard.help.back")}
+          </BackButton>
+          <nav aria-label={t("dashboard.help.title")}>
+            <Breadcrumbs>
+              <li>
+                <BackButton onClick={() => goTo()}>{t("dashboard.help.title")}</BackButton>
+              </li>
+              {path.map((node) => (
+                <li key={node.id}>
+                  {node === current ? (
+                    <span aria-current="page">{nodeTitle(node.id)}</span>
+                  ) : (
+                    <BackButton onClick={() => goTo(node.id)}>{nodeTitle(node.id)}</BackButton>
+                  )}
                 </li>
-                {path.map((node) => (
-                  <li key={node.id}>
-                    {node === current ? (
-                      <span aria-current="page">{nodeTitle(node.id)}</span>
-                    ) : (
-                      <BackButton onClick={() => goTo(node.id)}>{nodeTitle(node.id)}</BackButton>
-                    )}
-                  </li>
-                ))}
-              </Breadcrumbs>
-            </nav>
-          </>
-        )}
-
-        {tree && choices && (
-          <>
-            <Heading3 margin={0}>{current ? nodeTitle(current.id) : t("dashboard.help.rootQuestion")}</Heading3>
-            <CardGrid>
-              {choices.map((node) => (
-                <ChoiceCard key={node.id} onClick={() => goTo(node.id)}>
-                  <SectionHeader as="span">{nodeTitle(node.id)}</SectionHeader>
-                </ChoiceCard>
               ))}
-            </CardGrid>
-          </>
-        )}
+            </Breadcrumbs>
+          </nav>
+        </>
+      )}
 
-        {current && !current.children && (
-          <Card>
-            <Heading3 margin={0}>{nodeTitle(current.id)}</Heading3>
-            <HelpBlocks
-              blocks={t(`dashboard.help.nodes.${current.id}.blocks`, { returnObjects: true }) as HelpBlock[]}
-            />
-            {current.related && (
-              <RelatedLinks>
-                <SectionHeader>{t("dashboard.help.related")}</SectionHeader>
-                {current.related.map((id) => (
-                  <BackButton key={id} onClick={() => goTo(id)}>
-                    <ArrowRightIcon size={20} />
-                    {nodeTitle(id)}
-                  </BackButton>
-                ))}
-              </RelatedLinks>
+      {tree && choices && (
+        <>
+          <Heading3 margin={0}>{current ? nodeTitle(current.id) : t("dashboard.help.rootQuestion")}</Heading3>
+          <CardGrid>
+            {choices.map((node) => (
+              <ChoiceCard key={node.id} onClick={() => goTo(node.id)}>
+                <SectionHeader as="span">{nodeTitle(node.id)}</SectionHeader>
+              </ChoiceCard>
+            ))}
+          </CardGrid>
+        </>
+      )}
+
+      {current && !current.children && (
+        <Card>
+          <Heading3 margin={0}>{nodeTitle(current.id)}</Heading3>
+          <HelpBlocks blocks={t(`dashboard.help.nodes.${current.id}.blocks`, { returnObjects: true }) as HelpBlock[]} />
+          {current.related && (
+            <RelatedLinks>
+              <SectionHeader>{t("dashboard.help.related")}</SectionHeader>
+              {current.related.map((id) => (
+                <BackButton key={id} onClick={() => goTo(id)}>
+                  <ArrowRightIcon size={20} />
+                  {nodeTitle(id)}
+                </BackButton>
+              ))}
+            </RelatedLinks>
+          )}
+          <NoteText>
+            {isCoordinator ? (
+              t("dashboard.help.contactCoordinator")
+            ) : (
+              <>
+                {t("dashboard.help.contactNgo")} <TextLink href={`mailto:${EMAILS.contact}`}>{EMAILS.contact}</TextLink>
+              </>
             )}
-            <NoteText>
-              {isCoordinator ? (
-                t("dashboard.help.contactCoordinator")
-              ) : (
-                <>
-                  {t("dashboard.help.contactNgo")} <TextLink href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</TextLink>
-                </>
-              )}
-            </NoteText>
-          </Card>
-        )}
-      </PageContainer>
-    </DashboardLayout>
+          </NoteText>
+        </Card>
+      )}
+    </PageContainer>
   );
 }
 

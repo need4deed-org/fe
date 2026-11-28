@@ -115,14 +115,18 @@ export function PostFeed({ filters, expandedPostIds, onReply, onToggleReplies }:
     return (
       <EmptyState>
         <Paragraph>
-          {t(filters.search || filters.authorId ? "dashboard.posts.noSearchResults" : "dashboard.posts.empty")}
+          {t(
+            filters.search || filters.authorId
+              ? "dashboard.discussions.noSearchResults"
+              : "dashboard.discussions.empty",
+          )}
         </Paragraph>
       </EmptyState>
     );
   }
 
   return (
-    <FeedScrollContainer ref={feedRef} onScroll={handleScroll} aria-label={t("dashboard.home.sidebar.posts")}>
+    <FeedScrollContainer ref={feedRef} onScroll={handleScroll} aria-label={t("dashboard.home.sidebar.discussions")}>
       {(hasNextPage || isFetchingNextPage || isError) && (
         <LoadOlderIndicator aria-live="polite" role={isError ? "alert" : undefined}>
           {isError ? t("message.errorGeneric") : isFetchingNextPage ? "…" : null}

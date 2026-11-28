@@ -10,24 +10,11 @@ const interactivePinkBackground = css`
 export const PostsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: max(
-    520px,
-    calc(
-      100dvh - var(--layout-static-page-header-height) - var(--dashboard-base-container-padding-top) - var(
-          --dashboard-base-container-padding-bottom
-        )
-    )
-  );
+  height: 100dvh;
+  padding: var(--large-spacing);
 
-  @media (max-width: 767px) {
-    height: max(
-      520px,
-      calc(
-        100dvh - var(--layout-static-page-header-height) - var(--dashboard-base-container-padding-top) - var(
-            --dashboard-base-container-padding-bottom
-          ) - var(--dashboard-navigation-bar-mobile-height)
-      )
-    );
+  @media (max-width: 1000px) {
+    height: calc(100vh - var(--mobile-footer-menu-height));
   }
 `;
 

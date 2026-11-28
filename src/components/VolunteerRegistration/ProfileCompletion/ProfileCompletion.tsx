@@ -1,10 +1,11 @@
 "use client";
 
+import { ROUTES } from "@/constants/routes";
 import { Button } from "@/components/core/button";
 import { apiPathOption } from "@/config/constants";
 import { useRegisterVolunteer } from "@/hooks/useRegisterVolunteer";
 import { useRouteLang } from "@/hooks/use-route-lang";
-import { localizedPath, setAuthHint } from "@/utils/helpers";
+import { setAuthHint } from "@/utils/helpers";
 import { useForm } from "@tanstack/react-form";
 import { ApiOptionLists, ApiVolunteerRegisterNew, DocumentStatusType } from "need4deed-sdk";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -81,7 +82,7 @@ export function ProfileCompletion() {
     token,
     onSuccess: () => {
       setAuthHint();
-      router.push(localizedPath(lang, "/dashboard"));
+      router.push(ROUTES.dashboard(lang));
     },
   });
 

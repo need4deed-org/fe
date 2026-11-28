@@ -1,3 +1,4 @@
+import { ROUTES } from "@/constants/routes";
 import { ApiVolunteerOpportunityGetList, LangPurpose, OptionItem, ProfileVolunteeringType } from "need4deed-sdk";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
@@ -67,7 +68,7 @@ export function OpportunityCard({ opportunity, volunteerId, activitiesList, dist
         : null;
 
   const params = volunteerId ? `?volunteer=${volunteerId}` : "";
-  const profileUrl = id ? `/${i18n.language}/dashboard/opportunities/${id}${params}` : "";
+  const profileUrl = id ? `${ROUTES.opportunityDetail(i18n.language, Number(id))}${params}` : "";
 
   return (
     <Card as={Link} href={profileUrl} data-testid="opportunity-card">

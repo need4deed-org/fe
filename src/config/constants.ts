@@ -72,7 +72,6 @@ export const phoneRegEx = /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9]
 export const n4dLanguageLocalStorageKey = "n4d-language";
 
 export const eventsSectionContainerId = "events-section-container";
-export const eventsPublicLandingUrl = "/event-page";
 
 export const cloudfrontURL = process.env.NEXT_PUBLIC_CLOUDFRONT_URL ?? "https://cdn.need4deed.org/images";
 export const siteURL = "https://www.need4deed.org";
@@ -89,25 +88,6 @@ export const defaultAvatarURL = "head-silhouette.webp";
 export const defaultAvatarVolunteerProfile = "all_genders_avatar.png";
 
 export const DEFAULT_LEAFLET_ICON_URL = "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png";
-
-export enum DashboardRoutes {
-  Home = "/dashboard",
-  Volunteers = "/dashboard/volunteers",
-  Opportunities = "/dashboard/opportunities",
-  Agents = "/dashboard/agents",
-  Organizations = "/dashboard/organizations",
-  Racs = "/dashboard/racs",
-  Posts = "/dashboard/posts",
-  Calendar = "/dashboard/calendar",
-  Profile = "/dashboard/profile",
-  Help = "/dashboard/help",
-  Admin = "/dashboard/admin",
-  AdminDomains = "/dashboard/admin/domains",
-  AdminStatistics = "/dashboard/admin/statistics",
-  AdminNgoVolunteers = "/dashboard/admin/ngo-volunteers",
-  AdminAccounts = "/dashboard/admin/accounts",
-  AdminEmailTemplates = "/dashboard/admin/email-templates",
-}
 
 export const questionMark = "?";
 
@@ -134,7 +114,6 @@ export const MAP_LIMIT = 50;
 
 export const MAX_PAGE_LIMIT = 120;
 
-export const CONTACT_EMAIL = "info@need4deed.org";
 export const REQUEST_SUGGEST_CONTACT_EMAIL = "contact@need4deed.org";
 export const REQUEST_SUGGEST_COMMENT_MARKER = "📩";
 

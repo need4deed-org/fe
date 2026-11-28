@@ -1,42 +1,66 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { UserRole } from "need4deed-sdk";
-import { langCookieName } from "./config/constants";
-import {
-  decodeJwtPayload,
-  getPathLanguage,
-  getPathLanguagePrefix,
-  localizedPath,
-  getPreferredLanguage,
-} from "./utils/helpers";
+import { userAgent } from "next/server";
+import { defaultRouteLang, langCookieName, supportedLangs } from "./config/constants";
+import { Lang, UserRole } from "need4deed-sdk";
+import { decodeJwtPayload, getPathLanguage, getPathLanguagePrefix, localizedPath } from "./utils/helpers";
+import { ROUTES } from "./constants/routes";
 
+const DEFAULT_DEVICE_TYPE = "desktop";
+const DEVICE_HEADER_NAME = "x-device-type";
 const REFRESH = "refresh";
 
+const appSections =
+  "dashboard|opportunities|volunteers|organizations|discussions|calendar|metrics|settings|accounts|emails|help";
+
 const authorizedRoutes = {
-  AGENT: { regex: /^(?:\/[a-z]{2})?\/dashboard\/agents\/([0-9]+)$/, redirect: "/dashboard/agents" },
-  ORGANIZATION: { regex: /^(?:\/[a-z]{2})?\/dashboard\/organizations\/([0-9]+)$/, redirect: "/dashboard" },
+  AGENT: { regex: /^(?:\/[a-z]{2})?\/organizations\/([0-9]+)$/, redirect: ROUTES.organizations },
+  OPERATOR: { regex: /^(?:\/[a-z]{2})?\/organizations\/operators\/([0-9]+)$/, redirect: ROUTES.dashboard },
   NEW_OPPORTUNITIES: { regex: /^(?:\/[a-z]{2})?\/forms\/opportunity(?:\/|$)/ },
-  DASHBOARD: { regex: /^(?:\/[a-z]{2})?\/dashboard(?:\/|$)/ },
+  DASHBOARD: { regex: new RegExp(`^(?:/[a-z]{2})?/(?:${appSections})(?:/|$)`) },
 };
+
+function getAcceptLanguageLocale(header: string | null): Lang | null {
+  if (!header) return null;
+
+  const ranked = header
+    .split(",")
+    .map((entry) => {
+      const [tag, ...params] = entry.trim().split(";");
+      const qParam = params.find((param) => param.trim().startsWith("q="));
+      const quality = qParam ? Number(qParam.trim().slice(2)) : 1;
+      return { lang: tag.split("-")[0].toLowerCase(), quality: Number.isNaN(quality) ? 0 : quality };
+    })
+    .filter(({ quality }) => quality > 0)
+    .sort((a, b) => b.quality - a.quality);
+
+  return (ranked.find(({ lang }) => supportedLangs.includes(lang))?.lang as Lang | undefined) ?? null;
+}
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
   const currentLocale = getPathLanguage(pathname);
-  const locale = getPreferredLanguage(pathname, request.cookies.get(langCookieName)?.value);
+  const cookieLang = request.cookies.get(langCookieName)?.value;
+  const preferredLocale =
+    (cookieLang && supportedLangs.includes(cookieLang) ? (cookieLang as Lang) : null) ??
+    getAcceptLanguageLocale(request.headers.get("accept-language")) ??
+    defaultRouteLang;
+  const lang = currentLocale ?? preferredLocale;
 
   const redirectTo = (path: string, { clearSearch = false } = {}) => {
     const url = request.nextUrl.clone();
     if (clearSearch) url.search = "";
-    url.pathname = localizedPath(locale, path);
+    url.pathname = path;
     return NextResponse.redirect(url);
   };
 
   const token = request.cookies.get(REFRESH)?.value;
 
   if (!token) {
-    const isDashboard = authorizedRoutes.DASHBOARD.regex.test(pathname);
-    if (isDashboard || authorizedRoutes.NEW_OPPORTUNITIES.regex.test(pathname)) {
-      return redirectTo("/login", { clearSearch: isDashboard });
+    const isAppRoute = authorizedRoutes.DASHBOARD.regex.test(pathname);
+    if (isAppRoute || authorizedRoutes.NEW_OPPORTUNITIES.regex.test(pathname)) {
+      return redirectTo(ROUTES.login(lang), { clearSearch: isAppRoute });
     }
   }
 
@@ -45,38 +69,37 @@ export function middleware(request: NextRequest) {
     const isAuthorized =
       (userObject && userObject.role === UserRole.ADMIN) || (userObject && userObject.role === UserRole.COORDINATOR);
 
-    // Allowlist: any other role or an undecodable token is sent away.
-    const adminRegex = /^(?:\/[a-z]{2})?\/dashboard\/admin(?:\/|$)/;
-    if (!isAuthorized && adminRegex.test(pathname)) {
-      return redirectTo("/dashboard");
+    const adminOnlyRegex =
+      /^(?:\/[a-z]{2})?\/(?:metrics|accounts|emails|organizations\/(?:domains|volunteers))(?:\/|$)/;
+    if (!isAuthorized && adminOnlyRegex.test(pathname)) {
+      return redirectTo(ROUTES.dashboard(lang));
     }
 
-    const volunteerRestrictedRegex =
-      /^(?:\/[a-z]{2})?\/dashboard\/(volunteers|agents|organizations|posts|calendar)(?:\/|$)/;
+    const volunteerRestrictedRegex = /^(?:\/[a-z]{2})?\/(volunteers|organizations|discussions|calendar)(?:\/|$)/;
     if (userObject?.role === UserRole.VOLUNTEER && volunteerRestrictedRegex.test(pathname)) {
-      return redirectTo("/dashboard");
+      return redirectTo(ROUTES.dashboard(lang));
     }
 
     const isAgentDetail = authorizedRoutes.AGENT.regex.test(pathname);
     if (isAgentDetail && !isAuthorized && userObject?.role !== UserRole.AGENT) {
-      return redirectTo(authorizedRoutes.AGENT.redirect);
+      return redirectTo(authorizedRoutes.AGENT.redirect(lang));
     }
 
-    const isOrganizationDetail = authorizedRoutes.ORGANIZATION.regex.test(pathname);
-    if (isOrganizationDetail && !isAuthorized && userObject?.role !== UserRole.AGENT) {
-      return redirectTo(authorizedRoutes.ORGANIZATION.redirect);
+    const isOperatorDetail = authorizedRoutes.OPERATOR.regex.test(pathname);
+    if (isOperatorDetail && !isAuthorized && userObject?.role !== UserRole.AGENT) {
+      return redirectTo(authorizedRoutes.OPERATOR.redirect(lang));
     }
 
-    const agentRestrictedRegex = /^(?:\/[a-z]{2})?\/dashboard\/calendar(?:\/|$)/;
+    const agentRestrictedRegex = /^(?:\/[a-z]{2})?\/(?:calendar(?:\/|$)|organizations\/?$)/;
     if (userObject?.role === UserRole.AGENT && agentRestrictedRegex.test(pathname)) {
-      return redirectTo("/dashboard");
+      return redirectTo(ROUTES.dashboard(lang));
     }
   }
 
   if (!currentLocale) {
     const unsupportedPrefix = getPathLanguagePrefix(pathname);
     const unprefixedPath = unsupportedPrefix ? pathname.slice(unsupportedPrefix.length + 1) : pathname;
-    return redirectTo(unprefixedPath);
+    return redirectTo(localizedPath(preferredLocale, unprefixedPath));
   }
 
   const response = NextResponse.next();
@@ -85,6 +108,9 @@ export function middleware(request: NextRequest) {
     maxAge: 60 * 60 * 24 * 365,
     sameSite: "lax",
   });
+
+  const { device } = userAgent({ headers: request.headers });
+  response.headers.set(DEVICE_HEADER_NAME, device.type || DEFAULT_DEVICE_TYPE);
 
   return response;
 }

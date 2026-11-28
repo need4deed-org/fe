@@ -1,7 +1,6 @@
 "use client";
-
+import { ROUTES } from "@/constants/routes";
 import { PlusIcon } from "@phosphor-icons/react";
-import { DashboardLayout } from "@/components/Layout";
 import { AgentListController } from "./AgentListController";
 import { CreateAgentDialog } from "./CreateAgentDialog/CreateAgentDialog";
 import { PendingMemberships } from "./PendingMemberships";
@@ -29,6 +28,8 @@ import { useGetOpportunity } from "@/hooks/useGetOpportunity";
 import { useTransferOpportunityToAgent } from "@/hooks/useTransferOpportunityToAgent";
 import { ConfirmationDialog } from "@/components/core/common/ConfirmationDialog";
 import { useScreenType } from "@/context/DeviceContext";
+import { LinkButton } from "@/components/fields/LinkButton";
+import styled from "styled-components";
 
 export const Agents = () => {
   const user = useCurrentUser(true);
@@ -52,7 +53,7 @@ export const Agents = () => {
 
   const { mutate: transferMutate } = useTransferOpportunityToAgent(Number(transferOpportunityId), () => {
     setAgentToTransferTo(undefined);
-    router.push(`/${i18n.language}/dashboard/opportunities/${transferOpportunityId}`);
+    if (transferOpportunityId) router.push(ROUTES.opportunityDetail(i18n.language, Number(transferOpportunityId)));
   });
 
   const handleTransferConfirm = () => {
@@ -113,7 +114,7 @@ export const Agents = () => {
 
   const handleCancelTransfer = () => {
     setAgentToTransferTo(undefined);
-    router.push(`/${i18n.language}/dashboard/opportunities/${transferOpportunityId}`);
+    if (transferOpportunityId) router.push(ROUTES.opportunityDetail(i18n.language, Number(transferOpportunityId)));
   };
 
   useEffect(() => {
@@ -127,9 +128,20 @@ export const Agents = () => {
   }, [apiFilterOptions, searchParams]);
 
   const activeFilters = createSelectedAgentFiltersAsFlatArray(cardsFilter, setCardsFilter, t);
+
   return (
-    <DashboardLayout>
+    <>
       <AgentsContainer data-testid="agents-container">
+        {user && (
+          <ButtonContainer>
+            {[UserRole.COORDINATOR, UserRole.ADMIN].includes(user.role) && (
+              <LinkButton href={ROUTES.domains(i18n.language)} inline label={t("dashboard.agents.trustedDomains")} />
+            )}
+            {[UserRole.COORDINATOR, UserRole.ADMIN].includes(user.role) && (
+              <LinkButton inline href={ROUTES.ngoVolunteers(i18n.language)} label={t("dashboard.home.ngoVolunteers")} />
+            )}
+          </ButtonContainer>
+        )}
         <CardsHeader
           header={
             transferOpportunityId
@@ -193,6 +205,13 @@ export const Agents = () => {
         />
       )}
       {canCreateAgent && <CreateAgentDialog isOpen={isCreateAgentOpen} onClose={() => setIsCreateAgentOpen(false)} />}
-    </DashboardLayout>
+    </>
   );
 };
+
+const ButtonContainer = styled.div`
+  display: -webkit-flex;
+  display: flex;
+  gap: var(--small-spacing);
+  flex-wrap: wrap;
+`;

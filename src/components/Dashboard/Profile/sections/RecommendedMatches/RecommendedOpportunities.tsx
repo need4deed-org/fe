@@ -1,3 +1,4 @@
+import { ROUTES } from "@/constants/routes";
 import { Button } from "@/components/core/button";
 import { Heading4, Paragraph } from "@/components/styled/text";
 import { recommendedOpportunitiesKey, useRecommendedOpportunities } from "@/hooks/useRecommendedMatches";
@@ -50,7 +51,7 @@ export function RecommendedOpportunities({ volunteerId, volunteerName }: Props) 
             </>
           }
           onGoToProfile={() =>
-            router.push(`/${i18n.language}/dashboard/opportunities/${opportunity.id}?volunteer=${volunteerId}`)
+            router.push(`${ROUTES.opportunityDetail(i18n.language, Number(opportunity.id))}?volunteer=${volunteerId}`)
           }
           headerAction={
             <Button

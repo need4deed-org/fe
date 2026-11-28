@@ -1,8 +1,9 @@
+import { ROUTES } from "@/constants/routes";
 import axios from "axios";
-import { cancelLogout, startLogout } from "@/config/axios";
+import { cancelLogout, getActiveLanguage, startLogout } from "@/config/axios";
 import { apiPathAuthLogout } from "@/config/constants";
 import { useMutationQuery } from "@/hooks";
-import { clearAuthHint, getLoginPath } from "@/utils/helpers";
+import { clearAuthHint } from "@/utils/helpers";
 
 export const useLogout = () => {
   return useMutationQuery<void, unknown>({
@@ -19,7 +20,7 @@ export const useLogout = () => {
     noToast: true,
     onSuccessCallback: () => {
       clearAuthHint();
-      window.location.href = getLoginPath(window.location.pathname);
+      window.location.href = ROUTES.login(getActiveLanguage());
     },
   });
 };

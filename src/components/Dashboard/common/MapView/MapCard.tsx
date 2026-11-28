@@ -1,3 +1,4 @@
+import { ROUTES } from "@/constants/routes";
 import "leaflet/dist/leaflet.css";
 import "react-leaflet-cluster/dist/assets/MarkerCluster.css";
 import "react-leaflet-cluster/dist/assets/MarkerCluster.Default.css";
@@ -367,7 +368,7 @@ const MapCard = ({
             <DistrictMapList aria-label={t("dashboard.map.volunteersInterested", { district: selectedDistrictTitle })}>
               {volunteerItems.map((item) => (
                 <DistrictMapListItem key={`${item.entity}-${item.id}`}>
-                  <a href={`/${i18n.resolvedLanguage ?? i18n.language}/dashboard/volunteers/${item.id}`}>
+                  <a href={ROUTES.volunteerDetail(i18n.resolvedLanguage ?? i18n.language, Number(item.id))}>
                     {item.title}
                   </a>
                 </DistrictMapListItem>

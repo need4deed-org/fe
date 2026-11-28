@@ -1,3 +1,4 @@
+import { ROUTES } from "@/constants/routes";
 import { SectionCardProps } from "@/components/Dashboard/Profile/common/SectionCard";
 import { AccompanyingDetails } from "@/components/Dashboard/Profile/sections/AccompanyingDetails";
 import { isAccompanyingType } from "@/components/Dashboard/Profile/sections/AccompanyingDetails/helpers";
@@ -55,12 +56,12 @@ export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | u
 
   const { mutate: suggestMutate, isPending: isSuggesting } = useSuggestVolunteerOpportunity(() => {
     setIsSuggestDialogOpen(false);
-    router.push(`/${i18n.language}/dashboard/volunteers/${volunteerId}`);
+    if (volunteerId) router.push(ROUTES.volunteerDetail(i18n.language, parseInt(volunteerId)));
   }, ["volunteer-opportunities", String(volunteerId)]);
 
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const { mutate: deleteMutate, isPending: isDeleting } = useDeleteOpportunity(opportunity?.id ?? 0, () => {
-    router.replace(`/${i18n.language}/dashboard/opportunities`);
+    router.replace(ROUTES.opportunities(i18n.language));
   });
 
   if (!opportunity) return null;
@@ -161,7 +162,7 @@ export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | u
               : t("dashboard.opportunityProfile.volunteersSec.findVolunteers"),
             onHeaderButtonClick: volunteerId
               ? () => setIsSuggestDialogOpen(true)
-              : () => router.push(`/${i18n.language}/dashboard/volunteers?opportunity=${opportunity.id}`),
+              : () => router.push(`${ROUTES.volunteers(i18n.language)}?opportunity=${opportunity.id}`),
           }),
         subComponent: (
           <>
@@ -199,7 +200,7 @@ export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | u
       title: t("dashboard.opportunityProfile.duplicateOpportunity"),
       headerButtonName: t("dashboard.opportunityProfile.duplicateOpportunity"),
       onHeaderButtonClick: () =>
-        router.push(`/${i18n.language}/dashboard/opportunities/new?duplicateOpportunityId=${opportunity.id}`),
+        router.push(`${ROUTES.newOpportunity(i18n.language)}?duplicateOpportunityId=${opportunity.id}`),
     });
   }
 
@@ -225,7 +226,7 @@ export const useOpportunityProfileSections = (opportunity: ApiOpportunityGet | u
             deleteDisabled={isDeleting}
             transferButtonText={t("dashboard.opportunityProfile.dangerZone.transferButton")}
             onTransferClick={() =>
-              router.push(`/${i18n.language}/dashboard/agents?transferOpportunity=${opportunity.id}`)
+              router.push(`${ROUTES.organizations(i18n.language)}?transferOpportunity=${opportunity.id}`)
             }
           />
           {isDeleteDialogOpen && (

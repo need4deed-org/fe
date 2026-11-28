@@ -3,7 +3,7 @@
 import { CardHeader, CardHeaderInfo, DistrictContainer, DistrictDiv } from "@/components/Dashboard/Agents/styles";
 import { IconDiv } from "@/components/styled/container";
 import { Heading4, Paragraph } from "@/components/styled/text";
-import { DashboardRoutes } from "@/config/constants";
+import { ROUTES } from "@/constants/routes";
 import { MapPinIcon } from "@phosphor-icons/react";
 import { ApiAgentTagCandidate, Lang } from "need4deed-sdk";
 import Link from "next/link";
@@ -34,7 +34,7 @@ export const OrganizationAgents = ({ agents }: Props) => {
         <AgentItemCard
           key={agent.id}
           as={Link}
-          href={`/${i18n.language}${DashboardRoutes.Agents}/${agent.id}`}
+          href={ROUTES.organizationDetail(i18n.language, agent.id)}
           data-testid="organization-agent-card"
         >
           <CardHeader>

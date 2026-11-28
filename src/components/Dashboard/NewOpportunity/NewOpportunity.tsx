@@ -1,4 +1,5 @@
 "use client";
+import { ROUTES } from "@/constants/routes";
 import { SectionCard } from "@/components/Dashboard/Profile/common/SectionCard";
 import {
   useApiActivities,
@@ -14,7 +15,7 @@ import { AccompanyingDetailsEdit } from "@/components/Dashboard/Profile/sections
 import { BackButton, PageContainer } from "@/components/Dashboard/Profile/styles";
 import { IconName } from "@/components/Dashboard/Profile/types";
 import Button from "@/components/core/button/Button/Button";
-import { apiPathAgent, apiPathOpportunity, DashboardRoutes } from "@/config/constants";
+import { apiPathAgent, apiPathOpportunity } from "@/config/constants";
 import { useGetQuery, useMutationQuery } from "@/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Heading2 } from "@/components/styled/text";
@@ -200,7 +201,7 @@ export function NewOpportunity() {
     apiPath: `${apiPathOpportunity}/`,
     method: "post",
     onSuccessCallback: () => {
-      router.push(`/${lang}${isStaff ? DashboardRoutes.Opportunities : DashboardRoutes.Home}`);
+      router.push(isStaff ? ROUTES.opportunities(lang) : ROUTES.dashboard(lang));
     },
     queryKeyToInvalidate: [
       ["agent-opportunities", String(selectedAgentId)],
@@ -328,7 +329,7 @@ export function NewOpportunity() {
       {isAgentAddressMissing && (
         <AddressWarning role="alert">
           {t("dashboard.newOpportunity.addressMissing")}{" "}
-          <Link href={`/${lang}${DashboardRoutes.Agents}/${selectedAgentId}`} target="_blank" rel="noopener noreferrer">
+          <Link href={ROUTES.organizationDetail(lang, selectedAgentId)} target="_blank" rel="noopener noreferrer">
             {t("dashboard.newOpportunity.addressMissingLink")}
           </Link>
         </AddressWarning>

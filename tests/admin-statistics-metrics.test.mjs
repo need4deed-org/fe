@@ -11,7 +11,7 @@ const translations = (lng) =>
   JSON.parse(fs.readFileSync(path.join(root, "public/locales", lng, "translations.json"), "utf8"));
 const lookup = (dict, key) => key.split(".").reduce((node, part) => node?.[part], dict);
 
-const { METRIC_OPTIONS } = loadModule("src/components/Dashboard/Admin/Statistics/metrics.ts");
+const { METRIC_OPTIONS } = loadModule("src/components/Dashboard/Home/Statistics/metrics.ts");
 
 test("the picker offers every metric except the legacy requests alias", () => {
   const offered = METRIC_OPTIONS.map(({ metric }) => metric).sort();

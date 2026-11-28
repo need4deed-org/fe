@@ -3,7 +3,6 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { PageLayout } from "@/components/Layout";
 import { Heading3 } from "@/components/styled/text";
 import { useLegacyOpportunities } from "@/hooks/useLegacyOpportunities";
 import Cards from "./Cards";
@@ -65,32 +64,30 @@ export function OpportunityCards() {
   const isCardsTab = selectedTabIndex === 0;
 
   return (
-    <PageLayout>
-      <OpportunitiesContainer>
-        <Filters
-          isFiltersOpen={isFiltersOpen}
-          setIsFiltersOpen={setIsFiltersOpen}
-          filter={cardsFilter}
-          setFilter={setCardsFilter}
-        />
-        <OpportunityCardsHeader
-          numOfOpportunities={isCardsTab ? filteredOpportunities.length : 0}
-          searchInput={cardsFilter.searchInput}
-          onSearchInputChange={(searchInput) => setCardsFilter((prev) => ({ ...prev, searchInput }))}
-          tabs={[t("opportunityPage.tabs.tab1"), t("opportunityPage.tabs.tab2")]}
-          selectedTabIndex={selectedTabIndex}
-          setSelectedTabIndex={setSelectedTabIndex}
-          setIsFiltersOpen={setIsFiltersOpen}
-        />
-        {isCardsTab ? (
-          <Cards opportunities={filteredOpportunities} loading={loading} />
-        ) : (
-          <MapViewContainer>
-            <Heading3>{t("opportunityPage.mapViewMessage")}...</Heading3>
-          </MapViewContainer>
-        )}
-      </OpportunitiesContainer>
-    </PageLayout>
+    <OpportunitiesContainer>
+      <Filters
+        isFiltersOpen={isFiltersOpen}
+        setIsFiltersOpen={setIsFiltersOpen}
+        filter={cardsFilter}
+        setFilter={setCardsFilter}
+      />
+      <OpportunityCardsHeader
+        numOfOpportunities={isCardsTab ? filteredOpportunities.length : 0}
+        searchInput={cardsFilter.searchInput}
+        onSearchInputChange={(searchInput) => setCardsFilter((prev) => ({ ...prev, searchInput }))}
+        tabs={[t("opportunityPage.tabs.tab1"), t("opportunityPage.tabs.tab2")]}
+        selectedTabIndex={selectedTabIndex}
+        setSelectedTabIndex={setSelectedTabIndex}
+        setIsFiltersOpen={setIsFiltersOpen}
+      />
+      {isCardsTab ? (
+        <Cards opportunities={filteredOpportunities} loading={loading} />
+      ) : (
+        <MapViewContainer>
+          <Heading3>{t("opportunityPage.mapViewMessage")}...</Heading3>
+        </MapViewContainer>
+      )}
+    </OpportunitiesContainer>
   );
 }
 

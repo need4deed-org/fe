@@ -1,3 +1,4 @@
+"use client";
 import { ScreenTypes } from "@/config/constants";
 import { Lang } from "need4deed-sdk";
 import { PaginatedCards } from "../core/paginatedCards";

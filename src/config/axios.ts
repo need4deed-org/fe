@@ -1,9 +1,10 @@
+import { ROUTES } from "@/constants/routes";
 import axios, { InternalAxiosRequestConfig } from "axios";
 import i18next from "i18next";
 import type { Lang } from "need4deed-sdk";
 import { toast } from "react-toastify";
 import { getLocalizedErrorMessage, markSessionExpired, rememberSessionExpired } from "@/utils/apiErrors";
-import { clearAuthHint, getLoginPath, getPathLanguage, resolveLanguage, setAuthHint } from "@/utils/helpers";
+import { clearAuthHint, getPathLanguage, resolveLanguage, setAuthHint } from "@/utils/helpers";
 import { apiPathAuthRefresh, apiPathLogin, apiPathPasswordReset, apiPathRequestPasswordReset } from "./constants";
 
 const noRefreshPaths = [apiPathAuthRefresh, apiPathLogin, apiPathRequestPasswordReset, apiPathPasswordReset];
@@ -52,7 +53,7 @@ export const cancelLogout = (): void => {
 const isSessionRejected = (refreshError: unknown) =>
   axios.isAxiosError(refreshError) && SESSION_REJECTED_STATUSES.includes(refreshError.response?.status ?? 0);
 
-const getActiveLanguage = (): Lang => {
+export const getActiveLanguage = (): Lang => {
   if (typeof window !== "undefined") {
     const routeLanguage = getPathLanguage(window.location.pathname);
     if (routeLanguage) return routeLanguage;
@@ -118,12 +119,12 @@ axios.interceptors.response.use(
           window.location.pathname.includes("login") ||
           window.location.pathname.includes("forms") ||
           window.location.pathname.includes("register") ||
-          window.location.pathname.includes("event-page")
+          window.location.pathname.includes("events")
         );
         if (isRedirecting) {
           rememberSessionExpired();
           markSessionExpired(error);
-          window.location.href = getLoginPath(window.location.pathname);
+          window.location.href = ROUTES.login(getActiveLanguage());
         }
 
         return Promise.reject(error);

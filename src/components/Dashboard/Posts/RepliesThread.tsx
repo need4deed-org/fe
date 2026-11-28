@@ -29,11 +29,11 @@ export function RepliesThread({ postId, onReply }: Props) {
     return { children, roots };
   }, [replies]);
 
-  if (isLoading) return <ReplyState>{t("dashboard.posts.loadingReplies")}</ReplyState>;
+  if (isLoading) return <ReplyState>{t("dashboard.discussions.loadingReplies")}</ReplyState>;
   if (isError)
     return (
       <ReplyState role="alert">
-        <Paragraph>{t("dashboard.posts.repliesError")}</Paragraph>
+        <Paragraph>{t("dashboard.discussions.repliesError")}</Paragraph>
       </ReplyState>
     );
 
@@ -42,7 +42,7 @@ export function RepliesThread({ postId, onReply }: Props) {
       {grouped.roots.map((reply) => (
         <ReplyCard key={reply.id} reply={reply} childrenByParent={grouped.children} onReply={onReply} />
       ))}
-      {grouped.roots.length === 0 && <ReplyState>{t("dashboard.posts.noReplies")}</ReplyState>}
+      {grouped.roots.length === 0 && <ReplyState>{t("dashboard.discussions.noReplies")}</ReplyState>}
     </RepliesList>
   );
 }

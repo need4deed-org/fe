@@ -103,16 +103,6 @@ export const OverlayingSectionContainer = styled(SectionContainer)`
   transform: translateX(-50%);
 `;
 
-export const AppContainer = styled.div.attrs<ContainerProps>((props) => ({
-  id: props.id,
-}))<ContainerProps>`
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  align-items: center;
-  overflow-x: hidden;
-`;
-
 export const SectionHeaderContainer = styled.div.attrs<ContainerProps>((props) => ({
   id: props.id,
 }))<ContainerProps>`

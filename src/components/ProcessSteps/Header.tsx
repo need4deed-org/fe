@@ -13,7 +13,7 @@ export default function Header() {
   const { t } = useTranslation();
   return (
     <HeaderContainer>
-      <Heading1>{t("homepage.processSteps.headline")}</Heading1>
+      <Heading1>{t("website.processSteps.headline")}</Heading1>
       <Video />
     </HeaderContainer>
   );

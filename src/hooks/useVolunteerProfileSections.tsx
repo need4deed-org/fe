@@ -1,3 +1,4 @@
+import { ROUTES } from "@/constants/routes";
 import { SectionCardProps } from "@/components/Dashboard/Profile/common/SectionCard";
 import { Appreciation, AppreciationRef } from "@/components/Dashboard/Profile/sections/Appreciation";
 import { VolunteerEvents } from "@/components/Dashboard/Profile/sections/VolunteerEvents";
@@ -93,7 +94,7 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
 
   const { mutate: suggestMutate, isPending: isSuggesting } = useSuggestVolunteerOpportunity(() => {
     setIsSuggestDialogOpen(false);
-    router.push(`/${i18n.language}/dashboard/opportunities/${opportunityId}`);
+    if (opportunityId) router.push(ROUTES.opportunityDetail(i18n.language, parseInt(opportunityId)));
   }, ["opportunity-volunteers", String(opportunityId)]);
 
   const { mutate: ngoSuggest, isPending: isNgoSuggesting } = useSuggestVolunteerOpportunity(undefined, [
@@ -112,7 +113,7 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
 
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const { mutate: deleteMutate, isPending: isDeleting } = useDeleteVolunteer(volunteer?.id ?? 0, () => {
-    router.replace(`/${i18n.language}/dashboard/volunteers`);
+    router.replace(ROUTES.volunteers(i18n.language));
   });
 
   if (!volunteer) return null;
@@ -177,7 +178,7 @@ export const useVolunteerProfileSections = (volunteer: ApiVolunteerGet | undefin
           : t("dashboard.volunteerProfile.findOppButtonName"),
         onHeaderButtonClick: opportunityId
           ? () => setIsSuggestDialogOpen(true)
-          : () => router.push(`/${i18n.language}/dashboard/opportunities?volunteer=${volunteer.id}`),
+          : () => router.push(`${ROUTES.opportunities(i18n.language)}?volunteer=${volunteer.id}`),
       }),
       ...(isAgent && {
         headerButtonName: ownsVolunteer

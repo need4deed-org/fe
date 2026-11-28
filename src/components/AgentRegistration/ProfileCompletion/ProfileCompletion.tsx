@@ -1,4 +1,5 @@
 "use client";
+import { ROUTES } from "@/constants/routes";
 import { Button } from "@/components/core/button";
 import { FormInput } from "@/components/core/common";
 import { apiPathAgentRegister, apiPathOption } from "@/config/constants";
@@ -42,7 +43,7 @@ import { CheckMark, MatchBanner, MatchActions, MatchListCopy, MatchRow } from ".
 import { useAgentAddressLookup } from "./useAgentAddressLookup";
 import { useGetRegistrationOrganizations } from "@/hooks/useGetRegistrationOrganizations";
 import { useRouteLang } from "@/hooks/use-route-lang";
-import { localizedPath, setAuthHint } from "@/utils/helpers";
+import { setAuthHint } from "@/utils/helpers";
 
 function buildNewAgent(formData: ProfileCompletionData, organizationId?: number): ApiAgentRegisterNew {
   return {
@@ -146,7 +147,7 @@ export function ProfileCompletion() {
         return;
       }
       setAuthHint();
-      router.push(localizedPath(lang, "/dashboard"));
+      router.push(ROUTES.dashboard(lang));
     } catch (err) {
       if (axios.isAxiosError(err) && err.response?.status === 409) {
         const data = err.response.data as Partial<ApiAgentRegisterConflict> | undefined;
@@ -236,7 +237,7 @@ export function ProfileCompletion() {
             </SuccessText>
             <Button
               text={t("agentRegistration.completed.continue")}
-              onClick={() => router.replace(localizedPath(lang, currentUser ? "/dashboard" : "/login"))}
+              onClick={() => router.replace((currentUser ? ROUTES.dashboard : ROUTES.login)(lang))}
             />
           </SuccessWrapper>
         </Card>

@@ -1,4 +1,8 @@
 {
+  "notFound": {
+    "message": "Seite Nicht Gefunden",
+    "goHome": "Zur Startseite"
+  },
   "opportunityTranslations": {
     "target": "Übersetzung: {{language}}",
     "review": "Übersetzung prüfen",
@@ -73,36 +77,28 @@
     "regenerateRequested": "Neuerstellung der Übersetzung angefordert",
     "changedBeforeRegeneration": "Das Original oder die Übersetzung wurde geändert. Schließen Sie diesen Dialog und prüfen Sie den aktuellen Text, bevor Sie es erneut versuchen."
   },
-  "homepage": {
-    "heroSection": {
-      "menuItems": {
-        "about": "ÜBER UNS",
-        "volunteeringOpportunities": "Ehrenamtsbedarfe",
-        "events": "VERANSTALTUNGEN",
-        "openMenu": "Menü öffnen"
-      },
-      "content": {
-        "heroText": "Ehrenamtliche Unterstützung für Geflüchtete",
-        "heroSupportingText": "Wir vermitteln Ehrenamtliche an Gemeinschaftsunterkünften in Berlin",
-        "buttonJoinVolunteer": "Finde jetzt dein Ehrenamt",
-        "buttonJoinRefugeeCenter": "Für Einrichtungen"
-      }
+  "website": {
+    "header": {
+      "about": "Über Uns",
+      "volunteer": "Ehrenamtsbedarfe",
+      "events": "Veranstaltungen",
+      "login": "Anmelden",
+      "dashboard": "Dashboard",
+      "logout": "Abmelden",
+      "openMenu": "Menü öffnen",
+      "closeMenu": "Menü schließen",
+      "language": "Sprache",
+      "mainNavigation": "Hauptnavigation"
     },
     "footer": {
-      "about": "ÜBER",
+      "operator": "Träger",
+      "about": "Über Uns",
+      "forOrganizations": "Für Organisationen",
       "faq": "FAQ",
-      "legalNotice": "Rechtlicher Hinweis",
+      "legal": "Rechtliches",
       "privacy": "Datenschutz",
-      "vpa": "Ehrenamtliche Vereinbarung",
-      "contact": "Kontakt",
-      "legal": {
-        "guidelines": "Need4Deed Richtlinien",
-        "legalNotice": "Rechtlicher Hinweis",
-        "dataPrivacy": "Datenschutz",
-        "agreement": "Ehrenamtliche Vereinbarung",
-        "cookies": "Cookies"
-      },
-      "forOrganisations": "FÜR ORGANISATIONEN"
+      "agreement": "Ehrenamtliche Vereinbarung",
+      "contact": "Kontakt"
     },
     "iframeTitles": {
       "howToVolunteer": "Wie Du Geflüchtete in Deiner Nachbarschaft unterstützen können"
@@ -233,7 +229,12 @@
     "postcodeChecking": "PLZ wird geprüft…",
     "button": {
       "more": "mehr...",
+      "less": "weniger...",
       "submit": "Senden"
+    },
+    "consent": {
+      "dataPrivacy": "Datenschutz",
+      "guidelines": "Need4Deed Richtlinien"
     },
     "schedule": {
       "0": "Andere",
@@ -658,6 +659,7 @@
       }
     },
     "home": {
+      "ngoVolunteers": "NGO-Freiwillige",
       "content": {
         "header": "Dashboard Startseite",
         "newTags": "Neueste Tags",
@@ -677,16 +679,25 @@
         "earlierActivity": "Früher ({{count}})"
       },
       "sidebar": {
-        "home": "Startseite",
+        "dashboard": "Dashboard",
         "volunteers": "Ehrenamtliche",
-        "opportunities": "Ehrenamtsbedarfe",
-        "agents": "Einrichtungen / Projekte",
+        "opportunities": "Einsätze",
+        "organizations": "Organisationen",
         "racs": "RACs",
-        "posts": "Beiträge",
+        "discussions": "Diskussionen",
         "calendar": "Kalender",
-        "profile": "Profil",
+        "metrics": "Kennzahlen",
+        "settings": "Einstellungen",
+        "accounts": "Konten",
+        "emails": "E-Mails",
+        "logout": "Abmelden",
         "more": "Mehr",
         "admin": "Admin",
+        "unreadMentions_one": "1 ungelesene Erwähnung",
+        "unreadMentions_other": "{{count}} ungelesene Erwähnungen",
+        "legal": "Rechtliches",
+        "privacy": "Datenschutz",
+        "agreement": "Ehrenamtliche Vereinbarung",
         "help": "Hilfe"
       },
       "createOpportunity": "Neue Möglichkeit erstellen"
@@ -736,18 +747,18 @@
       "otherRacs": "Weitere Berliner Unterkünfte für Geflüchtete umschalten",
       "errorRac": "Fehler beim Abrufen der Berliner Unterkünfte für Geflüchtete"
     },
-    "posts": {
-      "searchPosts": "Beiträge, Antworten, Personen und Ehrenamtsbedarfe suchen",
+    "discussions": {
+      "searchDiscussions": "Diskussionen, Antworten, Personen und Ehrenamtsbedarfe suchen",
       "clearSearch": "Suche löschen",
-      "noSearchResults": "Keine passenden Beiträge gefunden.",
+      "noSearchResults": "Keine passenden Diskussionen gefunden.",
       "peopleTitle": "Personen",
-      "peopleDescription": "Beiträge nach Community-Mitglied filtern",
-      "postedBy": "Verfasst von",
+      "peopleDescription": "Diskussionen nach Community-Mitglied filtern",
+      "startedBy": "Gestartet von",
       "anyone": "Alle",
-      "everyoneDescription": "Beiträge von allen anzeigen",
+      "everyoneDescription": "Diskussionen von allen anzeigen",
       "findPerson": "Person suchen",
       "noPeople": "Keine passenden Personen gefunden.",
-      "allPosts": "Alle Beiträge",
+      "allDiscussions": "Alle Diskussionen",
       "roles": {
         "agent": "Einrichtung/Projekt",
         "coordinator": "Koordination",
@@ -755,12 +766,12 @@
       },
       "inputPlaceholder": "Nachricht eingeben...",
       "send": "Senden",
-      "addBookmark": "Beitrag für später speichern",
-      "removeBookmark": "Beitrag aus gespeicherten Elementen entfernen",
-      "bookmarkAdded": "Beitrag für später gespeichert",
-      "bookmarkRemoved": "Beitrag aus gespeicherten Elementen entfernt",
+      "addBookmark": "Diskussion für später speichern",
+      "removeBookmark": "Diskussion aus gespeicherten Elementen entfernen",
+      "bookmarkAdded": "Diskussion für später gespeichert",
+      "bookmarkRemoved": "Diskussion aus gespeicherten Elementen entfernt",
       "sendReply": "Antwort senden",
-      "created": "Beitrag erfolgreich erstellt",
+      "created": "Diskussion erfolgreich erstellt",
       "reply": "Antworten",
       "replyingTo": "Antwort an {{name}}",
       "cancelReply": "Antwort abbrechen",
@@ -795,18 +806,18 @@
       "everyone": "Alle",
       "removeOpportunity": "Ehrenamtsbedarf entfernen",
       "noOpportunities": "Keine Ehrenamtsbedarfe gefunden",
-      "empty": "Noch keine Beiträge. Sei der Erste, der eine Nachricht postet.",
-      "options": "Beitragsoptionen",
-      "edit": "Beitrag bearbeiten",
-      "delete": "Beitrag löschen",
+      "empty": "Noch keine Diskussionen. Starte die erste.",
+      "options": "Diskussionsoptionen",
+      "edit": "Diskussion bearbeiten",
+      "delete": "Diskussion löschen",
       "save": "Speichern",
       "cancel": "Abbrechen",
-      "updated": "Beitrag erfolgreich aktualisiert",
-      "deleted": "Beitrag erfolgreich gelöscht",
+      "updated": "Diskussion erfolgreich aktualisiert",
+      "deleted": "Diskussion erfolgreich gelöscht",
       "unknownUser": "Benutzer",
       "deleteDialog": {
-        "title": "Beitrag löschen?",
-        "message": "Dieser Beitrag wird unwiderruflich gelöscht."
+        "title": "Diskussion löschen?",
+        "message": "Diese Diskussion wird unwiderruflich gelöscht."
       },
       "deleteReplyDialog": {
         "title": "Antwort löschen?",
@@ -1091,6 +1102,7 @@
     },
     "agents": {
       "agents": "Einrichtungs-/Projektverzeichnis",
+      "trustedDomains": "Vertrauenswürdige Domains",
       "table": {
         "title": "Name",
         "type": "Typ",
@@ -1479,15 +1491,6 @@
       "entryDeleted": "Eintrag erfolgreich gelöscht",
       "deleteConfirmTitle": "Eintrag löschen?",
       "deleteConfirmText": "Der Eintrag vom {{date}} wird dauerhaft gelöscht."
-    },
-    "volunteerActivityLog": {
-      "emptyState": "Noch keine Aktivitäten",
-      "linked": "Verknüpft mit „{{title}}“",
-      "linkedAs": "Verknüpft mit „{{title}}“ als {{status}}",
-      "removed": "Entfernt aus „{{title}}“ (war {{from}})",
-      "statusChanged": "„{{title}}“: Status geändert zu {{to}}",
-      "statusChangedFrom": "„{{title}}“: {{from}} → {{to}}",
-      "imported": "{{entry}} (importiert, Datum ungefähr)"
     },
     "profile": {
       "loading": "Profil wird geladen...",
@@ -2315,6 +2318,15 @@
         "personLoadError": "Diese Person konnte nicht geladen werden, der Name lässt sich gerade nicht bearbeiten.",
         "truncated": "Es werden nur die neuesten Konten angezeigt. Suche, um weitere zu finden."
       }
+    },
+    "volunteerActivityLog": {
+      "emptyState": "Noch keine Aktivitäten",
+      "linked": "Verknüpft mit „{{title}}“",
+      "linkedAs": "Verknüpft mit „{{title}}“ als {{status}}",
+      "removed": "Entfernt aus „{{title}}“ (war {{from}})",
+      "statusChanged": "„{{title}}“: Status geändert zu {{to}}",
+      "statusChangedFrom": "„{{title}}“: {{from}} → {{to}}",
+      "imported": "{{entry}} (importiert, Datum ungefähr)"
     },
     "recommended": {
       "volunteersTitle": "Empfohlene Ehrenamtliche",
@@ -3252,7 +3264,7 @@
       "bevos": "BEVOS wurde aus dem Europäischen Sozialfonds (ESF) gefördert.",
       "need4deed": "Need4Deed wurde aus dem Asyl-, Migrations- und Integrationsfonds (AMIF) der Europäischen Union gefördert."
     },
-    "forOrganisations": "Für Organisationen",
+    "forOrganizations": "Für Organisationen",
     "intro": "Need4Deed ist ein strukturelles Projekt: Mit eigenen, einzigartigen Werkzeugen vernetzen und stärken wir kleine Ehrenamtsprojekte, die Geflüchtete unterstützen.",
     "offline": {
       "heading": "Vermittlung, Vernetzung, Workshops und Events",
@@ -4155,7 +4167,7 @@
     "header": "Angebote werden aktualisiert...",
     "para": "Wir aktualisieren gerade die Engagementangebote. Dies kann einige Zeit dauern. Wir empfehlen, die Seite später am Tag erneut zu aktualisieren. Wenn Du Fragen hast, wende Dich bitte an volunteer@need4deed.org"
   },
-  "forOrganisationsPage": {
+  "forOrganizationsPage": {
     "heading": "Für Organisationen",
     "intro": "Für Einrichtungen, die Geflüchtete in Berlin unterstützen: Finde Ehrenamtliche für Deine Einrichtung und verwalte Deine eigenen, an einem Ort und kostenlos.",
     "stepsHeading": "Teil 1: Vermittlung",
@@ -4239,9 +4251,9 @@
           "title": "Erweitertes Führungszeugnis",
           "body": "Wir unterstützen Dich bei der Anfrage. Melde Dich einfach bei uns."
         },
-        "posts": {
-          "title": "Beiträge",
-          "body": "Tausch Dich mit anderen Einrichtungen und mit uns aus."
+        "discussions": {
+          "title": "Diskussionen und Markierungen",
+          "body": "Stelle allgemeine Fragen oder Gesuche in die Diskussionen, antwortet Euch gegenseitig und markiert Euch. Wer markiert wird, bekommt eine E-Mail."
         },
         "openSource": {
           "title": "Open Source",

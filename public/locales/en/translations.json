@@ -1,4 +1,8 @@
 {
+  "notFound": {
+    "message": "Page Not Found",
+    "goHome": "Go Home"
+  },
   "opportunityTranslations": {
     "target": "{{language}} translation",
     "review": "Review translation",
@@ -73,38 +77,28 @@
     "regenerateRequested": "Translation regeneration requested",
     "changedBeforeRegeneration": "The source or translation changed. Close this dialog and review the latest text before trying again."
   },
-  "homepage": {
-    "heroSection": {
-      "menuItems": {
-        "about": "ABOUT",
-        "volunteeringOpportunities": "VOLUNTEERING OPPORTUNITIES",
-        "events": "EVENTS",
-        "openMenu": "Open menu"
-      },
-      "content": {
-        "heroText": "Voluntary support for refugees",
-        "heroSupportingText": "We connect volunteers to accommodation centers in Berlin",
-        "buttonJoinVolunteer": "Join as a volunteer",
-        "buttonJoinRefugeeCenter": "For non-profits"
-      }
+  "website": {
+    "header": {
+      "about": "About",
+      "volunteer": "Volunteer",
+      "events": "Events",
+      "login": "Login",
+      "dashboard": "Dashboard",
+      "logout": "Logout",
+      "openMenu": "Open menu",
+      "closeMenu": "Close menu",
+      "language": "Language",
+      "mainNavigation": "Main navigation"
     },
     "footer": {
-      "about": "ABOUT",
+      "operator": "Operator",
+      "about": "About",
+      "forOrganizations": "For Organizations",
       "faq": "FAQ",
-      "legalNotice": "Legal notice",
-      "vpa": "Volunteer Participation Agreement",
+      "legal": "Legal",
       "privacy": "Privacy",
-      "contact": "Contact",
-      "legal": {
-        "legalHeading": "Legal",
-        "impressum": "Legal notice",
-        "dataPrivacy": "Privacy",
-        "agreement": "Voluntary Participation Agreement",
-        "guidelines": "Need4Deed Guidelines",
-        "legalNotice": "Legal notice",
-        "cookies": "Cookies"
-      },
-      "forOrganisations": "FOR ORGANISATIONS"
+      "agreement": "Volunteer Agreement",
+      "contact": "Contact"
     },
     "iframeTitles": {
       "howToVolunteer": "How you can support refugees in your community"
@@ -235,7 +229,12 @@
     "postcodeChecking": "Checking postcode…",
     "button": {
       "more": "more...",
+      "less": "less...",
       "submit": "Submit"
+    },
+    "consent": {
+      "dataPrivacy": "Privacy",
+      "guidelines": "Need4Deed Guidelines"
     },
     "schedule": {
       "1": "Mon",
@@ -652,6 +651,7 @@
       }
     },
     "home": {
+      "ngoVolunteers": "NGO Volunteers",
       "content": {
         "header": "Dashboard Home",
         "newTags": "Newest Tags",
@@ -671,16 +671,25 @@
         "earlierActivity": "Earlier ({{count}})"
       },
       "sidebar": {
-        "home": "Home",
+        "dashboard": "Dashboard",
         "volunteers": "Volunteers",
         "opportunities": "Opportunities",
-        "agents": "NGOs",
+        "organizations": "Organizations",
         "racs": "RAC's",
-        "posts": "Posts",
+        "discussions": "Discussions",
         "calendar": "Calendar",
-        "profile": "Profile",
+        "metrics": "Metrics",
+        "settings": "Settings",
+        "accounts": "Accounts",
+        "emails": "Emails",
+        "logout": "Logout",
         "more": "More",
         "admin": "Admin",
+        "unreadMentions_one": "1 unread mention",
+        "unreadMentions_other": "{{count}} unread mentions",
+        "legal": "Legal",
+        "privacy": "Privacy",
+        "agreement": "Volunteer Agreement",
         "help": "Help"
       },
       "createOpportunity": "Create New Opportunity"
@@ -730,18 +739,18 @@
       "otherRacs": "Toggle other Refugee Accommodation Centers",
       "errorRac": "Error occurred when fetching Berlin RACs"
     },
-    "posts": {
-      "searchPosts": "Search posts, replies, people, and opportunities",
+    "discussions": {
+      "searchDiscussions": "Search discussions, replies, people, and opportunities",
       "clearSearch": "Clear search",
-      "noSearchResults": "No matching posts found.",
+      "noSearchResults": "No matching discussions found.",
       "peopleTitle": "People here",
-      "peopleDescription": "Filter posts by community member",
-      "postedBy": "Posted by",
+      "peopleDescription": "Filter discussions by community member",
+      "startedBy": "Started by",
       "anyone": "Anyone",
-      "everyoneDescription": "Show posts from everyone",
+      "everyoneDescription": "Show discussions from everyone",
       "findPerson": "Find a person",
       "noPeople": "No matching people found.",
-      "allPosts": "All posts",
+      "allDiscussions": "All discussions",
       "roles": {
         "agent": "NGO",
         "coordinator": "Coordinator",
@@ -749,12 +758,12 @@
       },
       "inputPlaceholder": "Type a message...",
       "send": "Send",
-      "addBookmark": "Save post for later",
-      "removeBookmark": "Remove post from saved items",
-      "bookmarkAdded": "Post saved for later",
-      "bookmarkRemoved": "Post removed from saved items",
+      "addBookmark": "Save discussion for later",
+      "removeBookmark": "Remove discussion from saved items",
+      "bookmarkAdded": "Discussion saved for later",
+      "bookmarkRemoved": "Discussion removed from saved items",
       "sendReply": "Send reply",
-      "created": "Post created successfully",
+      "created": "Discussion created successfully",
       "reply": "Reply",
       "replyingTo": "Replying to {{name}}",
       "cancelReply": "Cancel reply",
@@ -789,18 +798,18 @@
       "everyone": "Everyone",
       "removeOpportunity": "Remove opportunity",
       "noOpportunities": "No opportunities found",
-      "empty": "No posts yet. Be the first to post a message.",
-      "options": "Post options",
-      "edit": "Edit post",
-      "delete": "Delete post",
+      "empty": "No discussions yet. Be the first to start one.",
+      "options": "Discussion options",
+      "edit": "Edit discussion",
+      "delete": "Delete discussion",
       "save": "Save",
       "cancel": "Cancel",
-      "updated": "Post updated successfully",
-      "deleted": "Post deleted successfully",
+      "updated": "Discussion updated successfully",
+      "deleted": "Discussion deleted successfully",
       "unknownUser": "user",
       "deleteDialog": {
-        "title": "Delete post?",
-        "message": "This post will be permanently deleted."
+        "title": "Delete discussion?",
+        "message": "This discussion will be permanently deleted."
       },
       "deleteReplyDialog": {
         "title": "Delete reply?",
@@ -826,7 +835,7 @@
       "button": {
         "login": "Log in",
         "dashboard": "Dashboard",
-        "logout": "Log out"
+        "logout": "Logout"
       }
     },
     "login": {
@@ -1144,6 +1153,7 @@
     },
     "agents": {
       "agents": "NGO Directory",
+      "trustedDomains": "Trusted Domains",
       "table": {
         "title": "Name",
         "type": "Type",
@@ -1467,15 +1477,6 @@
       "entryDeleted": "Entry deleted successfully",
       "deleteConfirmTitle": "Delete entry?",
       "deleteConfirmText": "The entry for {{date}} will be permanently deleted."
-    },
-    "volunteerActivityLog": {
-      "emptyState": "No activity yet",
-      "linked": "Linked to \"{{title}}\"",
-      "linkedAs": "Linked to \"{{title}}\" as {{status}}",
-      "removed": "Removed from \"{{title}}\" (was {{from}})",
-      "statusChanged": "\"{{title}}\": status changed to {{to}}",
-      "statusChangedFrom": "\"{{title}}\": {{from}} → {{to}}",
-      "imported": "{{entry}} (imported, date approximate)"
     },
     "profile": {
       "loading": "Loading profile...",
@@ -2303,6 +2304,15 @@
         "personLoadError": "This person could not be loaded, so the name can't be edited right now.",
         "truncated": "Only the newest accounts are shown. Search to find others."
       }
+    },
+    "volunteerActivityLog": {
+      "emptyState": "No activity yet",
+      "linked": "Linked to \"{{title}}\"",
+      "linkedAs": "Linked to \"{{title}}\" as {{status}}",
+      "removed": "Removed from \"{{title}}\" (was {{from}})",
+      "statusChanged": "\"{{title}}\": status changed to {{to}}",
+      "statusChangedFrom": "\"{{title}}\": {{from}} → {{to}}",
+      "imported": "{{entry}} (imported, date approximate)"
     },
     "recommended": {
       "volunteersTitle": "Recommended volunteers",
@@ -3240,7 +3250,7 @@
       "bevos": "BEVOS was funded by the European Social Fund (ESF).",
       "need4deed": "Need4Deed was funded by the Asylum, Migration and Integration Fund (AMIF) of the European Union."
     },
-    "forOrganisations": "For organisations",
+    "forOrganizations": "For organizations",
     "intro": "Need4Deed is a structural project: with unique tools of our own, we connect and empower small volunteer projects that support refugees.",
     "offline": {
       "heading": "Matching, networking, workshops and events",
@@ -3308,7 +3318,7 @@
       }
     },
     "organisations": {
-      "heading": "For organisations",
+      "heading": "For organizations",
       "register": {
         "question": "How does our organisation register?",
         "answer": "Register your organisation and add its address with the postcode: you need it to create requests.",
@@ -3340,8 +3350,8 @@
       },
       "more": {
         "question": "Where can we read more?",
-        "answer": "How we work with organisations, step by step, and our guidelines are on the page for organisations.",
-        "link": "For organisations"
+        "answer": "How we work with organisations, step by step, and our guidelines are on the page for organizations.",
+        "link": "For organizations"
       }
     }
   },
@@ -3800,8 +3810,8 @@
     "header": "Opportunities are being updated...",
     "para": "We are currently updating the volunteering opportunities. This may take a while. We recommend refreshing the page later on today.  If you have any specific question please contact us at volunteer@need4deed.org"
   },
-  "forOrganisationsPage": {
-    "heading": "For organisations",
+  "forOrganizationsPage": {
+    "heading": "For organizations",
     "intro": "For centres that support refugees in Berlin: find volunteers and manage your own, in one place and free of charge.",
     "stepsHeading": "Part 1: Matching",
     "stepsIntro": "Find volunteers, yourself or with us.",
@@ -3841,7 +3851,7 @@
       "register": "Not registered yet?",
       "registerLink": "Register your organisation",
       "guidelines": "The rules for working together are in our",
-      "guidelinesLink": "guidelines for organisations",
+      "guidelinesLink": "guidelines for organizations",
       "contact": "Questions? Write to us at"
     },
     "dashboard": {
@@ -3884,9 +3894,9 @@
           "title": "Certificate of good conduct (EFZ)",
           "body": "We help you request it. Just get in touch."
         },
-        "posts": {
-          "title": "Posts",
-          "body": "Talk to other centres and to us."
+        "discussions": {
+          "title": "Discussions and tagging",
+          "body": "Write general questions or searches in the discussions, reply to each other and tag each other. Whoever is tagged gets an email."
         },
         "openSource": {
           "title": "Open source",

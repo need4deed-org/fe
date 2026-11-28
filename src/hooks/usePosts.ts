@@ -55,7 +55,7 @@ export function useUpdatePost(postId: number, onSuccess: () => void) {
     apiPath: `${apiPathPost}/${postId}`,
     method: "patch",
     queryKeyToInvalidate: POSTS_QUERY_KEY,
-    successMessage: "dashboard.posts.updated",
+    successMessage: "dashboard.discussions.updated",
     onSuccessCallback: onSuccess,
   });
 }
@@ -65,7 +65,7 @@ export function useDeletePost(postId: number, onSuccess: () => void) {
     apiPath: `${apiPathPost}/${postId}`,
     method: "delete",
     queryKeyToInvalidate: POSTS_QUERY_KEY,
-    successMessage: "dashboard.posts.deleted",
+    successMessage: "dashboard.discussions.deleted",
     onSuccessCallback: onSuccess,
   });
 }
@@ -74,7 +74,7 @@ export function useCreatePost(onSuccess: () => void) {
   return useMutationQuery<ApiPostPost, unknown>({
     apiPath: apiPathPost,
     queryKeyToInvalidate: POSTS_QUERY_KEY,
-    successMessage: "dashboard.posts.created",
+    successMessage: "dashboard.discussions.created",
     onSuccessCallback: onSuccess,
   });
 }
@@ -94,7 +94,7 @@ export function useTogglePostBookmark(postId: number, bookmarked: boolean) {
       else await axios.delete(`${apiPathPost}/${postId}/bookmark`);
       return nextBookmarked;
     },
-    successMessage: bookmarked ? "dashboard.posts.bookmarkRemoved" : "dashboard.posts.bookmarkAdded",
+    successMessage: bookmarked ? "dashboard.discussions.bookmarkRemoved" : "dashboard.discussions.bookmarkAdded",
     onSuccessCallback: (nextBookmarked) => {
       bookmarkedRef.current = nextBookmarked;
 
@@ -140,7 +140,7 @@ export function useCreateReply(postId: number) {
   return useMutationQuery<ApiPostReplyPost, unknown>({
     apiPath: `${apiPathPost}/${postId}/reply`,
     queryKeyToInvalidate: [POSTS_QUERY_KEY, postRepliesQueryKey(postId)],
-    successMessage: "dashboard.posts.replyCreated",
+    successMessage: "dashboard.discussions.replyCreated",
   });
 }
 
@@ -149,7 +149,7 @@ export function useUpdateReply(postId: number, replyId: number, onSuccess: () =>
     apiPath: `${apiPathPost}/reply/${replyId}`,
     method: "patch",
     queryKeyToInvalidate: postRepliesQueryKey(postId),
-    successMessage: "dashboard.posts.replyUpdated",
+    successMessage: "dashboard.discussions.replyUpdated",
     onSuccessCallback: onSuccess,
   });
 }
@@ -159,7 +159,7 @@ export function useDeleteReply(postId: number, replyId: number, onSuccess: () =>
     apiPath: `${apiPathPost}/reply/${replyId}`,
     method: "delete",
     queryKeyToInvalidate: [POSTS_QUERY_KEY, postRepliesQueryKey(postId)],
-    successMessage: "dashboard.posts.replyDeleted",
+    successMessage: "dashboard.discussions.replyDeleted",
     onSuccessCallback: onSuccess,
   });
 }

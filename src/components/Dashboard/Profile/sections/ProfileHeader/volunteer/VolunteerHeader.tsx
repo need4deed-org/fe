@@ -1,4 +1,5 @@
 "use client";
+import { ROUTES } from "@/constants/routes";
 import {
   apiPathAgent,
   apiPathVolunteer,
@@ -162,7 +163,9 @@ export const VolunteerHeader = ({ volunteer }: Props) => {
           title={t("dashboard.volunteerProfile.volunteerHeader.owner_title")}
           extra={
             currentOwner ? (
-              <AgentLink href={`/${i18n.language}/dashboard/agents/${currentOwner.id}`}>{currentOwner.title}</AgentLink>
+              <AgentLink href={ROUTES.organizationDetail(i18n.language, currentOwner.id)}>
+                {currentOwner.title}
+              </AgentLink>
             ) : (
               <span>{t("dashboard.volunteerProfile.volunteerHeader.owner_none")}</span>
             )

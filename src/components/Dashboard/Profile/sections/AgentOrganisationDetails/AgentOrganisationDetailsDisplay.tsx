@@ -1,5 +1,5 @@
 import { EditableField } from "@/components/EditableField/EditableField";
-import { DashboardRoutes } from "@/config/constants";
+import { ROUTES } from "@/constants/routes";
 import { ApiAgentOrganization } from "need4deed-sdk";
 import Link from "next/link";
 import { useFormContext } from "react-hook-form";
@@ -73,7 +73,7 @@ export const OrganisationDetailsDisplay = ({ rawClientLanguages, address, organi
         <FieldWrapper data-testid="agent-operator-link">
           <label>{t(`${i18nPrefix}.operator`)}</label>
           <span>
-            <OperatorLink href={`/${i18n.language}${DashboardRoutes.Organizations}/${organization.id}`}>
+            <OperatorLink href={ROUTES.operatorDetail(i18n.language, organization.id)}>
               {organization.title || values.operator}
             </OperatorLink>
           </span>

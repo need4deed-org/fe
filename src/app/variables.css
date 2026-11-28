@@ -1,0 +1,67 @@
+:root {
+  /* Colors */
+  --white: #ffffff;
+  --grey: rgb(102, 112, 133);
+  --scarlet: #e03100; /* For errors and notification badges */
+
+  --lavender: rgb(145, 99, 242);
+  --medium-lavender: color-mix(in srgb, var(--lavender) 75%, white);
+  --pale-lavender: color-mix(in srgb, var(--lavender) 25%, white);
+  --misty-lavender: color-mix(in srgb, var(--lavender) 15%, white);
+
+  --mint: rgb(65, 242, 141);
+  --medium-mint: color-mix(in srgb, var(--mint) 75%, white);
+  --pale-mint: color-mix(in srgb, var(--mint) 25%, white);
+  --misty-mint: color-mix(in srgb, var(--mint) 15%, white);
+
+  --blue: rgb(5, 64, 242);
+  --medium-blue: color-mix(in srgb, var(--blue) 75%, white);
+  --pale-blue: color-mix(in srgb, var(--blue) 25%, white);
+  --misty-blue: color-mix(in srgb, var(--blue) 15%, white);
+
+  /* Text */
+  --small-font-size: 16px; /* For if --medium-font-size is too large */
+  --medium-font-size: 18px; /* Font size of body text, text inputs, and buttons */
+  --heading-font-size: 24px; /* For section/card headings */
+  --sans-serif: var(--font-figtree), sans-serif;
+  --condensed-sans-serif: var(--font-barlow-condensed), sans-serif;
+  --bold: 600;
+  --line-height: 1.4;
+
+  /* Sizes */
+  --very-small-spacing: 4px; /* For gaps where --small-spacing looks too large */
+  --small-spacing: 8px; /* For inner gaps between list items or buttons in fields */
+  --medium-spacing: 18px; /* For "normal" spacing, left/right padding in text fields, and padding around fields */
+  --large-spacing: 28px; /* For spacious spacing and left/right padding in buttons */
+  --very-large-spacing: 56px; /* For when --large-spacing is too crowded */
+  --field-size: 44px; /* The height for form fields or the height and width of square buttons */
+  --border-width: 3px; /* The border width of inputs */
+  --sidebar-width: 300px; /* Main navigation sidebar width on desktop view */
+  --header-height: 86px; /* Main navigational header height */
+  --field-icon-size: 22px; /* For icons in a field like a search icon in a search bar */
+  --heading-icon-size: 32px; /* For icons paired with section/card headings */
+  --tag-size: 36px; /* Height of tags/chips with text/icons on them or height and width of square tags */
+  --modal-width: 600px; /* Width of modal window */
+  --modal-height: 500px; /* Height of modal window */
+  --dialog-width: 300px;
+  --field-border-radius: 8px; /* Border radius of fields */
+  --pill-field-border-radius: calc(var(--field-size) / 2);
+  --surface-border-radius: calc(
+    var(--field-border-radius) + var(--medium-spacing)
+  ); /* Outer border radius of the containing surface behind the fields */
+  --header-logo-height: 32px;
+  --mobile-menu-width: 320px;
+  --mobile-menu-logo-height: 24px;
+  --mobile-footer-menu-height: 86px;
+  --mobile-menu-font-size: 10px;
+  --notification-badge-size: 24px; /* For notification badges on app navigation sidebar items */
+  --notification-badge-side-spacing: 6px;
+  --notification-badge-border-radius: calc(var(--notification-badge-size) / 2);
+  --mobile-menu-icon-size: 24px;
+  --outline-offset: 2px;
+
+  /* Miscellaneous */
+  --short-transition: 0.15s ease-in-out; /* For short animations */
+  --medium-transition: 0.25s ease-in-out; /* For medium length animations */
+  --outline: 1px dashed var(--grey); /* For Keyboard Accessibility */
+}

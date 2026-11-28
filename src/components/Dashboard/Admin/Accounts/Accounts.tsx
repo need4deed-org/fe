@@ -25,9 +25,9 @@ import styled from "styled-components";
 import { EditNameDialog } from "./EditNameDialog";
 
 const ROLE_OPTIONS = [
-  { role: UserRole.COORDINATOR, labelKey: "dashboard.posts.roles.coordinator" },
-  { role: UserRole.AGENT, labelKey: "dashboard.posts.roles.agent" },
-  { role: UserRole.ADMIN, labelKey: "dashboard.posts.roles.admin" },
+  { role: UserRole.COORDINATOR, labelKey: "dashboard.discussions.roles.coordinator" },
+  { role: UserRole.AGENT, labelKey: "dashboard.discussions.roles.agent" },
+  { role: UserRole.ADMIN, labelKey: "dashboard.discussions.roles.admin" },
 ];
 
 export function Accounts() {
@@ -118,6 +118,7 @@ const Container = styled.div`
   flex-direction: column;
   gap: var(--spacing-24);
   max-width: 960px;
+  padding: var(--large-spacing);
 `;
 
 const Filters = styled.div`

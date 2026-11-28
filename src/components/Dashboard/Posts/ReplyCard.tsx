@@ -81,7 +81,7 @@ export function ReplyCard({ reply, childrenByParent, onReply, nested = false, co
           <PostMenuWrapper>
             <PostMenuButton
               type="button"
-              aria-label={t("dashboard.posts.options")}
+              aria-label={t("dashboard.discussions.options")}
               aria-expanded={isMenuOpen}
               onMouseDown={(event) => event.stopPropagation()}
               onClick={(event) => {
@@ -113,7 +113,7 @@ export function ReplyCard({ reply, childrenByParent, onReply, nested = false, co
           <EditTextArea value={editText} onChange={(event) => setEditText(event.target.value)} autoFocus />
           <EditActions>
             <EditButton type="button" disabled={updateReply.isPending} onClick={closeEdit}>
-              {t("dashboard.posts.cancel")}
+              {t("dashboard.discussions.cancel")}
             </EditButton>
             <EditButton
               type="button"
@@ -121,7 +121,7 @@ export function ReplyCard({ reply, childrenByParent, onReply, nested = false, co
               disabled={!editText.trim() || updateReply.isPending}
               onClick={() => updateReply.mutate({ text: editText.trim() })}
             >
-              {t("dashboard.posts.save")}
+              {t("dashboard.discussions.save")}
             </EditButton>
           </EditActions>
         </>
@@ -150,7 +150,7 @@ export function ReplyCard({ reply, childrenByParent, onReply, nested = false, co
             })
           }
         >
-          {t("dashboard.posts.reply")}
+          {t("dashboard.discussions.reply")}
         </EditButton>
       </ReplyFooter>
 
@@ -171,10 +171,10 @@ export function ReplyCard({ reply, childrenByParent, onReply, nested = false, co
 
       {isDeleteOpen && (
         <ConfirmationDialog
-          title={t("dashboard.posts.deleteReplyDialog.title")}
-          message={t("dashboard.posts.deleteReplyDialog.message")}
-          confirmText={t("dashboard.posts.delete")}
-          cancelText={t("dashboard.posts.cancel")}
+          title={t("dashboard.discussions.deleteReplyDialog.title")}
+          message={t("dashboard.discussions.deleteReplyDialog.message")}
+          confirmText={t("dashboard.discussions.delete")}
+          cancelText={t("dashboard.discussions.cancel")}
           onCancel={() => setIsDeleteOpen(false)}
           onConfirm={() => {
             if (!deleteReply.isPending) deleteReply.mutate();

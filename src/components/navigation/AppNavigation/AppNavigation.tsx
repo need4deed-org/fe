@@ -1,0 +1,37 @@
+import { ReactNode } from "react";
+import styled from "styled-components";
+import { Sidebar } from "./Sidebar";
+
+type AppNavigationProps = {
+  children: ReactNode;
+};
+
+const BREAKPOINT = 1000;
+
+export const AppNavigation = ({ children }: AppNavigationProps) => {
+  return (
+    <Frame>
+      <Sidebar breakpoint={BREAKPOINT} />
+      <PageContainer>{children}</PageContainer>
+    </Frame>
+  );
+};
+
+const Frame = styled.div`
+  display: -webkit-flex;
+  display: flex;
+  z-index: 0;
+  padding-left: var(--sidebar-width);
+
+  @media screen and (max-width: ${BREAKPOINT}px) {
+    display: block;
+    padding: 0;
+  }
+`;
+
+const PageContainer = styled.main`
+  z-index: 1;
+  width: 100%;
+  min-height: 100vh;
+  padding-bottom: var(--mobile-footer-menu-height);
+`;

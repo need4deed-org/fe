@@ -1,3 +1,4 @@
+import { ROUTES } from "@/constants/routes";
 import React, { useMemo } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
@@ -81,7 +82,7 @@ export function ForgotPasswordForm({ onSuccess }: Props) {
           textHoverColor="var(--color-magnolia)"
           disabled={!canSubmit}
         />
-        <Link href={`/${lang}/login`}>{t("dashboard.login.backToLogin")}</Link>
+        <Link href={ROUTES.login(lang)}>{t("dashboard.login.backToLogin")}</Link>
       </EmailButtonDiv>
     </StyledForm>
   );

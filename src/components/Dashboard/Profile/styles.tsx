@@ -10,6 +10,7 @@ export const PageContainer = styled.div`
   min-width: 0;
   overflow-x: clip;
   gap: var(--volunteer-profile-container-gap);
+  padding: var(--large-spacing);
 `;
 
 export const PageContentContainer = styled.div<{ $isFading?: boolean; $fadeDuration?: number }>`

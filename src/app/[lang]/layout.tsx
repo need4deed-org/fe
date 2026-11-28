@@ -1,62 +1,18 @@
-import AxiosInitializer from "@/components/hepler/AxiosInitializer";
-import "@/config/axios";
-import { DeviceProvider } from "@/context/DeviceContext";
-import StyledComponentsRegistry from "@/lib/styled-components-registry";
-import { isValidLanguage } from "@/utils/helpers";
-import { getScreenType } from "@/utils/screen-type";
-import QueryProvider from "@/utils/QueryProvider";
-import type { Metadata } from "next";
-import { Figtree } from "next/font/google";
-import { headers } from "next/headers";
+import { ReactNode, use } from "react";
 import { notFound } from "next/navigation";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { I18nProvider } from "../../config/i18next";
-import "./globals.css";
+import { I18nProvider } from "@/config/i18next";
+import { isValidLanguage } from "@/utils/helpers";
 
-const figtree = Figtree({
-  subsets: ["latin"],
-  variable: "--font-figtree",
-});
+type LanguageLayoutProps = Readonly<{
+  params: Promise<{
+    lang: string;
+  }>;
+  children: ReactNode;
+}>;
 
-export const metadata: Metadata = {
-  title: "Need4Deed",
-  description: "Need4Deed application for volunteers, RACs, and back office",
-};
+export default function LanguageLayout({ params, children }: LanguageLayoutProps) {
+  const { lang } = use(params);
+  if (!isValidLanguage(lang)) notFound();
 
-export default async function RootLayout({
-  children,
-  params,
-}: Readonly<{
-  children: React.ReactNode;
-  params: Promise<{ lang: string }>;
-}>) {
-  const { lang: language } = await params;
-  if (!isValidLanguage(language)) notFound();
-
-  const initialScreenType = getScreenType(await headers());
-  return (
-    <html lang={language}>
-      <head>
-        <link
-          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-          crossOrigin="anonymous"
-        />
-      </head>
-      <AxiosInitializer />
-      <body className={figtree.variable}>
-        <StyledComponentsRegistry>
-          <QueryProvider>
-            <DeviceProvider initialScreenType={initialScreenType}>
-              <I18nProvider initialLang={language}>{children}</I18nProvider>
-            </DeviceProvider>
-          </QueryProvider>
-        </StyledComponentsRegistry>
-
-        <ToastContainer />
-      </body>
-    </html>
-  );
+  return <I18nProvider initialLang={lang}>{children}</I18nProvider>;
 }

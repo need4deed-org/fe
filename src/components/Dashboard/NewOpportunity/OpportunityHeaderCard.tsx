@@ -18,7 +18,7 @@ import { Heading3, Heading4 } from "@/components/styled/text";
 import { createVolunteerTypeLabelMap } from "@/components/Dashboard/Profile/sections/ProfileHeader/common/labelMaps";
 import { HeaderFormData } from "./headerSchema";
 import { ErrorMessage } from "@/components/core/common";
-import { AgentPicker } from "@/components/Dashboard/Admin/NgoVolunteers/AgentPicker";
+import { AgentPicker } from "@/components/Dashboard/Home/NgoVolunteers/AgentPicker";
 import { AgentOption } from "@/hooks/useAgentSearch";
 import { useState } from "react";
 

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Link from "next/link";
 
 interface TagProps {
   $backgroundColor?: string;
@@ -17,7 +18,7 @@ export const Tag = styled.div<TagProps>`
   gap: var(--spacing-8);
 `;
 
-export const ATag = styled.a`
+export const ATag = styled(Link)`
   text-decoration: none;
 `;
 
