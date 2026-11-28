@@ -2,24 +2,37 @@
 import styled from "styled-components";
 import { useEffect, useId, useRef, useState, type FocusEvent, type KeyboardEvent } from "react";
 import { ListIcon } from "@phosphor-icons/react";
-import { MenuLink } from "../Navigation";
+import { MainItem, List } from "@/hooks/useAppNavigation";
 import { useTranslation } from "react-i18next";
-import { LegalLinks } from "./LegalLinks";
-import { UserMenu } from "./UserMenu";
 import { MainButton } from "./MainButton";
 import { MenuLinkButton } from "./MenuLinkButton";
+import { MenuButton } from "./MenuButton";
+import { usePathname } from "next/navigation";
 
 type MoreButtonProps = {
   breakpoint: number;
-  links: MenuLink[];
+  links: MainItem[];
+  lists: List[];
 };
 
-export const MoreButton = ({ breakpoint, links }: MoreButtonProps) => {
+const getSelected = (items: MainItem[], lists: List[], pathname: string): boolean => {
+  const currentItem = items.find(({ route }) => pathname.includes(route));
+  if (currentItem) return true;
+  for (const list of lists) {
+    const currentItem = list.find((item) => (item.type === "link" ? pathname.includes(item.route) : false));
+    if (currentItem) return true;
+  }
+  return false;
+};
+
+export const MoreButton = ({ breakpoint, links, lists }: MoreButtonProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const { t } = useTranslation();
   const listId = useId();
   const toggleRef = useRef<HTMLButtonElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
+  const pathname = usePathname();
+  const selected = getSelected(links, lists, pathname) || menuOpen;
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -57,11 +70,12 @@ export const MoreButton = ({ breakpoint, links }: MoreButtonProps) => {
       <MainButton
         ref={toggleRef}
         aria={{
+          current: selected,
           expanded: menuOpen,
           controls: listId,
         }}
         breakpoint={breakpoint}
-        selected={menuOpen}
+        selected={selected}
         Icon={ListIcon}
         label={t("dashboard.home.sidebar.more")}
         onClick={() => setMenuOpen(!menuOpen)}
@@ -75,7 +89,7 @@ export const MoreButton = ({ breakpoint, links }: MoreButtonProps) => {
           onClick={closeAndFocusToggle}
         />
         <Menu $breakpoint={breakpoint}>
-          <List ref={listRef} id={listId} $breakpoint={breakpoint}>
+          <MainList ref={listRef} id={listId} $breakpoint={breakpoint}>
             {links.map(({ route, Icon, label }) => {
               return (
                 <ListItem key={route}>
@@ -83,9 +97,20 @@ export const MoreButton = ({ breakpoint, links }: MoreButtonProps) => {
                 </ListItem>
               );
             })}
-          </List>
-          <UserMenu breakpoint={breakpoint} />
-          <LegalLinks breakpoint={breakpoint} />
+          </MainList>
+          {lists.map((items, i) => (
+            <SecondaryList key={i} $breakpoint={breakpoint}>
+              {items.map((item, i) => (
+                <ListItem key={i}>
+                  {item.type === "link" ? (
+                    <MenuLinkButton href={item.route} Icon={item.Icon} label={item.label} />
+                  ) : (
+                    <MenuButton Icon={item.Icon} label={item.label} onClick={item.onClick} />
+                  )}
+                </ListItem>
+              ))}
+            </SecondaryList>
+          ))}
         </Menu>
       </MenuWrapper>
     </Container>
@@ -137,7 +162,7 @@ const Menu = styled.div<{ $breakpoint: number }>`
   }
 `;
 
-const List = styled.ul<{ $breakpoint: number }>`
+const MainList = styled.ul<{ $breakpoint: number }>`
   display: -webkit-flex;
   display: flex;
   flex-direction: column;
@@ -154,4 +179,17 @@ const List = styled.ul<{ $breakpoint: number }>`
 const ListItem = styled.li`
   flex: 1;
   width: 100%;
+`;
+
+const SecondaryList = styled.ul<{ $breakpoint: number }>`
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: column;
+  gap: var(--small-spacing);
+  padding: var(--medium-spacing);
+  border-top: var(--border-width) solid var(--pale-lavender);
+
+  @media screen and (max-width: ${({ $breakpoint }) => $breakpoint}px) {
+    padding: var(--medium-spacing);
+  }
 `;

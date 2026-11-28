@@ -22,7 +22,7 @@
 
 ## Routing
 
-All routing must use constructor methods in [/constants/ROUTES.ts](../src/constants/ROUTES.ts)
+All routing must use constructor methods in [/constants/routes.ts](../src/constants/routes.ts)
 
 ## Component File Structure
 

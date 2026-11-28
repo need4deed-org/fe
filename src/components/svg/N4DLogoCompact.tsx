@@ -4,7 +4,7 @@ interface Props {
   height: string;
 }
 
-export default function N4DLogo({ fill = "var(--color-orchid)", height, width }: Props) {
+export const N4DLogoCompact = ({ fill = "var(--color-orchid)", height, width }: Props) => {
   return (
     <svg width={width} height={height} viewBox="0 0 451 244" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g clipPath="url(#clip0_3523_16)">
@@ -60,4 +60,4 @@ export default function N4DLogo({ fill = "var(--color-orchid)", height, width }:
       </defs>
     </svg>
   );
-}
+};

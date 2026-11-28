@@ -8,6 +8,7 @@ type MainButtonProps = {
   selected: boolean;
   ref: Ref<HTMLButtonElement>;
   aria: {
+    current: boolean;
     expanded: boolean;
     controls: string;
   };
@@ -16,15 +17,24 @@ type MainButtonProps = {
   onClick: () => void;
 };
 
-export const MainButton = ({ breakpoint, selected, ref, aria, Icon, label, onClick }: MainButtonProps) => {
+export const MainButton = ({
+  breakpoint,
+  selected,
+  ref,
+  aria: { current, expanded, controls },
+  Icon,
+  label,
+  onClick,
+}: MainButtonProps) => {
   return (
     <ButtonElement
       type="button"
       $breakpoint={breakpoint}
       $selected={selected}
       ref={ref}
-      aria-expanded={aria.expanded}
-      aria-controls={aria.controls}
+      aria-current={current}
+      aria-expanded={expanded}
+      aria-controls={controls}
       onClick={() => onClick()}
     >
       {<Icon aria-hidden weight="bold" />}
